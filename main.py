@@ -1,7 +1,7 @@
 from ItemList import *
 from LocationList import *
 import random
-import pyyaml
+import yaml
 
 #random.seed("garf")
 seedOut = []
