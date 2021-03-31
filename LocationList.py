@@ -34,6 +34,10 @@ class KH2LevelUp:
         self.ShieldAbility = itemId
         self.StaffAbility = itemId
 
+    def __repr__(self):
+        return "\nKH2LevelUp( Character:{self.Character}, Level: {self.Level}, ItemId: {self.SwordAbility}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
+
+
 class KH2Bonus:
     def __init__(self, id, character):
         self.RewardId = id

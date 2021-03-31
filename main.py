@@ -1,6 +1,7 @@
 from ItemList import *
 from LocationList import *
 import random
+import pyyaml
 
 #random.seed("garf")
 seedOut = []
@@ -14,4 +15,3 @@ while(len(itemList)>0):
 
 
 print(seedOut)
-
