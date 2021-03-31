@@ -11,6 +11,9 @@ class KH2Treasure:
     def getReward(self):
         return itemId
 
+    def __repr__(self):
+        return "KH2Treasure( Id:{self.Id}, ItemId: {self.ItemId}, Description: {self.Description}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
+
 class KH2LevelUp:
     def __init__(self, character, level):
         self.Character = character
