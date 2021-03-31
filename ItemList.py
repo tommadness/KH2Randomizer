@@ -1,8 +1,4 @@
-class KH2Item:
-    def __init__(self, id, name, itemType):
-        self.Id = id
-        self.Name = name
-        self.ItemType = itemType
+from itemClass import KH2Item
 
 itemList = [
     KH2Item(593, "Proof of Connection", "Proof"),
