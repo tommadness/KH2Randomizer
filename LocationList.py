@@ -12,7 +12,7 @@ class KH2Treasure:
         return itemId
 
     def __repr__(self):
-        return "KH2Treasure( Id:{self.Id}, ItemId: {self.ItemId}, Description: {self.Description}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
+        return "\nKH2Treasure( Id:{self.Id}, ItemId: {self.ItemId}, Description: {self.Description}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
 
 class KH2LevelUp:
     def __init__(self, character, level):
@@ -27,6 +27,12 @@ class KH2LevelUp:
         self.ShieldAbility = 0
         self.StaffAbility = 0
         self.Padding = 0
+        self.InvalidChecks = []
+
+    def setReward(self, itemId):
+        self.SwordAbility = itemId
+        self.ShieldAbility = itemId
+        self.StaffAbility = itemId
 
 class KH2Bonus:
     def __init__(self, id, character):
@@ -41,6 +47,10 @@ class KH2Bonus:
         self.BonusItem1 = 0
         self.BonusItem2 = 0
         self.Unknown0c = 0
+        self.InvalidChecks = []
+
+    def setReward(self, itemId):
+        self.BonusItem1 = itemId
 
 class KH2FormLevel:
     def __init__(self, id, level):
@@ -51,7 +61,7 @@ class KH2FormLevel:
         self.Ability = 0
         self.InvalidChecks = ["Form"]
     
-    def setReward(itemId):
+    def setReward(self, itemId):
         self.Ability = itemId
 
 class KH2ItemStat:
@@ -72,7 +82,7 @@ class KH2ItemStat:
         self.Unknown = 0
         self.InvalidChecks = ["Proof","GrowthAbility","Form","Item","Junk","Keyblade","Armor","Accessory"]
 
-    def setReward(itemId):
+    def setReward(self, itemId):
         self.Ability = itemId
 
 treasureList = [
@@ -84,5 +94,20 @@ treasureList = [
     KH2Treasure(22),
 ]
 
+soraLevelList = [
+    KH2LevelUp("Sora", 2),
+    KH2LevelUp("Sora", 3),
+    KH2LevelUp("Sora", 4)
+]
 
-locationList = treasureList
+soraBonusList = [
+    KH2Bonus(2,"Sora"),
+    KH2Bonus(3,"Sora")
+]
+
+formLevels = [
+    KH2FormLevel(1,2),
+    KH2FormLevel(1,3)
+]
+
+locationList = treasureList + soraLevelList + soraBonusList + formLevels
