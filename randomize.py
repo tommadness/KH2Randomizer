@@ -16,9 +16,9 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     if seedName == "":
         characters = string.ascii_letters + string.digits
-        seedName = (''.join(random.choice(characters) for i in range(15)))
+        seedName = (''.join(random.choice(characters) for i in range(30)))
     random.seed(seedName)
-    
+    modOut = "#" + seedName + "\n" + mod
     #KEYBLADE ABILITIES AND STATS
     validKeybladeAbilities = []
     invalidKeybladeAbilities = []
@@ -110,6 +110,6 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
         fmlvList = yaml.dump(formattedFmlv)
         outZip.writestr("FmlvList.yml",fmlvList)
 
-        outZip.writestr("mod.yml",mod)
+        outZip.writestr("mod.yml",modOut)
 
         outZip.close()
