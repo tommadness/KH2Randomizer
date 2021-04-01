@@ -1,3 +1,5 @@
 *.yml
 *.zip
 __pycache__
+venv
+.vscode
