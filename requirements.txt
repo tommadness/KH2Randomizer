@@ -1,3 +1,8 @@
-2021-04-01T08:08:38,834 Created temporary directory: C:\Users\tommc\AppData\Local\Temp\pip-ephem-wheel-cache-1rz3h5o_
-2021-04-01T08:12:18,274 Created temporary directory: C:\Users\tommc\AppData\Local\Temp\pip-ephem-wheel-cache-h15zv1th
-2021-04-01T16:24:50,555 Created temporary directory: C:\Users\tommc\AppData\Local\Temp\pip-ephem-wheel-cache-t4_53unl
+click==7.1.2
+Flask==1.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.3
+MarkupSafe==1.1.1
+numpy==1.20.2
+PyYAML==5.4.1
+Werkzeug==1.0.1
