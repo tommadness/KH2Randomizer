@@ -45,14 +45,22 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     #SORA REWARDS
     locationList = treasureList + soraLevelList + soraBonusList + formLevels
+    for location in locationList[:]:
+        if any(locationType in exclude for locationType in location.LocationTypes):
+            locationList.remove(location)
 
-    seedOut = []
-    while(len(itemsList)>0):
+
+    print(locationList)
+    print(itemList)
+
+    if len(locationList) < len(itemsList):
+        return "Too few locations, can't randomize."
+
+    for item in itemsList[:]:
         randomLocation = random.choice(locationList)
-        if not itemsList[0].ItemType in randomLocation.InvalidChecks and not any(location in exclude for location in randomLocation.LocationTypes):
-            randomLocation.setReward(itemsList[0].Id)
-            itemsList.remove(itemsList[0])
-            seedOut.append(randomLocation)
+        if not item.ItemType in randomLocation.InvalidChecks:
+            randomLocation.setReward(item.Id)
+            itemsList.remove(item)
             locationList.remove(randomLocation)
 
     #TODO: FILL REMAINING LOCATIONS WITH JUNK
