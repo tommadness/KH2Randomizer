@@ -92,7 +92,7 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
     for bons in soraBonusList:
         if not bons.RewardId in formattedBons.keys():
             formattedBons[bons.RewardId] = {}
-        formattedBons[bons.RewardId][bons.getCharacterName] = bons
+        formattedBons[bons.RewardId][bons.getCharacterName()] = bons
 
     formattedFmlv = {}
     for fmlv in formLevels:
