@@ -54,7 +54,7 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
             seedOut.append(randomLocation)
             locationList.remove(randomLocation)
 
-    #TODO: FILL REMAINING LOCATIONS WITH JUNK
+    #TODO: FILL REMAINING LOCATIONS WITH JUNKsour
 
 
 
