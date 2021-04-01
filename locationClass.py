@@ -70,7 +70,7 @@ class KH2Bonus:
         self.BonusItem1 = itemId
 
     def getCharacterName(self):
-        return self.CharacterMap[self.CharacterId]
+        return self.characterMap[self.CharacterId]
 
     def __repr__(self):
         return "\nKH2Bonus( RewardId:{self.RewardId}, Character: {self.CharacterId}, ItemId: {self.BonusItem1}, InvalidChecks: {self.InvalidChecks} )".format(self=self)

@@ -54,8 +54,8 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
         return "Too few locations, can't randomize."
 
     for item in itemsList[:]:
-        randomLocation = random.choice(validLocationList)
-        if not item.ItemType in randomLocation.InvalidChecks:
+        randomLocation = random.choice(locationList)
+        if not item.ItemType in randomLocation.InvalidChecks and not any(locationType in exclude for locationType in randomLocation.LocationTypes):
             randomLocation.setReward(item.Id)
             itemsList.remove(item)
             locationList.remove(randomLocation)
