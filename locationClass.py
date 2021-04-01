@@ -50,6 +50,7 @@ class KH2LevelUp:
 
 
 class KH2Bonus:
+    characterMap = {1: "Sora"}
     def __init__(self, id, character, locationTypes = []):
         self.RewardId = id
         self.CharacterId = character
@@ -67,6 +68,9 @@ class KH2Bonus:
 
     def setReward(self, itemId):
         self.BonusItem1 = itemId
+
+    def getCharacterName(self):
+        return self.CharacterMap[self.CharacterId]
 
     def __repr__(self):
         return "\nKH2Bonus( RewardId:{self.RewardId}, Character: {self.CharacterId}, ItemId: {self.BonusItem1}, InvalidChecks: {self.InvalidChecks} )".format(self=self)

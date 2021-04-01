@@ -111,8 +111,8 @@ soraLevelList = [
 ]
 
 soraBonusList = [
-    KH2Bonus(2,"Sora", locationTypes=["BC"]),
-    KH2Bonus(3,"Sora", locationTypes=["BC"])
+    KH2Bonus(2,1, locationTypes=["BC"]),
+    KH2Bonus(3,1, locationTypes=["BC"])
 ]
 
 formLevels = [
