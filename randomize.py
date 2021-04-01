@@ -109,19 +109,19 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
     with zipfile.ZipFile(data, "w") as outZip:
 
         trsrList = yaml.dump(formattedTrsr)
-        outZip.writestr("TrsrList.yml",trsrList)
+        outZip.writestr("TrsrList.yml",trsrList.replace("\n","\r\n"))
 
         lvupList = yaml.dump(formattedLvup)
-        outZip.writestr("LvupList.yml",lvupList)
+        outZip.writestr("LvupList.yml",lvupList.replace("\n","\r\n"))
 
         bonsList = yaml.dump(formattedBons)
-        outZip.writestr("BonsList.yml",bonsList)
+        outZip.writestr("BonsList.yml",bonsList.replace("\n","\r\n"))
 
         statsList = yaml.dump(formattedStats)
-        outZip.writestr("ItemList.yml",statsList)
+        outZip.writestr("ItemList.yml",statsList.replace("\n","\r\n"))
 
         fmlvList = yaml.dump(formattedFmlv)
-        outZip.writestr("FmlvList.yml",fmlvList)
+        outZip.writestr("FmlvList.yml",fmlvList.replace("\n","\r\n"))
 
         outZip.writestr("mod.yml",modOut)
 
