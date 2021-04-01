@@ -105,23 +105,24 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     #OUTPUT
     yaml.emitter.Emitter.process_tag = noop
+    
     data = io.BytesIO()
     with zipfile.ZipFile(data, "w") as outZip:
 
-        trsrList = yaml.dump(formattedTrsr)
-        outZip.writestr("TrsrList.yml",trsrList.replace("\n","\r\n"))
+        trsrList = yaml.dump(formattedTrsr, line_break="\r\n")
+        outZip.writestr("TrsrList.yml",trsrList)
 
-        lvupList = yaml.dump(formattedLvup)
-        outZip.writestr("LvupList.yml",lvupList.replace("\n","\r\n"))
+        lvupList = yaml.dump(formattedLvup, line_break="\r\n")
+        outZip.writestr("LvupList.yml",lvupList)
 
-        bonsList = yaml.dump(formattedBons)
-        outZip.writestr("BonsList.yml",bonsList.replace("\n","\r\n"))
+        bonsList = yaml.dump(formattedBons, line_break="\r\n")
+        outZip.writestr("BonsList.yml",bonsList)
 
-        statsList = yaml.dump(formattedStats)
-        outZip.writestr("ItemList.yml",statsList.replace("\n","\r\n"))
+        statsList = yaml.dump(formattedStats, line_break="\r\n")
+        outZip.writestr("ItemList.yml",statsList)
 
-        fmlvList = yaml.dump(formattedFmlv)
-        outZip.writestr("FmlvList.yml",fmlvList.replace("\n","\r\n"))
+        fmlvList = yaml.dump(formattedFmlv, line_break="\r\n")
+        outZip.writestr("FmlvList.yml",fmlvList)
 
         outZip.writestr("mod.yml",modOut)
 
