@@ -11,7 +11,8 @@ itemList = [
 
 supportAbilityList = [
     KH2Item(390, "Combo Boost", "SupportAbility"),
-    KH2Item(391, "Air Combo Boost", "SupportAbility")
+    KH2Item(391, "Air Combo Boost", "SupportAbility"),
+    KH2Item(392, "Reaction Boost", "SupportAbility")
 ]
 
 actionAbilityList = []

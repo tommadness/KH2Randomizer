@@ -30,6 +30,12 @@ class KH2LevelUp:
         self.Padding = 0
         self.InvalidChecks = []
         self.LocationTypes = ["Level"]
+        excludeFrom50 = []
+        excludeFrom99 = [1,2,3,4,5,6,8,10,11,13,14,16,18,19,21,22,24,26,27,29,30,32,34,35,37,38,40,42,43,45,46,48,50,51,52,54,55,56,57,58,60,61,62,63,64,66,67,68,69,70,71,72,74,75,76,77,78,79,80,81,82,83,84,86,87,88,89,90,91,92,93,94,95,96,97,98]
+        if self.Level in excludeFrom50:
+            self.LocationTypes.append("ExcludeFrom50")
+        if self.Level in excludeFrom99:
+            self.LocationTypes.append("ExcludeFrom99")
 
     def setReward(self, itemId):
         self.SwordAbility = itemId
@@ -66,12 +72,25 @@ class KH2FormLevel:
     def __init__(self, id, level):
         self.FormId = id
         self.FormLevel = level
-        self.GrowthAbilityLevel = 0
+        if level < 3:
+            self.GrowthAbilityLevel = 1
+        elif level < 5:
+            self.GrowthAbilityLevel = 2
+        elif level < 7:
+            self.GrowthAbilityLevel = 3
+        else:
+            self.GrowthAbilityLevel = 4
         self.Experience = 0
         self.Ability = 0
         self.InvalidChecks = ["Form"]
         self.LocationTypes = ["FormLevel"]
+        if level == 1:
+            self.LocationTypes += ["Level1Form"]
     
+    def getFormName(self):
+        formDict = {1:"Valor",2:"Wisdom",3:"Limit",4:"Master",5:"Final"}
+        return formDict[self.FormId]
+
     def setReward(self, itemId):
         self.Ability = itemId
 
@@ -86,16 +105,14 @@ class KH2ItemStat:
         self.Magic = 0
         self.Defense = 0
         self.AbilityPoints = 0
-        self.Unknown08 = 0
-        self.FireResistance = 0
-        self.IceResistance = 0
-        self.LightningResistance = 0
-        self.DarkResistance = 0
-        self.Unknown0d = 0
-        self.GeneralResistance = 0
+        self.Unknown08 = 100
+        self.FireResistance = 100
+        self.IceResistance = 100
+        self.LightningResistance = 100
+        self.DarkResistance = 100
+        self.Unknown0d = 100
+        self.GeneralResistance = 100
         self.Unknown = 0
-        self.InvalidChecks = ["Proof","GrowthAbility","Form","Item","Junk","Keyblade","Armor","Accessory"]
-        self.LocationTypes = ["KeybladeStats"]
 
     def setReward(self, itemId):
         self.Ability = itemId
