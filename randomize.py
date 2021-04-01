@@ -62,7 +62,7 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     #FILL REMAINING LOCATIONS WITH JUNK
     for location in locationList:
-        location.setReward(576)
+        location.setReward(random.choice(junkList).Id)
 
     #TODO: RANDOMIZE SORA STATS
 
