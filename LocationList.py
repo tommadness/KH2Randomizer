@@ -1,12 +1,12 @@
 from locationClass import *
 
 treasureList = [
-    KH2Treasure(245, "Land of Dragons - Bamboo Grove"),
-    KH2Treasure(497),
-    KH2Treasure(498),
-    KH2Treasure(21),
-    KH2Treasure(121),
-    KH2Treasure(22),
+    KH2Treasure(245, "Land of Dragons - Bamboo Grove", locationTypes=["LoD"]),
+    KH2Treasure(497, locationTypes=["LoD"]),
+    KH2Treasure(498, locationTypes=["LoD"]),
+    KH2Treasure(21, locationTypes=["LoD"]),
+    KH2Treasure(121, locationTypes=["LoD"]),
+    KH2Treasure(22, locationTypes=["LoD"]),
 ]
 
 soraLevelList = [
@@ -16,11 +16,17 @@ soraLevelList = [
 ]
 
 soraBonusList = [
-    KH2Bonus(2,"Sora"),
-    KH2Bonus(3,"Sora")
+    KH2Bonus(2,"Sora", locationTypes=["BC"]),
+    KH2Bonus(3,"Sora", locationTypes=["BC"])
 ]
 
 formLevels = [
     KH2FormLevel(1,2),
     KH2FormLevel(1,3)
 ]
+
+keybladeStats = [
+    KH2ItemStat(116),
+    KH2ItemStat(83),
+    KH2ItemStat(84)
+    ]

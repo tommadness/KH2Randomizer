@@ -1,9 +1,10 @@
 class KH2Treasure:
-    def __init__(self, id, description = "", invalidChecks = []):
+    def __init__(self, id, description = "", invalidChecks = [], locationTypes = []):
         self.Id = id
         self.ItemId = 0
         self.Description = description
         self.InvalidChecks = invalidChecks
+        self.LocationTypes = locationTypes
     
     def setReward(self, itemId):
         self.ItemId = itemId
@@ -15,7 +16,6 @@ class KH2Treasure:
         return "\nKH2Treasure( Id:{self.Id}, ItemId: {self.ItemId}, Description: {self.Description}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
 
 class KH2LevelUp:
-    yaml_tag = u''
     def __init__(self, character, level):
         self.Character = character
         self.Level = level
@@ -29,6 +29,7 @@ class KH2LevelUp:
         self.StaffAbility = 0
         self.Padding = 0
         self.InvalidChecks = []
+        self.LocationTypes = ["Level"]
 
     def setReward(self, itemId):
         self.SwordAbility = itemId
@@ -40,7 +41,7 @@ class KH2LevelUp:
 
 
 class KH2Bonus:
-    def __init__(self, id, character):
+    def __init__(self, id, character, locationTypes = []):
         self.RewardId = id
         self.CharacterId = character
         self.HpIncrease = 0
@@ -53,6 +54,7 @@ class KH2Bonus:
         self.BonusItem2 = 0
         self.Unknown0c = 0
         self.InvalidChecks = []
+        self.LocationTypes = locationTypes
 
     def setReward(self, itemId):
         self.BonusItem1 = itemId
@@ -68,6 +70,7 @@ class KH2FormLevel:
         self.Experience = 0
         self.Ability = 0
         self.InvalidChecks = ["Form"]
+        self.LocationTypes = ["FormLevel"]
     
     def setReward(self, itemId):
         self.Ability = itemId
@@ -92,8 +95,7 @@ class KH2ItemStat:
         self.GeneralResistance = 0
         self.Unknown = 0
         self.InvalidChecks = ["Proof","GrowthAbility","Form","Item","Junk","Keyblade","Armor","Accessory"]
+        self.LocationTypes = ["KeybladeStats"]
 
     def setReward(self, itemId):
         self.Ability = itemId
-
-characterMap = {1:"Sora",2:"Donald",3:"Goofy"}

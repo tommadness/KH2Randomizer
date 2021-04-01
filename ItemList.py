@@ -6,5 +6,12 @@ itemList = [
     KH2Item(595, "Proof of Peace", "Proof"),
     KH2Item(576, "Remembrance Shard", "Junk"),
     KH2Item(577, "Remembrance Stone", "Junk"),
-    KH2Item(578, "Remembrance Gem", "Junk")
+    KH2Item(578, "Remembrance Gem", "Junk"),
 ]
+
+supportAbilityList = [
+    KH2Item(390, "Combo Boost", "SupportAbility"),
+    KH2Item(391, "Air Combo Boost", "SupportAbility")
+]
+
+actionAbilityList = []
