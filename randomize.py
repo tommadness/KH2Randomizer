@@ -1,6 +1,7 @@
 from ItemList import itemList, supportAbilityList, actionAbilityList
 from LocationList import treasureList, soraLevelList, soraBonusList, formLevels, keybladeStats
 from experienceValues import formExp, soraExp
+from mod import mod
 import random
 import yaml
 import zipfile
@@ -108,5 +109,7 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
         fmlvList = yaml.dump(formattedFmlv)
         outZip.writestr("FmlvList.yml",fmlvList)
+
+        outZip.writestr("mod.yml",mod)
 
         outZip.close()
