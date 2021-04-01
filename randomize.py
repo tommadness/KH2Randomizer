@@ -54,6 +54,9 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
             seedOut.append(randomLocation)
             locationList.remove(randomLocation)
 
+    #TODO: FILL REMAINING LOCATIONS WITH JUNK
+
+
 
     #FORM EXPERIENCE
     for formLevel in formLevels:
