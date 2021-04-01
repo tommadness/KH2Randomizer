@@ -1,4 +1,4 @@
-from ItemList import itemList, supportAbilityList, actionAbilityList
+from ItemList import itemList, supportAbilityList, actionAbilityList, junkList
 from LocationList import treasureList, soraLevelList, soraBonusList, formLevels, keybladeStats
 from experienceValues import formExp, soraExp
 from mod import mod
@@ -48,7 +48,7 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
     locationList = treasureList + soraLevelList + soraBonusList + formLevels
     for location in locationList:
         if not any(locationType in exclude for locationType in location.LocationTypes):
-            valid:ocationList.append(location)
+            validLocationList.append(location)
 
     if len(validLocationList) < len(itemsList):
         return "Too few locations, can't randomize."
@@ -62,7 +62,7 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     #FILL REMAINING LOCATIONS WITH JUNK
     for location in locationList:
-        location.setReward(random.choice(junkList))
+        location.setReward(random.choice(junkList).Id)
 
     #TODO: RANDOMIZE SORA STATS
 

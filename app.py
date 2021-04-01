@@ -32,4 +32,4 @@ def randomizePage():
     )
 
 if __name__ == '__main__':
-    Randomize(exclude=["Level","FormLevel","BC","LoD"])
+    Randomize(exclude=[])
