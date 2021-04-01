@@ -35,7 +35,7 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
         randomAbility = random.choice(validKeybladeAbilities)
         keyblade.Ability = randomAbility
         validKeybladeAbilities.remove(randomAbility)
-        keyblade.Attack = random.randint(keybladeMinStat,. keybladeMaxStat + 1)
+        keyblade.Attack = random.randint(keybladeMinStat, keybladeMaxStat + 1)
         keyblade.Magic = random.randint(keybladeMinStat, keybladeMaxStat + 1)
 
     itemList += validKeybladeAbilities + invalidKeybladeAbilities
