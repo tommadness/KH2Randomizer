@@ -6,6 +6,7 @@ import random
 import yaml
 import zipfile
 import string
+import io
 
 def noop(self, *args, **kw):
     pass
@@ -54,7 +55,10 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
             seedOut.append(randomLocation)
             locationList.remove(randomLocation)
 
-    #TODO: FILL REMAINING LOCATIONS WITH JUNKsour
+    #TODO: FILL REMAINING LOCATIONS WITH JUNK
+
+
+    #TODO: RANDOMIZE SORA STATS
 
 
 
@@ -95,8 +99,8 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     #OUTPUT
     yaml.emitter.Emitter.process_tag = noop
-
-    with zipfile.ZipFile("randoSeed.zip", "w") as outZip:
+    data = io.BytesIO()
+    with zipfile.ZipFile(data, "w") as outZip:
 
         trsrList = yaml.dump(formattedTrsr)
         outZip.writestr("TrsrList.yml",trsrList)
@@ -116,3 +120,6 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
         outZip.writestr("mod.yml",modOut)
 
         outZip.close()
+
+    data.seek(0)
+    return data
