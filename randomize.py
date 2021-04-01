@@ -5,8 +5,6 @@ import random
 import yaml
 import zipfile
 import string
-import os
-import sys
 
 def noop(self, *args, **kw):
     pass
