@@ -640,7 +640,7 @@ soraBonusList = [
     KH2Bonus(38, 1, locationTypes=["DC"]),
     KH2Bonus(42,1,locationTypes=["Agrabah"]),
     KH2Bonus(43,1,locationTypes=["LoD"]),
-    KH2Bonus(47,1,locationTypes=["Agrabah"]),
+    KH2Bonus(47,1,locationTypes=["Agrabah"], invalidChecks=["Fire","Blizzard","Thunder"]),
     KH2Bonus(54,14,locationTypes=["STT"]),
     KH2Bonus(57,1,locationTypes=["OC"]),
     KH2Bonus(59,1,locationTypes=["PR"]),
