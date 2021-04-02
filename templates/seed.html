@@ -6,9 +6,9 @@ Included:<br/>
 <label>{{worlds[world]}}</label> <input type="hidden" name="include" value="{{world}}"/><br/>
 {% endfor %}
 Experience:<br/>
-Sora: {{soraExpMult}}<br/> <input type="hidden" name="soraExpMult" value="{{soraExpMult}}"/>
+Sora: {{soraExpMult}}x<br/> <input type="hidden" name="soraExpMult" value="{{soraExpMult}}"/>
 {% for key in formExpMult %}
-{{expTypes[key]}}: {{formExpMult[key]}}<br/> <input type="hidden" name="{{expTypes[key]}}Exp" value="{{formExpMult[key]}}"/>
+{{expTypes[key]}}: {{formExpMult[key]}}x<br/> <input type="hidden" name="{{expTypes[key]}}Exp" value="{{formExpMult[key]}}"/>
 {% endfor %}
 <input type="submit" value="Download">
 </form>
