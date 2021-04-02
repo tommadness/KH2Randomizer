@@ -6,6 +6,8 @@ class KH2Treasure:
         self.Description = description
         self.InvalidChecks = invalidChecks
         self.LocationTypes = locationTypes
+        if not ant(location in worlds for location in self.LocationTypes):
+            raise Exception(self, 'Not a valid LocaitonType')
     
     def setReward(self, itemId):
         self.ItemId = itemId
@@ -140,6 +142,7 @@ worlds = {
     "HT":"Halloween Town",
     "PL":"Pride Lands",
     "DC":"Disney Castle / Timeless River",
+    "100AW":"Hundred Acre Wood"
     "STT":"Simulated Twilight Town",
     "AS":"Absent Silhouettes",
     "Sephi":"Sephiroth",

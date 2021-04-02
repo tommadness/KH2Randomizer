@@ -75,3 +75,7 @@ junkList = [
     KH2Item(348, "Mythril Crystal", "Junk"),
     KH2Item(349,"Bright Shard", "Junk"),
 ]
+
+donaldItems = []
+
+goofyItems = []
