@@ -137,7 +137,34 @@ supportAbilityList = [
 
 ]
 
-actionAbilityList = []
+actionAbilityList = [
+    KH2Item(82, "Guard", "ActionAbility"),
+    KH2Item(137, "Upper Slash", "ActionAbility"),
+    KH2Item(271, "Horizontal Slash", "ActionAbility"),
+    KH2Item(267, "Finishing Leap", "ActionAbility"),
+    KH2Item(273, "Relatliating Slash", "ActionAbility"),
+    KH2Item(262, "Slapshot", "ActionAbility"),
+    KH2Item(263, "Dodge Slash", "ActionAbility"),
+    KH2Item(559, "Flash Step", "ActionAbility"),
+    KH2Item(264, "Slide Dash", "ActionAbility"),
+    KH2Item(562, "Vicinity Break", "ActionAbility"),
+    KH2Item(265, "Guard Break", "ActionAbility"),
+    KH2Item(266, "Explosion", "ActionAbility"),
+    KH2Item(269, "Aerial Sweep", "ActionAbility"),
+    KH2Item(560, "Aerial Dive", "ActionAbility"),
+    KH2Item(270, "Aerial Spiral", "ActionAbility"),
+    KH2Item(272, "Aerial Finish", "ActionAbility"),
+    KH2Item(561, "Magnet Burst", "ActionAbility"),
+    KH2Item(268, "Counterguard", "ActionAbility"),
+    KH2Item(385, "Auto Valor", "ActionAbility"),
+    KH2Item(386, "Auto Wisdom", "ActionAbility"),
+    KH2Item(387, "Auto Master", "ActionAbility"),
+    KH2Item(388, "Auto Final", "ActionAbility"),
+    KH2Item(389, "Auto Summon", "ActionAbility"),
+    KH2Item(568, "Auto Limit", "ActionAbility"),
+    KH2Item(198, "Trinity Limit", "ActionAbility"),
+
+]
 
 junkList = [
     KH2Item(576, "Remembrance Shard", "Junk"),

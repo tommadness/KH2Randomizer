@@ -650,11 +650,6 @@ soraBonusList = [
     KH2Bonus(63,1,locationTypes=["TT"]),
     KH2Bonus(69,1,locationTypes=["TWTNW"]),
     KH2Bonus(73,14,locationTypes=["STT"])
-
-
-
-
-
 ]
 
 formLevels = [
