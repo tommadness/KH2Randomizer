@@ -616,7 +616,45 @@ soraLevelList = [
 
 soraBonusList = [
     KH2Bonus(2,1, locationTypes=["BC"]),
-    KH2Bonus(3,1, locationTypes=["BC"])
+    KH2Bonus(3,1, locationTypes=["BC"]),
+    KH2Bonus(4,1,locationTypes=["BC"]),
+    KH2Bonus(5,1,locationTypes=["OC"]),
+    KH2Bonus(6,1,locationTypes=["OC"]),
+    KH2Bonus(7,1,locationTypes=["OC"]),
+    KH2Bonus(8,1, locationTypes=["OC"]),
+    KH2Bonus(9,1,locationTypes=["LoD"]),
+    KH2Bonus(10,1,locationTypes=["LoD"]),
+    KH2Bonus(15,1,locationTypes=["HB"]),
+    KH2Bonus(16,1,locationTypes=["DC"]),
+    KH2Bonus(17,1,locationTypes=["DC"]),
+    KH2Bonus(18,1,locationTypes=["HT"]),
+    KH2Bonus(21,1,locationTypes=["PR"]),
+    KH2Bonus(22,1,locationTypes=["PR"]),
+    KH2Bonus(24,1,locationTypes=["TWTNW"]),
+    KH2Bonus(28,1,locationTypes=["HB"]),
+    KH2Bonus(30,1,locationTypes=["PL"]),
+    KH2Bonus(31,1,locationTypes=["SP"]),
+    KH2Bonus(32,1,locationTypes=["SP"]),
+    KH2Bonus(33,14,locationTypes=["STT"]),
+    KH2Bonus(37,1,locationTypes=["Agrabah"]),
+    KH2Bonus(38, 1, locationTypes=["DC"]),
+    KH2Bonus(42,1,locationTypes=["Agrabah"]),
+    KH2Bonus(43,1,locationTypes=["LoD"]),
+    KH2Bonus(47,1,locationTypes=["Agrabah"]),
+    KH2Bonus(54,14,locationTypes=["STT"]),
+    KH2Bonus(57,1,locationTypes=["OC"]),
+    KH2Bonus(59,1,locationTypes=["PR"]),
+    KH2Bonus(60,1,locationTypes=["HB"]),
+    KH2Bonus(61,1,locationTypes=["SP"]),
+    KH2Bonus(62,1,locationTypes=["PR"]),
+    KH2Bonus(63,1,locationTypes=["TT"]),
+    KH2Bonus(69,1,locationTypes=["TWTNW"]),
+    KH2Bonus(73,14,locationTypes=["STT"])
+
+
+
+
+
 ]
 
 formLevels = [

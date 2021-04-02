@@ -50,7 +50,7 @@ class KH2LevelUp:
 
 
 class KH2Bonus:
-    characterMap = {1: "Sora"}
+    characterMap = {1: "Sora", 14: "Roxas"}
     def __init__(self, id, character, locationTypes = []):
         self.RewardId = id
         self.CharacterId = character
