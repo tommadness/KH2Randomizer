@@ -19,7 +19,7 @@ def index():
 def hashedSeed(hash):
     argsString = base64.urlsafe_b64decode(hash)
     
-    return fl.redirect("/seed?"+str(argsString).replace("b'","").replace("%27",""))
+    return fl.redirect("/seed?"+str(argsString).replace("b'","").replace("'",""))
 
 @app.route('/seed')
 def seed():
@@ -28,14 +28,14 @@ def seed():
     if seed == "":
         characters = string.ascii_letters + string.digits
         seed = (''.join(random.choice(characters) for i in range(30)))
-        return fl.redirect("/seed?seed="+seed+"&"+str(fl.request.query_string).replace("seed=&","").replace("b'",""))
+        return fl.redirect("/seed?seed="+seed+"&"+str(fl.request.query_string).replace("seed=&","").replace("b'","").replace("'",""))
     queryString = fl.request.query_string
         
 
     hashedString = base64.urlsafe_b64encode(queryString)
 
     permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
-    return fl.render_template('seed.html', permaLink = permaLink.replace("%27",""), include = includeList, seed = seed, worlds=worlds)
+    return fl.render_template('seed.html', permaLink = permaLink.replace("'",""), include = includeList, seed = seed, worlds=worlds)
 
 @app.route('/download')
 def randomizePage():
