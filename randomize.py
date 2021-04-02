@@ -62,7 +62,9 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     #TODO: RANDOMIZE SORA STATS
 
+    #TODO: RANDOMIZE PARTY MEMBER CHECKS
 
+    #TODO: INCORPORATE BOSS/ENEMY RANDO
 
     #FORM EXPERIENCE
     for formLevel in formLevels:

@@ -1,8 +1,9 @@
 <form action='/seed'>
     <label>Seed:</label><input id='seed' name='seed' type='text'/><br/>
-    {% for world in worlds %}
-    <label>{{world}}:</label> <input type="checkbox" value= "{{world}}" name="include"> <br/>
+    {% for key in worlds %}
+    <label>{{worlds[key]}}:</label> <input type="checkbox" value= "{{key}}" name="include"> <br/>
 
     {% endfor %}
+    <input type="hidden" name="dummy" value="true">
     <input type='submit'>
 </form>

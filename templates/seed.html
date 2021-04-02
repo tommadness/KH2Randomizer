@@ -3,7 +3,7 @@ Permalink: <a href="{{permaLink}}">{{permaLink}}</a><br/>
 <label>Seed: {{seed}}</label> <input type="hidden" name="seed" value="{{seed}}"/><br/>
 Included:<br/>
 {% for world in include %}
-<label>{{world}}</label> <input type="hidden" name="include" value="{{world}}"/><br/>
+<label>{{worlds[world]}}</label> <input type="hidden" name="include" value="{{world}}"/><br/>
 {% endfor %}
 <input type="submit" value="Download">
 </form>

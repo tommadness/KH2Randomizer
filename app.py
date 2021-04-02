@@ -1,5 +1,6 @@
 from randomize import Randomize
 from flask import Flask
+from locationClass import worlds
 import flask as fl
 import numpy as np
 import base64
@@ -8,7 +9,6 @@ import random
 
 app = Flask(__name__)
 
-worlds = ["LoD","BC","LingeringWill","DataOrg","Level","FormLevel"]
 
 @app.route('/')
 def index():
@@ -35,7 +35,7 @@ def seed():
     hashedString = base64.urlsafe_b64encode(queryString)
 
     permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
-    return fl.render_template('seed.html', permaLink = permaLink.replace("%27",""), include = includeList, seed = seed)
+    return fl.render_template('seed.html', permaLink = permaLink.replace("%27",""), include = includeList, seed = seed, worlds=worlds)
 
 @app.route('/download')
 def randomizePage():

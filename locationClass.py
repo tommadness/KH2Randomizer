@@ -123,3 +123,28 @@ class KH2ItemStat:
 
     def setReward(self, itemId):
         self.Ability = itemId
+
+worlds = {
+    "LoD":"Land of Dragons",
+    "BC":"Beast's Castle",
+    "HB":"Hollow Bastion",
+    "CoR":"Cavern of Remembrance",
+    "TT":"Twilight Town",
+    "TWTNW":"The World That Never Was",
+    "SP":"Space Paranoids",
+    "Atlantica":"Atlantica",
+    "PR":"Port Royal",
+    "OC":"Olympus Coliseum",
+    "OCCups":"Olympus Cups",
+    "Agrabah":"Agrabah",
+    "HT":"Halloween Town",
+    "PL":"Pride Lands",
+    "DC":"Disney Castle / Timeless River",
+    "STT":"Simulated Twilight Town",
+    "AS":"Absent Silhouettes",
+    "Sephi":"Sephiroth",
+    "LW":"Lingering Will (Terra)",
+    "DataOrg":"Data Organization XIII",
+    "Level": "Sora's Levels",
+    "FormLevel": "Form Levels"
+    }
