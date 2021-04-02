@@ -89,12 +89,12 @@ treasureList = [
     KH2Treasure(94, "Starry Hill Style Recipe", locationTypes=["100AW"]),
 
     KH2Treasure(242, "Underworld Entrance Power Boost", locationTypes=["OC"]),
-    KH2Treasure(7,"Cave of the Dead: Passage Mythril Shard", locationTypes=["OC"]
-    KH2Treasure(8,"Cave of the Dead: Passage Mythril Stone", locationTypes=["OC"]
+    KH2Treasure(7,"Cave of the Dead: Passage Mythril Shard", locationTypes=["OC"]),
+    KH2Treasure(8,"Cave of the Dead: Passage Mythril Stone", locationTypes=["OC"]),
     KH2Treasure(144, "Passage Ether", locationTypes=["OC"]),
     KH2Treasure(145, "Passage AP Boost", locationTypes=["OC"]),
     KH2Treasure(146, "Passage Hi-Potion", locationTypes=["OC"]),
-    KH2Treasure(2,"Cave of the Dead: Inner Chamber Underworld Map", locationTypes=["OC"]
+    KH2Treasure(2,"Cave of the Dead: Inner Chamber Underworld Map", locationTypes=["OC"]),
     KH2Treasure(243, "Inner Chamber Mythril Shard", locationTypes=["OC"]),
     KH2Treasure(3,"Underworld Caverns: Entrance Lucid Shard", locationTypes=["OC"]),
     KH2Treasure(11, "Entrance AP Boost", locationTypes=["OC"]),
@@ -510,7 +510,7 @@ treasureList = [
 
     KH2Treasure(588, "00 Winner's Proof", locationTypes=["HB"]),
 
-    KH2Treasure(589, "00 Proof of Peace", locationTypes=["HB"]),
+    KH2Treasure(589, "00 Proof of Peace", locationTypes=["HB"])
 ]
 
 soraLevelList = [
@@ -616,7 +616,7 @@ soraLevelList = [
 
 soraBonusList = [
     KH2Bonus(2,1, locationTypes=["BC"]),
-    KH2Bonus(3,1, locationTypes=["BC"]),
+    KH2Bonus(3,1, locationTypes=["BC"])
 ]
 
 formLevels = [
