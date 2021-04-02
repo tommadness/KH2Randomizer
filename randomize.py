@@ -10,10 +10,10 @@ import io
 def noop(self, *args, **kw):
     pass
 
-def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keybladeMinStat = 0, keybladeMaxStat = 7, formExpMult = {1:1,2:1,3:1,4:1,5:1}, soraExpMult = 1 ):
+def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keybladeMinStat = 0, keybladeMaxStat = 7, formExpMult = {1:1,2:1,3:1,4:1,5:1}, soraExpMult = 1, levelChoice = "ExcludeFrom50" ):
 
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
-
+    exclude.append(levelChoice)
     random.seed(seedName)
     modOut = "#" + seedName + "\n" + mod
     #KEYBLADE ABILITIES AND STATS
@@ -58,7 +58,8 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     #FILL REMAINING LOCATIONS WITH JUNK
     for location in locationList:
-        location.setReward(random.choice(junkList).Id)
+        if not levelChoice in location.LocationTypes:
+            location.setReward(random.choice(junkList).Id)
 
     #TODO: RANDOMIZE SORA STATS
 

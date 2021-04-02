@@ -43,12 +43,12 @@ def seed():
 def randomizePage():
     includeList = fl.request.args.getlist("include") or []
     excludeList = list(set(worlds) - set(includeList))
-    excludeList.append(fl.request.args.get("levelChoice"))
+    levelChoice = fl.request.args.get("levelChoice")
     seed = fl.request.args.get('seed') or ""
     print(seed)
     formExpMult = {1: float(fl.request.args.get("ValorExp")), 2: float(fl.request.args.get("WisdomExp")), 3: float(fl.request.args.get("LimitExp")), 4: float(fl.request.args.get("MasterExp")), 5: float(fl.request.args.get("FinalExp"))}
     soraExpMult = float(fl.request.args.get("soraExpMult"))
-    data = Randomize(seedName = fl.escape(seed), exclude = excludeList, formExpMult=formExpMult, soraExpMult=soraExpMult)
+    data = Randomize(seedName = fl.escape(seed), exclude = excludeList, formExpMult=formExpMult, soraExpMult=soraExpMult, levelChoice = levelChoice)
     if isinstance(data,str):
         return data
 
