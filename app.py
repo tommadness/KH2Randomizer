@@ -9,10 +9,11 @@ import random
 
 app = Flask(__name__)
 
+expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
 
 @app.route('/')
 def index():
-    return fl.render_template('index.html', worlds = worlds)
+    return fl.render_template('index.html', worlds = worlds, expTypes = expTypes)
 
 
 @app.route('/seed/<hash>')
@@ -30,12 +31,12 @@ def seed():
         seed = (''.join(random.choice(characters) for i in range(30)))
         return fl.redirect("/seed?seed="+seed+"&"+str(fl.request.query_string).replace("seed=&","").replace("b'","").replace("'",""))
     queryString = fl.request.query_string
-        
-
+    formExpMult = {1: fl.request.args.get("ValorExp"), 2: fl.request.args.get("WisdomExp"), 3: fl.request.args.get("LimitExp"), 4: fl.request.args.get("MasterExp"), 5: fl.request.args.get("FinalExp")}
+    soraExpMult = fl.request.args.get("SoraExp")
     hashedString = base64.urlsafe_b64encode(queryString)
 
     permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
-    return fl.render_template('seed.html', permaLink = permaLink.replace("'",""), include = includeList, seed = seed, worlds=worlds)
+    return fl.render_template('seed.html', permaLink = permaLink.replace("'",""), include = includeList, seed = seed, worlds=worlds, expTypes = expTypes, formExpMult = formExpMult, soraExpMult = soraExpMult)
 
 @app.route('/download')
 def randomizePage():
@@ -43,7 +44,9 @@ def randomizePage():
     excludeList = list(set(worlds) - set(includeList))
     seed = fl.request.args.get('seed') or ""
     print(seed)
-    data = Randomize(seedName = fl.escape(seed), exclude = excludeList, formExpMult={1:5,2:3,3:3,4:3,5:3})
+    formExpMult = {1: fl.request.args.get("ValorExp"), 2: fl.request.args.get("WisdomExp"), 3: fl.request.args.get("LimitExp"), 4: fl.request.args.get("MasterExp"), 5: fl.request.args.get("FinalExp")}
+    soraExpMult = fl.request.args.get("soraExpMult")
+    data = Randomize(seedName = fl.escape(seed), exclude = excludeList, formExpMult=formExpMult, soraExpMult=soraExpMult)
     if isinstance(data,str):
         return data
 

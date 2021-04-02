@@ -4,5 +4,9 @@
     <label>{{worlds[key]}}:</label> <input type="checkbox" value= "{{key}}" name="include"> <br/>
 
     {% endfor %}
+
+    {% for expType in expTypes%}
+    <label>{{expType}} Experience:</label> <input type="number" name="{{expType}}Exp"> <br/>
+    {% endfor %}
     <input type='submit'>
 </form>
