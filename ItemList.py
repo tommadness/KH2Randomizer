@@ -5,17 +5,17 @@ itemList = [
     KH2Item(594, "Proof of Nonexistence", "Proof"),
     KH2Item(595, "Proof of Peace", "Proof"),
 
-    KH2Item(21, "Fire Element", "MagicElement"),
-    KH2Item(21, "Fire Element", "MagicElement"),
-    KH2Item(21, "Fire Element", "MagicElement"),
+    KH2Item(21, "Fire Element", "MagicElementAG2"),
+    KH2Item(21, "Fire Element", "MagicElementAG2"),
+    KH2Item(21, "Fire Element", "MagicElementAG2"),
 
-    KH2Item(22, "Blizzard Element", "MagicElement"),
-    KH2Item(22, "Blizzard Element", "MagicElement"),
-    KH2Item(22, "Blizzard Element", "MagicElement"),
+    KH2Item(22, "Blizzard Element", "MagicElementAG2"),
+    KH2Item(22, "Blizzard Element", "MagicElementAG2"),
+    KH2Item(22, "Blizzard Element", "MagicElementAG2"),
 
-    KH2Item(23, "Thunder Element", "MagicElement"),
-    KH2Item(23, "Thunder Element", "MagicElement"),
-    KH2Item(23, "Thunder Element", "MagicElement"),
+    KH2Item(23, "Thunder Element", "MagicElementAG2"),
+    KH2Item(23, "Thunder Element", "MagicElementAG2"),
+    KH2Item(23, "Thunder Element", "MagicElementAG2"),
 
     KH2Item(24, "Cure Element", "MagicElement"),
     KH2Item(24, "Cure Element", "MagicElement"),
@@ -53,6 +53,12 @@ itemList = [
     KH2Item(565, "Dodge Roll","GrowthAbility"),
     KH2Item(567, "Dodge Roll","GrowthAbility"),
     KH2Item(568, "Dodge Roll","GrowthAbility"),
+
+    KH2Item(32, "Torn Pages","TornPage"),
+    KH2Item(32, "Torn Pages","TornPage"),
+    KH2Item(32, "Torn Pages","TornPage"),
+    KH2Item(32, "Torn Pages","TornPage"),
+    KH2Item(32, "Torn Pages","TornPage"),
 ]
 
 supportAbilityList = [
