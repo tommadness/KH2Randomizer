@@ -48,8 +48,8 @@ treasureList = [
     KH2Treasure(37, "Chasm of Challenges AP Boost", locationTypes=["Agrabah"]),
     KH2Treasure(502, "Treasure Room AP Boost", locationTypes=["Agrabah"]),
     KH2Treasure(503, "Treasure Room Serenity Gem", locationTypes=["Agrabah"]),
-    KH2Treasure(34, "Ruined Chamber Torn Pages", locationTypes=["Agrabah"], invalidChecks=["MagicElementAG2"]),
-    KH2Treasure(486, "Ruined Chamber Ruins Map", locationTypes=["Agrabah"], invalidChecks=["MagicElementAG2"]),
+    KH2Treasure(34, "Ruined Chamber Torn Pages", locationTypes=["Agrabah"], invalidChecks=["Fire","Blizzard","Thunder"]),
+    KH2Treasure(486, "Ruined Chamber Ruins Map", locationTypes=["Agrabah"], invalidChecks=["Fire","Blizzard","Thunder"]),
 
     KH2Treasure(79, "Cornerstone Hill Cornerstone Hill Map", locationTypes=["DC"]),
     KH2Treasure(12, "Cornerstone Hill Frost Shard", locationTypes=["DC"]),
@@ -400,7 +400,7 @@ treasureList = [
     KH2Treasure(269, "00 Ice Cream", locationTypes=["HB"]),
     KH2Treasure(511, "00 Picture", locationTypes=["HB"]),
 
-    KH2Treasure(367, "00 Undersea Kingdom Map", locationTypes=["Atlantica"]),
+    KH2Treasure(367, "00 Undersea Kingdom Map", locationTypes=["Atlantica"], invalidChecks=["Magnet","Thunder"]),
 
     KH2Treasure(270, "00 Rumbling Rose", locationTypes=["BC"]),
     KH2Treasure(325, "00 Castle Walls Map", locationTypes=["BC"]),
@@ -413,20 +413,20 @@ treasureList = [
     KH2Treasure(514, "00 Genji Shield", locationTypes=["OC"]),
     KH2Treasure(541, "00 Skillful Ring", locationTypes=["OC"]),
 
-    KH2Treasure(303, "Agrabah Wishing Lamp", locationTypes=["Agrabah"]),
+    KH2Treasure(303, "Agrabah Wishing Lamp", locationTypes=["Agrabah"], invalidChecks=["Fire","Blizzard","Thunder"]),
 
     KH2Treasure(297, "00 Present", locationTypes=["HT"]),
     KH2Treasure(298, "00 Decoy Presents", locationTypes=["HT"]),
     KH2Treasure(275, "00 Decisive Pumpkin", locationTypes=["HT"]),
 
-    KH2Treasure(287, "00 Mysterious Abyss", locationTypes=["Atlantica"]),
-    KH2Treasure(279, "00 Blizzard Element", locationTypes=["Atlantica"]),
-    KH2Treasure(538, "00 Orichalcum+", locationTypes=["Atlantica"]),
+    KH2Treasure(287, "00 Mysterious Abyss", locationTypes=["Atlantica"], invalidChecks=["Magnet","Thunder"]),
+    KH2Treasure(279, "00 Blizzard Element", locationTypes=["Atlantica"], invalidChecks=["Magnet","Thunder"]),
+    KH2Treasure(538, "00 Orichalcum+", locationTypes=["Atlantica"], invalidChecks=["Magnet","Thunder"]),
 
-    KH2Treasure(284, "00 Sweet Memories", locationTypes=["100AW"]),
-    KH2Treasure(485, "00 Spooky Cave Map", locationTypes=["100AW"]),
-    KH2Treasure(285, "00 Cure Element", locationTypes=["100AW"]),
-    KH2Treasure(539, "00 Orichalcum+", locationTypes=["100AW"]),
+    KH2Treasure(284, "00 Sweet Memories", locationTypes=["100AW"], invalidChecks=["TornPage"]),
+    KH2Treasure(485, "00 Spooky Cave Map", locationTypes=["100AW"], invalidChecks=["TornPage"]),
+    KH2Treasure(285, "00 Cure Element", locationTypes=["100AW"], invalidChecks=["TornPage"]),
+    KH2Treasure(539, "00 Orichalcum+", locationTypes=["100AW"], invalidChecks=["TornPage"]),
 
     KH2Treasure(276, "00 Sleeping Lion", locationTypes=["HB"]),
     KH2Treasure(282, "00 Fenrir", locationTypes=["HB","Sephi"]),
@@ -470,7 +470,7 @@ treasureList = [
 
     KH2Treasure(544, "00 Road to Discovery", locationTypes=["HT","AS"]),
 
-    KH2Treasure(545, "Strength Beyond Strength", locationTypes=["Agrabah","AS"], invalidChecks=["MagicElementAG2"]),
+    KH2Treasure(545, "Strength Beyond Strength", locationTypes=["Agrabah","AS"], invalidChecks=["Fire","Blizzard","Thunder"]),
 
     KH2Treasure(546, "00 Book of Shadows", locationTypes=["OC","AS"]),
 
@@ -480,7 +480,7 @@ treasureList = [
 
     KH2Treasure(549, "00 Lost Illusion", locationTypes=["HT","AS"]),
 
-    KH2Treasure(550, "00 Lost Illusion", locationTypes=["Agrabah","AS"], invalidChecks=["MagicElementAG2"]),
+    KH2Treasure(550, "00 Lost Illusion", locationTypes=["Agrabah","AS"], invalidChecks=["Fire","Blizzard","Thunder"]),
 
     KH2Treasure(551, "00 Lost Illusion", locationTypes=["OC","AS"]),
 

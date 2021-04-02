@@ -9,8 +9,12 @@ class KH2Item:
 
 itemTypes = [
     "Proof",
-    "MagicElement",
-    "MagicElementAG2",
+    "Fire",
+    "Blizzard",
+    "Thunder",
+    "Cure",
+    "Magnet",
+    "Reflect",
     "GrowthAbility",
     "ActionAbility",
     "SupportAbility",
