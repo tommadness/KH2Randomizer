@@ -308,30 +308,30 @@ treasureList = [
     KH2Treasure(387, "17 Mythril Crystal", locationTypes=["TWTNW"]),
     KH2Treasure(388, "17 Orichalcum", locationTypes=["TWTNW"]),
 
-    KH2Treasure(562, "21 AP Boost", locationTypes=["HB"]),
-    KH2Treasure(563, "21 Power Crystal", locationTypes=["HB"]),
-    KH2Treasure(564, "21 Frost Crystal", locationTypes=["HB"]),
-    KH2Treasure(565, "21 Manifest Illusion", locationTypes=["HB"]),
-    KH2Treasure(566, "21 AP Boost", locationTypes=["HB"]),
-    KH2Treasure(567, "Remembrance Gem", locationTypes=["HB"]),
-    KH2Treasure(568, "22 Serenity Gem", locationTypes=["HB"]),
-    KH2Treasure(569, "22 AP Boost", locationTypes=["HB"]),
-    KH2Treasure(570, "22 Serenity Crystal", locationTypes=["HB"]),
-    KH2Treasure(571, "22 Manifest Illusion", locationTypes=["HB"]),
-    KH2Treasure(572, "22 Serenity Gem", locationTypes=["HB"]),
-    KH2Treasure(573, "22 Dark Remembrance Map", locationTypes=["HB"]),
-    KH2Treasure(574, "23 Serenity Crystal", locationTypes=["HB"]),
-    KH2Treasure(575, "Remembrance Crystal", locationTypes=["HB"]),
-    KH2Treasure(576, "23 AP Boost", locationTypes=["HB"]),
-    KH2Treasure(577, "23 Manifest Illusion", locationTypes=["HB"]),
-    KH2Treasure(578, "24 AP Boost", locationTypes=["HB"]),
-    KH2Treasure(579, "24 AP Boost", locationTypes=["HB"]),
-    KH2Treasure(580, "24 Depths of Remembrance Map", locationTypes=["HB"]),
-    KH2Treasure(581, "24 Power Boost", locationTypes=["HB"]),
-    KH2Treasure(582, "24 Magic Boost", locationTypes=["HB"]),
-    KH2Treasure(585, "26 Garden of Assemblage Map", locationTypes=["HB"]),
-    KH2Treasure(586, "26 Lost Illusion", locationTypes=["HB"]),
-    KH2Treasure(590, "Proof of Nonexistence", locationTypes=["HB"]),
+    KH2Treasure(562, "21 AP Boost", locationTypes=["CoR"]),
+    KH2Treasure(563, "21 Power Crystal", locationTypes=["CoR"]),
+    KH2Treasure(564, "21 Frost Crystal", locationTypes=["CoR"]),
+    KH2Treasure(565, "21 Manifest Illusion", locationTypes=["CoR"]),
+    KH2Treasure(566, "21 AP Boost", locationTypes=["CoR"]),
+    KH2Treasure(567, "Remembrance Gem", locationTypes=["CoR"]),
+    KH2Treasure(568, "22 Serenity Gem", locationTypes=["CoR"]),
+    KH2Treasure(569, "22 AP Boost", locationTypes=["CoR"]),
+    KH2Treasure(570, "22 Serenity Crystal", locationTypes=["CoR"]),
+    KH2Treasure(571, "22 Manifest Illusion", locationTypes=["CoR"]),
+    KH2Treasure(572, "22 Serenity Gem", locationTypes=["CoR"]),
+    KH2Treasure(573, "22 Dark Remembrance Map", locationTypes=["CoR"]),
+    KH2Treasure(574, "23 Serenity Crystal", locationTypes=["CoR"]),
+    KH2Treasure(575, "Remembrance Crystal", locationTypes=["CoR"]),
+    KH2Treasure(576, "23 AP Boost", locationTypes=["CoR"]),
+    KH2Treasure(577, "23 Manifest Illusion", locationTypes=["CoR"]),
+    KH2Treasure(578, "24 AP Boost", locationTypes=["CoR"]),
+    KH2Treasure(579, "24 AP Boost", locationTypes=["CoR"]),
+    KH2Treasure(580, "24 Depths of Remembrance Map", locationTypes=["CoR"]),
+    KH2Treasure(581, "24 Power Boost", locationTypes=["CoR"]),
+    KH2Treasure(582, "24 Magic Boost", locationTypes=["CoR"]),
+    KH2Treasure(585, "26 Garden of Assemblage Map", locationTypes=["Free"]),
+    KH2Treasure(586, "26 Lost Illusion", locationTypes=["Free"]),
+    KH2Treasure(590, "Proof of Nonexistence", locationTypes=["Free"]),
 
     KH2Treasure(288, "00 Munny Pouch", locationTypes=["STT"]),
     KH2Treasure(389, "00 Champion Belt", locationTypes=["STT"], invalidChecks=itemTypes),
@@ -429,7 +429,7 @@ treasureList = [
     KH2Treasure(539, "00 Orichalcum+", locationTypes=["100AW"]),
 
     KH2Treasure(276, "00 Sleeping Lion", locationTypes=["HB"]),
-    KH2Treasure(282, "00 Fenrir", locationTypes=["HB"]),
+    KH2Treasure(282, "00 Fenrir", locationTypes=["HB","Sephi"]),
 
     KH2Treasure(516, "00 Fatal Crest", locationTypes=["OC"]),
     KH2Treasure(517, "00 Orichalcum+", locationTypes=["OC"]),
@@ -468,45 +468,45 @@ treasureList = [
 
     KH2Treasure(537, "00 Secret Ansem Report 13", locationTypes=["TWTNW"]),
 
-    KH2Treasure(544, "00 Road to Discovery", locationTypes=["HB"]),
+    KH2Treasure(544, "00 Road to Discovery", locationTypes=["HT","AS"]),
 
-    KH2Treasure(545, "Strength Beyond Strength", locationTypes=["HB"]),
+    KH2Treasure(545, "Strength Beyond Strength", locationTypes=["Agrabah","AS"]),
 
-    KH2Treasure(546, "00 Book of Shadows", locationTypes=["HB"]),
+    KH2Treasure(546, "00 Book of Shadows", locationTypes=["OC","AS"]),
 
-    KH2Treasure(547, "00 Cloaked Thunder", locationTypes=["HB"]),
+    KH2Treasure(547, "00 Cloaked Thunder", locationTypes=["SP","AS"]),
 
-    KH2Treasure(548, "00 Eternal Blossom", locationTypes=["HB"]),
+    KH2Treasure(548, "00 Eternal Blossom", locationTypes=["DC","AS"]),
 
-    KH2Treasure(549, "00 Lost Illusion", locationTypes=["HB"]),
+    KH2Treasure(549, "00 Lost Illusion", locationTypes=["HT","AS"]),
 
-    KH2Treasure(550, "00 Lost Illusion", locationTypes=["HB"]),
+    KH2Treasure(550, "00 Lost Illusion", locationTypes=["Agrabah","AS"]),
 
-    KH2Treasure(551, "00 Lost Illusion", locationTypes=["HB"]),
+    KH2Treasure(551, "00 Lost Illusion", locationTypes=["OC","AS"]),
 
-    KH2Treasure(552, "00 Lost Illusion", locationTypes=["HB"]),
+    KH2Treasure(552, "00 Lost Illusion", locationTypes=["SP","AS"]),
 
-    KH2Treasure(553, "00 Lost Illusion", locationTypes=["HB"]),
+    KH2Treasure(553, "00 Lost Illusion", locationTypes=["DC","AS"]),
 
-    KH2Treasure(560, "00 AP Boost", locationTypes=["HB"]),
+    KH2Treasure(560, "00 AP Boost", locationTypes=["HB", "DataOrg"]),
 
-    KH2Treasure(559, "00 Defense Boost", locationTypes=["BC"]),
+    KH2Treasure(559, "00 Defense Boost", locationTypes=["BC","DataOrg"]),
 
-    KH2Treasure(561, "00 Magic Boost", locationTypes=["TT"]),
+    KH2Treasure(561, "00 Magic Boost", locationTypes=["TT","DataOrg"]),
 
-    KH2Treasure(554, "00 Power Boost", locationTypes=["TWTNW"]),
+    KH2Treasure(554, "00 Power Boost", locationTypes=["TWTNW","DataOrg"]),
 
-    KH2Treasure(555, "00 Defense Boost", locationTypes=["TWTNW"]),
+    KH2Treasure(555, "00 Defense Boost", locationTypes=["LoD", "DataOrg"]),
 
-    KH2Treasure(556, "00 Defense Boost", locationTypes=["TWTNW"]),
+    KH2Treasure(556, "00 Defense Boost", locationTypes=["PL", "DataOrg"]),
 
-    KH2Treasure(557, "00 AP Boost", locationTypes=["TWTNW"]),
+    KH2Treasure(557, "00 AP Boost", locationTypes=["PR", "DataOrg"]),
 
-    KH2Treasure(558, "00 Magic Boost", locationTypes=["TWTNW"]),
+    KH2Treasure(558, "00 Magic Boost", locationTypes=["STT", "DataOrg"]),
 
-    KH2Treasure(587, "00 Proof of Connection", locationTypes=["DC"]),
+    KH2Treasure(587, "00 Proof of Connection", locationTypes=["DC","LW"]),
 
-    KH2Treasure(591, "00 Manifest Illusion", locationTypes=["DC"]),
+    KH2Treasure(591, "00 Manifest Illusion", locationTypes=["DC", "LW"]),
 
     KH2Treasure(588, "00 Winner's Proof", locationTypes=["HB"]),
 

@@ -149,5 +149,6 @@ worlds = {
     "LW":"Lingering Will (Terra)",
     "DataOrg":"Data Organization XIII",
     "Level": "Sora's Levels",
-    "FormLevel": "Form Levels"
+    "FormLevel": "Form Levels",
+    "Free":"GoA/Critical Bonus"
     }
