@@ -2,6 +2,9 @@ from randomize import Randomize
 from flask import Flask
 import flask as fl
 import numpy as np
+import base64
+import string
+import random
 
 app = Flask(__name__)
 
@@ -11,6 +14,28 @@ worlds = ["LoD","BC","LingeringWill","DataOrg","Level","FormLevel"]
 def index():
     return fl.render_template('index.html', worlds = worlds)
 
+
+@app.route('/seed/<hash>')
+def hashedSeed(hash):
+    argsString = base64.urlsafe_b64decode(hash)
+    
+    return fl.redirect("/seed?"+str(argsString).replace("b'","").replace("%27",""))
+
+@app.route('/seed')
+def seed():
+    includeList = fl.request.args.getlist("include") or []
+    seed = fl.escape(fl.request.args.get("seed")) or ""
+    if seed == "":
+        characters = string.ascii_letters + string.digits
+        seed = (''.join(random.choice(characters) for i in range(30)))
+        return fl.redirect("/seed?seed="+seed+"&"+str(fl.request.query_string).replace("b'",""))
+    queryString = fl.request.query_string
+        
+
+    hashedString = base64.urlsafe_b64encode(queryString)
+
+    permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
+    return fl.render_template('seed.html', permaLink = permaLink.replace("%27",""), include = includeList, seed = seed)
 
 @app.route('/download')
 def randomizePage():

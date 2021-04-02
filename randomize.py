@@ -5,7 +5,6 @@ from mod import mod
 import random
 import yaml
 import zipfile
-import string
 import io
 
 def noop(self, *args, **kw):
@@ -15,9 +14,6 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
 
-    if seedName == "":
-        characters = string.ascii_letters + string.digits
-        seedName = (''.join(random.choice(characters) for i in range(30)))
     random.seed(seedName)
     modOut = "#" + seedName + "\n" + mod
     #KEYBLADE ABILITIES AND STATS
