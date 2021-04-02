@@ -67,4 +67,11 @@ junkList = [
     KH2Item(576, "Remembrance Shard", "Junk"),
     KH2Item(577, "Remembrance Stone", "Junk"),
     KH2Item(578, "Remembrance Gem", "Junk"),
+    KH2Item(584, "Lost Illusion", "Junk"),
+    KH2Item(585, "Manifest Illusion", "Junk"),
+    KH2Item(345, "Mythril Shard", "Junk"),
+    KH2Item(346, "Mythril Stone", "Junk"),
+    KH2Item(347, "Mythril Gem", "Junk"),
+    KH2Item(348, "Mythril Crystal", "Junk"),
+    KH2Item(349,"Bright Shard", "Junk"),
 ]
