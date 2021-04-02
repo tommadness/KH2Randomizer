@@ -10,5 +10,6 @@ Sora: {{soraExpMult}}x<br/> <input type="hidden" name="soraExpMult" value="{{sor
 {% for key in formExpMult %}
 {{expTypes[key]}}: {{formExpMult[key]}}x<br/> <input type="hidden" name="{{expTypes[key]}}Exp" value="{{formExpMult[key]}}"/>
 {% endfor %}
+<input type="hidden" name="levelChoice" value="{{levelChoice}}"/>
 <input type="submit" value="Download">
 </form>

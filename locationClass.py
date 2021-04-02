@@ -6,8 +6,6 @@ class KH2Treasure:
         self.Description = description
         self.InvalidChecks = invalidChecks
         self.LocationTypes = locationTypes
-        if not any(location in worlds for location in self.LocationTypes):
-            raise Exception(self, 'Not a valid LocaitonType')
     
     def setReward(self, itemId):
         self.ItemId = itemId
@@ -148,7 +146,6 @@ worlds = {
     "Sephi":"Sephiroth",
     "LW":"Lingering Will (Terra)",
     "DataOrg":"Data Organization XIII",
-    "Level": "Sora's Levels",
     "FormLevel": "Form Levels",
     "Free":"GoA/Critical Bonus"
     }

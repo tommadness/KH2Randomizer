@@ -4,9 +4,15 @@
     <label>{{worlds[key]}}:</label> <input type="checkbox" value= "{{key}}" name="include"> <br/>
 
     {% endfor %}
-
+    <select name="levelChoice">
+        <option value="Level">Level 1</option>
+        <option selected value="ExcludeFrom50">Level 50</option>
+        <option value="ExcludeFrom99">Level 99</option>
+    </select> <br/>
     {% for expType in expTypes%}
-    <label>{{expType}} Experience:</label> <input type="number" name="{{expType}}Exp"> <br/>
+    <label>{{expType}} Experience:</label> <input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"> <br/>
     {% endfor %}
+
+    <br/>
     <input type='submit'>
 </form>

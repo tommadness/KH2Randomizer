@@ -33,19 +33,21 @@ def seed():
     queryString = fl.request.query_string
     formExpMult = {1: fl.request.args.get("ValorExp"), 2: fl.request.args.get("WisdomExp"), 3: fl.request.args.get("LimitExp"), 4: fl.request.args.get("MasterExp"), 5: fl.request.args.get("FinalExp")}
     soraExpMult = fl.request.args.get("SoraExp")
+    levelChoice = fl.request.args.get("levelChoice")
     hashedString = base64.urlsafe_b64encode(queryString)
 
     permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
-    return fl.render_template('seed.html', permaLink = permaLink.replace("'",""), include = includeList, seed = seed, worlds=worlds, expTypes = expTypes, formExpMult = formExpMult, soraExpMult = soraExpMult)
+    return fl.render_template('seed.html', permaLink = permaLink.replace("'",""), levelChoice = levelChoice, include = includeList, seed = seed, worlds=worlds, expTypes = expTypes, formExpMult = formExpMult, soraExpMult = soraExpMult)
 
 @app.route('/download')
 def randomizePage():
     includeList = fl.request.args.getlist("include") or []
     excludeList = list(set(worlds) - set(includeList))
+    excludeList.append(fl.request.args.get("levelChoice"))
     seed = fl.request.args.get('seed') or ""
     print(seed)
-    formExpMult = {1: int(fl.request.args.get("ValorExp")), 2: int(fl.request.args.get("WisdomExp")), 3: int(fl.request.args.get("LimitExp")), 4: int(fl.request.args.get("MasterExp")), 5: int(fl.request.args.get("FinalExp"))}
-    soraExpMult = int(fl.request.args.get("soraExpMult"))
+    formExpMult = {1: float(fl.request.args.get("ValorExp")), 2: float(fl.request.args.get("WisdomExp")), 3: float(fl.request.args.get("LimitExp")), 4: float(fl.request.args.get("MasterExp")), 5: float(fl.request.args.get("FinalExp"))}
+    soraExpMult = float(fl.request.args.get("soraExpMult"))
     data = Randomize(seedName = fl.escape(seed), exclude = excludeList, formExpMult=formExpMult, soraExpMult=soraExpMult)
     if isinstance(data,str):
         return data
