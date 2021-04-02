@@ -68,11 +68,11 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
     #FORM EXPERIENCE
     for formLevel in formLevels:
-        formLevel.Experience = round(formExp[formLevel.FormId][formLevel.FormLevel] / int(formExpMult[formLevel.FormId]))
+        formLevel.Experience = round(formExp[formLevel.FormId][formLevel.FormLevel] / formExpMult[formLevel.FormId])
 
     #SORA EXPERIENCE
     for level in soraLevelList:
-        level.Exp = round(soraExp[level.Level] / int(soraExpMult))
+        level.Exp = round(soraExp[level.Level] / soraExpMult)
 
 
     #FORMAT FOR OUTPUT
