@@ -28,7 +28,7 @@ def seed():
     if seed == "":
         characters = string.ascii_letters + string.digits
         seed = (''.join(random.choice(characters) for i in range(30)))
-        return fl.redirect("/seed?seed="+seed+"&"+str(fl.request.query_string).replace("b'",""))
+        return fl.redirect("/seed?seed="+seed+"&"+str(fl.request.query_string).replace("seed=&","").replace("b'",""))
     queryString = fl.request.query_string
         
 
