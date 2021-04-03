@@ -1,19 +1,50 @@
+{% extends "head.html" %}
+{% block content %}
+        
+<div class="container" id="form">
+    <h1>Kingdom Hearts 2: Final Mix Randomizer</h1> 
 <form action='/seed'>
-    <label>Seed:</label><input id='seed' name='seed' type='text'/><br/>
+    <label>Seed:</label><input id='seed' name='seed' type='text'/><br/><br/>
+    
+        {%set ns = namespace(counter = 0)%}
+    <div class="container" id="worlds">
     {% for key in worlds %}
-    <label>{{worlds[key]}}:</label> <input type="checkbox" value= "{{key}}" name="include"> <br/>
+
+        {% if ns.counter % 3 == 0%}
+        <div class="row">
+        {%endif%}
+
+            <div class="col-3"><label class=form-check-label>{{worlds[key]}}:</label></div><div class="col form-check form-switch"> <input class=form-check-input type="checkbox" value= "{{key}}" name="include" {%if key != "Atlantica"%} checked {%endif%}></div>
+
+        {%set ns.counter = ns.counter+1%}
+
+        {% if ns.counter % 3 == 0%}
+        </div>
+        {%endif%}
 
     {% endfor %}
+    </div>
     <select name="levelChoice">
         <option value="Level">Level 1</option>
         <option selected value="ExcludeFrom50">Level 50</option>
         <option value="ExcludeFrom99">Level 99</option>
     </select> <br/>
+
+    {%set ns = namespace(counter = 0)%}
     {% for expType in expTypes %}
-    <label>{{expType}} Experience:</label> <input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"> <br/>
+    {% if ns.counter % 3 == 0 %}
+    <div class="row">
+    {% endif %}
+    <div class="col-sm"><label>{{expType}} Experience:</label></div><div class="col-sm"><input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"></div>
+    {% set ns.counter = ns.counter+1%}
+    {% if ns.counter % 3 == 0%}
+    </div>
+    {% endif %}
     {% endfor %}
 
     <br/>
     Generate Spoiler Log: <input type="checkbox" name="spoilerLog"><br>
     <input type='submit'>
 </form>
+</div>
+{% endblock %}

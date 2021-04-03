@@ -1,3 +1,5 @@
+{% extends "head.html" %}
+{% block content %}
 Permalink: <a href="{{permaLink}}">{{permaLink}}</a><br/>
 <form action="/download">
 
@@ -27,3 +29,4 @@ Command Menu:<br>
 
 <input type="submit" value="Download">
 </form>
+{%endblock%}
