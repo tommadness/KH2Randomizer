@@ -49,6 +49,8 @@ def seed():
 
     levelChoice = fl.request.args.get("levelChoice")
 
+    spoilerLog = fl.request.args.get("spoilerLog") or False
+
     queryString = fl.request.query_string
     hashedString = base64.urlsafe_b64encode(queryString)
 
@@ -63,8 +65,9 @@ def seed():
     worlds=worlds, 
     expTypes = expTypes, 
     formExpMult = formExpMult, 
-    soraExpMult = soraExpMult)
-
+    soraExpMult = soraExpMult,
+    spoilerLog = spoilerLog)
+    
 @app.route('/download')
 def randomizePage():
     includeList = fl.request.args.getlist("include") or []
@@ -83,13 +86,16 @@ def randomizePage():
 
     soraExpMult = float(fl.request.args.get("soraExpMult"))
 
+    spoilerLog = fl.request.args.get("spoilerLog") or False
+    
     data = Randomize(
     seedName = fl.escape(seed), 
     exclude = excludeList, 
-    formExpMult=formExpMult, 
-    soraExpMult=soraExpMult, 
+    formExpMult = formExpMult, 
+    soraExpMult = soraExpMult, 
     levelChoice = levelChoice, 
-    cmdMenuChoice=cmdMenuChoice
+    cmdMenuChoice = cmdMenuChoice,
+    spoilerLog = spoilerLog
     )
 
     if isinstance(data,str):

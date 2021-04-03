@@ -36,8 +36,11 @@ def Randomize(
     exclude.append(levelChoice)
     random.seed(seedName)
 
+    if spoilerLog == "False":
+        random.randint(0,100)
+
     modOut = "#" + seedName + "\n" + mod
-    
+
     #KEYBLADE ABILITIES AND STATS
     validKeybladeAbilities = []
     invalidKeybladeAbilities = []
@@ -128,8 +131,8 @@ def Randomize(
         formattedFmlv[fmlv.getFormName()].append(fmlv)
 
     formattedStats = {'Stats': keybladeStats}
-    spoilerLogOut = ""
-    if spoilerLog:
+
+    if not spoilerLog == "False":
         spoilerLogOut = generateSpoilerLog(spoilerLogLocations, spoilerLogItems)
 
     #OUTPUT
@@ -153,7 +156,8 @@ def Randomize(
         fmlvList = yaml.dump(formattedFmlv, line_break="\r\n")
         outZip.writestr("FmlvList.yml",fmlvList)
 
-        outZip.writestr("spoilerlog.txt",spoilerLogOut)
+        if not spoilerLog == "False":
+            outZip.writestr("spoilerlog.txt",spoilerLogOut)
 
         outZip.writestr("mod.yml", modOut+commandMenuString)
         if not commandMenuString == "":

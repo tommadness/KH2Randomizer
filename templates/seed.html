@@ -19,7 +19,9 @@ Command Menu:<br>
     {% for key in cmdMenus %}
     <option value="{{key}}">{{cmdMenus[key]}}</option>
     {% endfor %}
-</select>
+</select><br>
+
+<input type="hidden" name="spoilerLog" value="{{spoilerLog}}"/>
 
 <input type="hidden" name="levelChoice" value="{{levelChoice}}"/>
 
