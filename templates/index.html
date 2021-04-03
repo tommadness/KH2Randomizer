@@ -9,7 +9,7 @@
         <option selected value="ExcludeFrom50">Level 50</option>
         <option value="ExcludeFrom99">Level 99</option>
     </select> <br/>
-    {% for expType in expTypes%}
+    {% for expType in expTypes %}
     <label>{{expType}} Experience:</label> <input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"> <br/>
     {% endfor %}
 

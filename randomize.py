@@ -1,16 +1,18 @@
 from ItemList import itemList, supportAbilityList, actionAbilityList, junkList
 from LocationList import treasureList, soraLevelList, soraBonusList, formLevels, keybladeStats
 from experienceValues import formExp, soraExp
+from randomCmdMenu import RandomizeCmdMenus
 from mod import mod
 import random
 import yaml
 import zipfile
 import io
+import os
 
 def noop(self, *args, **kw):
     pass
 
-def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keybladeMinStat = 0, keybladeMaxStat = 7, formExpMult = {1:1,2:1,3:1,4:1,5:1}, soraExpMult = 1, levelChoice = "ExcludeFrom50" ):
+def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keybladeMinStat = 0, keybladeMaxStat = 7, formExpMult = {1:1,2:1,3:1,4:1,5:1}, soraExpMult = 1, levelChoice = "ExcludeFrom50", cmdMenuChoice = "Vanilla" ):
 
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
     exclude.append(levelChoice)
@@ -76,6 +78,8 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
         level.Exp = round(soraExp[level.Level] / soraExpMult)
 
 
+    commandMenuString = RandomizeCmdMenus(cmdMenuChoice)
+
     #FORMAT FOR OUTPUT
     formattedTrsr = {}
     for trsr in treasureList:
@@ -123,8 +127,12 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
         fmlvList = yaml.dump(formattedFmlv, line_break="\r\n")
         outZip.writestr("FmlvList.yml",fmlvList)
 
-        outZip.writestr("mod.yml",modOut)
-
+        outZip.writestr("mod.yml", modOut+commandMenuString)
+        if not commandMenuString == "":
+            for folderName, subfolders, filenames in os.walk("CommandMenus"):
+                for filename in filenames:
+                    filePath = os.path.join(folderName, filename)
+                    outZip.write(filePath, filePath)
         outZip.close()
 
     data.seek(0)

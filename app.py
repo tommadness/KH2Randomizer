@@ -1,8 +1,10 @@
 from randomize import Randomize
 from flask import Flask
 from locationClass import worlds
+from randomCmdMenu import cmdMenusChoice
 import flask as fl
 import numpy as np
+import zipfile
 import base64
 import string
 import random
@@ -10,6 +12,7 @@ import random
 app = Flask(__name__)
 
 expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
+
 
 @app.route('/')
 def index():
@@ -37,18 +40,19 @@ def seed():
     hashedString = base64.urlsafe_b64encode(queryString)
 
     permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
-    return fl.render_template('seed.html', permaLink = permaLink.replace("'",""), levelChoice = levelChoice, include = includeList, seed = seed, worlds=worlds, expTypes = expTypes, formExpMult = formExpMult, soraExpMult = soraExpMult)
+    return fl.render_template('seed.html', permaLink = permaLink.replace("'",""), cmdMenus = cmdMenusChoice, levelChoice = levelChoice, include = includeList, seed = seed, worlds=worlds, expTypes = expTypes, formExpMult = formExpMult, soraExpMult = soraExpMult)
 
 @app.route('/download')
 def randomizePage():
     includeList = fl.request.args.getlist("include") or []
     excludeList = list(set(worlds) - set(includeList))
     levelChoice = fl.request.args.get("levelChoice")
+    cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
     seed = fl.request.args.get('seed') or ""
     print(seed)
     formExpMult = {1: float(fl.request.args.get("ValorExp")), 2: float(fl.request.args.get("WisdomExp")), 3: float(fl.request.args.get("LimitExp")), 4: float(fl.request.args.get("MasterExp")), 5: float(fl.request.args.get("FinalExp"))}
     soraExpMult = float(fl.request.args.get("soraExpMult"))
-    data = Randomize(seedName = fl.escape(seed), exclude = excludeList, formExpMult=formExpMult, soraExpMult=soraExpMult, levelChoice = levelChoice)
+    data = Randomize(seedName = fl.escape(seed), exclude = excludeList, formExpMult=formExpMult, soraExpMult=soraExpMult, levelChoice = levelChoice, cmdMenuChoice=cmdMenuChoice)
     if isinstance(data,str):
         return data
 
@@ -72,4 +76,7 @@ def add_header(r):
     return r
     
 if __name__ == '__main__':
-    Randomize(exclude=["LingeringWill","Level","FormLevel"])
+    dataOut = Randomize(exclude=["LingeringWill","Level","FormLevel"], cmdMenuChoice="randAll")
+    f = open("randoSeed.zip", "wb")
+    f.write(dataOut.read())
+    f.close()

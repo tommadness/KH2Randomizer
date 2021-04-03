@@ -1,15 +1,27 @@
 Permalink: <a href="{{permaLink}}">{{permaLink}}</a><br/>
 <form action="/download">
+
 <label>Seed: {{seed}}</label> <input type="hidden" name="seed" value="{{seed}}"/><br/>
+
 Included:<br/>
 {% for world in include %}
 <label>{{worlds[world]}}</label> <input type="hidden" name="include" value="{{world}}"/><br/>
 {% endfor %}
+
 Experience:<br/>
 Sora: {{soraExpMult}}x<br/> <input type="hidden" name="soraExpMult" value="{{soraExpMult}}"/>
 {% for key in formExpMult %}
 {{expTypes[key]}}: {{formExpMult[key]}}x<br/> <input type="hidden" name="{{expTypes[key]}}Exp" value="{{formExpMult[key]}}"/>
 {% endfor %}
+
+Command Menu:<br>
+<select name="cmdMenuChoice">
+    {% for key in cmdMenus %}
+    <option value="{{key}}">{{cmdMenus[key]}}</option>
+    {% endfor %}
+</select>
+
 <input type="hidden" name="levelChoice" value="{{levelChoice}}"/>
+
 <input type="submit" value="Download">
 </form>
