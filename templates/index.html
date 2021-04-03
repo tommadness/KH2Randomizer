@@ -17,25 +17,31 @@
             <div class="col-3"><label class=form-check-label>{{worlds[key]}}:</label></div><div class="col form-check form-switch"> <input class=form-check-input type="checkbox" value= "{{key}}" name="include" {%if key != "Atlantica"%} checked {%endif%}></div>
 
         {%set ns.counter = ns.counter+1%}
-
+        {%if loop.last %}<div class="col-3"></div><div class="col form-check form-switch"></div>{%endif%}
         {% if ns.counter % 3 == 0%}
         </div>
         {%endif%}
 
     {% endfor %}
     </div>
-    <select name="levelChoice">
+
+    <div class=row>
+        <div class="input-group mb-3 col-md">
+    <span class="input-group-text col-md">Sora Levels:</span>
+    <select class="input-group-select col-sm" name="levelChoice">
         <option value="Level">Level 1</option>
         <option selected value="ExcludeFrom50">Level 50</option>
         <option value="ExcludeFrom99">Level 99</option>
-    </select> <br/>
+    </select> 
+    </div>
+    </div>
 
     {%set ns = namespace(counter = 0)%}
     {% for expType in expTypes %}
     {% if ns.counter % 3 == 0 %}
     <div class="row">
     {% endif %}
-    <div class="col-sm"><label>{{expType}} Experience:</label></div><div class="col-sm"><input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"></div>
+    <div class="input-group mb-3 col-md"><span class="input-group-text col-9">{{expType}} Experience:</span><input class="form-control col-3" step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"></div>
     {% set ns.counter = ns.counter+1%}
     {% if ns.counter % 3 == 0%}
     </div>
