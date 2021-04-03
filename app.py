@@ -33,7 +33,7 @@ def seed():
 
         seed = (''.join(random.choice(characters) for i in range(30)))
 
-        return fl.redirect("/seed?"+str(fl.request.query_string).replace("seed=&","seed=&"+seed).replace("b'","").replace("'",""))
+        return fl.redirect("/seed?"+str(fl.request.query_string).replace("seed=&","seed="+seed+"&").replace("b'","").replace("'",""))
 
     includeList = fl.request.args.getlist("include") or []
 
