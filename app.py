@@ -27,20 +27,46 @@ def hashedSeed(hash):
 
 @app.route('/seed')
 def seed():
-    includeList = fl.request.args.getlist("include") or []
     seed = fl.escape(fl.request.args.get("seed")) or ""
     if seed == "":
         characters = string.ascii_letters + string.digits
+
         seed = (''.join(random.choice(characters) for i in range(30)))
-        return fl.redirect("/seed?seed="+seed+"&"+str(fl.request.query_string).replace("seed=&","").replace("b'","").replace("'",""))
-    queryString = fl.request.query_string
-    formExpMult = {1: fl.request.args.get("ValorExp"), 2: fl.request.args.get("WisdomExp"), 3: fl.request.args.get("LimitExp"), 4: fl.request.args.get("MasterExp"), 5: fl.request.args.get("FinalExp")}
+        
+        return fl.redirect("/seed?"+str(fl.request.query_string)
+        .replace("seed=&","seed=&"+seed)
+        .replace("b'","")
+        .replace("'",""))
+
+    includeList = fl.request.args.getlist("include") or []
+
+    formExpMult = {
+        1: fl.request.args.get("ValorExp"), 
+        2: fl.request.args.get("WisdomExp"), 
+        3: fl.request.args.get("LimitExp"), 
+        4: fl.request.args.get("MasterExp"), 
+        5: fl.request.args.get("FinalExp")
+        }
+
     soraExpMult = fl.request.args.get("SoraExp")
+
     levelChoice = fl.request.args.get("levelChoice")
+
+    queryString = fl.request.query_string
     hashedString = base64.urlsafe_b64encode(queryString)
 
     permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
-    return fl.render_template('seed.html', permaLink = permaLink.replace("'",""), cmdMenus = cmdMenusChoice, levelChoice = levelChoice, include = includeList, seed = seed, worlds=worlds, expTypes = expTypes, formExpMult = formExpMult, soraExpMult = soraExpMult)
+
+    return fl.render_template('seed.html', 
+    permaLink = permaLink.replace("'",""), 
+    cmdMenus = cmdMenusChoice, 
+    levelChoice = levelChoice, 
+    include = includeList, 
+    seed = seed, 
+    worlds=worlds, 
+    expTypes = expTypes, 
+    formExpMult = formExpMult, 
+    soraExpMult = soraExpMult)
 
 @app.route('/download')
 def randomizePage():
@@ -49,10 +75,26 @@ def randomizePage():
     levelChoice = fl.request.args.get("levelChoice")
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
     seed = fl.request.args.get('seed') or ""
-    print(seed)
-    formExpMult = {1: float(fl.request.args.get("ValorExp")), 2: float(fl.request.args.get("WisdomExp")), 3: float(fl.request.args.get("LimitExp")), 4: float(fl.request.args.get("MasterExp")), 5: float(fl.request.args.get("FinalExp"))}
+
+    formExpMult = {
+        1: float(fl.request.args.get("ValorExp")), 
+        2: float(fl.request.args.get("WisdomExp")), 
+        3: float(fl.request.args.get("LimitExp")), 
+        4: float(fl.request.args.get("MasterExp")), 
+        5: float(fl.request.args.get("FinalExp"))
+        }
+
     soraExpMult = float(fl.request.args.get("soraExpMult"))
-    data = Randomize(seedName = fl.escape(seed), exclude = excludeList, formExpMult=formExpMult, soraExpMult=soraExpMult, levelChoice = levelChoice, cmdMenuChoice=cmdMenuChoice)
+
+    data = Randomize(
+    seedName = fl.escape(seed), 
+    exclude = excludeList, 
+    formExpMult=formExpMult, 
+    soraExpMult=soraExpMult, 
+    levelChoice = levelChoice, 
+    cmdMenuChoice=cmdMenuChoice
+    )
+
     if isinstance(data,str):
         return data
 

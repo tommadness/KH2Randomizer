@@ -2,6 +2,7 @@ from ItemList import itemList, supportAbilityList, actionAbilityList, junkList
 from LocationList import treasureList, soraLevelList, soraBonusList, formLevels, keybladeStats
 from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
+from spoilerLog import generateSpoilerLog
 from mod import mod
 import random
 import yaml
@@ -12,12 +13,31 @@ import os
 def noop(self, *args, **kw):
     pass
 
-def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keybladeMinStat = 0, keybladeMaxStat = 7, formExpMult = {1:1,2:1,3:1,4:1,5:1}, soraExpMult = 1, levelChoice = "ExcludeFrom50", cmdMenuChoice = "Vanilla" ):
+def Randomize(
+    seedName="", 
+    exclude=[], 
+    keybladeAbilities = ["Support"], 
+    keybladeMinStat = 0, 
+    keybladeMaxStat = 7, 
+    formExpMult = {
+        1:1,
+        2:1,
+        3:1,
+        4:1,
+        5:1
+        }, 
+    soraExpMult = 1, 
+    levelChoice = "ExcludeFrom50", 
+    cmdMenuChoice = "Vanilla", 
+    spoilerLog = True,
+    ):
 
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
     exclude.append(levelChoice)
     random.seed(seedName)
+
     modOut = "#" + seedName + "\n" + mod
+    
     #KEYBLADE ABILITIES AND STATS
     validKeybladeAbilities = []
     invalidKeybladeAbilities = []
@@ -51,12 +71,16 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
     if len(validLocationList) < len(itemsList):
         return "Too few locations, can't randomize."
 
+    spoilerLogLocations = []
+    spoilerLogItems = itemsList[:]
+
     for item in itemsList[:]:
         randomLocation = random.choice(locationList)
         if not item.ItemType in randomLocation.InvalidChecks and not any(locationType in exclude for locationType in randomLocation.LocationTypes):
             randomLocation.setReward(item.Id)
             itemsList.remove(item)
             locationList.remove(randomLocation)
+            spoilerLogLocations.append(randomLocation)
 
     #FILL REMAINING LOCATIONS WITH JUNK
     for location in locationList:
@@ -104,7 +128,9 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
         formattedFmlv[fmlv.getFormName()].append(fmlv)
 
     formattedStats = {'Stats': keybladeStats}
-
+    spoilerLogOut = ""
+    if spoilerLog:
+        spoilerLogOut = generateSpoilerLog(spoilerLogLocations, spoilerLogItems)
 
     #OUTPUT
     yaml.emitter.Emitter.process_tag = noop
@@ -126,6 +152,8 @@ def Randomize(seedName="", exclude=[], keybladeAbilities = ["Support"], keyblade
 
         fmlvList = yaml.dump(formattedFmlv, line_break="\r\n")
         outZip.writestr("FmlvList.yml",fmlvList)
+
+        outZip.writestr("spoilerlog.txt",spoilerLogOut)
 
         outZip.writestr("mod.yml", modOut+commandMenuString)
         if not commandMenuString == "":

@@ -13,6 +13,9 @@ class KH2Treasure:
     def getReward(self):
         return self.ItemId
 
+    def getDescription(self):
+        return self.Description
+
     def __repr__(self):
         return "\nKH2Treasure( Id:{self.Id}, ItemId: {self.ItemId}, Description: {self.Description}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
 
@@ -45,15 +48,22 @@ class KH2LevelUp:
         self.ShieldAbility = itemId
         self.StaffAbility = itemId
 
+    def getReward(self):
+        return self.SwordAbility
+    
+    def getDescription(self):
+        return "{self.Character} level {self.Level}".format(self=self)
+
     def __repr__(self):
         return "\nKH2LevelUp( Character:{self.Character}, Level: {self.Level}, ItemId: {self.SwordAbility}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
 
 
 class KH2Bonus:
     characterMap = {1: "Sora", 14: "Roxas"}
-    def __init__(self, id, character, locationTypes = [], invalidChecks=[]):
+    def __init__(self, id, character, locationTypes = [], invalidChecks=[], description = ""):
         self.RewardId = id
         self.CharacterId = character
+        self.Description = description
         self.HpIncrease = 0
         self.MpIncrease = 0
         self.DriveGaugeUpgrade = 0
@@ -71,6 +81,12 @@ class KH2Bonus:
 
     def getCharacterName(self):
         return self.characterMap[self.CharacterId]
+
+    def getReward(self):
+        return self.BonusItem1
+
+    def getDescription(self):
+        return self.Description
 
     def __repr__(self):
         return "\nKH2Bonus( RewardId:{self.RewardId}, Character: {self.CharacterId}, ItemId: {self.BonusItem1}, InvalidChecks: {self.InvalidChecks} )".format(self=self)
@@ -100,7 +116,12 @@ class KH2FormLevel:
 
     def setReward(self, itemId):
         self.Ability = itemId
+    
+    def getReward(self):
+        return self.Ability
 
+    def getDescription(self):
+        return "{formName} level {self.FormLevel}".format(formName = self.getFormName(), self=self)
     def __repr__(self):
         return "\nKH2FormLevel( FordId:{self.FormId}, Level: {self.FormLevel}, ItemId: {self.Ability}, InvalidChecks: {self.InvalidChecks} )".format(self=self)
 
