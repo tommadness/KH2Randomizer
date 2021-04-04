@@ -19,11 +19,11 @@ def index():
     return fl.render_template('index.html', worlds = worlds, expTypes = expTypes)
 
 
+
 @app.route('/seed/<hash>')
 def hashedSeed(hash):
-    argsString = base64.urlsafe_b64decode(hash)
-    
-    return fl.redirect("/seed?"+str(argsString).replace("b'","").replace("'",""))
+    argsString = base64.urlsafe_b64decode(hash).replace("b'","").replace("'","")
+    return fl.redirect("/seed?"+str(argsString))
 
 @app.route('/seed')
 def seed():
