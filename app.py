@@ -15,7 +15,7 @@ import os
 app = Flask(__name__)
 
 expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
-app.config['SECRET_KEY'] = os.urandom(20)
+app.config['SECRET_KEY'] = 'ayylmao'
 
 
 @app.route('/')
