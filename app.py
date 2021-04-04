@@ -2,6 +2,7 @@ from randomize import Randomize
 from flask import Flask
 from locationClass import worlds
 from randomCmdMenu import cmdMenusChoice
+from configDict import miscConfig
 import flask as fl
 import numpy as np
 import zipfile
@@ -16,7 +17,7 @@ expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
 
 @app.route('/')
 def index():
-    return fl.render_template('index.html', worlds = worlds, expTypes = expTypes)
+    return fl.render_template('index.html', worlds = worlds, expTypes = expTypes, miscConfig = miscConfig)
 
 
 

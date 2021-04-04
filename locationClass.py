@@ -168,5 +168,6 @@ worlds = {
     "LW":"Lingering Will (Terra)",
     "DataOrg":"Data Organization XIII",
     "FormLevel": "Form Levels",
-    "Free":"GoA/Critical Bonus"
+    "Free":"Garden of Assemblage",
+    "Critical":"Critical Bonuses"
     }

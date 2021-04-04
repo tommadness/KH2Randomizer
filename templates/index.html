@@ -13,19 +13,19 @@
         {%set ns = namespace(counter = 0)%}
     <div class="container" id="worlds">
     {% for key in worlds %}
-
         {% if ns.counter % 3 == 0%}
         <div class="row">
         {%endif%}
-
-            <div class="col-3"><label class=form-check-label>{{worlds[key]}}:</label></div><div class="col form-check form-switch"> <input class=form-check-input type="checkbox" value= "{{key}}" name="include" {%if key != "Atlantica"%} checked {%endif%}></div>
-
+            <div class="col-3">
+                <label class=form-check-label for={{key}}>{{worlds[key]}}:</label>
+            </div>
+            <div class="col form-check form-switch">
+                <input class=form-check-input type="checkbox" id={{key}} value= "{{key}}" name="include" {%if key != "Atlantica"%} checked {%endif%}>
+            </div>
         {%set ns.counter = ns.counter+1%}
-        {%if loop.last %}<div class="col-3"></div><div class="col form-check form-switch"></div>{%endif%}
         {% if ns.counter % 3 == 0%}
         </div>
         {%endif%}
-
     {% endfor %}
     </div>
 
@@ -51,7 +51,26 @@
     </div>
     {% endif %}
     {% endfor %}
-
+    <div class="container">
+    {%set ns = namespace(counter = 0)%}
+    {% for config in miscConfig %}
+    {% if ns.counter % 3 == 0 %}
+        <div class="row justify-content-evenly">
+    {% endif %}
+            <div class="col-md-3">
+                <div class="input-group">
+                <label class="form-check-label col-8" for="{{config}}">{{miscConfig[config]}}:</label>
+                <div class="form-check form-switch col">
+                    <input class="form-check-input form-control" type="checkbox" id="{{config}}" value= "{{config}}" name="miscConfig">
+                </div>
+                </div>
+            </div>
+    {% set ns.counter = ns.counter+1%}
+    {% if ns.counter % 3 == 0%}
+        </div>
+    {% endif %}
+    {% endfor %}
+    </div>
     <br/>
     Generate Spoiler Log: <input type="checkbox" name="spoilerLog"><br>
     <input type='submit'>
