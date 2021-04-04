@@ -5,6 +5,7 @@ from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
 from spoilerLog import generateSpoilerLog
 from hashTextEntries import hashTextEntries
+from lvupStats import lvupStats, lvupAp
 from mod import mod
 import random
 import yaml
@@ -111,7 +112,14 @@ def Randomize(
             location.setReward(random.choice(junkList).Id)
 
     #TODO: RANDOMIZE SORA STATS
+    for i in range(1,len(soraLevelList)):
+        randomStat = lvupStats.pop(lvupStats.index(random.choice(lvupStats)))
 
+        soraLevelList[i].setStat(soraLevelList[i-1],randomStat)
+        if soraLevelList[i].getReward() == 0:
+            if len(lvupAp) > 0:
+                randomAp = lvupAp.pop(lvupAp.index(random.choice(lvupAp)))
+                soraLevelList[i].setAp(soraLevelList[i-1],randomAp)
     #TODO: RANDOMIZE PARTY MEMBER CHECKS
 
     #TODO: INCORPORATE BOSS/ENEMY RANDO

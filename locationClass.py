@@ -28,9 +28,9 @@ class KH2LevelUp:
         self.Character = character
         self.Level = level
         self.Exp = 0
-        self.Strength = 0
-        self.Magic = 0
-        self.Defense = 0
+        self.Strength = 2
+        self.Magic = 6
+        self.Defense = 2
         self.Ap = 0
         self.SwordAbility = 0
         self.ShieldAbility = 0
@@ -50,6 +50,22 @@ class KH2LevelUp:
 
     def getReward(self):
         return self.SwordAbility
+
+    def setStat(self, prevLvup, stat):
+        self.Strength = prevLvup.Strength
+        self.Magic = prevLvup.Magic
+        self.Defense = prevLvup.Defense
+        self.Ap = prevLvup.Ap
+        if stat == "Str":
+            self.Strength += 2
+        elif stat == "Mag":
+            self.Magic += 2
+        elif stat == "Def":
+            self.Defense += 1
+
+    def setAp(self, prevLvup, ap):
+        if ap == "Ap":
+            self.Ap += 2
     
     def getDescription(self):
         return "{self.Character} level {self.Level}".format(self=self)

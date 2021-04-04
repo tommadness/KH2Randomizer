@@ -514,6 +514,7 @@ treasureList = [
 ]
 
 soraLevelList = [
+    KH2LevelUp("Sora", 1),
     KH2LevelUp("Sora", 2),
     KH2LevelUp("Sora", 3),
     KH2LevelUp("Sora", 4),
