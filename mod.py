@@ -1,5 +1,17 @@
 mod = '''title: Randomizer Seed
 assets:
+- name: msg/jp/sys.bar
+  multi:
+  - name: msg/us/sys.bar
+  - name: msg/uk/sys.bar
+  method: binarc
+  source:
+  - name: sys
+    type: list
+    method: kh2msg
+    source:
+    - name: sys.yml
+      language: en
 - name: 00battle.bin
   method: binarc
   source:

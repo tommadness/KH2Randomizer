@@ -3,6 +3,7 @@ from LocationList import treasureList, soraLevelList, soraBonusList, formLevels,
 from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
 from spoilerLog import generateSpoilerLog
+from hashTextEntries import hashTextEntries
 from mod import mod
 import random
 import yaml
@@ -105,6 +106,15 @@ def Randomize(
         level.Exp = round(soraExp[level.Level] / soraExpMult)
 
 
+    hashString = ""
+    for i in range(7):
+        hashString += random.choice(hashTextEntries)
+        if not i == 6:
+            hashString += " "
+
+    sysBarOut = "- id: 17198\r\n  en: '{hashString}'".format(hashString = hashString)
+
+
     commandMenuString = RandomizeCmdMenus(cmdMenuChoice)
 
     #FORMAT FOR OUTPUT
@@ -135,6 +145,7 @@ def Randomize(
     if not spoilerLog == "False":
         spoilerLogOut = generateSpoilerLog(spoilerLogLocations, spoilerLogItems)
 
+
     #OUTPUT
     yaml.emitter.Emitter.process_tag = noop
     
@@ -158,6 +169,8 @@ def Randomize(
 
         if not spoilerLog == "False":
             outZip.writestr("spoilerlog.txt",spoilerLogOut)
+
+        outZip.writestr("sys.yml",sysBarOut)
 
         outZip.writestr("mod.yml", modOut+commandMenuString)
         if not commandMenuString == "":
