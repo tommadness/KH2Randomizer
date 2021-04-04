@@ -1,9 +1,9 @@
 from itemClass import KH2Item
 
 itemList = [
-    KH2Item(593, "Proof of Connection", "Proof"),
+    KH2Item(593, "Proof of Connection", "ProofofConnection"),
     KH2Item(594, "Proof of Nonexistence", "Proof"),
-    KH2Item(595, "Proof of Peace", "Proof"),
+    KH2Item(595, "Proof of Peace", "ProofofPeace"),
 
     KH2Item(21, "Fire Element", "Fire"),
     KH2Item(21, "Fire Element", "Fire"),

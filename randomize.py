@@ -94,7 +94,7 @@ def Randomize(
 
 
     if goMode:
-        proofs = [item for item in itemsList if item.ItemType == "Proof"]
+        proofs = [item for item in itemsList if item.ItemType == "Proof" or item.ItemType == "ProofofConnection" or item.ItemType == "ProofofPeace"]
         itemsList.remove(proofs[0])
         itemsList.remove(proofs[1])
         itemsList.remove(proofs[2])

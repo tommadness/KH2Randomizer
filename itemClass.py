@@ -8,6 +8,8 @@ class KH2Item:
 
 
 itemTypes = [
+    "ProofofConnection",
+    "ProofofPeace",
     "Proof",
     "Fire",
     "Blizzard",

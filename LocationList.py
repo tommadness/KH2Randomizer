@@ -504,13 +504,13 @@ treasureList = [
 
     KH2Treasure(558, "00 Magic Boost", locationTypes=["STT", "DataOrg"]),
 
-    KH2Treasure(587, "00 Proof of Connection", locationTypes=["DC","LW"]),
+    KH2Treasure(587, "00 Proof of Connection", locationTypes=["DC","LW"], invalidChecks=["ProofofConnection"]),
 
-    KH2Treasure(591, "00 Manifest Illusion", locationTypes=["DC", "LW"]),
+    KH2Treasure(591, "00 Manifest Illusion", locationTypes=["DC", "LW"], invalidChecks=["ProofofConnection"]),
 
-    KH2Treasure(588, "00 Winner's Proof", locationTypes=["HB"]),
+    KH2Treasure(588, "00 Winner's Proof", locationTypes=["HB"], invalidChecks=["ProofofPeace"]),
 
-    KH2Treasure(589, "00 Proof of Peace", locationTypes=["HB"])
+    KH2Treasure(589, "00 Proof of Peace", locationTypes=["HB"], invalidChecks=["ProofofPeace"])
 ]
 
 soraLevelList = [
