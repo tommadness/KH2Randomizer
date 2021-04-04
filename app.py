@@ -55,6 +55,10 @@ def seed():
     queryString = fl.request.query_string
     hashedString = base64.urlsafe_b64encode(queryString)
 
+    promiseCharm = bool(fl.request.args.get("PromiseCharm") or False)
+    goMode = bool(fl.request.args.get("GoMode") or False)
+
+
     permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
 
     return fl.render_template('seed.html', 
@@ -67,7 +71,9 @@ def seed():
     expTypes = expTypes, 
     formExpMult = formExpMult, 
     soraExpMult = soraExpMult,
-    spoilerLog = spoilerLog)
+    spoilerLog = spoilerLog,
+    promiseCharm = promiseCharm,
+    goMode = goMode)
     
 @app.route('/download')
 def randomizePage():
@@ -88,6 +94,10 @@ def randomizePage():
     soraExpMult = float(fl.request.args.get("soraExpMult"))
 
     spoilerLog = fl.request.args.get("spoilerLog") or False
+    promiseCharm = fl.request.args.get("promiseCharm") or False
+    print(promiseCharm)
+    goMode = fl.request.args.get("goMode") or False
+    print(goMode)
     
     data = Randomize(
     seedName = fl.escape(seed), 
@@ -96,7 +106,9 @@ def randomizePage():
     soraExpMult = soraExpMult, 
     levelChoice = levelChoice, 
     cmdMenuChoice = cmdMenuChoice,
-    spoilerLog = spoilerLog
+    spoilerLog = spoilerLog,
+    promiseCharm = promiseCharm,
+    goMode = goMode,
     )
 
     if isinstance(data,str):

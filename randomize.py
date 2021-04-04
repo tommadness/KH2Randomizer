@@ -1,5 +1,6 @@
 from ItemList import itemList, supportAbilityList, actionAbilityList, junkList
 from LocationList import treasureList, soraLevelList, soraBonusList, formLevels, keybladeStats
+from itemClass import KH2Item
 from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
 from spoilerLog import generateSpoilerLog
@@ -31,6 +32,8 @@ def Randomize(
     levelChoice = "ExcludeFrom50", 
     cmdMenuChoice = "Vanilla", 
     spoilerLog = True,
+    promiseCharm = False,
+    goMode = False
     ):
 
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
@@ -64,6 +67,7 @@ def Randomize(
         keyblade.Magic = random.randint(keybladeMinStat, keybladeMaxStat)
 
     itemsList = itemList + validKeybladeAbilities + invalidKeybladeAbilities
+    
 
     #SORA REWARDS
     validLocationList = []
@@ -74,6 +78,20 @@ def Randomize(
 
     if len(validLocationList) < len(itemsList):
         return "Too few locations, can't randomize."
+
+
+    if goMode == "True":
+        proofs = [item for item in itemsList if item.ItemType == "Proof"]
+        itemsList.remove(proofs[0])
+        itemsList.remove(proofs[1])
+        itemsList.remove(proofs[2])
+        freeLocations = [location for location in locationList if "Free" in location.LocationTypes]
+        for i in range(0,len(freeLocations)):
+            freeLocations[i].setReward(proofs[i].Id)
+            #spoilerLogLocations.append(freeLocations[i])
+
+    if promiseCharm == "True":
+        itemsList.insert(0, KH2Item(524, "Promise Charm","Proof"))
 
     spoilerLogLocations = []
     spoilerLogItems = itemsList[:]
