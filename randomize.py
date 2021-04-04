@@ -79,12 +79,13 @@ def Randomize(
     spoilerLogItems = itemsList[:]
 
     for item in itemsList[:]:
-        randomLocation = random.choice(locationList)
-        if not item.ItemType in randomLocation.InvalidChecks and not any(locationType in exclude for locationType in randomLocation.LocationTypes):
-            randomLocation.setReward(item.Id)
-            itemsList.remove(item)
-            locationList.remove(randomLocation)
-            spoilerLogLocations.append(randomLocation)
+        while(item in itemsList):
+            randomLocation = random.choice(locationList)
+            if not item.ItemType in randomLocation.InvalidChecks and not any(locationType in exclude for locationType in randomLocation.LocationTypes):
+                randomLocation.setReward(item.Id)
+                itemsList.remove(item)
+                locationList.remove(randomLocation)
+                spoilerLogLocations.append(randomLocation)
 
     #FILL REMAINING LOCATIONS WITH JUNK
     for location in locationList:
