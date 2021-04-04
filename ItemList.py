@@ -99,8 +99,8 @@ itemList = [
     KH2Item(499,"Fenrir","Keyblade"),
     KH2Item(500,"Ultima Weapon","Keyblade"),
 
-    KH2Item(535,"Munny Pouch","Munny Pouch"),
-    KH2Item(362, "Munny Pouch","Munny Pouch"),
+    KH2Item(535,"Munny Pouch","MunnyPouch"),
+    KH2Item(362, "Munny Pouch","MunnyPouch"),
 
     KH2Item(1, "Potion","Item"),
     KH2Item(2, "Hi-Potion","Item"),
