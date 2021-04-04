@@ -38,7 +38,7 @@ def Randomize(
     random.seed(seedName)
 
     if spoilerLog == "False":
-        random.randint(0,100)
+        random.randint(0,100) #Make sure the same seed name with and without spoiler log changes the randomization
 
     modOut = "#" + seedName + "\n" + mod
 
