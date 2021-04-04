@@ -29,16 +29,23 @@
     {% endfor %}
     </div>
 
-    <div class=row>
-        <div class="input-group mb-3 col-md">
-    <span class="input-group-text col-md">Sora Levels:</span>
-    <select class="input-group-select col-sm" name="levelChoice">
-        <option value="Level">Level 1</option>
-        <option selected value="ExcludeFrom50">Level 50</option>
-        <option value="ExcludeFrom99">Level 99</option>
-    </select> 
+    <div class="row mb-3">
+        <div class="input-group col">
+            <span class="input-group-text col-md">Sora Levels:</span>
+            <select class="input-group-select col-sm" name="levelChoice">
+                <option value="Level">Level 1</option>
+                <option selected value="ExcludeFrom50">Level 50</option>
+                <option value="ExcludeFrom99">Level 99</option>
+            </select> 
+        </div>
+        <div class="input-group col">
+            <span class="input-group-text col-9">Keyblade Minimum Stat:</span><input class="form-control col-3" min="0" max="10" value="0" required type="number" name="keybladeMinStat">
+        </div>
+        <div class="input-group col">
+            <span class="input-group-text col-9">Keyblade Max Stat:</span><input class="form-control col-3" min="1" max="10" value="7" required type="number" name="keybladeMaxStat">
+        </div>
     </div>
-    </div>
+
 
     {%set ns = namespace(counter = 0)%}
     {% for expType in expTypes %}

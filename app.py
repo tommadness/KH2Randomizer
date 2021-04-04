@@ -15,7 +15,7 @@ import os
 app = Flask(__name__)
 
 expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
-app.config['SECRET_KEY'] = 'ayylmao'
+app.config['SECRET_KEY'] = os.urandom(20)
 
 
 @app.route('/')
@@ -45,6 +45,8 @@ def hashedSeed(hash):
 @app.route('/seed',methods=['GET','POST'])
 def seed():
     if fl.request.method == "POST":
+        if int(fl.request.form.get('keybladeMaxStat')) < int(fl.request.form.get('keybladeMinStat')):
+            return "Keyblade minimum stat larger than maximum stat."
         session['seed'] = fl.escape(fl.request.form.get("seed")) or ""
         if session['seed'] == "":
             characters = string.ascii_letters + string.digits
@@ -67,6 +69,9 @@ def seed():
 
         session['spoilerLog'] = fl.request.form.get("spoilerLog") or False
 
+        session['keybladeMaxStat'] = int(fl.request.form.get("keybladeMaxStat"))
+
+        session['keybladeMinStat'] = int(fl.request.form.get("keybladeMinStat"))
 
         session['promiseCharm'] = bool(fl.request.form.get("PromiseCharm") or False)
         session['goMode'] = bool(fl.request.form.get("GoMode") or False)
@@ -88,6 +93,8 @@ def seed():
     expTypes = expTypes, 
     formExpMult = session.get('formExpMult'), 
     soraExpMult = session.get('soraExpMult'),
+    keybladeMinStat = session.get('keybladeMinStat'),
+    keybladeMaxStat = session.get('keybladeMaxStat'),
     )
     
 @app.route('/download')
@@ -104,6 +111,8 @@ def randomizePage():
     spoilerLog = session.get('spoilerLog'),
     promiseCharm = session.get('promiseCharm'),
     goMode = session.get('goMode'),
+    keybladeMinStat = int(session.get('keybladeMinStat')),
+    keybladeMaxStat = int(session.get('keybladeMaxStat')),
     )
 
     if isinstance(data,str):
