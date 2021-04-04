@@ -1,11 +1,11 @@
-from ItemList import itemList, supportAbilityList, actionAbilityList, junkList
-from LocationList import treasureList, soraLevelList, soraBonusList, formLevels, keybladeStats
+import ItemList
+import LocationList
 from itemClass import KH2Item
 from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
 from spoilerLog import generateSpoilerLog
 from hashTextEntries import hashTextEntries
-from lvupStats import lvupStats, lvupAp
+import LvupStats
 from mod import mod
 import random
 import yaml
@@ -36,12 +36,24 @@ def Randomize(
     promiseCharm = False,
     goMode = False
     ):
+    #Setup lists without modifying base lists
+    itemList = ItemList.itemList[:]
+    supportAbilityList = ItemList.supportAbilityList[:]
+    actionAbilityList = ItemList.actionAbilityList[:]
+    junkList = ItemList.junkList[:]
+    treasureList = LocationList.treasureList[:]
+    soraLevelList = LocationList.soraLevelList[:]
+    soraBonusList = LocationList.soraBonusList[:]
+    formLevels = LocationList.formLevels[:]
+    keybladeStats = LocationList.keybladeStats[:]
+    lvupStats = LvupStats.lvupStats[:]
+    lvupAp = LvupStats.lvupAp[:]
 
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
     exclude.append(levelChoice)
     random.seed(seedName)
 
-    if spoilerLog == "False":
+    if not spoilerLog:
         random.randint(0,100) #Make sure the same seed name with and without spoiler log changes the randomization
 
     modOut = "#" + seedName + "\n" + mod
@@ -81,7 +93,7 @@ def Randomize(
         return "Too few locations, can't randomize."
 
 
-    if goMode == "True":
+    if goMode:
         proofs = [item for item in itemsList if item.ItemType == "Proof"]
         itemsList.remove(proofs[0])
         itemsList.remove(proofs[1])
@@ -91,8 +103,9 @@ def Randomize(
             freeLocations[i].setReward(proofs[i].Id)
             #spoilerLogLocations.append(freeLocations[i])
 
-    if promiseCharm == "True":
+    if promiseCharm:
         itemsList.insert(0, KH2Item(524, "Promise Charm","Proof"))
+
 
     spoilerLogLocations = []
     spoilerLogItems = itemsList[:]
@@ -126,7 +139,7 @@ def Randomize(
 
     #FORM EXPERIENCE
     for formLevel in formLevels:
-        formLevel.Experience = round(formExp[formLevel.FormId][formLevel.FormLevel] / formExpMult[formLevel.FormId])
+        formLevel.Experience = round(formExp[int(formLevel.FormId)][int(formLevel.FormLevel)] / formExpMult[str(formLevel.FormId)])
 
     #SORA EXPERIENCE
     for level in soraLevelList:
@@ -169,9 +182,8 @@ def Randomize(
 
     formattedStats = {'Stats': keybladeStats}
 
-    if not spoilerLog == "False":
+    if spoilerLog:
         spoilerLogOut = generateSpoilerLog(spoilerLogLocations, spoilerLogItems)
-
 
     #OUTPUT
     yaml.emitter.Emitter.process_tag = noop
@@ -194,7 +206,7 @@ def Randomize(
         fmlvList = yaml.dump(formattedFmlv, line_break="\r\n")
         outZip.writestr("FmlvList.yml",fmlvList)
 
-        if not spoilerLog == "False":
+        if spoilerLog:
             outZip.writestr("spoilerlog.txt",spoilerLogOut)
 
         outZip.writestr("sys.yml",sysBarOut)

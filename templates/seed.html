@@ -3,17 +3,17 @@
 Permalink: <a href="{{permaLink}}">{{permaLink}}</a><br/>
 <form action="/download">
 
-<label>Seed: {{seed}}</label> <input type="hidden" name="seed" value="{{seed}}"/><br/>
+<label>Seed: {{seed}}</label><br/>
 
 Included:<br/>
 {% for world in include %}
-<label>{{worlds[world]}}</label> <input type="hidden" name="include" value="{{world}}"/><br/>
+<label>{{worlds[world]}}</label><br/>
 {% endfor %}
 
 Experience:<br/>
-Sora: {{soraExpMult}}x<br/> <input type="hidden" name="soraExpMult" value="{{soraExpMult}}"/>
+Sora: {{soraExpMult}}x<br/>
 {% for key in formExpMult %}
-{{expTypes[key]}}: {{formExpMult[key]}}x<br/> <input type="hidden" name="{{expTypes[key]}}Exp" value="{{formExpMult[key]}}"/>
+{{expTypes[key]}}: {{formExpMult[key]}}x<br/>
 {% endfor %}
 
 Command Menu:<br>
@@ -22,12 +22,6 @@ Command Menu:<br>
     <option value="{{key}}">{{cmdMenus[key]}}</option>
     {% endfor %}
 </select><br>
-
-<input type="hidden" name="spoilerLog" value="{{spoilerLog}}"/>
-<input type="hidden" name="goMode" value="{{goMode}}"/>
-<input type="hidden" name="promiseCharm" value="{{promiseCharm}}"/>
-
-<input type="hidden" name="levelChoice" value="{{levelChoice}}"/>
 
 <input type="submit" value="Download">
 </form>

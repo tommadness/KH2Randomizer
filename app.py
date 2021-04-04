@@ -1,5 +1,5 @@
 from randomize import Randomize
-from flask import Flask
+from flask import Flask, session, Response
 from locationClass import worlds
 from randomCmdMenu import cmdMenusChoice
 from configDict import miscConfig
@@ -9,106 +9,101 @@ import zipfile
 import base64
 import string
 import random
+import ast
+import os
 
 app = Flask(__name__)
 
 expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
+app.config['SECRET_KEY'] = 'ayylmao'
 
 
 @app.route('/')
 def index():
-    return fl.render_template('index.html', worlds = worlds, expTypes = expTypes, miscConfig = miscConfig)
+    resp = fl.make_response(fl.render_template('index.html', worlds = worlds, expTypes = expTypes, miscConfig = miscConfig))
+    return resp
 
 
 
 @app.route('/seed/<hash>')
 def hashedSeed(hash):
-    argsString = base64.urlsafe_b64decode(hash).replace("b'","").replace("'","")
-    return fl.redirect("/seed?"+str(argsString))
+    argList = str(base64.urlsafe_b64decode(hash)).replace('b"',"").replace('"',"").split(";")
+    print(argList)
+    for arg in argList:
+        if not arg == "":
+            kv = arg.split("=")
+            if kv[1].startswith("{") or kv[1].startswith("["):
+                session[kv[0]] = eval(kv[1])
+            elif kv[1] == "True":
+                session[kv[0]] = True
+            elif kv[1] == "False":
+                session[kv[0]] = False
+            else:
+                session[kv[0]] = kv[1]
+    return seed()
 
-@app.route('/seed')
+@app.route('/seed',methods=['GET','POST'])
 def seed():
-    seed = fl.escape(fl.request.args.get("seed")) or ""
-    if seed == "":
-        characters = string.ascii_letters + string.digits
+    if fl.request.method == "POST":
+        session['seed'] = fl.escape(fl.request.form.get("seed")) or ""
+        if session['seed'] == "":
+            characters = string.ascii_letters + string.digits
 
-        seed = (''.join(random.choice(characters) for i in range(30)))
+            session['seed'] = (''.join(random.choice(characters) for i in range(30)))
 
-        return fl.redirect("/seed?"+str(fl.request.query_string).replace("seed=&","seed="+seed+"&").replace("b'","").replace("'",""))
+        session['includeList'] = fl.request.form.getlist("include") or []
 
-    includeList = fl.request.args.getlist("include") or []
+        session['formExpMult'] = {
+            1: int(fl.request.form.get("ValorExp")), 
+            2: int(fl.request.form.get("WisdomExp")), 
+            3: int(fl.request.form.get("LimitExp")), 
+            4: int(fl.request.form.get("MasterExp")), 
+            5: int(fl.request.form.get("FinalExp"))
+            }
 
-    formExpMult = {
-        1: fl.request.args.get("ValorExp"), 
-        2: fl.request.args.get("WisdomExp"), 
-        3: fl.request.args.get("LimitExp"), 
-        4: fl.request.args.get("MasterExp"), 
-        5: fl.request.args.get("FinalExp")
-        }
+        session['soraExpMult'] = int(fl.request.form.get("SoraExp"))
 
-    soraExpMult = fl.request.args.get("SoraExp")
+        session['levelChoice'] = fl.request.form.get("levelChoice")
 
-    levelChoice = fl.request.args.get("levelChoice")
-
-    spoilerLog = fl.request.args.get("spoilerLog") or False
-
-    queryString = fl.request.query_string
-    hashedString = base64.urlsafe_b64encode(queryString)
-
-    promiseCharm = bool(fl.request.args.get("PromiseCharm") or False)
-    goMode = bool(fl.request.args.get("GoMode") or False)
+        session['spoilerLog'] = fl.request.form.get("spoilerLog") or False
 
 
-    permaLink = fl.url_for('hashedSeed', hash = hashedString,_external=True)
+        session['promiseCharm'] = bool(fl.request.form.get("PromiseCharm") or False)
+        session['goMode'] = bool(fl.request.form.get("GoMode") or False)
 
-    return fl.render_template('seed.html', 
-    permaLink = permaLink.replace("'",""), 
+    dumpStr = ""
+    for key in session:
+        dumpStr += "{key}={value};".format(key=key, value=session[key])
+    hashStr = str(base64.urlsafe_b64encode(bytes(dumpStr.encode('utf-8')))).replace("b'","").replace("'","")
+
+    print(session.get('spoilerLog'))
+
+    return fl.render_template('seed.html',
+    permaLink = fl.url_for("hashedSeed",hash=hashStr, _external=True), 
     cmdMenus = cmdMenusChoice, 
-    levelChoice = levelChoice, 
-    include = includeList, 
-    seed = seed, 
+    levelChoice = session.get('levelChoice'), 
+    include = session.get('includeList'), 
+    seed = session.get('seed'), 
     worlds=worlds, 
     expTypes = expTypes, 
-    formExpMult = formExpMult, 
-    soraExpMult = soraExpMult,
-    spoilerLog = spoilerLog,
-    promiseCharm = promiseCharm,
-    goMode = goMode)
+    formExpMult = session.get('formExpMult'), 
+    soraExpMult = session.get('soraExpMult'),
+    )
     
 @app.route('/download')
 def randomizePage():
-    includeList = fl.request.args.getlist("include") or []
-    excludeList = list(set(worlds) - set(includeList))
-    levelChoice = fl.request.args.get("levelChoice")
+    excludeList = list(set(worlds) - set(session.get('includeList')))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
-    seed = fl.request.args.get('seed') or ""
-
-    formExpMult = {
-        1: float(fl.request.args.get("ValorExp")), 
-        2: float(fl.request.args.get("WisdomExp")), 
-        3: float(fl.request.args.get("LimitExp")), 
-        4: float(fl.request.args.get("MasterExp")), 
-        5: float(fl.request.args.get("FinalExp"))
-        }
-
-    soraExpMult = float(fl.request.args.get("soraExpMult"))
-
-    spoilerLog = fl.request.args.get("spoilerLog") or False
-    promiseCharm = fl.request.args.get("promiseCharm") or False
-    print(promiseCharm)
-    goMode = fl.request.args.get("goMode") or False
-    print(goMode)
-    
     data = Randomize(
-    seedName = fl.escape(seed), 
+    seedName = fl.escape(session.get('seed')), 
     exclude = excludeList, 
-    formExpMult = formExpMult, 
-    soraExpMult = soraExpMult, 
-    levelChoice = levelChoice, 
+    formExpMult = session.get('formExpMult'), 
+    soraExpMult = int(session.get('soraExpMult')), 
+    levelChoice = session.get('levelChoice'), 
     cmdMenuChoice = cmdMenuChoice,
-    spoilerLog = spoilerLog,
-    promiseCharm = promiseCharm,
-    goMode = goMode,
+    spoilerLog = session.get('spoilerLog'),
+    promiseCharm = session.get('promiseCharm'),
+    goMode = session.get('goMode'),
     )
 
     if isinstance(data,str):
