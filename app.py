@@ -84,6 +84,7 @@ def seed():
     print(session.get('spoilerLog'))
 
     return fl.render_template('seed.html',
+    spoilerLog = session.get('spoilerLog'),
     permaLink = fl.url_for("hashedSeed",hash=hashStr, _external=True), 
     cmdMenus = cmdMenusChoice, 
     levelChoice = session.get('levelChoice'), 

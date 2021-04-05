@@ -2,9 +2,9 @@
 {% block content %}
 Permalink: <a href="{{permaLink}}">{{permaLink}}</a><br/>
 <form action="/download">
-
+{%if spoilerLog != False%}
 <label>Seed: {{seed}}</label><br/>
-
+{%endif%}
 Included:<br/>
 {% for world in include %}
 <label>{{worlds[world]}}</label><br/>
