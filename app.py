@@ -56,14 +56,14 @@ def seed():
         session['includeList'] = fl.request.form.getlist("include") or []
 
         session['formExpMult'] = {
-            1: int(fl.request.form.get("ValorExp")), 
-            2: int(fl.request.form.get("WisdomExp")), 
-            3: int(fl.request.form.get("LimitExp")), 
-            4: int(fl.request.form.get("MasterExp")), 
-            5: int(fl.request.form.get("FinalExp"))
+            1: float(fl.request.form.get("ValorExp")), 
+            2: float(fl.request.form.get("WisdomExp")), 
+            3: float(fl.request.form.get("LimitExp")), 
+            4: float(fl.request.form.get("MasterExp")), 
+            5: float(fl.request.form.get("FinalExp"))
             }
 
-        session['soraExpMult'] = int(fl.request.form.get("SoraExp"))
+        session['soraExpMult'] = float(fl.request.form.get("SoraExp"))
 
         session['levelChoice'] = fl.request.form.get("levelChoice")
 
@@ -105,7 +105,7 @@ def randomizePage():
     seedName = fl.escape(session.get('seed')), 
     exclude = excludeList, 
     formExpMult = session.get('formExpMult'), 
-    soraExpMult = int(session.get('soraExpMult')), 
+    soraExpMult = float(session.get('soraExpMult')), 
     levelChoice = session.get('levelChoice'), 
     cmdMenuChoice = cmdMenuChoice,
     spoilerLog = session.get('spoilerLog'),
