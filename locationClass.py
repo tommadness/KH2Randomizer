@@ -14,7 +14,7 @@ class KH2Treasure:
         return self.ItemId
 
     def getDescription(self):
-        return self.Description
+        return "{world} : {self.Description}".format(self=self, world=worlds[self.LocationTypes[0]])
 
     def __repr__(self):
         return "\nKH2Treasure( Id:{self.Id}, ItemId: {self.ItemId}, Description: {self.Description}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
@@ -75,7 +75,7 @@ class KH2LevelUp:
 
 
 class KH2Bonus:
-    characterMap = {1: "Sora", 14: "Roxas"}
+    characterMap = {1: "Sora", 2: "Donald", 3: "Goofy", 14: "Roxas"}
     def __init__(self, id, character, locationTypes = [], invalidChecks=[], description = ""):
         self.RewardId = id
         self.CharacterId = character
@@ -94,6 +94,10 @@ class KH2Bonus:
 
     def setReward(self, itemId):
         self.BonusItem1 = itemId
+        
+    # def setReward(self, itemId1, itemId2):
+    #     self.BonusItem1 = itemId1
+    #     self.BonusItem2 = itemId2
 
     def getCharacterName(self):
         return self.characterMap[self.CharacterId]
@@ -102,7 +106,7 @@ class KH2Bonus:
         return self.BonusItem1
 
     def getDescription(self):
-        return self.Description
+        return "{world} : {self.Description}".format(self=self, world=worlds[self.LocationTypes[0]])
 
     def __repr__(self):
         return "\nKH2Bonus( RewardId:{self.RewardId}, Character: {self.CharacterId}, ItemId: {self.BonusItem1}, InvalidChecks: {self.InvalidChecks} )".format(self=self)

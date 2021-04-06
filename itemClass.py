@@ -23,6 +23,8 @@ itemTypes = [
     "TornPage",
     "Keyblade",
     "Staff",
+    "DonaldAbility",
+    "GoofyAbility",
     "Shield",
     "Armor",
     "Accessory",

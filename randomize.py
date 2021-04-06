@@ -37,17 +37,26 @@ def Randomize(
     goMode = False
     ):
     #Setup lists without modifying base lists
+
     itemList = ItemList.itemList[:]
     supportAbilityList = ItemList.supportAbilityList[:]
     actionAbilityList = ItemList.actionAbilityList[:]
     junkList = ItemList.junkList[:]
+
     treasureList = LocationList.treasureList[:]
     soraLevelList = LocationList.soraLevelList[:]
     soraBonusList = LocationList.soraBonusList[:]
     formLevels = LocationList.formLevels[:]
     keybladeStats = LocationList.keybladeStats[:]
+
     lvupStats = LvupStats.lvupStats[:]
     lvupAp = LvupStats.lvupAp[:]
+
+    donaldLocationList = LocationList.donaldLocationList[:]
+    goofyLocationList = LocationList.goofyLocationList[:]
+
+    donaldAbilityList = ItemList.donaldAbilityList[:]
+    goofyAbilityList = ItemList.goofyAbilityList[:]
 
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
     exclude.append(levelChoice)
@@ -72,17 +81,12 @@ def Randomize(
     else:
         invalidKeybladeAbilities += actionAbilityList
 
-    for keyblade in keybladeStats:
-        randomAbility = random.choice(validKeybladeAbilities)
-        keyblade.Ability = randomAbility.Id
-        validKeybladeAbilities.remove(randomAbility)
-        keyblade.Attack = random.randint(keybladeMinStat, keybladeMaxStat)
-        keyblade.Magic = random.randint(keybladeMinStat, keybladeMaxStat)
+    randomizeKeyblades(keybladeStats, validKeybladeAbilities, keybladeMinStat, keybladeMaxStat)
 
     itemsList = itemList + validKeybladeAbilities + invalidKeybladeAbilities
     
 
-    #SORA REWARDS
+    #VALIDATE NUMBER OF LOCATIONS
     validLocationList = []
     locationList = treasureList + soraLevelList + soraBonusList + formLevels
     for location in locationList:
@@ -110,14 +114,7 @@ def Randomize(
     spoilerLogLocations = []
     spoilerLogItems = itemsList[:]
 
-    for item in itemsList[:]:
-        while(item in itemsList):
-            randomLocation = random.choice(locationList)
-            if not item.ItemType in randomLocation.InvalidChecks and not any(locationType in exclude for locationType in randomLocation.LocationTypes):
-                randomLocation.setReward(item.Id)
-                itemsList.remove(item)
-                locationList.remove(randomLocation)
-                spoilerLogLocations.append(randomLocation)
+    randomizeLocations(itemsList, locationList, exclude, spoilerLogLocations)
 
     #FILL REMAINING LOCATIONS WITH JUNK
     for location in locationList:
@@ -133,7 +130,10 @@ def Randomize(
             if len(lvupAp) > 0:
                 randomAp = lvupAp.pop(lvupAp.index(random.choice(lvupAp)))
                 soraLevelList[i].setAp(soraLevelList[i-1],randomAp)
-    #TODO: RANDOMIZE PARTY MEMBER CHECKS
+
+    #randomizeLocations(donaldAbilityList, donaldLocationList, exclude, spoilerLogLocations)
+
+    #randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocations)
 
     #TODO: INCORPORATE BOSS/ENEMY RANDO
 
@@ -144,15 +144,9 @@ def Randomize(
     #SORA EXPERIENCE
     for level in soraLevelList:
         level.Exp = round(soraExp[level.Level] / soraExpMult)
+        
 
-
-    hashString = ""
-    for i in range(7):
-        hashString += random.choice(hashTextEntries)
-        if not i == 6:
-            hashString += " "
-
-    sysBarOut = "- id: 17198\r\n  en: '{hashString}'".format(hashString = hashString)
+    sysBarOut = "- id: 17198\r\n  en: '{hashString}'".format(hashString = generateHashString())
 
 
     commandMenuString = RandomizeCmdMenus(cmdMenuChoice)
@@ -221,3 +215,33 @@ def Randomize(
 
     data.seek(0)
     return data
+
+
+
+
+def generateHashString():
+    hashString = ""
+    for i in range(7):
+        hashString += random.choice(hashTextEntries)
+        if not i == 6:
+            hashString += " "
+    return hashString
+
+def randomizeKeyblades(keybladeStats, validKeybladeAbilities, keybladeMinStat, keybladeMaxStat):
+    for keyblade in keybladeStats:
+        randomAbility = random.choice(validKeybladeAbilities)
+        keyblade.Ability = randomAbility.Id
+        validKeybladeAbilities.remove(randomAbility)
+        keyblade.Attack = random.randint(keybladeMinStat, keybladeMaxStat)
+        keyblade.Magic = random.randint(keybladeMinStat, keybladeMaxStat)
+
+def randomizeLocations(itemsList, locationList, exclude, spoilerLogLocations):
+    for item in itemsList[:]:
+        while(item in itemsList):
+            randomLocation = random.choice(locationList)
+            if not item.ItemType in randomLocation.InvalidChecks and not any(locationType in exclude for locationType in randomLocation.LocationTypes):
+                randomLocation.setReward(item.Id)
+                itemsList.remove(item)
+                locationList.remove(randomLocation)
+                spoilerLogLocations.append(randomLocation)
+

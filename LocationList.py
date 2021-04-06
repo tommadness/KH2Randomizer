@@ -629,7 +629,7 @@ soraBonusList = [
     KH2Bonus(16,1,locationTypes=["DC"],description="Boat Pete"),
     KH2Bonus(17,1,locationTypes=["DC"],description="Wharf Pete"),
     KH2Bonus(18,1,locationTypes=["HT"],description="Prison Keeper"),
-    KH2Bonus(21,1,locationTypes=["PR"],description="Barboss"),
+    KH2Bonus(21,1,locationTypes=["PR"],description="Barbossa"),
     KH2Bonus(22,1,locationTypes=["PR"],description="Grim Reaper 2"),
     KH2Bonus(24,1,locationTypes=["TWTNW"],description="Luxord"),
     KH2Bonus(28,1,locationTypes=["HB"],description="Demyx (Hollow Bastion)"),
@@ -651,6 +651,31 @@ soraBonusList = [
     KH2Bonus(63,1,locationTypes=["TT"],description="Betwixt and Between"),
     KH2Bonus(69,1,locationTypes=["TWTNW"],description="Roxas"),
     KH2Bonus(73,14,locationTypes=["STT"],description="Axel 1")
+]
+
+donaldLocationList = [
+    KH2Bonus(42,2,locationTypes=["Agrabah"],description="Abu Escort"),
+    KH2Bonus(45,2,locationTypes=["SP"],description="Screens"),
+    KH2Bonus(28, 2, locationTypes=["HB"], description="Demyx (Hollow Bastion)"),
+    KH2Bonus(58, 2, locationTypes=["OC"], description="Demyx (Olympus)"),
+    KH2Bonus(22, 2, locationTypes=["PR"], description="Grim Reaper 2"),
+    KH2Bonus(16, 2, locationTypes=["DC"], description="Boat Pete"),
+    KH2Bonus(17, 2, locationTypes=["DC"], description="Wharf Pete"),
+    KH2Bonus(18, 2, locationTypes=["HT"], description="Prison Keeper"),
+    KH2Bonus(29, 2, locationTypes=["PL"], description="Scar"),
+    KH2Bonus(61, 2, locationTypes=["SP"], description="Solar Sailor"),
+    KH2Bonus(20, 2, locationTypes=["HT"], description="Experiment"),
+    KH2Bonus(62, 2, locationTypes=["PR"], description="Boat Fight"),
+    KH2Bonus(56,2,locationTypes=["TT"], description="Mansion"),
+    KH2Bonus(2, 2, locationTypes=["BC"], description="Posessor"),
+    KH2Bonus(4,2,locationTypes=["BC"], description="Xaldin"),
+
+
+
+]
+
+goofyLocationList = [
+    
 ]
 
 formLevels = [
