@@ -1,0 +1,62 @@
+{% extends "head.jinja" %}
+{% block content %}
+<div class="container mb-3">
+<h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
+</div>
+<div class="container mb-3">
+<form action="/download">
+{%if spoilerLog != False%}
+<h4>Seed: {{seed}}</h4><br>
+{%endif%}
+<h4>Included:</h4>
+{%set ns = namespace(counter = 0)%}
+<div class="container mb-3" id="worlds">
+
+{% for key in include %}
+    {% if ns.counter % 3 == 0%}
+    <div class="row">
+    {%endif%}
+        <div class="col-4">
+            <label>{{worlds[key]}}</label>
+        </div>
+    {%set ns.counter = ns.counter+1%}
+    {% if ns.counter % 3 == 0 or loop.last%}
+    </div>
+    {%endif%}
+{% endfor %}
+
+</div>
+
+<h4>Experience:</h4>
+<div class="container mb-3">
+    {%set ns = namespace(counter = 0)%}
+    {% for key in expTypes %}
+    {% if ns.counter % 3 == 0 %}
+    <div class="row">
+    {% endif %}
+    <div class="col-4"><h5>{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter]}}{% endif %}</div>
+    {% set ns.counter = ns.counter+1%}
+    {% if ns.counter % 3 == 0%}
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="container mb-3">
+Keyblade Minimum Stat: {{keybladeMinStat}}<br>
+Keyblade Max Stat: {{keybladeMaxStat}}<br>
+</div>
+
+<div class="container mb-3">
+Command Menu:<br>
+<select name="cmdMenuChoice">
+    {% for key in cmdMenus %}
+    <option value="{{key}}">{{cmdMenus[key]}}</option>
+    {% endfor %}
+</select>
+</div>
+
+<input type="submit" value="Download">
+</form>
+</div>
+{%endblock%}

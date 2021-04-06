@@ -1,3 +1,5 @@
+from configDict import itemTypes
+
 class KH2Item:
     def __init__(self, id, name, itemType):
         self.Id = id
@@ -7,35 +9,3 @@ class KH2Item:
             raise Exception(self,'Not an itemType')
 
 
-itemTypes = [
-    "ProofofConnection",
-    "ProofofPeace",
-    "Proof",
-    "Fire",
-    "Blizzard",
-    "Thunder",
-    "Cure",
-    "Magnet",
-    "Reflect",
-    "GrowthAbility",
-    "ActionAbility",
-    "SupportAbility",
-    "TornPage",
-    "Keyblade",
-    "Staff",
-    "DonaldAbility",
-    "GoofyAbility",
-    "Shield",
-    "Armor",
-    "Accessory",
-    "Item",
-    "Form",
-    "Map",
-    "Recipe",
-    "Summon",
-    "Report",
-    "KeyItem",
-    "MunnyPouch",
-    "MembershipCard",
-    "OCTrophy",
-    "Junk"]

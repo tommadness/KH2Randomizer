@@ -5,13 +5,10 @@ from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
 from spoilerLog import generateSpoilerLog
 from hashTextEntries import hashTextEntries
+from configDict import itemTypes
 import LvupStats
 from mod import mod
-import random
-import yaml
-import zipfile
-import io
-import os
+import os, yaml, zipfile, io, random
 
 def noop(self, *args, **kw):
     pass

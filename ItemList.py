@@ -79,7 +79,7 @@ itemList = [
     KH2Item(237, "Secret Ansem's Report 12", "Report"),
     KH2Item(238, "Secret Ansem's Report 13", "Report"),
 
-    KH2Item(42, "Oathkeeper", "Keyblade"),
+    KH2Item(42,"Oathkeeper", "Keyblade"),
     KH2Item(43,"Oblivion","Keyblade"),
     KH2Item(484,"Hero's Crest","Keyblade"),
     KH2Item(485,"Monochrome","Keyblade"),
@@ -99,17 +99,6 @@ itemList = [
     KH2Item(499,"Fenrir","Keyblade"),
     KH2Item(500,"Ultima Weapon","Keyblade"),
 
-    KH2Item(535,"Munny Pouch","MunnyPouch"),
-    KH2Item(362, "Munny Pouch","MunnyPouch"),
-
-    KH2Item(1, "Potion","Item"),
-    KH2Item(2, "Hi-Potion","Item"),
-    KH2Item(3, "Ether", "Item"),
-    KH2Item(4, "Elixir", "Item"),
-    KH2Item(5,"Mega-Potion","Item"),
-    KH2Item(6,"Mega-Ether","Item"),
-    KH2Item(7,"Megalixir","Item"),
-
     KH2Item(546, "Centurion+", "Staff"), #StatEntry = 151
     KH2Item(151, "Comet Staff", "Staff"), #StatEntry = 90
     KH2Item(148, "Hammer Staff", "Staff"), #StatEntry = 87
@@ -125,6 +114,19 @@ itemList = [
     KH2Item(156, "Shaman's Relic", "Staff"), #StatEntry = 95
     KH2Item(149, "Victory Bell", "Staff"), #StatEntry = 88
     KH2Item(153, "Wisdom Wand", "Staff"), #StatEntry = 92
+
+    KH2Item(535,"Munny Pouch","MunnyPouch"),
+    KH2Item(362, "Munny Pouch","MunnyPouch"),
+
+    KH2Item(1, "Potion","Item"),
+    KH2Item(2, "Hi-Potion","Item"),
+    KH2Item(3, "Ether", "Item"),
+    KH2Item(4, "Elixir", "Item"),
+    KH2Item(5,"Mega-Potion","Item"),
+    KH2Item(6,"Mega-Ether","Item"),
+    KH2Item(7,"Megalixir","Item"),
+
+
 
 ]
 

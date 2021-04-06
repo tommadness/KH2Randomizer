@@ -1,26 +1,19 @@
 from randomize import Randomize
 from flask import Flask, session, Response
-from locationClass import worlds
 from randomCmdMenu import cmdMenusChoice
-from configDict import miscConfig
+from configDict import miscConfig, worlds, expTypes
 import flask as fl
 import numpy as np
-import zipfile
-import base64
-import string
-import random
-import ast
-import os
+import os, base64, string, random, ast, zipfile
 
 app = Flask(__name__)
 
-expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
 app.config['SECRET_KEY'] = 'ayylmao'
 
 
 @app.route('/')
 def index():
-    resp = fl.make_response(fl.render_template('index.html', worlds = worlds, expTypes = expTypes, miscConfig = miscConfig))
+    resp = fl.make_response(fl.render_template('index.jinja', worlds = worlds, expTypes = expTypes, miscConfig = miscConfig))
     return resp
 
 
@@ -83,7 +76,7 @@ def seed():
 
     print(session.get('spoilerLog'))
 
-    return fl.render_template('seed.html',
+    return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
     permaLink = fl.url_for("hashedSeed",hash=hashStr, _external=True), 
     cmdMenus = cmdMenusChoice, 
