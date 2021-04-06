@@ -669,9 +669,21 @@ donaldLocationList = [
     KH2Bonus(56,2,locationTypes=["TT"], description="Mansion"),
     KH2Bonus(2, 2, locationTypes=["BC"], description="Posessor"),
     KH2Bonus(4,2,locationTypes=["BC"], description="Xaldin"),
-
-
-
+    KH2ItemStat(151,13,3),
+    KH2ItemStat(90,2,2),
+    KH2ItemStat(87,2,1),
+    KH2ItemStat(91,3,3),
+    KH2ItemStat(86,1,1),
+    KH2ItemStat(89,4,3),
+    KH2ItemStat(94,5,5),
+    KH2ItemStat(154,1,5),
+    KH2ItemStat(155,2,7),
+    KH2ItemStat(156,3,9),
+    KH2ItemStat(93,4,4),
+    KH2ItemStat(146,5,6),
+    KH2ItemStat(95,4,5),
+    KH2ItemStat(88,3,2),
+    KH2ItemStat(92,4,5),
 ]
 
 goofyLocationList = [

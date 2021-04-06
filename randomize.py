@@ -112,7 +112,7 @@ def Randomize(
 
 
     spoilerLogLocations = []
-    spoilerLogItems = itemsList[:]
+    spoilerLogItems = itemsList[:] + donaldAbilityList[:] + goofyAbilityList[:]
 
     randomizeLocations(itemsList, locationList, exclude, spoilerLogLocations)
 
@@ -131,7 +131,7 @@ def Randomize(
                 randomAp = lvupAp.pop(lvupAp.index(random.choice(lvupAp)))
                 soraLevelList[i].setAp(soraLevelList[i-1],randomAp)
 
-    #randomizeLocations(donaldAbilityList, donaldLocationList, exclude, spoilerLogLocations)
+    randomizeLocations(donaldAbilityList, donaldLocationList, exclude, spoilerLogLocations)
 
     #randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocations)
 

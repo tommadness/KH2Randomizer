@@ -146,11 +146,11 @@ class KH2FormLevel:
         return "\nKH2FormLevel( FordId:{self.FormId}, Level: {self.FormLevel}, ItemId: {self.Ability}, InvalidChecks: {self.InvalidChecks} )".format(self=self)
 
 class KH2ItemStat:
-    def __init__(self, id):
+    def __init__(self, id, strength=0, magic=0, name=""):
         self.Id = id
         self.Ability = 0
-        self.Attack = 0
-        self.Magic = 0
+        self.Attack = strength
+        self.Magic = magic
         self.Defense = 0
         self.AbilityPoints = 0
         self.Unknown08 = 100
@@ -161,9 +161,18 @@ class KH2ItemStat:
         self.Unknown0d = 100
         self.GeneralResistance = 100
         self.Unknown = 0
+        self.InvalidChecks = []
+        self.LocationTypes = []
+        self.Name = name
 
     def setReward(self, itemId):
         self.Ability = itemId
+    
+    def getReward(self):
+        return self.Ability
+
+    def getDescription(self):
+        return self.Name
 
 worlds = {
     "LoD":"Land of Dragons",

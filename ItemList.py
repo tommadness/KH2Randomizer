@@ -109,6 +109,23 @@ itemList = [
     KH2Item(5,"Mega-Potion","Item"),
     KH2Item(6,"Mega-Ether","Item"),
     KH2Item(7,"Megalixir","Item"),
+
+    KH2Item(546, "Centurion+", "Staff"), #StatEntry = 151
+    KH2Item(151, "Comet Staff", "Staff"), #StatEntry = 90
+    KH2Item(148, "Hammer Staff", "Staff"), #StatEntry = 87
+    KH2Item(152, "Lord's Broom", "Staff"), #StatEntry = 91
+    KH2Item(75, "Mage's Staff", "Staff"), #StatEntry = 86
+    KH2Item(150, "Meteor Staff", "Staff"), #StatEntry = 89
+    KH2Item(155, "Nobody Lance", "Staff"), #StatEntry = 94
+    KH2Item(549, "Precious Mushroom", "Staff"), #StatEntry = 154
+    KH2Item(550, "Precious Mushroom+", "Staff"), #StatEntry = 155
+    KH2Item(551, "Premium Mushroom", "Staff"), #StatEntry = 156
+    KH2Item(154, "Rising Dragon", "Staff"), #StatEntry = 93
+    KH2Item(503, "Save The Queen+", "Staff"), #StatEntry = 146
+    KH2Item(156, "Shaman's Relic", "Staff"), #StatEntry = 95
+    KH2Item(149, "Victory Bell", "Staff"), #StatEntry = 88
+    KH2Item(153, "Wisdom Wand", "Staff"), #StatEntry = 92
+
 ]
 
 supportAbilityList = [
