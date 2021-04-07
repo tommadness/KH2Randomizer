@@ -17,7 +17,7 @@
     <div class="row">
     {%endif%}
         <div class="col-4">
-            <label>{{worlds[key]}}</label>
+            <label>{{key.value}}</label>
         </div>
     {%set ns.counter = ns.counter+1%}
     {% if ns.counter % 3 == 0 or loop.last%}
@@ -34,7 +34,7 @@
         {% if ns.counter % 3 == 0 %}
             <div class="row">
         {% endif %}
-                <div class="col-4 mb-2"><h5 class="mb-0">{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter]}}{% endif %}x</div>
+                <div class="col-4 mb-2"><h5 class="mb-0">{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter|int]}}{{formExpMult[ns.counter|string]}}{% endif %}x</div>
         {% set ns.counter = ns.counter+1%}
         {% if ns.counter % 3 == 0%}
             </div>

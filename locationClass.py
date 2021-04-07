@@ -1,24 +1,23 @@
 from itertools import chain
-from configDict import itemTypes, worlds
+from configDict import itemType, locationType
+from dataclasses import dataclass, field
+
+@dataclass
 class KH2Treasure:
-    def __init__(self, id, description = "", invalidChecks = [], locationTypes = []):
-        self.Id = id
-        self.ItemId = 0
-        self.Description = description
-        self.InvalidChecks = invalidChecks
-        self.LocationTypes = locationTypes
-    
+    Id: int
+    Description: str = ""
+    ItemId: int = 0
+    InvalidChecks: list[itemType] = field(default_factory=list)
+    LocationTypes: list[str] = field(default_factory=list)
+
     def setReward(self, itemId):
         self.ItemId = itemId
-    
+
     def getReward(self):
         return self.ItemId
 
     def getDescription(self):
-        return "{world} : {self.Description}".format(self=self, world=worlds[self.LocationTypes[0]])
-
-    def __repr__(self):
-        return "\nKH2Treasure( Id:{self.Id}, ItemId: {self.ItemId}, Description: {self.Description}, InvalidChecks: {self.InvalidChecks} )".format(self=self) 
+        return "{world} : {self.Description}".format(self=self, world=self.LocationTypes[0].value)
 
 
 
@@ -107,7 +106,7 @@ class KH2Bonus:
         return self.BonusItem1
 
     def getDescription(self):
-        return "{world} : {self.Description}".format(self=self, world=worlds[self.LocationTypes[0]])
+        return "{world} : {self.Description}".format(self=self, world=self.LocationTypes[0].value)
 
     def __repr__(self):
         return "\nKH2Bonus( RewardId:{self.RewardId}, Character: {self.CharacterId}, ItemId: {self.BonusItem1}, InvalidChecks: {self.InvalidChecks} )".format(self=self)
@@ -127,7 +126,7 @@ class KH2FormLevel:
         self.Experience = 0
         self.Ability = 0
         self.InvalidChecks = ["Form"]
-        self.LocationTypes = ["FormLevel"]
+        self.LocationTypes = [locationType.FormLevel]
         if level == 1:
             self.LocationTypes += ["Level1Form"]
     

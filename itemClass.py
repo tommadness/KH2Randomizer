@@ -1,11 +1,11 @@
-from configDict import itemTypes
+from configDict import itemType
+from dataclasses import dataclass
 
+@dataclass (frozen=True)
 class KH2Item:
-    def __init__(self, id, name, itemType):
-        self.Id = id
-        self.Name = name
-        self.ItemType = itemType
-        if not self.ItemType in itemTypes:
-            raise Exception(self,'Not an itemType')
+    Id: int
+    Name: str
+    ItemType: itemType
+
 
 

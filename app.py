@@ -1,38 +1,40 @@
 from randomize import Randomize
 from flask import Flask, session, Response
 from randomCmdMenu import cmdMenusChoice
-from configDict import miscConfig, worlds, expTypes
+from configDict import miscConfig, locationType, expTypes
 import flask as fl
 import numpy as np
-import os, base64, string, random, ast, zipfile
+from urllib.parse import urlparse
+import os, base64, string, random, ast, zipfile, redis, json
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'ayylmao'
+url = urlparse(os.environ.get("REDIS_URL"))
+r = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
 
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
 @app.route('/')
 def index():
-    resp = fl.make_response(fl.render_template('index.jinja', worlds = worlds, expTypes = expTypes, miscConfig = miscConfig))
-    return resp
+    session.clear()
+    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig)
 
 
 
 @app.route('/seed/<hash>')
 def hashedSeed(hash):
-    argList = str(base64.urlsafe_b64decode(hash)).replace('b"',"").replace('"',"").split(";")
-    print(argList)
-    for arg in argList:
-        if not arg == "":
-            kv = arg.split("=")
-            if kv[1].startswith("{") or kv[1].startswith("["):
-                session[kv[0]] = eval(kv[1])
-            elif kv[1] == "True":
-                session[kv[0]] = True
-            elif kv[1] == "False":
-                session[kv[0]] = False
-            else:
-                session[kv[0]] = kv[1]
+    session.clear()
+    sessionVars = r.hgetall(hash)
+    for var in sessionVars:
+        session[str(var, 'utf-8')] = json.loads(sessionVars[var])
+    
+    includeList = session['includeList'][:]
+    session['includeList'].clear()
+
+    for location in includeList:
+        session['includeList'].append(locationType(location))
+
+    print(session)
     return seed()
 
 @app.route('/seed',methods=['GET','POST'])
@@ -46,7 +48,10 @@ def seed():
 
             session['seed'] = (''.join(random.choice(characters) for i in range(30)))
 
-        session['includeList'] = fl.request.form.getlist("include") or []
+        includeList = fl.request.form.getlist('include') or []
+
+        session['includeList'] = [locationType[location.replace("locationType.","")] for location in includeList]
+
 
         session['formExpMult'] = {
             1: float(fl.request.form.get("ValorExp")), 
@@ -69,21 +74,21 @@ def seed():
         session['promiseCharm'] = bool(fl.request.form.get("PromiseCharm") or False)
         session['goMode'] = bool(fl.request.form.get("GoMode") or False)
 
-    dumpStr = ""
-    for key in session:
-        dumpStr += "{key}={value};".format(key=key, value=session[key])
-    hashStr = str(base64.urlsafe_b64encode(bytes(dumpStr.encode('utf-8')))).replace("b'","").replace("'","")
 
-    print(session.get('spoilerLog'))
+        session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
+        with r.pipeline() as pipe:
+            for key in session.keys():
+                pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
+            pipe.execute()
 
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
-    permaLink = fl.url_for("hashedSeed",hash=hashStr, _external=True), 
+    permaLink = fl.url_for("hashedSeed",hash=session['permaLink'], _external=True), 
     cmdMenus = cmdMenusChoice, 
     levelChoice = session.get('levelChoice'), 
     include = session.get('includeList'), 
     seed = session.get('seed'), 
-    worlds=worlds, 
+    worlds=locationType, 
     expTypes = expTypes, 
     formExpMult = session.get('formExpMult'), 
     soraExpMult = session.get('soraExpMult'),
@@ -93,7 +98,7 @@ def seed():
     
 @app.route('/download')
 def randomizePage():
-    excludeList = list(set(worlds) - set(session.get('includeList')))
+    excludeList = list(set(locationType) - set(session.get('includeList')))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
     data = Randomize(
     seedName = fl.escape(session.get('seed')), 
@@ -132,7 +137,7 @@ def add_header(r):
     return r
     
 if __name__ == '__main__':
-    dataOut = Randomize(exclude=["LingeringWill","Level","FormLevel"], cmdMenuChoice="randAll")
+    dataOut = Randomize(exclude=["LingeringWill","Level",locationType.FormLevel], cmdMenuChoice="randAll")
     f = open("randoSeed.zip", "wb")
     f.write(dataOut.read())
     f.close()

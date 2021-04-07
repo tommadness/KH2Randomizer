@@ -11,15 +11,15 @@
     
         {%set ns = namespace(counter = 0)%}
     <div class="container mb-3" id="worlds">
-    {% for key in worlds %}
+    {% for location in locations %}
         {% if ns.counter % 3 == 0%}
         <div class="row">
         {%endif%}
             <div class="col-3">
-                <label class=form-check-label for={{key}}>{{worlds[key]}}:</label>
+                <label class=form-check-label for={{location}}>{{location.value}}:</label>
             </div>
             <div class="col form-check form-switch">
-                <input class=form-check-input type="checkbox" id={{key}} value= "{{key}}" name="include" {%if key != "Atlantica"%} checked {%endif%}>
+                <input class=form-check-input type="checkbox" id={{location}} value= "{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}>
             </div>
         {%set ns.counter = ns.counter+1%}
         {% if ns.counter % 3 == 0%}

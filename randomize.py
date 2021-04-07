@@ -5,7 +5,7 @@ from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
 from spoilerLog import generateSpoilerLog
 from hashTextEntries import hashTextEntries
-from configDict import itemTypes
+from configDict import itemType
 import LvupStats
 from mod import mod
 import os, yaml, zipfile, io, random
@@ -58,7 +58,6 @@ def Randomize(
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
     exclude.append(levelChoice)
     random.seed(seedName)
-
     if not spoilerLog:
         random.randint(0,100) #Make sure the same seed name with and without spoiler log changes the randomization
 
@@ -95,7 +94,7 @@ def Randomize(
 
 
     if goMode:
-        proofs = [item for item in itemsList if item.ItemType == "Proof" or item.ItemType == "ProofofConnection" or item.ItemType == "ProofofPeace"]
+        proofs = [item for item in itemsList if item.ItemType == itemType.PROOF or item.ItemType == itemType.PROOF_OF_CONNECTION or item.ItemType == itemType.PROOF_OF_PEACE]
         itemsList.remove(proofs[0])
         itemsList.remove(proofs[1])
         itemsList.remove(proofs[2])
