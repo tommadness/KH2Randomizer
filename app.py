@@ -76,10 +76,10 @@ def seed():
 
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
-        with r.pipeline() as pipe:
-            for key in session.keys():
-                pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
-            pipe.execute()
+        # with r.pipeline() as pipe:
+        #     for key in session.keys():
+        #         pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
+        #     pipe.execute()
 
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
