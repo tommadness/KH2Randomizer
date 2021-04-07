@@ -101,10 +101,6 @@ itemList = [
     KH2Item(500,"Ultima Weapon",itemType.KEYBLADE),
 
     KH2Item(546, "Centurion+", itemType.STAFF), #StatEntry = 151
-    KH2Item(151, "Comet Staff", itemType.STAFF), #StatEntry = 90
-    KH2Item(148, "Hammer Staff", itemType.STAFF), #StatEntry = 87
-    KH2Item(152, "Lord's Broom", itemType.STAFF), #StatEntry = 91
-    KH2Item(75, "Mage's Staff", itemType.STAFF), #StatEntry = 86
     KH2Item(150, "Meteor Staff", itemType.STAFF), #StatEntry = 89
     KH2Item(155, "Nobody Lance", itemType.STAFF), #StatEntry = 94
     KH2Item(549, "Precious Mushroom", itemType.STAFF), #StatEntry = 154
@@ -113,18 +109,10 @@ itemList = [
     KH2Item(154, "Rising Dragon", itemType.STAFF), #StatEntry = 93
     KH2Item(503, "Save The Queen+", itemType.STAFF), #StatEntry = 146
     KH2Item(156, "Shaman's Relic", itemType.STAFF), #StatEntry = 95
-    KH2Item(149, "Victory Bell", itemType.STAFF), #StatEntry = 88
-    KH2Item(153, "Wisdom Wand", itemType.STAFF), #StatEntry = 92
 
-    KH2Item(139, "Adamant Shield", itemType.SHIELD), #StatEntry = 100
     KH2Item(146, "Akashic Record", itemType.SHIELD), #StatEntry = 107
-    KH2Item(140, "Chain Shield", itemType.SHIELD), #StatEntry = 101
-    KH2Item(143, "Dream Cloud", itemType.SHIELD), #StatEntry = 104
-    KH2Item(142, "Falling Star", itemType.SHIELD), #StatEntry = 103
     KH2Item(553, "Frozen Pride+", itemType.SHIELD), #StatEntry = 158
     KH2Item(145, "Genji Shield", itemType.SHIELD), #StatEntry = 106
-    KH2Item(144, "Knight Defender", itemType.SHIELD), #StatEntry = 105
-    KH2Item(49, "Knight's Shield", itemType.SHIELD), #StatEntry = 99
     KH2Item(556, "Majestic Mushroom", itemType.SHIELD), #StatEntry = 161
     KH2Item(557, "Majestic Mushroom+", itemType.SHIELD), #StatEntry = 162
     KH2Item(147, "Nobody Guard", itemType.SHIELD), #StatEntry = 108
