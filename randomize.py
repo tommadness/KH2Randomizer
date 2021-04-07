@@ -49,8 +49,11 @@ def Randomize(
     lvupStats = LvupStats.lvupStats[:]
     lvupAp = LvupStats.lvupAp[:]
 
-    donaldLocationList = LocationList.donaldLocationList[:]
-    goofyLocationList = LocationList.goofyLocationList[:]
+    donaldBonusList = LocationList.donaldBonusList[:]
+    goofyBonusList = LocationList.goofyBonusList[:]
+
+    donaldItemList = LocationList.donaldItemList[:]
+    goofyItemList = LocationList.goofyItemList[:]
 
     donaldAbilityList = ItemList.donaldAbilityList[:]
     goofyAbilityList = ItemList.goofyAbilityList[:]
@@ -117,7 +120,7 @@ def Randomize(
         if not levelChoice in location.LocationTypes:
             location.setReward(random.choice(junkList).Id)
 
-    #TODO: RANDOMIZE SORA STATS
+    #RANDOMIZE SORA STATS
     for i in range(1,len(soraLevelList)):
         randomStat = lvupStats.pop(lvupStats.index(random.choice(lvupStats)))
 
@@ -127,7 +130,11 @@ def Randomize(
                 randomAp = lvupAp.pop(lvupAp.index(random.choice(lvupAp)))
                 soraLevelList[i].setAp(soraLevelList[i-1],randomAp)
 
+    donaldLocationList = donaldItemList + donaldBonusList
+
     randomizeLocations(donaldAbilityList, donaldLocationList, exclude, spoilerLogLocations)
+
+    goofyLocationList = goofyItemList + goofyBonusList
 
     randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocations)
 
@@ -159,7 +166,8 @@ def Randomize(
         formattedLvup[lvup.Character][lvup.Level] = lvup
 
     formattedBons = {}
-    for bons in soraBonusList:
+    bonusList = soraBonusList+donaldBonusList+goofyBonusList
+    for bons in bonusList:
         if not bons.RewardId in formattedBons.keys():
             formattedBons[bons.RewardId] = {}
         formattedBons[bons.RewardId][bons.getCharacterName()] = bons
@@ -238,6 +246,12 @@ def randomizeLocations(itemsList, locationList, exclude, spoilerLogLocations):
             if not item.ItemType in randomLocation.InvalidChecks and not any(locationType in exclude for locationType in randomLocation.LocationTypes):
                 randomLocation.setReward(item.Id)
                 itemsList.remove(item)
-                locationList.remove(randomLocation)
+                if not randomLocation.DoubleReward:
+                    locationList.remove(randomLocation)
+                elif not randomLocation.BonusItem2 == 0:
+                    locationList.remove(randomLocation)
+
                 spoilerLogLocations.append(randomLocation)
 
+#not DoubleReward = remove
+#DoubleReward + BonusItem2 = remove

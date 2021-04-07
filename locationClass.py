@@ -9,6 +9,7 @@ class KH2Treasure:
     ItemId: int = 0
     InvalidChecks: list[itemType] = field(default_factory=list)
     LocationTypes: list[str] = field(default_factory=list)
+    DoubleReward: bool = False
 
     def setReward(self, itemId):
         self.ItemId = itemId
@@ -38,6 +39,7 @@ class KH2LevelUp:
         self.Padding = 0
         self.InvalidChecks = []
         self.LocationTypes = ["Level"]
+        self.DoubleReward = False
         if self.Level in self.excludeFrom50:
             self.LocationTypes.append("ExcludeFrom50")
         if self.Level in self.excludeFrom99:
@@ -76,7 +78,7 @@ class KH2LevelUp:
 
 class KH2Bonus:
     characterMap = {1: "Sora", 2: "Donald", 3: "Goofy", 14: "Roxas"}
-    def __init__(self, id, character, locationTypes = [], invalidChecks=[], description = ""):
+    def __init__(self, id, character, locationTypes = [], invalidChecks=[], description = "", doubleReward=False):
         self.RewardId = id
         self.CharacterId = character
         self.Description = description
@@ -91,13 +93,14 @@ class KH2Bonus:
         self.Unknown0c = 0
         self.InvalidChecks = invalidChecks
         self.LocationTypes = locationTypes
+        self.DoubleReward = doubleReward
 
     def setReward(self, itemId):
-        self.BonusItem1 = itemId
+        if self.BonusItem1 == 0:
+            self.BonusItem1 = itemId
+        else:
+            self.BonusItem2 = itemId
         
-    # def setReward(self, itemId1, itemId2):
-    #     self.BonusItem1 = itemId1
-    #     self.BonusItem2 = itemId2
 
     def getCharacterName(self):
         return self.characterMap[self.CharacterId]
@@ -127,6 +130,7 @@ class KH2FormLevel:
         self.Ability = 0
         self.InvalidChecks = ["Form"]
         self.LocationTypes = [locationType.FormLevel]
+        self.DoubleReward = False
         if level == 1:
             self.LocationTypes += ["Level1Form"]
     
@@ -145,26 +149,27 @@ class KH2FormLevel:
     def __repr__(self):
         return "\nKH2FormLevel( FordId:{self.FormId}, Level: {self.FormLevel}, ItemId: {self.Ability}, InvalidChecks: {self.InvalidChecks} )".format(self=self)
 
-class KH2ItemStat:
-    def __init__(self, id, strength=0, magic=0, name=""):
-        self.Id = id
-        self.Ability = 0
-        self.Attack = strength
-        self.Magic = magic
-        self.Defense = 0
-        self.AbilityPoints = 0
-        self.Unknown08 = 100
-        self.FireResistance = 100
-        self.IceResistance = 100
-        self.LightningResistance = 100
-        self.DarkResistance = 100
-        self.Unknown0d = 100
-        self.GeneralResistance = 100
-        self.Unknown = 0
-        self.InvalidChecks = []
-        self.LocationTypes = []
-        self.Name = name
 
+@dataclass
+class KH2ItemStat:
+    Id: int
+    Attack: int = 0
+    Magic: int = 0
+    Ability: int = 0
+    Defense: int = 0
+    AbilityPoints: int = 0
+    Unknown08: int = 100
+    FireResistance: int = 100
+    IceResistance: int = 100
+    LightningResistance: int = 100
+    DarkResistance: int = 100
+    Unknown0d: int = 100
+    GeneralResistance: int = 100
+    Unknown: int = 0
+    InvalidChecks: list[itemType] = field(default_factory=list)
+    LocationTypes: list[locationType] = field(default_factory=list)
+    Name: str = ""
+    DoubleReward: bool =  False
     def setReward(self, itemId):
         self.Ability = itemId
     
@@ -173,4 +178,3 @@ class KH2ItemStat:
 
     def getDescription(self):
         return self.Name
-

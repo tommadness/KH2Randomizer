@@ -653,13 +653,13 @@ soraBonusList = [
     KH2Bonus(73,14,locationTypes=[locationType.STT],description="Axel 1")
 ]
 
-donaldLocationList = [
+donaldBonusList = [
     KH2Bonus(42,2,locationTypes=[locationType.Agrabah],description="Abu Escort"),
     KH2Bonus(45,2,locationTypes=[locationType.SP],description="Screens"),
     KH2Bonus(28, 2, locationTypes=[locationType.HB], description="Demyx (Hollow Bastion)"),
     KH2Bonus(58, 2, locationTypes=[locationType.OC], description="Demyx (Olympus)"),
     KH2Bonus(22, 2, locationTypes=[locationType.PR], description="Grim Reaper 2"),
-    KH2Bonus(16, 2, locationTypes=[locationType.DC], description="Boat Pete"),
+    KH2Bonus(16, 2, locationTypes=[locationType.DC], description="Boat Pete", doubleReward=True),
     KH2Bonus(17, 2, locationTypes=[locationType.DC], description="Wharf Pete"),
     KH2Bonus(18, 2, locationTypes=[locationType.HT], description="Prison Keeper"),
     KH2Bonus(29, 2, locationTypes=[locationType.PL], description="Scar"),
@@ -669,6 +669,11 @@ donaldLocationList = [
     KH2Bonus(56,2,locationTypes=[locationType.TT], description="Mansion"),
     KH2Bonus(2, 2, locationTypes=[locationType.BC], description="Posessor"),
     KH2Bonus(4,2,locationTypes=[locationType.BC], description="Xaldin"),
+
+]
+
+donaldItemList = [
+
     KH2ItemStat(151,13,3),
     KH2ItemStat(90,2,2),
     KH2ItemStat(87,2,1),
@@ -686,8 +691,8 @@ donaldLocationList = [
     KH2ItemStat(92,4,5),
 ]
 
-goofyLocationList = [
-    KH2Bonus(21,3,locationTypes=[locationType.PR], description="Barbossa"),
+goofyBonusList = [
+    KH2Bonus(21,3,locationTypes=[locationType.PR], description="Barbossa", doubleReward=True),
     KH2Bonus(59,3,locationTypes=[locationType.PR], description="Grim Reaper 1"),
     KH2Bonus(31,3,locationTypes=[locationType.SP], description="Hostile Program"),
     KH2Bonus(49,3,locationTypes=[locationType.PL], description="Hyenas 1"),
@@ -702,22 +707,25 @@ goofyLocationList = [
     KH2Bonus(39,3,locationTypes=[locationType.PR], description="Interceptor Barrels"),
     KH2Bonus(46,3,locationTypes=[locationType.Agrabah], description="Treasure Room Heartless"),
     KH2Bonus(66,3,locationTypes=[locationType.OC, locationType.AS], description="Zexion"),
+]
 
-    KH2ItemStat(100,2,0, name="Adamant Shield"),
-    KH2ItemStat(107,7,0, name="Akashic Record"),
-    KH2ItemStat(101,3,0, name="Chain Shield"),
-    KH2ItemStat(104,4,0, name="Dream Cloud"),
-    KH2ItemStat(103,3,0, name="Falling Star"),
-    KH2ItemStat(158,5,0, name="Frozen Pride+"),
-    KH2ItemStat(106,6,0, name="Genji Shield"),
-    KH2ItemStat(105,7,0, name="Knight Defender"),
-    KH2ItemStat(99,1,0, name="Knight's Shield"),
-    KH2ItemStat(161,5,0, name="Majestic Mushroom"),
-    KH2ItemStat(162,7,0, name="Majestic Mushroom+"),
-    KH2ItemStat(108,8,0, name="Nobody Guard"),
-    KH2ItemStat(102,5,0, name="Ogre Shield"),
-    KH2ItemStat(147,9,0, name="Save The King+"),
-    KH2ItemStat(163,9,0, name="Ultimate Mushroom"),
+goofyItemList = [
+
+    KH2ItemStat(100,2,0, Name="Adamant Shield"),
+    KH2ItemStat(107,7,0, Name="Akashic Record"),
+    KH2ItemStat(101,3,0, Name="Chain Shield"),
+    KH2ItemStat(104,4,0, Name="Dream Cloud"),
+    KH2ItemStat(103,3,0, Name="Falling Star"),
+    KH2ItemStat(158,5,0, Name="Frozen Pride+"),
+    KH2ItemStat(106,6,0, Name="Genji Shield"),
+    KH2ItemStat(105,7,0, Name="Knight Defender"),
+    KH2ItemStat(99,1,0, Name="Knight's Shield"),
+    KH2ItemStat(161,5,0, Name="Majestic Mushroom"),
+    KH2ItemStat(162,7,0, Name="Majestic Mushroom+"),
+    KH2ItemStat(108,8,0, Name="Nobody Guard"),
+    KH2ItemStat(102,5,0, Name="Ogre Shield"),
+    KH2ItemStat(147,9,0, Name="Save The King+"),
+    KH2ItemStat(163,9,0, Name="Ultimate Mushroom"),
     
 ]
 
