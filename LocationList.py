@@ -674,7 +674,7 @@ donaldBonusList = [
 
 donaldItemList = [
 
-    KH2ItemStat(151,13,3),
+    KH2ItemStat(151,13,3, Name="Centurion+"),
     KH2ItemStat(90,2,2),
     KH2ItemStat(87,2,1),
     KH2ItemStat(91,3,3),

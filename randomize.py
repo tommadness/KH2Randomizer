@@ -178,7 +178,7 @@ def Randomize(
             formattedFmlv[fmlv.getFormName()] = []
         formattedFmlv[fmlv.getFormName()].append(fmlv)
 
-    formattedStats = {'Stats': keybladeStats}
+    formattedStats = {'Stats': keybladeStats+donaldItemList+goofyItemList}
 
     if spoilerLog:
         spoilerLogOut = generateSpoilerLog(spoilerLogLocations, spoilerLogItems)
