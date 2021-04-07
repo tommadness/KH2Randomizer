@@ -20,11 +20,11 @@ def Randomize(
     keybladeMinStat = 0, 
     keybladeMaxStat = 7, 
     formExpMult = {
-        1:1,
-        2:1,
-        3:1,
-        4:1,
-        5:1
+        '1':1,
+        '2':1,
+        '3':1,
+        '4':1,
+        '5':1
         }, 
     soraExpMult = 1, 
     levelChoice = "ExcludeFrom50", 
