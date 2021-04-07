@@ -34,7 +34,7 @@
         {% if ns.counter % 3 == 0 %}
             <div class="row">
         {% endif %}
-                <div class="col-4"><h5>{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter]}}{% endif %}x</div>
+                <div class="col-4 mb-2"><h5 class="mb-0">{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter]}}{% endif %}x</div>
         {% set ns.counter = ns.counter+1%}
         {% if ns.counter % 3 == 0%}
             </div>
@@ -45,8 +45,8 @@
 
 <div class="container mb-3">
     <div class="row">
-        <div class="col"><h5>Keyblade Minimum Stat</h5> {{keybladeMinStat}}</div>
-        <div class="col"><h5>Keyblade Max Stat</h5> {{keybladeMaxStat}}</div>
+        <div class="col"><h5 class="mb-0">Keyblade Minimum Stat</h5> {{keybladeMinStat}}</div>
+        <div class="col"><h5 class="mb-0">Keyblade Max Stat</h5> {{keybladeMaxStat}}</div>
     </div>
 </div>
 
