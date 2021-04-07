@@ -9,7 +9,7 @@ import os, base64, string, random, ast, zipfile, redis, json
 
 app = Flask(__name__)
 
-url = urlparse(os.environ.get("REDIS_URL"))
+url = urlparse(os.environ.get("REDIS_TLS_URL"))
 r = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
 
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
@@ -76,10 +76,10 @@ def seed():
 
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
-        # with r.pipeline() as pipe:
-        #     for key in session.keys():
-        #         pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
-        #     pipe.execute()
+        with r.pipeline() as pipe:
+            for key in session.keys():
+                pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
+            pipe.execute()
 
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
