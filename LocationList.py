@@ -703,21 +703,21 @@ goofyLocationList = [
     KH2Bonus(46,3,locationTypes=[locationType.Agrabah], description="Treasure Room Heartless"),
     KH2Bonus(66,3,locationTypes=[locationType.OC, locationType.AS], description="Zexion"),
 
-    KH2ItemStat(100,2,0) #Adamant Shield
-    KH2ItemStat(107,7,0) #Akashic Record
-    KH2ItemStat(101,3,0) #Chain Shield
-    KH2ItemStat(104,4,0) #Dream Cloud
-    KH2ItemStat(103,3,0) #Falling Star
-    KH2ItemStat(158,5,0) #Frozen Pride+
-    KH2ItemStat(106,7,0) #Akashic Record
-    KH2ItemStat(105,7,0) #Knight Defender
-    KH2ItemStat(99,1,0) #Knight's Shield
-    KH2ItemStat(161,5,0) #Majestic Mushroom
-    KH2ItemStat(162,7,0) #Majestic Mushroom+
-    KH2ItemStat(108,8,0) #Nobody Guard
-    KH2ItemStat(102,5,0) #Ogre Shield
-    KH2ItemStat(147,9,0) #Save The King+
-    KH2ItemStat(163,9,0) #Ultimate Mushroom
+    KH2ItemStat(100,2,0), #Adamant Shield
+    KH2ItemStat(107,7,0), #Akashic Record
+    KH2ItemStat(101,3,0), #Chain Shield
+    KH2ItemStat(104,4,0), #Dream Cloud
+    KH2ItemStat(103,3,0), #Falling Star
+    KH2ItemStat(158,5,0), #Frozen Pride+
+    KH2ItemStat(106,7,0), #Akashic Record
+    KH2ItemStat(105,7,0), #Knight Defender
+    KH2ItemStat(99,1,0), #Knight's Shield
+    KH2ItemStat(161,5,0), #Majestic Mushroom
+    KH2ItemStat(162,7,0), #Majestic Mushroom+
+    KH2ItemStat(108,8,0), #Nobody Guard
+    KH2ItemStat(102,5,0), #Ogre Shield
+    KH2ItemStat(147,9,0), #Save The King+
+    KH2ItemStat(163,9,0), #Ultimate Mushroom
     
 ]
 

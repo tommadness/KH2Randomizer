@@ -129,7 +129,7 @@ def Randomize(
 
     randomizeLocations(donaldAbilityList, donaldLocationList, exclude, spoilerLogLocations)
 
-    #randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocations)
+    randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocations)
 
     #TODO: INCORPORATE BOSS/ENEMY RANDO
 
