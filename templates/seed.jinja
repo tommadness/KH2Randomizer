@@ -31,24 +31,26 @@
 <div class="container mb-3">
     {%set ns = namespace(counter = 0)%}
     {% for key in expTypes %}
-    {% if ns.counter % 3 == 0 %}
-    <div class="row">
-    {% endif %}
-    <div class="col-4"><h5>{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter]}}{% endif %}</div>
-    {% set ns.counter = ns.counter+1%}
-    {% if ns.counter % 3 == 0%}
-    </div>
-    {% endif %}
+        {% if ns.counter % 3 == 0 %}
+            <div class="row">
+        {% endif %}
+                <div class="col-4"><h5>{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter]}}{% endif %}</div>
+        {% set ns.counter = ns.counter+1%}
+        {% if ns.counter % 3 == 0%}
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 
 <div class="container mb-3">
-Keyblade Minimum Stat: {{keybladeMinStat}}<br>
-Keyblade Max Stat: {{keybladeMaxStat}}<br>
+    <div class="row">
+        <div class="col"><h5>Keyblade Minimum Stat</h5> {{keybladeMinStat}}</div>
+        <div class="col"><h5>Keyblade Max Stat</h5> {{keybladeMaxStat}}</div>
+    </div>
 </div>
 
 <div class="container mb-3">
-Command Menu:<br>
+<h4>Command Menu:</h4>
 <select name="cmdMenuChoice">
     {% for key in cmdMenus %}
     <option value="{{key}}">{{cmdMenus[key]}}</option>
