@@ -1,7 +1,7 @@
 {% extends "head.jinja" %}
 {% block content %}
 <div class="container mb-3">
-<h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
+    <h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
 </div>
 <div class="container mb-3">
 <form action="/download">
@@ -34,12 +34,13 @@
         {% if ns.counter % 3 == 0 %}
             <div class="row">
         {% endif %}
-                <div class="col-4"><h5>{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter]}}{% endif %}</div>
+                <div class="col-4"><h5>{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter]}}{% endif %}x</div>
         {% set ns.counter = ns.counter+1%}
         {% if ns.counter % 3 == 0%}
             </div>
         {% endif %}
     {% endfor %}
+</div>
 </div>
 
 <div class="container mb-3">
@@ -58,7 +59,8 @@
 </select>
 </div>
 
-<input type="submit" value="Download">
+<div class="container">
+<input type="submit" value="Download for PCSX2">
 </form>
 </div>
 {%endblock%}
