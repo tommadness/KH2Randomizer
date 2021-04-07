@@ -687,6 +687,37 @@ donaldLocationList = [
 ]
 
 goofyLocationList = [
+    KH2Bonus(21,3,locationTypes=[locationType.PR], description="Barbossa"),
+    KH2Bonus(59,3,locationTypes=[locationType.PR], description="Grim Reaper 1"),
+    KH2Bonus(31,3,locationTypes=[locationType.SP], description="Hostile Program"),
+    KH2Bonus(49,3,locationTypes=[locationType.PL], description="Hyenas 1"),
+    KH2Bonus(50,3,locationTypes=[locationType.PL], description="Hyenas 2"),
+    KH2Bonus(40,3,locationTypes=[locationType.HT], description="Lock/Shock/Barrel"),
+    KH2Bonus(19, 3, locationTypes=[locationType.HT], description="Oogie Boogie"),
+    KH2Bonus(6,3,locationTypes=[locationType.OC], description="Pete (Olympus)"),
+    KH2Bonus(17,3,locationTypes=[locationType.DC], description="Pete (Wharf)"),
+    KH2Bonus(9,3,locationTypes=[locationType.LoD], description="Shan-Yu"),
+    KH2Bonus(10, 3, locationTypes=[locationType.LoD], description="Storm Rider"),
+    KH2Bonus(12,3,locationTypes=[locationType.BC], description="Beast"),
+    KH2Bonus(39,3,locationTypes=[locationType.PR], description="Interceptor Barrels"),
+    KH2Bonus(46,3,locationTypes=[locationType.Agrabah], description="Treasure Room Heartless"),
+    KH2Bonus(66,3,locationTypes=[locationType.OC, locationType.AS], description="Zexion"),
+
+    KH2ItemStat(100,2,0) #Adamant Shield
+    KH2ItemStat(107,7,0) #Akashic Record
+    KH2ItemStat(101,3,0) #Chain Shield
+    KH2ItemStat(104,4,0) #Dream Cloud
+    KH2ItemStat(103,3,0) #Falling Star
+    KH2ItemStat(158,5,0) #Frozen Pride+
+    KH2ItemStat(106,7,0) #Akashic Record
+    KH2ItemStat(105,7,0) #Knight Defender
+    KH2ItemStat(99,1,0) #Knight's Shield
+    KH2ItemStat(161,5,0) #Majestic Mushroom
+    KH2ItemStat(162,7,0) #Majestic Mushroom+
+    KH2ItemStat(108,8,0) #Nobody Guard
+    KH2ItemStat(102,5,0) #Ogre Shield
+    KH2ItemStat(147,9,0) #Save The King+
+    KH2ItemStat(163,9,0) #Ultimate Mushroom
     
 ]
 
