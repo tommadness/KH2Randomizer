@@ -204,7 +204,7 @@ treasureList = [
     KH2Treasure(180, "03 Energy Crystal", LocationTypes=[locationType.HB]),
     KH2Treasure(181, "03 AP Boost", LocationTypes=[locationType.HB]),
     KH2Treasure(491, "06 Gull Wing", LocationTypes=[locationType.HB]),
-    KH2Treasure(311, "12 Cosmic Chain", LocationTypes=[locationType.HB]),
+    KH2Treasure(311, "12 Cosmic Chain", LocationTypes=[locationType.HB], InvalidChecks=[itemType.MEMBERSHIPCARD]),
 
     KH2Treasure(492, "06 Savannah Map", LocationTypes=[locationType.PL]),
     KH2Treasure(404, "06 Dark Gem", LocationTypes=[locationType.PL]),
@@ -367,8 +367,8 @@ treasureList = [
 
     KH2Treasure(261, "Cornerstone Hill Monochrome", LocationTypes=[locationType.DC]),
 
-    KH2Treasure(513, "00 Protect Belt", LocationTypes=[locationType.OC]),
-    KH2Treasure(540, "00 Serenity Gem", LocationTypes=[locationType.OC]),
+    KH2Treasure(513, "00 Protect Belt", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY]),
+    KH2Treasure(540, "00 Serenity Gem", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY]),
 
     KH2Treasure(332, "00 Disney Castle Map", LocationTypes=[locationType.DC]),
     KH2Treasure(262, "00 Wisdom Form", LocationTypes=[locationType.DC]),
@@ -385,8 +385,8 @@ treasureList = [
     KH2Treasure(264, "00 Circle of Life", LocationTypes=[locationType.PL]),
     KH2Treasure(302, "00 Fire Element", LocationTypes=[locationType.PL]),
 
-    KH2Treasure(515, "00 Rising Dragon", LocationTypes=[locationType.OC]),
-    KH2Treasure(542, "00 Serenity Crystal", LocationTypes=[locationType.OC]),
+    KH2Treasure(515, "00 Rising Dragon", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY]),
+    KH2Treasure(542, "00 Serenity Crystal", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY]),
 
     KH2Treasure(294, "00 Seifer´s Trophy", LocationTypes=[locationType.TT]),
     KH2Treasure(265, "00 Oathkeeper", LocationTypes=[locationType.TT]),
@@ -410,8 +410,8 @@ treasureList = [
 
     KH2Treasure(295, "00 Auron´s Statue", LocationTypes=[locationType.OC]),
     KH2Treasure(272, "00 Guardian Soul", LocationTypes=[locationType.OC]),
-    KH2Treasure(514, "00 Genji Shield", LocationTypes=[locationType.OC]),
-    KH2Treasure(541, "00 Skillful Ring", LocationTypes=[locationType.OC]),
+    KH2Treasure(514, "00 Genji Shield", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY]),
+    KH2Treasure(541, "00 Skillful Ring", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY]),
 
     KH2Treasure(303, "Agrabah Wishing Lamp", LocationTypes=[locationType.Agrabah], InvalidChecks=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER]),
 
@@ -431,8 +431,8 @@ treasureList = [
     KH2Treasure(276, "00 Sleeping Lion", LocationTypes=[locationType.HB]),
     KH2Treasure(282, "00 Fenrir", LocationTypes=[locationType.HB, locationType.Sephi]),
 
-    KH2Treasure(516, "00 Fatal Crest", LocationTypes=[locationType.OC]),
-    KH2Treasure(517, "00 Orichalcum+", LocationTypes=[locationType.OC]),
+    KH2Treasure(516, "00 Fatal Crest", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY]),
+    KH2Treasure(517, "00 Orichalcum+", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY]),
 
     KH2Treasure(317, "00 Bond of Flame", LocationTypes=[locationType.TT]),
 
@@ -675,18 +675,18 @@ donaldBonusList = [
 donaldItemList = [
 
     KH2ItemStat(151,13,3, Name="Centurion+"),
-    KH2ItemStat(90,2,2),
+    KH2ItemStat(90,2,2, Name="Nobody Lance"),
     KH2ItemStat(87,2,1),
     KH2ItemStat(91,3,3),
     KH2ItemStat(86,1,1),
-    KH2ItemStat(89,4,3),
-    KH2ItemStat(94,5,5),
-    KH2ItemStat(154,1,5),
-    KH2ItemStat(155,2,7),
-    KH2ItemStat(156,3,9),
-    KH2ItemStat(93,4,4),
-    KH2ItemStat(146,5,6),
-    KH2ItemStat(95,4,5),
+    KH2ItemStat(89,4,3, Name="Meteor Staff"),
+    KH2ItemStat(94,5,5, Name="Nobody Lance"),
+    KH2ItemStat(154,1,5, Name="Precious Mushroom"),
+    KH2ItemStat(155,2,7, Name="Precious Mushroom+"),
+    KH2ItemStat(156,3,9, Name="Premium Mushroom"),
+    KH2ItemStat(93,4,4, Name="Rising Dragon"),
+    KH2ItemStat(146,5,6, Name="Save the Queen+"),
+    KH2ItemStat(95,4,5, Name="Shaman's Relic"),
     KH2ItemStat(88,3,2),
     KH2ItemStat(92,4,5),
 ]

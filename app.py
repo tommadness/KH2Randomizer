@@ -14,7 +14,7 @@ r = redis.Redis(host=url.hostname, port=url.port, username=url.username, passwor
 
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
     return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message)
@@ -43,10 +43,10 @@ def seed():
         session['keybladeAbilities'] = fl.request.form.getlist('keybladeAbilities')
 
         if session['keybladeAbilities'] == []:
-            return fl.redirect(fl.url_for("index", message="Please select at least one keyblade ability type."))
+            return fl.redirect(fl.url_for("index", message="Please select at least one keyblade ability type."), code=307)
 
         if int(fl.request.form.get('keybladeMaxStat')) < int(fl.request.form.get('keybladeMinStat')):
-            return fl.redirect(fl.url_for("index", message="Keyblade minimum stat larger than maximum stat."))
+            return fl.redirect(fl.url_for("index", message="Keyblade minimum stat larger than maximum stat."), code=307)
         session['seed'] = fl.escape(fl.request.form.get("seed")) or ""
         if session['seed'] == "":
             characters = string.ascii_letters + string.digits
@@ -145,7 +145,7 @@ def add_header(r):
     return r
     
 if __name__ == '__main__':
-    dataOut = Randomize(exclude=["LingeringWill","Level",locationType.FormLevel], cmdMenuChoice="randAll")
+    dataOut = Randomize(exclude=[], cmdMenuChoice="randAll")
     f = open("randoSeed.zip", "wb")
     f.write(dataOut.read())
     f.close()
