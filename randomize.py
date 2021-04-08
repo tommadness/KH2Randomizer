@@ -218,6 +218,12 @@ def Randomize(
         outZip.close()
 
     data.seek(0)
+
+    spoilerLogLocations.clear()
+    spoilerLogItems.clear()
+    validKeybladeAbilities.clear()
+    invalidKeybladeAbilities.clear()
+    validLocationList.clear()
     return data
 
 
