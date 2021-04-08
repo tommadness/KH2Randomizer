@@ -1,7 +1,7 @@
 from randomize import Randomize
 from flask import Flask, session, Response
 from randomCmdMenu import cmdMenusChoice
-from configDict import miscConfig, locationType, expTypes
+from configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import flask as fl
 import numpy as np
 from urllib.parse import urlparse
@@ -15,9 +15,9 @@ r = redis.Redis(host=url.hostname, port=url.port, username=url.username, passwor
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
 @app.route('/')
-def index():
+def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig)
+    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message)
 
 
 
@@ -40,8 +40,13 @@ def hashedSeed(hash):
 @app.route('/seed',methods=['GET','POST'])
 def seed():
     if fl.request.method == "POST":
+        session['keybladeAbilities'] = fl.request.form.getlist('keybladeAbilities')
+
+        if session['keybladeAbilities'] == []:
+            return fl.redirect(fl.url_for("index", message="Please select at least one keyblade ability type."))
+
         if int(fl.request.form.get('keybladeMaxStat')) < int(fl.request.form.get('keybladeMinStat')):
-            return "Keyblade minimum stat larger than maximum stat."
+            return fl.redirect(fl.url_for("index", message="Keyblade minimum stat larger than maximum stat."))
         session['seed'] = fl.escape(fl.request.form.get("seed")) or ""
         if session['seed'] == "":
             characters = string.ascii_letters + string.digits
@@ -75,6 +80,7 @@ def seed():
         session['goMode'] = bool(fl.request.form.get("GoMode") or False)
 
 
+
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
         with r.pipeline() as pipe:
             for key in session.keys():
@@ -94,6 +100,7 @@ def seed():
     soraExpMult = session.get('soraExpMult'),
     keybladeMinStat = session.get('keybladeMinStat'),
     keybladeMaxStat = session.get('keybladeMaxStat'),
+    keybladeAbilities = session.get('keybladeAbilities'),
     )
     
 @app.route('/download')
@@ -112,6 +119,7 @@ def randomizePage():
     goMode = session.get('goMode'),
     keybladeMinStat = int(session.get('keybladeMinStat')),
     keybladeMaxStat = int(session.get('keybladeMaxStat')),
+    keybladeAbilities = session.get('keybladeAbilities'),
     )
 
     if isinstance(data,str):

@@ -7,6 +7,8 @@ miscConfig = {
 
 expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
 
+keybladeAbilities = ["Support","Action"]
+
 class locationType(str, Enum):
     LoD = "Land of Dragons"
     BC = "Beast's Castle"

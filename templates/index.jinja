@@ -2,6 +2,7 @@
 {% block content %}
         
 <div class="container" id="form">
+<h2>{{message}}</h2>
 <form action='/seed' method="POST">
     <div class="container mb-3">
     <div class="row">
@@ -57,7 +58,26 @@
     </div>
     {% endif %}
     {% endfor %}
+
     <div class="container">
+    <div class="row justify-content-evenly mb-3">
+        <div class="col-4">
+            <div class="input-group">
+                <label class="form-check-label col-8" for="{{keybladeAbilities[0]}}">{{keybladeAbilities[0]}} Keyblade Abilities</label>
+                <div class="form-check form-switch col">
+                    <input type="checkbox" class="form-check-input form-control" id="{{keybladeAbilities[0]}}" name="keybladeAbilities" value="{{keybladeAbilities[0]}}" checked>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <label class="form-check-label col-8" for="{{keybladeAbilities[1]}}">{{keybladeAbilities[1]}} Keyblade Abilities</label>
+                <div class="form-check form-switch col">
+                    <input type="checkbox" class="form-check-input form-control" id="{{keybladeAbilities[1]}}" name="keybladeAbilities" value="{{keybladeAbilities[1]}}">
+                </div>
+            </div>
+        </div>
+    </div>
     {%set ns = namespace(counter = 0)%}
     {% for config in miscConfig %}
     {% if ns.counter % 3 == 0 %}

@@ -44,6 +44,10 @@
 </div>
 
 <div class="container mb-3">
+    <h4>Keyblade Abilities:</h4> {%for keybladeAbility in keybladeAbilities %}{{keybladeAbility}} {%endfor%}
+</div>
+
+<div class="container mb-3">
     <div class="row">
         <div class="col"><h5 class="mb-0">Keyblade Minimum Stat</h5> {{keybladeMinStat}}</div>
         <div class="col"><h5 class="mb-0">Keyblade Max Stat</h5> {{keybladeMaxStat}}</div>
