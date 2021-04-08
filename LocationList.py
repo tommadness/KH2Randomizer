@@ -729,6 +729,39 @@ goofyItemList = [
     
 ]
 
+criticalBonus = KH2StartingItem(1,7, LocationTypes=[locationType.Critical])
+donaldStarting = KH2StartingItem(2,0, LocationTypes=[locationType.Free])
+goofyStarting = KH2StartingItem(3,0, LocationTypes=[locationType.Free])
+lionStartWithDash = KH2StartingItem(135, 0, Hp=0, Ap=0, Mp=0, Unknown06=0, Unknown08 = 0, Unknown0a = 0)
+lionStartWithDash.setReward(-32606)
+lionStartWithDash.setReward(-32606)
+lionStartWithDash.setReward(-32605)
+lionStartWithDash.setReward(-32605)
+lionStartWithDash.setReward(-32248)
+lionStartWithDash.setReward(-32247)
+lionStartWithDash.setReward(-32246)
+lionStartWithDash.setReward(-32242)
+
+soraStartingItems = [
+    criticalBonus,
+    criticalBonus,
+    criticalBonus,
+    criticalBonus,
+    criticalBonus,
+    criticalBonus,
+    criticalBonus,
+]
+
+donaldStartingItems = [
+    donaldStarting,
+    donaldStarting
+]
+
+goofyStartingItems = [
+    goofyStarting,
+    goofyStarting
+]
+
 formLevels = [
     KH2FormLevel(1,1),
     KH2FormLevel(1,2),

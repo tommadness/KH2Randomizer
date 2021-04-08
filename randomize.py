@@ -5,7 +5,7 @@ from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
 from spoilerLog import generateSpoilerLog
 from hashTextEntries import hashTextEntries
-from configDict import itemType
+from configDict import itemType, locationType
 import LvupStats
 from mod import mod
 import os, yaml, zipfile, io, random
@@ -45,12 +45,16 @@ def Randomize(
     soraBonusList = LocationList.soraBonusList[:]
     formLevels = LocationList.formLevels[:]
     keybladeStats = LocationList.keybladeStats[:]
+    soraStartingItems = LocationList.soraStartingItems[:]
 
     lvupStats = LvupStats.lvupStats[:]
     lvupAp = LvupStats.lvupAp[:]
 
     donaldBonusList = LocationList.donaldBonusList[:]
     goofyBonusList = LocationList.goofyBonusList[:]
+
+    donaldStartingList = LocationList.donaldStartingItems[:]
+    goofyStartingList = LocationList.goofyStartingItems[:]
 
     donaldItemList = LocationList.donaldItemList[:]
     goofyItemList = LocationList.goofyItemList[:]
@@ -88,6 +92,10 @@ def Randomize(
     #VALIDATE NUMBER OF LOCATIONS
     validLocationList = []
     locationList = treasureList + soraLevelList + soraBonusList + formLevels
+
+    if not locationType.Critical in exclude:
+        locationList += soraStartingItems
+
     for location in locationList:
         if not any(locationType in exclude for locationType in location.LocationTypes):
             validLocationList.append(location)
@@ -130,11 +138,11 @@ def Randomize(
                 randomAp = lvupAp.pop(lvupAp.index(random.choice(lvupAp)))
                 soraLevelList[i].setAp(soraLevelList[i-1],randomAp)
 
-    donaldLocationList = donaldItemList + donaldBonusList
+    donaldLocationList = donaldItemList + donaldBonusList + donaldStartingList
 
     randomizeLocations(donaldAbilityList, donaldLocationList, exclude, spoilerLogLocations)
 
-    goofyLocationList = goofyItemList + goofyBonusList
+    goofyLocationList = goofyItemList + goofyBonusList + goofyStartingList
 
     randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocations)
 
@@ -180,6 +188,16 @@ def Randomize(
 
     formattedStats = {'Stats': keybladeStats+donaldItemList+goofyItemList}
 
+    formattedPlrp = []
+    if not locationType.Critical in exclude:
+        padStartingItem(formattedPlrp, LocationList.criticalBonus)
+    
+    padStartingItem(formattedPlrp, LocationList.lionStartWithDash)
+
+    padStartingItem(formattedPlrp, LocationList.donaldStarting)
+
+    padStartingItem(formattedPlrp, LocationList.goofyStarting)
+
     if spoilerLog:
         spoilerLogOut = generateSpoilerLog(spoilerLogLocations, spoilerLogItems)
 
@@ -204,6 +222,9 @@ def Randomize(
         fmlvList = yaml.dump(formattedFmlv, line_break="\r\n")
         outZip.writestr("FmlvList.yml",fmlvList)
 
+        plrpList = yaml.dump(formattedPlrp, line_break="\r\n")
+        outZip.writestr("PlrpList.yml",plrpList)
+
         if spoilerLog:
             outZip.writestr("spoilerlog.txt",spoilerLogOut)
 
@@ -218,13 +239,14 @@ def Randomize(
         outZip.close()
 
     data.seek(0)
-
-    spoilerLogLocations.clear()
-    spoilerLogItems.clear()
-    validKeybladeAbilities.clear()
-    invalidKeybladeAbilities.clear()
-    validLocationList.clear()
     return data
+
+
+
+def padStartingItem(formattedPlrp, startingItem):
+    while len(startingItem.Objects) < 58:
+        startingItem.setReward(0)
+    formattedPlrp.append(startingItem)
 
 
 

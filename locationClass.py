@@ -178,3 +178,27 @@ class KH2ItemStat:
 
     def getDescription(self):
         return self.Name
+
+@dataclass
+class KH2StartingItem:
+    Character: int
+    Difficulty: int
+    Hp: int = 20
+    Mp: int = 100
+    Ap: int = 50
+    Unknown06: int = 0
+    Unknown08: int = 256
+    Unknown0a: int = 769
+    DoubleReward: bool = False
+    LocationTypes: list[locationType] = field(default_factory=list)
+    InvalidChecks: list[itemType] = field(default_factory=list)
+    Objects: list[int] = field(default_factory=list) #58
+
+    def setReward(self, itemId):
+        self.Objects.append(itemId)
+
+    def getReward(self):
+        return self.Objects
+    
+    def getDescription(self):
+        return "Critical Bonus"
