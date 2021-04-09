@@ -49,6 +49,7 @@ def Randomize(
 
     lvupStats = LvupStats.lvupStats[:]
     lvupAp = LvupStats.lvupAp[:]
+    bonsStats = LvupStats.bonsStats[:]
 
     donaldBonusList = LocationList.donaldBonusList[:]
     goofyBonusList = LocationList.goofyBonusList[:]
@@ -144,6 +145,13 @@ def Randomize(
     goofyLocationList = goofyItemList + goofyBonusList + goofyStartingList
 
     randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocationItems)
+
+    #SORA BONUS LEVEL STATS
+    for bonus in soraBonusList:
+        if bonus.HasStat:
+            randomStat = random.choice(bonsStats)
+            bonus.setStat(randomStat)
+            bonsStats.remove(randomStat)
 
     #TODO: INCORPORATE BOSS/ENEMY RANDO
 

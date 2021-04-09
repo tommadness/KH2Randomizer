@@ -78,7 +78,7 @@ class KH2LevelUp:
 
 class KH2Bonus:
     characterMap = {1: "Sora", 2: "Donald", 3: "Goofy", 14: "Roxas"}
-    def __init__(self, id, character, locationTypes = [], invalidChecks=[], description = "", doubleReward=False):
+    def __init__(self, id, character, locationTypes = [], invalidChecks=[], description = "", doubleReward=False, hasStat=False, hasItem=True):
         self.RewardId = id
         self.CharacterId = character
         self.Description = description
@@ -94,16 +94,33 @@ class KH2Bonus:
         self.InvalidChecks = invalidChecks
         self.LocationTypes = locationTypes
         self.DoubleReward = doubleReward
+        self.HasStat = hasStat
+        self.HasItem = hasItem
 
     def setReward(self, itemId):
-        if self.BonusItem1 == 0:
-            self.BonusItem1 = itemId
-        else:
-            self.BonusItem2 = itemId
+        if self.HasItem:
+            if self.BonusItem1 == 0:
+                self.BonusItem1 = itemId
+            else:
+                self.BonusItem2 = itemId
         
 
     def getCharacterName(self):
         return self.characterMap[self.CharacterId]
+
+    def setStat(self, stat):
+        if stat == "HP":
+            self.HpIncrease += 5
+        elif stat == "MP":
+            self.MpIncrease += 10
+        elif stat == "Drive":
+            self.DriveGaugeUpgrade += 1
+        elif stat == "Item":
+            self.ItemSlotUpgrade += 1
+        elif stat == "Accessory":
+            self.AccessorySlotUpgrade += 1
+        elif stat == "Armor":
+            self.ArmorSlotUpgrade += 1
 
     def getReward(self):
         return self.BonusItem1

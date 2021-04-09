@@ -35,7 +35,7 @@ class locationType(str, Enum):
     Free = "Garden of Assemblage"
     Critical = "Critical Bonuses"
 
-class itemType(Enum):
+class itemType(str, Enum):
     PROOF_OF_CONNECTION = "Proof of Connection"
     PROOF_OF_PEACE = "Proof of Peace"
     PROOF = "Proof"
