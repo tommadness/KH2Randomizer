@@ -333,91 +333,91 @@ treasureList = [
     KH2Treasure(586, "26 Lost Illusion", LocationTypes=[locationType.Free]),
     KH2Treasure(590, "Proof of Nonexistence", LocationTypes=[locationType.Free]),
 
-    KH2Treasure(288, "00 Munny Pouch", LocationTypes=[locationType.STT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(288, "00 Munny Pouch", LocationTypes=[locationType.STT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
     KH2Treasure(389, "00 Champion Belt", LocationTypes=[locationType.STT], InvalidChecks=[e for e in itemType]),
     KH2Treasure(390, "00 Medal", LocationTypes=[locationType.STT], InvalidChecks=[e for e in itemType]),
-    KH2Treasure(519, "The Struggle Trophy", LocationTypes=[locationType.STT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(319, "00 Twilight Town Map", LocationTypes=[locationType.STT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(289, "00 Naminé´s Sketches", LocationTypes=[locationType.STT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(483, "00 Mansion Map", LocationTypes=[locationType.STT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(519, "The Struggle Trophy", LocationTypes=[locationType.STT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(319, "00 Twilight Town Map", LocationTypes=[locationType.STT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(289, "00 Naminé´s Sketches", LocationTypes=[locationType.STT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(483, "00 Mansion Map", LocationTypes=[locationType.STT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(290, "00 Munny Pouch", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(291, "00 Crystal Orb", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(304, "00 Star Seeker", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(286, "00 Valor Form", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(290, "00 Munny Pouch", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(291, "00 Crystal Orb", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(304, "00 Star Seeker", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(286, "00 Valor Form", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(362, "00 Marketplace Map", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(256, "00 Membership Card", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(292, "00 Blizzard Element", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(362, "00 Marketplace Map", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(256, "00 Membership Card", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(292, "00 Blizzard Element", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(415, "Bamboo Grove Hi-Potion", LocationTypes=[locationType.LoD], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(416, "Bamboo Grove Mythril Shard", LocationTypes=[locationType.LoD], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(417, "Bamboo Grove AP Boost", LocationTypes=[locationType.LoD], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(350, "Bamboo Grove Encampment Area Map", LocationTypes=[locationType.LoD], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(495, "Bamboo Grove Village Area Map", LocationTypes=[locationType.LoD], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(257, "Bamboo Grove Hidden Dragon", LocationTypes=[locationType.LoD], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(415, "Bamboo Grove Hi-Potion", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(416, "Bamboo Grove Mythril Shard", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(417, "Bamboo Grove AP Boost", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(350, "Bamboo Grove Encampment Area Map", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(495, "Bamboo Grove Village Area Map", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(257, "Bamboo Grove Hidden Dragon", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(299, "00 Cure Element", LocationTypes=[locationType.BC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(299, "00 Cure Element", LocationTypes=[locationType.BC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(258, "00 Baseball Charm", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(258, "00 Baseball Charm", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(338, "00 Coliseum Map", LocationTypes=[locationType.OC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(293, "00 Olympus Stone", LocationTypes=[locationType.OC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(260, "00 Hero´s Crest", LocationTypes=[locationType.OC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(338, "00 Coliseum Map", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(293, "00 Olympus Stone", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(260, "00 Hero´s Crest", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(261, "Cornerstone Hill Monochrome", LocationTypes=[locationType.DC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(261, "Cornerstone Hill Monochrome", LocationTypes=[locationType.DC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(513, "00 Protect Belt", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
     KH2Treasure(540, "00 Serenity Gem", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(332, "00 Disney Castle Map", LocationTypes=[locationType.DC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(262, "00 Wisdom Form", LocationTypes=[locationType.DC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(368, "Cornerstone Hill Window of Time Map", LocationTypes=[locationType.DC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(332, "00 Disney Castle Map", LocationTypes=[locationType.DC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(262, "00 Wisdom Form", LocationTypes=[locationType.DC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(368, "Cornerstone Hill Window of Time Map", LocationTypes=[locationType.DC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(329, "00 Isla de Muerta Map", LocationTypes=[locationType.PR], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(263, "00 Follow the Wind", LocationTypes=[locationType.PR], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(329, "00 Isla de Muerta Map", LocationTypes=[locationType.PR], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(263, "00 Follow the Wind", LocationTypes=[locationType.PR], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(353, "Agrabah Agrabah Map", LocationTypes=[locationType.Agrabah], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(300, "Agrabah Lamp Charm", LocationTypes=[locationType.Agrabah], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(353, "Agrabah Agrabah Map", LocationTypes=[locationType.Agrabah], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(300, "Agrabah Lamp Charm", LocationTypes=[locationType.Agrabah], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(301, "00 Magnet Element", LocationTypes=[locationType.HT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(301, "00 Magnet Element", LocationTypes=[locationType.HT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(264, "00 Circle of Life", LocationTypes=[locationType.PL], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(302, "00 Fire Element", LocationTypes=[locationType.PL], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(264, "00 Circle of Life", LocationTypes=[locationType.PL], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(302, "00 Fire Element", LocationTypes=[locationType.PL], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(515, "00 Rising Dragon", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
     KH2Treasure(542, "00 Serenity Crystal", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(294, "00 Seifer´s Trophy", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(265, "00 Oathkeeper", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(543, "00 Limit Form", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(294, "00 Seifer´s Trophy", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(265, "00 Oathkeeper", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(543, "00 Limit Form", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(266, "00 Master Form", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(266, "00 Master Form", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(267, "00 Photon Debugger", LocationTypes=[locationType.SP], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(267, "00 Photon Debugger", LocationTypes=[locationType.SP], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(361, "00 Cure Element", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(269, "00 Ice Cream", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(511, "00 Picture", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(361, "00 Cure Element", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(269, "00 Ice Cream", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(511, "00 Picture", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(367, "00 Undersea Kingdom Map", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(270, "00 Rumbling Rose", LocationTypes=[locationType.BC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(325, "00 Castle Walls Map", LocationTypes=[locationType.BC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(270, "00 Rumbling Rose", LocationTypes=[locationType.BC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(325, "00 Castle Walls Map", LocationTypes=[locationType.BC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(296, "00 Cursed Medallion", LocationTypes=[locationType.PR], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(331, "00 Ship Graveyard Map", LocationTypes=[locationType.PR], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(296, "00 Cursed Medallion", LocationTypes=[locationType.PR], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(331, "00 Ship Graveyard Map", LocationTypes=[locationType.PR], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(295, "00 Auron´s Statue", LocationTypes=[locationType.OC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(272, "00 Guardian Soul", LocationTypes=[locationType.OC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(295, "00 Auron´s Statue", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(272, "00 Guardian Soul", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
     KH2Treasure(514, "00 Genji Shield", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
     KH2Treasure(541, "00 Skillful Ring", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(303, "Agrabah Wishing Lamp", LocationTypes=[locationType.Agrabah], InvalidChecks=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(297, "00 Present", LocationTypes=[locationType.HT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(298, "00 Decoy Presents", LocationTypes=[locationType.HT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(275, "00 Decisive Pumpkin", LocationTypes=[locationType.HT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(297, "00 Present", LocationTypes=[locationType.HT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(298, "00 Decoy Presents", LocationTypes=[locationType.HT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(275, "00 Decisive Pumpkin", LocationTypes=[locationType.HT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(287, "00 Mysterious Abyss", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
     KH2Treasure(279, "00 Blizzard Element", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
@@ -428,81 +428,81 @@ treasureList = [
     KH2Treasure(285, "00 Cure Element", LocationTypes=[locationType.HUNDREDAW], InvalidChecks=[itemType.TORN_PAGE,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
     KH2Treasure(539, "00 Orichalcum+", LocationTypes=[locationType.HUNDREDAW], InvalidChecks=[itemType.TORN_PAGE,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(276, "00 Sleeping Lion", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(282, "00 Fenrir", LocationTypes=[locationType.HB, locationType.Sephi], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(276, "00 Sleeping Lion", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(282, "00 Fenrir", LocationTypes=[locationType.HB, locationType.Sephi], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(516, "00 Fatal Crest", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
     KH2Treasure(517, "00 Orichalcum+", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(317, "00 Bond of Flame", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(317, "00 Bond of Flame", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(277, "00 Two Become One", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(278, "00 Oblivion", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-    KH2Treasure(496, "00 Castle That Never Was Map", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(277, "00 Two Become One", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(278, "00 Oblivion", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(496, "00 Castle That Never Was Map", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(518, "00 Hades Cup Trophy", LocationTypes=[locationType.OC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(518, "00 Hades Cup Trophy", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(525, "00 Secret Ansem Report 1", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(525, "00 Secret Ansem Report 1", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(526, "00 Secret Ansem Report 2", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(526, "00 Secret Ansem Report 2", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(527, "00 Secret Ansem Report 3", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(527, "00 Secret Ansem Report 3", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(528, "00 Secret Ansem Report 4", LocationTypes=[locationType.PR], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(528, "00 Secret Ansem Report 4", LocationTypes=[locationType.PR], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(529, "00 Secret Ansem Report 5", LocationTypes=[locationType.OC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(529, "00 Secret Ansem Report 5", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(530, "00 Secret Ansem Report 6", LocationTypes=[locationType.BC], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(530, "00 Secret Ansem Report 6", LocationTypes=[locationType.BC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(531, "00 Secret Ansem Report 7", LocationTypes=[locationType.HB], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(531, "00 Secret Ansem Report 7", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(532, "00 Secret Ansem Report 8", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(532, "00 Secret Ansem Report 8", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(533, "00 Secret Ansem Report 9", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(533, "00 Secret Ansem Report 9", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(534, "00 Secret Ansem Report 10", LocationTypes=[locationType.TT], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(534, "00 Secret Ansem Report 10", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(535, "00 Secret Ansem Report 11", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(535, "00 Secret Ansem Report 11", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(536, "00 Secret Ansem Report 12", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(536, "00 Secret Ansem Report 12", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(537, "00 Secret Ansem Report 13", LocationTypes=[locationType.TWTNW], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(537, "00 Secret Ansem Report 13", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(544, "00 Road to Discovery", LocationTypes=[locationType.HT, locationType.AS], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(544, "00 Road to Discovery", LocationTypes=[locationType.HT, locationType.AS], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(545, "Strength Beyond Strength", LocationTypes=[locationType.Agrabah, locationType.AS], InvalidChecks=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(546, "00 Book of Shadows", LocationTypes=[locationType.OC, locationType.AS], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(546, "00 Book of Shadows", LocationTypes=[locationType.OC, locationType.AS], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(547, "00 Cloaked Thunder", LocationTypes=[locationType.SP, locationType.AS], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(547, "00 Cloaked Thunder", LocationTypes=[locationType.SP, locationType.AS], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(548, "00 Eternal Blossom", LocationTypes=[locationType.DC, locationType.AS], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(548, "00 Eternal Blossom", LocationTypes=[locationType.DC, locationType.AS], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(549, "00 Lost Illusion", LocationTypes=[locationType.HT, locationType.AS], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(549, "00 Lost Illusion", LocationTypes=[locationType.HT, locationType.AS], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(550, "00 Lost Illusion", LocationTypes=[locationType.Agrabah, locationType.AS], InvalidChecks=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(551, "00 Lost Illusion", LocationTypes=[locationType.OC, locationType.AS], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(551, "00 Lost Illusion", LocationTypes=[locationType.OC, locationType.AS], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(552, "00 Lost Illusion", LocationTypes=[locationType.SP, locationType.AS], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(552, "00 Lost Illusion", LocationTypes=[locationType.SP, locationType.AS], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(553, "00 Lost Illusion", LocationTypes=[locationType.DC, locationType.AS], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(553, "00 Lost Illusion", LocationTypes=[locationType.DC, locationType.AS], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(560, "00 AP Boost", LocationTypes=[locationType.HB, locationType.DataOrg], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(560, "00 AP Boost", LocationTypes=[locationType.HB, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(559, "00 Defense Boost", LocationTypes=[locationType.BC, locationType.DataOrg], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(559, "00 Defense Boost", LocationTypes=[locationType.BC, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(561, "00 Magic Boost", LocationTypes=[locationType.TT, locationType.DataOrg], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(561, "00 Magic Boost", LocationTypes=[locationType.TT, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(554, "00 Power Boost", LocationTypes=[locationType.TWTNW, locationType.DataOrg], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(554, "00 Power Boost", LocationTypes=[locationType.TWTNW, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(555, "00 Defense Boost", LocationTypes=[locationType.LoD, locationType.DataOrg], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(555, "00 Defense Boost", LocationTypes=[locationType.LoD, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(556, "00 Defense Boost", LocationTypes=[locationType.PL, locationType.DataOrg], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(556, "00 Defense Boost", LocationTypes=[locationType.PL, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(557, "00 AP Boost", LocationTypes=[locationType.PR, locationType.DataOrg], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(557, "00 AP Boost", LocationTypes=[locationType.PR, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-    KH2Treasure(558, "00 Magic Boost", LocationTypes=[locationType.STT, locationType.DataOrg], invalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+    KH2Treasure(558, "00 Magic Boost", LocationTypes=[locationType.STT, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
     KH2Treasure(587, "00 Proof of Connection", LocationTypes=[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
