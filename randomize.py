@@ -118,10 +118,9 @@ def Randomize(
         itemsList.insert(0, KH2Item(524, "Promise Charm","Proof"))
 
 
-    spoilerLogLocations = []
-    spoilerLogItems = itemsList[:] + donaldAbilityList[:] + goofyAbilityList[:]
+    spoilerLogLocationItems = []
 
-    randomizeLocations(itemsList, locationList, exclude, spoilerLogLocations)
+    randomizeLocations(itemsList, locationList, exclude, spoilerLogLocationItems)
 
     #FILL REMAINING LOCATIONS WITH JUNK
     for location in locationList:
@@ -140,11 +139,11 @@ def Randomize(
 
     donaldLocationList = donaldItemList + donaldBonusList + donaldStartingList
 
-    randomizeLocations(donaldAbilityList, donaldLocationList, exclude, spoilerLogLocations)
+    randomizeLocations(donaldAbilityList, donaldLocationList, exclude, spoilerLogLocationItems)
 
     goofyLocationList = goofyItemList + goofyBonusList + goofyStartingList
 
-    randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocations)
+    randomizeLocations(goofyAbilityList, goofyLocationList, exclude, spoilerLogLocationItems)
 
     #TODO: INCORPORATE BOSS/ENEMY RANDO
 
@@ -199,7 +198,7 @@ def Randomize(
     padStartingItem(formattedPlrp, LocationList.goofyStarting)
 
     if spoilerLog:
-        spoilerLogOut = generateSpoilerLog(spoilerLogLocations, spoilerLogItems)
+        spoilerLogOut = generateSpoilerLog(spoilerLogLocationItems)
 
     #OUTPUT
     yaml.emitter.Emitter.process_tag = noop
@@ -267,7 +266,7 @@ def randomizeKeyblades(keybladeStats, validKeybladeAbilities, keybladeMinStat, k
         keyblade.Attack = random.randint(keybladeMinStat, keybladeMaxStat)
         keyblade.Magic = random.randint(keybladeMinStat, keybladeMaxStat)
 
-def randomizeLocations(itemsList, locationList, exclude, spoilerLogLocations):
+def randomizeLocations(itemsList, locationList, exclude, spoilerLogLocationItems):
     for item in itemsList[:]:
         while(item in itemsList):
             randomLocation = random.choice(locationList)
@@ -279,7 +278,7 @@ def randomizeLocations(itemsList, locationList, exclude, spoilerLogLocations):
                 elif not randomLocation.BonusItem2 == 0:
                     locationList.remove(randomLocation)
 
-                spoilerLogLocations.append(randomLocation)
+                spoilerLogLocationItems.append((randomLocation,item))
 
 #not DoubleReward = remove
 #DoubleReward + BonusItem2 = remove

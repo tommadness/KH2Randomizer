@@ -1,12 +1,10 @@
 import itemClass
 import locationClass
 
-def generateSpoilerLog(locations, items):
+
+
+def generateSpoilerLog(locationItems):
     outString = ""
-    print(locations)
-    print(items)
-    for location in locations:
-        item = [item for item in items if item.Id == location.getReward()]
-        print(item)
-        outString += "{location} : {item}\n".format(location=location.getDescription(), item=item[0].Name)
+    for location,item in locationItems:
+        outString += "{location} : {item}\n".format(location=location.getDescription(), item=item.Name)
     return outString
