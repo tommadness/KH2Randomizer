@@ -79,16 +79,15 @@ def RandomizeCmdMenus(cmdMenuChoice):
     else:
         for cmdMenu in cmdMenus[:]:
             cmdMenusDict[cmdMenu] = cmdMenuChoice
-    cmdMenuOut = ""
+    cmdMenuAssets = []
     for key in cmdMenusDict:
-        cmdMenuOut += """
-- name: field2d\\jp\\{key}command.2dd
-  method: copy
-  source:
-  - name: CommandMenus\\{cmdMenu}command.2dd
-        """.format(key = key, cmdMenu=cmdMenusDict[key])
+        cmdMenuAssets.append({
+            "name": "field2d\\jp\\{key}command.2dd".format(key=key),
+            "method": "copy",
+            "source": [{"name": "CommandMenus\\{cmdMenu}command.2dd".format(cmdMenu=cmdMenusDict[key])}]
+        })
     
-    return cmdMenuOut
+    return cmdMenuAssets
 
 
 

@@ -8,7 +8,7 @@ from hashTextEntries import hashTextEntries
 from configDict import itemType, locationType
 import LvupStats
 from mod import mod
-import os, yaml, zipfile, io, random
+import os, yaml, zipfile, io, random, json
 
 def noop(self, *args, **kw):
     pass
@@ -28,10 +28,12 @@ def Randomize(
         }, 
     soraExpMult = 1, 
     levelChoice = "ExcludeFrom50", 
-    cmdMenuChoice = "Vanilla", 
+    cmdMenuChoice = "vanilla", 
     spoilerLog = True,
     promiseCharm = False,
-    goMode = False
+    goMode = False,
+    # enemyOptions = {},
+    enemyOptions={}
     ):
     #Setup lists without modifying base lists
 
@@ -69,7 +71,6 @@ def Randomize(
     if not spoilerLog:
         random.randint(0,100) #Make sure the same seed name with and without spoiler log changes the randomization
 
-    modOut = "#" + seedName + "\n" + mod
 
     #KEYBLADE ABILITIES AND STATS
     validKeybladeAbilities = []
@@ -153,8 +154,6 @@ def Randomize(
             bonus.setStat(randomStat)
             bonsStats.remove(randomStat)
 
-    #TODO: INCORPORATE BOSS/ENEMY RANDO
-
     #FORM EXPERIENCE
     for formLevel in formLevels:
         formLevel.Experience = round(formExp[int(formLevel.FormId)][int(formLevel.FormLevel)] / formExpMult[str(formLevel.FormId)])
@@ -167,7 +166,7 @@ def Randomize(
     sysBarOut = "- id: 17198\r\n  en: '{hashString}'".format(hashString = generateHashString())
 
 
-    commandMenuString = RandomizeCmdMenus(cmdMenuChoice)
+    commandMenuAssets = RandomizeCmdMenus(cmdMenuChoice)
 
     #FORMAT FOR OUTPUT
     formattedTrsr = {}
@@ -232,13 +231,26 @@ def Randomize(
         plrpList = yaml.dump(formattedPlrp, line_break="\r\n")
         outZip.writestr("PlrpList.yml",plrpList)
 
+        enemySpoilers = None
+        if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
+            from khbr.randomizer import Randomizer as khbr
+            enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
+
         if spoilerLog:
             outZip.writestr("spoilerlog.txt",spoilerLogOut)
+            if enemySpoilers:
+                outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 
         outZip.writestr("sys.yml",sysBarOut)
 
-        outZip.writestr("mod.yml", modOut+commandMenuString)
-        if not commandMenuString == "":
+        mod["assets"] += commandMenuAssets
+        mod["title"] += " {}".format(seedName)
+        print(len(mod["assets"]))
+        print(len(set([json.dumps(i) for i in mod["assets"]])))
+        print(yaml.dump(mod))
+        modOut = "#" + seedName + "\n" + yaml.dump(mod)
+        outZip.writestr("mod.yml", modOut)
+        if commandMenuAssets:
             for folderName, subfolders, filenames in os.walk("CommandMenus"):
                 for filename in filenames:
                     filePath = os.path.join(folderName, filename)
@@ -290,3 +302,9 @@ def randomizeLocations(itemsList, locationList, exclude, spoilerLogLocationItems
 
 #not DoubleReward = remove
 #DoubleReward + BonusItem2 = remove
+
+# for testing
+if __name__ == '__main__':
+    seed = "XYZ"
+    data = Randomize(seedName=seed, cmdMenuChoice="randAll").getbuffer()
+    open(seed, "wb").write(data)
