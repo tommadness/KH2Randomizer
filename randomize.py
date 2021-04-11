@@ -33,7 +33,7 @@ def Randomize(
     promiseCharm = False,
     goMode = False,
     # enemyOptions = {},
-    enemyOptions={}
+    enemyOptions={"boss":"Disabled"}
     ):
     #Setup lists without modifying base lists
     print(enemyOptions)
@@ -240,7 +240,7 @@ def Randomize(
                 enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
 
         if spoilerLog:
-            outZip.writestr("spoilerlog.txt",spoilerLogOut)
+            outZip.writestr("spoilerlog.txt",json.dumps(spoilerLogOut, indent=4))
             if enemySpoilers:
                 outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 

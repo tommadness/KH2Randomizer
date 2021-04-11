@@ -4,7 +4,12 @@ import locationClass
 
 
 def generateSpoilerLog(locationItems):
-    outString = ""
+    outDict = {"Weapons": []}
     for location,item in locationItems:
-        outString += "{location} : {item}\n".format(location=location.getDescription(), item=item.Name)
-    return outString
+        if not location.LocationTypes == []:
+            if not location.LocationTypes[0] in outDict.keys():
+                outDict[location.LocationTypes[0]] = []
+            outDict[location.LocationTypes[0]].append((location.getDescription(),item.Name))
+        else:
+            outDict["Weapons"].append((location.getDescription(), item.Name))
+    return outDict

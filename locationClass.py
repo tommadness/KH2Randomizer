@@ -18,7 +18,7 @@ class KH2Treasure:
         return self.ItemId
 
     def getDescription(self):
-        return "{world} : {self.Description}".format(self=self, world=self.LocationTypes[0].value)
+        return self.Description
 
 
 
