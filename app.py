@@ -134,7 +134,8 @@ def randomizePage():
     keybladeMinStat = int(session.get('keybladeMinStat')),
     keybladeMaxStat = int(session.get('keybladeMaxStat')),
     keybladeAbilities = session.get('keybladeAbilities'),
-    enemyOptions = json.loads(session.get("enemyOptions"))
+    enemyOptions = json.loads(session.get("enemyOptions")),
+    hintsType = session.get("hintsType")
     )
 
     if isinstance(data,str):
