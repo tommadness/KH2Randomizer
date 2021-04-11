@@ -9,7 +9,7 @@ from configDict import itemType, locationType
 import LvupStats
 from modYml import modYml
 from hints import Hints
-import os, yaml, zipfile, io, random, json
+import os, yaml, zipfile, io, random, json, base64
 
 def noop(self, *args, **kw):
     pass
@@ -252,7 +252,10 @@ def Randomize(
             if enemySpoilers:
                 outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 
-        outZip.writestr("hints."+hintsType, json.dumps(hintsOut))
+        if not hintsType == "Disabled":
+            hintJson = json.dumps(hintsOut, indent=4).encode('utf-8')
+            outZip.writestr(seedName+".Hints", base64.b64encode(hintJson).decode('utf-8'))
+
         outZip.writestr("sys.yml",sysBarOut)
 
         mod["assets"] += commandMenuAssets
