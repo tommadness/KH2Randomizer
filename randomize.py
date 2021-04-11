@@ -7,7 +7,7 @@ from spoilerLog import generateSpoilerLog
 from hashTextEntries import hashTextEntries
 from configDict import itemType, locationType
 import LvupStats
-from mod import mod
+from modYml import modYml
 import os, yaml, zipfile, io, random, json
 
 def noop(self, *args, **kw):
@@ -64,6 +64,8 @@ def Randomize(
 
     donaldAbilityList = ItemList.donaldAbilityList[:]
     goofyAbilityList = ItemList.goofyAbilityList[:]
+
+    mod = modYml.getDefaultMod()
 
     exclude.append("Level1Form") #Always exclude level 1 forms from getting checks
     exclude.append(levelChoice)
@@ -232,9 +234,10 @@ def Randomize(
         outZip.writestr("PlrpList.yml",plrpList)
 
         enemySpoilers = None
-        if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
-            from khbr.randomizer import Randomizer as khbr
-            enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
+        if not enemyOptions["boss"] == "Disabled":
+            if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
+                from khbr.randomizer import Randomizer as khbr
+                enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
 
         if spoilerLog:
             outZip.writestr("spoilerlog.txt",spoilerLogOut)
