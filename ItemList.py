@@ -55,6 +55,12 @@ itemList = [
     KH2Item(567, "Dodge Roll",itemType.GROWTH_ABILITY),
     KH2Item(568, "Dodge Roll",itemType.GROWTH_ABILITY),
 
+    KH2Item(26, "Valor Form", itemType.FORM),
+    KH2Item(27, "Wisdom Form", itemType.FORM),
+    KH2Item(29, "Final Form", itemType.FORM),
+    KH2Item(31, "Master Form", itemType.FORM),
+    KH2Item(563, "Limit Form", itemType.FORM),
+
     KH2Item(32, "Torn Pages",itemType.TORN_PAGE),
     KH2Item(32, "Torn Pages",itemType.TORN_PAGE),
     KH2Item(32, "Torn Pages",itemType.TORN_PAGE),
