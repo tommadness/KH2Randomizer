@@ -249,7 +249,7 @@ def Randomize(
             if enemySpoilers:
                 outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 
-        outZip.writestr("hints"+hintsType, json.dumps(hintsOut))
+        outZip.writestr("hints."+hintsType, json.dumps(hintsOut))
         outZip.writestr("sys.yml",sysBarOut)
 
         mod["assets"] += commandMenuAssets

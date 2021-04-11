@@ -118,6 +118,16 @@
         </div>
         {%endfor%}
     </div>
+    <div class="row mb-3">
+    <h4>Hint System:</h4>
+    <div class="col-4">
+    <select name="hintsType">
+    {%for option in hintSystems%}
+        <option value={{option}}>{{option}}</option>
+    {%endfor%}
+    </select>
+    </div>
+    </div>
     Generate Spoiler Log: <input type="checkbox" name="spoilerLog"><br>
     <input type='submit'>
 </form>

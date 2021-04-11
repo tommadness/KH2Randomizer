@@ -14,3 +14,6 @@ class Hints:
                             hintsText[world] += 1
                     
         return hintsText
+
+    def getOptions():
+        return ["Disabled","Shananas"]

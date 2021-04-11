@@ -7,6 +7,7 @@ import numpy as np
 from urllib.parse import urlparse
 import os, base64, string, random, ast, zipfile, redis, json
 from khbr.randomizer import Randomizer as khbr
+from hints import Hints
 
 app = Flask(__name__)
 
@@ -18,7 +19,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options())
+    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions())
 
 
 
@@ -88,6 +89,8 @@ def seed():
         }
         session['enemyOptions'] = json.dumps(enemyOptions)
 
+        session['hintsType'] = fl.request.form.get("hintsType")
+
 
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
@@ -110,7 +113,8 @@ def seed():
     keybladeMinStat = session.get('keybladeMinStat'),
     keybladeMaxStat = session.get('keybladeMaxStat'),
     keybladeAbilities = session.get('keybladeAbilities'),
-    enemyOptions = json.loads(session.get("enemyOptions"))
+    enemyOptions = json.loads(session.get("enemyOptions")),
+    hintsType = session.get("hintsType")
     )
     
 @app.route('/download')
