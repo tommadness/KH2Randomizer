@@ -6,6 +6,7 @@ import flask as fl
 import numpy as np
 from urllib.parse import urlparse
 import os, base64, string, random, ast, zipfile, redis, json
+from khbr.randomizer import Randomizer as khbr
 
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message)
+    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options())
 
 
 
@@ -78,6 +79,14 @@ def seed():
 
         session['promiseCharm'] = bool(fl.request.form.get("PromiseCharm") or False)
         session['goMode'] = bool(fl.request.form.get("GoMode") or False)
+        session['bossEnemy'] = bool(fl.request.form.get("bossEnemy") or False)
+        enemyOptions = {
+            "boss": fl.request.form.get("boss"),
+            "nightmare_bosses": bool(fl.request.form.get("nightmare_bosses")),
+            "stable_bosses_only": bool(fl.request.form.get("stable_bosses_only")),
+            "selected_boss": fl.request.form.get("selected_boss")
+        }
+        session['enemyOptions'] = json.dumps(enemyOptions)
 
 
 
@@ -101,6 +110,7 @@ def seed():
     keybladeMinStat = session.get('keybladeMinStat'),
     keybladeMaxStat = session.get('keybladeMaxStat'),
     keybladeAbilities = session.get('keybladeAbilities'),
+    enemyOptions = json.loads(session.get("enemyOptions"))
     )
     
 @app.route('/download')
@@ -120,6 +130,7 @@ def randomizePage():
     keybladeMinStat = int(session.get('keybladeMinStat')),
     keybladeMaxStat = int(session.get('keybladeMaxStat')),
     keybladeAbilities = session.get('keybladeAbilities'),
+    enemyOptions = json.loads(session.get("enemyOptions"))
     )
 
     if isinstance(data,str):

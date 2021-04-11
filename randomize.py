@@ -36,7 +36,7 @@ def Randomize(
     enemyOptions={}
     ):
     #Setup lists without modifying base lists
-
+    print(enemyOptions)
     itemList = ItemList.itemList[:]
     supportAbilityList = ItemList.supportAbilityList[:]
     actionAbilityList = ItemList.actionAbilityList[:]

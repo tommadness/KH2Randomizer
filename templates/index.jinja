@@ -1,5 +1,11 @@
 {% extends "head.jinja" %}
 {% block content %}
+
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
         
 <div class="container" id="form">
 <h2>{{message}}</h2>
@@ -12,6 +18,7 @@
     
         {%set ns = namespace(counter = 0)%}
     <div class="container mb-3" id="worlds">
+    <h4>Item Randomizer:</h4>
     {% for location in locations %}
         {% if ns.counter % 3 == 0%}
         <div class="row">
@@ -83,7 +90,7 @@
     {% if ns.counter % 3 == 0 %}
         <div class="row justify-content-evenly">
     {% endif %}
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="input-group">
                 <label class="form-check-label col-8" for="{{config}}">{{miscConfig[config]}}:</label>
                 <div class="form-check form-switch col">
@@ -98,6 +105,25 @@
     {% endfor %}
     </div>
     <br/>
+    <h4>Boss/Enemy Randomizer:</h4>
+    <div class="row mb-3">
+        {%for optionGroup in bossEnemyConfig%}
+        <div class="col">
+        <label for="{{optionGroup}}" data-toggle="tooltip" data-placement="top" title="{{bossEnemyConfig[optionGroup].description}}">{{bossEnemyConfig[optionGroup].display_name}}</label>
+        {%if bossEnemyConfig[optionGroup].possible_values == [True, False] or bossEnemyConfig[optionGroup].possible_values == [False, True]%}
+        <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="{{optionGroup}}" name="{{optionGroup}}" {%if bossEnemyConfig[optionGroup].possible_values == [True, False]%} checked {%endif%}>
+        </div>
+        {%else%}
+        <select name="{{optionGroup}}">
+        {%for option in bossEnemyConfig[optionGroup].possible_values%}
+            <option value="{{option}}">{{option}}</option>
+        {%endfor%}
+        </select>
+        {%endif%}
+        </div>
+        {%endfor%}
+    </div>
     Generate Spoiler Log: <input type="checkbox" name="spoilerLog"><br>
     <input type='submit'>
 </form>
