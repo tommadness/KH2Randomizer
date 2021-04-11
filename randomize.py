@@ -1,6 +1,6 @@
 import ItemList
 import LocationList
-from itemClass import KH2Item
+from itemClass import KH2Item, ItemEncoder
 from experienceValues import formExp, soraExp
 from randomCmdMenu import RandomizeCmdMenus
 from spoilerLog import generateSpoilerLog
@@ -8,6 +8,7 @@ from hashTextEntries import hashTextEntries
 from configDict import itemType, locationType
 import LvupStats
 from modYml import modYml
+from hints import Hints
 import os, yaml, zipfile, io, random, json
 
 def noop(self, *args, **kw):
@@ -33,7 +34,8 @@ def Randomize(
     promiseCharm = False,
     goMode = False,
     # enemyOptions = {},
-    enemyOptions={"boss":"Disabled"}
+    enemyOptions={"boss":"Disabled"},
+    hintsType = "Shananas"
     ):
     #Setup lists without modifying base lists
     print(enemyOptions)
@@ -206,8 +208,11 @@ def Randomize(
 
     padStartingItem(formattedPlrp, LocationList.goofyStarting)
 
-    if spoilerLog:
-        spoilerLogOut = generateSpoilerLog(spoilerLogLocationItems)
+    
+    spoilerLogOut = generateSpoilerLog(spoilerLogLocationItems)
+
+    hintsOut = Hints.generateHints(spoilerLogOut, hintsType)
+    
 
     #OUTPUT
     yaml.emitter.Emitter.process_tag = noop
@@ -240,10 +245,11 @@ def Randomize(
                 enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
 
         if spoilerLog:
-            outZip.writestr("spoilerlog.txt",json.dumps(spoilerLogOut, indent=4))
+            outZip.writestr("spoilerlog.txt",json.dumps(spoilerLogOut, indent=4, cls=ItemEncoder))
             if enemySpoilers:
                 outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 
+        outZip.writestr("hints"+hintsType, json.dumps(hintsOut))
         outZip.writestr("sys.yml",sysBarOut)
 
         mod["assets"] += commandMenuAssets
