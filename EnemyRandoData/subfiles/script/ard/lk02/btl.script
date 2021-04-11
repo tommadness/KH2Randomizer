@@ -1,0 +1,4 @@
+Program 0x33
+Party DEFAULT
+Mission 0x6A "LK02_MS102"
+Spawn "b_40"

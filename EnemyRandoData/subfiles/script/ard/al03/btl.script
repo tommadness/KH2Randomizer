@@ -1,0 +1,17 @@
+Program 0x3B
+Party W_FRIEND
+Mission 0x44 "AL03_MS103"
+Spawn "b_40"
+
+Program 0x0A
+Capacity 8.7E-44
+StatusFlag3
+Spawn "b_20"
+
+Program 0x01
+Capacity 8.4E-44
+Spawn "b_00"
+
+Program 0x02
+Capacity 8.4E-44
+Spawn "b_01"

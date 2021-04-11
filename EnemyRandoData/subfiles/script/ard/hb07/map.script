@@ -1,0 +1,23 @@
+Program 0x00
+MapVisibility 0x00000003 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_94"
+
+Program 0x19
+MapVisibility 0x00000005 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+
+Program 0x1A
+MapVisibility 0x00000005 0x00000000
+Spawn "m_00"
+
+Program 0x1B
+MapVisibility 0x00000003 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_94"

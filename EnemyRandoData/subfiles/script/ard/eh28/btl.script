@@ -1,0 +1,11 @@
+Program 0x5B
+Party W_FRIEND
+MapVisibility 0x0000000b 0x00000000
+Spawn "b_99"
+Spawn "m_51"
+
+Program 0x44
+Progress 0x4844
+Party W_FRIEND
+Mission 0x10B "EH28_MS107"
+Spawn "b_99"

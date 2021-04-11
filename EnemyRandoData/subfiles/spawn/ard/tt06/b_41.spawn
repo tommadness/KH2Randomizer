@@ -1,0 +1,189 @@
+- Type: 1
+  Flag: 0
+  Id: 117
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities:
+  - ObjectId: 566
+    PositionX: -30.862289428710938
+    PositionY: -257.08441162109375
+    PositionZ: 789.813720703125
+    RotationX: 0
+    RotationY: 3.1415927410125732
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 16
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  - ObjectId: 567
+    PositionX: -130.86219787597656
+    PositionY: -218.01930236816406
+    PositionZ: 689.813720703125
+    RotationX: 0
+    RotationY: 3.1415927410125732
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 17
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  - ObjectId: 568
+    PositionX: 69.13775634765625
+    PositionY: -239.71380615234375
+    PositionZ: 689.813720703125
+    RotationX: 0
+    RotationY: 3.1415927410125732
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 18
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  - ObjectId: 765
+    PositionX: -25.982479095458984
+    PositionY: -278.99960327148438
+    PositionZ: 1062.1519775390625
+    RotationX: 0
+    RotationY: 3.1415927410125732
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 74
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  EventActivators: []
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []
+- Type: 4
+  Flag: 0
+  Id: 118
+  Teleport:
+    Place: 92
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities: []
+  EventActivators:
+  - Shape: 0
+    Option: 0
+    PositionX: -57.754989624023438
+    PositionY: -903.78948974609375
+    PositionZ: 4064.445068359375
+    ScaleX: 269.8609619140625
+    ScaleY: 253.40840148925781
+    ScaleZ: 323.57763671875
+    RotationX: 0
+    RotationY: 0
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters:
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  Signals: []
+- Type: 4
+  Flag: 0
+  Id: 119
+  Teleport:
+    Place: 92
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities: []
+  EventActivators:
+  - Shape: 0
+    Option: 0
+    PositionX: -75.800003051757812
+    PositionY: -1250
+    PositionZ: 2049.080078125
+    ScaleX: 909.635009765625
+    ScaleY: 1000
+    ScaleZ: 508.07501220703125
+    RotationX: 0
+    RotationY: -1.5707963705062866
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters:
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  Signals: []

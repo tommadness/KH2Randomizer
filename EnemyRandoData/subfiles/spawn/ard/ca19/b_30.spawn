@@ -1,0 +1,105 @@
+- Type: 2
+  Flag: 0
+  Id: 160
+  Teleport:
+    Place: 30
+    Door: 0
+    World: 15
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities:
+  - ObjectId: 314
+    PositionX: 166.898193359375
+    PositionY: -1000
+    PositionZ: -2014.760009765625
+    RotationX: 0
+    RotationY: 3.001589298248291
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 85
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 25
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  - ObjectId: 314
+    PositionX: 307.74688720703125
+    PositionY: -1353
+    PositionZ: -2195.0390625
+    RotationX: 0
+    RotationY: -1.5707963705062866
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 86
+    Argument1: 90
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 25
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  - ObjectId: 314
+    PositionX: -240.59309387207031
+    PositionY: -1360
+    PositionZ: -1989.5830078125
+    RotationX: 0
+    RotationY: 1.5707963705062866
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 87
+    Argument1: 90
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 15
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  EventActivators:
+  - Shape: 2
+    Option: 0
+    PositionX: -265.19198608398438
+    PositionY: -1240.823974609375
+    PositionZ: -2761.321044921875
+    ScaleX: 158.99800109863281
+    ScaleY: 100
+    ScaleZ: 167.30250549316406
+    RotationX: 0
+    RotationY: 1.5896455049514771
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters:
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  Signals: []

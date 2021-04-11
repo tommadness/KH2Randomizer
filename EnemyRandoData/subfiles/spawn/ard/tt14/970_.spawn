@@ -1,0 +1,488 @@
+- Type: 6
+  Flag: 0
+  Id: 485
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities:
+  - ObjectId: 1075
+    PositionX: -420.051513671875
+    PositionY: 1.23337704280857E-05
+    PositionZ: -2377.31591796875
+    RotationX: 0
+    RotationY: 1.9003232717514038
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 84
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 1312
+    SpawnDelay: 0
+    Command: 31
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  EventActivators:
+  - Shape: 0
+    Option: 0
+    PositionX: -798.35821533203125
+    PositionY: -100.00002288818359
+    PositionZ: -2163.81396484375
+    ScaleX: 109.70884704589844
+    ScaleY: 100
+    ScaleZ: 48.020401000976562
+    RotationX: 0
+    RotationY: -2.6720991134643555
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 1
+    PositionX: -382.58819580078125
+    PositionY: -100.00001525878906
+    PositionZ: -2308.6259765625
+    ScaleX: 138.54100036621094
+    ScaleY: 100
+    ScaleZ: 52.821998596191406
+    RotationX: 0
+    RotationY: 2.9204368591308594
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 0
+    PositionX: -609.5147705078125
+    PositionY: -100.00048065185547
+    PositionZ: -2603.5810546875
+    ScaleX: 91.596351623535156
+    ScaleY: 100.00045013427734
+    ScaleZ: 52.822151184082031
+    RotationX: 0
+    RotationY: 2.5015332698822021
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 2
+    PositionX: -366.84979248046875
+    PositionY: -100.00052642822266
+    PositionZ: -2694.326904296875
+    ScaleX: 29.757749557495117
+    ScaleY: 100.00050354003906
+    ScaleZ: 70.059501647949219
+    RotationX: 0
+    RotationY: -2.0775508880615234
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 2
+    PositionX: -734.20391845703125
+    PositionY: -100.00054931640625
+    PositionZ: -2286.381103515625
+    ScaleX: 29.757749557495117
+    ScaleY: 100.00050354003906
+    ScaleZ: 70.059501647949219
+    RotationX: 0
+    RotationY: -2.0775508880615234
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 2
+    PositionX: -123.30010223388672
+    PositionY: -100.00051116943359
+    PositionZ: -2440.6298828125
+    ScaleX: 29.757749557495117
+    ScaleY: 100.00050354003906
+    ScaleZ: 70.059501647949219
+    RotationX: 0
+    RotationY: -1.9335787296295166
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 0
+    PositionX: -857.12359619140625
+    PositionY: -100.00048828125
+    PositionZ: -2489.925048828125
+    ScaleX: 91.596351623535156
+    ScaleY: 100.00045013427734
+    ScaleZ: 52.822151184082031
+    RotationX: 0
+    RotationY: 2.8658900260925293
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 0
+    PositionX: -343.63958740234375
+    PositionY: -100.00048828125
+    PositionZ: -2512.25
+    ScaleX: 91.596351623535156
+    ScaleY: 100.00045013427734
+    ScaleZ: 52.822151184082031
+    RotationX: 0
+    RotationY: -3.1120476722717285
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath:
+  - Serial: 117
+    Flag: 1
+    Id: 0
+    Positions:
+    - X: -692.6915283203125
+      Y: -3.7534948205575347E-05
+      Z: -2482.577880859375
+    - X: -633.43701171875
+      Y: -3.2151303457794711E-05
+      Z: -2605.74169921875
+    - X: -403.86639404296875
+      Y: -2.714239053602796E-05
+      Z: -2720.332275390625
+    - X: -383.22039794921875
+      Y: -3.1091469281818718E-05
+      Z: -2629.98779296875
+    - X: -690.9427490234375
+      Y: -4.1309260268462822E-05
+      Z: -2396.231689453125
+    - X: -687.7288818359375
+      Y: -1.7493519408162683E-05
+      Z: -2259.27490234375
+    - X: -160.66949462890625
+      Y: -1.2572790183185134E-05
+      Z: -2371.847900390625
+    - X: -199.23159790039062
+      Y: -3.687473144964315E-05
+      Z: -2497.681884765625
+    - X: -876.51959228515625
+      Y: -3.7258359952829778E-05
+      Z: -2488.905517578125
+    - X: -899.2095947265625
+      Y: 4.6888439101167023E-05
+      Z: -2268.59521484375
+    - X: -675.42425537109375
+      Y: -2.3437429263140075E-05
+      Z: -2123.294189453125
+    - X: -551.51080322265625
+      Y: -2.0150830096099526E-05
+      Z: -2198.48291015625
+  ReturnParameters:
+  - Id: 0
+    Type: 2
+    Rate: 0
+    EntryType: 1
+    Argument04: 1076
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 1
+    Type: 0
+    Rate: 30
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 1
+    Type: 3
+    Rate: 30
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 2
+    Type: 0
+    Rate: 40
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 2
+    Type: 3
+    Rate: 30
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 2
+    Type: 0
+    Rate: 20
+    EntryType: 2
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 2
+    Type: 0
+    Rate: 20
+    EntryType: 1
+    Argument04: 1076
+    Argument08: 0
+    Argument0c: 0
+  Signals: []
+- Type: 6
+  Flag: 0
+  Id: 486
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities:
+  - ObjectId: 1076
+    PositionX: 409.44680786132812
+    PositionY: -1.8283379176864401E-05
+    PositionZ: -2339.23291015625
+    RotationX: 0
+    RotationY: -2.3738467693328857
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 85
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 1314
+    SpawnDelay: 0
+    Command: 31
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  EventActivators:
+  - Shape: 0
+    Option: 1
+    PositionX: 708.8082275390625
+    PositionY: -100.00043487548828
+    PositionZ: -2499.946044921875
+    ScaleX: 110.45649719238281
+    ScaleY: 100.00039672851562
+    ScaleZ: 56.542350769042969
+    RotationX: 0
+    RotationY: -1.9125300645828247
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 1
+    PositionX: 185.27999877929688
+    PositionY: -100.57586669921875
+    PositionZ: -2298.2529296875
+    ScaleX: 128.4029541015625
+    ScaleY: 100
+    ScaleZ: 56.542350769042969
+    RotationX: 0
+    RotationY: 0.30414736270904541
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 1
+    PositionX: 256.71780395507812
+    PositionY: -102.35416412353516
+    PositionZ: -2481.575927734375
+    ScaleX: 80.582550048828125
+    ScaleY: 100
+    ScaleZ: 56.542350769042969
+    RotationX: 0
+    RotationY: 0.35521864891052246
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 2
+    PositionX: 561.3621826171875
+    PositionY: -99.999969482421875
+    PositionZ: -2286.73095703125
+    ScaleX: 38.841751098632812
+    ScaleY: 100
+    ScaleZ: 69.108497619628906
+    RotationX: 0
+    RotationY: 0.61872988939285278
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 2
+    PositionX: 579.460205078125
+    PositionY: -99.999992370605469
+    PositionZ: -2686.696044921875
+    ScaleX: 38.841751098632812
+    ScaleY: 100
+    ScaleZ: 69.108497619628906
+    RotationX: 0
+    RotationY: -0.15131095051765442
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 2
+    PositionX: -65.446060180664062
+    PositionY: -99.999961853027344
+    PositionZ: -2450.343017578125
+    ScaleX: 38.841751098632812
+    ScaleY: 100
+    ScaleZ: 69.108497619628906
+    RotationX: 0
+    RotationY: 1.2872527837753296
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath:
+  - Serial: 118
+    Flag: 1
+    Id: 0
+    Positions:
+    - X: 724.95208740234375
+      Y: 4.0913699194788933E-05
+      Z: -2405.281005859375
+    - X: 613.2935791015625
+      Y: 4.6238154027378187E-05
+      Z: -2283.4716796875
+    - X: 547.4342041015625
+      Y: 4.3658637878252193E-05
+      Z: -2342.484130859375
+    - X: 568.3408203125
+      Y: -3.535065843607299E-05
+      Z: -2532.54833984375
+    - X: 445.18670654296875
+      Y: -0.23526138067245483
+      Z: -2574.374267578125
+    - X: 312.7379150390625
+      Y: -1.7831860780715942
+      Z: -2474.456787109375
+    - X: 210.49679565429688
+      Y: -2.6845781803131104
+      Z: -2511.635498046875
+    - X: 131.49229431152344
+      Y: -3.2928881645202637
+      Z: -2604.58203125
+    - X: -66.019096374511719
+      Y: -5.1168499339837581E-06
+      Z: -2513.959228515625
+    - X: -28.840499877929688
+      Y: -4.1140181565424427E-05
+      Z: -2400.099609375
+    - X: 252.14930725097656
+      Y: -1.5144870303629432E-05
+      Z: -2285.858154296875
+    - X: 399.03170776367188
+      Y: -0.1067354828119278
+      Z: -2359.148681640625
+    - X: 536.576171875
+      Y: -2.9956359867355786E-05
+      Z: -2655.95556640625
+    - X: 627.0660400390625
+      Y: -2.9798149626003578E-05
+      Z: -2659.574951171875
+  ReturnParameters:
+  - Id: 0
+    Type: 2
+    Rate: 0
+    EntryType: 1
+    Argument04: 1075
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 1
+    Type: 0
+    Rate: 30
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 1
+    Type: 3
+    Rate: 30
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 2
+    Type: 0
+    Rate: 40
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 2
+    Type: 3
+    Rate: 50
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 2
+    Type: 0
+    Rate: 20
+    EntryType: 2
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 2
+    Type: 0
+    Rate: 20
+    EntryType: 1
+    Argument04: 1075
+    Argument08: 0
+    Argument0c: 0
+  Signals: []

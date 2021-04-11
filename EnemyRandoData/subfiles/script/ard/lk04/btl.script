@@ -1,0 +1,24 @@
+Program 0x0A
+Capacity 9.1E-44
+Spawn "b_20"
+Spawn "b_35"
+
+Program 0x0B
+Capacity 9.1E-44
+Spawn "b_20"
+
+Program 0x01
+Capacity 9.1E-44
+Spawn "b_00"
+Spawn "b_10"
+
+Program 0x02
+Capacity 9.1E-44
+Spawn "b_01"
+Spawn "b_10"
+
+Program 0x19
+Spawn "b_90"
+
+Program 0x1A
+Spawn "b_93"

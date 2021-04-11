@@ -1,0 +1,139 @@
+Program 0x64
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x00
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x45
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x01
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x46
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x02
+MapVisibility 0x00000061 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x52
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x47
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x03
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+SpawnAlt "m_21"
+Spawn "m_70"
+
+Program 0x4A
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x19
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x61
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x59
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x56
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"
+
+Program 0x1A
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_70"
+
+Program 0x58
+MapVisibility 0x00000041 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_22"
+Spawn "m_70"

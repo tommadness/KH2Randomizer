@@ -1,0 +1,35 @@
+Program 0x3E
+Bgm 110 110
+AreaSettings 16 -1
+	SetProgressFlag 0x1C3B
+	SetEvent "209" Type 18
+	SetJump Type 1 World AL Area 0 Entrance 0 LocalSet 0 FadeType 1
+	SetInventory 303
+	SetPartyMenu 0
+
+
+Program 0x0A
+Party W_FRIEND
+Bgm 110 110
+AreaSettings 0 -1
+	SetProgressFlag 0x1C3A
+	SetEvent "208" Type 2
+	SetJump Type 2 World AL Area 0 Entrance 0 LocalSet 62 FadeType 1
+	SetPartyMenu 0
+
+Unk1d 1
+
+Program 0x91
+Bgm 110 110
+AreaSettings 0 -1
+	SetEvent "208" Type 66
+	SetJump Type 2 World AL Area 0 Entrance 0 LocalSet 146 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x92
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "209" Type 66
+	SetJump Type 2 World AL Area 0 Entrance 0 LocalSet 147 FadeType 1
+	SetPartyMenu 0

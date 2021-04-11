@@ -1,0 +1,135 @@
+- Type: 6
+  Flag: 0
+  Id: 789
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities:
+  - ObjectId: 1172
+    PositionX: 88.49359130859375
+    PositionY: 9.4444558271788992E-06
+    PositionZ: 741.244873046875
+    RotationX: 0
+    RotationY: 1.3409279584884644
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 62
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 1411
+    SpawnDelay: 0
+    Command: 31
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  EventActivators:
+  - Shape: 0
+    Option: 1
+    PositionX: 142.24200439453125
+    PositionY: -99.999992370605469
+    PositionZ: 705.36517333984375
+    ScaleX: 150.47050476074219
+    ScaleY: 100
+    ScaleZ: 39.968448638916016
+    RotationX: 0
+    RotationY: 2.9222309589385986
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  - Shape: 0
+    Option: 0
+    PositionX: 270.63320922851562
+    PositionY: -100.00001525878906
+    PositionZ: 452.34878540039062
+    ScaleX: 82.318550109863281
+    ScaleY: 100
+    ScaleZ: 39.968433380126953
+    RotationX: 0
+    RotationY: 2.184661865234375
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath:
+  - Serial: 92
+    Flag: 1
+    Id: 0
+    Positions:
+    - X: 10.053990364074707
+      Y: -0.49991840124130249
+      Z: 715.1317138671875
+    - X: -8.1822595596313477
+      Y: -0.4999205470085144
+      Z: 666.12176513671875
+    - X: 111.49318695068359
+      Y: 1.340000017080456E-05
+      Z: 638.76739501953125
+    - X: 240.28669738769531
+      Y: 1.4199999895936344E-05
+      Z: 548.72589111328125
+    - X: 369.08029174804688
+      Y: 1.8099999579135329E-05
+      Z: 626.22998046875
+    - X: 325.76910400390625
+      Y: -1.9400000383029692E-05
+      Z: 706.0135498046875
+    - X: 230.02879333496094
+      Y: -0.5000004768371582
+      Z: 679.7989501953125
+    - X: 208.92759704589844
+      Y: -1.7500000467407517E-05
+      Z: 555.97882080078125
+    - X: 341.83819580078125
+      Y: 4.3000000005122274E-06
+      Z: 372.2069091796875
+    - X: 395.29489135742188
+      Y: 2.0699999367934652E-05
+      Z: 423.35159301757812
+    - X: 277.19268798828125
+      Y: -1.3199999557400588E-05
+      Z: 655.31927490234375
+  ReturnParameters:
+  - Id: 0
+    Type: 2
+    Rate: 0
+    EntryType: 1
+    Argument04: 1285
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 0
+    Type: 0
+    Rate: 0
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 1
+    Type: 0
+    Rate: 40
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  - Id: 1
+    Type: 3
+    Rate: 40
+    EntryType: 0
+    Argument04: 0
+    Argument08: 0
+    Argument0c: 0
+  Signals: []

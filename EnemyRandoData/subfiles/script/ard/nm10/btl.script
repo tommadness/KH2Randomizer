@@ -1,0 +1,17 @@
+Program 0x3E
+Progress 0x383a
+Party W_FRIEND
+Mission 0x72 "NM10_MS201"
+Spawn "b_60"
+
+Program 0x48
+Party W_FRIEND
+Mission 0x119 "NM10_MS203_FREE"
+Unk1d 1
+Spawn "b_61"
+
+Program 0x3F
+Party W_FRIEND
+Mission 0x74 "NM10_MS203"
+Unk1d 1
+Spawn "b_61"

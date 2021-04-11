@@ -1,0 +1,321 @@
+Program 0xD0
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "102" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 209 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x15
+Spawn "e_50"
+Spawn "c02_"
+Spawn "z00s"
+
+Program 0x0A
+AreaSettings 0 -1
+	SetProgressFlag 0x1865
+	SetEvent "201" Type 2
+	SetJump Type 1 World HE Area 3 Entrance 54 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x16
+Layout "file/%s/he_co.2ld"
+Spawn "e_50"
+Spawn "e55_"
+Spawn "z00s"
+Spawn "f53m"
+SpawnAlt "f52m"
+
+Program 0x0B
+AreaSettings 0 -1
+	SetProgressFlag 0x1866
+	SetEvent "218" Type 2
+	SetJump Type 1 World HE Area 3 Entrance 56 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x0C
+AreaSettings 0 -1
+	SetProgressFlag 0x1867
+	SetEvent "202" Type 2
+	SetJump Type 1 World HE Area 3 Entrance 56 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x01
+Spawn "z00s"
+
+Program 0xF6
+AreaSettings 0 -1
+	SetEvent "206s" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 247 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0D
+Layout "file/%s/he_co.2ld"
+AreaSettings 9 -1
+	SetProgressFlag 0x187D
+	SetEvent "203" Type 1
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 124 FadeType 1
+	SetPartyMenu 0
+
+Unk1d 4
+Spawn "e_50"
+Spawn "a52_"
+Spawn "c52_"
+Spawn "e52y"
+Spawn "h50_"
+Spawn "z00s"
+Spawn "f51m"
+SpawnAlt "f52m"
+
+Program 0x02
+Bgm 102 102
+AreaSettings 9 -1
+	SetProgressFlag 0x1843
+	SetEvent "103" Type 1
+	SetJump Type 1 World HE Area 3 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c00e"
+Spawn "z00s"
+
+Program 0x100
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "216" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 257 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0E
+Layout "file/%s/he_co.2ld"
+AreaSettings 9 -1
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 124 FadeType 1
+	SetPartyMenu 0
+
+Unk1d 4
+Spawn "e_50"
+Spawn "a52_"
+Spawn "c52_"
+Spawn "e52y"
+Spawn "h50_"
+Spawn "z00s"
+Spawn "f51m"
+SpawnAlt "f52m"
+
+Program 0x03
+Spawn "e_50"
+Spawn "b05_"
+Spawn "c03_"
+Spawn "d00_"
+Spawn "z00s"
+
+Program 0xC5
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x1833
+	SetEvent "102" Type 2
+	SetJump Type 1 World HE Area 3 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0F
+Layout "file/%s/he_co.2ld"
+AreaSettings 9 -1
+	SetProgressFlag 0x1831
+	SetEvent "205" Type 1
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 125 FadeType 1
+	SetPartyMenu 0
+
+Unk1d 4
+Spawn "e_50"
+Spawn "a53_"
+Spawn "c53_"
+Spawn "e53y"
+Spawn "h51_"
+Spawn "z00s"
+Spawn "f51m"
+SpawnAlt "f52m"
+
+Program 0x04
+AreaSettings 1 44
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 67 FadeType -1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "z00s"
+
+Program 0x10
+Layout "file/%s/he_co.2ld"
+AreaSettings 9 -1
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 125 FadeType 1
+	SetPartyMenu 0
+
+Unk1d 4
+Spawn "e_50"
+Spawn "a53_"
+Spawn "c53_"
+Spawn "e53y"
+Spawn "h51_"
+Spawn "z00s"
+Spawn "f51m"
+SpawnAlt "f52m"
+
+Program 0x05
+AreaSettings 0 -1
+	SetProgressFlag 0x1858
+	SetEvent "126" Type 2
+	SetJump Type 1 World HE Area 3 Entrance 52 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "z00s"
+
+Program 0xFC
+AreaSettings 0 -1
+	SetEvent "219" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 253 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xD2
+AreaSettings 0 -1
+	SetEvent "103s" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 211 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x11
+AreaSettings 0 -1
+	SetProgressFlag 0x186D
+	SetEvent "207" Type 2
+	SetJump Type 1 World HE Area 3 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x06
+AreaSettings 1 48
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 68 FadeType -1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "b04_"
+Spawn "z00s"
+
+Program 0xF8
+AreaSettings 0 -1
+	SetEvent "209" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 249 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xF4
+AreaSettings 0 -1
+	SetEvent "201s" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 245 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x12
+AreaSettings 9 -1
+	SetProgressFlag 0x186F
+	SetEvent "209" Type 1
+	SetJump Type 1 World HE Area 3 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "a55_"
+Spawn "c55_"
+Spawn "e51_"
+Spawn "f52_"
+Spawn "i50e"
+Spawn "z00s"
+
+Program 0x07
+Party DEFAULT
+AreaSettings 0 -1
+	SetProgressFlag 0x1862
+	SetEvent "137" Type 2
+	SetJump Type 1 World HE Area 3 Entrance 53 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0xC7
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x1835
+	SetEvent "216" Type 2
+	SetJump Type 1 World HE Area 14 Entrance 0 LocalSet 0 FadeType 1
+	SetInventory 272
+	SetPartyMenu 0
+
+
+Program 0x13
+Layout "file/%s/he_co.2ld"
+AreaSettings 9 -1
+	SetEvent "219" Type 1
+	SetJump Type 1 World HE Area 13 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Unk1d 4
+Spawn "e_50"
+Spawn "e54y"
+Spawn "h52_"
+Spawn "z00s"
+Spawn "f51m"
+SpawnAlt "f52m"
+
+Program 0x08
+Spawn "e_50"
+Spawn "b04_"
+Spawn "z00s"
+
+Program 0xF5
+AreaSettings 0 -1
+	SetEvent "202v" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 246 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xD1
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "103v" Type 66
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 210 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xC6
+AreaSettings 0 -1
+	SetProgressFlag 0x1834
+	SetMember 1
+	SetUnk05 0x1
+	SetEvent "118" Type 2
+	SetJump Type 1 World HE Area 3 Entrance 1 LocalSet 0 FadeType 1
+	SetPartyMenu 2
+
+
+Program 0x14
+Spawn "e_50"
+Spawn "c56_"
+Spawn "z00s"
+
+Program 0x09
+Spawn "e_50"
+Spawn "a54_"
+Spawn "c54_"
+Spawn "e50_"
+Spawn "f50_"
+Spawn "z00s"

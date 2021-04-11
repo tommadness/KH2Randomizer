@@ -1,0 +1,24 @@
+Program 0x01
+Capacity 7E-44
+StatusFlag3
+Spawn "b_00"
+
+Program 0x02
+Capacity 7E-44
+StatusFlag3
+Spawn "b_01"
+
+Program 0x39
+Progress 0x4843
+Party DEFAULT
+Mission 0xC7 "EH10_MS102"
+Unk1d 4
+Spawn "b_40"
+
+Program 0x64
+Progress 0x484a
+Party DEFAULT
+Mission 0xC7 "EH10_MS102"
+BattleLevel 99
+Unk1d 1
+Spawn "b_80"

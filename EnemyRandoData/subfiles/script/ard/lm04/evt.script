@@ -1,0 +1,169 @@
+Program 0x66
+AreaSettings 0 -1
+	SetEvent "905" Type 66
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 103 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x64
+Bgm 129 129
+AreaSettings 0 -1
+	SetEvent "411s" Type 66
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 106 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x37
+AreaSettings 0 -1
+	SetEvent "905" Type 2
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetProgressFlag 0x2C21
+	SetEvent "502" Type 72
+	SetJump Type 4 World LM Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetInventory 279 538
+	SetPartyMenu 0
+
+AreaSettings 8 -1
+	SetProgressFlag 0x2C42
+	SetEvent "503" Type 1
+	SetJump Type 1 World LM Area 2 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 55 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetProgressFlag 0x2C42
+	SetJump Type 1 World LM Area 2 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_00"
+
+Program 0x42
+AreaSettings 0 -1
+	SetEvent "901" Type 2
+	SetJump Type 1 World LM Area 2 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 66 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetJump Type 1 World LM Area 2 Entrance 20 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00
+
+
+Program 0x01
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2C23
+	SetEvent "105" Type 2
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 64 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x46
+AreaSettings 0 -1
+	SetEvent "905" Type 2
+	SetJump Type 1 World LM Area 2 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 70 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetJump Type 1 World LM Area 2 Entrance 20 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x02
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2C20
+	SetEvent "501" Type 2
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 55 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x3A
+Layout "file/%s/lm_al.2ld"
+
+Program 0x67
+AreaSettings 0 -1
+	SetEvent "502" Type 66
+	SetJump Type 6 World LM Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x4E
+AreaSettings 0 -1
+	SetEvent "106" Type 66
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 79 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x6A
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "501v" Type 66
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 102 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x68
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "105v" Type 66
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 77 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x19
+Layout "file/%s/lm_al.2ld"
+
+Program 0x4D
+AreaSettings 0 -1
+	SetEvent "901" Type 66
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 78 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x3E
+Layout "file/%s/lm_al.2ld"
+
+Program 0x36
+Spawn "e_00"
+
+Program 0x40
+AreaSettings 0 -1
+	SetEvent "901" Type 2
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetProgressFlag 0x2C24
+	SetEvent "106" Type 8
+	SetJump Type 1 World LM Area 6 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 8 -1
+	SetProgressFlag 0x2C3E
+	SetEvent "110" Type 1
+	SetJump Type 1 World LM Area 2 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 64 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetProgressFlag 0x2C3E
+	SetJump Type 1 World LM Area 2 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0

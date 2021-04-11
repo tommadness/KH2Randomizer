@@ -1,0 +1,201 @@
+Program 0xBF
+Bgm 120 120
+AreaSettings 7 10
+	SetProgressFlag 0x1841
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 181 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 3 World HE Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World HE Area 0 Entrance 1 LocalSet 191 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 3 Entrance 3 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xC0
+Bgm 120 120
+AreaSettings 7 10
+	SetProgressFlag 0x1844
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 183 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 3 World HE Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World HE Area 0 Entrance 1 LocalSet 192 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 3 Entrance 3 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xC1
+Bgm 120 120
+AreaSettings 7 10
+	SetProgressFlag 0x1847
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 6 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 3 World HE Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World HE Area 0 Entrance 1 LocalSet 193 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 6 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x7C
+Bgm 120 120
+AreaSettings 8 -1
+	SetProgressFlag 0x187E
+	SetUnk05 0x3
+	SetJump Type 1 World HE Area 3 Entrance 3 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetProgressFlag 0x1878
+	SetUnk05 0x3
+	SetEvent "204" Type 8
+	SetJump Type 1 World HE Area 3 Entrance 3 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xC2
+Bgm 120 120
+AreaSettings 7 10
+	SetProgressFlag 0x184D
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 6 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 3 World HE Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World HE Area 0 Entrance 1 LocalSet 194 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 6 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x7D
+Bgm 120 120
+AreaSettings 8 -1
+	SetProgressFlag 0x187F
+	SetUnk05 0x3
+	SetJump Type 1 World HE Area 3 Entrance 3 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetProgressFlag 0x1879
+	SetUnk05 0x3
+	SetEvent "206" Type 8
+	SetJump Type 1 World HE Area 3 Entrance 3 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xC3
+Bgm 120 120
+AreaSettings 7 10
+	SetProgressFlag 0x184F
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 6 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 3 World HE Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World HE Area 0 Entrance 1 LocalSet 195 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 6 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xC4
+Bgm 120 120
+AreaSettings 7 50
+	SetProgressFlag 0x1851
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 184 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 3 World HE Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World HE Area 0 Entrance 1 LocalSet 196 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 6 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xBD
+Bgm 120 120
+AreaSettings 7 10
+	SetProgressFlag 0x183E
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 180 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 3 World HE Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World HE Area 0 Entrance 1 LocalSet 189 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 3 Entrance 3 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xBE
+Bgm 120 120
+AreaSettings 7 10
+	SetProgressFlag 0x1840
+	SetJump Type 2 World HE Area 0 Entrance 0 LocalSet 182 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 3 World HE Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetJump Type 2 World HE Area 0 Entrance 1 LocalSet 190 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x1
+	SetJump Type 1 World HE Area 3 Entrance 3 LocalSet 0 FadeType 1
+	SetPartyMenu 0

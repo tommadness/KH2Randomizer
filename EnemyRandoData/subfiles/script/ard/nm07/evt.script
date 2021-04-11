@@ -1,0 +1,39 @@
+Program 0x0A
+Party W_FRIEND
+AreaSettings 0 -1
+	SetProgressFlag 0x382F
+	SetEvent "215" Type 2
+	SetJump Type 2 World NM Area 0 Entrance 0 LocalSet 64 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x71
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "215" Type 66
+	SetJump Type 2 World NM Area 0 Entrance 0 LocalSet 114 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00
+
+
+Program 0x72
+Bgm 115 115
+AreaSettings 0 -1
+	SetEvent "216" Type 66
+	SetJump Type 2 World NM Area 0 Entrance 0 LocalSet 115 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x40
+Party W_FRIEND
+Bgm 115 115
+MapScript 8
+AreaSettings 16 -1
+	SetProgressFlag 0x3830
+	SetUnk05 0x3
+	SetEvent "216" Type 18
+	SetJump Type 1 World NM Area 0 Entrance 0 LocalSet 0 FadeType 1
+	SetInventory 275
+	SetPartyMenu 0

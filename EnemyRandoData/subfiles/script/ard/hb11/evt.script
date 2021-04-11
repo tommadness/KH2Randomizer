@@ -1,0 +1,67 @@
+Program 0xC0
+Bgm 153 153
+AreaSettings 0 -1
+	SetEvent "404" Type 66
+	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 193 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00
+
+
+Program 0xB4
+AreaSettings 0 -1
+	SetEvent "207" Type 66
+	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 181 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x01
+Party DEFAULT
+AreaSettings 0 -1
+	SetProgressFlag 0x1010
+	SetEvent "207" Type 2
+	SetJump Type 1 World HB Area 11 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x02
+Party DEFAULT
+Bgm 153 153
+AreaSettings 0 -1
+	SetProgressFlag 0x101C
+	SetEvent "404" Type 2
+	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 86 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x03
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "405" Type 2
+	SetJump Type 1 World HB Area 6 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xDD
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "405" Type 66
+	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 222 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xC1
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "405" Type 66
+	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 194 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xDC
+Bgm 153 153
+AreaSettings 0 -1
+	SetEvent "404" Type 66
+	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 221 FadeType 1
+	SetPartyMenu 0

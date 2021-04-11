@@ -1,0 +1,48 @@
+Program 0x33
+Progress 0x405e
+Unk06 0
+Party DEFAULT
+Mission 0x76 "CA01_MS101"
+Unk1d 3
+Spawn "b_40"
+
+Program 0x0B
+Capacity 5.6E-44
+Spawn "b_21"
+
+Program 0x35
+Progress 0x4061
+Unk06 0
+Party W_FRIEND
+Mission 0x7D "CA01_MS201"
+Spawn "b_60"
+
+Program 0x34
+Progress 0x405e
+Unk06 0
+Party DEFAULT
+Mission 0x77 "CA01_MS102"
+Unk1d 3
+Spawn "b_41"
+
+Program 0x01
+Capacity 5.9E-44
+Spawn "b_00"
+
+Program 0x02
+Capacity 5.9E-44
+Spawn "b_01"
+
+Program 0x36
+Progress 0x405c
+Unk06 0
+Party W_FRIEND
+Mission 0x80 "CA01_MS204"
+Spawn "b_61"
+
+Program 0x23
+Capacity 8E-44
+Spawn "b_30"
+
+Program 0x19
+Spawn "b_99"

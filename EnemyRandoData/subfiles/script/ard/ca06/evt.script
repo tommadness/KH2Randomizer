@@ -1,0 +1,49 @@
+Program 0x15
+Unk1d 4
+Spawn "e_50"
+Spawn "a51_"
+Spawn "b50_"
+Spawn "c51_"
+Spawn "d53_"
+
+Program 0x0A
+Party W_FRIEND
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x4025
+	SetEvent "206" Type 2
+	SetJump Type 1 World CA Area 6 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x16
+Spawn "c50_"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x01
+
+
+Program 0x76
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "206" Type 66
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 119 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x19
+Spawn "test"
+Spawn "z00s"
+SpawnAlt "z01s"
+
+Program 0x13
+Spawn "e_50"
+Spawn "b52_"
+Spawn "c55_"
+
+Program 0x14
+Spawn "e_50"
+Spawn "b51_"
+Spawn "c52_"

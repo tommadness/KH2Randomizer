@@ -1,0 +1,16 @@
+Program 0x0A
+Capacity 8E-44
+StatusFlag3
+Spawn "b_20"
+
+Program 0x01
+Capacity 8E-44
+StatusFlag3
+Spawn "b_00"
+
+Program 0x35
+AllocEnemy 1992294
+Party DEFAULT
+Mission 0x68 "WI03_MS104"
+Spawn "b_40"
+Spawn "b_41"

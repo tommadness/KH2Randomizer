@@ -1,0 +1,13 @@
+Program 0x45
+Progress 0x4844
+Party W_FRIEND
+Mission 0x10C "EH26_MS108"
+Spawn "b_99"
+
+Program 0x56
+Party W_FRIEND
+MapVisibility 0x155554af 0x00000000
+Mission 0x10C "EH26_MS108"
+Spawn "b_99"
+Spawn "m_51"
+Spawn "m_50"

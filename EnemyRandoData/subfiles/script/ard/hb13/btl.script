@@ -1,0 +1,4 @@
+Program 0x65
+Party DEFAULT
+Mission 0x139 "HB13_MS902"
+Spawn "b_40"

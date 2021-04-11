@@ -1,0 +1,22 @@
+Program 0x3A
+Party W_FRIEND
+MapScript 5
+Mission 0x89 "TR09_MS204"
+Spawn "b_60"
+
+Program 0x3B
+Party W_FRIEND
+MapScript 5
+Mission 0x8A "TR09_MS205"
+Spawn "b_61"
+
+Program 0x4C
+Party W_FRIEND_FIX
+MapScript 5
+Spawn "b_98"
+
+Program 0x40
+Party W_FRIEND_FIX
+MapScript 5
+Mission 0x8A "TR09_MS205"
+Spawn "b_99"

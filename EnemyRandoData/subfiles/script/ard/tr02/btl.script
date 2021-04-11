@@ -1,0 +1,71 @@
+Program 0x3F
+Layout "file/%s/tr_cy.2ld"
+Mission 0x34 "TR02_MS102_FREE"
+Unk1d 1
+Spawn "b_9a"
+Spawn "b_9b"
+Spawn "b_97"
+Spawn "b_9c"
+Spawn "b_9f"
+
+Program 0x48
+Capacity 1E-45
+Party W_FRIEND_FIX
+Layout "tr_cy.2ld"
+MapVisibility 0x00000005 0x00000000
+Mission 0x32 "TR02_MS102A"
+Spawn "b_9b"
+Spawn "b_96"
+Spawn "b_9c"
+Spawn "b_9f"
+
+Program 0x35
+Party DEFAULT
+Mission 0x86 "TR02_MS210"
+Spawn "b_60"
+
+Program 0x49
+Capacity 2.8E-44
+Party W_FRIEND_FIX
+Layout "tr_cy.2ld"
+Mission 0x32 "TR02_MS102A"
+Spawn "b_9d"
+Spawn "b_92"
+Spawn "b_93"
+Spawn "b_99"
+
+Program 0x4A
+Capacity 7E-44
+Party W_FRIEND_FIX
+Layout "tr_cy.2ld"
+MapVisibility 0x00000005 0x00000000
+Mission 0x34 "TR02_MS102_FREE"
+Spawn "b_9a"
+Spawn "b_9b"
+Spawn "b_97"
+Spawn "b_9c"
+Spawn "b_9f"
+
+Program 0x3D
+Capacity 2.8E-44
+Party NO_FRIEND
+StatusFlag3
+Layout "file/%s/tr_cy.2ld"
+Mission 0x32 "TR02_MS102A"
+Unk1d 1
+Spawn "b_9d"
+Spawn "b_92"
+Spawn "b_93"
+Spawn "b_99"
+
+Program 0x3E
+Capacity 7E-44
+Party NO_FRIEND
+Layout "file/%s/tr_cy.2ld"
+MapVisibility 0x00000005 0x00000000
+Mission 0x33 "TR02_MS102B"
+Spawn "b_9a"
+Spawn "b_9b"
+Spawn "b_97"
+Spawn "b_9c"
+Spawn "b_9f"

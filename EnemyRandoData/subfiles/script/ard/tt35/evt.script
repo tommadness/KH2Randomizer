@@ -1,0 +1,20 @@
+Program 0x9E
+Party DEFAULT
+Bgm 89 89
+AreaSettings 0 -1
+	SetProgressFlag 0x89F
+	SetUnk05 0x2
+	SetEvent "711" Type 2
+	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 215 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x150
+Bgm 89 89
+AreaSettings 0 -1
+	SetEvent "711" Type 66
+	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 337 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00

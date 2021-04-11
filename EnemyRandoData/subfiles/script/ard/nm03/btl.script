@@ -1,0 +1,17 @@
+Program 0x0A
+Capacity 8.4E-44
+Spawn "b_20"
+
+Program 0x0B
+Capacity 8.4E-44
+Spawn "b_21"
+
+Program 0x01
+Capacity 8.4E-44
+Unk06 20
+Spawn "b_00"
+
+Program 0x34
+Party W_FRIEND
+Mission 0x70 "NM03_MS103"
+Spawn "b_40"

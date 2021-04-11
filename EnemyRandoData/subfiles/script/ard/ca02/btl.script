@@ -1,0 +1,39 @@
+Program 0x1D
+RandomSpawn "b_86" "b_87" "b_88"
+
+Program 0x0A
+Capacity 7E-44
+Spawn "b_20"
+RandomSpawn "b_86" "b_87" "b_88"
+
+Program 0x0B
+Capacity 7E-44
+Spawn "b_21"
+
+Program 0x01
+Capacity 5.9E-44
+Spawn "b_00"
+Spawn "b_80"
+
+Program 0x02
+Capacity 5.6E-44
+Spawn "b_01"
+
+Program 0x37
+Progress 0x405e
+Unk06 0
+Party DEFAULT
+Mission 0x78 "CA02_MS103"
+Spawn "b_40"
+
+Program 0x58
+Mission 0x12F "CA02_SKATE_01"
+Unk1d 1
+Spawn "s_99"
+Spawn "s_90"
+
+Program 0x19
+Spawn "b_99"
+
+Program 0x1C
+Spawn "z_99"

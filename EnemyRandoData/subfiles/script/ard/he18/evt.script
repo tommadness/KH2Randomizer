@@ -1,0 +1,18 @@
+Program 0xF3
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "139" Type 66
+	SetJump Type 6 World HE Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0xAB
+Bgm 121 121
+MapScript 5
+AreaSettings 16 -1
+	SetProgressFlag 0x182F
+	SetUnk05 0x2
+	SetEvent "139" Type 18
+	SetJump Type 4 World HE Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetInventory 260
+	SetPartyMenu 0

@@ -1,0 +1,53 @@
+Program 0x0A
+Capacity 6.3E-44
+Unk1f "b_70"
+Spawn "b_20"
+
+Program 0x0B
+Capacity 6.4E-44
+Unk1f "b_70"
+Spawn "b_20"
+
+Program 0x0C
+Capacity 6.4E-44
+Unk1f "b_70"
+Spawn "b_20"
+
+Program 0x01
+Capacity 5.9E-44
+Spawn "b_00"
+
+Program 0x02
+Capacity 5.9E-44
+Spawn "b_01"
+
+Program 0x03
+Capacity 5.9E-44
+Unk06 0
+Spawn "b_00"
+
+Program 0x23
+Capacity 6.3E-44
+Spawn "b_70"
+
+Program 0x24
+Capacity 6.4E-44
+Spawn "b_70"
+
+Program 0x25
+Capacity 6.4E-44
+Spawn "b_70"
+
+Program 0x45
+Capacity 5.3E-44
+Party W_FRIEND_FIX
+Mission 0x56 "MU02_MS103A"
+Spawn "b_40"
+Spawn "b_41"
+Spawn "b_42"
+
+Program 0x50
+Capacity 7E-44
+Party W_FRIEND_FIX
+Mission 0x57 "MU02_MS103B"
+Spawn "b_45"

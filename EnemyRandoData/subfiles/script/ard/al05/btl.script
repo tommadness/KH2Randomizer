@@ -1,0 +1,6 @@
+Program 0x3E
+Party W_FRIEND
+MapScript 4
+Mission 0x45 "AL05_MS203"
+Unk1d 4
+Spawn "b_60"

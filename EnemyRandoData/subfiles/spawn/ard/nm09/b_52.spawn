@@ -1,0 +1,90 @@
+- Type: 4
+  Flag: 0
+  Id: 122
+  Teleport:
+    Place: 82
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities: []
+  EventActivators:
+  - Shape: 0
+    Option: 0
+    PositionX: 574.40228271484375
+    PositionY: -600
+    PositionZ: -1290.7919921875
+    ScaleX: 200
+    ScaleY: 500
+    ScaleZ: 929.83551025390625
+    RotationX: 0
+    RotationY: -0.52359879016876221
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []
+- Type: 4
+  Flag: 0
+  Id: 123
+  Teleport:
+    Place: 83
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities: []
+  EventActivators:
+  - Shape: 0
+    Option: 0
+    PositionX: -331.97320556640625
+    PositionY: -600
+    PositionZ: -910.63201904296875
+    ScaleX: 200
+    ScaleY: 500
+    ScaleZ: 953.76202392578125
+    RotationX: 0
+    RotationY: -0.2617993950843811
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []
+- Type: 4
+  Flag: 0
+  Id: 124
+  Teleport:
+    Place: 84
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities: []
+  EventActivators:
+  - Shape: 0
+    Option: 0
+    PositionX: -1304.718994140625
+    PositionY: -600
+    PositionZ: -796.1005859375
+    ScaleX: 200
+    ScaleY: 500
+    ScaleZ: 948.8759765625
+    RotationX: 0
+    RotationY: 0
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []

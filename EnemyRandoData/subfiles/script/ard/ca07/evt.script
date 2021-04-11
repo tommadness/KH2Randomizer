@@ -1,0 +1,34 @@
+Program 0x3A
+Bgm 155 155
+AreaSettings 7 -1
+	SetProgressFlag 0x4018
+	SetUnk05 0x3
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 81 FadeType 16385
+	SetPartyMenu 0
+
+
+Program 0x00
+
+
+Program 0x6C
+Bgm 95 95
+AreaSettings 0 -1
+	SetEvent "121s" Type 66
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 109 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x6B
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "120" Type 66
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 108 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x51
+Bgm 155 155
+AreaSettings 0 -1
+	SetEvent "120" Type 2
+	SetJump Type 1 World CA Area 4 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0

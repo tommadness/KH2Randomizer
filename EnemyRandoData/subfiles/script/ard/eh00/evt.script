@@ -1,0 +1,105 @@
+Program 0x7E
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "203" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 127 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x74
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "502" Type 2
+	SetJump Type 4 World HB Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x7B
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "501" Type 66
+	SetJump Type 6 World EH Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x75
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "503" Type 2
+	SetJump Type 4 World TT Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x00
+
+
+Program 0x81
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "502" Type 66
+	SetJump Type 6 World EH Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x76
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "504" Type 2
+	SetJump Type 4 World HB Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x83
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "503" Type 66
+	SetJump Type 6 World EH Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x77
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "505" Type 2
+	SetJump Type 1 World EH Area 1 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x88
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "505" Type 66
+	SetJump Type 6 World EH Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x33
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "203" Type 2
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 55 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x87
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "504" Type 66
+	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 243 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x85
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "504" Type 66
+	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 215 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x73
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "501" Type 2
+	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 60 FadeType 1
+	SetPartyMenu 0

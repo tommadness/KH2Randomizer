@@ -1,0 +1,11 @@
+Program 0x00
+MapVisibility 0x0000002b 0x00000000
+Spawn "m_00"
+
+Program 0x50
+MapVisibility 0x0000002b 0x00000000
+Spawn "m_00"
+
+Program 0x19
+MapVisibility 0x00000057 0x00000000
+Spawn "m_00"

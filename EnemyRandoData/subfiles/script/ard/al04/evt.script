@@ -1,0 +1,41 @@
+Program 0x84
+Bgm 98 98
+AreaSettings 0 -1
+	SetEvent "201" Type 66
+	SetJump Type 2 World AL Area 0 Entrance 0 LocalSet 133 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x81
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "116" Type 66
+	SetJump Type 2 World AL Area 0 Entrance 0 LocalSet 130 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0A
+Party DEFAULT
+Bgm 98 98
+AreaSettings 0 -1
+	SetProgressFlag 0x1C16
+	SetEvent "201" Type 2
+	SetJump Type 1 World AL Area 15 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x85
+AreaSettings 0 -1
+	SetEvent "302s" Type 66
+	SetJump Type 2 World AL Area 0 Entrance 0 LocalSet 134 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x01
+Party W_FRIEND
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x1C13
+	SetEvent "116" Type 2
+	SetJump Type 1 World AL Area 3 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0

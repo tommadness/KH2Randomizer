@@ -1,0 +1,40 @@
+Program 0x0A
+Capacity 8.4E-44
+MapScript 6
+Spawn "b_20"
+Spawn "b_11"
+
+Program 0x0B
+Capacity 8.4E-44
+MapScript 6
+Spawn "b_21"
+Spawn "b_11"
+
+Program 0x01
+Capacity 8.1E-44
+MapScript 6
+Unk1d 5
+Spawn "b_00"
+Spawn "b_11"
+
+Program 0x02
+Capacity 8.4E-44
+MapScript 6
+Unk1d 5
+Spawn "b_01"
+Spawn "b_11"
+
+Program 0x03
+Capacity 8.4E-44
+MapScript 6
+Spawn "b_01"
+Spawn "b_11"
+
+Program 0x6F
+Progress 0x1837
+AllocEnemy 2097152
+Party W_FRIEND_FIX
+Mission 0x1B "HE05_MS102"
+Unk1d 5
+Spawn "b_40"
+Spawn "b_42"

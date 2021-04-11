@@ -1,0 +1,67 @@
+Program 0x1D
+Spawn "b_20"
+Spawn "b_80"
+
+Program 0x0A
+Capacity 6.2E-44
+Unk1f "b_70"
+Spawn "b_20"
+
+Program 0x1E
+Spawn "b_20"
+Spawn "b_81"
+
+Program 0x0B
+Capacity 6.9E-44
+Unk1f "b_71"
+Spawn "b_21"
+
+Program 0x1F
+Spawn "b_20"
+Spawn "b_82"
+
+Program 0x5F
+Mission 0x97 "BB08_GIMMICK"
+Spawn "b_10"
+
+Program 0x01
+Capacity 7.7E-44
+Spawn "b_00"
+Spawn "z_70"
+
+Program 0x20
+Spawn "b_20"
+
+Program 0x02
+Capacity 7.7E-44
+Spawn "b_01"
+RandomSpawn "b_86" "b_87"
+
+Program 0x03
+Capacity 7.7E-44
+Spawn "b_02"
+RandomSpawn "b_86" "b_87"
+
+Program 0x23
+Capacity 6.2E-44
+Spawn "b_70"
+
+Program 0x24
+Capacity 6.9E-44
+Spawn "b_71"
+
+Program 0x19
+Spawn "b_21"
+Spawn "b_80"
+
+Program 0x1A
+Spawn "b_21"
+Spawn "b_81"
+
+Program 0x1B
+Spawn "b_21"
+Spawn "b_82"
+
+Program 0x1C
+Spawn "b_21"
+Spawn "b_83"

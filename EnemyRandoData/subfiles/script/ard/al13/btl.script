@@ -1,0 +1,20 @@
+Program 0x0A
+Spawn "b_20"
+
+Program 0x50
+Capacity 1.19E-43
+Party W_FRIEND
+Mission 0x9B "AL13_TRAP_FREE"
+Spawn "b_40"
+
+Program 0x51
+Capacity 1.19E-43
+Party W_FRIEND
+Mission 0xF6 "AL13_TRAP_FREE2"
+Spawn "b_20"
+
+Program 0x4F
+Capacity 1.19E-43
+Party W_FRIEND
+Mission 0x42 "AL13_TRAP"
+Spawn "b_40"

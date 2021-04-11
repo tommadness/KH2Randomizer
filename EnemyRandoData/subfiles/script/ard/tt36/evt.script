@@ -1,0 +1,44 @@
+Program 0x00
+Spawn "e_50"
+
+Program 0x0C
+Layout "file/%s/tt_my.2ld"
+Spawn "e_50"
+
+Program 0x02
+Layout "file/%s/tt_my.2ld"
+AreaSettings 1 -1
+	SetProgressFlag 0x8FF
+	SetJump Type 1 World TT Area 10 Entrance 2 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "b51m"
+Spawn "p01_"
+
+Program 0x0D
+Layout "file/%s/tt_my.2ld"
+Spawn "e_50"
+Spawn "b51m"
+
+Program 0x9F
+Bgm 119 119
+AreaSettings 7 -1
+	SetProgressFlag 0x870
+	SetUnk05 0x3
+	SetEvent "533" Type 9
+	SetJump Type 1 World TT Area 36 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 15 -1
+	SetProgressFlag 0x8E6
+	SetUnk05 0x3
+	SetJump Type 1 World TT Area 36 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xAB
+AreaSettings 0 -1
+	SetEvent "523" Type 2
+	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 159 FadeType 1
+	SetPartyMenu 0

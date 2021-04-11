@@ -1,0 +1,30 @@
+Program 0x54
+Bgm 61 61
+AreaSettings 0 -1
+	SetEvent "138" Type 2
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 73 FadeType 16385
+	SetPartyMenu 0
+
+
+Program 0x101
+Bgm 61 61
+AreaSettings 0 -1
+	SetEvent "138" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 258 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xD8
+Bgm 61 61
+AreaSettings 0 -1
+	SetEvent "138" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 217 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x49
+Bgm 61 61
+AreaSettings 16 -1
+	SetProgressFlag 0x4840
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 85 FadeType 16386
+	SetPartyMenu 0

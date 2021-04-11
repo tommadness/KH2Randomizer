@@ -1,0 +1,22 @@
+Program 0x4B
+Mission 0x132 "NM09_SKATE_01"
+Unk1d 1
+Spawn "s_99"
+
+Program 0x44
+Party W_FRIEND
+Mission 0x71 "NM09_MS104"
+Spawn "b_40"
+Spawn "b_51"
+
+Program 0x45
+Party W_FRIEND
+Mission 0x71 "NM09_MS104"
+Spawn "b_40"
+Spawn "b_50"
+
+Program 0x37
+Party W_FRIEND
+Mission 0x71 "NM09_MS104"
+Spawn "b_40"
+Spawn "b_52"

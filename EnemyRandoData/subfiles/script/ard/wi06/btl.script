@@ -1,0 +1,15 @@
+Program 0x0A
+Capacity 7E-44
+StatusFlag3
+Spawn "b_20"
+
+Program 0x01
+Capacity 6.3E-44
+StatusFlag3
+Spawn "b_00"
+
+Program 0x38
+Party DEFAULT
+Mission 0x64 "WI06_MS102B"
+Spawn "b_40"
+Spawn "b_41"

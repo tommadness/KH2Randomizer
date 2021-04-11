@@ -1,0 +1,8 @@
+Program 0x01
+Spawn "b_80"
+
+Program 0x45
+Party DEFAULT
+StatusFlag3
+Mission 0x46 "BB03_MS103"
+Spawn "b_40"

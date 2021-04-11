@@ -1,0 +1,11 @@
+Program 0xA0
+Progress 0x8d1
+Party DEFAULT
+Mission 0xC4 "TT40_MS002"
+Spawn "b_40"
+
+Program 0xA1
+Progress 0x8d1
+Party NO_FRIEND
+Mission 0xC5 "TT40_MS003"
+Spawn "b_41"

@@ -1,0 +1,10 @@
+Program 0xC9
+Party W_FRIEND
+Mission 0x125 "HE19_MS204"
+Spawn "b_62"
+
+Program 0xCA
+AllocEnemy 2097152
+Party W_FRIEND
+Mission 0x124 "HE19_MS205"
+Spawn "b_63"

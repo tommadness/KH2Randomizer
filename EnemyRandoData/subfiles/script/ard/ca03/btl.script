@@ -1,0 +1,15 @@
+Program 0x4C
+Party DEFAULT
+Spawn "b_98"
+
+Program 0x19
+Spawn "b_99"
+
+Program 0x38
+Progress 0x4061
+Capacity 8.1E-44
+Unk06 0
+Party W_FRIEND_FIX
+Mission 0x7B "CA03_MS106"
+Spawn "b_40"
+Spawn "b_50"

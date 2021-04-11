@@ -1,0 +1,89 @@
+Program 0x122
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0xE7
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x3D
+MapVisibility 0x00000007 0x00000000
+
+Program 0x135
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x114
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0xF4
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x37
+MapVisibility 0x00000007 0x00000000
+
+Program 0x00
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x133
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x115
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x102
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0xE6
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x134
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x38
+MapVisibility 0x00000007 0x00000000
+
+Program 0x39
+MapVisibility 0x00000007 0x00000000
+
+Program 0x34
+MapVisibility 0x00000007 0x00000000
+
+Program 0x113
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x35
+MapVisibility 0x00000007 0x00000000
+
+Program 0xE5
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x3B
+MapVisibility 0x00000007 0x00000000
+
+Program 0xF3
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0xF2
+MapVisibility 0x00000007 0x00000000
+Spawn "m_00"
+
+Program 0x3C
+MapVisibility 0x00000007 0x00000000
+
+Program 0x3A
+MapVisibility 0x00000007 0x00000000
+
+Program 0x36
+MapVisibility 0x00000007 0x00000000

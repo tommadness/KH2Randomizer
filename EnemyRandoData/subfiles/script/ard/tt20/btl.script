@@ -1,0 +1,12 @@
+Program 0xD5
+Party NO_FRIEND
+Mission 0x1B5 "TT20_MS603_RE"
+BattleLevel 99
+Unk1d 1
+Spawn "b_80"
+
+Program 0x89
+Progress 0x8ce
+Party NO_FRIEND
+Mission 0xBD "TT20_MS603"
+Spawn "b_40"

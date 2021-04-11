@@ -1,0 +1,49 @@
+Program 0xEB
+Bgm 119 119
+AreaSettings 0 -1
+	SetEvent "113" Type 66
+	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 236 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x16
+Bgm 119 119
+Spawn "e_50"
+Spawn "801_"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x01
+Party NO_FRIEND
+AreaSettings 0 -1
+	SetProgressFlag 0x844
+	SetEvent "307" Type 2
+	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 82 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x7E
+Party NO_FRIEND
+Bgm 119 119
+AreaSettings 0 -1
+	SetProgressFlag 0x824
+	SetEvent "113" Type 2
+	SetJump Type 1 World TT Area 13 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x106
+AreaSettings 0 -1
+	SetEvent "307" Type 66
+	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 375 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x12
+Spawn "h70_"
+
+Program 0x13
+
+
+Program 0x14

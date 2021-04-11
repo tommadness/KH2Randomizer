@@ -1,0 +1,147 @@
+Program 0x5B
+AreaSettings 0 -1
+	SetEvent "203s" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 92 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x4C
+AreaSettings 0 -1
+	SetEvent "299" Type 2
+	SetJump Type 1 World PO Area 3 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x5C
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "205" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 93 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0C
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 70 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "d06_"
+Spawn "e03y"
+Spawn "r_21"
+
+Program 0x01
+AreaSettings 0 -1
+	SetProgressFlag 0x2412
+	SetEvent "202" Type 2
+	SetJump Type 1 World PO Area 3 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x0D
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 70 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "d05_"
+Spawn "e03y"
+Spawn "r_21"
+
+Program 0x02
+AreaSettings 9 -1
+	SetProgressFlag 0x2413
+	SetEvent "203" Type 1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 57 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "e_01"
+Spawn "a07_"
+Spawn "c05_"
+Spawn "d00_"
+
+Program 0x5A
+AreaSettings 0 -1
+	SetEvent "203v" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 91 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0E
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 70 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "d05_"
+Spawn "e03y"
+Spawn "r_21"
+
+Program 0x03
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 57 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "a03_"
+Spawn "c02_"
+Spawn "d01_"
+Spawn "e00y"
+Spawn "f02_"
+Spawn "r_20"
+
+Program 0x04
+AreaSettings 0 -1
+	SetProgressFlag 0x2417
+	SetEvent "205" Type 2
+	SetJump Type 1 World PO Area 0 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0F
+Spawn "e_50"
+
+Program 0x10
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 70 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "d04_"
+Spawn "e03y"
+Spawn "r_21"
+
+Program 0x11
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 70 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "d02_"
+Spawn "e03y"
+Spawn "r_21"
+
+Program 0x12
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 70 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "d02_"
+Spawn "e03y"
+Spawn "r_21"
+
+Program 0x59
+AreaSettings 0 -1
+	SetEvent "202" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 90 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x09
+Spawn "e_50"

@@ -1,0 +1,30 @@
+Program 0x16
+Spawn "b_80"
+
+Program 0x78
+Progress 0x8db
+Party NO_FRIEND
+Mission 0xD5 "TT10_WORK_TIMBER"
+Unk1d 3
+Spawn "b_42"
+
+Program 0x79
+Progress 0x8db
+Party NO_FRIEND
+Mission 0xD7 "TT10_WORK_MIRROR"
+Unk1d 3
+Spawn "b_41"
+
+Program 0x19
+Party DEFAULT
+Spawn "b_80"
+
+Program 0x07
+Capacity 7.8E-44
+Spawn "b_21"
+
+Program 0x1B
+Spawn "z_70"
+
+Program 0x1C
+Spawn "z_71"

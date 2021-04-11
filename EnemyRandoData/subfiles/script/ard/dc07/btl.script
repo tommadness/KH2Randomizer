@@ -1,0 +1,13 @@
+Program 0x49
+Party DEFAULT
+Mission 0x19A "DC07_FM_NAZO"
+BattleLevel 99
+Unk1d 1
+Spawn "b_80"
+
+Program 0x43
+Party DEFAULT
+Mission 0x19A "DC07_FM_NAZO"
+BattleLevel 99
+Unk1d 1
+Spawn "b_80"

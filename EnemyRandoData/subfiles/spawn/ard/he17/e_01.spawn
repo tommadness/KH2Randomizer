@@ -1,0 +1,30 @@
+- Type: 3
+  Flag: 0
+  Id: 8
+  Teleport:
+    Place: 9
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities: []
+  EventActivators:
+  - Shape: 1
+    Option: 0
+    PositionX: -56.351070404052734
+    PositionY: -1335.955322265625
+    PositionZ: 1059.93603515625
+    ScaleX: 379.6982421875
+    ScaleY: 743.39447021484375
+    ScaleZ: 256.04818725585938
+    RotationX: 0
+    RotationY: 3.0668418407440186
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []

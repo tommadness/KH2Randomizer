@@ -1,0 +1,18 @@
+Program 0x00
+
+
+Program 0x01
+Bgm 129 129
+AreaSettings 0 -1
+	SetProgressFlag 0x2C29
+	SetEvent "407" Type 2
+	SetJump Type 1 World LM Area 5 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x5F
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "407" Type 66
+	SetJump Type 2 World LM Area 0 Entrance 0 LocalSet 96 FadeType 1
+	SetPartyMenu 0

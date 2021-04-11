@@ -1,0 +1,15 @@
+Program 0x4A
+Progress 0x4845
+AllocEnemy 2516582
+Party W_FRIEND_ONLY
+Mission 0x111 "EH20_MS113"
+Spawn "b_40"
+
+Program 0x62
+Progress 0x484c
+AllocEnemy 2516582
+Party W_FRIEND_ONLY
+Mission 0x1BA "EH20_MS113_RE"
+BattleLevel 99
+Unk1d 1
+Spawn "b_80"

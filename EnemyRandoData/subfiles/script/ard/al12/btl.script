@@ -1,0 +1,14 @@
+Program 0x0A
+Capacity 9.1E-44
+Unk06 0
+Spawn "b_20"
+
+Program 0x01
+Capacity 9.1E-44
+Unk06 0
+Spawn "b_00"
+
+Program 0x02
+Capacity 9.1E-44
+Unk06 0
+Spawn "b_01"

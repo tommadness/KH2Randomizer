@@ -1,0 +1,23 @@
+Program 0x15
+Party W_FRIEND
+
+Program 0x16
+Unk1d 5
+
+Program 0x70
+Progress 0x1836
+Capacity 1.15E-43
+Party DEFAULT
+Mission 0x17 "HE06_MS101"
+Unk1d 3
+Spawn "b_40"
+
+Program 0x88
+Party DEFAULT
+Mission 0x17 "HE06_MS101"
+Spawn "b_99"
+
+Program 0x7E
+Party DEFAULT
+Mission 0x51 "HE06_MS203"
+Spawn "b_60"

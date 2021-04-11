@@ -1,0 +1,144 @@
+Program 0x7C
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "211" Type 66
+	SetJump Type 2 World BB Area 0 Entrance 0 LocalSet 125 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x75
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "204v" Type 66
+	SetJump Type 2 World BB Area 0 Entrance 0 LocalSet 118 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x64
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "101" Type 66
+	SetJump Type 2 World BB Area 0 Entrance 0 LocalSet 101 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0A
+Party DEFAULT
+AreaSettings 0 -1
+	SetProgressFlag 0x1443
+	SetEvent "202" Type 2
+	SetJump Type 1 World BB Area 0 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_03"
+
+Program 0x0B
+Party DEFAULT
+AreaSettings 9 -1
+	SetProgressFlag 0x141C
+	SetEvent "204" Type 1
+	SetJump Type 1 World BB Area 4 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_51"
+Spawn "a50e"
+
+Program 0x00
+Spawn "e_50"
+Spawn "e_51"
+Spawn "e_52"
+Spawn "e_53"
+
+Program 0x0C
+Party W_FRIEND
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x1422
+	SetEvent "210" Type 2
+	SetJump Type 2 World BB Area 0 Entrance 0 LocalSet 75 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_05"
+
+Program 0x01
+Party DEFAULT
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x1401
+	SetEvent "101" Type 2
+	SetJump Type 1 World BB Area 1 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_01"
+
+Program 0x0D
+Party W_FRIEND
+AreaSettings 1 -1
+	SetProgressFlag 0x1455
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "e_52"
+
+Program 0x02
+Party DEFAULT
+AreaSettings 0 -1
+	SetProgressFlag 0x1407
+	SetEvent "124" Type 2
+	SetJump Type 1 World BB Area 0 Entrance 53 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_07"
+
+Program 0x03
+Party W_FRIEND
+AreaSettings 0 -1
+	SetProgressFlag 0x143C
+	SetEvent "117" Type 2
+	SetJump Type 1 World BB Area 0 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_02"
+
+Program 0x6F
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "117" Type 66
+	SetJump Type 2 World BB Area 0 Entrance 0 LocalSet 112 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x04
+Party W_FRIEND
+AreaSettings 1 -1
+	SetProgressFlag 0x1454
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "e_52"
+
+Program 0x05
+AreaSettings 1 48
+	SetJump Type 1 World BB Area 2 Entrance 0 LocalSet 0 FadeType 0
+	SetPartyMenu 0
+
+Spawn "e_53"
+
+Program 0x4B
+Party W_FRIEND
+Bgm 111 111
+AreaSettings 7 -1
+	SetProgressFlag 0x1450
+	SetUnk05 0x3
+	SetEvent "211" Type 8
+	SetJump Type 1 World BB Area 0 Entrance 52 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_06"
+
+Program 0x7B
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "210" Type 66
+	SetJump Type 2 World BB Area 0 Entrance 0 LocalSet 124 FadeType 1
+	SetPartyMenu 0

@@ -1,0 +1,16 @@
+Program 0x55
+Capacity 8.4E-44
+Mission 0xA5 "HB17_MS405"
+Spawn "b_99"
+Spawn "b_40"
+
+Program 0x19
+Capacity 1.05E-43
+Spawn "b_99"
+
+Program 0x42
+Capacity 8.4E-44
+Party NO_FRIEND
+Mission 0xA5 "HB17_MS405"
+Spawn "b_99"
+Spawn "b_40"

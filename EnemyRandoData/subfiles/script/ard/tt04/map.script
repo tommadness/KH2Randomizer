@@ -1,0 +1,260 @@
+Program 0xEA
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0xCD
+MapVisibility 0xc000040f 0x00000fff
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_81"
+Spawn "m_96"
+Spawn "m_97"
+Spawn "m_99"
+
+Program 0x4C
+MsgWall 0xc174
+MapVisibility 0xc020040f 0x00000fff
+Spawn "m_80"
+Spawn "m_81"
+
+Program 0x1D
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0x4D
+MsgWall 0xc175
+MapVisibility 0xc0100409 0x00000fff
+
+Program 0x00
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0x53
+MapVisibility 0xc000040f 0x00000fff
+
+Program 0x4E
+MsgWall 0xc176
+MapVisibility 0xc0100409 0x00000fff
+
+Program 0x01
+MapVisibility 0xc000040f 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_81"
+Spawn "m_96"
+Spawn "m_97"
+Spawn "m_99"
+
+Program 0x51
+MapVisibility 0xc000040f 0x00000fff
+
+Program 0x50
+MapVisibility 0xc0000001 0x40000fff
+BarrierFlag 0x0 0x40000000
+
+Program 0x52
+MapVisibility 0xc0000409 0x00000fff
+
+Program 0x03
+MapVisibility 0xc0000409 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_81"
+
+Program 0xB6
+MsgWall 0xcaaa
+MapVisibility 0xc010040f 0x00000fff
+
+Program 0x04
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_82"
+
+Program 0x15F
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0xB7
+MsgWall 0xcaab
+MapVisibility 0xc010040f 0x00000fff
+
+Program 0x05
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_84"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0x160
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0x10E
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0xB8
+MsgWall 0xcaac
+MapVisibility 0xc010040f 0x00000fff
+
+Program 0x06
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_85"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0xE9
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0x4F
+MapVisibility 0xc0000409 0x40000fff
+BarrierFlag 0x0 0x40000000
+
+Program 0x1A
+MapVisibility 0xc000040f 0x00000fff
+Spawn "m_00"
+Spawn "m_80"
+Spawn "m_81"
+
+Program 0x07
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_82"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0xB5
+MsgWall 0xca33
+MapVisibility 0xc010040f 0x00000fff
+
+Program 0x108
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0x177
+MapVisibility 0xc0000407 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_83"
+Spawn "m_94"
+Spawn "m_95"
+Spawn "m_99"
+
+Program 0xCC
+MapVisibility 0xc000040f 0x00000fff
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_81"
+Spawn "m_96"
+Spawn "m_97"
+Spawn "m_99"
+
+Program 0x1C
+MapVisibility 0xc000040f 0x00000fff
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_80"
+Spawn "m_81"
+Spawn "m_96"
+Spawn "m_97"
+Spawn "m_99"

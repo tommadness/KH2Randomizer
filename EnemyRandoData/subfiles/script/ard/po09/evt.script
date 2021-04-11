@@ -1,0 +1,132 @@
+Program 0x00
+Spawn "e_50"
+
+Program 0x0C
+AreaSettings 9 -1
+	SetProgressFlag 0x2452
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 72 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "h02y"
+Spawn "r_21"
+
+Program 0x01
+AreaSettings 0 -1
+	SetProgressFlag 0x2422
+	SetEvent "402" Type 2
+	SetJump Type 1 World PO Area 9 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x66
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "404" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 103 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0D
+AreaSettings 9 -1
+	SetProgressFlag 0x2452
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 72 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "h02y"
+Spawn "r_21"
+
+Program 0x02
+AreaSettings 9 -1
+	SetProgressFlag 0x2451
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 61 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "b03_"
+Spawn "c04_"
+Spawn "d03_"
+Spawn "e02_"
+Spawn "f04_"
+Spawn "i02_"
+Spawn "j01y"
+Spawn "r_20"
+
+Program 0x0E
+AreaSettings 9 -1
+	SetProgressFlag 0x2452
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 72 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "h02y"
+Spawn "r_21"
+
+Program 0x03
+AreaSettings 0 -1
+	SetProgressFlag 0x2426
+	SetEvent "404" Type 2
+	SetJump Type 1 World PO Area 0 Entrance 0 LocalSet 0 FadeType 1
+	SetInventory 284 485
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x3C
+Bgm 158 158
+
+Program 0x3D
+Bgm 158 158
+AreaSettings 7 -1
+	SetProgressFlag 0x2425
+	SetUnk05 0x3
+	SetJump Type 1 World PO Area 9 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 8 -1
+	SetProgressFlag 0x2450
+	SetUnk05 0x3
+	SetEvent "499" Type 19
+	SetJump Type 1 World PO Area 9 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetUnk05 0x3
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 61 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetProgressFlag 0x2450
+	SetUnk05 0x3
+	SetJump Type 1 World PO Area 9 Entrance 20 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x10
+Spawn "e_50"
+
+Program 0x65
+AreaSettings 0 -1
+	SetEvent "402s" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 102 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x48
+Bgm 158 158
+AreaSettings 139 -1
+	SetUnk05 0x3
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 72 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetProgressFlag 0x2453
+	SetUnk05 0x3
+	SetJump Type 1 World PO Area 9 Entrance 21 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x09
+Spawn "e_50"

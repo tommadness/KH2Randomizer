@@ -1,0 +1,12 @@
+Program 0x9A
+Progress 0x8db
+Party NO_FRIEND
+Mission 0xB3 "TT32_MS302"
+Unk1d 3
+Spawn "b_40"
+
+Program 0x9B
+Progress 0x8db
+Party NO_FRIEND
+Mission 0xB4 "TT32_MS303"
+Spawn "b_41"

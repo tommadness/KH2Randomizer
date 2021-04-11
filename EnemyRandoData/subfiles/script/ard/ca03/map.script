@@ -1,0 +1,51 @@
+Program 0x00
+MapVisibility 0x00000003 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+SpawnAlt "m_21"
+Spawn "m_80"
+
+Program 0x3F
+MapVisibility 0x00000003 0x00000000
+Spawn "m_10"
+Spawn "m_80"
+
+Program 0x01
+MapVisibility 0x00000005 0x00000000
+Spawn "m_80"
+
+Program 0x6A
+MapVisibility 0x00000003 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+SpawnAlt "m_21"
+Spawn "m_80"
+
+Program 0x19
+MapVisibility 0x00000003 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+SpawnAlt "m_21"
+
+Program 0x6D
+MapVisibility 0x00000003 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+SpawnAlt "m_21"
+Spawn "m_80"
+
+Program 0x1A
+MapVisibility 0x00000003 0x00000000
+Spawn "m_00"
+SpawnAlt "m_21"
+Spawn "m_50"
+
+Program 0x38
+MsgWall 0xcca4
+MapVisibility 0x0000000b 0x00000000
+Spawn "m_50"
+
+Program 0x1B
+MapVisibility 0x00000003 0x00000000
+Spawn "m_00"
+Spawn "m_10"

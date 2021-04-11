@@ -1,0 +1,10 @@
+Program 0x0A
+Capacity 7.7E-44
+Unk06 0
+StatusFlag3
+CasualSpawn 25 "b_20"
+Spawn "b_21"
+
+Program 0x19
+Capacity 7E-44
+Spawn "b_20"

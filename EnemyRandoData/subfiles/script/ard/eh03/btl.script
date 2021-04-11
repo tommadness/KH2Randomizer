@@ -1,0 +1,27 @@
+Program 0x01
+Capacity 6.3E-44
+Spawn "b_10"
+
+Program 0x02
+Capacity 7.7E-44
+Spawn "b_00"
+
+Program 0x03
+Unk06 0
+Mission 0x19E "EH03_KINOKO_XEM"
+Spawn "b_80"
+
+Program 0x19
+Capacity 1.06E-43
+Spawn "b_01"
+Spawn "b_10"
+Spawn "z_70"
+
+Program 0x1A
+Capacity 9E-44
+Spawn "b_01"
+Spawn "b_10"
+Spawn "b_11"
+
+Program 0x1B
+Spawn "z_70"

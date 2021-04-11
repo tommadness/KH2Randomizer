@@ -1,0 +1,47 @@
+Program 0x15
+Capacity 8.4E-44
+Unk06 0
+Unk07 0
+Party W_FRIEND
+StatusFlag3
+Spawn "b_71"
+
+Program 0x0A
+Capacity 8E-44
+Spawn "b_10"
+CasualSpawn 40 "b_30"
+Spawn "b_20"
+
+Program 0x16
+Unk06 0
+Unk07 0
+Party W_FRIEND
+StatusFlag3
+AreaSettings 17 -1
+	SetProgressFlag 0x4036
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetProgressFlag 0x403D
+	SetJump Type 1 World CA Area 5 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+Mission 0xDC "CA12_MEDAL"
+Spawn "b_70"
+
+Program 0x01
+Capacity 8E-44
+Unk06 0
+Unk07 0
+Spawn "b_00"
+
+Program 0x02
+Capacity 8E-44
+Spawn "b_01"
+Spawn "b_10"
+
+Program 0x19
+Spawn "b_99"
+
+Program 0x1A
+Spawn "b_97"

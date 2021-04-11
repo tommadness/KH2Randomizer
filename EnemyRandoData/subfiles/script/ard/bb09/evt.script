@@ -1,0 +1,24 @@
+Program 0x0A
+Party DEFAULT
+AreaSettings 0 -1
+	SetProgressFlag 0x1447
+	SetEvent "208" Type 2
+	SetJump Type 1 World BB Area 9 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_01"
+
+Program 0x16
+Party DEFAULT
+AreaSettings 1 -1
+	SetProgressFlag 0x1421
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "d54_"
+Spawn "e55_"
+Spawn "f54_"
+Spawn "g54_"
+
+Program 0x00
+Spawn "e_50"

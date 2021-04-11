@@ -1,0 +1,25 @@
+Program 0x0A
+Party W_FRIEND
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x4028
+	SetEvent "209" Type 2
+	SetJump Type 1 World CA Area 11 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x16
+Unk1d 4
+Spawn "e_50"
+Spawn "a50_"
+Spawn "d50_"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x79
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "209" Type 66
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 122 FadeType 1
+	SetPartyMenu 0

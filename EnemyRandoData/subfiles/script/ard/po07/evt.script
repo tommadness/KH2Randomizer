@@ -1,0 +1,41 @@
+Program 0x38
+Bgm 159 159
+
+Program 0x39
+Bgm 159 159
+AreaSettings 7 -1
+	SetProgressFlag 0x2416
+	SetUnk05 0x3
+	SetJump Type 1 World PO Area 3 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 8 -1
+	SetUnk05 0x3
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 76 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 139 -1
+	SetUnk05 0x3
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 57 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x3
+	SetJump Type 1 World PO Area 3 Entrance 20 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x01
+
+
+Program 0x46
+Bgm 159 159
+AreaSettings 139 -1
+	SetUnk05 0x3
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 70 FadeType 1
+	SetPartyMenu 0
+
+AreaSettings 141 -1
+	SetUnk05 0x3
+	SetJump Type 1 World PO Area 3 Entrance 21 LocalSet 0 FadeType 1
+	SetPartyMenu 0

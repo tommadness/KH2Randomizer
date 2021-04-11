@@ -1,0 +1,47 @@
+Program 0x00
+MapVisibility 0x00000001 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+
+Program 0xEB
+MapVisibility 0x00000001 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+
+Program 0xCF
+MapVisibility 0x00000001 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+
+Program 0x37
+MapVisibility 0x00000001 0x40000000
+BarrierFlag 0x0 0x40000000
+
+Program 0x72
+MapVisibility 0x00000001 0x40000000
+BarrierFlag 0x0 0x40000000
+
+Program 0xEC
+MapVisibility 0x00000001 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+
+Program 0x19
+MapVisibility 0x00000001 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+
+Program 0xD0
+MapVisibility 0x00000001 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+
+Program 0x1A
+MapVisibility 0x00000001 0x00000000
+Spawn "m_00"

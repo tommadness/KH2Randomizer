@@ -1,0 +1,25 @@
+Program 0x16
+Spawn "e_50"
+Spawn "a01_"
+Spawn "b01_"
+Spawn "z00s"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x01
+Party W_FRIEND_FIX
+AreaSettings 0 -1
+	SetProgressFlag 0x2036
+	SetEvent "108" Type 2
+	SetJump Type 1 World MU Area 4 Entrance 50 LocalSet 0 FadeType 1
+	SetInventory 495
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x14
+Spawn "a52_"
+Spawn "b50_"
+Spawn "z00s"
+SpawnAlt "z01s"

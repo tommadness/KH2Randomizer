@@ -1,0 +1,24 @@
+Program 0x16
+Spawn "e_50"
+Spawn "960_"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x01
+Party NO_FRIEND
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x88F
+	SetEvent "616" Type 2
+	SetJump Type 1 World TT Area 22 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_01"
+
+Program 0x144
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "616" Type 66
+	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 325 FadeType 1
+	SetPartyMenu 0

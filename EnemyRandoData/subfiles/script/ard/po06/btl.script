@@ -1,0 +1,40 @@
+Program 0x45
+Layout "minigame/po_06.bar"
+Mission 0xFF "PO06_MS101_FREE"
+Unk1d 4
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_13"
+Spawn "m_14"
+Spawn "m_20"
+
+Program 0x36
+Layout "minigame/po_06.bar"
+Mission 0x3A "PO06_MS100"
+Unk1d 4
+Spawn "b_40"
+
+Program 0x37
+Layout "minigame/po_06.bar"
+Mission 0x3 "PO06_MS101"
+Unk1d 4
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_13"
+Spawn "m_14"
+Spawn "m_20"
+
+Program 0x42
+Layout "minigame/po_06.bar"
+Mission 0x3 "PO06_MS101"
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_12"
+Spawn "m_13"
+Spawn "m_14"
+Spawn "m_20"

@@ -1,0 +1,37 @@
+Program 0x6C
+Spawn "x_01"
+Spawn "m_00"
+
+Program 0x8C
+Progress 0x183a
+Party NO_FRIEND
+Mission 0x9D "HE00_MS104A"
+Unk1d 1
+Spawn "b_4a"
+Spawn "b_4b"
+
+Program 0x8D
+Progress 0x183a
+Party NO_FRIEND
+Mission 0x9E "HE00_MS104B"
+Unk1d 1
+Spawn "b_4a"
+Spawn "b_4d"
+Spawn "b_4e"
+
+Program 0x89
+Party DEFAULT
+Mission 0x1C "HE00_MS104"
+Spawn "b_99"
+
+Program 0x23
+Spawn "b_4z"
+
+Program 0x6B
+Spawn "x_00"
+Spawn "m_00"
+
+Program 0xAE
+Party NO_FRIEND
+Mission 0x9D "HE00_MS104A"
+Spawn "b_4z"

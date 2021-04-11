@@ -1,0 +1,16 @@
+Program 0x51
+Party W_FRIEND_FIX
+Mission 0x16 "BB05_MS104B"
+Spawn "b_99"
+
+Program 0x4E
+Party W_FRIEND
+StatusFlag3
+Mission 0x47 "BB05_MS104A"
+Spawn "b_40"
+
+Program 0x4F
+Party W_FRIEND
+StatusFlag3
+Mission 0x16 "BB05_MS104B"
+Spawn "b_41"

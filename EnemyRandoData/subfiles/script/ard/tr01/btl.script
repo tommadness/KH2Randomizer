@@ -1,0 +1,20 @@
+Program 0x0A
+Capacity 6.2E-44
+Spawn "b_20"
+
+Program 0x33
+Party W_FRIEND
+Mission 0x83 "TR01_MS101"
+Spawn "b_40"
+
+Program 0x01
+Capacity 6.2E-44
+Spawn "b_00"
+
+Program 0x23
+Capacity 7E-44
+Spawn "z_20"
+
+Program 0x1A
+Capacity 7E-44
+Spawn "z_00"

@@ -1,0 +1,24 @@
+Program 0xBA
+AreaSettings 0 -1
+	SetEvent "109" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 187 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x01
+Party DEFAULT
+AreaSettings 0 -1
+	SetProgressFlag 0x480D
+	SetEvent "109" Type 2
+	SetJump Type 1 World EH Area 16 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xE3
+AreaSettings 0 -1
+	SetEvent "109" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 228 FadeType 1
+	SetPartyMenu 0

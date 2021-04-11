@@ -1,0 +1,208 @@
+Program 0x15
+Spawn "e_91"
+Spawn "e_50"
+
+Program 0x0A
+Party W_FRIEND_FIX
+AreaSettings 0 -1
+	SetProgressFlag 0x2031
+	SetEvent "185" Type 2
+	SetJump Type 1 World MU Area 1 Entrance 54 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x6D
+AreaSettings 0 -1
+	SetEvent "103" Type 66
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 110 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0B
+Spawn "e_50"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x0C
+Party W_FRIEND_FIX
+AreaSettings 0 -1
+	SetProgressFlag 0x2033
+	SetEvent "105" Type 2
+	SetJump Type 1 World MU Area 1 Entrance 55 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x01
+Party W_FRIEND_FIX
+AreaSettings 9 -1
+	SetProgressFlag 0x2025
+	SetEvent "103" Type 1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 68 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_10"
+Spawn "e_50"
+Spawn "c00_"
+
+Program 0x0D
+Spawn "e_50"
+
+Program 0x02
+AreaSettings 46 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 68 FadeType -1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x46
+Bgm 112 112
+AreaSettings 7 -1
+	SetProgressFlag 0x2030
+	SetUnk05 0x3
+	SetEvent "186" Type 8
+	SetJump Type 1 World MU Area 1 Entrance 50 LocalSet 0 FadeType 1
+	SetInventory 417
+	SetPartyMenu 0
+
+
+Program 0x43
+Bgm 112 112
+
+Program 0x0E
+Party W_FRIEND_FIX
+AreaSettings 0 -1
+	SetProgressFlag 0x2052
+	SetEvent "182" Type 2
+	SetJump Type 1 World MU Area 1 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x03
+Spawn "e_50"
+
+Program 0x44
+Bgm 112 112
+AreaSettings 7 -1
+	SetProgressFlag 0x2026
+	SetUnk05 0x3
+	SetEvent "104" Type 8
+	SetJump Type 1 World MU Area 1 Entrance 50 LocalSet 0 FadeType 1
+	SetInventory 350
+	SetPartyMenu 0
+
+
+Program 0x0F
+Spawn "e_50"
+Spawn "a05_"
+Spawn "b04_"
+Spawn "c02_"
+
+Program 0x04
+Layout "file/%s/mu_mi.2ld"
+AreaSettings 47 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 69 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 48 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 80 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 49 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 70 FadeType -1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "b05_"
+Spawn "c03_"
+Spawn "a07m"
+
+Program 0x10
+Layout "file/%s/mu_mi.2ld"
+AreaSettings 47 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 69 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 48 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 80 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 49 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 70 FadeType -1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "b00_"
+Spawn "c01_"
+Spawn "a08m"
+
+Program 0x05
+Spawn "e_50"
+
+Program 0x11
+Layout "file/%s/mu_mi.2ld"
+AreaSettings 47 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 69 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 48 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 80 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 49 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 70 FadeType -1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "b00_"
+Spawn "c01_"
+Spawn "a09m"
+
+Program 0x06
+Spawn "e_50"
+
+Program 0x12
+Layout "file/%s/mu_mi.2ld"
+AreaSettings 47 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 69 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 48 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 80 FadeType -1
+	SetPartyMenu 0
+
+AreaSettings 49 -1
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 70 FadeType -1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "b00_"
+Spawn "c01_"
+Spawn "a10m"
+
+Program 0x07
+Party W_FRIEND_FIX
+AreaSettings 0 -1
+	SetProgressFlag 0x2021
+	SetEvent "184" Type 2
+	SetJump Type 1 World MU Area 1 Entrance 53 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x08
+Spawn "e_50"
+
+Program 0x6E
+Bgm 112 112
+AreaSettings 0 -1
+	SetEvent "104s" Type 66
+	SetJump Type 2 World MU Area 0 Entrance 0 LocalSet 111 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x09
+Spawn "e_50"

@@ -1,0 +1,8 @@
+Program 0x0A
+Party DEFAULT
+AreaSettings 1 10
+	SetJump Type 1 World LK Area 9 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00

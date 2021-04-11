@@ -1,0 +1,117 @@
+Program 0x3E
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "006" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 124 FadeType 16386
+	SetPartyMenu 0
+
+
+Program 0x36
+Bgm Default Default
+
+Program 0x37
+Bgm Default Default
+
+Program 0x3C
+Bgm Default Default
+Layout "menu/%s/jiminy.bar"
+MapScript 4
+AreaSettings 0 -1
+	SetProgressFlag 0x409
+	SetEvent "999" Type 130
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 2 World ES Area 0 Entrance 0 LocalSet 61 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 8 -1
+	SetJump Type 5 World ES Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+
+Program 0x41
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "999" Type 66
+	SetJump Type 6 World ES Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x3A
+Bgm Default Default
+Layout "menu/%s/jiminy.bar"
+MapScript 3
+AreaSettings 0 -1
+	SetEvent "998" Type 130
+	SetPartyMenu 0
+
+AreaSettings 7 -1
+	SetJump Type 2 World ES Area 0 Entrance 0 LocalSet 60 FadeType 16385
+	SetPartyMenu 0
+
+AreaSettings 8 -1
+	SetJump Type 5 World ES Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+
+Program 0x3D
+Bgm Default Default
+Layout "menu/%s/jiminy.bar"
+AreaSettings 0 -1
+	SetProgressFlag 0x40A
+	SetEvent "993" Type 130
+	SetJump Type 5 World ES Area 0 Entrance 0 LocalSet 0 FadeType 16385
+	SetPartyMenu 0
+
+
+Program 0x42
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "993" Type 66
+	SetJump Type 6 World ES Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x45
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "998" Type 66
+	SetJump Type 6 World ES Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x33
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "995" Type 131
+	SetJump Type 2 World ES Area 0 Entrance 0 LocalSet 58 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x44
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "995" Type 67
+	SetJump Type 6 World ES Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x43
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "995" Type 67
+	SetJump Type 2 World ES Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x39
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "006" Type 2
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 54 FadeType 16386
+	SetPartyMenu 0
+
+
+Program 0x35
+Bgm Default Default

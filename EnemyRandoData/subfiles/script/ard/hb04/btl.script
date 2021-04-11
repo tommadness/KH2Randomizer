@@ -1,0 +1,18 @@
+Program 0x0A
+Spawn "b_20"
+
+Program 0x01
+Unk06 0
+Mission 0x1A6 "HB04_KINOKO_DEM"
+Spawn "b_81"
+
+Program 0x37
+Party DEFAULT
+Mission 0x90 "HB04_MS403"
+Spawn "b_40"
+
+Program 0x72
+Party DEFAULT
+Mission 0x90 "HB04_MS403"
+BattleLevel 99
+Spawn "b_80"

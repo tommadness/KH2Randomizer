@@ -1,0 +1,22 @@
+Program 0xCE
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "701" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 132 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x109
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "701" Type 2
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 260 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xEA
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "701" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 134 FadeType 1
+	SetPartyMenu 0

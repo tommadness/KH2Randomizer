@@ -1,0 +1,132 @@
+- Type: 2
+  Flag: 0
+  Id: 42
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 6553660
+  Unk24: 0
+  Entities:
+  - ObjectId: 1109
+    PositionX: 2740
+    PositionY: -70
+    PositionZ: 280
+    RotationX: 0
+    RotationY: -1.5707963705062866
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 9
+    Argument1: 13
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 100
+    Medal: 0
+  EventActivators:
+  - Shape: 1
+    Option: 0
+    PositionX: 2148
+    PositionY: -300
+    PositionZ: 320
+    ScaleX: 300
+    ScaleY: 300
+    ScaleZ: 300
+    RotationX: 0
+    RotationY: -1.6210629940032959
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []
+- Type: 2
+  Flag: 0
+  Id: 43
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 6553660
+  Unk24: 0
+  Entities:
+  - ObjectId: 1109
+    PositionX: -1520
+    PositionY: -150
+    PositionZ: -350
+    RotationX: 0
+    RotationY: 2.9670596122741699
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 10
+    Argument1: 11
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 100
+    Medal: 0
+  - ObjectId: 1109
+    PositionX: -1150
+    PositionY: -150
+    PositionZ: -360
+    RotationX: 0
+    RotationY: -3.1415927410125732
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 11
+    Argument1: 11
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 100
+    Medal: 0
+  - ObjectId: 1109
+    PositionX: -820
+    PositionY: -150
+    PositionZ: -430
+    RotationX: 0
+    RotationY: 2.7925267219543457
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 246
+    Argument1: 11
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 100
+    Medal: 0
+  EventActivators:
+  - Shape: 0
+    Option: 0
+    PositionX: -1000
+    PositionY: -250
+    PositionZ: -210
+    ScaleX: 550
+    ScaleY: 300
+    ScaleZ: 340
+    RotationX: 0
+    RotationY: 0
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []

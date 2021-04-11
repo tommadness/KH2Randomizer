@@ -1,0 +1,61 @@
+Program 0x15
+AreaSettings 82 -1
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 88 FadeType 1
+	SetPartyMenu 0
+
+Spawn "r_20"
+Spawn "b53y"
+Spawn "c53_"
+Spawn "z00s"
+
+Program 0x0A
+Party DEFAULT
+AreaSettings 0 -1
+	SetProgressFlag 0x4020
+	SetEvent "202" Type 2
+	SetJump Type 1 World CA Area 0 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x16
+AreaSettings 82 -1
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 88 FadeType 1
+	SetPartyMenu 0
+
+Spawn "r_20"
+Spawn "b03y"
+Spawn "c03_"
+Spawn "z00s"
+
+Program 0x00
+Spawn "e_50"
+Spawn "e_51"
+
+Program 0x01
+Party DEFAULT
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x4004
+	SetEvent "101" Type 2
+	SetJump Type 1 World CA Area 0 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x02
+AreaSettings 1 27
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 84 FadeType 0
+	SetPartyMenu 0
+
+
+Program 0x59
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "101" Type 66
+	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 90 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x14
+Spawn "e_50"
+Spawn "e_51"
+Spawn "z00s"

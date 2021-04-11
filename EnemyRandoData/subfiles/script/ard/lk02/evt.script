@@ -1,0 +1,68 @@
+Program 0x15
+Spawn "d51_"
+
+Program 0x0A
+MapScript 9
+AreaSettings 0 -1
+	SetProgressFlag 0x281C
+	SetEvent "204" Type 2
+	SetPartyMenu 0
+
+AreaSettings 76 -1
+	SetProgressFlag 0x281C
+	SetMember 4
+	SetUnk05 0x1
+	SetEvent "204a" Type 129
+	SetJump Type 1 World LK Area 2 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 1
+
+
+Program 0x5A
+AreaSettings 0 -1
+	SetEvent "204" Type 66
+	SetJump Type 2 World LK Area 0 Entrance 0 LocalSet 91 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x16
+Spawn "d00_"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x53
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "120" Type 66
+	SetJump Type 2 World LK Area 0 Entrance 0 LocalSet 84 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x5B
+AreaSettings 0 -1
+	SetEvent "205s" Type 66
+	SetJump Type 2 World LK Area 0 Entrance 0 LocalSet 92 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x33
+Bgm 117 117
+AreaSettings 7 -1
+	SetProgressFlag 0x2814
+	SetUnk05 0x3
+	SetEvent "120" Type 8
+	SetJump Type 1 World LK Area 2 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x13
+Spawn "e_50"
+Spawn "d52_"
+Spawn "e52_"
+Spawn "f52_"
+
+Program 0x14
+Spawn "e_50"
+Spawn "d01_"
+Spawn "e03_"
+Spawn "f03_"

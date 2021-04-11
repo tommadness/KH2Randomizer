@@ -1,0 +1,56 @@
+Program 0x0A
+Capacity 7.7E-44
+AllocEnemy 3145728
+AllocEffect 0x100000 0x40000
+MapScript 11
+Spawn "b_20"
+Spawn "b_30"
+Spawn "b_11"
+
+Program 0x0B
+Capacity 7.7E-44
+AllocEnemy 3145728
+AllocEffect 0x100000 0x40000
+MapScript 11
+Spawn "b_21"
+Spawn "b_30"
+Spawn "b_11"
+
+Program 0x01
+Capacity 5.6E-44
+AllocEnemy 3145728
+AllocEffect 0x100000 0x40000
+MapScript 11
+Unk1d 5
+Spawn "b_00"
+Spawn "b_10"
+Spawn "b_11"
+
+Program 0x02
+Capacity 5.7E-44
+AllocEnemy 3145728
+AllocEffect 0x100000 0x40000
+MapScript 11
+Unk1d 5
+Spawn "b_01"
+Spawn "b_12"
+Spawn "b_11"
+
+Program 0x03
+Capacity 5.7E-44
+AllocEnemy 3145728
+AllocEffect 0x100000 0x40000
+MapScript 11
+Spawn "b_01"
+Spawn "b_12"
+Spawn "b_11"
+
+Program 0x1A
+Capacity 5.6E-44
+Spawn "b_00"
+Spawn "b_10"
+
+Program 0x1B
+Capacity 7.7E-44
+Spawn "b_01"
+Spawn "b_12"

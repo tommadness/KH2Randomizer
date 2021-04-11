@@ -1,0 +1,19 @@
+Program 0x0A
+Capacity 7.3E-44
+Spawn "b_12"
+Spawn "b_20"
+
+Program 0x0B
+Capacity 7.3E-44
+Spawn "b_10"
+Spawn "b_21"
+
+Program 0x03
+Capacity 7.3E-44
+Spawn "b_11"
+Spawn "b_02"
+
+Program 0x04
+Capacity 7.3E-44
+Spawn "b_11"
+Spawn "b_03"

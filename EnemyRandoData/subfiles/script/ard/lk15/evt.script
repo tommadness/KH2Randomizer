@@ -1,0 +1,34 @@
+Program 0x3B
+Bgm 115 115
+AreaSettings 16 -1
+	SetProgressFlag 0x2833
+	SetEvent "213" Type 18
+	SetJump Type 1 World LK Area 0 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0A
+Bgm 115 115
+AreaSettings 0 -1
+	SetProgressFlag 0x2825
+	SetMember 5
+	SetUnk05 0x1
+	SetEvent "212" Type 2
+	SetJump Type 2 World LK Area 0 Entrance 0 LocalSet 59 FadeType 1
+	SetPartyMenu 1
+
+
+Program 0x62
+Bgm 115 115
+AreaSettings 0 -1
+	SetEvent "212" Type 66
+	SetJump Type 2 World LK Area 0 Entrance 0 LocalSet 99 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x63
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "213" Type 66
+	SetJump Type 2 World LK Area 0 Entrance 0 LocalSet 100 FadeType 1
+	SetPartyMenu 0

@@ -1,0 +1,196 @@
+Program 0x64
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "401" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 101 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x50
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "005" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 81 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0A
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2437
+	SetUnk05 0x1
+	SetEvent "405" Type 2
+	SetJump Type 1 World HB Area 13 Entrance 1 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x68
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "501" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 105 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x16
+Bgm Default Default
+Spawn "e_50"
+
+Program 0x0B
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2428
+	SetEvent "501" Type 2
+	SetJump Type 1 World PO Area 0 Entrance 55 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x57
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "106" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 88 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x01
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2401
+	SetEvent "001" Type 67
+	SetJump Type 1 World PO Area 0 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x5D
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "206" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 94 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x02
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2405
+	SetEvent "005" Type 67
+	SetJump Type 1 World PO Area 0 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x67
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "405" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 104 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x03
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2409
+	SetEvent "101" Type 2
+	SetJump Type 1 World PO Area 0 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x63
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "307" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 100 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x04
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2434
+	SetUnk05 0x1
+	SetEvent "106" Type 2
+	SetJump Type 1 World HB Area 13 Entrance 1 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x05
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2411
+	SetEvent "201" Type 2
+	SetJump Type 1 World PO Area 0 Entrance 52 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x4D
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "001" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 78 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x06
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2435
+	SetUnk05 0x1
+	SetEvent "206" Type 2
+	SetJump Type 1 World HB Area 13 Entrance 1 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x53
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "101" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 84 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x07
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2419
+	SetEvent "301" Type 2
+	SetJump Type 1 World PO Area 0 Entrance 53 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x58
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "201" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 89 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x08
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2436
+	SetUnk05 0x1
+	SetEvent "307" Type 2
+	SetJump Type 1 World HB Area 13 Entrance 1 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x5E
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "301" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 95 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x09
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2421
+	SetEvent "401" Type 2
+	SetJump Type 1 World PO Area 0 Entrance 54 LocalSet 0 FadeType 1
+	SetPartyMenu 0

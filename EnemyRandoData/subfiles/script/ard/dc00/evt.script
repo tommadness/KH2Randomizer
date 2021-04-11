@@ -1,0 +1,37 @@
+Program 0x00
+Spawn "e_01"
+
+Program 0x01
+Party NO_FRIEND
+AreaSettings 0 -1
+	SetProgressFlag 0x3008
+	SetEvent "106" Type 2
+	SetJump Type 2 World DC Area 0 Entrance 0 LocalSet 51 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_02"
+
+Program 0x33
+Bgm 117 117
+AreaSettings 7 -1
+	SetProgressFlag 0x3009
+	SetEvent "107" Type 8
+	SetJump Type 1 World DC Area 4 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_03"
+
+Program 0x50
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "106" Type 66
+	SetJump Type 2 World DC Area 0 Entrance 0 LocalSet 81 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x51
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "107" Type 66
+	SetJump Type 2 World DC Area 0 Entrance 0 LocalSet 82 FadeType 1
+	SetPartyMenu 0

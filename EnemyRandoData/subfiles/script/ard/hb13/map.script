@@ -1,0 +1,190 @@
+Program 0x00
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0x01
+MapVisibility 0x00000031 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_80"
+
+Program 0xA8
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0x02
+MapVisibility 0x00000031 0x00000000
+Spawn "m_01"
+Spawn "m_10"
+SpawnAlt "m_21"
+Spawn "m_22"
+Spawn "m_23"
+Spawn "m_80"
+
+Program 0xAA
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0x03
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_01"
+Spawn "m_10"
+SpawnAlt "m_21"
+Spawn "m_22"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0xAB
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0x04
+Unk0e 1
+MapVisibility 0x000000b5 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0xAC
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0x19
+Unk0e 1
+MapVisibility 0x000000a3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0x65
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_20"
+Spawn "m_23"
+
+Program 0xA2
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0x1A
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_20"
+Spawn "m_50"
+Spawn "m_80"
+
+Program 0xFE
+Unk0e 1
+MapVisibility 0x000000b3 0x00000000
+AreaSettings 11 -1
+	SetUnk05 0x1
+	SetJump Type 1 World PO Area 0 Entrance 6 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_20"
+Spawn "m_23"
+Spawn "m_50"
+Spawn "m_80"

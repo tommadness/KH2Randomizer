@@ -1,0 +1,187 @@
+Program 0x0A
+Spawn "e_50"
+Spawn "i00_"
+
+Program 0x4B
+AreaSettings 0 -1
+	SetEvent "199" Type 2
+	SetJump Type 1 World PO Area 4 Entrance 20 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x56
+AreaSettings 0 -1
+	SetEvent "105" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 87 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0B
+Spawn "e_50"
+Spawn "f06_"
+Spawn "i03_"
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x55
+AreaSettings 0 -1
+	SetEvent "103s" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 86 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0C
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c06y"
+Spawn "f09_"
+Spawn "i06_"
+Spawn "r_21"
+
+Program 0x01
+AreaSettings 0 -1
+	SetProgressFlag 0x240A
+	SetEvent "102" Type 2
+	SetJump Type 1 World PO Area 4 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x0D
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c06y"
+Spawn "f08_"
+Spawn "i05_"
+Spawn "r_21"
+
+Program 0x02
+AreaSettings 9 -1
+	SetProgressFlag 0x240B
+	SetEvent "103" Type 1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 55 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c00e"
+
+Program 0x0E
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c06y"
+Spawn "f08_"
+Spawn "i05_"
+Spawn "r_21"
+
+Program 0x03
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 55 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "a02y"
+Spawn "f00_"
+Spawn "r_20"
+
+Program 0x04
+AreaSettings 0 -1
+	SetProgressFlag 0x240F
+	SetEvent "105" Type 2
+	SetJump Type 1 World PO Area 0 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0F
+Spawn "e_50"
+
+Program 0x10
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c06y"
+Spawn "f07_"
+Spawn "i04_"
+Spawn "r_21"
+
+Program 0x06
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "c06y"
+Spawn "i05_"
+Spawn "r_21"
+
+Program 0x11
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c06y"
+Spawn "f06_"
+Spawn "i03_"
+Spawn "r_21"
+
+Program 0x07
+Spawn "f01_"
+Spawn "i00_"
+
+Program 0x12
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c06y"
+Spawn "f06_"
+Spawn "i03_"
+Spawn "r_21"
+
+Program 0x54
+AreaSettings 0 -1
+	SetEvent "102" Type 66
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 85 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x13
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c06y"
+Spawn "f01_"
+Spawn "i00_"
+Spawn "r_21"
+
+Program 0x08
+Spawn "e_50"
+Spawn "i03_"
+
+Program 0x14
+AreaSettings 9 -1
+	SetJump Type 2 World PO Area 0 Entrance 0 LocalSet 69 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_50"
+Spawn "c06y"
+Spawn "f01_"
+Spawn "i00_"
+Spawn "r_21"
+
+Program 0x09
+Spawn "e_50"

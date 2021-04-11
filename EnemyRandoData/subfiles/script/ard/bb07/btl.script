@@ -1,0 +1,27 @@
+Program 0x0A
+Capacity 7.3E-44
+StatusFlag3
+CasualSpawn 30 "b_30"
+Spawn "b_20"
+
+Program 0x01
+Capacity 7E-44
+Spawn "b_00"
+Spawn "z_70"
+
+Program 0x02
+Capacity 7E-44
+Spawn "b_01"
+RandomSpawn "b_80" "b_81" "b_82" "b_83" "b_84" "b_85"
+Spawn "z_70"
+
+Program 0x03
+Capacity 7E-44
+Spawn "b_02"
+RandomSpawn "b_84" "b_85"
+Spawn "z_70"
+
+Program 0x04
+Capacity 7E-44
+RandomSpawn "b_86" "b_87"
+Spawn "z_70"

@@ -1,0 +1,8 @@
+Program 0x00
+MapVisibility 0x0000001f 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+
+Program 0x1A
+MapVisibility 0x0000001f 0x00000000
+Spawn "m_00"

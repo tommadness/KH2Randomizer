@@ -1,0 +1,132 @@
+- Type: 2
+  Flag: 0
+  Id: 696
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 25
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities:
+  - ObjectId: 318
+    PositionX: 480.44699096679688
+    PositionY: -0
+    PositionZ: 116.55039978027344
+    RotationX: 0
+    RotationY: 0
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 322
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 25
+    Command: 0
+    SpawnRange: 500
+    Level: 0
+    Medal: 0
+  - ObjectId: 318
+    PositionX: 930.447021484375
+    PositionY: -0
+    PositionZ: 116.55039978027344
+    RotationX: 0
+    RotationY: 0
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 323
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 25
+    Command: 0
+    SpawnRange: 500
+    Level: 0
+    Medal: 0
+  - ObjectId: 318
+    PositionX: 680.447021484375
+    PositionY: -0
+    PositionZ: 116.55039978027344
+    RotationX: 0
+    RotationY: 0
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 356
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 25
+    Command: 0
+    SpawnRange: 500
+    Level: 0
+    Medal: 0
+  EventActivators:
+  - Shape: 1
+    Option: 0
+    PositionX: 725.59918212890625
+    PositionY: -125
+    PositionZ: 85.323638916015625
+    ScaleX: 599.6099853515625
+    ScaleY: 175
+    ScaleZ: 564.125
+    RotationX: 0
+    RotationY: 0
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []
+- Type: 2
+  Flag: 0
+  Id: 698
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities:
+  - ObjectId: 318
+    PositionX: -1286.0340576171875
+    PositionY: -379.37939453125
+    PositionZ: -574.573974609375
+    RotationX: 0
+    RotationY: 1.3744467496871948
+    RotationZ: 0
+    SpawnType: 2
+    SpawnArgument: 0
+    Serial: 288
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  EventActivators:
+  - Shape: 1
+    Option: 0
+    PositionX: -1223.23095703125
+    PositionY: -175
+    PositionZ: -606.79791259765625
+    ScaleX: 295.99301147460938
+    ScaleY: 175
+    ScaleZ: 328.8489990234375
+    RotationX: 0
+    RotationY: 0
+    RotationZ: 0
+    Flags: 0
+    Type: 0
+    OnBgGroup: 0
+    OffBgGroup: 0
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []

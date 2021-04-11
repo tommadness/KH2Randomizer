@@ -1,0 +1,23 @@
+Program 0x5B
+Party NO_FRIEND
+MapVisibility 0x0000012b 0x40000000
+BarrierFlag 0x0 0x40000000
+Mission 0x8D "HB08_MS102"
+Spawn "b_99"
+Spawn "b_10"
+
+Program 0x01
+Capacity 7.3E-44
+Spawn "b_10"
+Spawn "b_00"
+
+Program 0x02
+Capacity 7.3E-44
+Spawn "b_10"
+Spawn "b_01"
+
+Program 0x34
+Capacity 1.68E-43
+Party NO_FRIEND
+Mission 0x8D "HB08_MS102"
+Spawn "b_40"

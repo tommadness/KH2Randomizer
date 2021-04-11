@@ -1,0 +1,6 @@
+Program 0x34
+Mission 0x3E "LM02_MS101"
+Spawn "b_40"
+
+Program 0x3F
+Mission 0x152 "LM02_MS102"

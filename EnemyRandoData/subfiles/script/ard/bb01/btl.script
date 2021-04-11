@@ -1,0 +1,5 @@
+Program 0x44
+Party DEFAULT
+Mission 0x35 "BB01_MS101"
+Unk1d 3
+Spawn "b_40"

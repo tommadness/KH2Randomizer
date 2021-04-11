@@ -1,0 +1,115 @@
+Program 0xFB
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"
+
+Program 0x43
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_50"
+
+Program 0xDB
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"
+
+Program 0x00
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"
+
+Program 0x01
+MapVisibility 0x00000009 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_50"
+
+Program 0x02
+Unk0e 1
+MapVisibility 0x00000005 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"
+
+Program 0xD5
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"
+
+Program 0x70
+Unk0e 1
+MapVisibility 0x00000005 0x40000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_50"
+
+Program 0xE0
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"
+
+Program 0x42
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_50"
+
+Program 0xD7
+Unk0e 1
+MapVisibility 0x00000005 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"
+
+Program 0x88
+Unk0e 1
+MapVisibility 0x00000005 0x40000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_50"
+
+Program 0x7E
+MapVisibility 0x00000003 0x40000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_50"
+
+Program 0x1A
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_50"
+
+Program 0xD8
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"
+
+Program 0x41
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_50"
+
+Program 0x1B
+Unk0e 1
+MapVisibility 0x00000005 0x40000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_50"
+
+Program 0xFA
+MapVisibility 0x00000003 0x00000000
+BarrierFlag 0x0 0x40000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_50"

@@ -1,0 +1,98 @@
+Program 0x70
+AreaSettings 0 -1
+	SetEvent "214" Type 66
+	SetJump Type 2 World NM Area 0 Entrance 0 LocalSet 113 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x65
+AreaSettings 0 -1
+	SetEvent "126" Type 66
+	SetJump Type 6 World NM Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0
+
+
+Program 0x5B
+AreaSettings 0 -1
+	SetEvent "115" Type 66
+	SetJump Type 2 World NM Area 0 Entrance 0 LocalSet 92 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x0A
+Party W_FRIEND
+AreaSettings 0 -1
+	SetProgressFlag 0x382E
+	SetEvent "214" Type 2
+	SetJump Type 1 World NM Area 7 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x00
+Spawn "e_50"
+
+Program 0x01
+Party W_FRIEND
+AreaSettings 0 -1
+	SetProgressFlag 0x380B
+	SetEvent "111" Type 2
+	SetJump Type 2 World NM Area 0 Entrance 0 LocalSet 53 FadeType 1
+	SetPartyMenu 0
+
+Spawn "e_70"
+
+Program 0x02
+Party W_FRIEND
+AreaSettings 1 -1
+	SetProgressFlag 0x383C
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0x03
+Party W_FRIEND
+AreaSettings 0 -1
+	SetProgressFlag 0x380F
+	SetEvent "115" Type 2
+	SetJump Type 1 World NM Area 6 Entrance 51 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x04
+Spawn "e_50"
+
+Program 0x05
+Party W_FRIEND
+AreaSettings 0 -1
+	SetProgressFlag 0x381A
+	SetUnk05 0x2
+	SetEvent "126" Type 2
+	SetJump Type 4 World NM Area 0 Entrance 0 LocalSet 0 FadeType -1
+	SetInventory 301
+	SetPartyMenu 0
+
+
+Program 0x57
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "111" Type 66
+	SetJump Type 2 World NM Area 0 Entrance 0 LocalSet 88 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x58
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "112" Type 66
+	SetJump Type 2 World NM Area 0 Entrance 0 LocalSet 89 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x35
+Bgm 65 65
+AreaSettings 7 -1
+	SetProgressFlag 0x381B
+	SetUnk05 0x3
+	SetEvent "112" Type 8
+	SetJump Type 1 World NM Area 6 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 0

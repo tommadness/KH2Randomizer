@@ -1,0 +1,48 @@
+Program 0x94
+AllocEnemy 3670016
+Party DEFAULT
+Mission 0x199 "HB33_FM_LAR"
+BattleLevel 99
+Spawn "b_81"
+
+Program 0x8E
+AllocEnemy 3145728
+Party DEFAULT
+AllocEffect 0x100000 0x80000
+Mission 0x196 "HB33_FM_LEX"
+BattleLevel 40
+Spawn "b_82"
+
+Program 0x9B
+AllocEnemy 3670016
+Party DEFAULT
+Mission 0x199 "HB33_FM_LAR"
+BattleLevel 32
+Spawn "b_83"
+
+Program 0x9C
+Party DEFAULT
+Mission 0x1B9 "HB33_FM_VEX"
+BattleLevel 50
+Spawn "b_85"
+
+Program 0x93
+AllocEnemy 3145728
+Party DEFAULT
+AllocEffect 0x100000 0x80000
+Mission 0x196 "HB33_FM_LEX"
+BattleLevel 99
+Spawn "b_80"
+
+Program 0x9D
+Party DEFAULT
+Mission 0x1B9 "HB33_FM_VEX"
+BattleLevel 99
+Spawn "b_84"
+
+Program 0x8F
+AllocEnemy 3670016
+Party DEFAULT
+Mission 0x199 "HB33_FM_LAR"
+BattleLevel 32
+Spawn "b_83"

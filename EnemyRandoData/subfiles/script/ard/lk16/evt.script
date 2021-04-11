@@ -1,0 +1,23 @@
+Program 0x01
+Party DEFAULT
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x2801
+	SetEvent "101" Type 2
+	SetJump Type 1 World LK Area 11 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x65
+AreaSettings 0 -1
+	SetEvent "101" Type 66
+	SetJump Type 2 World LK Area 0 Entrance 0 LocalSet 65 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x40
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "101" Type 66
+	SetJump Type 2 World LK Area 0 Entrance 0 LocalSet 65 FadeType 1
+	SetPartyMenu 0

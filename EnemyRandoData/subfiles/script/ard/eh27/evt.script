@@ -1,0 +1,32 @@
+Program 0x5E
+Party W_FRIEND
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x4827
+	SetEvent "135" Type 2
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 75 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xFD
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "135" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 254 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0xD4
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "135" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 213 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x4B
+Bgm 59 59
+AreaSettings 1 -1
+	SetProgressFlag 0x483A
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 68 FadeType 0
+	SetPartyMenu 0

@@ -1,0 +1,28 @@
+Program 0x15
+Unk1d 4
+Spawn "a53_"
+Spawn "b54_"
+
+Program 0x0A
+Party W_FRIEND
+AreaSettings 11 -1
+	SetProgressFlag 0x441D
+	SetEvent "207" Type 1
+	SetJump Type 1 World TR Area 7 Entrance 0 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+
+Unk1d 4
+Spawn "a51_"
+Spawn "b52_"
+
+Program 0x16
+Unk1d 4
+Spawn "a51_"
+Spawn "b52_"
+
+Program 0x66
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "207" Type 66
+	SetJump Type 2 World TR Area 0 Entrance 0 LocalSet 103 FadeType 1
+	SetPartyMenu 0

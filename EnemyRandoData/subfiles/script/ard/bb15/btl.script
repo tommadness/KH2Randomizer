@@ -1,0 +1,12 @@
+Program 0x61
+Party DEFAULT
+Mission 0x1B8 "BB15_MS203_RE"
+BattleLevel 99
+Spawn "b_80"
+
+Program 0x52
+Progress 0x1083
+Party W_FRIEND
+StatusFlag3
+Mission 0x99 "BB15_MS203"
+Spawn "b_60"

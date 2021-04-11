@@ -1,0 +1,65 @@
+Program 0x16
+AreaSettings 0 -1
+	SetProgressFlag 0x4847
+	SetPartyMenu 0
+
+AreaSettings 33 -1
+	SetProgressFlag 0x4846
+	SetPartyMenu 0
+
+Unk1d 4
+Spawn "e_50"
+Spawn "e00_"
+
+Program 0x00
+AreaSettings 0 -1
+	SetProgressFlag 0x4847
+	SetPartyMenu 0
+
+AreaSettings 33 -1
+	SetProgressFlag 0x4846
+	SetPartyMenu 0
+
+Spawn "e_50"
+
+Program 0xDB
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "101" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 220 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x01
+Bgm Default Default
+AreaSettings 0 -1
+	SetProgressFlag 0x4805
+	SetMember 1
+	SetUnk05 0x1
+	SetEvent "101" Type 66
+	SetJump Type 1 World EH Area 1 Entrance 50 LocalSet 0 FadeType 1
+	SetPartyMenu 1
+
+
+Program 0xB2
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "101" Type 66
+	SetJump Type 2 World EH Area 0 Entrance 0 LocalSet 179 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x40
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "301" Type 66
+	SetJump Type 2 World DI Area 0 Entrance 0 LocalSet 54 FadeType 1
+	SetPartyMenu 0
+
+
+Program 0x82
+Bgm Default Default
+AreaSettings 0 -1
+	SetEvent "301" Type 66
+	SetJump Type 2 World DI Area 0 Entrance 0 LocalSet 58 FadeType 1
+	SetPartyMenu 0
