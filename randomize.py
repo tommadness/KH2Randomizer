@@ -203,9 +203,12 @@ def Randomize(
         padStartingItem(formattedPlrp, LocationList.criticalBonus)
     
     padStartingItem(formattedPlrp, LocationList.lionStartWithDash)
-
+    LocationList.donaldStarting.setReward(1, equipped=True)
+    LocationList.donaldStarting.setReward(3, equipped=True)
     padStartingItem(formattedPlrp, LocationList.donaldStarting)
-
+    LocationList.goofyStarting.setReward(1, equipped=True)
+    LocationList.goofyStarting.setReward(1, equipped=True)
+    LocationList.goofyStarting.setReward(1, equipped=True)
     padStartingItem(formattedPlrp, LocationList.goofyStarting)
 
     

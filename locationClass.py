@@ -211,7 +211,9 @@ class KH2StartingItem:
     InvalidChecks: list[itemType] = field(default_factory=list)
     Objects: list[int] = field(default_factory=list) #58
 
-    def setReward(self, itemId):
+    def setReward(self, itemId, equipped=False):
+        if equipped:
+            itemId -= 0x8000
         self.Objects.append(itemId)
 
     def getReward(self):
