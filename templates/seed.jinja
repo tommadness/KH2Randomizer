@@ -62,7 +62,7 @@
 
 <div class="container mb-3">
 <h4>Command Menu:</h4>
-<select name="cmdMenuChoice">
+<select name="cmdMenuChoice" disabled>
     {% for key in cmdMenus %}
     <option value="{{key}}">{{cmdMenus[key]}}</option>
     {% endfor %}

@@ -1,13 +1,13 @@
-from randomize import Randomize
 from flask import Flask, session, Response
-from randomCmdMenu import cmdMenusChoice
-from configDict import miscConfig, locationType, expTypes, keybladeAbilities
+from Module.randomCmdMenu import cmdMenusChoice
+from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import flask as fl
 import numpy as np
 from urllib.parse import urlparse
 import os, base64, string, random, ast, zipfile, redis, json
 from khbr.randomizer import Randomizer as khbr
-from hints import Hints
+from Module.hints import Hints
+from Module.randomize import KH2Randomizer
 
 app = Flask(__name__)
 
@@ -121,32 +121,43 @@ def seed():
 def randomizePage():
     excludeList = list(set(locationType) - set(session.get('includeList')))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
-    data = Randomize(
-    seedName = fl.escape(session.get('seed')), 
-    exclude = excludeList, 
-    formExpMult = session.get('formExpMult'), 
-    soraExpMult = float(session.get('soraExpMult')), 
-    levelChoice = session.get('levelChoice'), 
-    cmdMenuChoice = cmdMenuChoice,
-    spoilerLog = session.get('spoilerLog'),
-    promiseCharm = session.get('promiseCharm'),
-    goMode = session.get('goMode'),
-    keybladeMinStat = int(session.get('keybladeMinStat')),
-    keybladeMaxStat = int(session.get('keybladeMaxStat')),
-    keybladeAbilities = session.get('keybladeAbilities'),
-    enemyOptions = json.loads(session.get("enemyOptions")),
-    hintsType = session.get("hintsType")
-    )
+    # data = Randomize(
+    # seedName = fl.escape(session.get('seed')), 
+    # exclude = excludeList, 
+    # formExpMult = session.get('formExpMult'), 
+    # soraExpMult = float(session.get('soraExpMult')), 
+    # levelChoice = session.get('levelChoice'), 
+    # cmdMenuChoice = cmdMenuChoice,
+    # spoilerLog = session.get('spoilerLog'),
+    # promiseCharm = session.get('promiseCharm'),
+    # goMode = session.get('goMode'),
+    # keybladeMinStat = int(session.get('keybladeMinStat')),
+    # keybladeMaxStat = int(session.get('keybladeMaxStat')),
+    # keybladeAbilities = session.get('keybladeAbilities'),
+    # enemyOptions = json.loads(session.get("enemyOptions")),
+    # hintsType = session.get("hintsType")
+    # )
 
-    if isinstance(data,str):
-        return data
 
-    return fl.send_file(
-        data,
-        mimetype='application/zip',
-        as_attachment=True,
-        attachment_filename='randoseed.zip'
-    )
+    randomizer = KH2Randomizer()
+    randomizer.populateLocations(excludeList)
+    randomizer.populateItems(promiseCharm = session.get("promiseCharm"))
+    if randomizer.validateCount():
+        randomizer.setKeybladeAbilities(
+            keybladeAbilities = session.get("keybladeAbilities"), 
+            keybladeMinStat = int(session.get("keybladeMinStat")), 
+            keybladeMaxStat = int(session.get("keybladeMaxStat"))
+        )
+        randomizer.setRewards(levelChoice = session.get("levelChoice"))
+        randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
+        randomizer.setBonusStats()
+        zip = randomizer.generateZip(enemyOptions = json.loads(session.get("enemyOptions")))
+        return fl.send_file(
+            zip,
+            mimetype='application/zip',
+            as_attachment=True,
+            attachment_filename='randoseed.zip'
+        )
 
 @app.after_request
 def add_header(r):
