@@ -64,7 +64,7 @@ cmdMenus = [
 ]
 
 
-def RandomizeCmdMenus(cmdMenuChoice):
+def randomizeCmdMenus(cmdMenuChoice):
     cmdMenusDict = {}
     if cmdMenuChoice == "randAll":
         for cmdMenu in cmdMenus[:]:

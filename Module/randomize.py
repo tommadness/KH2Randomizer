@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
-import random, zipfile, yaml, io, json
+import random, zipfile, yaml, io, json, os
 
 from Module.spoilerLog import generateSpoilerLog
+from Module.randomCmdMenu import randomizeCmdMenus
 
 from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat
 from Class.itemClass import KH2Item, ItemEncoder
@@ -175,7 +176,7 @@ class KH2Randomizer():
             random.shuffle(statsList)
             location.setStat(statsList.pop())
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla"):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -306,6 +307,15 @@ class KH2Randomizer():
                 outZip.writestr("spoilerlog.txt",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
                 if enemySpoilers:
                     outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
+
+            cmdMenuAssets = randomizeCmdMenus(cmdMenuChoice)
+
+            if not cmdMenuAssets == "":
+                mod["assets"] += cmdMenuAssets
+                for folderName, subfolders, filenames in os.walk("Module/CommandMenus"):
+                    for filename in filenames:
+                        filePath = os.path.join(folderName, filename)
+                        outZip.write(filePath, filePath.replace("Module/",""))
 
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             outZip.close()
