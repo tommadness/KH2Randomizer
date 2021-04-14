@@ -1,5 +1,5 @@
-import itemClass
-import locationClass
+import Class.itemClass
+import Class.locationClass
 
 
 

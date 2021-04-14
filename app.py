@@ -152,7 +152,7 @@ def randomizePage():
         randomizer.setRewards(levelChoice = session.get("levelChoice"))
         randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
         randomizer.setBonusStats()
-        zip = randomizer.generateZip(enemyOptions = json.loads(session.get("enemyOptions")))
+        zip = randomizer.generateZip(spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
         return fl.send_file(
             zip,
             mimetype='application/zip',

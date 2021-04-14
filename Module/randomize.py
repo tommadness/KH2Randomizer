@@ -1,8 +1,10 @@
 from dataclasses import dataclass, field
-import random, zipfile, yaml, io
+import random, zipfile, yaml, io, json
+
+from Module.spoilerLog import generateSpoilerLog
 
 from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat
-from Class.itemClass import KH2Item
+from Class.itemClass import KH2Item, ItemEncoder
 from Class.modYml import modYml
 
 from List.configDict import locationType, itemType
@@ -19,6 +21,9 @@ def noop(self, *args, **kw):
 @dataclass
 class KH2Randomizer():
     seedName: str
+
+    _locationItems: list[tuple[KH2Location, KH2Item]] = field(default_factory=list)
+
     _validLocationList: list[KH2Location] = field(default_factory=list)
     _allLocationList: list[KH2Location] = field(default_factory=list)
     _validItemList: list[KH2Item] = field(default_factory=list)
@@ -69,6 +74,7 @@ class KH2Randomizer():
             self._validLocationList.remove(location)
             location.InvalidChecks.append(itemType.JUNK)
             self._validItemList.remove(proofs[index])
+            self._locationItems.append((location, proofs[index]))
 
 
     def setKeybladeAbilities(self, keybladeAbilities = ["Support"], keybladeMinStat = 0, keybladeMaxStat = 7):
@@ -79,18 +85,23 @@ class KH2Randomizer():
             randomAbility = random.choice(abilityList)
             keyblade.setReward(randomAbility.Id)
             keyblade.setStats(keybladeMinStat, keybladeMaxStat)
+            self._locationItems.append((keyblade,randomAbility))
             abilityList.remove(randomAbility)
             self._validItemList.remove(randomAbility)
 
         shieldList = [location for location in self._validLocationListGoofy if isinstance(location, KH2ItemStat)]
         for shield in shieldList:
             random.shuffle(self._validItemListGoofy)
-            shield.setReward(self._validItemListGoofy.pop().Id)
+            randomAbility = self._validItemListGoofy.pop()
+            shield.setReward(randomAbility.Id)
+            self._locationItems.append((shield,randomAbility))
 
         staffList = [location for location in self._validLocationListDonald if isinstance(location, KH2ItemStat)]
         for staff in staffList:
             random.shuffle(self._validItemListDonald)
-            staff.setReward(self._validItemListDonald.pop().Id)
+            randomAbility = self._validItemListDonald.pop()
+            staff.setReward(randomAbility.Id)
+            self._locationItems.append((staff,randomAbility))
 
     def setRewards(self, levelChoice="ExcludeFrom50"):
         locations = [location for location in self._validLocationList if not isinstance(location, KH2ItemStat)]
@@ -100,13 +111,16 @@ class KH2Randomizer():
                 if not item.ItemType in randomLocation.InvalidChecks:
                     randomLocation.setReward(item.Id)
                     locations.remove(randomLocation)
+                    self._locationItems.append((randomLocation,item))
                     break
         
         junkLocations = locations + [location for location in self._allLocationList if (not location in self._validLocationList and not set(location.LocationTypes).intersection([levelChoice]) and not set(location.InvalidChecks).intersection([itemType.JUNK]))]
 
 
         for location in junkLocations:
-            location.setReward(random.choice(Items.getJunkList()).Id)
+            randomJunk = random.choice(Items.getJunkList())
+            location.setReward(randomJunk.Id)
+            self._locationItems.append((location, randomJunk))
 
         goofyLocations = [location for location in self._validLocationListGoofy if not isinstance(location, KH2ItemStat)]
         for item in self._validItemListGoofy:
@@ -161,7 +175,7 @@ class KH2Randomizer():
             random.shuffle(statsList)
             location.setStat(statsList.pop())
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -287,6 +301,11 @@ class KH2Randomizer():
                 if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
                     from khbr.randomizer import Randomizer as khbr
                     enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
+
+            if spoilerLog:
+                outZip.writestr("spoilerlog.txt",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
+                if enemySpoilers:
+                    outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             outZip.close()
