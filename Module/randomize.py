@@ -18,6 +18,7 @@ def noop(self, *args, **kw):
 
 @dataclass
 class KH2Randomizer():
+    seedName: str
     _validLocationList: list[KH2Location] = field(default_factory=list)
     _allLocationList: list[KH2Location] = field(default_factory=list)
     _validItemList: list[KH2Item] = field(default_factory=list)
@@ -29,6 +30,9 @@ class KH2Randomizer():
     _validLocationListDonald: list[KH2Location] = field(default_factory=list)
     _allLocationListDonald: list[KH2Location] = field(default_factory=list)
     _validItemListDonald: list[KH2Item] = field(default_factory=list)
+
+    def __post_init__(self):
+        random.seed(self.seedName)
     
 
     def populateLocations(self, excludeWorlds):

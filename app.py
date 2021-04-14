@@ -138,8 +138,7 @@ def randomizePage():
     # hintsType = session.get("hintsType")
     # )
 
-
-    randomizer = KH2Randomizer()
+    randomizer = KH2Randomizer(seedName = session.get("seed"))
     randomizer.populateLocations(excludeList)
     randomizer.populateItems(promiseCharm = session.get("promiseCharm"))
     if randomizer.validateCount():
