@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
-import random, zipfile, yaml, io, json, os
+import random, zipfile, yaml, io, json, os, base64
 
 from Module.spoilerLog import generateSpoilerLog
 from Module.randomCmdMenu import randomizeCmdMenus
+from Module.hints import Hints
 
 from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat
 from Class.itemClass import KH2Item, ItemEncoder
@@ -176,7 +177,7 @@ class KH2Randomizer():
             random.shuffle(statsList)
             location.setStat(statsList.pop())
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla"):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", hintsType = "Disabled"):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -261,6 +262,8 @@ class KH2Randomizer():
             })
 
         formattedPlrp = []
+        lionStartWithDash = KH2StartingItem(135, 0, Hp=0, Ap=0, Mp=0, Unknown06=0,Unknown08=0,Unknown0a=0, Objects=[-32606, -32606, -32605, -32605, -32248, -32247, -32246, -32242])
+        plrpList.append(lionStartWithDash)
         for plrp in plrpList:
             formattedPlrp.append({
                 "Character": plrp.Character,
@@ -309,6 +312,12 @@ class KH2Randomizer():
                     outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 
             cmdMenuAssets = randomizeCmdMenus(cmdMenuChoice)
+
+            if not hintsType == "Disabled":
+                hintsDict = json.dumps(Hints.generateHints(self._locationItems, hintsType)).encode('utf-8')
+                outZip.writestr(self.seedName+".Hints", base64.b64encode(hintsDict).decode('utf-8'))
+
+
 
             if not cmdMenuAssets == "":
                 mod["assets"] += cmdMenuAssets

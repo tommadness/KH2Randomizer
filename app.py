@@ -121,22 +121,6 @@ def seed():
 def randomizePage():
     excludeList = list(set(locationType) - set(session.get('includeList')))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
-    # data = Randomize(
-    # seedName = fl.escape(session.get('seed')), 
-    # exclude = excludeList, 
-    # formExpMult = session.get('formExpMult'), 
-    # soraExpMult = float(session.get('soraExpMult')), 
-    # levelChoice = session.get('levelChoice'), 
-    # cmdMenuChoice = cmdMenuChoice,
-    # spoilerLog = session.get('spoilerLog'),
-    # promiseCharm = session.get('promiseCharm'),
-    # goMode = session.get('goMode'),
-    # keybladeMinStat = int(session.get('keybladeMinStat')),
-    # keybladeMaxStat = int(session.get('keybladeMaxStat')),
-    # keybladeAbilities = session.get('keybladeAbilities'),
-    # enemyOptions = json.loads(session.get("enemyOptions")),
-    # hintsType = session.get("hintsType")
-    # )
 
     randomizer = KH2Randomizer(seedName = session.get("seed"))
     randomizer.populateLocations(excludeList)
@@ -152,7 +136,7 @@ def randomizePage():
         randomizer.setRewards(levelChoice = session.get("levelChoice"))
         randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
         randomizer.setBonusStats()
-        zip = randomizer.generateZip(cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
+        zip = randomizer.generateZip(hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
         return fl.send_file(
             zip,
             mimetype='application/zip',
