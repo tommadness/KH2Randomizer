@@ -61,10 +61,13 @@ class KH2Randomizer():
 
     def goMode(self):
         locations = [location for location in self._validLocationList if set(location.LocationTypes).intersection([locationType.Free])]
+        print(locations)
         proofs = [item for item in self._validItemList if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]]
+        print(proofs)
         for index, location in enumerate(locations):
             location.setReward(proofs[index].Id)
             self._validLocationList.remove(location)
+            location.InvalidChecks.append(itemType.JUNK)
             self._validItemList.remove(proofs[index])
 
 

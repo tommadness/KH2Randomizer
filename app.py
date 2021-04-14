@@ -142,6 +142,8 @@ def randomizePage():
     randomizer.populateLocations(excludeList)
     randomizer.populateItems(promiseCharm = session.get("promiseCharm"))
     if randomizer.validateCount():
+        if bool(session.get('goMode')):
+            randomizer.goMode()
         randomizer.setKeybladeAbilities(
             keybladeAbilities = session.get("keybladeAbilities"), 
             keybladeMinStat = int(session.get("keybladeMinStat")), 
