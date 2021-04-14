@@ -798,7 +798,7 @@ class Locations:
         ]
 
     def getDonaldStartingItemList():
-        donaldStartingItem = KH2StartingItem(2,0, LocationTypes=[locationType.Free])
+        donaldStartingItem = KH2StartingItem(2,0, LocationTypes=[locationType.Free], Unknown0a=514)
         donaldStartingItem.setReward(1, equipped=True)
         donaldStartingItem.setReward(3, equipped=True)
         return [donaldStartingItem, donaldStartingItem]
@@ -842,7 +842,7 @@ class Locations:
         ]
 
     def getGoofyStartingItemList():
-        goofyStartingItem = KH2StartingItem(3,0, LocationTypes=[locationType.Free])
+        goofyStartingItem = KH2StartingItem(3,0, LocationTypes=[locationType.Free], Unknown08 = 512)
         goofyStartingItem.setReward(1, equipped=True)
         goofyStartingItem.setReward(1, equipped=True)
         goofyStartingItem.setReward(1, equipped=True)
