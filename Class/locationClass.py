@@ -175,7 +175,7 @@ class KH2FormLevel(KH2Location):
         return "\nKH2FormLevel( FordId:{self.FormId}, Level: {self.FormLevel}, ItemId: {self.Ability}, InvalidChecks: {self.InvalidChecks} )".format(self=self)
 
 
-@dataclass
+@dataclass(unsafe_hash=True, eq=True, repr=True)
 class KH2ItemStat(KH2Location):
     Id: int
     Attack: int = 0
