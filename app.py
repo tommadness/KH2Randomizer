@@ -157,7 +157,13 @@ def add_header(r):
     return r
     
 if __name__ == '__main__':
-    dataOut = Randomize(exclude=[], cmdMenuChoice="randAll")
-    f = open("randoSeed.zip", "wb")
-    f.write(dataOut.read())
-    f.close()
+    randomizer = KH2Randomizer("fdh6h34q6h4q6g62g6h6w46hw464vbvherby39")
+    randomizer.populateLocations([locationType.LoD, "ExcludeFrom50"])
+    randomizer.populateItems()
+    if randomizer.validateCount():
+        randomizer.setKeybladeAbilities()
+        randomizer.setRewards()
+        randomizer.setLevels(soraExpMult = 1.5, formExpMult = {'1':6, '2':3, '3':3, '4':3, '5':3})
+        randomizer.setBonusStats()
+        zip = randomizer.generateZip(hintsType="JSmartee").getbuffer()
+        open("randoSeed.zip", "wb").write(zip)

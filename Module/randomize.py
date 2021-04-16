@@ -300,6 +300,11 @@ class KH2Randomizer():
             outZip.writestr("PlrpList.yml", yaml.dump(formattedPlrp, line_break="\r\n"))
             outZip.writestr("sys.yml", yaml.dump(sys, line_break=""))
 
+            if not hintsType == "Disabled":
+                hintsDict = json.dumps(Hints.generateHints(self._locationItems, hintsType)).encode('utf-8')
+                outZip.writestr(self.seedName+".Hints", base64.b64encode(hintsDict).decode('utf-8'))
+
+
             enemySpoilers = None
             if not enemyOptions["boss"] == "Disabled":
                 if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
@@ -313,9 +318,6 @@ class KH2Randomizer():
 
             cmdMenuAssets = randomizeCmdMenus(cmdMenuChoice)
 
-            if not hintsType == "Disabled":
-                hintsDict = json.dumps(Hints.generateHints(self._locationItems, hintsType)).encode('utf-8')
-                outZip.writestr(self.seedName+".Hints", base64.b64encode(hintsDict).decode('utf-8'))
 
 
 
@@ -355,5 +357,5 @@ if __name__ == '__main__':
         randomizer.setRewards()
         randomizer.setLevels(soraExpMult = 1.5, formExpMult = {1:6, 2:3, 3:3, 4:3, 5:3})
         randomizer.setBonusStats()
-        zip = randomizer.generateZip().getbuffer()
+        zip = randomizer.generateZip(hintsType="JSmartee").getbuffer()
         open("randoSeed.zip", "wb").write(zip)
