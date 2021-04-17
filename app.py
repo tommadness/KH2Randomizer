@@ -165,7 +165,7 @@ def add_header(r):
 if __name__ == '__main__':
     randomizer = KH2Randomizer("fdh6h34q6h4q6g62g6h6w46hw464vbvherby39")
     randomizer.populateLocations([locationType.LoD, "ExcludeFrom50"])
-    randomizer.populateItems()
+    randomizer.populateItems(startingInventory=["138","537","369"])
     if randomizer.validateCount():
         randomizer.setKeybladeAbilities()
         randomizer.setRewards()

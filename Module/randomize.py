@@ -56,13 +56,18 @@ class KH2Randomizer():
 
         self._validLocationListDonald = [location for location in self._allLocationListDonald if not set(location.LocationTypes).intersection(excludeWorlds)]
 
-    def populateItems(self, promiseCharm = False):
-        self._validItemList = Items.getItemList() + Items.getSupportAbilityList() + Items.getActionAbilityList()
+    def populateItems(self, promiseCharm = False, startingInventory=[]):
+        validItemList = Items.getItemList() + Items.getSupportAbilityList() + Items.getActionAbilityList()
         self._validItemListGoofy = Items.getGoofyAbilityList()
         self._validItemListDonald = Items.getDonaldAbilityList()
 
+        self._validItemList = [item for item in validItemList if not str(item.Id) in startingInventory]
+
         if promiseCharm:
             self._validItemList.append(KH2Item(524, "Promise Charm",itemType.PROMISE_CHARM))
+
+
+
 
     def validateCount(self):
         return len(self._validItemList) < len(self._validLocationList)
