@@ -17,11 +17,9 @@
         {% if ns.counter % 3 == 0%}
         <div class="row">
         {%endif%}
-            <div class="col-3">
-                <label class=form-check-label for={{location}}>{{location.value}}:</label>
-            </div>
-            <div class="col form-check form-switch">
-                <input class=form-check-input type="checkbox" id={{location}} value= "{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}>
+            <div class="col-4 custom-control custom-switch">
+                <input class="custom-control-input" type="checkbox" id={{location}} value= "{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}>
+                <label class="custom-control-label" for={{location}}>{{location.value}}</label>
             </div>
         {%set ns.counter = ns.counter+1%}
         {% if ns.counter % 3 == 0%}
@@ -62,20 +60,16 @@
 
     <div class="container">
     <div class="row justify-content-evenly mb-3">
-        <div class="col-4">
-            <div class="input-group">
-                <label class="form-check-label col-8" for="{{keybladeAbilities[0]}}">{{keybladeAbilities[0]}} Keyblade Abilities</label>
-                <div class="form-check form-switch col">
-                    <input type="checkbox" class="form-check-input form-control" id="{{keybladeAbilities[0]}}" name="keybladeAbilities" value="{{keybladeAbilities[0]}}" checked>
-                </div>
+        <div class="col">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="{{keybladeAbilities[0]}}" name="keybladeAbilities" value="{{keybladeAbilities[0]}}" checked>
+                <label class="custom-control-label" for="{{keybladeAbilities[0]}}">{{keybladeAbilities[0]}} Keyblade Abilities</label>
             </div>
         </div>
-        <div class="col-4">
-            <div class="input-group">
-                <label class="form-check-label col-8" for="{{keybladeAbilities[1]}}">{{keybladeAbilities[1]}} Keyblade Abilities</label>
-                <div class="form-check form-switch col">
-                    <input type="checkbox" class="form-check-input form-control" id="{{keybladeAbilities[1]}}" name="keybladeAbilities" value="{{keybladeAbilities[1]}}">
-                </div>
+        <div class="col">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="{{keybladeAbilities[1]}}" name="keybladeAbilities" value="{{keybladeAbilities[1]}}">
+                <label class="custom-control-label" for="{{keybladeAbilities[1]}}">{{keybladeAbilities[1]}} Keyblade Abilities</label>
             </div>
         </div>
     </div>
@@ -84,12 +78,10 @@
     {% if ns.counter % 3 == 0 %}
         <div class="row justify-content-evenly">
     {% endif %}
-            <div class="col-md-4">
-                <div class="input-group">
-                <label class="form-check-label col-8" for="{{config}}">{{miscConfig[config]}}:</label>
-                <div class="form-check form-switch col">
-                    <input class="form-check-input form-control" type="checkbox" id="{{config}}" name="{{config}}">
-                </div>
+            <div class="col">
+                <div class="custom-control custom-switch">
+                    <input class="custom-control-input" type="checkbox" id="{{config}}" name="{{config}}">
+                    <label class="custom-control-label" for="{{config}}">{{miscConfig[config]}}:</label>
                 </div>
             </div>
     {% set ns.counter = ns.counter+1%}
@@ -119,11 +111,32 @@
         {%endfor%}
     </div>
     <div class="row mb-3">
-    <h4>Hint System:</h4>
     <div class="col-4">
-    <select name="hintsType">
-    {%for option in hintSystems%}
-        <option value={{option}}>{{option}}</option>
+        <h4>Hint System:</h4>
+        <select name="hintsType" style="width:100%">
+        {%for option in hintSystems%}
+            <option value={{option}}>{{option}}</option>
+        {%endfor%}
+        </select>
+    </div>
+    <div class="col-4">
+    <h4>Sora's Starting Inventory</h4>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#starting-inventory').multiselect({
+                enableCollapsibleOptGroups: true
+            });
+        });
+    </script>
+    <select id="starting-inventory" multiple="multiple" name="startingInventory">
+    {%for category in startingInventory["options"]%}
+    <optgroup label="{{category}}" class="group-{{category}}">
+        {%for dict in startingInventory["options"][category]%}
+            {%for id, item in dict.items()%}
+            <option value={{id}}>{{item}}</option>
+            {%endfor%}
+        {%endfor%}
+    </optgroup>
     {%endfor%}
     </select>
     </div>

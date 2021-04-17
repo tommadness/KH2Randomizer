@@ -1,9 +1,9 @@
 from List.configDict import itemType, locationType
 from Class.locationClass import KH2ItemStat
-import random
+import zipfile, base64, json, random
 
 class Hints:
-    def generateHints(locationItems, hintsType):
+    def generateHints(locationItems, hintsType, seedName, outZip):
         hintsText = {}
         hintsText['hintsType'] = hintsType
         if hintsType == "Shananas":
@@ -113,8 +113,7 @@ class Hints:
 
 
 
-
-        return hintsText
+        outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
 
     def getOptions():
         return ["Disabled","Shananas","JSmartee"]

@@ -1,5 +1,6 @@
 from flask import Flask, session, Response
 from Module.randomCmdMenu import cmdMenusChoice
+from Module.startingInventory import StartingInventory
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import flask as fl
 import numpy as np
@@ -9,7 +10,7 @@ from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 url = urlparse(os.environ.get("REDIS_TLS_URL"))
 r = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
@@ -19,7 +20,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions())
+    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions())
 
 
 
@@ -91,6 +92,9 @@ def seed():
 
         session['hintsType'] = fl.request.form.get("hintsType")
 
+        session['startingInventory'] = fl.request.form.getlist("startingInventory")
+        print(type(session.get('startingInventory')[0]))
+
 
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
@@ -114,7 +118,9 @@ def seed():
     keybladeMaxStat = session.get('keybladeMaxStat'),
     keybladeAbilities = session.get('keybladeAbilities'),
     enemyOptions = json.loads(session.get("enemyOptions")),
-    hintsType = session.get("hintsType")
+    hintsType = session.get("hintsType"),
+    startingInventory = session.get("startingInventory"),
+    idConverter = StartingInventory.getIdConverter()
     )
     
 @app.route('/download')
@@ -136,7 +142,7 @@ def randomizePage():
         randomizer.setRewards(levelChoice = session.get("levelChoice"))
         randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
         randomizer.setBonusStats()
-        zip = randomizer.generateZip(hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
+        zip = randomizer.generateZip(startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
         return fl.send_file(
             zip,
             mimetype='application/zip',
