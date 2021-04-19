@@ -234,3 +234,7 @@ class KH2StartingItem(KH2Location):
     
     def getDescription(self):
         return "Critical Bonus"
+
+    def padStartingItems(self):
+        while len(self.Objects < 58):
+            self.setReward(0)

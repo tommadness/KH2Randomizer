@@ -272,6 +272,7 @@ class KH2Randomizer():
         lionStartWithDash = KH2StartingItem(135, 0, Hp=0, Ap=0, Mp=0, Unknown06=0,Unknown08=0,Unknown0a=0, Objects=[-32606, -32606, -32605, -32605, -32248, -32247, -32246, -32242])
         plrpList.append(lionStartWithDash)
         for plrp in plrpList:
+            plrp.padStartingItems()
             formattedPlrp.append({
                 "Character": plrp.Character,
                 "Difficulty": plrp.Difficulty,
