@@ -129,7 +129,7 @@ def randomizePage():
 
     randomizer = KH2Randomizer(seedName = session.get("seed"))
     randomizer.populateLocations(excludeList)
-    randomizer.populateItems(promiseCharm = session.get("promiseCharm"))
+    randomizer.populateItems(promiseCharm = session.get("promiseCharm"), startingInventory = session.get("startingInventory"))
     if randomizer.validateCount():
         if bool(session.get('goMode')):
             randomizer.goMode()
