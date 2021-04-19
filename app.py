@@ -125,6 +125,7 @@ def seed():
 @app.route('/download')
 def randomizePage():
     excludeList = list(set(locationType) - set(session.get('includeList')))
+    excludeList.append(session.get("levelChoice"))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
 
     randomizer = KH2Randomizer(seedName = session.get("seed"))
