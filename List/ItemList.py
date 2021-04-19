@@ -206,9 +206,9 @@ class Items:
 
             KH2Item(363, "Crystal Orb", itemType.KEYITEM),
             KH2Item(364, "Seifer's Trophy", itemType.KEYITEM),
-            KH2Item(365, "Tournament Poster", itemType.KEYITEM),
-            KH2Item(366, "Poster", itemType.KEYITEM),
-            KH2Item(367, "Letter", itemType.KEYITEM),
+            #KH2Item(365, "Tournament Poster", itemType.KEYITEM),
+            #KH2Item(366, "Poster", itemType.KEYITEM),
+            #KH2Item(367, "Letter", itemType.KEYITEM),
             KH2Item(368, "Namine's Sketches", itemType.KEYITEM),
             KH2Item(370, "Olympus Stone", itemType.KEYITEM),
             KH2Item(371, "Auron's Statue", itemType.KEYITEM),
