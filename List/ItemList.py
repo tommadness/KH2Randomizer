@@ -289,21 +289,6 @@ class Items:
             KH2Item(517, "Solar Sailer Simulation Map", itemType.MAP),
             KH2Item(256, "Dark City Map", itemType.MAP),
             KH2Item(536, "Castle That Never Was Map", itemType.MAP),
-
-            KH2Item(1, "Potion", itemType.ITEM),
-            KH2Item(2, "Hi-Potion", itemType.ITEM),
-            KH2Item(3, "Ether", itemType.ITEM),
-            KH2Item(4, "Elixir", itemType.ITEM),
-            KH2Item(5, "Mega-Potion", itemType.ITEM),
-            KH2Item(6, "Mega-Ether", itemType.ITEM),
-            KH2Item(7, "Mega-Elixir", itemType.ITEM),
-            KH2Item(131, "Tent", itemType.ITEM),
-            KH2Item(274, "Drive Recovery", itemType.ITEM),
-            KH2Item(275, "High Drive Recovery", itemType.ITEM),
-            KH2Item(276, "Power Boost", itemType.ITEM),
-            KH2Item(277, "Magic Boost", itemType.ITEM),
-            KH2Item(278, "Defense Boost", itemType.ITEM),
-            KH2Item(279, "AP Boost", itemType.ITEM),
         ]
 
     def getSupportAbilityList():
@@ -472,6 +457,20 @@ class Items:
             KH2Item(585, "Manifest Illusion", itemType.JUNK),
             KH2Item(377, "Orichalcum", itemType.JUNK),
             KH2Item(361, "Orichalcum+", itemType.JUNK),
+            KH2Item(1, "Potion", itemType.ITEM),
+            KH2Item(2, "Hi-Potion", itemType.ITEM),
+            KH2Item(3, "Ether", itemType.ITEM),
+            KH2Item(4, "Elixir", itemType.ITEM),
+            KH2Item(5, "Mega-Potion", itemType.ITEM),
+            KH2Item(6, "Mega-Ether", itemType.ITEM),
+            KH2Item(7, "Mega-Elixir", itemType.ITEM),
+            KH2Item(131, "Tent", itemType.ITEM),
+            KH2Item(274, "Drive Recovery", itemType.ITEM),
+            KH2Item(275, "High Drive Recovery", itemType.ITEM),
+            KH2Item(276, "Power Boost", itemType.ITEM),
+            KH2Item(277, "Magic Boost", itemType.ITEM),
+            KH2Item(278, "Defense Boost", itemType.ITEM),
+            KH2Item(279, "AP Boost", itemType.ITEM),
         ]
 
     def getDonaldAbilityList():

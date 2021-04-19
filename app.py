@@ -93,7 +93,6 @@ def seed():
         session['hintsType'] = fl.request.form.get("hintsType")
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
-        print(type(session.get('startingInventory')[0]))
 
 
 
