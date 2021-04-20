@@ -503,6 +503,10 @@ class Items:
             KH2Item(413, "MP Haste", itemType.DONALD_ABILITY),
             KH2Item(421, "MP Hastera", itemType.DONALD_ABILITY),
             KH2Item(422, "MP Hastega", itemType.DONALD_ABILITY),
+            KH2Item(413, "MP Haste", itemType.DONALD_ABILITY),
+            KH2Item(542, "Damage Control", itemType.DONALD_ABILITY),
+            KH2Item(421, "MP Hastera", itemType.DONALD_ABILITY),
+            KH2Item(405, "Draw", itemType.DONALD_ABILITY),
         ]
 
     def getGoofyAbilityList():
@@ -536,4 +540,5 @@ class Items:
             KH2Item(596, "Protect", itemType.GOOFY_ABILITY),
             KH2Item(597, "Protera", itemType.GOOFY_ABILITY),
             KH2Item(598, "Protega", itemType.GOOFY_ABILITY),
+            KH2Item(542, "Damage Control", itemType.GOOFY_ABILITY),
         ]
