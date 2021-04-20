@@ -12,6 +12,10 @@ class StartingInventory:
             "options":{
                 "Abilities": [
                     {138: "Scan"},
+                    {404: "No Experience"},
+                    {158: "Aerial Recovery"},
+                    {82: "Guard"}
+
                 ],
                 "Items": [
                     {537: "Hades Cup Trophy"},
@@ -24,5 +28,8 @@ class StartingInventory:
         return {
             '138':"Scan",
             '537':"Hades Cup Trophy",
-            '369':"Membership Card"
+            '369':"Membership Card",
+            '404':"No Experience",
+            '158':"Aerial Recovery",
+            '82':"Guard"
         }
