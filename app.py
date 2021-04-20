@@ -124,6 +124,7 @@ def seed():
     
 @app.route('/download')
 def randomizePage():
+    platform = fl.request.args.get("platform").split(" ")[2]
     excludeList = list(set(locationType) - set(session.get('includeList')))
     excludeList.append(session.get("levelChoice"))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
@@ -142,7 +143,7 @@ def randomizePage():
         randomizer.setRewards(levelChoice = session.get("levelChoice"))
         randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
         randomizer.setBonusStats()
-        zip = randomizer.generateZip(startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
+        zip = randomizer.generateZip(platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
         return fl.send_file(
             zip,
             mimetype='application/zip',

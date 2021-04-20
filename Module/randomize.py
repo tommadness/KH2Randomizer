@@ -183,7 +183,7 @@ class KH2Randomizer():
             random.shuffle(statsList)
             location.setStat(statsList.pop())
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", hintsType = "Disabled", startingInventory=[]):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", hintsType = "Disabled", startingInventory=[], platform="PCSX2"):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -323,7 +323,7 @@ class KH2Randomizer():
                 if enemySpoilers:
                     outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 
-            cmdMenuAssets = randomizeCmdMenus(cmdMenuChoice)
+            cmdMenuAssets = randomizeCmdMenus(cmdMenuChoice, platform)
 
 
 
