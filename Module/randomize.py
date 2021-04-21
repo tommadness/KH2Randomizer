@@ -60,16 +60,18 @@ class KH2Randomizer():
         validItemList = Items.getItemList() + Items.getSupportAbilityList() + Items.getActionAbilityList()
         self._validItemListGoofy = Items.getGoofyAbilityList()
         self._validItemListDonald = Items.getDonaldAbilityList()
+        if promiseCharm:
+            self._validItemList.append(KH2Item(524, "Promise Charm",itemType.PROMISE_CHARM))
 
         self._validItemList = [item for item in validItemList if not str(item.Id) in startingInventory]
 
-        if promiseCharm:
-            self._validItemList.append(KH2Item(524, "Promise Charm",itemType.PROMISE_CHARM))
 
 
 
 
     def validateCount(self):
+        #additionalGoofyLocations = Locations.getAdditionalGoofy(len(self._validItemListGoofy) - len(self._validLocationListGoofy))
+        #additionalDonaldLocations = Locations.getAdditionalDonald(len(self._validItemListDonald) - len(self._validLocationListDonald))
         return len(self._validItemList) < len(self._validLocationList)
 
     def goMode(self):

@@ -2,7 +2,6 @@ from enum import Enum
 
 miscConfig = {
     "PromiseCharm": "Promise Charm",
-    "GoMode": "Go Mode"
 }
 
 expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]

@@ -80,7 +80,6 @@ def seed():
         session['keybladeMinStat'] = int(fl.request.form.get("keybladeMinStat"))
 
         session['promiseCharm'] = bool(fl.request.form.get("PromiseCharm") or False)
-        session['goMode'] = bool(fl.request.form.get("GoMode") or False)
         session['bossEnemy'] = bool(fl.request.form.get("bossEnemy") or False)
         enemyOptions = {
             "boss": fl.request.form.get("boss"),
@@ -133,8 +132,6 @@ def randomizePage():
     randomizer.populateLocations(excludeList)
     randomizer.populateItems(promiseCharm = session.get("promiseCharm"), startingInventory = session.get("startingInventory"))
     if randomizer.validateCount():
-        if bool(session.get('goMode')):
-            randomizer.goMode()
         randomizer.setKeybladeAbilities(
             keybladeAbilities = session.get("keybladeAbilities"), 
             keybladeMinStat = int(session.get("keybladeMinStat")), 
@@ -143,13 +140,16 @@ def randomizePage():
         randomizer.setRewards(levelChoice = session.get("levelChoice"))
         randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
         randomizer.setBonusStats()
-        zip = randomizer.generateZip(platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
-        return fl.send_file(
-            zip,
-            mimetype='application/zip',
-            as_attachment=True,
-            attachment_filename='randoseed.zip'
-        )
+        try:
+            zip = randomizer.generateZip(platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
+            return fl.send_file(
+                zip,
+                mimetype='application/zip',
+                as_attachment=True,
+                attachment_filename='randoseed.zip'
+            )
+        except ValueError as err:
+            print("ERROR: ", err.args)
 
 @app.after_request
 def add_header(r):
