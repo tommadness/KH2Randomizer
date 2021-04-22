@@ -193,6 +193,45 @@ const presets = {
         "PromiseCharm":[false],
         "starting-inventory":[]
     },
+    "Bingo":{
+        "include":[
+            "locationType.LoD",
+            "locationType.BC",
+            "locationType.HB",
+            "locationType.CoR",
+            "locationType.TT",
+            "locationType.TWTNW",
+            "locationType.SP",
+            "locationType.PR",
+            "locationType.OC",
+            "locationType.OCCups",
+            "locationType.Agrabah",
+            "locationType.HT",
+            "locationType.PL",
+            "locationType.DC",
+            "locationType.HUNDREDAW",
+            "locationType.STT",
+            "locationType.AS",
+            "locationType.Sephi",
+            "locationType.FormLevel",
+            "locationType.Free",
+            "locationType.Critical"
+        ],
+        "levelChoice":"ExcludeFrom50",
+        "keybladeMinStat":3,
+        "keybladeMaxStat":10,
+        "SoraExp":2.5,
+        "ValorExp":6,
+        "WisdomExp":4,
+        "LimitExp":4,
+        "MasterExp":3,
+        "FinalExp":4,
+        "keybladeAbilities":["Support"],
+        "enemy":"Disabled",
+        "hintsType":"Shananas",
+        "PromiseCharm":[false],
+        "starting-inventory":[]
+    },
 
 
 };
