@@ -32,12 +32,7 @@ function setPreset(presetName){
     });
 
     $('#starting-inventory option').each(function(){
-        if (preset["starting-inventory"].includes(this.value)){
-            $(this).prop('selected',true);
-        }
-        else{
-            $(this).prop('selected',false);
-        }
+        $(this).prop('selected',preset["starting-inventory"].includes(this.value));
     });
     $('#starting-inventory').multiselect('refresh');
 
