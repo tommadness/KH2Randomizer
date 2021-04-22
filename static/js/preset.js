@@ -232,6 +232,48 @@ const presets = {
         "PromiseCharm":[false],
         "starting-inventory":[]
     },
+    "Go Mode":{
+        "include":[
+            "locationType.LoD",
+            "locationType.BC",
+            "locationType.HB",
+            "locationType.CoR",
+            "locationType.TT",
+            "locationType.TWTNW",
+            "locationType.SP",
+            "locationType.PR",
+            "locationType.OC",
+            "locationType.OCCups",
+            "locationType.Agrabah",
+            "locationType.HT",
+            "locationType.PL",
+            "locationType.DC",
+            "locationType.HUNDREDAW",
+            "locationType.STT",
+            "locationType.AS",
+            "locationType.Sephi",
+            "locationType.FormLevel",
+            "locationType.Free",
+            "locationType.Critical",
+            "locationType.DataOrg",
+            "locationType.LW"
+        ],
+        "levelChoice":"ExcludeFrom50",
+        "keybladeMinStat":0,
+        "keybladeMaxStat":7,
+        "SoraExp":1.5,
+        "ValorExp":5,
+        "WisdomExp":3,
+        "LimitExp":3,
+        "MasterExp":3,
+        "FinalExp":3,
+        "keybladeAbilities":["Support"],
+        "enemy":"Disabled",
+        "hintsType":"Shananas",
+        "PromiseCharm":[false],
+        "starting-inventory":["593","594","595"]
+    },
+
 
 
 };
