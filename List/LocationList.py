@@ -1,4 +1,5 @@
 from Class.locationClass import *
+from Class.itemClass import *
 from List.configDict import itemType, locationType
 
 class Locations:
@@ -826,7 +827,7 @@ class Locations:
         return [
             KH2ItemStat(100,2,0, Name="Adamant Shield"),
             KH2ItemStat(107,7,0, Name="Akashic Record"),
-            KH2ItemStat(101,3,0, Name="Chain Shield"),
+            KH2ItemStat(101,3,0, Name="Chain Gear"),
             KH2ItemStat(104,4,0, Name="Dream Cloud"),
             KH2ItemStat(103,3,0, Name="Falling Star"),
             KH2ItemStat(158,5,0, Name="Frozen Pride+"),
@@ -847,6 +848,22 @@ class Locations:
         goofyStartingItem.setReward(1, equipped=True)
         goofyStartingItem.setReward(1, equipped=True)
         return [goofyStartingItem, goofyStartingItem]
+
+    def getAdditionalGoofy(count):
+        return random.shuffle([
+            (KH2ItemStat(0,7,0, Name="Akashic Record +"), KH2Item(601, Name="Akashic Record +", ItemType=itemType.SHIELD)),
+            (KH2ItemStat(0,1,0, Name="Joyous Mushroom"), KH2Item(554, Name="Joyous Mushroom", ItemType=itemType.SHIELD)),
+            (KH2ItemStat(0,3,0, Name="Joyous Mushroom +"), KH2Item(555, Name="Joyous Mushroom +", ItemType=itemType.SHIELD)),
+            (KH2ItemStat(0,5,0, Name="Frozen Pride"), KH2Item(552, Name="Frozen Pride", ItemType=itemType.SHIELD)),
+            (KH2ItemStat(0,7,0, Name="Save the King"), KH2Item(483, Name="Save the King", ItemType=itemType.SHIELD)),
+        ])[:count]
+
+    def getAdditionalDonald(count):
+        return random.shuffle([
+            (KH2ItemStat(0,0,0, Name=""), KH2Item(0, Name="", ItemType=itemType.STAFF)),
+            (KH2ItemStat(0,0,0, Name=""), KH2Item(0, Name="", ItemType=itemType.STAFF))
+
+        ])[:count]
 
 
 # lionStartWithDash = KH2StartingItem(135, 0, Hp=0, Ap=0, Mp=0, Unknown06=0, Unknown08 = 0, Unknown0a = 0)

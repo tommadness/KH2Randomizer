@@ -6,7 +6,11 @@
 <form action='/seed' method="POST">
     <div class="container mb-3">
     <div class="row">
-    <span class="input-group-text col-1">Seed:</span><input class="form-control col" id='seed' name='seed' type='text'/>
+    <span class="input-group-text col-1">Seed:</span><input class="form-control col" id='seed' name='seed' type='text'/>    <select id="preset">
+        <option disabled selected>Select a Preset:</option>
+        {# <option value="League">League</option>
+        <option value="EscapeSTT">Escape STT</option> #}
+    </select>
     </div>
     </div>
     
@@ -142,7 +146,7 @@
     </div>
     </div>
     Generate Spoiler Log: <input type="checkbox" name="spoilerLog"><br>
-    <input type='submit'>
+    <input type='submit'> 
 </form>
 </div>
 {% endblock %}

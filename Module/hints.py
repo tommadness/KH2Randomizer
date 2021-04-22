@@ -34,6 +34,9 @@ class Hints:
                         if not location.LocationTypes[0] in hintedWorlds:
                             hintedWorlds.append(location.LocationTypes[0])
 
+            if len(worldChecks.keys()) < 13:
+                raise ValueError("Too few worlds. Add more worlds or change hint system.")
+
 
             if locationType.FormLevel in hintedWorlds:
                 for world in worldChecks:
