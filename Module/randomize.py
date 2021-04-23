@@ -176,7 +176,7 @@ class KH2Randomizer():
 
         formLevels = [location for location in self._allLocationList if isinstance(location, KH2FormLevel)]
         for level in formLevels:
-            level.Exp = round(formExp[level.FormId][level.FormLevel] / float(formExpMult[str(level.FormId)]))
+            level.Experience = round(formExp[level.FormId][level.FormLevel] / float(formExpMult[str(level.FormId)]))
 
     def setBonusStats(self):
         statsList = Stats.getBonusStats()

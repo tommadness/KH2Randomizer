@@ -143,14 +143,7 @@ class KH2FormLevel(KH2Location):
     def __init__(self, id, level):
         self.FormId = id
         self.FormLevel = level
-        if level < 3:
-            self.GrowthAbilityLevel = 1
-        elif level < 5:
-            self.GrowthAbilityLevel = 2
-        elif level < 7:
-            self.GrowthAbilityLevel = 3
-        else:
-            self.GrowthAbilityLevel = 4
+        self.GrowthAbilityLevel = 0
         self.Experience = 0
         self.Ability = 0
         self.InvalidChecks = ["Form"]
