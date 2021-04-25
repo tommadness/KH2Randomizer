@@ -328,8 +328,7 @@ class KH2Randomizer():
 
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             
-            if randomBGM:
-                mod["assets"] += RandomBGM.randomizeBGM(outZip, platform)
+            mod["assets"] += RandomBGM.randomizeBGM(randomBGM, outZip, platform)
 
             mod["title"] += " {seedName}".format(seedName = self.seedName)
 

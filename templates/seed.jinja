@@ -73,7 +73,11 @@
 </div>
 <div class="col-6">
 <h4>Randomize BGM (PC ONLY)</h4>
-<input type="checkbox" name="randomBGM">
+<select name="randomBGM">
+    {%for option in bgmOptions %}
+    <option value="{{option}}">{{option}}</option>
+    {%endfor%}
+</select>
 </div>
 </div>
 </div>

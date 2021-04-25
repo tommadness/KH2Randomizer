@@ -1,5 +1,6 @@
 from flask import Flask, session, Response
 from Module.randomCmdMenu import RandomCmdMenu
+from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import flask as fl
@@ -105,7 +106,8 @@ def seed():
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
     permaLink = fl.url_for("hashedSeed",hash=session['permaLink'], _external=True), 
-    cmdMenus = RandomCmdMenu.getOptions(), 
+    cmdMenus = RandomCmdMenu.getOptions(),
+    bgmOptions = RandomBGM.getOptions(), 
     levelChoice = session.get('levelChoice'), 
     include = session.get('includeList'), 
     seed = session.get('seed'), 
@@ -128,7 +130,7 @@ def randomizePage():
     excludeList = list(set(locationType) - set(session.get('includeList')))
     excludeList.append(session.get("levelChoice"))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
-    randomBGM = bool(fl.request.args.get("randomBGM"))
+    randomBGM = fl.request.args.get("randomBGM")
 
     randomizer = KH2Randomizer(seedName = session.get("seed"))
     randomizer.populateLocations(excludeList)
