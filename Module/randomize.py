@@ -331,6 +331,8 @@ class KH2Randomizer():
             
             mod["assets"] += RandomBGM.randomizeBGM(randomBGM, outZip, platform)
 
+            outZip.write("Module/icon.png", "icon.png")
+
 
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             outZip.close()
