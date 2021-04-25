@@ -322,6 +322,7 @@ class KH2Randomizer():
                     enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
 
             if spoilerLog:
+                mod["title"] += " {seedName}".format(seedName = self.seedName)
                 outZip.writestr("spoilerlog.txt",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
                 if enemySpoilers:
                     outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
@@ -329,8 +330,6 @@ class KH2Randomizer():
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             
             mod["assets"] += RandomBGM.randomizeBGM(randomBGM, outZip, platform)
-
-            mod["title"] += " {seedName}".format(seedName = self.seedName)
 
 
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
