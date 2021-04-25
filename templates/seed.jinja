@@ -62,6 +62,8 @@
 </div>
 
 <div class="container mb-3">
+<div class="row">
+<div class="col-4">
 <h4>Command Menu:</h4>
 <select name="cmdMenuChoice">
     {% for key in cmdMenus %}
@@ -69,9 +71,16 @@
     {% endfor %}
 </select>
 </div>
+<div class="col-6">
+<h4>Randomize BGM (PC ONLY)</h4>
+<input type="checkbox" name="randomBGM">
+</div>
+</div>
+</div>
 
 <div class="container">
 <input type="submit" value="Download for PCSX2" name="platform">
+<input type="submit" value="Download for PC" name="platform">
 </form>
 </div>
 {%endblock%}

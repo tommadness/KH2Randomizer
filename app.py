@@ -1,5 +1,5 @@
 from flask import Flask, session, Response
-from Module.randomCmdMenu import cmdMenusChoice
+from Module.randomCmdMenu import RandomCmdMenu
 from Module.startingInventory import StartingInventory
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import flask as fl
@@ -43,6 +43,7 @@ def hashedSeed(hash):
 @app.route('/seed',methods=['GET','POST'])
 def seed():
     if fl.request.method == "POST":
+
         session['keybladeAbilities'] = fl.request.form.getlist('keybladeAbilities')
 
         if session['keybladeAbilities'] == []:
@@ -104,7 +105,7 @@ def seed():
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
     permaLink = fl.url_for("hashedSeed",hash=session['permaLink'], _external=True), 
-    cmdMenus = cmdMenusChoice, 
+    cmdMenus = RandomCmdMenu.getOptions(), 
     levelChoice = session.get('levelChoice'), 
     include = session.get('includeList'), 
     seed = session.get('seed'), 
@@ -127,6 +128,7 @@ def randomizePage():
     excludeList = list(set(locationType) - set(session.get('includeList')))
     excludeList.append(session.get("levelChoice"))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
+    randomBGM = bool(fl.request.args.get("randomBGM"))
 
     randomizer = KH2Randomizer(seedName = session.get("seed"))
     randomizer.populateLocations(excludeList)
@@ -141,7 +143,7 @@ def randomizePage():
         randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
         randomizer.setBonusStats()
         try:
-            zip = randomizer.generateZip(platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
+            zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
             return fl.send_file(
                 zip,
                 mimetype='application/zip',

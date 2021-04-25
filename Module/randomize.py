@@ -2,7 +2,8 @@ from dataclasses import dataclass, field
 import random, zipfile, yaml, io, json, os, base64
 
 from Module.spoilerLog import generateSpoilerLog
-from Module.randomCmdMenu import randomizeCmdMenus
+from Module.randomCmdMenu import RandomCmdMenu
+from Module.randomBGM import RandomBGM
 from Module.hints import Hints
 from Module.startingInventory import StartingInventory
 
@@ -185,7 +186,7 @@ class KH2Randomizer():
             random.shuffle(statsList)
             location.setStat(statsList.pop())
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", hintsType = "Disabled", startingInventory=[], platform="PCSX2"):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsType = "Disabled", startingInventory=[], platform="PCSX2"):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -325,17 +326,13 @@ class KH2Randomizer():
                 if enemySpoilers:
                     outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
 
-            cmdMenuAssets = randomizeCmdMenus(cmdMenuChoice, platform)
+            mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
+            
+            if randomBGM:
+                mod["assets"] += RandomBGM.randomizeBGM(outZip, platform)
 
+            mod["title"] += " {seedName}".format(seedName = self.seedName)
 
-
-
-            if not cmdMenuAssets == "":
-                mod["assets"] += cmdMenuAssets
-                for folderName, subfolders, filenames in os.walk("Module/CommandMenus"):
-                    for filename in filenames:
-                        filePath = os.path.join(folderName, filename)
-                        outZip.write(filePath, filePath.replace("Module/",""))
 
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             outZip.close()
