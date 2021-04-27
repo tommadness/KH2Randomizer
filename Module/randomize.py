@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-import random, zipfile, yaml, io, json, os, base64
+import random, zipfile, yaml, io, json, os, base64, asyncio
 
 from Module.spoilerLog import generateSpoilerLog
 from Module.randomCmdMenu import RandomCmdMenu
