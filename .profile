@@ -1,1 +1,1 @@
-export GUNICORN_CMD_ARGS="--timeout=0"
+export GUNICORN_CMD_ARGS="--timeout=300"
