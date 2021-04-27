@@ -313,10 +313,24 @@ class KH2Randomizer():
 
             if not hintsType == "Disabled":
                 Hints.generateHints(self._locationItems, hintsType, self.seedName, outZip)
-
+            async def timer():
+                print("ping")
+                await asyncio.sleep(20)
+                print("ping")
+                await asyncio.sleep(20)
+                print("ping")
+                await asyncio.sleep(20)
+                print("ping")
+                await asyncio.sleep(20)
+                print("ping")
+                await asyncio.sleep(20)
+                print("ping")
+                await asyncio.sleep(20)
+                print("ping")
 
             enemySpoilers = None
             if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled":
+                asyncio.run(timer())
                 enemyOptions["boss"] = "Disabled" #TEMPORARY WHILE BOSS RANDO IS DISABLED
                 if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
                     from khbr.randomizer import Randomizer as khbr
