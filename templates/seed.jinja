@@ -71,20 +71,50 @@
     {% endfor %}
 </select>
 </div>
-{# <div class="col-6">
+<div class="col-6">
 <h4>Randomize BGM (PC ONLY)</h4>
 <select name="randomBGM">
     {%for option in bgmOptions %}
     <option value="{{option}}">{{option}}</option>
     {%endfor%}
 </select>
-</div> #}
+</div>
 </div>
 </div>
 
-<div class="container">
-<input type="submit" value="Download for PCSX2" name="platform">
+
 {#<input type="submit" value="Download for PC" name="platform">#}
 </form>
+<div class="container" id="downloadButtons">
+<button id="PCSX2" name="platform" value="PCSX2">Generate for PCSX2</button>
 </div>
+<script>
+$(function(){
+    $('button').click(function(){
+        var data = $('form').serialize();
+        data += "&platform="+$(this).val();
+        $("#downloadButtons button").prop('disabled',true);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/download',true);
+        xhr.responseType = "blob";
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4) {
+                var blob = xhr.response;
+                saveAs(blob,"randoSeed.zip")
+            }
+        }
+        xhr.send();
+    });
+});
+
+function str2bytes (str) {
+    var bytes = new Uint8Array(str.length);
+    for (var i=0; i<str.length; i++) {
+        bytes[i] = str.charCodeAt(i);
+    }
+    return bytes;
+}
+</script>
 {%endblock%}
+

@@ -6,7 +6,7 @@ from List.configDict import miscConfig, locationType, expTypes, keybladeAbilitie
 import flask as fl
 import numpy as np
 from urllib.parse import urlparse
-import os, base64, string, random, ast, zipfile, redis, json
+import os, base64, string, random, ast, zipfile, redis, json, asyncio
 from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer
@@ -128,7 +128,7 @@ def seed():
     
 @app.route('/download')
 def randomizePage():
-    platform = fl.request.args.get("platform").split(" ")[2]
+    platform = fl.request.args.get("platform")
     excludeList = list(set(locationType) - set(session.get('includeList')))
     excludeList.append(session.get("levelChoice"))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")

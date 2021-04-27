@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
-import random, zipfile, yaml, io, json, os, base64
-
+import random, zipfile, yaml, io, json, os, base64, asyncio
 from Module.spoilerLog import generateSpoilerLog
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
@@ -313,9 +312,10 @@ class KH2Randomizer():
 
             if not hintsType == "Disabled":
                 Hints.generateHints(self._locationItems, hintsType, self.seedName, outZip)
+
             enemySpoilers = None
+            enemyOptions["boss"] = "Disabled" #TEMPORARY WHILE BOSS RANDO IS DISABLED
             if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled":
-                enemyOptions["boss"] = "Disabled" #TEMPORARY WHILE BOSS RANDO IS DISABLED
                 if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
                     from khbr.randomizer import Randomizer as khbr
                     enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
