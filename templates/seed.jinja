@@ -91,13 +91,14 @@
 <script>
 $(function(){
     $('button').click(function(){
-        var data = $('form').serialize();
-        data += "&platform="+$(this).val();
+        var platform = $(this).val();
+        var cmdMenuChoice = $("select[name=cmdMenuChoice]").val();
+        var randomBGM = $("select[name=randomBGM]").val();
         $("#downloadButtons button").prop('disabled',true).text("Generating...");
         var HOST = location.origin.replace(/^http/, 'ws')
         var socket = io(HOST);
         socket.on('connect', function(){
-            socket.emit('download', {platform: "PCSX2", cmdMenuChoice: "vanilla", randomBGM: "Disabled"});
+            socket.emit('download', {platform: platform, cmdMenuChoice: cmdMenuChoice, randomBGM: randomBGM});
         });
         socket.on('file', function(zip){
             console.log(zip);
