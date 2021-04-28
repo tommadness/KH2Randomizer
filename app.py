@@ -128,12 +128,15 @@ def seed():
     
 @socketio.on('download')
 def startDownload(data):
-    socketio.start_background_task(randomizePage(data))
     socketio.emit("started")
+    print("Started")
+    socketio.start_background_task(randomizePage(data))
+
 
 @socketio.on("ping")
 def pong():
     socketio.emit("pong")
+    print("pong")
 
 def randomizePage(data):
     print(data['platform'])
