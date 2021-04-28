@@ -129,6 +129,11 @@ def seed():
 @socketio.on('download')
 def startDownload(data):
     socketio.start_background_task(randomizePage(data))
+    socketio.emit("started")
+
+@socketio.on("ping")
+def pong():
+    socketio.emit("pong")
 
 def randomizePage(data):
     print(data['platform'])
@@ -153,12 +158,6 @@ def randomizePage(data):
         try:
             zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
             socketio.emit('file',zip.read())
-            # return fl.send_file(
-            #     zip,
-            #     mimetype='application/zip',
-            #     as_attachment=True,
-            #     attachment_filename='randoseed.zip'
-            # )
         except ValueError as err:
             print("ERROR: ", err.args)
 
