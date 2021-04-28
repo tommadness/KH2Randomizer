@@ -94,7 +94,8 @@ $(function(){
         var data = $('form').serialize();
         data += "&platform="+$(this).val();
         $("#downloadButtons button").prop('disabled',true);
-        var socket = io();
+        var HOST = location.origin.replace(/^http/, 'ws')
+        var socket = io(HOST);
         socket.on('connect', function(){
             socket.emit('download', {platform: "PCSX2"});
         });
