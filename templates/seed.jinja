@@ -94,17 +94,16 @@ $(function(){
         var data = $('form').serialize();
         data += "&platform="+$(this).val();
         $("#downloadButtons button").prop('disabled',true);
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/download',true);
-        xhr.responseType = "blob";
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState === 4) {
-                var blob = xhr.response;
-                saveAs(blob,"randoSeed.zip")
-            }
-        }
-        xhr.send();
+        var socket = io();
+        socket.on('connect', function(){
+            socket.emit('download', {platform: "PCSX2"});
+        });
+        socket.on('file', function(zip){
+            console.log(zip);
+            blob = new Blob([zip], {type:"application/zip"});
+            saveAs(blob, "randoseed.zip");
+            socket.disconnect();
+        });
     });
 });
 

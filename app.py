@@ -4,15 +4,15 @@ from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import flask as fl
-import numpy as np
 from urllib.parse import urlparse
 import os, base64, string, random, ast, zipfile, redis, json, asyncio
 from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer
+from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
-
+socketio = SocketIO(app)
 url = urlparse(os.environ.get("REDIS_TLS_URL"))
 r = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
 
@@ -126,9 +126,10 @@ def seed():
     idConverter = StartingInventory.getIdConverter()
     )
     
-@app.route('/download')
-def randomizePage():
-    platform = fl.request.args.get("platform")
+@socketio.on('download')
+def randomizePage(data):
+    print(data['platform'])
+    platform = data['platform']
     excludeList = list(set(locationType) - set(session.get('includeList')))
     excludeList.append(session.get("levelChoice"))
     cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
@@ -148,12 +149,13 @@ def randomizePage():
         randomizer.setBonusStats()
         try:
             zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
-            return fl.send_file(
-                zip,
-                mimetype='application/zip',
-                as_attachment=True,
-                attachment_filename='randoseed.zip'
-            )
+            socketio.emit('file',zip.read())
+            # return fl.send_file(
+            #     zip,
+            #     mimetype='application/zip',
+            #     as_attachment=True,
+            #     attachment_filename='randoseed.zip'
+            # )
         except ValueError as err:
             print("ERROR: ", err.args)
 
@@ -170,6 +172,7 @@ def add_header(r):
     return r
     
 if __name__ == '__main__':
+    socketio.run(app)
     randomizer = KH2Randomizer("fdh6h34q6h4q6g62g6h6w46hw464vbvherby39")
     randomizer.populateLocations([locationType.LoD, "ExcludeFrom50"])
     randomizer.populateItems(startingInventory=["138","537","369"])
