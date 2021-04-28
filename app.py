@@ -127,6 +127,9 @@ def seed():
     )
     
 @socketio.on('download')
+def startDownload(data):
+    socketio.start_background_task(randomizePage(data))
+
 def randomizePage(data):
     print(data['platform'])
     platform = data['platform']
