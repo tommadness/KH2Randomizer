@@ -15,7 +15,7 @@ app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app)
 url = urlparse(os.environ.get("REDIS_TLS_URL"))
 r = redis.Redis(host=url.hostname, port=url.port, ssl=True, ssl_cert_reqs=None,password=url.password)
-
+seed = None
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
 @app.route('/', methods=['GET','POST'])
@@ -132,9 +132,9 @@ def handleConnection():
     
 @socketio.on('download')
 def startDownload(data):
+    seed = socketio.start_background_task(randomizePage, data, dict(session))
     socketio.emit("started")
     print("Started")
-    #socketio.start_background_task(randomizePage(data))
 
 
 @socketio.on("ping")
@@ -142,28 +142,28 @@ def pong():
     socketio.emit("pong")
     print("pong")
 
-def randomizePage(data):
+def randomizePage(data, sessionDict):
     print(data['platform'])
     platform = data['platform']
-    excludeList = list(set(locationType) - set(session.get('includeList')))
-    excludeList.append(session.get("levelChoice"))
-    cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
-    randomBGM = fl.request.args.get("randomBGM")
+    excludeList = list(set(locationType) - set(sessionDict['includeList']))
+    excludeList.append(sessionDict["levelChoice"])
+    cmdMenuChoice = data["cmdMenuChoice"]
+    randomBGM = data["randomBGM"]
 
-    randomizer = KH2Randomizer(seedName = session.get("seed"))
+    randomizer = KH2Randomizer(seedName = sessionDict["seed"])
     randomizer.populateLocations(excludeList)
-    randomizer.populateItems(promiseCharm = session.get("promiseCharm"), startingInventory = session.get("startingInventory"))
+    randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"])
     if randomizer.validateCount():
         randomizer.setKeybladeAbilities(
-            keybladeAbilities = session.get("keybladeAbilities"), 
-            keybladeMinStat = int(session.get("keybladeMinStat")), 
-            keybladeMaxStat = int(session.get("keybladeMaxStat"))
+            keybladeAbilities = sessionDict["keybladeAbilities"], 
+            keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
+            keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
         )
-        randomizer.setRewards(levelChoice = session.get("levelChoice"))
-        randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
+        randomizer.setRewards(levelChoice = sessionDict["levelChoice"])
+        randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"])
         randomizer.setBonusStats()
         try:
-            zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
+            zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
             socketio.emit('file',zip.read())
         except ValueError as err:
             print("ERROR: ", err.args)

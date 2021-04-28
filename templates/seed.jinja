@@ -97,7 +97,7 @@ $(function(){
         var HOST = location.origin.replace(/^http/, 'ws')
         var socket = io(HOST);
         socket.on('connect', function(){
-            socket.emit('download', {platform: "PCSX2"});
+            socket.emit('download', {platform: "PCSX2", cmdMenuChoice: "vanilla", randomBGM: "Disabled"});
         });
         socket.on("started", function(){
             console.log("started");
