@@ -125,6 +125,10 @@ def seed():
     startingInventory = session.get("startingInventory"),
     idConverter = StartingInventory.getIdConverter()
     )
+
+@socketio.on('connect')
+def handleConnection():
+    socketio.send("connected")
     
 @socketio.on('download')
 def startDownload(data):
