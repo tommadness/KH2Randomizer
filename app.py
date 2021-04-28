@@ -12,7 +12,7 @@ from Module.randomize import KH2Randomizer
 from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
-socketio = SocketIO(app)
+socketio = SocketIO(app, manage_session=False, always_connect=True, async_mode="eventlet")
 url = urlparse(os.environ.get("REDIS_TLS_URL"))
 r = redis.Redis(host=url.hostname, port=url.port, ssl=True, ssl_cert_reqs=None,password=url.password)
 seed = None
