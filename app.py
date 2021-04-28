@@ -14,7 +14,7 @@ from flask_socketio import SocketIO
 app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app)
 url = urlparse(os.environ.get("REDIS_TLS_URL"))
-r = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
+r = redis.Redis(host=url.hostname, port=url.port, ssl=True, ssl_cert_reqs=None,password=url.password)
 
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
