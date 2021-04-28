@@ -99,7 +99,10 @@ $(function(){
             socket.emit('download', {platform: "PCSX2"});
         });
         socket.on("started", function(){
-            setTimeout(function(){socket.emit('ping')},5000);
+            setTimeout(function(){socket.emit('ping');},5000);
+        });
+        socket.on("pong", function(){
+            setTimeout(function(){socket.emit('ping');},5000);
         });
         socket.on('file', function(zip){
             console.log(zip);
