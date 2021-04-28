@@ -132,9 +132,9 @@ def handleConnection():
     
 @socketio.on('download')
 def startDownload(data):
-    seed = socketio.start_background_task(randomizePage, data, dict(session))
     socketio.emit("started")
     print("Started")
+    seed = socketio.start_background_task(randomizePage, data, dict(session))
 
 
 @socketio.on("ping")
