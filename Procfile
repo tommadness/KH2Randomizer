@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn --worker-class gthread -w 1 --threads 12 app:app

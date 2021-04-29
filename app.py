@@ -1,20 +1,21 @@
 from flask import Flask, session, Response
-from Module.randomCmdMenu import cmdMenusChoice
+from Module.randomCmdMenu import RandomCmdMenu
+from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import flask as fl
-import numpy as np
 from urllib.parse import urlparse
-import os, base64, string, random, ast, zipfile, redis, json
+import os, base64, string, random, ast, zipfile, redis, json, asyncio
 from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer
+from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
-
+socketio = SocketIO(app, manage_session=False, always_connect=True, async_mode="threading", ping_interval=20)
 url = urlparse(os.environ.get("REDIS_TLS_URL"))
-r = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
-
+r = redis.Redis(host=url.hostname, port=url.port, ssl=True, ssl_cert_reqs=None,password=url.password)
+seed = None
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
 @app.route('/', methods=['GET','POST'])
@@ -43,6 +44,7 @@ def hashedSeed(hash):
 @app.route('/seed',methods=['GET','POST'])
 def seed():
     if fl.request.method == "POST":
+
         session['keybladeAbilities'] = fl.request.form.getlist('keybladeAbilities')
 
         if session['keybladeAbilities'] == []:
@@ -84,8 +86,10 @@ def seed():
         enemyOptions = {
             "boss": fl.request.form.get("boss"),
             "nightmare_bosses": bool(fl.request.form.get("nightmare_bosses")),
-            "stable_bosses_only": bool(fl.request.form.get("stable_bosses_only")),
-            "selected_boss": fl.request.form.get("selected_boss")
+            "selected_boss": None if fl.request.form.get("selected_boss") == "None" else fl.request.form.get("selected_boss"),
+            "enemy": fl.request.form.get("enemy"),
+            "selected_enemy": None if fl.request.form.get("selected_enemy") == "None" else fl.request.form.get("selected_enemy"),
+            "nightmare_enemies": bool(fl.request.form.get("nightmare_enemies"))
         }
         session['enemyOptions'] = json.dumps(enemyOptions)
 
@@ -104,7 +108,8 @@ def seed():
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
     permaLink = fl.url_for("hashedSeed",hash=session['permaLink'], _external=True), 
-    cmdMenus = cmdMenusChoice, 
+    cmdMenus = RandomCmdMenu.getOptions(),
+    bgmOptions = RandomBGM.getOptions(), 
     levelChoice = session.get('levelChoice'), 
     include = session.get('includeList'), 
     seed = session.get('seed'), 
@@ -120,34 +125,40 @@ def seed():
     startingInventory = session.get("startingInventory"),
     idConverter = StartingInventory.getIdConverter()
     )
-    
-@app.route('/download')
-def randomizePage():
-    platform = fl.request.args.get("platform").split(" ")[2]
-    excludeList = list(set(locationType) - set(session.get('includeList')))
-    excludeList.append(session.get("levelChoice"))
-    cmdMenuChoice = fl.request.args.get("cmdMenuChoice")
 
-    randomizer = KH2Randomizer(seedName = session.get("seed"))
+@socketio.on('connect')
+def handleConnection():
+    socketio.send("connected")
+    
+@socketio.on('download')
+def startDownload(data):
+    print("Started")
+    seed = socketio.start_background_task(randomizePage, data, dict(session))
+
+
+def randomizePage(data, sessionDict):
+    print(data['platform'])
+    platform = data['platform']
+    excludeList = list(set(locationType) - set(sessionDict['includeList']))
+    excludeList.append(sessionDict["levelChoice"])
+    cmdMenuChoice = data["cmdMenuChoice"]
+    randomBGM = data["randomBGM"]
+
+    randomizer = KH2Randomizer(seedName = sessionDict["seed"])
     randomizer.populateLocations(excludeList)
-    randomizer.populateItems(promiseCharm = session.get("promiseCharm"), startingInventory = session.get("startingInventory"))
+    randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"])
     if randomizer.validateCount():
         randomizer.setKeybladeAbilities(
-            keybladeAbilities = session.get("keybladeAbilities"), 
-            keybladeMinStat = int(session.get("keybladeMinStat")), 
-            keybladeMaxStat = int(session.get("keybladeMaxStat"))
+            keybladeAbilities = sessionDict["keybladeAbilities"], 
+            keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
+            keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
         )
-        randomizer.setRewards(levelChoice = session.get("levelChoice"))
-        randomizer.setLevels(session.get("soraExpMult"), formExpMult = session.get("formExpMult"))
+        randomizer.setRewards(levelChoice = sessionDict["levelChoice"])
+        randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"])
         randomizer.setBonusStats()
         try:
-            zip = randomizer.generateZip(platform = platform, startingInventory = session.get("startingInventory"), hintsType = session.get("hintsType"), cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(session.get("spoilerLog")), enemyOptions = json.loads(session.get("enemyOptions")))
-            return fl.send_file(
-                zip,
-                mimetype='application/zip',
-                as_attachment=True,
-                attachment_filename='randoseed.zip'
-            )
+            zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
+            socketio.emit('file',zip.read())
         except ValueError as err:
             print("ERROR: ", err.args)
 
@@ -164,6 +175,7 @@ def add_header(r):
     return r
     
 if __name__ == '__main__':
+    socketio.run(app)
     randomizer = KH2Randomizer("fdh6h34q6h4q6g62g6h6w46hw464vbvherby39")
     randomizer.populateLocations([locationType.LoD, "ExcludeFrom50"])
     randomizer.populateItems(startingInventory=["138","537","369"])

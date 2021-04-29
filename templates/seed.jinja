@@ -62,6 +62,8 @@
 </div>
 
 <div class="container mb-3">
+<div class="row">
+<div class="col-4">
 <h4>Command Menu:</h4>
 <select name="cmdMenuChoice">
     {% for key in cmdMenus %}
@@ -69,9 +71,52 @@
     {% endfor %}
 </select>
 </div>
-
-<div class="container">
-<input type="submit" value="Download for PCSX2" name="platform">
-</form>
+{# <div class="col-6">
+<h4>Randomize BGM (PC ONLY)</h4>
+<select name="randomBGM">
+    {%for option in bgmOptions %}
+    <option value="{{option}}">{{option}}</option>
+    {%endfor%}
+</select>
+</div> #}
 </div>
+</div>
+
+
+{#<input type="submit" value="Download for PC" name="platform">#}
+</form>
+<div class="container" id="downloadButtons">
+<button id="PCSX2" name="platform" value="PCSX2">Generate for PCSX2</button>
+{# <button id="PC" name="platform" value="PC">Generate for PC</button> #}
+</div>
+<script>
+$(function(){
+    $('button').click(function(){
+        var platform = $(this).val();
+        var cmdMenuChoice = $("select[name=cmdMenuChoice]").val();
+        var randomBGM = $("select[name=randomBGM]").val();
+        $("#downloadButtons button").prop('disabled',true).text("Generating...");
+        var HOST = location.origin.replace(/^http/, 'ws')
+        var socket = io(HOST);
+        socket.on('connect', function(){
+            socket.emit('download', {platform: platform, cmdMenuChoice: cmdMenuChoice, randomBGM: "Disabled"});
+        });
+        socket.on('file', function(zip){
+            console.log(zip);
+            blob = new Blob([zip], {type:"application/zip"});
+            saveAs(blob, "randoseed.zip");
+            socket.disconnect();
+        });
+    });
+});
+
+function str2bytes (str) {
+    var bytes = new Uint8Array(str.length);
+    for (var i=0; i<str.length; i++) {
+        bytes[i] = str.charCodeAt(i);
+    }
+    return bytes;
+}
+</script>
 {%endblock%}
+
