@@ -256,5 +256,3 @@ patch=1,EE,1036E5D0,extended,0000006D
 patch=1,EE,E0020107,extended,0032EF06
 patch=1,EE,1032EF0C,extended,0000806D
 patch=1,EE,1032EF1E,extended,00000000
-
-patch=1,EE,0032F1C6,extended,00000001 //Hades Cup Trophy
