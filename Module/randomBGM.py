@@ -1,7 +1,7 @@
 import random, os, zipfile
 
 class RandomBGM():
-    def randomizeBGM(option, outZip, platform):
+    def randomizeBGM(option, platform):
         if not platform == "PC":
             return ""
         if option == "Disabled":
@@ -133,7 +133,6 @@ class RandomBGM():
                 "method": "copy",
                 "source": [{"name": "bgm\\{newBGM}".format(newBGM = shuffledBGM[i]), "type":"internal"}]
             })
-            outZip.write("Module/BGM/{platform}/{BGM}".format(platform = platform, BGM = BGMList[i]),"bgm/{BGM}".format(BGM = BGMList[i]))
         return BGMAssets
 
     def getOptions():

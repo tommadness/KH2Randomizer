@@ -327,7 +327,7 @@ class KH2Randomizer():
 
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             
-            mod["assets"] += RandomBGM.randomizeBGM(randomBGM, outZip, platform)
+            mod["assets"] += RandomBGM.randomizeBGM(randomBGM, platform)
 
             outZip.write("Module/icon.png", "icon.png")
 
