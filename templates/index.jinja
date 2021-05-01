@@ -1,161 +1,113 @@
 {% extends "head.jinja" %}
 {% block content %}
         
-<div class="container" id="form">
 <h2>{{message}}</h2>
 <form action='/seed' method="POST">
-    <div class="container mb-3">
-    <div class="row">
-    <span class="input-group-text col-1">Seed</span><input class="form-control col" id='seed' name='seed' type='text' placeholder="Leave blank for a random seed"/>    <select id="preset">
-        <option disabled selected>Select a Preset</option>
-        {# <option value="League">League</option>
-        <option value="EscapeSTT">Escape STT</option> #}
-    </select>
-    </div>
+    <div class="container seed">
+        <div>
+            <label class="textboxLabel">Seed</label>
+        </div>
+        <div id="seed"><input name='seed' type='text' placeholder="Leave blank for a random seed"/></div>
+        <div>
+            <select id="preset">
+                <option disabled selected>Select a Preset</option>
+            </select>
+        </div>
     </div>
     
-        {%set ns = namespace(counter = 0)%}
-    <div class="container mb-3" id="worlds">
-    <h4>Item Randomizer</h4>
-    {% for location in locations %}
-        {% if ns.counter % 3 == 0%}
-        <div class="row">
-        {%endif%}
-            <div class="col-4 custom-control custom-switch">
+    <div class="container worlds">
+    <h4>Include Worlds</h4>
+        {% for location in locations %}
+            <div>
                 <input class="custom-control-input" type="checkbox" id={{location}} value= "{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}>
                 <label class="custom-control-label" for={{location}}>{{location.value}}</label>
             </div>
-        {%set ns.counter = ns.counter+1%}
-        {% if ns.counter % 3 == 0%}
+        {% endfor %}
         </div>
-        {%endif%}
-    {% endfor %}
-    </div>
-
-    <div class="row mb-3">
-        <div class="input-group col">
-            <span class="input-group-text col-md">Sora Levels</span>
-            <select class="input-group-select col-sm" name="levelChoice">
+    <div class="container">
+        <div>
+            <span class="textboxLabel">Sora Levels</span>
+            <select name="levelChoice">
                 <option value="Level">Level 1</option>
                 <option selected value="ExcludeFrom50">Level 50</option>
                 <option value="ExcludeFrom99">Level 99</option>
             </select> 
         </div>
-        <div class="input-group col">
-            <span class="input-group-text col-9">Keyblade Minimum Stat</span><input class="form-control col-3" min="0" max="10" value="0" required type="number" name="keybladeMinStat">
-        </div>
-        <div class="input-group col">
-            <span class="input-group-text col-9">Keyblade Max Stat</span><input class="form-control col-3" min="1" max="10" value="7" required type="number" name="keybladeMaxStat">
-        </div>
+        <div><span>Keyblade Minimum Stat</span><input min="0" max="10" value="0" required type="number" name="keybladeMinStat"></div>
+        <div><span>Keyblade Max Stat</span><input min="1" max="10" value="7" required type="number" name="keybladeMaxStat"></div>
     </div>
-
-
-    {%set ns = namespace(counter = 0)%}
-    {% for expType in expTypes %}
-    {% if ns.counter % 3 == 0 %}
-    <div class="row">
-    {% endif %}
-    <div class="input-group mb-3 col-md"><span class="input-group-text col-9">{{expType}} Experience</span><input class="form-control col-3" step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"></div>
-    {% set ns.counter = ns.counter+1%}
-    {% if ns.counter % 3 == 0%}
-    </div>
-    {% endif %}
-    {% endfor %}
-
     <div class="container">
-    <div class="row justify-content-evenly mb-3">
-        <div class="col">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="{{keybladeAbilities[0]}}" name="keybladeAbilities" value="{{keybladeAbilities[0]}}" checked>
-                <label class="custom-control-label" for="{{keybladeAbilities[0]}}">{{keybladeAbilities[0]}} Keyblade Abilities</label>
-            </div>
+    <h4>Experience Multipliers</h4>
+        {% for expType in expTypes %}
+        <div><span>{{expType}}</span><input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"></div>
+        {% endfor %}
+
+        <div>
+            <input type="checkbox" id="{{keybladeAbilities[0]}}" name="keybladeAbilities" value="{{keybladeAbilities[0]}}" checked>
+            <label for="{{keybladeAbilities[0]}}">{{keybladeAbilities[0]}} Keyblade Abilities</label>
         </div>
-        <div class="col">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="{{keybladeAbilities[1]}}" name="keybladeAbilities" value="{{keybladeAbilities[1]}}">
-                <label class="custom-control-label" for="{{keybladeAbilities[1]}}">{{keybladeAbilities[1]}} Keyblade Abilities</label>
-            </div>
+        <div>
+            <input type="checkbox" id="{{keybladeAbilities[1]}}" name="keybladeAbilities" value="{{keybladeAbilities[1]}}">
+            <label for="{{keybladeAbilities[1]}}">{{keybladeAbilities[1]}} Keyblade Abilities</label>
         </div>
+        {% for config in miscConfig %}
+            <div>
+                <input class="custom-control-input" type="checkbox" id="{{config}}" name="{{config}}">
+                <label class="custom-control-label" for="{{config}}">{{miscConfig[config]}}</label>
+            </div>
+        {% endfor %}
     </div>
-    {%set ns = namespace(counter = 0)%}
-    {% for config in miscConfig %}
-    {% if ns.counter % 3 == 0 %}
-        <div class="row justify-content-evenly">
-    {% endif %}
-            <div class="col">
-                <div class="custom-control custom-switch">
-                    <input class="custom-control-input" type="checkbox" id="{{config}}" name="{{config}}">
-                    <label class="custom-control-label" for="{{config}}">{{miscConfig[config]}}</label>
-                </div>
-            </div>
-    {% set ns.counter = ns.counter+1%}
-    {% if ns.counter % 3 == 0%}
-        </div>
-    {% endif %}
-    {% endfor %}
-    </div>
-    <br/>
-    <h4>Boss & Enemy Randomizer <em>(CURRENTLY IN BETA)</em></h4>
-    <h5><em>Please report any enemy randomizer bugs <a href="https://docs.google.com/forms/d/e/1FAIpQLSetSQExeeuJH45A57nVMPzba0uPYSe9c0tfOMFypihnQMDNjA/viewform">HERE</a></em></h5>
-    <h5><em>Please report any boss randomizer bugs <a href="https://forms.gle/Y3X8F1wvMMz3XPr66">HERE</a></em></h5>
+    <div class="container">
+    <h4>Enemy Randomizer <em>(CURRENTLY IN ALPHA)</em></h4>
+    <h5><em>Please report any bugs <a href="https://docs.google.com/forms/d/e/1FAIpQLSetSQExeeuJH45A57nVMPzba0uPYSe9c0tfOMFypihnQMDNjA/viewform">HERE</a></em></h5>
     <h6>Randomization can take a few minutes. Please be patient.</h6>
-    <div class="row mb-3">
         {%for optionGroup in bossEnemyConfig if not optionGroup in ["memory_expansion", "scale_boss_stats", "cups_bosses", "data_bosses"]%}
-        <div class="col-4">
-        <label for="{{optionGroup}}" data-toggle="tooltip" data-placement="top" title="{{bossEnemyConfig[optionGroup].description}}">{{bossEnemyConfig[optionGroup].display_name}}</label>
-        {%if bossEnemyConfig[optionGroup].possible_values == [True, False] or bossEnemyConfig[optionGroup].possible_values == [False, True]%}
-        <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="{{optionGroup}}" name="{{optionGroup}}" {%if bossEnemyConfig[optionGroup].possible_values == [True, False]%} checked {%endif%}>
+            <div>
+                <label for="{{optionGroup}}" data-toggle="tooltip" data-placement="top" title="{{bossEnemyConfig[optionGroup].description}}">{{bossEnemyConfig[optionGroup].display_name}}</label>
+                {%if bossEnemyConfig[optionGroup].possible_values == [True, False] or bossEnemyConfig[optionGroup].possible_values == [False, True]%}
+                    <input class="form-check-input" type="checkbox" id="{{optionGroup}}" name="{{optionGroup}}" {%if bossEnemyConfig[optionGroup].possible_values == [True, False]%} checked {%endif%}>
+                {%else%}
+                    <select name="{{optionGroup}}">
+                    {%for option in bossEnemyConfig[optionGroup].possible_values%}
+                        <option value="{{option}}">{{option}}</option>
+                    {%endfor%}
+                    </select>
+                {%endif%}
+            </div>
+        {%endfor%}
         </div>
-        {%else%}
-        <select name="{{optionGroup}}">
-        {%for option in bossEnemyConfig[optionGroup].possible_values%}
-            <option value="{{option}}">{{option}}</option>
-        {%endfor%}
-        </select>
-        {%endif%}
+    <div class="container">
+        <div>
+            <h4>Hint System</h4>
+            <select name="hintsType" style="width:100%">
+                {%for option in hintSystems%}
+                    <option value={{option}}>{{option}}</option>
+                {%endfor%}
+            </select>
         </div>
-        {%endfor%}
-    </div>
-    <div class="row mb-3">
-    <div class="col-4">
-        <h4>Hint System</h4>
-        <select name="hintsType" style="width:100%">
-        {%for option in hintSystems%}
-            <option value={{option}}>{{option}}</option>
-        {%endfor%}
-        </select>
-    </div>
-    <div class="col-4">
-    <h4>Sora's Starting Inventory</h4>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#starting-inventory').multiselect({
-                enableCollapsibleOptGroups: true
-            });
-        });
-    </script>
-    <select id="starting-inventory" multiple="multiple" name="startingInventory">
-    {%for category in startingInventory["options"]%}
-    <optgroup label="{{category}}" class="group-{{category}}">
-        {%for dict in startingInventory["options"][category]%}
-            {%for id, item in dict.items()%}
-            <option value={{id}}>{{item}}</option>
+        <div>
+            <h4>Sora's Starting Inventory</h4>
+            <select id="starting-inventory" multiple="multiple" name="startingInventory">
+                {%for category in startingInventory["options"]%}
+                    <optgroup label="{{category}}" class="group-{{category}}">
+                        {%for dict in startingInventory["options"][category]%}
+                            {%for id, item in dict.items()%}
+                                <option value={{id}}>{{item}}</option>
+                            {%endfor%}
+                        {%endfor%}
+                    </optgroup>
+                {%endfor%}
+            </select>
+        </div>
+        <div>
+            <h4>Seed Modifiers</h4>
+            {%for modifier in seedModifiers%}
+                <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> <input type="checkbox" name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/><br>
             {%endfor%}
-        {%endfor%}
-    </optgroup>
-    {%endfor%}
-    </select>
-    </div>
-    <div class="col-4">
-    <h4>Seed Modifiers</h4>
-    {%for modifier in seedModifiers%}
-    <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> <input type="checkbox" name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/><br>
-    {%endfor%}
-    </div>
+        </div>
     </div>
     Generate Spoiler Log: <input type="checkbox" name="spoilerLog"><br>
     <input type='submit'> 
+    </div>
 </form>
-</div>
 {% endblock %}
