@@ -15,7 +15,6 @@ from List.experienceValues import soraExp, formExp
 from List.LvupStats import Stats
 from List.LocationList import Locations
 from List.ItemList import Items
-from List.hashTextEntries import hashTextEntries
 
 def noop(self, *args, **kw):
     pass
@@ -287,12 +286,7 @@ class KH2Randomizer():
                 "Objects": plrp.Objects
             })
 
-        sys = [{"id": 17198, "en":""}]
-        for i in range(7):
-            sys[0]["en"] += random.choice(hashTextEntries)
-            if i < 6:
-                sys[0]["en"] += " "
-
+        sys = modYml.getSysYAML()
 
         
 
@@ -308,7 +302,8 @@ class KH2Randomizer():
             outZip.writestr("FmlvList.yml", yaml.dump(formattedFmlv, line_break="\r\n"))
             outZip.writestr("ItemList.yml", yaml.dump(formattedItem, line_break="\r\n"))
             outZip.writestr("PlrpList.yml", yaml.dump(formattedPlrp, line_break="\r\n"))
-            outZip.writestr("sys.yml", yaml.dump(sys, line_break=""))
+            outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
+            outZip.writestr("jm.yml", yaml.dump(modYml.getJMYAML(), line_break="\r\n"))
 
             if not hintsType == "Disabled":
                 Hints.generateHints(self._locationItems, hintsType, self.seedName, outZip)

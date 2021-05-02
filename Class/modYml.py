@@ -1,3 +1,5 @@
+from List.hashTextEntries import hashTextEntries
+import random
 class modYml:
     def getDefaultMod():
         return {
@@ -22,6 +24,31 @@ class modYml:
                             "source": [
                                 {
                                     "name": "sys.yml",
+                                    "language": "en"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "msg/jp/jm.bar",
+                    "multi": [
+                        {
+                            "name": "msg/us/jm.bar"
+                        },
+                        {
+                            "name": "msg/uk/jm.bar"
+                        }
+                    ],
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "jm",
+                            "type": "list",
+                            "method": "kh2msg",
+                            "source": [
+                                {
+                                    "name": "jm.yml",
                                     "language": "en"
                                 }
                             ]
@@ -108,3 +135,69 @@ class modYml:
                 }
             ]
         }
+
+    def getJMYAML():
+        return [
+            {
+                "id": 20279,
+                "en": "Defeat Xemnas at the top of the Castle"
+            },
+            {
+                "id": 20280,
+                "en": "Defeat Stormrider"
+            },
+            {
+                "id": 20281,
+                "en": "Defeat Xaldin in the Courtyard"
+            },
+            {
+                "id": 20282,
+                "en": "Defeat Dr. Finkelstein's Experiment"
+            },
+            {
+                "id": 20283,
+                "en": "Defeat Genie Jafar"
+            },
+            {
+                "id": 20284,
+                "en": "Defeat Hades"
+            },
+            {
+                "id": 20285,
+                "en": "Defeat Groundshaker"
+            },
+            {
+                "id": 20286,
+                "en": "Fight alongside Axel in the world Between"
+            },
+            {
+                "id": 20287,
+                "en": "Defend Hollow Bastion from the Heartless Army"
+            },
+            {
+                "id": 20288,
+                "en": "Defeat Grim Reaper II"
+            },
+            {
+                "id": 20289,
+                "en": "Protect the Cornerstone of Light from Pete"
+            },
+            {
+                "id": 20290,
+                "en": "Defeat the Master Control Program"
+            },
+            {
+                "id": 20291,
+                "en": "End Roxas' Summer Vacation"
+            }
+        ]
+
+    def getSysYAML():
+        sys = [{"id": 17198, "en":""}]
+        for i in range(7):
+            sys[0]["en"] += random.choice(hashTextEntries)
+            if i < 6:
+                sys[0]["en"] += " "
+
+        sys.append({"id": 19482, "en": "Important Checks Found"})
+        return sys
