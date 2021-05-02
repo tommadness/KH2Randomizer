@@ -188,7 +188,7 @@ class modYml:
             },
             {
                 "id": 20291,
-                "en": "End Roxas' Summer Vacation"
+                "en": "Confront DiZ in the Pod Room"
             }
         ]
 
