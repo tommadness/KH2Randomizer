@@ -541,4 +541,6 @@ class Items:
             KH2Item(597, "Protera", itemType.GOOFY_ABILITY),
             KH2Item(598, "Protega", itemType.GOOFY_ABILITY),
             KH2Item(542, "Damage Control", itemType.GOOFY_ABILITY),
+            KH2Item(419, "Hyper Healing", itemType.GOOFY_ABILITY),
+            KH2Item(411, "Item Boost", itemType.GOOFY_ABILITY),
         ]
