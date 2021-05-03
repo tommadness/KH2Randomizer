@@ -86,13 +86,8 @@ class RandomCmdMenu():
                 "name": "field2d\\jp\\{key}command.2dd".format(key=key),
                 "multi": [{"name": "field2d\\us\\{key}command.2dd".format(key=key)}],
                 "method": "copy",
-                "source": [{"name": "CommandMenus\\{cmdMenu}command.2dd".format(cmdMenu=cmdMenusDict[key])}]
+                "source": [{"name": "field2d\\us\\{cmdMenu}command.2dd".format(cmdMenu=cmdMenusDict[key]), "type":"internal"}]
             })
-        
-        for folderName, subfolders, filenames in os.walk("Module/CommandMenus/{platform}".format(platform = platform)):
-            for filename in filenames:
-                filePath = os.path.join(folderName, filename)
-                outZip.write(filePath, "CommandMenus/"+filename)
 
         
         return cmdMenuAssets

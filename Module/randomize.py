@@ -312,9 +312,9 @@ class KH2Randomizer():
             enemyOptions["boss"] = "Disabled" #TEMPORARY WHILE BOSS RANDO IS DISABLED
             if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled":
                 if platform == "PC":
-                    enemyOptions["memory_expansion"] == True
+                    enemyOptions["memory_expansion"] = True
                 else:
-                    enemyOptions["memory_expansion"] == False
+                    enemyOptions["memory_expansion"] = False
                 if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
                     from khbr.randomizer import Randomizer as khbr
                     enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
@@ -327,7 +327,7 @@ class KH2Randomizer():
 
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             
-            mod["assets"] += RandomBGM.randomizeBGM(randomBGM, outZip, platform)
+            mod["assets"] += RandomBGM.randomizeBGM(randomBGM, platform)
 
             outZip.write("Module/icon.png", "icon.png")
 

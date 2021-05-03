@@ -144,7 +144,7 @@ class modYml:
             },
             {
                 "id": 20280,
-                "en": "Defeat Stormrider"
+                "en": "Defeat Storm Rider"
             },
             {
                 "id": 20281,
@@ -188,7 +188,7 @@ class modYml:
             },
             {
                 "id": 20291,
-                "en": "Confront DiZ in the Pod Room"
+                "en": "Confront DiZ in the Mansion's Pod Room"
             }
         ]
 
