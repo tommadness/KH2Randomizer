@@ -37,6 +37,8 @@ class RandomCmdMenu():
             }
 
     def randomizeCmdMenus(cmdMenuChoice, outZip, platform="PCSX2"):
+        if not platform == "PCSX2":
+            return ""
         cmdMenus = [
             "al0",
             "bb0",
