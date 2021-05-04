@@ -19,8 +19,7 @@
     <h4>Include Worlds</h4>
         {% for location in locations %}
             <div>
-                <input class="custom-control-input" type="checkbox" id={{location}} value= "{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}>
-                <label class="custom-control-label" for={{location}}>{{location.value}}</label>
+                <label class="switch"><input type="checkbox" value="{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}><span class="slider round"></label>{{location.value}}
             </div>
         {% endfor %}
         </div>
