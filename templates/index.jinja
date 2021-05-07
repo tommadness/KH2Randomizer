@@ -19,7 +19,7 @@
     <h4>Include Worlds</h4>
         {% for location in locations %}
             <div>
-                <label class="switch"><input type="checkbox" value="{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}><span class="slider round"></label>{{location.value}}
+                <label class="switch"><input type="checkbox" id="{{location}}" value="{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}><span class="slider round"></label><label for="{{location}}">{{location.value}}</label>
             </div>
         {% endfor %}
         </div>
@@ -42,17 +42,14 @@
         {% endfor %}
 
         <div>
-            <input type="checkbox" id="{{keybladeAbilities[0]}}" name="keybladeAbilities" value="{{keybladeAbilities[0]}}" checked>
-            <label for="{{keybladeAbilities[0]}}">{{keybladeAbilities[0]}} Keyblade Abilities</label>
+            <label class="switch"><input type="checkbox" id="{{keybladeAbilities[0]}}" value="{{keybladeAbilities[0]}}" name="keybladeAbilities" checked><span class="slider round"></label><label for="{{keybladeAbilities[0]}}">Support Keyblade Abilities</label>
         </div>
         <div>
-            <input type="checkbox" id="{{keybladeAbilities[1]}}" name="keybladeAbilities" value="{{keybladeAbilities[1]}}">
-            <label for="{{keybladeAbilities[1]}}">{{keybladeAbilities[1]}} Keyblade Abilities</label>
+            <label class="switch"><input type="checkbox" id="{{keybladeAbilities[1]}}" value="{{keybladeAbilities[1]}}" name="keybladeAbilities"><span class="slider round"></label><label for="{{keybladeAbilities[1]}}">Action Keyblade Abilities</label>
         </div>
         {% for config in miscConfig %}
             <div>
-                <input class="custom-control-input" type="checkbox" id="{{config}}" name="{{config}}">
-                <label class="custom-control-label" for="{{config}}">{{miscConfig[config]}}</label>
+                        <label class="switch"><input type="checkbox" id="{{config}}" name="{{config}}"><span class="slider round"></label><label for="{{config}}">{{miscConfig[config]}}</label>
             </div>
         {% endfor %}
     </div>
