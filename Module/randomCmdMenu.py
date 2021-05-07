@@ -83,12 +83,15 @@ class RandomCmdMenu():
             for cmdMenu in cmdMenus[:]:
                 cmdMenusDict[cmdMenu] = cmdMenuChoice
         cmdMenuAssets = []
+        region = ""
+        if platform == "PCSX2":
+            region = "jp"
         for key in cmdMenusDict:
             cmdMenuAssets.append({
                 "name": "field2d\\jp\\{key}command.2dd".format(key=key),
                 "multi": [{"name": "field2d\\us\\{key}command.2dd".format(key=key)}],
                 "method": "copy",
-                "source": [{"name": "field2d\\us\\{cmdMenu}command.2dd".format(cmdMenu=cmdMenusDict[key]), "type":"internal"}]
+                "source": [{"name": "field2d\\{region}\\{cmdMenu}command.2dd".format(cmdMenu=cmdMenusDict[key], region=region), "type":"internal"}]
             })
 
         
