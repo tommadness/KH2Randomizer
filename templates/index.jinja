@@ -99,8 +99,8 @@
     <h5><em>Please report any bugs <a href="https://docs.google.com/forms/d/e/1FAIpQLSetSQExeeuJH45A57nVMPzba0uPYSe9c0tfOMFypihnQMDNjA/viewform">HERE</a></em></h5>
     <h6>Randomization can take a few minutes. Please be patient.</h6>
     <div class="row mb-3">
-        {%for optionGroup in bossEnemyConfig if not optionGroup in ["boss","nightmare_bosses","selected_boss","memory_expansion"]%}
-        <div class="col">
+        {%for optionGroup in bossEnemyConfig if not optionGroup in ["memory_expansion"]%}
+        <div class="col-4">
         <label for="{{optionGroup}}" data-toggle="tooltip" data-placement="top" title="{{bossEnemyConfig[optionGroup].description}}">{{bossEnemyConfig[optionGroup].display_name}}</label>
         {%if bossEnemyConfig[optionGroup].possible_values == [True, False] or bossEnemyConfig[optionGroup].possible_values == [False, True]%}
         <div class="form-check form-switch">
