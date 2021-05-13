@@ -684,7 +684,7 @@ class Locations:
         ]
 
     def getSoraStartingItemList():
-        soraStartingItem = KH2StartingItem(1,7, LocationTypes=[locationType.Critical])
+        soraStartingItem = KH2StartingItem(1,7, LocationTypes=[locationType.Critical], ArmorSlotMax=1, AccessorySlotMax=1, ItemSlotMax=3)
         return [soraStartingItem, soraStartingItem, soraStartingItem, soraStartingItem, soraStartingItem, soraStartingItem, soraStartingItem]
 
     def getFormLevelList():
@@ -799,7 +799,7 @@ class Locations:
         ]
 
     def getDonaldStartingItemList():
-        donaldStartingItem = KH2StartingItem(2,0, LocationTypes=[locationType.Free], Unknown0a=514)
+        donaldStartingItem = KH2StartingItem(2,0, LocationTypes=[locationType.Free], ArmorSlotMax=1, AccessorySlotMax=2, ItemSlotMax=2)
         donaldStartingItem.setReward(1, equipped=True)
         donaldStartingItem.setReward(3, equipped=True)
         return [donaldStartingItem, donaldStartingItem]
@@ -843,7 +843,7 @@ class Locations:
         ]
 
     def getGoofyStartingItemList():
-        goofyStartingItem = KH2StartingItem(3,0, LocationTypes=[locationType.Free], Unknown08 = 512)
+        goofyStartingItem = KH2StartingItem(3,0, LocationTypes=[locationType.Free], ArmorSlotMax=2, AccessorySlotMax=1, ItemSlotMax=3)
         goofyStartingItem.setReward(1, equipped=True)
         goofyStartingItem.setReward(1, equipped=True)
         goofyStartingItem.setReward(1, equipped=True)
