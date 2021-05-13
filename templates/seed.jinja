@@ -94,7 +94,7 @@ $(function(){
     $('button').click(function(){
         var platform = $(this).val();
         var cmdMenuChoice = $("select[name=cmdMenuChoice]").val();
-        var randomBGM = $("select[name=randomBGM]").val();
+        var randomBGM = "Disabled";
         $("#downloadButtons button").prop('disabled',true).text("Generating...");
         var HOST = location.origin.replace(/^http/, 'ws')
         var socket = io(HOST);
