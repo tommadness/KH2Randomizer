@@ -235,7 +235,7 @@ class KH2Randomizer():
                 "ArmorSlotUpgrade": bons.ArmorSlotUpgrade,
                 "BonusItem1": bons.BonusItem1,
                 "BonusItem2": bons.BonusItem2,
-                "Unknown0c": 0
+                "Padding": 0
             }
 
         formattedFmlv = {}
@@ -270,20 +270,21 @@ class KH2Randomizer():
             })
 
         formattedPlrp = []
-        lionStartWithDash = KH2StartingItem(135, 0, Hp=0, Ap=0, Mp=0, Unknown06=0,Unknown08=0,Unknown0a=0, Objects=[-32606, -32606, -32605, -32605, -32248, -32247, -32246, -32242])
+        lionStartWithDash = KH2StartingItem(135, 0, Hp=0, Ap=0, Mp=0, ArmorSlotMax=0,AccessorySlotMax=0,ItemSlotMax=0, Items=[32930, 32930, 32931, 32931, 33288, 33289, 33290, 33294])
         plrpList.append(lionStartWithDash)
         for plrp in plrpList:
             plrp.padStartingItems()
             formattedPlrp.append({
                 "Character": plrp.Character,
-                "Difficulty": plrp.Difficulty,
+                "Id": plrp.Difficulty,
                 "Hp": plrp.Hp,
                 "Mp": plrp.Mp,
                 "Ap": plrp.Ap,
-                "Unknown06": plrp.Unknown06,
-                "Unknown08": plrp.Unknown08,
-                "Unknown0a": plrp.Unknown0a,
-                "Objects": plrp.Objects
+                "ArmorSlotMax": plrp.ArmorSlotMax,
+                "AccessorySlotMax": plrp.AccessorySlotMax,
+                "ItemSlotMax": plrp.ItemSlotMax,
+                "Items": plrp.Items,
+                "Padding": [0] * 52
             })
 
         sys = modYml.getSysYAML()
@@ -309,7 +310,6 @@ class KH2Randomizer():
                 Hints.generateHints(self._locationItems, hintsType, self.seedName, outZip)
 
             enemySpoilers = None
-            enemyOptions["boss"] = "Disabled" #TEMPORARY WHILE BOSS RANDO IS DISABLED
             if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled":
                 if platform == "PC":
                     enemyOptions["memory_expansion"] = True

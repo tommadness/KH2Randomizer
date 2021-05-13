@@ -71,14 +71,14 @@
     {% endfor %}
 </select>
 </div>
- <div class="col-6">
+ {# <div class="col-6">
 <h4>Randomize BGM (PC ONLY)</h4>
 <select name="randomBGM">
     {%for option in bgmOptions %}
     <option value="{{option}}">{{option}}</option>
     {%endfor%}
 </select>
-</div> 
+</div>  #}
 </div>
 </div>
 
@@ -87,7 +87,7 @@
 </form>
 <div class="container" id="downloadButtons">
 <button id="PCSX2" name="platform" value="PCSX2">Generate for PCSX2</button>
-<button id="PC" name="platform" value="PC">Generate for PC</button>
+{# <button id="PC" name="platform" value="PC">Generate for PC</button> #}
 </div>
 <script>
 $(function(){

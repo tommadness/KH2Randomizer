@@ -209,18 +209,18 @@ class KH2StartingItem(KH2Location):
     Hp: int = 20
     Mp: int = 100
     Ap: int = 50
-    Unknown06: int = 0
-    Unknown08: int = 256
-    Unknown0a: int = 769
+    ArmorSlotMax: int = 0
+    AccessorySlotMax: int = 0
+    ItemSlotMax: int = 0
     DoubleReward: bool = False
     LocationTypes: list[locationType] = field(default_factory=list)
     InvalidChecks: list[itemType] = field(default_factory=list)
-    Objects: list[int] = field(default_factory=list) #58
+    Items: list[int] = field(default_factory=list) #32
 
     def setReward(self, itemId, equipped=False):
         if equipped:
-            itemId -= 0x8000
-        self.Objects.append(itemId)
+            itemId += 0x8000
+        self.Items.append(itemId)
 
     def getReward(self):
         return self.Objects
@@ -229,5 +229,5 @@ class KH2StartingItem(KH2Location):
         return "Critical Bonus"
 
     def padStartingItems(self):
-        while len(self.Objects) < 58:
+        while len(self.Items) < 32:
             self.setReward(0)
