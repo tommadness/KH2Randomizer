@@ -4,7 +4,7 @@ miscConfig = {
     "PromiseCharm": "Promise Charm",
 }
 
-expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final"]
+expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final","Summon"]
 
 keybladeAbilities = ["Support","Action"]
 

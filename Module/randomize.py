@@ -45,7 +45,7 @@ class KH2Randomizer():
     def populateLocations(self, excludeWorlds):
         self._allLocationList = Locations.getTreasureList() + Locations.getSoraLevelList() + Locations.getSoraBonusList() + Locations.getFormLevelList() + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
 
-        self._validLocationList = [location for location in self._allLocationList if not set(location.LocationTypes).intersection(excludeWorlds)]
+        self._validLocationList = [location for location in self._allLocationList if not set(location.LocationTypes).intersection(excludeWorlds+["Level1Form", "SummonLevel"])]
 
         self._allLocationListGoofy = Locations.getGoofyWeaponList() + Locations.getGoofyStartingItemList() + Locations.getGoofyBonusList()
 
