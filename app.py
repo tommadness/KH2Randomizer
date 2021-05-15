@@ -13,8 +13,10 @@ from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app, manage_session=False, always_connect=True, async_mode="threading", ping_interval=20)
-url = urlparse(os.environ.get("REDIS_TLS_URL"))
-r = redis.Redis(host=url.hostname, port=url.port, ssl=True, ssl_cert_reqs=None,password=url.password)
+url = urlparse(os.environ.get("REDIS_URL"))
+development_mode = os.environ.get("DEVELOPMENT_MODE")
+if not development_mode:
+    r = redis.Redis(host=url.hostname, port=url.port, ssl=True, ssl_cert_reqs=None,password=url.password)
 seed = None
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
@@ -100,10 +102,11 @@ def seed():
 
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
-        with r.pipeline() as pipe:
-            for key in session.keys():
-                pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
-            pipe.execute()
+        if not development_mode:
+            with r.pipeline() as pipe:
+                for key in session.keys():
+                    pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
+                pipe.execute()
 
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
@@ -158,7 +161,16 @@ def randomizePage(data, sessionDict):
         randomizer.setBonusStats()
         try:
             zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
+            if development_mode:
+                development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
+                if development_mode_path:
+                    # Unzip mod into path
+                    import zipfile
+                    zipfile.ZipFile(zip).extractall(development_mode_path)
+                    print("unzipped into {}".format(development_mode_path))
+                return
             socketio.emit('file',zip.read())
+
         except ValueError as err:
             print("ERROR: ", err.args)
 
