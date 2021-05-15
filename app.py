@@ -64,6 +64,7 @@ def seed():
 
 
         session['formExpMult'] = {
+            0: float(fl.request.form.get("SummonExp")),
             1: float(fl.request.form.get("ValorExp")), 
             2: float(fl.request.form.get("WisdomExp")), 
             3: float(fl.request.form.get("LimitExp")), 

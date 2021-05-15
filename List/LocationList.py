@@ -370,8 +370,8 @@ class Locations:
 
             KH2Treasure(261, "Cornerstone Hill Monochrome", LocationTypes=[locationType.DC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(513, "00 Protect Belt", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(540, "00 Serenity Gem", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(513, "00 Protect Belt", LocationTypes=[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(540, "00 Serenity Gem", LocationTypes=[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(332, "00 Disney Castle Map", LocationTypes=[locationType.DC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(262, "00 Wisdom Form", LocationTypes=[locationType.DC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
@@ -388,8 +388,8 @@ class Locations:
             KH2Treasure(264, "00 Circle of Life", LocationTypes=[locationType.PL], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(302, "00 Fire Element", LocationTypes=[locationType.PL], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(515, "00 Rising Dragon", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(542, "00 Serenity Crystal", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(515, "00 Rising Dragon", LocationTypes=[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(542, "00 Serenity Crystal", LocationTypes=[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(294, "00 Seifer´s Trophy", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(265, "00 Oathkeeper", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
@@ -413,8 +413,8 @@ class Locations:
 
             KH2Treasure(295, "00 Auron´s Statue", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(272, "00 Guardian Soul", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(514, "00 Genji Shield", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(541, "00 Skillful Ring", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(514, "00 Genji Shield", LocationTypes=[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(541, "00 Skillful Ring", LocationTypes=[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(303, "Agrabah Wishing Lamp", LocationTypes=[locationType.Agrabah], InvalidChecks=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
@@ -434,8 +434,8 @@ class Locations:
             KH2Treasure(276, "00 Sleeping Lion", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(282, "00 Fenrir", LocationTypes=[locationType.HB, locationType.Sephi], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(516, "00 Fatal Crest", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(517, "00 Orichalcum+", LocationTypes=[locationType.OC], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(516, "00 Fatal Crest", LocationTypes=[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(517, "00 Orichalcum+", LocationTypes=[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(317, "00 Bond of Flame", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
@@ -723,7 +723,15 @@ class Locations:
             KH2FormLevel(5,4),
             KH2FormLevel(5,5),
             KH2FormLevel(5,6),
-            KH2FormLevel(5,7)
+            KH2FormLevel(5,7),
+            KH2FormLevel(0,1, LocationTypes=["SummonLevel"]),
+            KH2FormLevel(0,2, LocationTypes=["SummonLevel"]),
+            KH2FormLevel(0,3, LocationTypes=["SummonLevel"]),
+            KH2FormLevel(0,4, LocationTypes=["SummonLevel"]),
+            KH2FormLevel(0,5, LocationTypes=["SummonLevel"]),
+            KH2FormLevel(0,6, LocationTypes=["SummonLevel"]),
+            KH2FormLevel(0,7, LocationTypes=["SummonLevel"]),
+
         ]
 
     def getSoraWeaponList():

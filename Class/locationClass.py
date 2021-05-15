@@ -139,21 +139,37 @@ class KH2Bonus(KH2Location):
     def __repr__(self):
         return "\nKH2Bonus( RewardId:{self.RewardId}, Character: {self.CharacterId}, ItemId: {self.BonusItem1}, InvalidChecks: {self.InvalidChecks} )".format(self=self)
 
+@dataclass(unsafe_hash=True, eq=True, repr=True)
 class KH2FormLevel(KH2Location):
-    def __init__(self, id, level):
-        self.FormId = id
-        self.FormLevel = level
-        self.GrowthAbilityLevel = 0
-        self.Experience = 0
-        self.Ability = 0
-        self.InvalidChecks = ["Form"]
-        self.LocationTypes = [locationType.FormLevel]
-        self.DoubleReward = False
-        if level == 1:
+    FormId: int
+    FormLevel: int
+    GrowthAbilityLevel: int = 0
+    Experience: int = 0
+    Ability: int = 0
+    InvalidChecks: list[itemType] = field(default_factory=list)
+    LocationTypes: list[locationType] = field(default_factory=list)
+    DoubleReward: bool = False
+
+    def __post_init__(self):
+        if self.FormLevel == 1:
             self.LocationTypes += ["Level1Form"]
+        self.LocationTypes += [locationType.FormLevel]
+        self.InvalidChecks += [itemType.FORM]
+
+    # def __init__(self, id, level):
+    #     self.FormId = id
+    #     self.FormLevel = level
+    #     self.GrowthAbilityLevel = 0
+    #     self.Experience = 0
+    #     self.Ability = 0
+    #     self.InvalidChecks = ["Form"]
+    #     self.LocationTypes = [locationType.FormLevel]
+    #     self.DoubleReward = False
+    #     if level == 1:
+    #         self.LocationTypes += ["Level1Form"]
     
     def getFormName(self):
-        formDict = {1:"Valor",2:"Wisdom",3:"Limit",4:"Master",5:"Final"}
+        formDict = {0:"Summon", 1:"Valor",2:"Wisdom",3:"Limit",4:"Master",5:"Final"}
         return formDict[self.FormId]
 
     def setReward(self, itemId):
