@@ -159,17 +159,18 @@ class KH2Randomizer():
             
 
     def setLevels(self, soraExpMult, formExpMult):
-        statsList = Stats.getLevelStats()
-        apList = Stats.getAp()
+        statsList = ["Str","Mag","Def", "Ap"]
         soraLevels = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         for index, level in enumerate(soraLevels):
+            statChoice = random.choice(statsList)
             level.Exp = round(soraExp[level.Level] / soraExpMult)
             if level.Level > 1:
-                random.shuffle(statsList)
-                level.setStat(soraLevels[index-1], statsList.pop())
+                level.setStat(soraLevels[index-1], statChoice)
                 if level.getReward() == 0:
-                    random.shuffle(apList)
-                    level.setAp(soraLevels[index-1], apList.pop())
+                    statChoice2 = statChoice
+                    while (statChoice2 == statChoice):
+                        statChoice2 = random.choice(statsList)
+                    level.setStat2(statChoice2)
 
 
 

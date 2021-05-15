@@ -69,9 +69,17 @@ class KH2LevelUp(KH2Location):
             self.Magic += 2
         elif stat == "Def":
             self.Defense += 1
+        elif stat == "Ap":
+            self.Ap += 2
 
-    def setAp(self, prevLvup, ap):
-        if ap == "Ap":
+    def setStat2(self, stat):
+        if stat == "Str":
+            self.Strength += 2
+        elif stat == "Mag":
+            self.Magic += 2
+        elif stat == "Def":
+            self.Defense += 1
+        elif stat == "Ap":
             self.Ap += 2
     
     def getDescription(self):
