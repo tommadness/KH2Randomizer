@@ -55,8 +55,8 @@ class Items:
 
             KH2Item(564, "Dodge Roll",itemType.GROWTH_ABILITY),
             KH2Item(565, "Dodge Roll",itemType.GROWTH_ABILITY),
+            KH2Item(566, "Dodge Roll",itemType.GROWTH_ABILITY),
             KH2Item(567, "Dodge Roll",itemType.GROWTH_ABILITY),
-            KH2Item(568, "Dodge Roll",itemType.GROWTH_ABILITY),
 
             KH2Item(26, "Valor Form", itemType.FORM),
             KH2Item(27, "Wisdom Form", itemType.FORM),
