@@ -13,7 +13,7 @@ from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app, manage_session=False, always_connect=True, async_mode="threading", ping_interval=20)
-url = urlparse(os.environ.get("REDIS_URL"))
+url = urlparse(os.environ.get("REDIS_TLS_URL"))
 development_mode = os.environ.get("DEVELOPMENT_MODE")
 if not development_mode:
     r = redis.Redis(host=url.hostname, port=url.port, ssl=True, ssl_cert_reqs=None,password=url.password)
