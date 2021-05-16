@@ -150,7 +150,7 @@
     <div class="col-4">
     <h4>Seed Modifiers</h4>
     {%for modifier in seedModifiers%}
-    <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> <input type="checkbox" name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/>
+    <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> <input type="checkbox" name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/><br>
     {%endfor%}
     </div>
     </div>

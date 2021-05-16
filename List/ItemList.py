@@ -395,7 +395,24 @@ class Items:
             KH2Item(198, "Trinity Limit", itemType.ACTION_ABILITY),
         ]
 
-    def getJunkList():
+    def getJunkList(betterJunk):
+        if betterJunk:
+            return [
+                KH2Item(1, "Potion", itemType.ITEM),
+                KH2Item(2, "Hi-Potion", itemType.ITEM),
+                KH2Item(3, "Ether", itemType.ITEM),
+                KH2Item(4, "Elixir", itemType.ITEM),
+                KH2Item(5, "Mega-Potion", itemType.ITEM),
+                KH2Item(6, "Mega-Ether", itemType.ITEM),
+                KH2Item(7, "Mega-Elixir", itemType.ITEM),
+                KH2Item(131, "Tent", itemType.ITEM),
+                KH2Item(274, "Drive Recovery", itemType.ITEM),
+                KH2Item(275, "High Drive Recovery", itemType.ITEM),
+                KH2Item(276, "Power Boost", itemType.ITEM),
+                KH2Item(277, "Magic Boost", itemType.ITEM),
+                KH2Item(278, "Defense Boost", itemType.ITEM),
+                KH2Item(279, "AP Boost", itemType.ITEM),
+            ]
         return [
             KH2Item(317, "Blazing Shard", itemType.JUNK),
             KH2Item(318, "Blazing Stone", itemType.JUNK),

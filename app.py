@@ -151,6 +151,7 @@ def randomizePage(data, sessionDict):
     excludeList.append(sessionDict["levelChoice"])
     cmdMenuChoice = data["cmdMenuChoice"]
     randomBGM = data["randomBGM"]
+    sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
     randomizer = KH2Randomizer(seedName = sessionDict["seed"])
     randomizer.populateLocations(excludeList)
@@ -161,7 +162,7 @@ def randomizePage(data, sessionDict):
             keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
             keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
         )
-        randomizer.setRewards(levelChoice = sessionDict["levelChoice"])
+        randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
         randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
         randomizer.setBonusStats()
         try:

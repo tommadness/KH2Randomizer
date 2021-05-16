@@ -112,7 +112,7 @@ class KH2Randomizer():
             staff.setReward(randomAbility.Id)
             self._locationItems.append((staff,randomAbility))
 
-    def setRewards(self, levelChoice="ExcludeFrom50"):
+    def setRewards(self, levelChoice="ExcludeFrom50", betterJunk=False):
         locations = [location for location in self._validLocationList if not isinstance(location, KH2ItemStat)]
         for item in self._validItemList:
             while True:
@@ -127,7 +127,7 @@ class KH2Randomizer():
 
 
         for location in junkLocations:
-            randomJunk = random.choice(Items.getJunkList())
+            randomJunk = random.choice(Items.getJunkList(betterJunk))
             location.setReward(randomJunk.Id)
             self._locationItems.append((location, randomJunk))
 
