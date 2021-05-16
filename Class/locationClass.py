@@ -58,29 +58,29 @@ class KH2LevelUp(KH2Location):
     def getReward(self):
         return self.SwordAbility
 
-    def setStat(self, prevLvup, stat):
+    def setStat(self, prevLvup, stat, value):
         self.Strength = prevLvup.Strength
         self.Magic = prevLvup.Magic
         self.Defense = prevLvup.Defense
         self.Ap = prevLvup.Ap
         if stat == "Str":
-            self.Strength += 2
+            self.Strength += value
         elif stat == "Mag":
-            self.Magic += 2
+            self.Magic += value
         elif stat == "Def":
-            self.Defense += 1
+            self.Defense += value
         elif stat == "Ap":
-            self.Ap += 2
+            self.Ap += value
 
-    def setStat2(self, stat):
+    def setStat2(self, stat, value):
         if stat == "Str":
-            self.Strength += 2
+            self.Strength += value
         elif stat == "Mag":
-            self.Magic += 2
+            self.Magic += value
         elif stat == "Def":
-            self.Defense += 1
+            self.Defense += value
         elif stat == "Ap":
-            self.Ap += 2
+            self.Ap += value
     
     def getDescription(self):
         return "{self.Character} level {self.Level}".format(self=self)
