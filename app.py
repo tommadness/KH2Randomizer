@@ -2,6 +2,7 @@ from flask import Flask, session, Response
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
+from Module.modifier import SeedModifier
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import flask as fl
 from urllib.parse import urlparse
@@ -23,7 +24,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions())
+    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions())
 
 
 
@@ -100,6 +101,8 @@ def seed():
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
 
+        session['seedModifiers'] = fl.request.form.getlist("seedModifiers")
+
 
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
@@ -127,6 +130,7 @@ def seed():
     enemyOptions = json.loads(session.get("enemyOptions")),
     hintsType = session.get("hintsType"),
     startingInventory = session.get("startingInventory"),
+    seedModifiers = session.get("seedModifiers"),
     idConverter = StartingInventory.getIdConverter()
     )
 
@@ -158,7 +162,7 @@ def randomizePage(data, sessionDict):
             keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
         )
         randomizer.setRewards(levelChoice = sessionDict["levelChoice"])
-        randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"])
+        randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
         randomizer.setBonusStats()
         try:
             zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))

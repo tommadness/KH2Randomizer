@@ -147,6 +147,12 @@
     {%endfor%}
     </select>
     </div>
+    <div class="col-4">
+    <h4>Seed Modifiers</h4>
+    {%for modifier in seedModifiers%}
+    <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> <input type="checkbox" name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/>
+    {%endfor%}
+    </div>
     </div>
     Generate Spoiler Log: <input type="checkbox" name="spoilerLog"><br>
     <input type='submit'> 
