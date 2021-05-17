@@ -8,7 +8,9 @@ body {
 
 select, input {
   background-color: #555;
-  color: #ddd;
+  color: #aaa;
+  border: none;
+  padding: 5px;
 }
 
 a {
@@ -22,6 +24,8 @@ a {
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   place-content: stretch;
   grid-gap: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .container > div {
@@ -32,8 +36,9 @@ a {
       -ms-flex-align: center;
           align-items: center;
   min-height: 40px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
 }
 
 .container > div.vertical {
@@ -63,8 +68,8 @@ a {
 }
 
 .container.seed {
-  -ms-grid-columns: 40px (minmax(40px, auto))[6];
-      grid-template-columns: 40px repeat(6, minmax(40px, auto));
+  -ms-grid-columns: 60px (minmax(40px, auto))[6];
+      grid-template-columns: 60px repeat(6, minmax(40px, auto));
 }
 
 .container.exp {
@@ -155,12 +160,24 @@ input:focus + .slider {
 }
 
 #hint {
-  height: 20px;
+  height: 30px;
 }
 
 h4, h5, h6 {
   grid-column: 1 / -1;
   margin-top: 0;
   margin-bottom: 3px;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
 }
 /*# sourceMappingURL=style.css.map */
