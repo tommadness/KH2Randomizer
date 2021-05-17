@@ -27,16 +27,16 @@
         {% endfor %}
 </div>
 <div class="container">
-<h4>Keyblade Abilities:</h4> {%for keybladeAbility in keybladeAbilities %}{{keybladeAbility}} {%endfor%}
-
-<h5>Keyblade Minimum Stat</h5> {{keybladeMinStat}}
-<h5>Keyblade Max Stat</h5> {{keybladeMaxStat}}
+    <div class="vertical"><h4>Keyblade Abilities:</h4> {%for keybladeAbility in keybladeAbilities %}{{keybladeAbility}} {%endfor%}</div>
+    <div class="vertical"><h5>Keyblade Minimum Stat</h5> {{keybladeMinStat}}</div>
+    <div class="vertical"><h5>Keyblade Max Stat</h5> {{keybladeMaxStat}}</div>
 </div>
 
-<h5>Hint System</h5>{{hintsType}}
-<h5>Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}{%endfor%}
-<h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}{%endfor%}
-
+<div class="container">
+    <div class="vertical"><h5>Hint System</h5>{{hintsType}}</div>
+    <div class="vertical"><h5>Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}<br>{%endfor%}</div>
+    <div class="vertical"><h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}<br>{%endfor%}</div>
+</div>
 
 
 <h4>Command Menu:</h4>

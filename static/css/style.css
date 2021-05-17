@@ -55,10 +55,6 @@ a {
   height: 100%;
 }
 
-.container > div > span {
-  text-align: right;
-}
-
 .container > div > div {
   display: -webkit-box;
   display: -ms-flexbox;
