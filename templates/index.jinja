@@ -35,12 +35,13 @@
         <div><span>Keyblade Minimum Stat</span><input min="0" max="10" value="0" required type="number" name="keybladeMinStat"></div>
         <div><span>Keyblade Max Stat</span><input min="1" max="10" value="7" required type="number" name="keybladeMaxStat"></div>
     </div>
-    <div class="container">
+    <div class="container exp">
     <h4>Experience Multipliers</h4>
         {% for expType in expTypes %}
         <div><span>{{expType}}</span><input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"></div>
         {% endfor %}
-
+    </div>
+    <div class="container">
         <div>
             <label class="switch"><input type="checkbox" id="{{keybladeAbilities[0]}}" value="{{keybladeAbilities[0]}}" name="keybladeAbilities" checked><span class="slider round"></label><label for="{{keybladeAbilities[0]}}">Support Keyblade Abilities</label>
         </div>
@@ -49,20 +50,25 @@
         </div>
         {% for config in miscConfig %}
             <div>
-                        <label class="switch"><input type="checkbox" id="{{config}}" name="{{config}}"><span class="slider round"></label><label for="{{config}}">{{miscConfig[config]}}</label>
+                <label class="switch"><input type="checkbox" id="{{config}}" name="{{config}}"><span class="slider round"></label>
+                <label for="{{config}}">{{miscConfig[config]}}</label>
             </div>
         {% endfor %}
     </div>
-    <div class="container">
+    <div class="container enemy">
     <h4>Enemy Randomizer <em>(CURRENTLY IN ALPHA)</em></h4>
     <h5><em>Please report any bugs <a href="https://docs.google.com/forms/d/e/1FAIpQLSetSQExeeuJH45A57nVMPzba0uPYSe9c0tfOMFypihnQMDNjA/viewform">HERE</a></em></h5>
     <h6>Randomization can take a few minutes. Please be patient.</h6>
         {%for optionGroup in bossEnemyConfig if not optionGroup in ["memory_expansion", "scale_boss_stats", "cups_bosses", "data_bosses"]%}
-            <div>
-                <label for="{{optionGroup}}" data-toggle="tooltip" data-placement="top" title="{{bossEnemyConfig[optionGroup].description}}">{{bossEnemyConfig[optionGroup].display_name}}</label>
+            <div class="vertical">
+                
                 {%if bossEnemyConfig[optionGroup].possible_values == [True, False] or bossEnemyConfig[optionGroup].possible_values == [False, True]%}
-                    <input class="form-check-input" type="checkbox" id="{{optionGroup}}" name="{{optionGroup}}" {%if bossEnemyConfig[optionGroup].possible_values == [True, False]%} checked {%endif%}>
+                    <div class="bottom">
+                        <label class="switch"><input type="checkbox" id="{{optionGroup}}" name="{{optionGroup}}" {%if bossEnemyConfig[optionGroup].possible_values == [True, False]%} checked {%endif%}><span class="slider round"></label>
+                        <label for="{{optionGroup}}" data-toggle="tooltip" data-placement="top" title="{{bossEnemyConfig[optionGroup].description}}">{{bossEnemyConfig[optionGroup].display_name}}</label>
+                    </div>
                 {%else%}
+                    <label for="{{optionGroup}}" data-toggle="tooltip" data-placement="top" title="{{bossEnemyConfig[optionGroup].description}}">{{bossEnemyConfig[optionGroup].display_name}}</label>
                     <select name="{{optionGroup}}">
                     {%for option in bossEnemyConfig[optionGroup].possible_values%}
                         <option value="{{option}}">{{option}}</option>
@@ -73,15 +79,15 @@
         {%endfor%}
         </div>
     <div class="container">
-        <div>
+        <div class="vertical">
             <h4>Hint System</h4>
-            <select name="hintsType" style="width:100%">
+            <select name="hintsType" style="width:100%" id="hint">
                 {%for option in hintSystems%}
                     <option value={{option}}>{{option}}</option>
                 {%endfor%}
             </select>
         </div>
-        <div>
+        <div class="vertical">
             <h4>Sora's Starting Inventory</h4>
             <select id="starting-inventory" multiple="multiple" name="startingInventory">
                 {%for category in startingInventory["options"]%}
@@ -95,10 +101,13 @@
                 {%endfor%}
             </select>
         </div>
-        <div>
+        <div class="vertical">
             <h4>Seed Modifiers</h4>
             {%for modifier in seedModifiers%}
-                <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> <input type="checkbox" name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/><br>
+                <div>
+                    <label class="switch"><input type="checkbox" name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/><span class="slider round"></label>
+                    <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> 
+                </div>
             {%endfor%}
         </div>
     </div>

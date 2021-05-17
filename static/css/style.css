@@ -1,8 +1,18 @@
 body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: #333;
+  color: #ddd;
+  background-color: #333;
   margin-left: 40px;
   margin-right: 40px;
+}
+
+select, input {
+  background-color: #555;
+  color: #ddd;
+}
+
+a {
+  color: #fff;
 }
 
 .container {
@@ -11,8 +21,7 @@ body {
   -ms-grid-columns: (minmax(300px, 1fr))[auto-fit];
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   place-content: stretch;
-  grid-gap: 0px 5px;
-  padding: 5px;
+  grid-gap: 5px;
 }
 
 .container > div {
@@ -27,20 +36,49 @@ body {
   padding-bottom: 5px;
 }
 
+.container > div.vertical {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: normal;
+      -ms-flex-align: normal;
+          align-items: normal;
+}
+
+.container > div.vertical > div.bottom {
+  padding-top: 20px;
+}
+
 .container > div > input[type="text"], .container > div > input[type="number"], .container > div > select {
   width: 100%;
   height: 100%;
 }
 
 .container > div > span {
-  min-width: 60px;
   text-align: right;
-  padding-right: 5px;
+}
+
+.container > div > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-bottom: 3px;
 }
 
 .container.seed {
   -ms-grid-columns: 40px (minmax(40px, auto))[6];
       grid-template-columns: 40px repeat(6, minmax(40px, auto));
+}
+
+.container.exp {
+  -ms-grid-columns: (minmax(40px, auto))[7];
+      grid-template-columns: repeat(7, minmax(40px, auto));
+}
+
+.container.enemy {
+  -ms-grid-columns: (minmax(60px, auto))[3];
+      grid-template-columns: repeat(3, minmax(60px, auto));
 }
 
 .switch {
@@ -114,14 +152,14 @@ input:focus + .slider {
   }
 }
 
-select#preset {
-  border-top-right-radius: 1rem;
-}
-
 #seed {
   -ms-grid-column: 2;
       grid-column-start: 2;
   grid-column-end: 7;
+}
+
+#hint {
+  height: 20px;
 }
 
 h4, h5, h6 {

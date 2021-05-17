@@ -1,16 +1,25 @@
 body {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: #333;
+    color: #ddd;
+    background-color: #333;
     margin-left: 40px;
     margin-right: 40px;
+}
+
+select, input {
+    background-color: #555;
+    color: #ddd;
+}
+
+a {
+    color: #fff;
 }
 
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
     place-content: stretch;
-    grid-gap: 0px 5px;
-    padding: 5px;
+    grid-gap: 5px;
 
     > div {
         display: flex;
@@ -19,20 +28,39 @@ body {
         padding-top: 5px;
         padding-bottom: 5px;
 
+        &.vertical {
+            flex-direction: column;
+            align-items: normal;
+
+            > div.bottom {
+                padding-top: 20px;
+            }
+        }
+
         > input[type="text"], > input[type="number"], > select {
             width:100%;
             height:100%;
         }
 
         > span {
-            min-width: 60px;
             text-align: right;
-            padding-right: 5px;
+        }
+        > div {
+            display: flex;
+            padding-bottom: 3px;
         }
     }
 
     &.seed{
         grid-template-columns: 40px repeat(6, minmax(40px,auto));
+    }
+
+    &.exp{
+        grid-template-columns: repeat(7, minmax(40px,auto));
+    }
+
+    &.enemy{
+        grid-template-columns: repeat(3, minmax(60px, auto));
     }
 
 }
@@ -109,13 +137,14 @@ input:focus + .slider {
     }
 }
 
-select#preset{
-    border-top-right-radius: 1rem;
-}
 
 #seed {
     grid-column-start: 2;
     grid-column-end: 7;
+}
+
+#hint {
+    height: 20px;
 }
 
 h4,h5,h6 {
