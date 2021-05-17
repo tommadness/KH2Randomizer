@@ -36,9 +36,9 @@ a {
         &.vertical {
             flex-direction: column;
             align-items: normal;
-
-            > div.bottom {
-                padding-top: 20px;
+            justify-content: center;
+            &.top {
+                justify-content: normal;
             }
         }
 
@@ -49,6 +49,7 @@ a {
 
         > div {
             display: flex;
+            align-items: center;
             padding-bottom: 3px;
         }
     }
@@ -80,7 +81,7 @@ a {
     }
 
     + label {
-        margin-left: 4px;
+        margin-left: 6px;
     }
 }
 

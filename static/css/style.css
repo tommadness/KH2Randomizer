@@ -49,10 +49,15 @@ a {
   -webkit-box-align: normal;
       -ms-flex-align: normal;
           align-items: normal;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.container > div.vertical > div.bottom {
-  padding-top: 20px;
+.container > div.vertical.top {
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
 }
 
 .container > div > input[type="text"], .container > div > input[type="number"], .container > div > select {
@@ -64,6 +69,9 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding-bottom: 3px;
 }
 
@@ -96,7 +104,7 @@ a {
 }
 
 .switch + label {
-  margin-left: 4px;
+  margin-left: 6px;
 }
 
 .slider {
