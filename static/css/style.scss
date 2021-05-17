@@ -1,13 +1,13 @@
 body {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: #ddd;
-    background-color: #333;
+    color: #dcddde;
+    background-color: #36393f;
     margin-left: 40px;
     margin-right: 40px;
 }
 
 select, input {
-    background-color: #555;
+    background-color: rgba(255,255,255,0.1);
     color: #aaa;
     border: none;
     padding: 5px;
@@ -22,8 +22,8 @@ a {
     grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
     place-content: stretch;
     grid-gap: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 
     > div {
         display: flex;

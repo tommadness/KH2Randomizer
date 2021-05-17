@@ -23,6 +23,14 @@
             </div>
         {% endfor %}
         </div>
+    
+    <div class="container exp">
+    <h4>Experience Multipliers</h4>
+        {% for expType in expTypes %}
+        <div class="vertical"><span>{{expType}}</span><input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"></div>
+        {% endfor %}
+    </div>
+
     <div class="container">
         <div>
             <span class="textboxLabel">Sora Levels</span>
@@ -35,12 +43,7 @@
         <div><span>Keyblade Minimum Stat</span><input min="0" max="10" value="0" required type="number" name="keybladeMinStat"></div>
         <div><span>Keyblade Max Stat</span><input min="1" max="10" value="7" required type="number" name="keybladeMaxStat"></div>
     </div>
-    <div class="container exp">
-    <h4>Experience Multipliers</h4>
-        {% for expType in expTypes %}
-        <div class="vertical"><span>{{expType}}</span><input step="0.5" min="1" max="10" value="1" required type="number" name="{{expType}}Exp"></div>
-        {% endfor %}
-    </div>
+
     <div class="container">
         <div>
             <label class="switch"><input type="checkbox" id="{{keybladeAbilities[0]}}" value="{{keybladeAbilities[0]}}" name="keybladeAbilities" checked><span class="slider round"></label><label for="{{keybladeAbilities[0]}}">Support Keyblade Abilities</label>
