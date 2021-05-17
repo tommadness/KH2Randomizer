@@ -1,4 +1,10 @@
 {% extends "head.jinja" %}
+{%block meta%}
+    <meta content="KH2 Randomizer Seed" property="og:title">
+  <meta content="{% for key in include%}{{key.value}}{%endfor%}" property="og:description">
+    <meta content="{{permalink}}" property="og:url">
+    <meta content="#43B581" data-react-helmet="true" name="theme-color">
+{%endblock%}
 {% block content %}
 <h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
 <form action="/download">
