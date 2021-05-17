@@ -56,6 +56,10 @@ a {
 
     &.seed{
         grid-template-columns: 60px repeat(6, minmax(40px,auto));
+        
+        > div {
+            justify-content: center;
+        }
     }
 
     &.exp{

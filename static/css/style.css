@@ -80,6 +80,12 @@ a {
       grid-template-columns: 60px repeat(6, minmax(40px, auto));
 }
 
+.container.seed > div {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .container.exp {
   -ms-grid-columns: (minmax(40px, auto))[7];
       grid-template-columns: repeat(7, minmax(40px, auto));
