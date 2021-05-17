@@ -1,45 +1,41 @@
 {% extends "head.jinja" %}
 {% block content %}
-    <h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
+<h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
 <form action="/download">
 {%if spoilerLog != False%}
 <h4>Seed: {{seed}}</h4>
 {%endif%}
 <h4>Included:</h4>
-{%set ns = namespace(counter = 0)%}
 <div class="container">
-{% for key in include %}
-    {% if ns.counter % 3 == 0%}
-    {%endif%}
-            <label>{{key.value}}</label>
-    {%set ns.counter = ns.counter+1%}
-    {% if ns.counter % 3 == 0 or loop.last%}
-    {%endif%}
-{% endfor %}
-</div>
-
-<div class="container exp">
-<h4>Experience:</h4>
-    {%set ns = namespace(counter = 0)%}
-    {% for key in expTypes %}
-        {% if ns.counter % 3 == 0 %}
-        {% endif %}
-        <div class="vertical"><h5 class="mb-0">{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% elif ns.counter < 6 %}{{formExpMult[ns.counter|int]}}{{formExpMult[ns.counter|string]}}{%else%}{{formExpMult[0|int]}}{{formExpMult[0|string]}}{% endif %}x</div>
-        {% set ns.counter = ns.counter+1%}
-        {% if ns.counter % 3 == 0%}
-        {% endif %}
+    {% for key in include %}
+        <label>{{key.value}}</label>
     {% endfor %}
 </div>
 
-    <h4>Keyblade Abilities:</h4> {%for keybladeAbility in keybladeAbilities %}{{keybladeAbility}} {%endfor%}
+<div class="container exp">
+    <h4>Experience:</h4>
+        {%set ns = namespace(counter = 0)%}
+        {% for key in expTypes %}
+            <div class="vertical"><h5>{{key}}</h5>
+                {% if key == "Sora" %}{{soraExpMult}}{% elif ns.counter < 6 %}
+                    {{formExpMult[ns.counter|int]}}{{formExpMult[ns.counter|string]}}
+                {%else%}
+                    {{formExpMult[0|int]}}{{formExpMult[0|string]}}
+                {% endif %}x
+            </div>
+            {% set ns.counter = ns.counter+1%}
+        {% endfor %}
+</div>
+<div class="container">
+<h4>Keyblade Abilities:</h4> {%for keybladeAbility in keybladeAbilities %}{{keybladeAbility}} {%endfor%}
 
-<h5 class="mb-0">Keyblade Minimum Stat</h5> {{keybladeMinStat}}
-<h5 class="mb-0">Keyblade Max Stat</h5> {{keybladeMaxStat}}
+<h5>Keyblade Minimum Stat</h5> {{keybladeMinStat}}
+<h5>Keyblade Max Stat</h5> {{keybladeMaxStat}}
+</div>
 
-
-<h5 class="mb-0">Hint System</h5>{{hintsType}}
-<h5 class="mb-0">Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}{%endfor%}
-<h5 class="mb-0">Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}{%endfor%}
+<h5>Hint System</h5>{{hintsType}}
+<h5>Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}{%endfor%}
+<h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}{%endfor%}
 
 
 
