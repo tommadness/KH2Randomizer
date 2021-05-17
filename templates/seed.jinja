@@ -1,77 +1,55 @@
 {% extends "head.jinja" %}
 {% block content %}
-<div class="container mb-3">
     <h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
-</div>
-<div class="container mb-3">
 <form action="/download">
 {%if spoilerLog != False%}
 <h4>Seed: {{seed}}</h4>
 {%endif%}
 <h4>Included:</h4>
 {%set ns = namespace(counter = 0)%}
-<div class="container mb-3" id="worlds">
-
+<div class="container">
 {% for key in include %}
     {% if ns.counter % 3 == 0%}
-    <div class="row">
     {%endif%}
-        <div class="col-4">
             <label>{{key.value}}</label>
-        </div>
     {%set ns.counter = ns.counter+1%}
     {% if ns.counter % 3 == 0 or loop.last%}
-    </div>
     {%endif%}
 {% endfor %}
-
 </div>
 
+<div class="container exp">
 <h4>Experience:</h4>
-<div class="container mb-3">
     {%set ns = namespace(counter = 0)%}
     {% for key in expTypes %}
         {% if ns.counter % 3 == 0 %}
-            <div class="row">
         {% endif %}
-                <div class="col-4 mb-2"><h5 class="mb-0">{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% else %}{{formExpMult[ns.counter|int]}}{{formExpMult[ns.counter|string]}}{% endif %}x</div>
+        <div class="vertical"><h5 class="mb-0">{{key}}</h5> {% if key == "Sora" %}{{soraExpMult}}{% elif ns.counter < 6 %}{{formExpMult[ns.counter|int]}}{{formExpMult[ns.counter|string]}}{%else%}{{formExpMult[0|int]}}{{formExpMult[0|string]}}{% endif %}x</div>
         {% set ns.counter = ns.counter+1%}
         {% if ns.counter % 3 == 0%}
-            </div>
         {% endif %}
     {% endfor %}
 </div>
-</div>
 
-<div class="container mb-3">
     <h4>Keyblade Abilities:</h4> {%for keybladeAbility in keybladeAbilities %}{{keybladeAbility}} {%endfor%}
-</div>
 
-<div class="container mb-3">
-    <div class="row">
-        <div class="col"><h5 class="mb-0">Keyblade Minimum Stat</h5> {{keybladeMinStat}}</div>
-        <div class="col"><h5 class="mb-0">Keyblade Max Stat</h5> {{keybladeMaxStat}}</div>
-    </div>
-</div>
+<h5 class="mb-0">Keyblade Minimum Stat</h5> {{keybladeMinStat}}
+<h5 class="mb-0">Keyblade Max Stat</h5> {{keybladeMaxStat}}
 
-<div class="container mb-3">
-<div class="row">
-<div class="col-4"><h5 class="mb-0">Hint System</h5>{{hintsType}}</div>
-<div class="col-4"><h5 class="mb-0">Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}<br>{%endfor%}</div>
-<div class="col-4"><h5 class="mb-0">Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}<br>{%endfor%}</div>
-</div>
-</div>
 
-<div class="container mb-3">
-<div class="row">
-<div class="col-4">
+<h5 class="mb-0">Hint System</h5>{{hintsType}}
+<h5 class="mb-0">Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}{%endfor%}
+<h5 class="mb-0">Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}{%endfor%}
+
+
+
 <h4>Command Menu:</h4>
 <select name="cmdMenuChoice">
     {% for key in cmdMenus %}
     <option value="{{key}}">{{cmdMenus[key]}}</option>
     {% endfor %}
 </select>
-</div>
+
  {# <div class="col-6">
 <h4>Randomize BGM (PC ONLY)</h4>
 <select name="randomBGM">
@@ -80,16 +58,14 @@
     {%endfor%}
 </select>
 </div>  #}
-</div>
-</div>
 
 
 {#<input type="submit" value="Download for PC" name="platform">#}
 </form>
-<div class="container" id="downloadButtons">
+
 <button id="PCSX2" name="platform" value="PCSX2">Generate for PCSX2</button>
 {# <button id="PC" name="platform" value="PC">Generate for PC</button> #}
-</div>
+
 <script>
 $(function(){
     $('button').click(function(){
