@@ -4,6 +4,7 @@ from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
 from Module.modifier import SeedModifier
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
+import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
 import os, base64, string, random, ast, zipfile, redis, json, asyncio
@@ -24,7 +25,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = locationType, expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions())
+    return fl.render_template('index.jinja', locations = List.LocationList.getOptions(), expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions())
 
 
 
