@@ -6,11 +6,22 @@ body {
   margin-right: 40px;
 }
 
-select, input {
+select, input, .tail-select div.select-label, button {
   background-color: #696C72;
   color: #ccc;
   border: none;
   padding: 5px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  font-size: 13.3333px;
+}
+
+.tail-select {
+  width: 100% !important;
+}
+
+.tail-select .select-dropdown ul li, .label-inner {
+  font-size: 14px !important;
 }
 
 a {
@@ -193,5 +204,11 @@ h5 {
 
 h6 {
   font-size: 1rem;
+}
+
+input[type=submit], button {
+  width: 250px;
+  font-size: 16px;
+  margin-top: 5px;
 }
 /*# sourceMappingURL=style.css.map */

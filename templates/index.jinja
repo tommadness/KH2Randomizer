@@ -91,7 +91,7 @@
                 {%endfor%}
             </select>
         </div>
-        <div class="vertical">
+        <div class="vertical top">
             <h4>Sora's Starting Inventory</h4>
             <select id="starting-inventory" multiple="multiple" name="startingInventory">
                 {%for category in startingInventory["options"]%}
@@ -119,4 +119,12 @@
     <input type='submit'> 
     </div>
 </form>
+
+<script>
+$(document).ready(function(){
+    tail.select("#starting-inventory", {
+        multiSelectGroup: true,
+    });
+});
+</script>
 {% endblock %}

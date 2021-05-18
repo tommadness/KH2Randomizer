@@ -24,7 +24,9 @@
         {%set ns = namespace(counter = 0)%}
         {% for key in expTypes %}
             <div class="vertical"><h5>{{key}}</h5>
-                {% if key == "Sora" %}{{soraExpMult}}{% elif ns.counter < 6 %}
+                {% if key == "Sora" %}
+                    {{soraExpMult}}
+                {% elif ns.counter < 6 %}
                     {{formExpMult[ns.counter|int]}}{{formExpMult[ns.counter|string]}}
                 {%else%}
                     {{formExpMult[0|int]}}{{formExpMult[0|string]}}
@@ -40,9 +42,9 @@
 </div>
 
 <div class="container">
-    <div class="vertical"><h5>Hint System</h5>{{hintsType}}</div>
-    <div class="vertical"><h5>Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}<br>{%endfor%}</div>
-    <div class="vertical"><h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}<br>{%endfor%}</div>
+    <div class="vertical top"><h5>Hint System</h5>{{hintsType}}</div>
+    <div class="vertical top"><h5>Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}<br>{%endfor%}</div>
+    <div class="vertical top"><h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}<br>{%endfor%}</div>
 </div>
 
 
