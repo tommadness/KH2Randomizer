@@ -873,6 +873,43 @@ class Locations:
 
         ])[:count]
 
+def getOptions():
+    return [
+        {
+            "Worlds": [
+                locationType.LoD,
+                locationType.BC,
+                locationType.HB,
+                locationType.CoR,
+                locationType.TT,
+                locationType.TWTNW,
+                locationType.SP,
+                locationType.Atlantica,
+                locationType.PR,
+                locationType.OC,
+
+                locationType.Agrabah,
+                locationType.HT,
+                locationType.PL,
+                locationType.DC,
+                locationType.HUNDREDAW,
+                locationType.STT,
+            ]},
+            {"Superbosses": [
+                locationType.AS,
+                locationType.Sephi,
+                locationType.LW,
+                locationType.DataOrg,
+            ]},
+            {"Misc":[
+                locationType.OCCups,
+                locationType.FormLevel,
+                locationType.Free,
+                locationType.Critical,
+            ]}
+
+    ]
+
 
 # lionStartWithDash = KH2StartingItem(135, 0, Hp=0, Ap=0, Mp=0, Unknown06=0, Unknown08 = 0, Unknown0a = 0)
 # lionStartWithDash.setReward(-32606)

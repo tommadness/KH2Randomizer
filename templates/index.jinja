@@ -16,11 +16,15 @@
     </div>
     
     <div class="container worlds">
-    <h4>Include Worlds</h4>
-        {% for location in locations %}
+        {% for dict_item in locations %}
+        {% for key, values in dict_item.items()%}
+        <h4>{{key}}</h4>
+        {% for location in values %}
             <div>
                 <label class="switch"><input type="checkbox" id="{{location}}" value="{{location}}" name="include" {%if location != locations.Atlantica %} checked {%endif%}><span class="slider round"></label><label for="{{location}}">{{location.value}}</label>
             </div>
+            {%endfor%}
+            {%endfor%}
         {% endfor %}
         </div>
     
