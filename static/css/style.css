@@ -87,14 +87,20 @@ a {
 }
 
 .container.seed {
-  -ms-grid-columns: 60px (minmax(40px, auto))[6];
-      grid-template-columns: 60px repeat(6, minmax(40px, auto));
+  -ms-grid-columns: 60px (minmax(40px, auto))[7];
+      grid-template-columns: 60px repeat(7, minmax(40px, auto));
 }
 
 .container.seed > div {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.container.seed > div:last-of-type {
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
 }
 
 .container.exp {

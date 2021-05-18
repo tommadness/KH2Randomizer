@@ -65,10 +65,13 @@ a {
     }
 
     &.seed{
-        grid-template-columns: 60px repeat(6, minmax(40px,auto));
+        grid-template-columns: 60px repeat(7, minmax(40px,auto));
         
         > div {
             justify-content: center;
+            &:last-of-type {
+                justify-content: normal;
+            }
         }
     }
 
