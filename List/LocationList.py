@@ -876,7 +876,7 @@ class Locations:
 def getOptions():
     return [
         {
-            "Worlds": [
+            "Worlds (Chests, Bonus Levels, Rewards)": [
                 locationType.LoD,
                 locationType.BC,
                 locationType.HB,
@@ -895,13 +895,13 @@ def getOptions():
                 locationType.HUNDREDAW,
                 locationType.STT,
             ]},
-            {"Superbosses": [
+            {"Superboss Rewards": [
                 locationType.AS,
                 locationType.Sephi,
                 locationType.LW,
                 locationType.DataOrg,
             ]},
-            {"Misc":[
+            {"Misc Rewards":[
                 locationType.OCCups,
                 locationType.FormLevel,
                 locationType.Free,
