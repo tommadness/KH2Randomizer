@@ -20,6 +20,7 @@ class locationType(str, Enum):
     PR = "Port Royal"
     OC = "Olympus Coliseum"
     OCCups = "Olympus Cups"
+    OCParadoxCup = "Hades Paradox Cup"
     Agrabah = "Agrabah"
     HT = "Halloween Town"
     PL = "Pride Lands"

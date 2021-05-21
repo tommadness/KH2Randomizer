@@ -162,7 +162,7 @@ class KH2FormLevel(KH2Location):
         if self.FormLevel == 1:
             self.LocationTypes += ["Level1Form"]
         self.LocationTypes += [locationType.FormLevel]
-        self.InvalidChecks += [itemType.FORM]
+        self.InvalidChecks += [itemType.FORM, itemType.TORN_PAGE]
 
     # def __init__(self, id, level):
     #     self.FormId = id
