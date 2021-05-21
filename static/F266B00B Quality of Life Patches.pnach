@@ -82,37 +82,6 @@ patch=1,EE,1032BAE0,extended,00001712
 patch=1,EE,2032BAE4,extended,00540054
 patch=1,EE,1032BAE8,extended,00000054
 
-patch=1,EE,11D0B890,extended,00000000
-patch=1,EE,11D0B894,extended,00000000
-patch=1,EE,11D0B892,extended,00000000
-patch=1,EE,11D0B8B0,extended,00000000
-patch=1,EE,11D0B8B4,extended,00000000
-patch=1,EE,11D0B8B2,extended,00000000
-patch=1,EE,11D0B990,extended,00000000
-patch=1,EE,11D0B994,extended,00000000
-patch=1,EE,11D0B992,extended,00000000
-patch=1,EE,11D0B9B0,extended,00000000
-patch=1,EE,11D0B9B4,extended,00000000
-patch=1,EE,11D0B9B2,extended,00000000
-patch=1,EE,11D0B9F0,extended,00000000
-patch=1,EE,11D0B9F4,extended,00000000
-patch=1,EE,11D0B9F2,extended,00000000
-patch=1,EE,11D0BA50,extended,00000000
-patch=1,EE,11D0BA54,extended,00000000
-patch=1,EE,11D0BA52,extended,00000000
-patch=1,EE,11D0BAB0,extended,00000000
-patch=1,EE,11D0BAB4,extended,00000000
-patch=1,EE,11D0BAB2,extended,00000000
-patch=1,EE,11D0BB30,extended,00000000
-patch=1,EE,11D0BB34,extended,00000000
-patch=1,EE,11D0BB32,extended,00000000
-patch=1,EE,11D0BBF0,extended,00000000
-patch=1,EE,11D0BBF4,extended,00000000
-patch=1,EE,11D0BBF2,extended,00000000
-patch=1,EE,11D0BCD0,extended,00000000
-patch=1,EE,11D0BCD4,extended,00000000
-patch=1,EE,11D0BCD2,extended,00000000
-
 
 //Remove High Jump LV1
 patch=1,EE,E0030102,extended,0032EE26
