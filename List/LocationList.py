@@ -354,8 +354,7 @@ class Locations:
             KH2Treasure(292, "00 Blizzard Element", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(415, "Bamboo Grove Hi-Potion", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(416, "Bamboo Grove Mythril Shard", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(417, "Bamboo Grove AP Boost", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(417, "Missions", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(350, "Bamboo Grove Encampment Area Map", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(495, "Bamboo Grove Village Area Map", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(257, "Bamboo Grove Hidden Dragon", LocationTypes=[locationType.LoD], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
