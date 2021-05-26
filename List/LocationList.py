@@ -619,7 +619,10 @@ class Locations:
             KH2LevelUp("Sora", 99)
         ]
 
-    def getSoraBonusList():
+    def getSoraBonusList(statSanity = False):
+        if statSanity:
+            pass
+
         return [
             KH2Bonus(2,1, locationTypes=[locationType.BC],description="Possessor"),
             KH2Bonus(3,1, locationTypes=[locationType.BC],description="Dark Thorn", hasStat=True),

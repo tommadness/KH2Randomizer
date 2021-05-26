@@ -16,6 +16,10 @@ class SeedModifier():
             {
                 "name": "Better Junk",
                 "description": "No more synthesis materials in the junk item pool"
+            },
+            {
+                "name": "StatSanity",
+                "description": "Bonus Level stats are mixed into the pool"
             }
         ]
 

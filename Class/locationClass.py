@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 import random
 
 class KH2Location:
+    def getInvalidChecks(self):
+        return self.InvalidChecks
     pass
 
 
@@ -91,7 +93,7 @@ class KH2LevelUp(KH2Location):
 
 class KH2Bonus(KH2Location):
     characterMap = {1: "Sora", 2: "Donald", 3: "Goofy", 14: "Roxas"}
-    def __init__(self, id, character, locationTypes = [], invalidChecks=[], description = "", doubleReward=False, hasStat=False, hasItem=True):
+    def __init__(self, id, character, locationTypes = [], invalidChecks=[], invalidChecks2 = [], description = "", doubleReward=False, hasStat=False, hasItem=True):
         self.RewardId = id
         self.CharacterId = character
         self.Description = description
@@ -105,6 +107,7 @@ class KH2Bonus(KH2Location):
         self.BonusItem2 = 0
         self.Unknown0c = 0
         self.InvalidChecks = invalidChecks
+        self.InvalidChecks2 = invalidChecks2
         self.LocationTypes = locationTypes
         self.DoubleReward = doubleReward
         self.HasStat = hasStat
@@ -119,6 +122,11 @@ class KH2Bonus(KH2Location):
                 self.BonusItem1 = itemId
             else:
                 self.BonusItem2 = itemId
+
+    def getInvalidChecks(self):
+        if self.BonusItem1 == 0:
+            return self.InvalidChecks
+        return self.InvalidChecks2
         
 
     def getCharacterName(self):

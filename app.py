@@ -155,7 +155,7 @@ def randomizePage(data, sessionDict):
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
     randomizer = KH2Randomizer(seedName = sessionDict["seed"])
-    randomizer.populateLocations(excludeList)
+    randomizer.populateLocations(excludeList, statSanity = "StatSanity" in sessionDict["seedModifiers"])
     randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"])
     if randomizer.validateCount():
         randomizer.setKeybladeAbilities(
