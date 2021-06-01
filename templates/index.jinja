@@ -108,7 +108,7 @@
     <h5><em>Please report any enemy randomizer bugs <a href="https://docs.google.com/forms/d/e/1FAIpQLSetSQExeeuJH45A57nVMPzba0uPYSe9c0tfOMFypihnQMDNjA/viewform">HERE</a></em></h5>
     <h5><em>Please report any boss randomizer bugs <a href="https://forms.gle/Y3X8F1wvMMz3XPr66">HERE</a></em></h5>
     <h6>Randomization can take a few minutes. Please be patient.</h6>
-        {%for optionGroup in bossEnemyConfig if not optionGroup in ["memory_expansion", "scale_boss_stats", "cups_bosses", "data_bosses"]%}
+        {%for optionGroup in bossEnemyConfig if not optionGroup in ["memory_expansion"]%}
             <div class="vertical">
                 
                 {%if bossEnemyConfig[optionGroup].possible_values == [True, False] or bossEnemyConfig[optionGroup].possible_values == [False, True]%}
