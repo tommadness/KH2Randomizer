@@ -94,7 +94,10 @@ def seed():
             "selected_boss": None if fl.request.form.get("selected_boss") == "None" else fl.request.form.get("selected_boss"),
             "enemy": fl.request.form.get("enemy"),
             "selected_enemy": None if fl.request.form.get("selected_enemy") == "None" else fl.request.form.get("selected_enemy"),
-            "nightmare_enemies": bool(fl.request.form.get("nightmare_enemies"))
+            "nightmare_enemies": bool(fl.request.form.get("nightmare_enemies")),
+            "scale_boss_stats": bool(fl.request.form.get("scale_boss_stats")),
+            "cups_bosses": bool(fl.request.form.get("cups_bosses")),
+            "data_bosses": bool(fl.request.form.get("data_bosses"))
         }
         session['enemyOptions'] = json.dumps(enemyOptions)
 
