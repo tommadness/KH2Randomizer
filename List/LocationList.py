@@ -402,7 +402,7 @@ class Locations:
             KH2Treasure(269, "00 Ice Cream", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(511, "00 Picture", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(367, "00 Undersea Kingdom Map", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER, itemType.FORM, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(367, "00 Undersea Kingdom Map", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(270, "00 Rumbling Rose", LocationTypes=[locationType.BC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(325, "00 Castle Walls Map", LocationTypes=[locationType.BC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
@@ -421,9 +421,9 @@ class Locations:
             KH2Treasure(298, "00 Decoy Presents", LocationTypes=[locationType.HT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(275, "00 Decisive Pumpkin", LocationTypes=[locationType.HT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(287, "00 Mysterious Abyss", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER, itemType.FORM, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(279, "00 Blizzard Element", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER, itemType.FORM, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
-            KH2Treasure(538, "00 Orichalcum+", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER, itemType.FORM,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(287, "00 Mysterious Abyss", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(279, "00 Blizzard Element", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(538, "00 Orichalcum+", LocationTypes=[locationType.Atlantica], InvalidChecks=[itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(284, "00 Sweet Memories", LocationTypes=[locationType.HUNDREDAW], InvalidChecks=[itemType.TORN_PAGE,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(485, "00 Spooky Cave Map", LocationTypes=[locationType.HUNDREDAW], InvalidChecks=[itemType.TORN_PAGE,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
@@ -506,13 +506,13 @@ class Locations:
 
             KH2Treasure(558, "00 Magic Boost", LocationTypes=[locationType.STT, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(587, "00 Proof of Connection", LocationTypes=[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(587, "00 Proof of Connection", LocationTypes=[locationType.DC, locationType.LW], InvalidChecks=[itemType.FORM, itemType.THUNDER, itemType.MAGNET, itemType.TORN_PAGE, itemType.PROOF_OF_CONNECTION, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(591, "00 Manifest Illusion", LocationTypes=[locationType.DC, locationType.LW], InvalidChecks=[itemType.FORM, itemType.THUNDER, itemType.MAGNET, itemType.PROOF_OF_CONNECTION, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(591, "00 Manifest Illusion", LocationTypes=[locationType.DC, locationType.LW], InvalidChecks=[itemType.FORM, itemType.THUNDER, itemType.MAGNET, itemType.TORN_PAGE, itemType.PROOF_OF_CONNECTION, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(588, "00 Winner's Proof", LocationTypes=[locationType.HB], InvalidChecks=[itemType.PROOF_OF_PEACE, itemType.FORM, itemType.THUNDER, itemType.MAGNET, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(588, "00 Winner's Proof", LocationTypes=[locationType.HB], InvalidChecks=[itemType.PROOF_OF_PEACE, itemType.TORN_PAGE, itemType.FORM, itemType.THUNDER, itemType.MAGNET, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(589, "00 Proof of Peace", LocationTypes=[locationType.HB], InvalidChecks=[itemType.PROOF_OF_PEACE, itemType.FORM, itemType.THUNDER, itemType.MAGNET, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY])
+            KH2Treasure(589, "00 Proof of Peace", LocationTypes=[locationType.HB], InvalidChecks=[itemType.PROOF_OF_PEACE, itemType.TORN_PAGE, itemType.FORM, itemType.THUNDER, itemType.MAGNET, itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY])
         ]
 
     def getSoraLevelList():
