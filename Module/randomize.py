@@ -40,8 +40,6 @@ class KH2Randomizer():
 
     def __post_init__(self):
         random.seed(self.seedName)
-    
-    def populateAbilities(self):
 
     def populateLocations(self, excludeWorlds):
         self._allLocationList = Locations.getTreasureList() + Locations.getSoraLevelList() + Locations.getSoraBonusList() + Locations.getFormLevelList() + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()

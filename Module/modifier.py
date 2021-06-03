@@ -1,3 +1,5 @@
+import random
+
 class SeedModifier():
     def getOptions():
         return [
@@ -25,7 +27,7 @@ class SeedModifier():
 
     def randomAbilityPool(abilitylist):
         abilitydict = {i.Name: i for i in abilitylist}
-        possibleabilities = set([i.Name for i in abilitylist if i not in ["Second Chance", "Once More"]])
+        possibleabilities = list(set([i.Name for i in abilitylist if i not in ["Second Chance", "Once More"]]))
         randomabilitypool = []
         for _ in range(len(abilitydict)-2):
             choice = random.choice(possibleabilities)
