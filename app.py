@@ -11,6 +11,7 @@ import os, base64, string, random, ast, zipfile, redis, json, asyncio
 from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer
+from Module.dailySeed import generateDailySeed
 from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
@@ -107,7 +108,8 @@ def seed():
 
         session['seedModifiers'] = fl.request.form.getlist("seedModifiers")
 
-
+        if fl.request.get("dailySeed"):
+            session = 
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
         if not development_mode:
