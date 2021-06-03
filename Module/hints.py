@@ -33,6 +33,17 @@ class Hints:
                     if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]:
                         if not location.LocationTypes[0] in hintedWorlds:
                             hintedWorlds.append(location.LocationTypes[0])
+                        else:
+                            if item.ItemType is itemType.PROOF_OF_CONNECTION:
+                                proof_of_connection_index = hintedWorlds.index(location.LocationTypes[0])
+                            if item.ItemType is itemType.PROOF_OF_PEACE:
+                                proof_of_peace_index = hintedWorlds.index(location.LocationTypes[0])
+                    if item.ItemType is itemType.REPORT:
+                        reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
+                        if locationType.LW in location.LocationTypes:
+                            isReportOnTerra[reportNumber-1] = True
+                        if isinstance(location,KH2Treasure) and location.Description in ["00 Winner's Proof","00 Proof of Peace"]:
+                            isReportOnMushroom[reportNumber-1] = True
 
             if len(worldChecks.keys()) < 13:
                 raise ValueError("Too few worlds. Add more worlds or change hint system.")
@@ -73,9 +84,45 @@ class Hints:
                         hintedHints.append(world)
                         hintsText["Reports"][reportNumber]["Location"] = world
 
-            for world in hintedHints:
-                random.shuffle(reportsList)
-                reportNumber = reportsList.pop()
+            # hintedWorlds is now all the required hinted worlds. We'll see if we can also hint the reports that hint proofs
+            if len(hintedWorlds) > 13:
+                hintedWorlds = hintedWorlds[0:13]
+
+            random.shuffle(reportOrdering)
+            proof_report_order = None
+            for ordering in reportOrdering:
+                remaining_report_slots = 13-len(hintedWorlds)
+                worlds_to_add = []
+                for index,reportNumber in enumerate(ordering):
+                    invalid = False
+                    for world in worldChecks:
+                        if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
+                            #don't allow a report for a proof to be locked by that proof
+                            if (proof_of_peace_index is index and isReportOnMushroom[reportNumber-1]) or \
+                               (proof_of_connection_index is index and isReportOnTerra[reportNumber-1]):
+                                invalid = True
+                                break
+                            if world not in hintedWorlds:
+                                # totally fine if we have space
+                                worlds_to_add.append(world)
+                                remaining_report_slots-=1
+                                break
+                    if invalid:
+                        break
+                if remaining_report_slots >= 0:
+                    proof_report_order = ordering
+                    hintedWorlds+=worlds_to_add
+                    break
+
+            # ------------------ Done filling required hinted worlds --------------------------------
+
+            for index,world in enumerate(hintedWorlds):
+                if index < 3 and proof_report_order is not None:
+                    reportNumber = proof_report_order[index]
+                    reportsList.remove(reportNumber)
+                else:
+                    random.shuffle(reportsList)
+                    reportNumber = reportsList.pop()
                 hintsText["Reports"][reportNumber] = {
                     "World": world,
                     "Count": len(worldChecks[world]),
@@ -108,17 +155,7 @@ class Hints:
                     if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
                         hintsText["Reports"][reportNumber]["Location"] = world
 
-
-
-            
-
-
-
-
-
         outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
 
     def getOptions():
         return ["Disabled","Shananas","JSmartee"]
-
-
