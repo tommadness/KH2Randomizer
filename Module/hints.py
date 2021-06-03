@@ -1,6 +1,8 @@
 from List.configDict import itemType, locationType
-from Class.locationClass import KH2ItemStat
+from Class.locationClass import KH2ItemStat,KH2Treasure
 import zipfile, base64, json, random
+from itertools import permutations
+
 
 class Hints:
     def generateHints(locationItems, hintsType, seedName, outZip):
@@ -18,9 +20,18 @@ class Hints:
                     hintsText['world'][location.LocationTypes[0]].append(item.Name)
 
         if hintsType == "JSmartee":
+            proof_of_connection_index = None
+            proof_of_peace_index = None
             hintedWorlds = []
             reportsList = list(range(1,14))
+            # different possibilities for how to make the reports hinting the proofs hinted
+            temp_ordering = permutations(reportsList, 3)
+            reportOrdering = []
+            for o in temp_ordering:
+                reportOrdering.append(o)
             hintsText['Reports'] = {}
+            isReportOnMushroom = [False for x in range(13)]
+            isReportOnTerra = [False for x in range(13)]
             importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"]
             worldChecks = {}
             for location,item in locationItems:
@@ -32,6 +43,10 @@ class Hints:
                     worldChecks[location.LocationTypes[0]].append(item)
                     if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]:
                         if not location.LocationTypes[0] in hintedWorlds:
+                            if item.ItemType is itemType.PROOF_OF_CONNECTION:
+                                proof_of_connection_index = len(hintedWorlds)
+                            if item.ItemType is itemType.PROOF_OF_PEACE:
+                                proof_of_peace_index = len(hintedWorlds)
                             hintedWorlds.append(location.LocationTypes[0])
                         else:
                             if item.ItemType is itemType.PROOF_OF_CONNECTION:
@@ -45,44 +60,36 @@ class Hints:
                         if isinstance(location,KH2Treasure) and location.Description in ["00 Winner's Proof","00 Proof of Peace"]:
                             isReportOnMushroom[reportNumber-1] = True
 
+
             if len(worldChecks.keys()) < 13:
                 raise ValueError("Too few worlds. Add more worlds or change hint system.")
 
+            forms_need_hints = (locationType.FormLevel in hintedWorlds)
+            pages_need_hints = (locationType.HUNDREDAW in hintedWorlds)
+            mag_thun_need_hints = (locationType.Atlantica in hintedWorlds)
 
-            if locationType.FormLevel in hintedWorlds:
+            # following the priority of Proofs > Forms > Pages > Thunders > Magnets > Proof Reports
+            if forms_need_hints:
                 for world in worldChecks:
                     if not world in hintedWorlds and any(item.ItemType == itemType.FORM for item in worldChecks[world]):
                         hintedWorlds.append(world)
 
 
-            if locationType.HUNDREDAW in hintedWorlds:
+            if pages_need_hints:
                 for world in worldChecks:
                     if not world in hintedWorlds and any(item.ItemType == itemType.TORN_PAGE for item in worldChecks[world]):
                         hintedWorlds.append(world)
 
 
-            if locationType.Atlantica in hintedWorlds:
+            if mag_thun_need_hints:
                 for world in worldChecks:
-                    if not world in hintedWorlds and any(item.ItemType == itemType.THUNDER or item.ItemType == itemType.MAGNET for item in worldChecks[world]):
+                    if not world in hintedWorlds and any(item.ItemType == itemType.THUNDER for item in worldChecks[world]):
                         hintedWorlds.append(world)
 
-
-            for world in hintedWorlds:
-                random.shuffle(reportsList)
-                reportNumber = reportsList.pop()
-                hintsText["Reports"][reportNumber] = {
-                    "World": world,
-                    "Count": len(worldChecks[world]),
-                    "Location": ""
-                }
-
-            hintedHints = []
-
-            for reportNumber in hintsText["Reports"].keys():
+            if mag_thun_need_hints:
                 for world in worldChecks:
-                    if not world in hintedWorlds and not world in hintedHints and any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
-                        hintedHints.append(world)
-                        hintsText["Reports"][reportNumber]["Location"] = world
+                    if not world in hintedWorlds and any(item.ItemType == itemType.MAGNET for item in worldChecks[world]):
+                        hintedWorlds.append(world)
 
             # hintedWorlds is now all the required hinted worlds. We'll see if we can also hint the reports that hint proofs
             if len(hintedWorlds) > 13:
@@ -134,7 +141,7 @@ class Hints:
                 worlds = list(worldChecks.keys())
                 random.shuffle(worlds)
                 randomWorld = None
-                if not worlds[0] in hintedWorlds and not worlds[0] in hintedHints:
+                if not worlds[0] in hintedWorlds:
                     randomWorld = worlds[0]
                 else:
                     continue
