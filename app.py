@@ -154,7 +154,7 @@ def randomizePage(data, sessionDict):
     randomBGM = data["randomBGM"]
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
-    randomizer = KH2Randomizer(seedName = sessionDict["seed"])
+    randomizer = KH2Randomizer(seedName = sessionDict["seed"], randomizedAbilities=SeedModifier.randomizedAbilities("Randomize Ability Pool" in sessionDict["seedModifiers"]))
     randomizer.populateLocations(excludeList)
     randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"])
     if randomizer.validateCount():

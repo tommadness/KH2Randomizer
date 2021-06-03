@@ -16,8 +16,24 @@ class SeedModifier():
             {
                 "name": "Better Junk",
                 "description": "No more synthesis materials in the junk item pool"
+            },
+            {
+                "name": "Randomize Ability Pool",
+                "description": "Pick action/support abilities at random (it's guaranteed to have 1 SC & 1 OM)"
             }
         ]
+
+    def randomAbilityPool(abilitylist):
+        abilitydict = {i.Name: i for i in abilitylist}
+        possibleabilities = set([i.Name for i in abilitylist if i not in ["Second Chance", "Once More"]])
+        randomabilitypool = []
+        for _ in range(len(abilitydict)-2):
+            choice = random.choice(possibleabilities)
+            randomabilitypool.append(abilitydict[choice])
+        # Make sure there is one OM and one SC so the tracker behaves
+        randomabilitypool.append(abilitydict["Second Chance"])
+        randomabilitypool.append(abilitydict["Once More"])
+        return randomabilitypool
 
     def glassCannon(enabled):
         if enabled:
