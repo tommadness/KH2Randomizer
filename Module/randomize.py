@@ -40,7 +40,6 @@ class KH2Randomizer():
 
     def __post_init__(self):
         random.seed(self.seedName)
-    
 
     def populateLocations(self, excludeWorlds):
         self._allLocationList = Locations.getTreasureList() + Locations.getSoraLevelList() + Locations.getSoraBonusList() + Locations.getFormLevelList() + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
@@ -55,8 +54,12 @@ class KH2Randomizer():
 
         self._validLocationListDonald = [location for location in self._allLocationListDonald if not set(location.LocationTypes).intersection(excludeWorlds)]
 
-    def populateItems(self, promiseCharm = False, startingInventory=[]):
-        validItemList = Items.getItemList() + Items.getSupportAbilityList() + Items.getActionAbilityList()
+    def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=None):
+        abilityList = Items.getSupportAbilityList() + Items.getActionAbilityList()
+        if abilityListModifier:
+            abilityList = abilityListModifier(abilityList)
+        validItemList = Items.getItemList() + abilityList
+
         self._validItemListGoofy = Items.getGoofyAbilityList()
         self._validItemListDonald = Items.getDonaldAbilityList()
         if promiseCharm:

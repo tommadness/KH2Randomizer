@@ -159,7 +159,7 @@ def randomizePage(data, sessionDict):
 
     randomizer = KH2Randomizer(seedName = sessionDict["seed"])
     randomizer.populateLocations(excludeList)
-    randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"])
+    randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
     if randomizer.validateCount():
         randomizer.setKeybladeAbilities(
             keybladeAbilities = sessionDict["keybladeAbilities"], 
