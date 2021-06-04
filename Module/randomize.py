@@ -54,8 +54,11 @@ class KH2Randomizer():
 
         self._validLocationListDonald = [location for location in self._allLocationListDonald if not set(location.LocationTypes).intersection(excludeWorlds)]
 
-    def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=lambda l: l):
-        validItemList = Items.getItemList() + abilityListModifier(Items.getSupportAbilityList() + Items.getActionAbilityList())
+    def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=None):
+        abilityList = Items.getSupportAbilityList() + Items.getActionAbilityList()
+        if abilityListModifier:
+            abilityList = abilityListModifier(abilityList)
+        validItemList = Items.getItemList() + abilityList
 
         self._validItemListGoofy = Items.getGoofyAbilityList()
         self._validItemListDonald = Items.getDonaldAbilityList()

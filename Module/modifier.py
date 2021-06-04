@@ -21,7 +21,7 @@ class SeedModifier():
             },
             {
                 "name": "Randomize Ability Pool",
-                "description": "Pick action/support abilities at random (it's guaranteed to have 1 SC & 1 OM)"
+                "description": "Pick Sora's action/support abilities at random (guaranteed to have 1 SC & 1 OM)"
             }
         ]
 
