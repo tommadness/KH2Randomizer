@@ -111,7 +111,8 @@ class Hints:
                                 break
                             if world not in hintedWorlds:
                                 # totally fine if we have space
-                                worlds_to_add.append(world)
+                                if world not in worlds_to_add:
+                                    worlds_to_add.append(world)
                                 remaining_report_slots-=1
                                 break
                     if invalid:
@@ -161,6 +162,9 @@ class Hints:
                 for world in worldChecks:
                     if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
                         hintsText["Reports"][reportNumber]["Location"] = world
+
+            if len(hintedWorlds) != len(set(hintedWorlds)):
+                raise RuntimeError("Two reports hint the same location. This is an error, try a new seedname.")
 
         outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
 
