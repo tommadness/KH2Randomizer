@@ -29,7 +29,7 @@ class SeedModifier():
         abilitydict = {i.Name: i for i in abilitylist}
         possibleabilities = list(set([i.Name for i in abilitylist if i not in ["Second Chance", "Once More"]]))
         randomabilitypool = []
-        for _ in range(len(abilitydict)-2):
+        for _ in range(len(abilitylist)-2):
             choice = random.choice(possibleabilities)
             randomabilitypool.append(abilitydict[choice])
         # Make sure there is one OM and one SC so the tracker behaves
