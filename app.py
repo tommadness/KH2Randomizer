@@ -108,8 +108,23 @@ def seed():
 
         session['seedModifiers'] = fl.request.form.getlist("seedModifiers")
 
-        if fl.request.get("dailySeed"):
-            session = 
+        # DEBUG - Change to something like fl.request.get("dailySeed") before merging
+        if True:
+            dailySession = generateDailySeed()
+            print("my daily seed")
+            print(dailySession)
+            print("")
+            for k in session.keys():
+                if k not in dailySession:
+                    del k
+                elif k == "locations":
+                    print(dailySession["locations"])
+                    session["includeList"] = [locationType(l) for l in dailySession["locations"]]
+                elif k == "enemyOptions":
+                    session["enemyOptions"] = json.dumps(dailySession[k])
+                else:
+                    session[k] = dailySession[k]
+            session["includeList"] = [locationType(l) for l in dailySession["locations"]]
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
         if not development_mode:
