@@ -328,7 +328,7 @@ class KH2Randomizer():
                 mod["title"] += " {seedName}".format(seedName = self.seedName)
                 outZip.writestr("spoilerlog.txt",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
                 if enemySpoilers:
-                    outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
+                    outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             
