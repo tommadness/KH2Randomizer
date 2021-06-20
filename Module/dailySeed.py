@@ -34,6 +34,10 @@ def goMode(s):
     s["startingInventory"].append("594")
     s["startingInventory"].append("595")
 
+def enableSuperbosses(s):
+    s["enemyOptions"]["data_bosses"] = True
+    s["locations"] += ["Sephiroth", "Lingering Will (Terra)", "Data Organization XIII"]
+
 dailyModifiers = [
     DailyModifier(name="Level it up",
                 description="Level 99 but Sora XP multiplier set to 10x",
@@ -66,16 +70,16 @@ dailyModifiers = [
                 modifier=lambda s: exec('s["enemyOptions"]["boss"] = "Wild"')
                 ),
     DailyModifier(name="Superbosses",
-                description="All superbosses will be included in the randomization pool, and their base locations are added to the item pool",
-                categories={'bosses'},
-                modifier=lambda s: exec('s["enemyOptions"]["data_bosses"] = True')
+                description="All superbosses will be included in the randomization pool, and their reward locations are added to the item pool",
+                categories={'bosses', 'worlds'},
+                modifier=enableSuperbosses
                 ),
     DailyModifier(name="Enemies Changed Every Room",
                 description="The randomization mapping used for enemies is different every room",
                 categories={'enemies'},
                 modifier=lambda s: exec('s["enemyOptions"]["enemy"] = "One to One Per Room"')
                 ),
-    DailyModifier(name="The All Seeing Eye",
+    DailyModifier(name="X-Ray Vision",
                 description="Sora starts the game with Scan",
                 categories={},
                 modifier=lambda s: s["startingInventory"].append("138")
@@ -110,6 +114,11 @@ dailyModifiers = [
                 categories={},
                 modifier=lambda s: s["seedModifiers"].append("Randomize Ability Pool")
                 ),
+    DailyModifier(name="Have Some Finny Fun",
+                description="Atlantica is turned on.",
+                categories={'worlds'},
+                modifier=lambda s: s["locations"].append("Atlantica")
+    )
 ]
 
 def getDailyModifiers(date):
