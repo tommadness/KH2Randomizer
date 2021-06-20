@@ -174,6 +174,10 @@ def randomizePage(data, sessionDict):
             if development_mode:
                 development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
                 if development_mode_path:
+                    if os.path.exists(development_mode_path):
+                        # Ensure a clean environment
+                        import shutil
+                        shutil.rmtree(development_mode_path)
                     # Unzip mod into path
                     import zipfile
                     zipfile.ZipFile(zip).extractall(development_mode_path)
