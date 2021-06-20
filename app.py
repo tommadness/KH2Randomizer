@@ -7,11 +7,11 @@ from List.configDict import miscConfig, locationType, expTypes, keybladeAbilitie
 import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
-import os, base64, string, random, ast, zipfile, redis, json, asyncio
+import os, base64, string, datetime, random, ast, zipfile, redis, json, asyncio
 from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer
-from Module.dailySeed import generateDailySeed
+from Module.dailySeed import generateDailySeed, getDailyModifiers
 from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
@@ -26,7 +26,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = List.LocationList.getOptions(), expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions())
+    return fl.render_template('index.jinja', locations = List.LocationList.getOptions(), expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions(), dailyModifiers = getDailyModifiers(datetime.date.today()))
 
 
 
@@ -108,17 +108,12 @@ def seed():
 
         session['seedModifiers'] = fl.request.form.getlist("seedModifiers")
 
-        # DEBUG - Change to something like fl.request.get("dailySeed") before merging
-        if True:
+        if fl.request.form.get("dailySeed"):
             dailySession = generateDailySeed()
-            print("my daily seed")
-            print(dailySession)
-            print("")
             for k in session.keys():
                 if k not in dailySession:
                     del k
                 elif k == "locations":
-                    print(dailySession["locations"])
                     session["includeList"] = [locationType(l) for l in dailySession["locations"]]
                 elif k == "enemyOptions":
                     session["enemyOptions"] = json.dumps(dailySession[k])
