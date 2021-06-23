@@ -7,7 +7,10 @@
     <meta content="#e32733" data-react-helmet="true" name="theme-color">
 {%endblock%}
 {% block content %}
+{% if not permaLink[-1] == "/"%}
 <h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
+{% else %}
+{%endif%}
 <form action="/download">
 {%if spoilerLog != False%}
 <h4>Seed: {{seed}}</h4>

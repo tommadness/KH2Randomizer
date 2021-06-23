@@ -28,7 +28,18 @@ def index(message=""):
     session.clear()
     return fl.render_template('index.jinja', locations = List.LocationList.getOptions(), expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions(), dailyModifiers = getDailyModifiers(datetime.date.today()))
 
-
+@app.route('/daily', methods=["GET", ])
+def dailySeed():
+    dailySession = generateDailySeed()
+    for k in dailySession.keys():
+        if k == "locations":
+            session["includeList"] = [locationType(l) for l in dailySession["locations"]]
+        elif k == "enemyOptions":
+            session["enemyOptions"] = json.dumps(dailySession[k])
+        else:
+            session[k] = dailySession[k]
+    session["permaLink"] = ""
+    return fl.redirect(fl.url_for('seed'))
 
 @app.route('/seed/<hash>')
 def hashedSeed(hash):
@@ -127,14 +138,14 @@ def seed():
                 for key in session.keys():
                     pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
                 pipe.execute()
-
+    
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
     permaLink = fl.url_for("hashedSeed",hash=session['permaLink'], _external=True), 
     cmdMenus = RandomCmdMenu.getOptions(),
     bgmOptions = RandomBGM.getOptions(), 
     levelChoice = session.get('levelChoice'), 
-    include = session.get('includeList'), 
+    include = [locationType(l) for l in session.get('includeList')], 
     seed = session.get('seed'), 
     worlds=locationType, 
     expTypes = expTypes, 

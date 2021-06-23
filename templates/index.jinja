@@ -2,6 +2,16 @@
 {% block content %}
         
 <h2>{{message}}</h2>
+<div class="vertical">
+    <div>
+        <a href="/daily"><button name="dailySeed" value="Daily Seed" id="Daily Seed" data-toggle="tooltip" data-placement="top" title="Generate the daily seed with the below modifiers from league boss/enemy settings. When this option is selected, all other seed options are ignored.">Generate Daily Seed</button></a></label>
+    </div>
+    {%for modifier in dailyModifiers%}
+        <div>
+            <label title="{{modifier["description"]}}">{{modifier["name"]}}</label> 
+        </div>
+    {%endfor%}
+</div>
 <form action='/seed' method="POST">
     <div class="container seed">
         <div>
@@ -14,19 +24,6 @@
             </select>
         </div>
         <div><label class="switch"><input type="checkbox" name="spoilerLog" id="spoilerLog"><span class="slider round"></label><label for="spoilerLog">Generate Spoiler Log</label></div>
-    </div>
-    <div class="container">
-        <div class="vertical">
-            <div>
-                <label class="switch"><input type="checkbox" name="dailySeed" value="Daily Seed" id="Daily Seed"/><span class="slider round"></label>
-                <label for="Daily Seed" data-toggle="tooltip" data-placement="top" title="Generate the daily seed with the below modifiers from league boss/enemy settings. When this option is selected, all other seed options are ignored.">Daily Seed</label> 
-            </div>
-            {%for modifier in dailyModifiers%}
-                <div>
-                    <label title="{{modifier["description"]}}">{{modifier["name"]}}</label> 
-                </div>
-            {%endfor%}
-        </div>
     </div>
     <div class="container">
         <h4>Item Randomizer</h4>
