@@ -30,6 +30,7 @@ def index(message=""):
 
 @app.route('/daily', methods=["GET", ])
 def dailySeed():
+    session.clear()
     dailySession = generateDailySeed()
     for k in dailySession.keys():
         if k == "locations":
