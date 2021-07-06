@@ -22,6 +22,10 @@ class SeedModifier():
             {
                 "name": "Randomize Ability Pool",
                 "description": "Pick Sora's action/support abilities at random (guaranteed to have 1 SC & 1 OM)"
+            },
+            {
+                "name": "Remove Damage Cap",
+                "description": "Removes the damage cap for every enemy/boss in the game."
             }
         ]
 
