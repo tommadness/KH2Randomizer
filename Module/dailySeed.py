@@ -4,7 +4,8 @@ from collections import namedtuple
 DailyModifier = namedtuple('DailyModifier', ['modifier', 'name', 'description', 'categories'])
 
 # Default Settings are League + Enemy One-to-One + Boss One-to-One
-default_settings = {
+def get_default_settings():
+    return {
     "keybladeAbilities": ["Support"],
     "formExpMult":  {0: 1.0, 1: 5.0, 2: 3.0, 3: 3.0, 4: 2.0, 5: 3.0},
     "soraExpMult": 1.5,
@@ -148,7 +149,7 @@ def getDailyModifiers(date):
 # And app can take responsibility for messing with the session
 #    and regenerating the location types
 def generateDailySeed():
-    session = dict(default_settings)
+    session = dict(get_default_settings())
     session["dailyModifiers"] = []
     currentDate = datetime.date.today()
     modifiers = getDailyModifiers(currentDate)
