@@ -315,12 +315,12 @@ class KH2Randomizer():
                 Hints.generateHints(self._locationItems, hintsType, self.seedName, outZip)
 
             enemySpoilers = None
-            if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled":
+            if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled" or enemyOptions["remove_damage_cap"]:
                 if platform == "PC":
                     enemyOptions["memory_expansion"] = True
                 else:
                     enemyOptions["memory_expansion"] = False
-                if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
+                if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False) or enemyOptions.get("remove_damage_cap", False):
                     from khbr.randomizer import Randomizer as khbr
                     enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
 

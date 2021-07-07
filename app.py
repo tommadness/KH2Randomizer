@@ -86,6 +86,8 @@ def seed():
 
         session['keybladeMinStat'] = int(fl.request.form.get("keybladeMinStat"))
 
+        session['seedModifiers'] = fl.request.form.getlist("seedModifiers")
+
         session['promiseCharm'] = bool(fl.request.form.get("PromiseCharm") or False)
         session['bossEnemy'] = bool(fl.request.form.get("bossEnemy") or False)
         enemyOptions = {
@@ -97,17 +99,14 @@ def seed():
             "nightmare_enemies": bool(fl.request.form.get("nightmare_enemies")),
             "scale_boss_stats": bool(fl.request.form.get("scale_boss_stats")),
             "cups_bosses": bool(fl.request.form.get("cups_bosses")),
-            "data_bosses": bool(fl.request.form.get("data_bosses"))
+            "data_bosses": bool(fl.request.form.get("data_bosses")),
+            "remove_damage_cap": "Remove Damage Cap" in session['seedModifiers']
         }
         session['enemyOptions'] = json.dumps(enemyOptions)
 
         session['hintsType'] = fl.request.form.get("hintsType")
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
-
-        session['seedModifiers'] = fl.request.form.getlist("seedModifiers")
-
-
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
         if not development_mode:
