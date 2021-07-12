@@ -19,7 +19,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 jsonify==0.5
 kh2lib==0.2
-khbr==1.1.1
+khbr==1.1.3
 kombu==3.0.37
 MarkupSafe==1.1.1
 monotonic==1.6
