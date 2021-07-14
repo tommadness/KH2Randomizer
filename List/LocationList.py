@@ -450,11 +450,11 @@ class Locations:
 
             KH2Treasure(527, "00 Secret Ansem Report 3", LocationTypes=[locationType.TWTNW], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(528, "00 Secret Ansem Report 4", LocationTypes=[locationType.PR], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(530, "00 Secret Ansem Report 4", LocationTypes=[locationType.PR], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(529, "00 Secret Ansem Report 5", LocationTypes=[locationType.OC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
-            KH2Treasure(530, "00 Secret Ansem Report 6", LocationTypes=[locationType.BC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(528, "00 Secret Ansem Report 6", LocationTypes=[locationType.BC], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
             KH2Treasure(531, "00 Secret Ansem Report 7", LocationTypes=[locationType.HB], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
 
