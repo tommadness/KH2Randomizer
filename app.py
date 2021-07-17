@@ -99,6 +99,8 @@ def seed():
 
         session['keybladeMinStat'] = int(fl.request.form.get("keybladeMinStat"))
 
+        session['seedModifiers'] = fl.request.form.getlist("seedModifiers")
+
         session['promiseCharm'] = bool(fl.request.form.get("PromiseCharm") or False)
         session['bossEnemy'] = bool(fl.request.form.get("bossEnemy") or False)
         enemyOptions = {
@@ -110,28 +112,14 @@ def seed():
             "nightmare_enemies": bool(fl.request.form.get("nightmare_enemies")),
             "scale_boss_stats": bool(fl.request.form.get("scale_boss_stats")),
             "cups_bosses": bool(fl.request.form.get("cups_bosses")),
-            "data_bosses": bool(fl.request.form.get("data_bosses"))
+            "data_bosses": bool(fl.request.form.get("data_bosses")),
+            "remove_damage_cap": "Remove Damage Cap" in session['seedModifiers']
         }
         session['enemyOptions'] = json.dumps(enemyOptions)
 
         session['hintsType'] = fl.request.form.get("hintsType")
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
-
-        session['seedModifiers'] = fl.request.form.getlist("seedModifiers")
-
-        # if fl.request.form.get("dailySeed"):
-        #     dailySession = generateDailySeed()
-        #     for k in session.keys():
-        #         if k not in dailySession:
-        #             del k
-        #         elif k == "locations":
-        #             session["includeList"] = [locationType(l) for l in dailySession["locations"]]
-        #         elif k == "enemyOptions":
-        #             session["enemyOptions"] = json.dumps(dailySession[k])
-        #         else:
-        #             session[k] = dailySession[k]
-        #     session["includeList"] = [locationType(l) for l in dailySession["locations"]]
 
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
         if not development_mode:
@@ -183,7 +171,7 @@ def randomizePage(data, sessionDict):
 
     randomizer = KH2Randomizer(seedName = sessionDict["seed"])
     randomizer.populateLocations(excludeList)
-    randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"])
+    randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
     if randomizer.validateCount():
         randomizer.setKeybladeAbilities(
             keybladeAbilities = sessionDict["keybladeAbilities"], 
@@ -198,6 +186,10 @@ def randomizePage(data, sessionDict):
             if development_mode:
                 development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
                 if development_mode_path:
+                    if os.path.exists(development_mode_path):
+                        # Ensure a clean environment
+                        import shutil
+                        shutil.rmtree(development_mode_path)
                     # Unzip mod into path
                     import zipfile
                     zipfile.ZipFile(zip).extractall(development_mode_path)

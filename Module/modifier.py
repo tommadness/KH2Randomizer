@@ -1,3 +1,5 @@
+import random
+
 class SeedModifier():
     def getOptions():
         return [
@@ -16,8 +18,29 @@ class SeedModifier():
             {
                 "name": "Better Junk",
                 "description": "No more synthesis materials in the junk item pool"
+            },
+            {
+                "name": "Randomize Ability Pool",
+                "description": "Pick Sora's action/support abilities at random (guaranteed to have 1 SC & 1 OM)"
+            },
+            {
+                "name": "Remove Damage Cap",
+                "description": "Removes the damage cap for every enemy/boss in the game."
             }
         ]
+
+    def randomAbilityPool(abilitylist):
+        abilitydict = {i.Name: i for i in abilitylist}
+        possibleabilities = list(set([i.Name for i in abilitylist if i.Name not in ["Second Chance", "Once More"]]))
+        print(possibleabilities)
+        randomabilitypool = []
+        for _ in range(len(abilitylist)-2):
+            choice = random.choice(possibleabilities)
+            randomabilitypool.append(abilitydict[choice])
+        # Make sure there is one OM and one SC so the tracker behaves
+        randomabilitypool.append(abilitydict["Second Chance"])
+        randomabilitypool.append(abilitydict["Once More"])
+        return randomabilitypool
 
     def glassCannon(enabled):
         if enabled:

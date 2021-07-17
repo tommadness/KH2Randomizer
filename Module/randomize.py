@@ -40,7 +40,6 @@ class KH2Randomizer():
 
     def __post_init__(self):
         random.seed(self.seedName)
-    
 
     def populateLocations(self, excludeWorlds):
         self._allLocationList = Locations.getTreasureList() + Locations.getSoraLevelList() + Locations.getSoraBonusList() + Locations.getFormLevelList() + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
@@ -55,8 +54,12 @@ class KH2Randomizer():
 
         self._validLocationListDonald = [location for location in self._allLocationListDonald if not set(location.LocationTypes).intersection(excludeWorlds)]
 
-    def populateItems(self, promiseCharm = False, startingInventory=[]):
-        validItemList = Items.getItemList() + Items.getSupportAbilityList() + Items.getActionAbilityList()
+    def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=None):
+        abilityList = Items.getSupportAbilityList() + Items.getActionAbilityList()
+        if abilityListModifier:
+            abilityList = abilityListModifier(abilityList)
+        validItemList = Items.getItemList() + abilityList
+
         self._validItemListGoofy = Items.getGoofyAbilityList()
         self._validItemListDonald = Items.getDonaldAbilityList()
         if promiseCharm:
@@ -312,12 +315,12 @@ class KH2Randomizer():
                 Hints.generateHints(self._locationItems, hintsType, self.seedName, outZip)
 
             enemySpoilers = None
-            if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled":
+            if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled" or enemyOptions["remove_damage_cap"]:
                 if platform == "PC":
                     enemyOptions["memory_expansion"] = True
                 else:
                     enemyOptions["memory_expansion"] = False
-                if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False):
+                if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False) or enemyOptions.get("remove_damage_cap", False):
                     from khbr.randomizer import Randomizer as khbr
                     enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
 
@@ -325,7 +328,7 @@ class KH2Randomizer():
                 mod["title"] += " {seedName}".format(seedName = self.seedName)
                 outZip.writestr("spoilerlog.txt",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
                 if enemySpoilers:
-                    outZip.writestr("enemyspoilers.txt", json.dumps(enemySpoilers, indent=4))
+                    outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             
