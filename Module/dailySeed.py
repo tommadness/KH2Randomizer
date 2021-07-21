@@ -119,7 +119,11 @@ dailyModifiers = [
                 description="Atlantica is turned on.",
                 categories={'worlds'},
                 modifier=lambda s: s["locations"].append("Atlantica")
-    )
+                ),
+    DailyModifier(name="Remove Damage Cap",
+                description="Remove Damage Cap for Sora dealing damage to enemies",
+                categories={},
+                modifier=lambda s: s["seedModifiers"].append("Remove Damage Cap"))
 ]
 
 def getDailyModifiers(date):
