@@ -63,7 +63,7 @@ class KH2Randomizer():
         self._validItemListGoofy = Items.getGoofyAbilityList()
         self._validItemListDonald = Items.getDonaldAbilityList()
         if promiseCharm:
-            self._validItemList.append(KH2Item(524, "Promise Charm",itemType.PROMISE_CHARM))
+            validItemList.append(KH2Item(524, "PromiseCharm",itemType.PROMISE_CHARM))
 
         self._validItemList = [item for item in validItemList if not str(item.Id) in startingInventory]
 
