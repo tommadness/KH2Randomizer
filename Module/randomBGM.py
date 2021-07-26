@@ -2,13 +2,16 @@ import random, os, zipfile
 
 class RandomBGM():
     def randomizeBGM(option, platform):
+
+        print("hmm",option,platform)
+        option = "ALL"
         if not platform == "PC":
             return ""
         if option == "Disabled":
             return ""
         
         KH2BGMList = [
-            "music050.win32.scd",
+            {"name": "music050.win32.scd", "kind": "battle"},
             "music051.win32.scd",
             "music052.win32.scd",
             "music053.win32.scd",
@@ -304,7 +307,9 @@ class RandomBGM():
             "music132.win32.scd",
         ]
 
-        BGMList = KH2BGMList + BBSBGMList + KH1BGMList
+        BGMList = KH2BGMList 
+        if option == "KH2+BBS+KH1":
+            BGMLIST += BBSBGMList + KH1BGMList
 
         if option == "DMCA-Safe":
             for BGM in DMCABGM:
@@ -322,4 +327,4 @@ class RandomBGM():
         return BGMAssets
 
     def getOptions():
-        return ["Disabled","All Music","DMCA-Safe"]
+        return ["Disabled","All KH2 Music","DMCA-Safe","KH2+BBS+KH1"]
