@@ -133,6 +133,7 @@ def seed():
     permaLink = fl.url_for("hashedSeed",hash=session['permaLink'], _external=True), 
     cmdMenus = RandomCmdMenu.getOptions(),
     bgmOptions = RandomBGM.getOptions(), 
+    bgmGames = RandomBGM.getGames(),
     levelChoice = session.get('levelChoice'), 
     include = [locationType(l) for l in session.get('includeList')], 
     seed = session.get('seed'), 
@@ -158,7 +159,7 @@ def handleConnection():
 def startDownload(data):
     print("Started")
     seed = socketio.start_background_task(randomizePage, data, dict(session))
-
+    
 
 def randomizePage(data, sessionDict):
     print(data['platform'])
@@ -167,6 +168,8 @@ def randomizePage(data, sessionDict):
     excludeList.append(sessionDict["levelChoice"])
     cmdMenuChoice = data["cmdMenuChoice"]
     randomBGM = data["randomBGM"]
+    print("LISTEN")
+    print(data)
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
     randomizer = KH2Randomizer(seedName = sessionDict["seed"])

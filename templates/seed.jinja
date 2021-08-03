@@ -58,23 +58,38 @@
     {% endfor %}
 </select>
 
- <div class="col-6">
+<div class="container col-6">
 <h4>Randomize BGM (PC ONLY)</h4>
-<select name="randomBGM">
-    {%for option in bgmOptions %}
-    <option value="{{option}}">{{option}}</option>
-    {%endfor%}
+<select name="randomBGM" multiple="multiple" id="random-bgm">
+    <option style="pointer-events:none">Including music from games beside KH2 requires some additional steps.
+    <option style="pointer-events:none">See https://pastebin.com/FAKE for details
+    <optGroup label="Options" class="group-options">
+        {%for option in bgmOptions %}
+        <option value="{{option}}">{{option}}</option>
+        {%endfor%}
+    </optGroup>
+    <optGroup label="Games to include" class="group-games">
+        {%for option in bgmGames %}
+        <option value="{{option}}">{{option}}</option>
+        {%endfor%}
+    </optGroup>
 </select>
 </div> 
 
 
-<input type="submit" value="Download for PC" name="platform">
-</form>
 <div id="downloadButtons">
 <button id="PCSX2" name="platform" value="PCSX2">Generate for PCSX2</button>
 <button id="PC" name="platform" value="PC">Generate for PC</button>
 </div>
+</form>
 <script>
+
+$(document).ready(function(){
+    tail.select("#random-bgm", {
+        multiSelectGroup: true,
+    });
+});
+
 $(function(){
     $('button').click(function(){
         var platform = $(this).val();
