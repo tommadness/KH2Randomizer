@@ -339,7 +339,7 @@ const presets = {
         "ValorExp":10,
         "WisdomExp":7,
         "LimitExp":7,
-        "MasterExp":7,
+        "MasterExp":5,
         "FinalExp":7,
         "SummonExp":5,
         "keybladeAbilities":["Support", "Action"],
