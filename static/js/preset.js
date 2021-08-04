@@ -215,7 +215,7 @@ const presets = {
         "levelChoice":"Level",
         "keybladeMinStat":0,
         "keybladeMaxStat":7,
-        "SoraExp":0,
+        "SoraExp":1,
         "ValorExp":5,
         "WisdomExp":5,
         "LimitExp":5,
@@ -225,7 +225,7 @@ const presets = {
         "enemy":"Disabled",
         "hintsType":"Shananas",
         "PromiseCharm":[false],
-        "starting-inventory":["No Experience"]
+        "starting-inventory":["404"]
     },
     "Bingo":{
         "include":[
