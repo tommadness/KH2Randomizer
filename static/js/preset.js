@@ -173,7 +173,6 @@ const presets = {
             "locationType.DC",
             "locationType.HUNDREDAW",
             "locationType.STT",
-            "locationType.Atlantica",
             "locationType.FormLevel",
             "locationType.Free",
             "locationType.AS"
@@ -192,6 +191,41 @@ const presets = {
         "hintsType":"Shananas",
         "PromiseCharm":[false],
         "starting-inventory":[]
+    },
+    "Level 1":{
+        "include":[
+            "locationType.LoD",
+            "locationType.BC",
+            "locationType.HB",
+            "locationType.CoR",
+            "locationType.TT",
+            "locationType.TWTNW",
+            "locationType.SP",
+            "locationType.PR",
+            "locationType.OC",
+            "locationType.Agrabah",
+            "locationType.HT",
+            "locationType.PL",
+            "locationType.DC",
+            "locationType.HUNDREDAW",
+            "locationType.STT",
+            "locationType.FormLevel",
+            "locationType.Free",
+        ],
+        "levelChoice":"Level",
+        "keybladeMinStat":0,
+        "keybladeMaxStat":7,
+        "SoraExp":1,
+        "ValorExp":5,
+        "WisdomExp":5,
+        "LimitExp":5,
+        "MasterExp":5,
+        "FinalExp":5,
+        "keybladeAbilities":["Support"],
+        "enemy":"Disabled",
+        "hintsType":"Shananas",
+        "PromiseCharm":[false],
+        "starting-inventory":["404"]
     },
     "Bingo":{
         "include":[
@@ -217,7 +251,7 @@ const presets = {
             "locationType.Free",
             "locationType.Critical"
         ],
-        "levelChoice":"ExcludeFrom50",
+        "levelChoice":"Level",
         "keybladeMinStat":3,
         "keybladeMaxStat":10,
         "SoraExp":2.5,
@@ -273,7 +307,46 @@ const presets = {
         "PromiseCharm":[false],
         "starting-inventory":["593","594","595"]
     },
-
-
-
+    "Better All Blue Numbers":{
+        "include":[
+            "locationType.LoD",
+            "locationType.BC",
+            "locationType.HB",
+            "locationType.TT",
+            "locationType.TWTNW",
+            "locationType.SP",
+            "locationType.PR",
+            "locationType.OC",
+            "locationType.Agrabah",
+            "locationType.HT",
+            "locationType.PL",
+            "locationType.DC",
+            "locationType.HUNDREDAW",
+            "locationType.STT",
+            "locationType.AS",
+            "locationType.Sephi",
+            "locationType.FormLevel",
+            "locationType.Free",
+            "locationType.Critical",
+            "locationType.Atlantica",
+            "locationType.LW",
+            "locationType.DataOrg"
+        ],
+        "levelChoice":"ExcludeFrom99",
+        "keybladeMinStat":5,
+        "keybladeMaxStat":13,
+        "SoraExp":7,
+        "ValorExp":10,
+        "WisdomExp":7,
+        "LimitExp":7,
+        "MasterExp":7,
+        "FinalExp":7,
+        "SummonExp":5,
+        "keybladeAbilities":["Support", "Action"],
+        "enemy":"Disabled",
+        "hintsType":"Shananas",
+        "PromiseCharm":[true],
+        "starting-inventory":[],
+        "seedModifiers": ["Schmovement", "Better Junk"]
+    }
 };
