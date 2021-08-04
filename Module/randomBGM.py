@@ -5,7 +5,7 @@ class RandomBGM():
         # JUST FOR TESTING
         options = {
             "games": ["KH2", "BBS"],
-            "options": ["DMCA-SAFE"]
+            "options": ["Randomize Field and Battle Music Separate"]
         }
 
         if not platform == "PC" or len(options["games"]) < 1:
