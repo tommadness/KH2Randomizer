@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>KH2FM Randomizer Spoiler Log</title>
+<script>
+        spoiler_data = SPOILER_JSON_FROM_SEED
+    </script>
+
+
+        <style>
+            :root {
+                --background: rgba(0,214,170,.85);
+            }
+            *,*::before,*::after {
+                box-sizing: border-box;
+            }
+            .content {
+                height: 95hv;
+                background-blend-mode: multiply;
+                background-size: cover;
+                display: grid;
+                place-items: center;
+            }
+            .table_wrapper{
+                height:95vh;
+                overflow-y:scroll;
+                overflow-x:hidden;
+            }
+
+            .styled-table {
+                border-collapse: collapse;
+                margin: 0px 0;
+                font-size: 0.8em;
+                font-family: sans-serif;
+                min-width: 500px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                position: relative;
+            }
+            .styled-table thead tr {
+                background-color: #009879;
+                color: #ffffff;
+                text-align: center;
+            }
+            .styled-table th,
+            .styled-table td {
+                padding: 12px 15px;
+            }
+            .styled-table th {
+                position: sticky;
+                top: 0px;
+                background-color: #bee3db;
+            }
+            .styled-table tbody tr {
+                border-bottom: 1px solid #dddddd;
+            }
+
+            .styled-table tbody tr:nth-of-type(odd) {
+                background-color: #f3f3f3;
+            }
+
+            .styled-table tbody tr:last-of-type {
+                border-bottom: 2px solid #009879;
+            }
+            .styled-table tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <div class="table-wrapper">
+                <table class="styled-table" id="spoilerTable">
+                    <tr>
+                        <th>World <input type="text" id="world_search" onkeyup="tableFilter()" placeholder="Search for world.."></th>
+                        <th>Location <input type="text" id="location_search" onkeyup="tableFilter()" placeholder="Search for location.."></th>
+                        <th>Item <input type="text" id="item_search" onkeyup="tableFilter()" placeholder="Search for item.."></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        worlds = ["Garden of Assemblage","Critical Bonuses","Space Paranoids", "Port Royal", "Twilight Town", "Olympus Coliseum", "Halloween Town", "Land of Dragons", "The World That Never Was", "Beast's Castle", "Agrabah", "Pride Lands", "Hollow Bastion", "Disney Castle / Timeless River", "Simulated Twilight Town", "Hundred Acre Wood", "Atlantica"]
+
+        var mainContainer = document.getElementById("spoilerTable");
+        for(var j = 0; j < worlds.length; j++)
+        {
+            var world = worlds[j]
+            for (var i = 0; i < spoiler_data[world].length; i++)
+            {
+                var table_entry = document.createElement("tr");
+                var world_table_html = "";
+                world_table_html+="<td>"
+                world_table_html+=world
+                world_table_html+="</td>"
+                var item_data = spoiler_data[world][i]
+                world_table_html+="<td>"
+                world_table_html+=item_data[0]
+                world_table_html+="</td>"
+                world_table_html+="<td>"
+                world_table_html+=item_data[1]["Name"]
+                world_table_html+="</td>"
+                table_entry.innerHTML += world_table_html;
+                mainContainer.appendChild(table_entry);
+            }
+        }
+
+        for (var i = 0; i < spoiler_data["Level"].length; i++)
+        {
+            var table_entry = document.createElement("tr");
+            var world_table_html = "";
+            world_table_html+="<td>";
+            world_table_html+="Levels";
+            world_table_html+="</td>";
+            var level_data = spoiler_data["Level"][i];
+            world_table_html+="<td>";
+            world_table_html+=level_data[0];
+            world_table_html+="</td>";
+            world_table_html+="<td>";
+            world_table_html+=level_data[1]["Name"];
+            world_table_html+="</td>";
+            table_entry.innerHTML += world_table_html;
+            mainContainer.appendChild(table_entry);
+        }
+
+        for (var i = 0; i < spoiler_data["Form Levels"].length; i++)
+        {
+            var table_entry = document.createElement("tr");
+            var world_table_html = "";
+            world_table_html+="<td>";
+            world_table_html+="Levels";
+            world_table_html+="</td>";
+            var level_data = spoiler_data["Form Levels"][i]
+            world_table_html+="<td>";
+            world_table_html+=level_data[0];
+            world_table_html+="</td>";
+            world_table_html+="<td>";
+            world_table_html+=level_data[1]["Name"];
+            world_table_html+="</td>";
+            table_entry.innerHTML += world_table_html;
+            mainContainer.appendChild(table_entry);
+        }
+
+        for (var i = 0; i <  spoiler_data["Weapons"].length; i++)
+        {
+            var table_entry = document.createElement("tr");
+            var world_table_html = "";
+            world_table_html+="<td>";
+            world_table_html+="Weapons";
+            world_table_html+="</td>";
+            var weapon = spoiler_data["Weapons"][i]
+            world_table_html+="<td>";
+            world_table_html+=weapon[0];
+            world_table_html+="</td>";
+            world_table_html+="<td>";
+            world_table_html+=weapon[1];
+            world_table_html+="</td>";
+            table_entry.innerHTML += world_table_html;
+            mainContainer.appendChild(table_entry);
+        }
+
+        function tableFilter()
+        {
+            var input, world_filter, location_filter, item_filter, table, tr, td1, td2, td3, i, txtValue1, txtValue2, txtValue3;
+            input = document.getElementById("world_search");
+            world_filter = input.value.toUpperCase();
+            input = document.getElementById("location_search");
+            location_filter = input.value.toUpperCase();
+            input = document.getElementById("item_search");
+            item_filter = input.value.toUpperCase();
+
+            table = document.getElementById("spoilerTable");
+            tr = table.getElementsByTagName("tr");
+
+
+            for(var i=1; i<tr.length; i++)
+            {
+                td1 = tr[i].getElementsByTagName("td")[0];
+                td2 = tr[i].getElementsByTagName("td")[1];
+                td3 = tr[i].getElementsByTagName("td")[2];
+
+                var found = false;
+
+                txtValue1 = txtValue2 = txtValue3 = "";
+
+                if(td1)
+                {
+                    txtValue1 = td1.textContent || td1.innerText;
+                }
+                if(td2)
+                {
+                    txtValue2 = td2.textContent || td2.innerText;
+                }
+                if(td3)
+                {
+                    txtValue3 = td3.textContent || td3.innerText;
+                }
+
+                if (txtValue1.toUpperCase().indexOf(world_filter) > -1 && txtValue2.toUpperCase().indexOf(location_filter) > -1 && txtValue3.toUpperCase().indexOf(item_filter) > -1)
+                {
+                    found = true;
+                }
+
+                if (found)
+                {
+                    tr[i].style.display = "";
+                }
+                else
+                {
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+    </script>
+</html>
