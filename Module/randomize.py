@@ -41,8 +41,8 @@ class KH2Randomizer():
     def __post_init__(self):
         random.seed(self.seedName)
 
-    def populateLocations(self, excludeWorlds):
-        self._allLocationList = Locations.getTreasureList() + Locations.getSoraLevelList() + Locations.getSoraBonusList() + Locations.getFormLevelList() + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
+    def populateLocations(self, excludeWorlds, maxItemLogic=False, item_difficulty="Normal"):
+        self._allLocationList = Locations.getTreasureList(maxItemLogic) + Locations.getSoraLevelList() + Locations.getSoraBonusList(maxItemLogic) + Locations.getFormLevelList(maxItemLogic) + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
 
         self._validLocationList = [location for location in self._allLocationList if not set(location.LocationTypes).intersection(excludeWorlds+["Level1Form", "SummonLevel"])]
 
@@ -53,6 +53,31 @@ class KH2Randomizer():
         self._allLocationListDonald = Locations.getDonaldWeaponList() + Locations.getDonaldStartingItemList() + Locations.getDonaldBonusList()
 
         self._validLocationListDonald = [location for location in self._allLocationListDonald if not set(location.LocationTypes).intersection(excludeWorlds)]
+
+        late_item_weight = 1
+        early_item_weight = 1
+        if item_difficulty == "Super Easy":
+            early_item_weight = 5
+            late_item_weight = .1
+        if item_difficulty == "Easy":
+            early_item_weight = 1
+            late_item_weight = .1
+        if item_difficulty == "Hard":
+            early_item_weight = 1
+            late_item_weight = 5
+        if item_difficulty == "Very Hard":
+            early_item_weight = .1
+            late_item_weight = 5
+        if item_difficulty == "Insane":
+            early_item_weight = .01
+            late_item_weight = 50
+
+        for loc in self._validLocationList:
+            if loc.LocationWeight>1:
+                loc.setLocationWeight(late_item_weight)
+            elif loc.LocationWeight<1:
+                loc.setLocationWeight(early_item_weight)
+
 
     def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=None):
         abilityList = Items.getSupportAbilityList() + Items.getActionAbilityList()
@@ -117,12 +142,22 @@ class KH2Randomizer():
 
     def setRewards(self, levelChoice="ExcludeFrom50", betterJunk=False):
         locations = [location for location in self._validLocationList if not isinstance(location, KH2ItemStat)]
+        location_weights = [location.LocationWeight for location in locations]
         for item in self._validItemList:
+            weighted_random = item.Id in [593,594,595,21,22,23,24,87,88,26,27,29,31,
+                                          563,32,159,160,25,383,535,362,539,393,394,
+                                          401,415,416,541,271,264,559,265,266,560,561,198]
+
             while True:
-                randomLocation = random.choice(locations)
+                if weighted_random:
+                    randomLocation = random.choices(locations,location_weights)[0]
+                else:
+                    randomLocation = random.choice(locations)
                 if not item.ItemType in randomLocation.InvalidChecks:
                     randomLocation.setReward(item.Id)
+                    location_index = locations.index(randomLocation)
                     locations.remove(randomLocation)
+                    del location_weights[location_index]
                     self._locationItems.append((randomLocation,item))
                     break
         
@@ -136,6 +171,8 @@ class KH2Randomizer():
 
         goofyLocations = [location for location in self._validLocationListGoofy if not isinstance(location, KH2ItemStat)]
         for item in self._validItemListGoofy:
+            if len(goofyLocations)==0:
+                continue
             randomLocation = random.choice(goofyLocations)
             randomLocation.setReward(item.Id)
             if not randomLocation.DoubleReward:
@@ -149,6 +186,8 @@ class KH2Randomizer():
 
         donaldLocations = [location for location in self._validLocationListDonald if not isinstance(location, KH2ItemStat)]
         for item in self._validItemListDonald:
+            if len(donaldLocations)==0:
+                continue
             randomLocation = random.choice(donaldLocations)
             randomLocation.setReward(item.Id)
             if not randomLocation.DoubleReward:

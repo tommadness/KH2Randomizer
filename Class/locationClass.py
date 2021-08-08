@@ -4,7 +4,10 @@ from dataclasses import dataclass, field
 import random
 
 class KH2Location:
-    pass
+    LocationWeight: float = 1
+    def setLocationWeight(self,w=1):
+        self.LocationWeight = w
+        return self
 
 
 @dataclass

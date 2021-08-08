@@ -26,6 +26,10 @@ class SeedModifier():
             {
                 "name": "Remove Damage Cap",
                 "description": "Removes the damage cap for every enemy/boss in the game."
+            },
+            {
+                "name": "Max Logic Item Placement",
+                "description": "Less restricted item placement. All checks still obtainable."
             }
         ]
 

@@ -108,6 +108,8 @@ def seed():
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
 
+        session['itemPlacementDifficulty'] = fl.request.form.get("itemPlacementDifficulty")
+
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
         if not development_mode:
             with r.pipeline() as pipe:
@@ -133,6 +135,7 @@ def seed():
     enemyOptions = json.loads(session.get("enemyOptions")),
     hintsType = session.get("hintsType"),
     startingInventory = session.get("startingInventory"),
+    itemPlacementDifficulty = session.get("itemPlacementDifficulty"),
     seedModifiers = session.get("seedModifiers"),
     idConverter = StartingInventory.getIdConverter()
     )
@@ -157,7 +160,7 @@ def randomizePage(data, sessionDict):
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
     randomizer = KH2Randomizer(seedName = sessionDict["seed"])
-    randomizer.populateLocations(excludeList)
+    randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"])
     randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
     if randomizer.validateCount():
         randomizer.setKeybladeAbilities(
