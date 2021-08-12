@@ -190,6 +190,14 @@ input:focus + .slider {
   grid-column-end: 7;
 }
 
+#daily {
+  grid-template-columns: auto 250px;
+  margin-bottom: 40px;
+}
+#daily > div {
+  justify-content: center;
+}
+
 #hint {
   height: 30px;
 }
