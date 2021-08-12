@@ -168,12 +168,12 @@ def randomizePage(data, sessionDict):
         randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
         randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
         randomizer.setBonusStats()
-        if not randomizer.validateSeed(startingInventory = sessionDict["startingInventory"]):
-            print("ERROR: Seed is not completable! Trying another seed...")
-            characters = string.ascii_letters + string.digits
-            sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
-            randomizePage(data,sessionDict)
-            return
+        # if not randomizer.validateSeed(startingInventory = sessionDict["startingInventory"]):
+        #     print("ERROR: Seed is not completable! Trying another seed...")
+        #     characters = string.ascii_letters + string.digits
+        #     sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
+        #     randomizePage(data,sessionDict)
+        #     return
         try:
             zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
             if development_mode:
