@@ -226,8 +226,13 @@ input[type=submit], button {
   grid-template-columns: auto;
 }
 
+.container.answer h4 {
+  margin-bottom: 20px;
+}
+
 .container.answer div {
   flex-direction: column;
   align-items: initial;
+  margin-bottom: 20px;
 }
 /*# sourceMappingURL=style.css.map */
