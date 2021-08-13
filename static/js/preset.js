@@ -34,7 +34,8 @@ function setPreset(presetName){
     $('#starting-inventory option').each(function(){
         $(this).prop('selected',preset["starting-inventory"].includes(this.value));
     });
-    $('#starting-inventory').multiselect('refresh');
+    tail.reload($("#starting-inventory"));
+    //$('#starting-inventory').multiselect('refresh');
 
 
 

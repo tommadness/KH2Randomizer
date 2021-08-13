@@ -27,7 +27,9 @@ def index(message=""):
     session.clear()
     return fl.render_template('index.jinja', locations = List.LocationList.getOptions(), expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions())
 
-
+@app.route('/faq')
+def faq():
+    return fl.render_template('faq.jinja')
 
 @app.route('/seed/<hash>')
 def hashedSeed(hash):

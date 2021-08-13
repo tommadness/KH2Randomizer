@@ -217,4 +217,8 @@ input[type=submit], button {
   font-size: 16px;
   margin-top: 5px;
 }
+
+#nav {
+  grid-template-columns: auto auto auto auto;
+}
 /*# sourceMappingURL=style.css.map */
