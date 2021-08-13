@@ -31,6 +31,10 @@ def index(message=""):
 def faq():
     return fl.render_template('faq.jinja')
 
+@app.route('/setup')
+def setup():
+    return fl.render_template('setup.jinja')
+
 @app.route('/seed/<hash>')
 def hashedSeed(hash):
     session.clear()

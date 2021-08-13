@@ -221,4 +221,13 @@ input[type=submit], button {
 #nav {
   grid-template-columns: auto auto auto auto;
 }
+
+.container.answer {
+  grid-template-columns: auto;
+}
+
+.container.answer div {
+  flex-direction: column;
+  align-items: initial;
+}
 /*# sourceMappingURL=style.css.map */
