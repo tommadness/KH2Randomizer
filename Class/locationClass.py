@@ -142,7 +142,7 @@ class KH2Bonus(KH2Location):
         return self.BonusItem1
 
     def getDescription(self):
-        return "{world} : {self.Description}".format(self=self, world=self.LocationTypes[0].value)
+        return "{self.Description}".format(self=self)
 
     def __repr__(self):
         return "\nKH2Bonus( RewardId:{self.RewardId}, Character: {self.CharacterId}, ItemId: {self.BonusItem1}, InvalidChecks: {self.InvalidChecks} )".format(self=self)

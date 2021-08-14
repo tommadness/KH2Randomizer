@@ -108,6 +108,7 @@ class Items:
             KH2Item(498,"Bond of Flame",itemType.KEYBLADE),
             KH2Item(499,"Fenrir",itemType.KEYBLADE),
             KH2Item(500,"Ultima Weapon",itemType.KEYBLADE),
+            KH2Item(544,"Winner's Proof",itemType.KEYBLADE),
 
             KH2Item(546, "Centurion+", itemType.STAFF), #StatEntry = 151
             KH2Item(150, "Meteor Staff", itemType.STAFF), #StatEntry = 89
@@ -498,7 +499,7 @@ class Items:
             KH2Item(168, "Donald Cure", itemType.DONALD_ABILITY),
             KH2Item(199, "Fantasia", itemType.DONALD_ABILITY),
             KH2Item(200, "Flare Force", itemType.DONALD_ABILITY),
-            KH2Item(405, "Draw", itemType.DONALD_ABILITY),
+            KH2Item(412, "MP Rage", itemType.DONALD_ABILITY),
             KH2Item(406, "Jackpot", itemType.DONALD_ABILITY),
             KH2Item(407, "Lucky Lucky", itemType.DONALD_ABILITY),
             KH2Item(408, "Fire Boost", itemType.DONALD_ABILITY),
@@ -512,7 +513,7 @@ class Items:
             KH2Item(417, "Auto Limit", itemType.DONALD_ABILITY),
             KH2Item(419, "Hyper Healing", itemType.DONALD_ABILITY),
             KH2Item(420, "Auto Healing", itemType.DONALD_ABILITY),
-            KH2Item(414, "Defender", itemType.DONALD_ABILITY),
+            KH2Item(422, "MP Hastega", itemType.DONALD_ABILITY),
             KH2Item(411, "Item Boost", itemType.DONALD_ABILITY),
             KH2Item(542, "Damage Control", itemType.DONALD_ABILITY),
             KH2Item(419, "Hyper Healing", itemType.DONALD_ABILITY),
@@ -558,6 +559,7 @@ class Items:
             KH2Item(597, "Protera", itemType.GOOFY_ABILITY),
             KH2Item(598, "Protega", itemType.GOOFY_ABILITY),
             KH2Item(542, "Damage Control", itemType.GOOFY_ABILITY),
-            KH2Item(419, "Hyper Healing", itemType.GOOFY_ABILITY),
-            KH2Item(411, "Item Boost", itemType.GOOFY_ABILITY),
+            KH2Item(596, "Protect", itemType.GOOFY_ABILITY),
+            KH2Item(597, "Protera", itemType.GOOFY_ABILITY),
+            KH2Item(598, "Protega", itemType.GOOFY_ABILITY),
         ]

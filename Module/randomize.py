@@ -57,13 +57,13 @@ class KH2Randomizer():
     def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=None):
         abilityList = Items.getSupportAbilityList() + Items.getActionAbilityList()
         if abilityListModifier:
-            abilityList = abilityListModifier(abilityList)
+            abilityList = abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList())
         validItemList = Items.getItemList() + abilityList
 
         self._validItemListGoofy = Items.getGoofyAbilityList()
         self._validItemListDonald = Items.getDonaldAbilityList()
         if promiseCharm:
-            validItemList.append(KH2Item(524, "Promise Charm",itemType.PROMISE_CHARM))
+            validItemList.append(KH2Item(524, "PromiseCharm",itemType.PROMISE_CHARM))
 
         self._validItemList = [item for item in validItemList if not str(item.Id) in startingInventory]
 
@@ -187,7 +187,175 @@ class KH2Randomizer():
         locations = [location for location in self._allLocationList if isinstance(location, KH2Bonus) and location.HasStat]
         for location in locations:
             random.shuffle(statsList)
-            location.setStat(statsList.pop())
+            first_stat = statsList.pop()
+            location.setStat(first_stat)
+            if location.DoubleReward:
+                while statsList[0]==first_stat:
+                    random.shuffle(statsList)
+                location.setStat(statsList.pop())
+
+        print(len(statsList))
+
+    def validateSeed(self, startingInventory):
+        # check if the seed is completable
+        need_fire_blizzard_thunder = lambda inventory : (21 in inventory and 22 in inventory and 23 in inventory)
+        need_2_magnets = lambda inventory : (inventory.count(87)>=2)
+        need_2_magnets_all_thunders = lambda inventory : (inventory.count(87)>=2 and inventory.count(23)==3)
+        count_high_jumps = lambda inventory : ((94 in inventory) + (95 in inventory) + (96 in inventory) + (97 in inventory))
+        count_quick_runs = lambda inventory : ((98 in inventory) + (99 in inventory) + (100 in inventory) + (101 in inventory))
+        count_aerial_dodges = lambda inventory : ((102 in inventory) + (103 in inventory) + (104 in inventory) + (105 in inventory))
+        count_glides = lambda inventory : ((106 in inventory) + (107 in inventory) + (108 in inventory) + (109 in inventory))
+        need_growths = lambda inventory : (count_high_jumps(inventory)>=3 and count_quick_runs(inventory)>=3 and count_aerial_dodges(inventory)>=3 and count_glides(inventory)>=3)
+        need_proof_connection = lambda inventory : (593 in inventory)
+        need_proof_peace = lambda inventory : (595 in inventory)
+        has_valor = lambda inventory : (26 in inventory)
+        has_wisdom = lambda inventory : (27 in inventory)
+        has_limit = lambda inventory : (563 in inventory)
+        has_master = lambda inventory : (31 in inventory)
+        has_final = lambda inventory : (29 in inventory)
+        count_forms = lambda inventory : (has_valor(inventory) + has_wisdom(inventory) + has_limit(inventory) + has_master(inventory) + has_final(inventory))
+        need_forms  = lambda inventory : (count_forms(inventory)==5)
+        need_summons = lambda inventory : (( 159 in inventory) and ( 160 in inventory) and ( 25 in inventory) and ( 383 in inventory))
+        need_forms_and_summons = lambda inventory : (need_forms(inventory) and need_summons(inventory))
+        count_pages = lambda inventory : inventory.count(32)
+        need_1_page = lambda inventory : count_pages(inventory) >= 1
+        need_2_pages = lambda inventory : count_pages(inventory) >= 2
+        need_3_pages = lambda inventory : count_pages(inventory) >= 3
+        need_4_pages = lambda inventory : count_pages(inventory) >= 4
+        need_5_pages = lambda inventory : count_pages(inventory) == 5
+
+        def make_form_lambda(form_id,form_level):
+            if form_id==1:
+                return lambda inventory : has_valor(inventory) and count_forms(inventory)>=form_level-2
+            if form_id==2:
+                return lambda inventory : has_wisdom(inventory) and count_forms(inventory)>=form_level-2
+            if form_id==3:
+                return lambda inventory : has_limit(inventory) and count_forms(inventory)>=form_level-2
+            if form_id==4:
+                return lambda inventory : has_master(inventory) and count_forms(inventory)>=form_level-2
+            if form_id==5:
+                return lambda inventory : has_final(inventory) and count_forms(inventory)>=form_level-2
+
+            return lambda inventory : False
+
+        restricted_treasures = [([34,486,303,545,550],need_fire_blizzard_thunder),
+                                ([287],need_2_magnets),
+                                ([279,538],need_2_magnets_all_thunders),
+                                ([562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582],need_growths),
+                                ([587,591],need_proof_connection),
+                                ([588,589],need_proof_peace),
+                                ([560],need_forms),
+                                ([518],need_forms_and_summons),
+                                ([103,104,105], need_1_page),
+                                ([100,101,314], need_2_pages),
+                                ([106,107,108], need_3_pages),
+                                ([110,111,112,113,115,116,284,485], need_4_pages),
+                                ([285,539,312,94], need_5_pages)]
+
+        restricted_bonuses = [([15,need_fire_blizzard_thunder])]
+        restricted_forms = [(1,2,make_form_lambda(1,2)),
+                            (1,3,make_form_lambda(1,3)),
+                            (1,4,make_form_lambda(1,4)),
+                            (1,5,make_form_lambda(1,5)),
+                            (1,6,make_form_lambda(1,6)),
+                            (1,7,make_form_lambda(1,7)),
+                            (2,2,make_form_lambda(2,2)),
+                            (2,3,make_form_lambda(2,3)),
+                            (2,4,make_form_lambda(2,4)),
+                            (2,5,make_form_lambda(2,5)),
+                            (2,6,make_form_lambda(2,6)),
+                            (2,7,make_form_lambda(2,7)),
+                            (3,2,make_form_lambda(3,2)),
+                            (3,3,make_form_lambda(3,3)),
+                            (3,4,make_form_lambda(3,4)),
+                            (3,5,make_form_lambda(3,5)),
+                            (3,6,make_form_lambda(3,6)),
+                            (3,7,make_form_lambda(3,7)),
+                            (4,2,make_form_lambda(4,2)),
+                            (4,3,make_form_lambda(4,3)),
+                            (4,4,make_form_lambda(4,4)),
+                            (4,5,make_form_lambda(4,5)),
+                            (4,6,make_form_lambda(4,6)),
+                            (4,7,make_form_lambda(4,7)),
+                            (5,2,make_form_lambda(5,2)),
+                            (5,3,make_form_lambda(5,3)),
+                            (5,4,make_form_lambda(5,4)),
+                            (5,5,make_form_lambda(5,5)),
+                            (5,6,make_form_lambda(5,6)),
+                            (5,7,make_form_lambda(5,7))]
+        def treasure_restriction(location_id):
+            for loc_list,condition in restricted_treasures:
+                if location_id in loc_list:
+                    return condition
+            return lambda inventory: True
+        def bonus_restriction(location_id):
+            for loc_id,condition in restricted_bonuses:
+                if location_id == loc_id:
+                    return condition
+            return lambda inventory: True
+        def form_restriction(form_id,form_level):
+            for f_id,f_level,condition in restricted_forms:
+                if f_id == form_id and f_level==form_level:
+                    return condition
+            return lambda inventory: True
+
+        trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
+        lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
+        bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)]
+        fmlvList = [location for location in self._allLocationList if isinstance(location, KH2FormLevel)]
+        plrpList = []
+        [plrpList.append(location) for location in self._allLocationList if isinstance(location, KH2StartingItem) and not location in plrpList]
+        StartingInventory.generateStartingInventory(plrpList[0], startingInventory)
+        inventory = []
+
+
+        # grab everything that can't possibly be locked by items
+        for i in plrpList:
+            inventory += i.Items
+        for i in lvupList:
+            inventory.append(i.getReward())
+
+
+        changed = True
+        depth = 0
+        while changed:
+            depth+=1
+            if len(trsrList)==0 and len(bonsList)==0 and len(fmlvList)==0:
+                return True
+            changed = False
+            treasures_to_remove = []
+            bonuses_to_remove = []
+            forms_to_remove = []
+            # pass through remaining treasures and find unlockable things
+            for i in trsrList:
+                location_id = i.Id
+                reward_id = i.ItemId
+                if treasure_restriction(location_id)(inventory):
+                    treasures_to_remove.append(i)
+                    inventory.append(reward_id)
+                    changed = True
+            for i in bonsList:
+                location_id = i.RewardId
+                reward_id = i.getReward()
+                if bonus_restriction(location_id)(inventory):
+                    bonuses_to_remove.append(i)
+                    inventory.append(reward_id)
+                    changed = True
+            for i in fmlvList:
+                reward_id = i.Ability
+                if form_restriction(i.FormId,i.FormLevel)(inventory):
+                    forms_to_remove.append(i)
+                    inventory.append(reward_id)
+                    changed = True
+            for i in treasures_to_remove:
+                trsrList.remove(i)
+            for i in bonuses_to_remove:
+                bonsList.remove(i)
+            for i in forms_to_remove:
+                fmlvList.remove(i)
+
+        return False
+
 
     def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsType = "Disabled", startingInventory=[], platform="PCSX2"):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
@@ -326,7 +494,9 @@ class KH2Randomizer():
 
             if spoilerLog:
                 mod["title"] += " {seedName}".format(seedName = self.seedName)
-                outZip.writestr("spoilerlog.txt",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
+                with open("static/spoilerlog.html") as spoiler_site:
+                    html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
+                    outZip.writestr("spoilerlog.html",html_template)
                 if enemySpoilers:
                     outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
