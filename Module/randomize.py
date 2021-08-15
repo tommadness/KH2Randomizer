@@ -351,6 +351,9 @@ class KH2Randomizer():
         # grab everything that can't possibly be locked by items
         for i in plrpList:
             inventory += i.Items
+            # remove the starting inventory to prevent duplication
+            for j in startingInventory:
+                i.Items.remove(int(j))
         for i in lvupList:
             inventory.append(i.getReward())
 
