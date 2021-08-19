@@ -8,7 +8,7 @@ def get_default_settings():
     return {
     "keybladeAbilities": ["Support"],
     "formExpMult":  {0: 1.0, 1: 5.0, 2: 3.0, 3: 3.0, 4: 2.0, 5: 3.0},
-    "soraExpMult": 1.5,
+    "soraExpMult": 3,
     "levelChoice": "ExcludeFrom50",
     "spoilerLog": False,
     "keybladeMaxStat": 7,
@@ -21,6 +21,9 @@ def get_default_settings():
     "seedModifiers": [],
     "locations": ["Land of Dragons", "Beast's Castle", "Hollow Bastion", "Cavern of Remembrance", "Twilight Town", "The World That Never Was", "Space Paranoids", "Port Royal", "Olympus Coliseum", "Agrabah", "Halloween Town", "Pride Lands", "Disney Castle / Timeless River", "Hundred Acre Wood", "Simulated Twilight Town", "Absent Silhouettes", "Sephiroth", "Form Levels", "Garden of Assemblage", "Critical Bonuses"]
     }
+
+def powerfulKeyblades(s):
+    s["keybladeMaxStat"] = 20
 
 def levelItUp(s):
     s["levelChoice"] = "ExcludeFrom99"
@@ -36,6 +39,7 @@ def goMode(s):
     s["startingInventory"].append("595")
 
 def enableSuperbosses(s):
+    s["soraExpMult"] = max(s["soraExpMult"], 5)
     s["enemyOptions"]["data_bosses"] = True
     s["locations"] += ["Sephiroth", "Lingering Will (Terra)", "Data Organization XIII"]
 
@@ -71,7 +75,7 @@ dailyModifiers = [
                 modifier=lambda s: exec('s["enemyOptions"]["boss"] = "Wild"')
                 ),
     DailyModifier(name="Superbosses",
-                description="All superbosses will be included in the randomization pool, and their reward locations are added to the item pool",
+                description="All superbosses will be included in the randomization pool, and their reward locations are added to the item pool, but your XP is at leat times 5",
                 categories={'bosses', 'worlds'},
                 modifier=enableSuperbosses
                 ),
@@ -123,7 +127,11 @@ dailyModifiers = [
     DailyModifier(name="Remove Damage Cap",
                 description="Remove Damage Cap for Sora dealing damage to enemies",
                 categories={},
-                modifier=lambda s: s["seedModifiers"].append("Remove Damage Cap"))
+                modifier=lambda s: s["seedModifiers"].append("Remove Damage Cap")),
+    DailyModifier(name="More Powerful keyblades",
+                description="Keyblades can have maximum stats of up to 20",
+                categories={'keyblades'},
+                modifier=powerfulKeyblades)
 ]
 
 def getDailyModifiers(date):
