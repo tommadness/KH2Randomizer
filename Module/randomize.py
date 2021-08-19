@@ -57,7 +57,7 @@ class KH2Randomizer():
         late_item_weight = 1
         early_item_weight = 1
         if item_difficulty == "Super Easy":
-            early_item_weight = 5
+            early_item_weight = 50
             late_item_weight = .1
         if item_difficulty == "Easy":
             early_item_weight = 1
@@ -171,8 +171,8 @@ class KH2Randomizer():
 
         goofyLocations = [location for location in self._validLocationListGoofy if not isinstance(location, KH2ItemStat)]
         for item in self._validItemListGoofy:
-            if len(goofyLocations)==0:
-                continue
+            if len(goofyLocations) == 0:
+                break
             randomLocation = random.choice(goofyLocations)
             randomLocation.setReward(item.Id)
             if not randomLocation.DoubleReward:
@@ -186,8 +186,8 @@ class KH2Randomizer():
 
         donaldLocations = [location for location in self._validLocationListDonald if not isinstance(location, KH2ItemStat)]
         for item in self._validItemListDonald:
-            if len(donaldLocations)==0:
-                continue
+            if len(donaldLocations) == 0:
+                break
             randomLocation = random.choice(donaldLocations)
             randomLocation.setReward(item.Id)
             if not randomLocation.DoubleReward:

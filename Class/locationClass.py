@@ -14,7 +14,7 @@ class KH2Location:
 class KH2Treasure(KH2Location):
     Id: int
     Description: str = ""
-    ItemId: int = 0
+    ItemId: int = 1 # PC version crashes on pause when Trsr contains an ItemId0
     InvalidChecks: list[itemType] = field(default_factory=list)
     LocationTypes: list[str] = field(default_factory=list)
     DoubleReward: bool = False
