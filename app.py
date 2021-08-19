@@ -7,7 +7,7 @@ from List.configDict import miscConfig, locationType, expTypes, keybladeAbilitie
 import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
-import os, base64, string, random, ast, zipfile, redis, json, asyncio
+import os, base64, string, random, ast, zipfile, redis, json, asyncio, copy
 from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer
@@ -157,6 +157,7 @@ def randomizePage(data, sessionDict):
     excludeList.append(sessionDict["levelChoice"])
     cmdMenuChoice = data["cmdMenuChoice"]
     randomBGM = data["randomBGM"]
+    startingInventoryBackup = copy.deepcopy(sessionDict["startingInventory"])
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
     randomizer = KH2Randomizer(seedName = sessionDict["seed"])
@@ -171,10 +172,12 @@ def randomizePage(data, sessionDict):
         randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
         randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
         randomizer.setBonusStats()
-        if not randomizer.validateSeed(startingInventory = sessionDict["startingInventory"]):
+        if not randomizer.validateSeed(startingInventory = sessionDict["startingInventory"], reverseRando=("Reverse Rando" in sessionDict["seedModifiers"])):
             print("ERROR: Seed is not completable! Trying another seed...")
             characters = string.ascii_letters + string.digits
             sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
+            #restore the backup so we don't accumulate items
+            sessionDict['startingInventory']=startingInventoryBackup
             randomizePage(data,sessionDict)
             return
         try:

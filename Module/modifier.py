@@ -30,6 +30,10 @@ class SeedModifier():
             {
                 "name": "Max Logic Item Placement",
                 "description": "Less restricted item placement. All checks still obtainable."
+            },
+            {
+                "name": "Reverse Rando",
+                "description": "Use when generating a Reverse Rando seed to ensure softlock protection"
             }
         ]
 

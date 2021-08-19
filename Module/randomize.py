@@ -233,9 +233,7 @@ class KH2Randomizer():
                     random.shuffle(statsList)
                 location.setStat(statsList.pop())
 
-        print(len(statsList))
-
-    def validateSeed(self, startingInventory):
+    def validateSeed(self, startingInventory, reverseRando=False):
         # check if the seed is completable
         need_fire_blizzard_thunder = lambda inventory : (21 in inventory and 22 in inventory and 23 in inventory)
         need_2_magnets = lambda inventory : (inventory.count(87)>=2)
@@ -277,21 +275,39 @@ class KH2Randomizer():
 
             return lambda inventory : False
 
-        restricted_treasures = [([34,486,303,545,550],need_fire_blizzard_thunder),
-                                ([287],need_2_magnets),
-                                ([279,538],need_2_magnets_all_thunders),
-                                ([562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582],need_growths),
-                                ([587,591],need_proof_connection),
-                                ([588,589],need_proof_peace),
-                                ([560],need_forms),
-                                ([518],need_forms_and_summons),
-                                ([103,104,105], need_1_page),
-                                ([100,101,314], need_2_pages),
-                                ([106,107,108], need_3_pages),
-                                ([110,111,112,113,115,116,284,485], need_4_pages),
-                                ([285,539,312,94], need_5_pages)]
+        restricted_treasures = []
+        restricted_bonuses = []
 
-        restricted_bonuses = [([15,need_fire_blizzard_thunder])]
+        if not reverseRando:
+            restricted_treasures = [([34,486,303,545,550],need_fire_blizzard_thunder),
+                                    ([287],need_2_magnets),
+                                    ([279,538],need_2_magnets_all_thunders),
+                                    ([562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582],need_growths),
+                                    ([587,591],need_proof_connection),
+                                    ([588,589],need_proof_peace),
+                                    ([560],need_forms),
+                                    ([518],need_forms_and_summons),
+                                    ([103,104,105], need_1_page),
+                                    ([100,101,314], need_2_pages),
+                                    ([106,107,108], need_3_pages),
+                                    ([110,111,112,113,115,116,284,485], need_4_pages),
+                                    ([285,539,312,94], need_5_pages)]
+
+            restricted_bonuses = [([15],need_fire_blizzard_thunder)]
+        else:
+            restricted_treasures = [([34,486,303,545,550,250,251,35,36,137,138,487,37,502,503,300],need_fire_blizzard_thunder),
+                                    ([287],need_2_magnets),
+                                    ([367],need_2_magnets_all_thunders),
+                                    ([587,591],need_proof_connection),
+                                    ([560],need_forms),
+                                    ([518],need_forms_and_summons),
+                                    ([313,97,98], need_5_pages),
+                                    ([103,104,105], need_4_pages),
+                                    ([100,101,314], need_3_pages),
+                                    ([106,107,108], need_2_pages),
+                                    ([110,111,112,113,115,116,284,485], need_1_page)]
+
+            restricted_bonuses = [([15,37,42,46],need_fire_blizzard_thunder)]
         restricted_forms = [(1,2,make_form_lambda(1,2)),
                             (1,3,make_form_lambda(1,3)),
                             (1,4,make_form_lambda(1,4)),
@@ -328,8 +344,8 @@ class KH2Randomizer():
                     return condition
             return lambda inventory: True
         def bonus_restriction(location_id):
-            for loc_id,condition in restricted_bonuses:
-                if location_id == loc_id:
+            for loc_list,condition in restricted_bonuses:
+                if location_id in loc_list:
                     return condition
             return lambda inventory: True
         def form_restriction(form_id,form_level):
