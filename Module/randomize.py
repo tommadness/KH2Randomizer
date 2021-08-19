@@ -236,6 +236,7 @@ class KH2Randomizer():
     def validateSeed(self, startingInventory, reverseRando=False):
         # check if the seed is completable
         need_fire_blizzard_thunder = lambda inventory : (21 in inventory and 22 in inventory and 23 in inventory)
+        need_1_magnet = lambda inventory : (inventory.count(87)>=1)
         need_2_magnets = lambda inventory : (inventory.count(87)>=2)
         need_2_magnets_all_thunders = lambda inventory : (inventory.count(87)>=2 and inventory.count(23)==3)
         count_high_jumps = lambda inventory : ((94 in inventory) + (95 in inventory) + (96 in inventory) + (97 in inventory))
@@ -296,7 +297,7 @@ class KH2Randomizer():
             restricted_bonuses = [([15],need_fire_blizzard_thunder)]
         else:
             restricted_treasures = [([34,486,303,545,550,250,251,35,36,137,138,487,37,502,503,300],need_fire_blizzard_thunder),
-                                    ([287],need_2_magnets),
+                                    ([287],need_1_magnet),
                                     ([367],need_2_magnets_all_thunders),
                                     ([587,591],need_proof_connection),
                                     ([560],need_forms),
