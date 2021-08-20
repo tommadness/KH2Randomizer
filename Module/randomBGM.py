@@ -341,9 +341,9 @@ musicList = {
 
 musicPaths = {
     "KH2": "bgm",
-    "KH1": "..\\kh1\\TOBEFOUND",
-    "BBS": "..\\bbs\\TOBEFOUND",
-    "RECOM": "..\\recom\\TOBEFOUND",
+    "KH1": "..\\KH1PC\\TOBEFOUND",
+    "BBS": "..\\KHBBS\\sound\\win\\bgm",
+    "RECOM": "..\\KHRECOM\\STREAM\\0001",
     "CUSTOM": "..\\custom"
 }
 class RandomBGM():
@@ -410,7 +410,7 @@ class RandomBGM():
     def getGames():
         return [
             "KH2",
-            "KH1",
+            # "KH1", Can't find where the SCD files are located
             "BBS",
             "RECOM",  
             "CUSTOM 5", 
