@@ -348,7 +348,11 @@ musicPaths = {
 }
 class RandomBGM():
     @staticmethod
-    def randomizeBGM(options, platform):
+    def randomizeBGM(selections, platform):
+        options = {
+            "games": [s for s in selections if s in musicList or s.startswith("CUSTOM")],
+            "options": [s for s in selections if not (s in musicList or s.startswith("CUSTOM"))]
+        }
         if not platform == "PC" or len(options["games"]) < 1:
             return ""
         
