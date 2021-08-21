@@ -56,6 +56,7 @@ class KH2Randomizer():
 
         late_item_weight = 1
         early_item_weight = 1
+        insane = False
         if item_difficulty == "Super Easy":
             early_item_weight = 50
             late_item_weight = .1
@@ -71,12 +72,15 @@ class KH2Randomizer():
         if item_difficulty == "Insane":
             early_item_weight = .01
             late_item_weight = 50
+            insane = True
 
         for loc in self._validLocationList:
             if loc.LocationWeight>1:
                 loc.setLocationWeight(late_item_weight)
             elif loc.LocationWeight<1:
                 loc.setLocationWeight(early_item_weight)
+            if insane and locationType.DataOrg in loc.LocationTypes:
+                loc.setLocationWeight(200)
 
 
     def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=None):
