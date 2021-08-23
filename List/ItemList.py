@@ -106,6 +106,7 @@ class Items:
             KH2Item(494,"Sleeping Lion",itemType.KEYBLADE),
             KH2Item(495,"Sweet Memories",itemType.KEYBLADE),
             KH2Item(496,"Mysterious Abyss",itemType.KEYBLADE),
+            KH2Item(543,"Two Become One",itemType.KEYBLADE),
             KH2Item(497,"Fatal Crest",itemType.KEYBLADE),
             KH2Item(498,"Bond of Flame",itemType.KEYBLADE),
             KH2Item(499,"Fenrir",itemType.KEYBLADE),
