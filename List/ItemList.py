@@ -1,5 +1,6 @@
 from Class.itemClass import KH2Item
 from List.configDict import itemType
+import itertools
 
 
 class Items:
@@ -293,7 +294,7 @@ class Items:
             KH2Item(517, "Solar Sailer Simulation Map", itemType.MAP),
             KH2Item(256, "Dark City Map", itemType.MAP),
             KH2Item(536, "Castle That Never Was Map", itemType.MAP),
-        ]
+        ] + list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50))
 
     def getSupportAbilityList():
         return [
