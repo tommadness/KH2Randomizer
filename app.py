@@ -3,6 +3,7 @@ from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
 from Module.modifier import SeedModifier
+from Module.seedEvaluation import SeedValidator
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import List.LocationList
 import flask as fl
@@ -160,44 +161,44 @@ def randomizePage(data, sessionDict):
     startingInventoryBackup = copy.deepcopy(sessionDict["startingInventory"])
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
-    randomizer = KH2Randomizer(seedName = sessionDict["seed"])
-    randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"])
-    randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
-    if randomizer.validateCount():
-        randomizer.setKeybladeAbilities(
-            keybladeAbilities = sessionDict["keybladeAbilities"], 
-            keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
-            keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
-        )
-        randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
-        randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
-        randomizer.setBonusStats()
-        if not randomizer.validateSeed(startingInventory = sessionDict["startingInventory"], reverseRando=("Reverse Rando" in sessionDict["seedModifiers"])):
-            print("ERROR: Seed is not completable! Trying another seed...")
-            characters = string.ascii_letters + string.digits
-            sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
-            #restore the backup so we don't accumulate items
-            sessionDict['startingInventory']=startingInventoryBackup
-            randomizePage(data,sessionDict)
-            return
-        try:
-            zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
-            if development_mode:
-                development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
-                if development_mode_path:
-                    if os.path.exists(development_mode_path):
-                        # Ensure a clean environment
-                        import shutil
-                        shutil.rmtree(development_mode_path)
-                    # Unzip mod into path
-                    import zipfile
-                    zipfile.ZipFile(zip).extractall(development_mode_path)
-                    print("unzipped into {}".format(development_mode_path))
-                return
-            socketio.emit('file',zip.read())
+    seedValidation = SeedValidator(sessionDict)
 
-        except ValueError as err:
-            print("ERROR: ", err.args)
+    while True:
+        randomizer = KH2Randomizer(seedName = sessionDict["seed"])
+        randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"])
+        randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
+        if randomizer.validateCount():
+            randomizer.setKeybladeAbilities(
+                keybladeAbilities = sessionDict["keybladeAbilities"], 
+                keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
+                keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
+            )
+            randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
+            randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
+            randomizer.setBonusStats()
+            if not seedValidation.validateSeed(sessionDict, randomizer):
+                print("ERROR: Seed is not completable! Trying another seed...")
+                characters = string.ascii_letters + string.digits
+                sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
+                continue
+            try:
+                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
+                if development_mode:
+                    development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
+                    if development_mode_path:
+                        if os.path.exists(development_mode_path):
+                            # Ensure a clean environment
+                            import shutil
+                            shutil.rmtree(development_mode_path)
+                        # Unzip mod into path
+                        import zipfile
+                        zipfile.ZipFile(zip).extractall(development_mode_path)
+                        print("unzipped into {}".format(development_mode_path))
+                    return
+                socketio.emit('file',zip.read())
+
+            except ValueError as err:
+                print("ERROR: ", err.args)
 
 @app.after_request
 def add_header(r):
