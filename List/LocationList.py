@@ -363,7 +363,7 @@ class Locations:
             KH2Treasure(483, "Mansion Map", LocationTypes=[locationType.STT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
             KH2Treasure(459, "Mansion Library Hi-Potion", LocationTypes=[locationType.STT]),
             KH2Treasure(463, "Mansion Basement Corridor Hi-Potion", LocationTypes=[locationType.STT]),
-            KH2Treasure(558, "Roxas (Data) Magic Boost", LocationTypes=[locationType.STT, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(558, "Roxas (Data) Magic Boost", LocationTypes=[locationType.STT, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10),
 
 
 

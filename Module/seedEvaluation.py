@@ -1,6 +1,9 @@
 
 from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat
 
+from List.configDict import itemType, locationType
+
+from Module.importantItems import getImportantChecks,getUsefulItems
 from Module.itemPlacementRestriction import ItemPlacementRestriction
 from Module.startingInventory import StartingInventory
 
@@ -75,3 +78,17 @@ class SeedValidator:
                 fmlvList.remove(i)
 
         return False
+
+class SeedMetrics:
+    def metrics(self, randomizer):
+
+        trsrList = [location for location in randomizer._allLocationList if isinstance(location, KH2Treasure)]
+        useful_items = getImportantChecks()+getUsefulItems()
+
+        num_data_checks = 0
+        for i in trsrList:
+            reward_id = i.ItemId
+            if locationType.DataOrg in i.LocationTypes and reward_id in useful_items:
+                num_data_checks+=1
+
+        return num_data_checks

@@ -80,8 +80,6 @@ class KH2Randomizer():
                 loc.setLocationWeight(late_item_weight)
             elif loc.LocationWeight<1:
                 loc.setLocationWeight(early_item_weight)
-            if insane and locationType.DataOrg in loc.LocationTypes:
-                loc.setLocationWeight(200)
 
 
     def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=None):
