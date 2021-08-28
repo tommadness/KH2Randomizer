@@ -51,15 +51,18 @@
     <div class="vertical top"><h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}<br>{%endfor%}</div>
 </div>
 
+<div class="container col-12">
 
+<div class="vertical">
 <h4>Command Menu:</h4>
 <select name="cmdMenuChoice">
     {% for key in cmdMenus %}
     <option value="{{key}}">{{cmdMenus[key]}}</option>
     {% endfor %}
 </select>
+</div>
 
-<div class="container col-6">
+<div class="vertical">
 <h4>Randomize BGM (PC ONLY)</h4>
 <select name="randomBGM" multiple="multiple" id="random-bgm">
     <option style="pointer-events:none">Including music from games beside KH2 requires some additional steps.
@@ -77,6 +80,7 @@
 </select>
 </div> 
 
+</div>
 
 <div id="downloadButtons">
 <button id="PCSX2" name="platform" value="PCSX2">Generate for PCSX2</button>
