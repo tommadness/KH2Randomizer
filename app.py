@@ -7,7 +7,7 @@ from List.configDict import miscConfig, locationType, expTypes, keybladeAbilitie
 import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
-import os, base64, string, datetime, random, ast, zipfile, redis, json, asyncio
+import os, base64, string, datetime, random, ast, zipfile, redis, json, asyncio, copy
 from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer

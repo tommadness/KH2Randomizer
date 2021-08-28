@@ -18,8 +18,9 @@ def get_default_settings():
     "enemyOptions": {"boss": "One to One", "enemy": "One to One", "scale_boss_stats": True, "cups_bosses": True},
     "hintsType": "JSmartee",
     "startingInventory": [],
-    "seedModifiers": [],
-    "locations": ["Land of Dragons", "Beast's Castle", "Hollow Bastion", "Cavern of Remembrance", "Twilight Town", "The World That Never Was", "Space Paranoids", "Port Royal", "Olympus Coliseum", "Agrabah", "Halloween Town", "Pride Lands", "Disney Castle / Timeless River", "Hundred Acre Wood", "Simulated Twilight Town", "Absent Silhouettes", "Sephiroth", "Form Levels", "Garden of Assemblage", "Critical Bonuses"]
+    "seedModifiers": ["Max Logic Item Placement"],
+    "locations": ["Land of Dragons", "Beast's Castle", "Hollow Bastion", "Cavern of Remembrance", "Twilight Town", "The World That Never Was", "Space Paranoids", "Port Royal", "Olympus Coliseum", "Agrabah", "Halloween Town", "Pride Lands", "Disney Castle / Timeless River", "Hundred Acre Wood", "Simulated Twilight Town", "Absent Silhouettes", "Sephiroth", "Form Levels", "Garden of Assemblage", "Critical Bonuses"],
+    "itemPlacementDifficulty": "Normal"
     }
 
 def powerfulKeyblades(s):

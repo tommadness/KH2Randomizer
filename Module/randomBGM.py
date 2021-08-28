@@ -4,107 +4,107 @@ musicList = {
     "KH2": [
         {"name": "music050.win32.scd", "kind": "unknown"}, 
         {"name": "music051.win32.scd", "kind": "field"}, # Fragments of Sorrow
-        {"name": "music052.win32.scd", "kind": "battle"}, # The Afternoon Streets
+        {"name": "music052.win32.scd", "kind": "field"}, # The Afternoon Streets
         {"name": "music053.win32.scd", "kind": "battle"}, # Working Together
-        {"name": "music054.win32.scd", "kind": "battle"},
+        {"name": "music054.win32.scd", "kind": "unknown"},
         {"name": "music055.win32.scd", "kind": "battle"}, #Deep Drive
         {"name": "music059.win32.scd", "kind": "battle"}, #A Fight to the Death
-        {"name": "music060.win32.scd", "kind": "battle"}, #Darkness of the Unkown I
+        {"name": "music060.win32.scd", "kind": "battle"}, #Darkness of the Unknown I
         {"name": "music061.win32.scd", "kind": "battle"}, #Darkness of the unknown II
         {"name": "music062.win32.scd", "kind": "battle"}, # Darkness of the Unknown III
         {"name": "music063.win32.scd", "kind": "battle"}, # The 13th Reflection
-        {"name": "music064.win32.scd", "kind": "battle"}, #What a Surprise
+        {"name": "music064.win32.scd", "kind": "field"}, #What a Surprise
         {"name": "music065.win32.scd", "kind": "battle"}, # Happy Holidays
         {"name": "music066.win32.scd", "kind": "battle"},  # The other Promise
         {"name": "music067.win32.scd", "kind": "battle"}, # Rage Awakened
-        {"name": "music068.win32.scd", "kind": "battle"}, # Cavern of Remembrance
+        {"name": "music068.win32.scd", "kind": "field"}, # Cavern of Remembrance
         {"name": "music069.win32.scd", "kind": "battle"}, # Deep Anxiety
         {"name": "music081.win32.scd", "kind": "battle"}, # Beneath the Ground
-        {"name": "music082.win32.scd", "kind": "battle"}, # The Escapade
+        {"name": "music082.win32.scd", "kind": "field"}, # The Escapade
         {"name": "music084.win32.scd", "kind": "battle"}, # Arabian Daydream
         {"name": "music085.win32.scd", "kind": "battle"}, # Byte Striking
         {"name": "music086.win32.scd", "kind": "battle"}, # Spooks of Halloween Town
         {"name": "music087.win32.scd", "kind": "battle"}, # Disappeared
-        {"name": "music088.win32.scd", "kind": "battle"}, # Sora's Theme
-        {"name": "music089.win32.scd", "kind": "battle"}, # Friends in my heart
-        {"name": "music090.win32.scd", "kind": "battle"}, # Riku's Theme
-        {"name": "music091.win32.scd", "kind": "battle"}, #Kairi's Theme
-        {"name": "music092.win32.scd", "kind": "battle"},# A Walk in Andante
-        {"name": "music093.win32.scd", "kind": "battle"}, # Villain's of a Sort
-        {"name": "music094.win32.scd", "kind": "battle"}, # Organization XIII
+        {"name": "music088.win32.scd", "kind": "field"}, # Sora's Theme
+        {"name": "music089.win32.scd", "kind": "field"}, # Friends in my heart
+        {"name": "music090.win32.scd", "kind": "field"}, # Riku's Theme
+        {"name": "music091.win32.scd", "kind": "field"}, #Kairi's Theme
+        {"name": "music092.win32.scd", "kind": "field"},# A Walk in Andante
+        {"name": "music093.win32.scd", "kind": "field"}, # Villain's of a Sort
+        {"name": "music094.win32.scd", "kind": "field"}, # Organization XIII
         {"name": "music095.win32.scd", "kind": "battle"}, # Apprehension
         {"name": "music096.win32.scd", "kind": "battle"}, # Courage
-        {"name": "music097.win32.scd", "kind": "battle"}, # Laughter and Merriment
-        {"name": "music098.win32.scd", "kind": "battle"}, # Hesitation
-        {"name": "music099.win32.scd", "kind": "battle"}, # Missing You
-        {"name": "music100.win32.scd", "kind": "battle"}, # The Underworld
+        {"name": "music097.win32.scd", "kind": "field"}, # Laughter and Merriment
+        {"name": "music098.win32.scd", "kind": "field"}, # Hesitation
+        {"name": "music099.win32.scd", "kind": "field"}, # Missing You
+        {"name": "music100.win32.scd", "kind": "field"}, # The Underworld
         {"name": "music101.win32.scd", "kind": "battle"}, # Waltz of the Damned
         {"name": "music102.win32.scd", "kind": "battle"}, # What Lies Beneath
         {"name": "music103.win32.scd", "kind": "battle"}, # Olympus Coliseum
         {"name": "music104.win32.scd", "kind": "battle"}, # Dance of the Daring
-        {"name": "music106.win32.scd", "kind": "battle", "dmca": True}, # Under the Sea
+        {"name": "music106.win32.scd", "kind": "field", "dmca": True}, # Under the Sea
         {"name": "music107.win32.scd", "kind": "battle"}, # Ursula's Revenge
-        {"name": "music108.win32.scd", "kind": "battle", "dmca": True}, # Part of your World
-        {"name": "music109.win32.scd", "kind": "battle"}, # A New Day is Dawning
+        {"name": "music108.win32.scd", "kind": "field", "dmca": True}, # Part of your World
+        {"name": "music109.win32.scd", "kind": "field"}, # A New Day is Dawning
         {"name": "music110.win32.scd", "kind": "battle"}, # The Encounter
         {"name": "music111.win32.scd", "kind": "battle"}, # Sinister Shadows
         {"name": "music112.win32.scd", "kind": "battle"}, # Fields of Honor 
-        {"name": "music113.win32.scd", "kind": "battle"}, # Swim This Way
+        {"name": "music113.win32.scd", "kind": "field"}, # Swim This Way
         {"name": "music114.win32.scd", "kind": "battle"}, # Tension Rising
         {"name": "music115.win32.scd", "kind": "battle"}, # The Corrupted
-        {"name": "music116.win32.scd", "kind": "battle"}, # The Home of Dragons
+        {"name": "music116.win32.scd", "kind": "field"}, # The Home of Dragons
         {"name": "music117.win32.scd", "kind": "battle"}, # Rowdy Rumble
-        {"name": "music118.win32.scd", "kind": "battle"}, # Lazy Afternoons
+        {"name": "music118.win32.scd", "kind": "field"}, # Lazy Afternoons
         {"name": "music119.win32.scd", "kind": "battle"}, # Sinister Sundown
-        {"name": "music120.win32.scd", "kind": "battle"}, 
-        {"name": "music121.win32.scd", "kind": "battle"}, # Desire for All That is Lost
-        {"name": "music122.win32.scd", "kind": "battle"}, # Atlantica Tutorial I
-        {"name": "music123.win32.scd", "kind": "battle"}, # Atlantica Tutorial II
-        {"name": "music124.win32.scd", "kind": "battle"}, # Atlantica Tutorial II.5
-        {"name": "music125.win32.scd", "kind": "battle"}, # Atlantica Tutorial Finish
-        {"name": "music127.win32.scd", "kind": "battle"}, # A Day in Agrabah
+        {"name": "music120.win32.scd", "kind": "unknown"}, 
+        {"name": "music121.win32.scd", "kind": "field"}, # Desire for All That is Lost
+        {"name": "music122.win32.scd", "kind": "field"}, # Atlantica Tutorial I
+        {"name": "music123.win32.scd", "kind": "field"}, # Atlantica Tutorial II
+        {"name": "music124.win32.scd", "kind": "field"}, # Atlantica Tutorial II.5
+        {"name": "music125.win32.scd", "kind": "field"}, # Atlantica Tutorial Finish
+        {"name": "music127.win32.scd", "kind": "field"}, # A Day in Agrabah
         {"name": "music128.win32.scd", "kind": "battle"}, # Arabian Dream
-        {"name": "music129.win32.scd", "kind": "battle"}, # Isn't It Lovely
-        {"name": "music130.win32.scd", "kind": "battle"}, # Atlantica tutorials Combined
+        {"name": "music129.win32.scd", "kind": "field"}, # Isn't It Lovely
+        {"name": "music130.win32.scd", "kind": "field"}, # Atlantica tutorials Combined
         {"name": "music131.win32.scd", "kind": "battle"}, # Dance to the Death 
-        {"name": "music132.win32.scd", "kind": "battle", "dmca": True}, # Beauty and the Beast
-        {"name": "music133.win32.scd", "kind": "battle"}, # Magical Mystery
-        {"name": "music134.win32.scd", "kind": "battle"}, 
-        {"name": "music135.win32.scd", "kind": "battle"}, # Space Paranoids Theme
+        {"name": "music132.win32.scd", "kind": "field", "dmca": True}, # Beauty and the Beast
+        {"name": "music133.win32.scd", "kind": "field"}, # Magical Mystery
+        {"name": "music134.win32.scd", "kind": "unknown"}, 
+        {"name": "music135.win32.scd", "kind": "field"}, # Space Paranoids Theme
         {"name": "music136.win32.scd", "kind": "battle"}, # Byte Bashing
-        {"name": "music137.win32.scd", "kind": "battle"}, # A Twinkle in the Sky
-        {"name": "music138.win32.scd", "kind": "battle"}, # Shipmeisters' Shanty
-        {"name": "music139.win32.scd", "kind": "battle"}, # Gearing up
-        {"name": "music141.win32.scd", "kind": "battle"}, # Winnie the Pooh Theme
-        {"name": "music142.win32.scd", "kind": "battle"}, # Crossing the Finish Line
-        {"name": "music143.win32.scd", "kind": "battle"}, # Mickey Mouse Club March
-        {"name": "music144.win32.scd", "kind": "battle"}, # This is Halloween
+        {"name": "music137.win32.scd", "kind": "field"}, # A Twinkle in the Sky
+        {"name": "music138.win32.scd", "kind": "field"}, # Shipmeisters' Shanty
+        {"name": "music139.win32.scd", "kind": "field"}, # Gearing up
+        {"name": "music141.win32.scd", "kind": "field"}, # Winnie the Pooh Theme
+        {"name": "music142.win32.scd", "kind": "field"}, # Crossing the Finish Line
+        {"name": "music143.win32.scd", "kind": "field"}, # Mickey Mouse Club March
+        {"name": "music144.win32.scd", "kind": "field"}, # This is Halloween
         {"name": "music145.win32.scd", "kind": "battle"}, # Vim and Vigor
         {"name": "music146.win32.scd", "kind": "battle"}, # Roxas' Theme
-        {"name": "music148.win32.scd", "kind": "battle"}, # Blast Off
-        {"name": "music149.win32.scd", "kind": "battle"}, 
+        {"name": "music148.win32.scd", "kind": "field"}, # Blast Off
+        {"name": "music149.win32.scd", "kind": "unknown"}, 
         {"name": "music151.win32.scd", "kind": "battle"}, # The 13th Struggle
-        {"name": "music152.win32.scd", "kind": "battle"}, # Reviving Hallow Bastion
+        {"name": "music152.win32.scd", "kind": "field"}, # Reviving Hallow Bastion
         {"name": "music153.win32.scd", "kind": "battle"}, # Scherzo Di Notte
-        {"name": "music154.win32.scd", "kind": "battle"}, # Nights of the Cursed
+        {"name": "music154.win32.scd", "kind": "field"}, # Nights of the Cursed
         {"name": "music155.win32.scd", "kind": "battle"}, # He's a Pirate
-        {"name": "music158.win32.scd", "kind": "battle"}, # Bounce-o-Rama
-        {"name": "music159.win32.scd", "kind": "battle"}, # Bounce-o-Rama Ver 2
-        {"name": "music164.win32.scd", "kind": "battle"}, # Road to a Hero
+        {"name": "music158.win32.scd", "kind": "field"}, # Bounce-o-Rama
+        {"name": "music159.win32.scd", "kind": "field"}, # Bounce-o-Rama Ver 2
+        {"name": "music164.win32.scd", "kind": "field"}, # Road to a Hero
         {"name": "music185.win32.scd", "kind": "battle"}, # The 13th Dilemma
-        {"name": "music186.win32.scd", "kind": "battle"}, # Adventures in the Savannah
+        {"name": "music186.win32.scd", "kind": "field"}, # Adventures in the Savannah
         {"name": "music187.win32.scd", "kind": "battle"}, # Savannah Pride
         {"name": "music188.win32.scd", "kind": "battle"}, # One-Winged Angel
-        {"name": "music189.win32.scd", "kind": "battle"}, # Monochrome Dreams
+        {"name": "music189.win32.scd", "kind": "field"}, # Monochrome Dreams
         {"name": "music190.win32.scd", "kind": "battle"}, # Old Friends, Old Rivals
-        {"name": "music506.win32.scd", "kind": "battle", "dmca": True},
-        {"name": "music507.win32.scd", "kind": "battle"},
-        {"name": "music508.win32.scd", "kind": "battle", "dmca": True},
-        {"name": "music509.win32.scd", "kind": "battle"},
-        {"name": "music513.win32.scd", "kind": "battle"},
-        {"name": "music517.win32.scd", "kind": "battle"},
-        {"name": "music521.win32.scd", "kind": "battle"},
-        {"name": "music530.win32.scd", "kind": "battle"}],
+        {"name": "music506.win32.scd", "kind": "field", "dmca": True},
+        {"name": "music507.win32.scd", "kind": "field"},
+        {"name": "music508.win32.scd", "kind": "field", "dmca": True},
+        {"name": "music509.win32.scd", "kind": "field"},
+        {"name": "music513.win32.scd", "kind": "field"},
+        {"name": "music517.win32.scd", "kind": "field"},
+        {"name": "music521.win32.scd", "kind": "field"},
+        {"name": "music530.win32.scd", "kind": "field"}],
     "KH1": [
         {"name": "music097.win32.scd", "kind": "unknown"},
         {"name": "music098.win32.scd", "kind": "unknown"},
@@ -341,9 +341,9 @@ musicList = {
 
 musicPaths = {
     "KH2": "bgm",
-    "KH1": "..\\KH1PC\\TOBEFOUND",
-    "BBS": "..\\KHBBS\\sound\\win\\bgm",
-    "RECOM": "..\\KHRECOM\\STREAM\\0001",
+    "KH1": "..\\kh1\\TOBEFOUND",
+    "BBS": "..\\bbs\\sound\\win\\bgm",
+    "RECOM": "..\\recom\\STREAM\\0001",
     "CUSTOM": "..\\custom"
 }
 class RandomBGM():
@@ -416,8 +416,9 @@ class RandomBGM():
             "KH2",
             # "KH1", Can't find where the SCD files are located
             "BBS",
-            "RECOM",  
-            "CUSTOM 5", 
-            "CUSTOM 10",
-            "CUSTOM 25"
+            "RECOM"
+            # "CUSTOM 5", 
+            # "CUSTOM 10",
+            # "CUSTOM 25",
+            # "CUSTOM 100"
         ]
