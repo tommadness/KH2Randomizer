@@ -79,7 +79,7 @@ class SeedValidator:
 
         return False
 
-class SeedMetrics:
+class SeedMetricsNumDatas:
     def metrics(self, randomizer):
 
         trsrList = [location for location in randomizer._allLocationList if isinstance(location, KH2Treasure)]
