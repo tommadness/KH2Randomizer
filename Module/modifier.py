@@ -41,7 +41,6 @@ class SeedModifier():
         abilitylist = action + support
         abilitydict = {i.Name: i for i in abilitylist}
         possibleabilities = list(set([i.Name for i in abilitylist if i.Name not in ["Second Chance", "Once More"]]))
-        print(possibleabilities)
         randomabilitypool = []
         for _ in range(len(abilitylist)-2):
             choice = random.choice(possibleabilities)
