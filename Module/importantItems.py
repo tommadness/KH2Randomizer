@@ -6,7 +6,8 @@ def getImportantChecks():
             26,27,29,31,563, # forms
             32, #pages
             159,160,25,383, #summons
-            415,416 #SC/OM
+            415,416, #SC/OM
+            524 #promise charm
     ]
 
 def getReports():
