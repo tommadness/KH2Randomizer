@@ -334,7 +334,21 @@ class KH2Randomizer():
                 "ArmorSlotMax": plrp.ArmorSlotMax,
                 "AccessorySlotMax": plrp.AccessorySlotMax,
                 "ItemSlotMax": plrp.ItemSlotMax,
-                "Items": plrp.Items,
+                "Items": plrp.Items[:7] if plrp.Difficulty == 7 else plrp.Items,
+                "Padding": [0] * 52
+            })
+        crit_sora = plrpList[0]
+        # Non crit plrp is same as crit entry but without the crit specific starting items, and the crit mode will get starting items from both non_crit and crit plrps
+        formattedPlrp.append({
+                "Character": crit_sora.Character,
+                "Id": 0,
+                "Hp": crit_sora.Hp,
+                "Mp": crit_sora.Mp,
+                "Ap": crit_sora.Ap,
+                "ArmorSlotMax": crit_sora.ArmorSlotMax,
+                "AccessorySlotMax": crit_sora.AccessorySlotMax,
+                "ItemSlotMax": crit_sora.ItemSlotMax,
+                "Items": crit_sora.Items[7:],
                 "Padding": [0] * 52
             })
 
