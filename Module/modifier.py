@@ -4,6 +4,14 @@ class SeedModifier():
     def getOptions():
         return [
             {
+                "name": "Max Logic Item Placement",
+                "description": "Less restricted item placement. All checks still obtainable."
+            },
+            {
+                "name": "Reverse Rando",
+                "description": "Use when generating a Reverse Rando seed to ensure softlock protection"
+            },
+            {
                 "name":"Glass Cannon",
                 "description": "No more pesky Defense Ups in the level up stats pool"
             },
@@ -30,14 +38,6 @@ class SeedModifier():
             {
                 "name": "Remove Damage Cap",
                 "description": "Removes the damage cap for every enemy/boss in the game."
-            },
-            {
-                "name": "Max Logic Item Placement",
-                "description": "Less restricted item placement. All checks still obtainable."
-            },
-            {
-                "name": "Reverse Rando",
-                "description": "Use when generating a Reverse Rando seed to ensure softlock protection"
             }
         ]
 

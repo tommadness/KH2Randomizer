@@ -5,9 +5,8 @@ A daily seed is a set seed that is automatically generated each day, using a num
 Note that PC and PS2 times can't be directly compared, as the enemy/boss randomizations will be completely different (but the item locations will be the same)
 
 The default ruleset:
-- League Locations
-- ??? Form XP
 - 3x Sora XP, levels to 50
+- Form XP: 5x Valor, 3x Wisdom, 3x Limit, 2x Master, 3x Final
 - Keyblade stats 0-7
 - No promise charm
 - JSmartee Hints

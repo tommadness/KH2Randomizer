@@ -6,7 +6,7 @@ The OpenKH mods manager does not currently support PC directly, however using a 
 
 Presetup note: Make sure the versions of the .PKG/.HED files in your KH1.5/2.5 install folder are unmodified (If you have previously modified them either restore backups, or right click the game in EGS and "verify game files")
 
-- Download the zip of the latest release of the khpc-modsmanager-bridge (https://github.com/thundrio-kh/khpc-modsmanager-bridge/releases/tag/v1.1), and extract it to a folder of your choice.
+- Download the zip of the latest release of the [khpc-modsmanager-bridge](https://github.com/thundrio-kh/khpc-modsmanager-bridge/releases/), and extract it to a folder of your choice.
 - Run the build_from_mm.exe, and in the window that appears a few directories need to be set under "setup".
 * openkh_path: This should be the directory containing your openkh installation (so the mods manager exe/everything else).
     Example: `C:\Users\randouser1001\Desktop\openkh`
