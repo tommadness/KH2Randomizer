@@ -1,8 +1,0 @@
-If configuring music rando to work with more than kh2, you must create extracted folders for the games you want to include (bbs and recom supported)
-
-The simplest
-You can do this by opening the pc-modsmanager-bridge program, and selecting "bbs" or "recom", and then running the "extract" option
-
-Assuming you already extracted KH2PC with this method, it should work fine.
-
-If you end up with some file not found errors when doing "build only" you likely didn't extract the games to the right spot.

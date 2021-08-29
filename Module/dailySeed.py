@@ -80,11 +80,6 @@ dailyModifiers = [
                 categories={'bosses', 'worlds'},
                 modifier=enableSuperbosses
                 ),
-    DailyModifier(name="Enemies Changed Every Room",
-                description="The randomization mapping used for enemies is different every room",
-                categories={'enemies'},
-                modifier=lambda s: exec('s["enemyOptions"]["enemy"] = "One to One Per Room"')
-                ),
     DailyModifier(name="X-Ray Vision",
                 description="Sora starts the game with Scan",
                 categories={},
@@ -128,15 +123,28 @@ dailyModifiers = [
     DailyModifier(name="Remove Damage Cap",
                 description="Remove Damage Cap for Sora dealing damage to enemies",
                 categories={},
-                modifier=lambda s: s["seedModifiers"].append("Remove Damage Cap")),
+                modifier=lambda s: s["seedModifiers"].append("Remove Damage Cap")
+                ),
     DailyModifier(name="More Powerful keyblades",
                 description="Keyblades can have maximum stats of up to 20",
                 categories={'keyblades'},
-                modifier=powerfulKeyblades),
+                modifier=powerfulKeyblades
+                ),
     DailyModifier(name="Early Checks",
                 description="Worlds are more likely to have better checks early, than late",
                 categories={'itemdifficulty'},
-                modifier=lambda s: exec('s["itemPlacementDifficulty"] = "Easy"'))
+                modifier=lambda s: exec('s["itemPlacementDifficulty"] = "Easy"')
+                ),
+    DailyModifier(name="Late Checks",
+                description="Worlds are more likely to have better checks early, than late",
+                categories={'itemdifficulty'},
+                modifier=lambda s: exec('s["itemPlacementDifficulty"] = "Hard"')
+                ),
+    DailyModifier(name="No Starting AP",
+                description="Sora/Donald/Goofy start the game with 0 AP",
+                categories= {"abilities"},
+                modifier=lambda s: s["seedModifiers"].append("Start with No AP")
+                )
 ]
 
 def getDailyModifiers(date):
