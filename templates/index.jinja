@@ -2,6 +2,17 @@
 {% block content %}
         
 <h2>{{message}}</h2>
+<div class="container" id="daily">
+    <div class="vertical">
+    <h4><a href="https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/dailyseeds.md">Daily Seed Modifiers</a></h4>
+    {%for modifier in dailyModifiers%}
+            <label title="{{modifier["description"]}}">{{modifier["name"]}}</label> 
+    {%endfor%}
+    </div>
+    <div>
+        <a href="/daily"><button name="dailySeed" value="Daily Seed" id="Daily Seed" data-toggle="tooltip" data-placement="top" title="Generate the daily seed with the below modifiers from league boss/enemy settings. When this option is selected, all other seed options are ignored.">Generate Daily Seed</button></a></label>
+        </div>
+</div>
 <form action='/seed' method="POST">
     <div class="container seed">
         <div>
@@ -95,17 +106,35 @@
         <div class="vertical">
             <h4>Seed Modifiers</h4>
             {%for modifier in seedModifiers%}
+                {%if modifier["name"] == "Max Logic Item Placement" %}
+                <div>
+                    <label class="switch"><input type="checkbox" checked name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/><span class="slider round"></label>
+                    <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> 
+                </div>
+                {%else%}
                 <div>
                     <label class="switch"><input type="checkbox" name="seedModifiers" value="{{modifier["name"]}}" id="{{modifier["name"]}}"/><span class="slider round"></label>
                     <label for="{{modifier["name"]}}" data-toggle="tooltip" data-placement="top" title="{{modifier["description"]}}">{{modifier["name"]}}</label> 
                 </div>
+                {%endif%}
             {%endfor%}
+        </div>
+        <div class="vertical">
+            <h4>Seed Item Placement Difficulty</h4>
+            <select name="itemPlacementDifficulty" style="width:100%" id="itemPlacementDifficulty">
+                <option value="Super Easy">Super Easy</option>
+                <option value="Easy">Easy</option>
+                <option selected value="Normal">Normal</option>
+                <option value="Hard">Hard</option>
+                <option value="Very Hard">Very Hard</option>
+                <option value="Insane">Insane</option>
+            </select>
         </div>
     </div>
 
     <div class="container enemy">
     <h4>Enemy Randomizer</h4>
-    <h5><em>For updates and information about the enemy randomizer, click <a href="https://docs.google.com/spreadsheets/d/1O0mFCrmnS8E5E_MeTdInJaRh5-wfDsxlQnQEe3H1LJc/edit?usp=sharing">HERE</a> (Last update: 8/11/2021)</em></h5>
+    <h5><em>For updates and information about the enemy randomizer, click <a href="https://docs.google.com/spreadsheets/d/1O0mFCrmnS8E5E_MeTdInJaRh5-wfDsxlQnQEe3H1LJc/edit?usp=sharing">HERE</a> (Last update: 8/28/2021)</em></h5>
     <h6>Randomization can take a few minutes. Please be patient.</h6>
         {%for optionGroup in bossEnemyConfig if not optionGroup in ["memory_expansion"]%}
             <div class="vertical">

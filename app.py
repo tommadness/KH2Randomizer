@@ -3,14 +3,16 @@ from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
 from Module.modifier import SeedModifier
+from Module.seedEvaluation import SeedValidator
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
 import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
-import os, base64, string, random, ast, zipfile, redis, json, asyncio
+import os, base64, string, datetime, random, ast, zipfile, redis, json, asyncio, copy
 from khbr.randomizer import Randomizer as khbr
 from Module.hints import Hints
 from Module.randomize import KH2Randomizer
+from Module.dailySeed import generateDailySeed, getDailyModifiers
 from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
@@ -25,9 +27,21 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = List.LocationList.getOptions(), expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions())
+    return fl.render_template('index.jinja', locations = List.LocationList.getOptions(), expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions(), dailyModifiers = getDailyModifiers(datetime.date.today()))
 
-
+@app.route('/daily', methods=["GET", ])
+def dailySeed():
+    session.clear()
+    dailySession = generateDailySeed()
+    for k in dailySession.keys():
+        if k == "locations":
+            session["includeList"] = [locationType(l) for l in dailySession["locations"]]
+        elif k == "enemyOptions":
+            session["enemyOptions"] = json.dumps(dailySession[k])
+        else:
+            session[k] = dailySession[k]
+    session["permaLink"] = ""
+    return fl.redirect(fl.url_for('seed'))
 
 @app.route('/seed/<hash>')
 def hashedSeed(hash):
@@ -108,20 +122,23 @@ def seed():
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
 
+        session['itemPlacementDifficulty'] = fl.request.form.get("itemPlacementDifficulty")
+
         session['permaLink'] = ''.join(random.choice(string.ascii_uppercase) for i in range(8))
         if not development_mode:
             with r.pipeline() as pipe:
                 for key in session.keys():
                     pipe.hmset(session['permaLink'], {key.encode('utf-8'): json.dumps(session.get(key)).encode('utf-8')})
                 pipe.execute()
-
+    
     return fl.render_template('seed.jinja',
     spoilerLog = session.get('spoilerLog'),
     permaLink = fl.url_for("hashedSeed",hash=session['permaLink'], _external=True), 
     cmdMenus = RandomCmdMenu.getOptions(),
     bgmOptions = RandomBGM.getOptions(), 
+    bgmGames = RandomBGM.getGames(),
     levelChoice = session.get('levelChoice'), 
-    include = session.get('includeList'), 
+    include = [locationType(l) for l in session.get('includeList')], 
     seed = session.get('seed'), 
     worlds=locationType, 
     expTypes = expTypes, 
@@ -133,6 +150,7 @@ def seed():
     enemyOptions = json.loads(session.get("enemyOptions")),
     hintsType = session.get("hintsType"),
     startingInventory = session.get("startingInventory"),
+    itemPlacementDifficulty = session.get("itemPlacementDifficulty"),
     seedModifiers = session.get("seedModifiers"),
     idConverter = StartingInventory.getIdConverter()
     )
@@ -145,7 +163,7 @@ def handleConnection():
 def startDownload(data):
     print("Started")
     seed = socketio.start_background_task(randomizePage, data, dict(session))
-
+    
 
 def randomizePage(data, sessionDict):
     print(data['platform'])
@@ -156,42 +174,45 @@ def randomizePage(data, sessionDict):
     randomBGM = data["randomBGM"]
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
-    randomizer = KH2Randomizer(seedName = sessionDict["seed"])
-    randomizer.populateLocations(excludeList)
-    randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
-    if randomizer.validateCount():
-        randomizer.setKeybladeAbilities(
-            keybladeAbilities = sessionDict["keybladeAbilities"], 
-            keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
-            keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
-        )
-        randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
-        randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
-        randomizer.setBonusStats()
-        # if not randomizer.validateSeed(startingInventory = sessionDict["startingInventory"]):
-        #     print("ERROR: Seed is not completable! Trying another seed...")
-        #     characters = string.ascii_letters + string.digits
-        #     sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
-        #     randomizePage(data,sessionDict)
-        #     return
-        try:
-            zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
-            if development_mode:
-                development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
-                if development_mode_path:
-                    if os.path.exists(development_mode_path):
-                        # Ensure a clean environment
-                        import shutil
-                        shutil.rmtree(development_mode_path)
-                    # Unzip mod into path
-                    import zipfile
-                    zipfile.ZipFile(zip).extractall(development_mode_path)
-                    print("unzipped into {}".format(development_mode_path))
-                return
-            socketio.emit('file',zip.read())
+    seedValidation = SeedValidator(sessionDict)
 
-        except ValueError as err:
-            print("ERROR: ", err.args)
+    while True:
+        randomizer = KH2Randomizer(seedName = sessionDict["seed"])
+        randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"])
+        randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
+        if randomizer.validateCount():
+            randomizer.setKeybladeAbilities(
+                keybladeAbilities = sessionDict["keybladeAbilities"], 
+                keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
+                keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
+            )
+            randomizer.setNoAP("Start with No AP" in sessionDict["seedModifiers"])
+            randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
+            randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
+            randomizer.setBonusStats()
+            if not seedValidation.validateSeed(sessionDict, randomizer):
+                print("ERROR: Seed is not completable! Trying another seed...")
+                characters = string.ascii_letters + string.digits
+                sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
+                continue
+            try:
+                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
+                if development_mode:
+                    development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
+                    if development_mode_path:
+                        if os.path.exists(development_mode_path):
+                            # Ensure a clean environment
+                            import shutil
+                            shutil.rmtree(development_mode_path)
+                        # Unzip mod into path
+                        import zipfile
+                        zipfile.ZipFile(zip).extractall(development_mode_path)
+                        print("unzipped into {}".format(development_mode_path))
+                    return
+                socketio.emit('file',zip.read())
+
+            except ValueError as err:
+                print("ERROR: ", err.args)
 
 @app.after_request
 def add_header(r):

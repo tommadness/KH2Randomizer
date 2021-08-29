@@ -7,7 +7,10 @@
     <meta content="#e32733" data-react-helmet="true" name="theme-color">
 {%endblock%}
 {% block content %}
+{% if not permaLink[-1] == "/"%}
 <h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
+{% else %}
+{%endif%}
 <form action="/download">
 {%if spoilerLog != False%}
 <h4>Seed: {{seed}}</h4>
@@ -44,39 +47,57 @@
 <div class="container">
     <div class="vertical top"><h5>Hint System</h5>{{hintsType}}</div>
     <div class="vertical top"><h5>Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}<br>{%endfor%}</div>
+    <div class="vertical top"><h5>Item Placement Difficulty</h5>{{itemPlacementDifficulty}}</div>
     <div class="vertical top"><h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}<br>{%endfor%}</div>
 </div>
 
+<div class="container col-12">
 
+<div class="vertical">
 <h4>Command Menu:</h4>
 <select name="cmdMenuChoice">
     {% for key in cmdMenus %}
     <option value="{{key}}">{{cmdMenus[key]}}</option>
     {% endfor %}
 </select>
+</div>
 
- {# <div class="col-6">
+<div class="vertical">
 <h4>Randomize BGM (PC ONLY)</h4>
-<select name="randomBGM">
-    {%for option in bgmOptions %}
-    <option value="{{option}}">{{option}}</option>
-    {%endfor%}
+<select name="randomBGM" multiple="multiple" id="random-bgm">
+    <optGroup label="Options" class="group-options">
+        {%for option in bgmOptions %}
+        <option value="{{option}}">{{option}}</option>
+        {%endfor%}
+    </optGroup>
+    <optGroup label="Games to include" class="group-games">
+        {%for option in bgmGames %}
+        <option value="{{option}}">{{option}}</option>
+        {%endfor%}
+    </optGroup>
 </select>
-</div>  #}
+</div> 
 
+</div>
 
-{#<input type="submit" value="Download for PC" name="platform">#}
-</form>
 <div id="downloadButtons">
 <button id="PCSX2" name="platform" value="PCSX2">Generate for PCSX2</button>
-{# <button id="PC" name="platform" value="PC">Generate for PC</button> #}
+<button id="PC" name="platform" value="PC">Generate for PC</button> <a href="https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/pc.md">PC Setup Instructions</a>
 </div>
+</form>
 <script>
+
+$(document).ready(function(){
+    tail.select("#random-bgm", {
+        multiSelectGroup: true,
+    });
+});
+
 $(function(){
     $('button').click(function(){
         var platform = $(this).val();
         var cmdMenuChoice = $("select[name=cmdMenuChoice]").val();
-        var randomBGM = "Disabled";
+        var randomBGM = $("select[name=randomBGM]").val();
         $("#downloadButtons button").prop('disabled',true).text("Generating...");
         var HOST = location.origin.replace(/^http/, 'ws')
         var socket = io(HOST);

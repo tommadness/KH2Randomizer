@@ -89,77 +89,89 @@
         for(var j = 0; j < worlds.length; j++)
         {
             var world = worlds[j]
-            for (var i = 0; i < spoiler_data[world].length; i++)
+            if(world in spoiler_data)
+            {
+                for (var i = 0; i < spoiler_data[world].length; i++)
+                {
+                    var table_entry = document.createElement("tr");
+                    var world_table_html = "";
+                    world_table_html+="<td>"
+                    world_table_html+=world
+                    world_table_html+="</td>"
+                    var item_data = spoiler_data[world][i]
+                    world_table_html+="<td>"
+                    world_table_html+=item_data[0]
+                    world_table_html+="</td>"
+                    world_table_html+="<td>"
+                    world_table_html+=item_data[1]["Name"]
+                    world_table_html+="</td>"
+                    table_entry.innerHTML += world_table_html;
+                    mainContainer.appendChild(table_entry);
+                }
+            }
+        }
+
+        if ("Level" in spoiler_data)
+        {
+            for (var i = 0; i < spoiler_data["Level"].length; i++)
             {
                 var table_entry = document.createElement("tr");
                 var world_table_html = "";
-                world_table_html+="<td>"
-                world_table_html+=world
-                world_table_html+="</td>"
-                var item_data = spoiler_data[world][i]
-                world_table_html+="<td>"
-                world_table_html+=item_data[0]
-                world_table_html+="</td>"
-                world_table_html+="<td>"
-                world_table_html+=item_data[1]["Name"]
-                world_table_html+="</td>"
+                world_table_html+="<td>";
+                world_table_html+="Levels";
+                world_table_html+="</td>";
+                var level_data = spoiler_data["Level"][i];
+                world_table_html+="<td>";
+                world_table_html+=level_data[0];
+                world_table_html+="</td>";
+                world_table_html+="<td>";
+                world_table_html+=level_data[1]["Name"];
+                world_table_html+="</td>";
                 table_entry.innerHTML += world_table_html;
                 mainContainer.appendChild(table_entry);
             }
         }
 
-        for (var i = 0; i < spoiler_data["Level"].length; i++)
+        if ("Form Levels" in spoiler_data)
         {
-            var table_entry = document.createElement("tr");
-            var world_table_html = "";
-            world_table_html+="<td>";
-            world_table_html+="Levels";
-            world_table_html+="</td>";
-            var level_data = spoiler_data["Level"][i];
-            world_table_html+="<td>";
-            world_table_html+=level_data[0];
-            world_table_html+="</td>";
-            world_table_html+="<td>";
-            world_table_html+=level_data[1]["Name"];
-            world_table_html+="</td>";
-            table_entry.innerHTML += world_table_html;
-            mainContainer.appendChild(table_entry);
+            for (var i = 0; i < spoiler_data["Form Levels"].length; i++)
+            {
+                var table_entry = document.createElement("tr");
+                var world_table_html = "";
+                world_table_html+="<td>";
+                world_table_html+="Levels";
+                world_table_html+="</td>";
+                var level_data = spoiler_data["Form Levels"][i]
+                world_table_html+="<td>";
+                world_table_html+=level_data[0];
+                world_table_html+="</td>";
+                world_table_html+="<td>";
+                world_table_html+=level_data[1]["Name"];
+                world_table_html+="</td>";
+                table_entry.innerHTML += world_table_html;
+                mainContainer.appendChild(table_entry);
+            }
         }
 
-        for (var i = 0; i < spoiler_data["Form Levels"].length; i++)
+        if ("Weapons" in spoiler_data)
         {
-            var table_entry = document.createElement("tr");
-            var world_table_html = "";
-            world_table_html+="<td>";
-            world_table_html+="Levels";
-            world_table_html+="</td>";
-            var level_data = spoiler_data["Form Levels"][i]
-            world_table_html+="<td>";
-            world_table_html+=level_data[0];
-            world_table_html+="</td>";
-            world_table_html+="<td>";
-            world_table_html+=level_data[1]["Name"];
-            world_table_html+="</td>";
-            table_entry.innerHTML += world_table_html;
-            mainContainer.appendChild(table_entry);
-        }
-
-        for (var i = 0; i <  spoiler_data["Weapons"].length; i++)
-        {
-            var table_entry = document.createElement("tr");
-            var world_table_html = "";
-            world_table_html+="<td>";
-            world_table_html+="Weapons";
-            world_table_html+="</td>";
-            var weapon = spoiler_data["Weapons"][i]
-            world_table_html+="<td>";
-            world_table_html+=weapon[0];
-            world_table_html+="</td>";
-            world_table_html+="<td>";
-            world_table_html+=weapon[1];
-            world_table_html+="</td>";
-            table_entry.innerHTML += world_table_html;
-            mainContainer.appendChild(table_entry);
+            for (var i = 0; i <  spoiler_data["Weapons"].length; i++)
+            {
+                var table_entry = document.createElement("tr");
+                var world_table_html = "";
+                world_table_html+="<td>";
+                world_table_html+="Weapons";
+                world_table_html+="</td>";
+                var weapon = spoiler_data["Weapons"][i]
+                world_table_html+="<td>";
+                world_table_html+=weapon[0];
+                world_table_html+="</td>";
+                world_table_html+="<td>";
+                world_table_html+=weapon[1];
+                world_table_html+="</td>";
+                table_entry.innerHTML += world_table_html;
+                mainContainer.appendChild(table_entry);
+            }
         }
 
         function tableFilter()
