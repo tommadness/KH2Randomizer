@@ -233,7 +233,8 @@ class KH2Randomizer():
                     random.shuffle(statsList)
                 location.setStat(statsList.pop())
 
-
+    def setNoAP(self, settrue=False):
+        self._noap = settrue
 
     def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsType = "Disabled", startingInventory=[], platform="PCSX2"):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
@@ -330,7 +331,7 @@ class KH2Randomizer():
                 "Id": plrp.Difficulty,
                 "Hp": plrp.Hp,
                 "Mp": plrp.Mp,
-                "Ap": plrp.Ap,
+                "Ap": 0 if self._noap else plrp.Ap,
                 "ArmorSlotMax": plrp.ArmorSlotMax,
                 "AccessorySlotMax": plrp.AccessorySlotMax,
                 "ItemSlotMax": plrp.ItemSlotMax,
@@ -344,7 +345,7 @@ class KH2Randomizer():
                 "Id": 0,
                 "Hp": crit_sora.Hp,
                 "Mp": crit_sora.Mp,
-                "Ap": crit_sora.Ap,
+                "Ap": 0 if self._noap else crit_sora.Ap,
                 "ArmorSlotMax": crit_sora.ArmorSlotMax,
                 "AccessorySlotMax": crit_sora.AccessorySlotMax,
                 "ItemSlotMax": crit_sora.ItemSlotMax,

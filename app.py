@@ -186,6 +186,7 @@ def randomizePage(data, sessionDict):
                 keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
                 keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
             )
+            randomizer.setNoAP("Start with No AP" in sessionDict["seedModifiers"])
             randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
             randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
             randomizer.setBonusStats()

@@ -24,6 +24,10 @@ class SeedModifier():
                 "description": "Pick Sora's action/support abilities at random (guaranteed to have 1 SC & 1 OM)"
             },
             {
+                "name": "Start with No AP",
+                "description": "Sora/Donald/Goofy start the game with 0 AP"
+            },
+            {
                 "name": "Remove Damage Cap",
                 "description": "Removes the damage cap for every enemy/boss in the game."
             },

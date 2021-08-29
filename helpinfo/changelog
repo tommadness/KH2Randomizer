@@ -3,6 +3,7 @@
 - daily seeds! seeds with different settings that change every day. see ___ for details
 - updated boss/enemy rando, can now do remove_damage_cap with vanilla boss/enemy placements
 - logic validator to prevent softlocks, comes with new "Max Logic" seedmod with stuff
+- fix beginner AP bug
 - start with 0 AP Seed modifier? 
 - Seed difficulty setting, from super easy to insanse
 - Endless Darkness preset, makes things super hard
