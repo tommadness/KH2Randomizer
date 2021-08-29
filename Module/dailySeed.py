@@ -132,7 +132,11 @@ dailyModifiers = [
     DailyModifier(name="More Powerful keyblades",
                 description="Keyblades can have maximum stats of up to 20",
                 categories={'keyblades'},
-                modifier=powerfulKeyblades)
+                modifier=powerfulKeyblades),
+    DailyModifier(name="Early Checks",
+                description="Worlds are more likely to have better checks early, than late",
+                categories={'itemdifficulty'},
+                modifier=lambda s: exec('s["itemPlacementDifficulty"] = "Easy"'))
 ]
 
 def getDailyModifiers(date):
