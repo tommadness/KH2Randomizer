@@ -177,8 +177,9 @@ def randomizePage(data, sessionDict):
     seedValidation = SeedValidator(sessionDict)
     notValidSeed = True
 
+    originalSeedName = sessionDict['seed']
     while notValidSeed:
-        randomizer = KH2Randomizer(seedName = sessionDict["seed"])
+        randomizer = KH2Randomizer(seedName = sessionDict["seed"], spoiler=bool(sessionDict["spoilerLog"]))
         randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"])
         randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
         if randomizer.validateCount():
@@ -198,6 +199,7 @@ def randomizePage(data, sessionDict):
                 continue
             notValidSeed = False
             try:
+                randomizer.seedName = originalSeedName
                 zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
                 if development_mode:
                     development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
