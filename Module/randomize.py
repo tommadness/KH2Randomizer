@@ -24,6 +24,7 @@ def noop(self, *args, **kw):
 @dataclass
 class KH2Randomizer():
     seedName: str
+    spoiler: bool
 
     _locationItems: list[tuple[KH2Location, KH2Item]] = field(default_factory=list)
 
@@ -41,6 +42,9 @@ class KH2Randomizer():
 
     def __post_init__(self):
         random.seed(self.seedName)
+        # call the random number generator with a random salt addition if a spoiler log is generated
+        if self.spoiler:
+            random.seed(self.seedName+str(random.random()))
 
     def populateLocations(self, excludeWorlds, maxItemLogic=False, item_difficulty="Normal"):
         self._allLocationList = Locations.getTreasureList(maxItemLogic) + Locations.getSoraLevelList() + Locations.getSoraBonusList(maxItemLogic) + Locations.getFormLevelList(maxItemLogic) + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
