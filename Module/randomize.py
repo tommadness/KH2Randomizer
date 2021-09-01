@@ -240,7 +240,7 @@ class KH2Randomizer():
     def setNoAP(self, settrue=False):
         self._noap = settrue
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsType = "Disabled", startingInventory=[], platform="PCSX2"):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsText = None, startingInventory=[], platform="PCSX2"):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -376,8 +376,8 @@ class KH2Randomizer():
             outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
             outZip.writestr("jm.yml", yaml.dump(modYml.getJMYAML(), line_break="\r\n"))
 
-            if not hintsType == "Disabled":
-                Hints.generateHints(self._locationItems, hintsType, self.seedName, outZip)
+            if hintsText is not None:
+                Hints.writeHints(hintsText, self.seedName, outZip)
 
             enemySpoilers = None
             if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled" or enemyOptions["remove_damage_cap"]:

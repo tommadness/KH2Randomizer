@@ -719,7 +719,6 @@ class Locations:
             KH2Bonus(58, 2, locationTypes=[locationType.OC], description="Demyx (Olympus)"),
             KH2Bonus(22, 2, locationTypes=[locationType.PR], description="Grim Reaper 2"),
             KH2Bonus(16, 2, locationTypes=[locationType.DC], description="Boat Pete", doubleReward=True),
-            KH2Bonus(17, 2, locationTypes=[locationType.DC], description="Wharf Pete"),
             KH2Bonus(18, 2, locationTypes=[locationType.HT], description="Prison Keeper"),
             KH2Bonus(29, 2, locationTypes=[locationType.PL], description="Scar"),
             KH2Bonus(61, 2, locationTypes=[locationType.SP], description="Solar Sailor"),

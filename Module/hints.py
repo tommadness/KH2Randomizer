@@ -5,7 +5,9 @@ from itertools import permutations
 
 
 class Hints:
-    def generateHints(locationItems, hintsType, seedName, outZip):
+    def generateHints(locationItems, hintsType, seedName):
+        if hintsType=="Disabled":
+            return None
         hintsText = {}
         hintsText['hintsType'] = hintsType
         if hintsType == "Shananas":
@@ -166,6 +168,9 @@ class Hints:
             if len(hintedWorlds) != len(set(hintedWorlds)):
                 raise RuntimeError("Two reports hint the same location. This is an error, try a new seedname.")
 
+        return hintsText
+
+    def writeHints(hintsText,seedName,outZip):
         outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
 
     def getOptions():

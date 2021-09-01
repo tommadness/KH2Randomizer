@@ -62,7 +62,7 @@ def hashedSeed(hash):
 @app.route('/seed',methods=['GET','POST'])
 def seed():
     if fl.request.method == "POST":
-        random.seed(datetime.datetime.now())
+        random.seed(str(datetime.datetime.now()))
 
         session['keybladeAbilities'] = fl.request.form.getlist('keybladeAbilities')
 
@@ -199,9 +199,11 @@ def randomizePage(data, sessionDict):
                 sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
                 continue
             notValidSeed = False
+            randomizer.seedName = originalSeedName
+            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName)
+            
             try:
-                randomizer.seedName = originalSeedName
-                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
+                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsText = hintsText, cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
                 if development_mode:
                     development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
                     if development_mode_path:
