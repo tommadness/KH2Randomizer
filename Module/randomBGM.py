@@ -105,7 +105,6 @@ musicList = {
         {"name": "bgm\\music517.win32.scd", "kind": "battle"},
         {"name": "bgm\\music521.win32.scd", "kind": "battle"},
         {"name": "bgm\\music530.win32.scd", "kind": "battle"},
-        #maybe these can be included too with some edits here and there.
         {"name": "vagstream\\End_Piano.win32.scd", "kind": "field"},
         {"name": "vagstream\\GM1_Asteroid.win32.scd", "kind": "battle"},
         {"name": "vagstream\\GM2_Highway.win32.scd", "kind": "battle"},
@@ -440,6 +439,7 @@ musicList = {
 		{"name": "bgm_114.win32.scd", "kind": "field"},
 		{"name": "bgm_115.win32.scd", "kind": "field"},
 		{"name": "bgm_116.win32.scd", "kind": "battle"}],
+    "CUSTOM": [],
 }
 
 musicPaths = {
@@ -453,33 +453,49 @@ musicPaths = {
 class RandomBGM():
     @staticmethod
     def randomizeBGM(selections, platform):
+        #for testing. you would want a option to set these to whatever number you want on the site.
+        #if we don't care about categories then we could just set one number and set all tracks to "unknown" or something.
+        customlistf = 13
+        customlistb = 7
+        #Uses the numbrers above to build the dict with appropriate categories.
+        for i in range(customlistf):
+            musicList["CUSTOM"].append({"name": "custom_f_{}.scd".format(f'{i+1:03d}'), "kind": "field"})
+        for i in range(customlistb):
+            musicList["CUSTOM"].append({"name": "custom_b_{}.scd".format(f'{i+1:03d}'), "kind": "battle"})
+        #print (musicList["CUSTOM"]),
+        
         options = {
-            "games": [s for s in selections if s in musicList or s.startswith("CUSTOM")],
-            "options": [s for s in selections if not (s in musicList or s.startswith("CUSTOM"))]
+            #we don't need to separate CUSTOM from everything else anymore i think.
+            #"games": [s for s in selections if s in musicList or s.startswith("CUSTOM")],
+            #"options": [s for s in selections if not (s in musicList or s.startswith("CUSTOM"))]
+            "games": [s for s in selections if s in musicList],
+            "options": [s for s in selections if not (s in musicList)]
         }
+        
         if not platform == "PC" or len(options["games"]) < 1:
             return ""
         
         BGMList = {"battle": [], "field": []}
         for game in options["games"]:
-            if game.startswith("CUSTOM"):
-                nsongs = int(game.split(" ")[-1]) 
-                for i in range(nsongs):
-                    kind = "battle" # default
-                    if "Randomize Field and Battle Music Separately" in options["options"]:
-                        kind = random.choice(["field", "battle"])
-                    BGMList[kind].append({"name": "custom_{}.scd".format(i), "kind": kind, "game": "CUSTOM"})
-            else:
-                for song in musicList[game]:
-                    if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
-                        continue
-                    kind = "battle" # default
-                    if "Randomize Field and Battle Music Separately" in options["options"]:
-                        kind = song.get("kind", "battle")
-                    if kind == "unknown":
-                        kind = random.choice(["field", "battle"])
-                    song["game"] = game
-                    BGMList[kind].append(song)
+            #if the lists above work correctly then this probably isn't needed anymore.
+            #if game.startswith("CUSTOM"):
+            #    nsongs = int(game.split(" ")[-1]) 
+            #    for i in range(nsongs):
+            #        kind = "battle" # default
+            #        if "Randomize Field and Battle Music Separately" in options["options"]:
+            #            kind = random.choice(["field", "battle"])
+            #        BGMList[kind].append({"name": "custom_{}.scd".format(i), "kind": kind, "game": "CUSTOM"})
+            #else:
+            for song in musicList[game]:
+                if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
+                    continue
+                kind = "battle" # default
+                if "Randomize Field and Battle Music Separately" in options["options"]:
+                    kind = song.get("kind", "battle")
+                if kind == "unknown":
+                    kind = random.choice(["field", "battle"])
+                song["game"] = game
+                BGMList[kind].append(song)
 
         def _getMusicAsset(original_song, new_song):
             return {
@@ -521,9 +537,7 @@ class RandomBGM():
             "KH1",
             "BBS",
             "RECOM",
-            "DDD"
-            # "CUSTOM 5", 
-            # "CUSTOM 10",
-            # "CUSTOM 25",
-            # "CUSTOM 100"
+            "DDD",
+            #framework already done for this option. just needs options on the site to set the number of tracks to use
+            #"CUSTOM"
         ]
