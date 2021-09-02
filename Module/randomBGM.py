@@ -537,7 +537,7 @@ class RandomBGM():
             "KH1",
             "BBS",
             "RECOM",
-            "DDD",
+            "DDD"
             #framework already done for this option. just needs options on the site to set the number of tracks to use
             #"CUSTOM"
         ]
