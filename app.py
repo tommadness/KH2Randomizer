@@ -62,6 +62,7 @@ def hashedSeed(hash):
 @app.route('/seed',methods=['GET','POST'])
 def seed():
     if fl.request.method == "POST":
+        random.seed(datetime.datetime.now())
 
         session['keybladeAbilities'] = fl.request.form.getlist('keybladeAbilities')
 
