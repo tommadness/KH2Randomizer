@@ -94,7 +94,7 @@ $(document).ready(function(){
 });
 
 $(function(){
-    $('button').click(function(){
+    $('button').click(function(ev){
         var platform = $(this).val();
         var cmdMenuChoice = $("select[name=cmdMenuChoice]").val();
         var randomBGM = $("select[name=randomBGM]").val();
@@ -110,6 +110,7 @@ $(function(){
             saveAs(blob, "randoseed.zip");
             socket.disconnect();
         });
+        ev.preventDefault();
     });
 });
 
