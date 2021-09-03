@@ -1,12 +1,16 @@
 from itertools import chain
-from List.configDict import itemType, locationType
+from List.configDict import itemType, locationType, locationDepth
 from dataclasses import dataclass, field
 import random
 
 class KH2Location:
     LocationWeight: float = 1
+    LocationDepth: locationDepth = locationDepth.FirstVisit
     def setLocationWeight(self,w=1):
         self.LocationWeight = w
+        return self
+    def setLocationDepth(self,d=locationDepth.FirstVisit):
+        self.LocationDepth = d
         return self
 
 
@@ -94,7 +98,7 @@ class KH2LevelUp(KH2Location):
 
 class KH2Bonus(KH2Location):
     characterMap = {1: "Sora", 2: "Donald", 3: "Goofy", 14: "Roxas"}
-    def __init__(self, id, character, locationTypes = [], invalidChecks=[], description = "", doubleReward=False, hasStat=False, hasItem=True):
+    def __init__(self, id, character, locationTypes = None, invalidChecks=None, description = "", doubleReward=False, hasStat=False, hasItem=True):
         self.RewardId = id
         self.CharacterId = character
         self.Description = description
@@ -107,7 +111,11 @@ class KH2Bonus(KH2Location):
         self.BonusItem1 = 0
         self.BonusItem2 = 0
         self.Unknown0c = 0
+        if invalidChecks is None:
+            invalidChecks = []
         self.InvalidChecks = invalidChecks
+        if locationTypes is None:
+            locationTypes = []
         self.LocationTypes = locationTypes
         self.DoubleReward = doubleReward
         self.HasStat = hasStat
