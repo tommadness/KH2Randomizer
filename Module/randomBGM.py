@@ -141,7 +141,7 @@ musicList = {
         {"name": "music129.dat\\music129.win32.scd", "kind": "field"}, #Captain Hook Pirate Ship
         {"name": "music130.dat\\music130.win32.scd", "kind": "field"}, #Never Land Sky
         {"name": "music131.dat\\music131.win32.scd", "kind": "battle"}, #Night Of Fate
-        {"name": "music140.dat\\music140.win32.scd", "kind": "field"}, #Under The Sea
+        {"name": "music140.dat\\music140.win32.scd", "kind": "field", "dmca": True}, #Under The Sea
         {"name": "music141.dat\\music141.win32.scd", "kind": "field"}, #Winnie The Pooh
         {"name": "music142.bgm\\music142.win32.scd", "kind": "field"}, #Dive Into The Heart (Part 9)
         {"name": "music143.bgm\\music143.win32.scd", "kind": "field"}, #Mickey Mouse Club March
@@ -178,7 +178,7 @@ musicList = {
         {"name": "music188.bgm\\music188.win32.scd", "kind": "field"}, #It Began With A Letter
         {"name": "music193.bgm\\music193.win32.scd", "kind": "field"}, #Dearly Beloved Reprise       
         {"name": "music196.bgm\\music196.win32.scd", "kind": "battle"}, #One Winged Angel
-        {"name": "music197.bgm\\music197.win32.scd", "kind": "battle"} #Night On Blad Mountain
+        {"name": "music197.bgm\\music197.win32.scd", "kind": "battle", "dmca": True} #Night On Blad Mountain
         #a few of the no intro duplicates removed along with BGMs that are short and don't loop.
         #{"name": "music194.bgm\\music194.win32.scd", "kind": "battle"}, #Guardando Nel Buio (No Intro)
         #{"name": "music097.bgm\\music097.win32.scd", "kind": "battle"}, #Dissapeared (No Intro)
@@ -244,7 +244,7 @@ musicList = {
         {"name": '35_Boss_NiseRiku.win32.scd', "kind": "battle"},
         {"name": '36_WinnieThePooh.win32.scd', "kind": "field"},
         {"name": '37_LastBoss1.win32.scd', "kind": "battle"},
-        {"name": '38_UnderTheSea.win32.scd', "kind": "field"},
+        {"name": '38_UnderTheSea.win32.scd', "kind": "field", "dmca": True},
         {"name": '39_LittleMermaid_B.win32.scd', "kind": "battle"},
         {"name": '40_LastBoss2.win32.scd', "kind": "battle"},
         {"name": '41_LastBoss3.win32.scd', "kind": "battle"},
@@ -352,10 +352,10 @@ musicList = {
 		{"name": "bgm_002.win32.scd", "kind": "field"},
 		{"name": "bgm_003.win32.scd", "kind": "field"},
 		{"name": "bgm_004.win32.scd", "kind": "field"},
-		{"name": "bgm_005.win32.scd", "kind": "field"},
-		{"name": "bgm_006.win32.scd", "kind": "field"},
-		{"name": "bgm_007.win32.scd", "kind": "field"},
-		{"name": "bgm_008.win32.scd", "kind": "battle"},
+		{"name": "bgm_005.win32.scd", "kind": "field", "dmca": True},
+		{"name": "bgm_006.win32.scd", "kind": "field", "dmca": True},
+		{"name": "bgm_007.win32.scd", "kind": "field", "dmca": True},
+		{"name": "bgm_008.win32.scd", "kind": "battle", "dmca": True},
 		{"name": "bgm_009.win32.scd", "kind": "field"},
 		{"name": "bgm_010.win32.scd", "kind": "field"},
 		{"name": "bgm_011.win32.scd", "kind": "field"},
@@ -412,9 +412,9 @@ musicList = {
 		{"name": "bgm_069.win32.scd", "kind": "battle"}, #calling -kingdom mix-
 		{"name": "bgm_070.win32.scd", "kind": "field"},
 		{"name": "bgm_071.win32.scd", "kind": "field"},
-		{"name": "bgm_072.win32.scd", "kind": "field"},
-		{"name": "bgm_073.win32.scd", "kind": "field"},
-		{"name": "bgm_074.win32.scd", "kind": "field"},
+		{"name": "bgm_072.win32.scd", "kind": "field", "dmca": True},
+		{"name": "bgm_073.win32.scd", "kind": "field", "dmca": True},
+		{"name": "bgm_074.win32.scd", "kind": "field", "dmca": True},
 		{"name": "bgm_075.win32.scd", "kind": "field"},
 		{"name": "bgm_076.win32.scd", "kind": "field"},
 		{"name": "bgm_077.win32.scd", "kind": "field"},
