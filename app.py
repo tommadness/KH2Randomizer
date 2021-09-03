@@ -4,7 +4,7 @@ from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
 from Module.modifier import SeedModifier
 from Module.seedEvaluation import SeedValidator
-from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
+from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities, locationDepth
 import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
@@ -119,7 +119,14 @@ def seed():
         }
         session['enemyOptions'] = json.dumps(enemyOptions)
 
-        session['hintsType'] = fl.request.form.get("hintsType")
+        hintSubstrings = fl.request.form.get("hintsType").split('-')
+
+        session['hintsType'] = hintSubstrings[0]
+
+        if len(hintSubstrings)==1:
+            session['reportDepth'] = locationDepth("DataFight") # don't use report depth
+        else:
+            session['reportDepth'] = locationDepth(hintSubstrings[1])
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
 
@@ -150,6 +157,7 @@ def seed():
     keybladeAbilities = session.get('keybladeAbilities'),
     enemyOptions = json.loads(session.get("enemyOptions")),
     hintsType = session.get("hintsType"),
+    reportDepth = session.get("reportDepth"),
     startingInventory = session.get("startingInventory"),
     itemPlacementDifficulty = session.get("itemPlacementDifficulty"),
     seedModifiers = session.get("seedModifiers"),
@@ -181,7 +189,7 @@ def randomizePage(data, sessionDict):
     originalSeedName = sessionDict['seed']
     while notValidSeed:
         randomizer = KH2Randomizer(seedName = sessionDict["seed"], spoiler=bool(sessionDict["spoilerLog"]))
-        randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"], reportDepth=None)
+        randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"], reportDepth=sessionDict["reportDepth"])
         randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
         if randomizer.validateCount():
             randomizer.setKeybladeAbilities(
@@ -190,7 +198,7 @@ def randomizePage(data, sessionDict):
                 keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
             )
             randomizer.setNoAP("Start with No AP" in sessionDict["seedModifiers"])
-            randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]), reportDepth=None)
+            randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]), reportDepth=sessionDict["reportDepth"])
             randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
             randomizer.setBonusStats()
             if not seedValidation.validateSeed(sessionDict, randomizer):

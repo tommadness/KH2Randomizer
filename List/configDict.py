@@ -36,12 +36,12 @@ class locationType(str, Enum):
     Free = "Garden of Assemblage"
     Critical = "Critical Bonuses"
 
-class locationDepth(Enum):
-    FirstVisit = 0
-    SecondVisit = 1
-    DataFight = 2
-    FirstBoss = 3
-    SecondBoss = 4
+class locationDepth(str,Enum):
+    FirstVisit = "FirstVisit"
+    SecondVisit = "SecondVisit"
+    DataFight = "DataFight"
+    FirstBoss = "FirstBoss"
+    SecondBoss = "SecondBoss"
 
 
 class itemType(str, Enum):
