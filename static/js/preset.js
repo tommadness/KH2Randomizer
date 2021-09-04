@@ -11,7 +11,8 @@ $(document).ready(function(){
         setPreset(urlParams.get("preset"));
     }
     if (urlParams.has("settings")){
-        setPreset(urlParams.get("settings"));
+        console.log(atob(urlParams.get("settings")));
+        setPreset(atob(urlParams.get("settings")));
     }
 });
 
@@ -73,11 +74,12 @@ function serializeSettings(){
             settings["starting-inventory"].push(this.value);
         }
     });
-    navigator.clipboard.writeText(window.location.href+"?settings="+JSON.stringify(settings));
+    navigator.clipboard.writeText(window.location.href.split('?')[0]+"?settings="+btoa(JSON.stringify(settings)));
     $("#copySettings").html("Copied!");
     setTimeout(function(){
         $("#copySettings").html("Copy Settings");
     }, 3000);
+
 }
 
 
