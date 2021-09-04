@@ -6,12 +6,18 @@ $(document).ready(function(){
     $('#preset').change(function(){
         setPreset(this.value);
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("preset")){
+        setPreset(urlParams.get("preset"));
+    }
 });
 
 
 
 function setPreset(presetName){
     preset = parsePreset(presetName);
+    console.log(preset);
     $('input').each(function(){
         $(this).prop("checked", false);
     });
@@ -24,7 +30,7 @@ function setPreset(presetName){
     $("input[type='number']").each(function(){
         if(this.name in preset){
             $(this).val(preset[this.name]);
-        }W
+        }
     });
     $("select").each(function(){
         if(this.name in preset){
@@ -35,7 +41,7 @@ function setPreset(presetName){
     $('#starting-inventory option').each(function(){
         $(this).prop('selected',preset["starting-inventory"].includes(this.value));
     });
-    $('#starting-inventory').multiselect('refresh');
+    tail.select('#starting-inventory').reload();
 
 
 
