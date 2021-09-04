@@ -9,8 +9,9 @@ $(document).ready(function(){
 });
 
 
+
 function setPreset(presetName){
-    preset = presets[presetName];
+    preset = parsePreset(presetName);
     $('input').each(function(){
         $(this).prop("checked", false);
     });
@@ -23,7 +24,7 @@ function setPreset(presetName){
     $("input[type='number']").each(function(){
         if(this.name in preset){
             $(this).val(preset[this.name]);
-        }
+        }W
     });
     $("select").each(function(){
         if(this.name in preset){
@@ -40,6 +41,13 @@ function setPreset(presetName){
 
 
 };
+
+function parsePreset(option){
+    if (presets[option]){
+        return presets[option];
+    }
+    return JSON.parse(option);
+}
 
 const presets = {
     "League":{
