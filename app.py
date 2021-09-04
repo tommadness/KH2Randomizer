@@ -24,6 +24,10 @@ if not development_mode:
 seed = None
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
+@app.context_processor
+def inject_today_date():
+    return {'today_date': datetime.date.today()}
+
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
