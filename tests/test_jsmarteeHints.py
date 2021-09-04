@@ -69,6 +69,15 @@ class Tests(unittest.TestCase):
             hints = self.getHints(seed)
             assert hints is not None
 
+
+    def test_FirstVisitSelfHinted(self):
+        for i in range(30):
+            seed = self.createSeed(f"testingSelfHinted{i}",[],[],[],[], reportDepth=locationDepth.FirstVisit)
+            hints = self.getHints(seed)
+            hinted_worlds = self.getHintedWorlds(hints)
+            hint_locations = self.getHintLocations(hints)
+
+
     @staticmethod
     def createSeed(seedName,treasure_items,treasure_locations,form_items,form_locations,reportDepth):
         randomizer = KH2Randomizer(seedName = seedName)
