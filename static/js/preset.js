@@ -1,6 +1,5 @@
 $(document).ready(function(){
     $.each(presets, function(preset, value){
-        console.log(preset);
         $('#preset').append($("<option></option>").prop("value",preset).text(preset));
     })
     $('#preset').change(function(){
@@ -11,13 +10,80 @@ $(document).ready(function(){
     if (urlParams.has("preset")){
         setPreset(urlParams.get("preset"));
     }
+    if (urlParams.has("settings")){
+        setPreset(urlParams.get("settings"));
+    }
 });
+
+function serializeSettings(){
+    settings = {"include":[],
+    "levelChoice":"",
+    "keybladeMinStat":0,
+    "keybladeMaxStat":0,
+    "SoraExp":0,
+    "ValorExp":0,
+    "WisdomExp":0,
+    "LimitExp":0,
+    "MasterExp":0,
+    "FinalExp":0,
+    "keybladeAbilities":[],
+    "enemy":"",
+    "hintsType":"",
+    "PromiseCharm":[],
+    "starting-inventory":[],
+    "seedModifiers": []};
+    $('.worlds input[type="checkbox"]').each(function(){
+
+        if ($(this).prop("checked") == true){
+            settings["include"].push(this.value);
+        }
+    });
+    settings["levelChoice"] = $("select[name='levelChoice']").val();
+    if ($("#Support").prop("checked") == true){
+        settings["keybladeAbilities"].push("Support");
+    }
+    if ($("#Action").prop("checked") == true){
+        settings["keybladeAbilities"].push("Action");
+    }
+    if ($("#PromiseCharm").prop("checked") == true){
+        settings["PromiseCharm"].push(true);
+    } else {
+        settings["PromiseCharm"].push(false);
+    }
+
+    $("select").each(function(){
+        if (this.name in settings){
+            settings[this.name] = this.value;
+        }
+    });
+    $("input[type=number]").each(function(){
+        if (this.name in settings){
+            settings[this.name] = this.value;
+        }
+    });
+
+    $("input[name='seedModifiers']").each(function(){
+        if ($(this).prop("checked") == true){
+            settings["seedModifiers"].push(this.value);
+        }
+    })
+
+    $("#starting-inventory option").each(function(){
+        if ($(this).prop("selected") == true){
+            settings["starting-inventory"].push(this.value);
+        }
+    });
+    navigator.clipboard.writeText(window.location.href+"?settings="+JSON.stringify(settings));
+    $("#copySettings").html("Copied!");
+    setTimeout(function(){
+        $("#copySettings").html("Copy Settings");
+    }, 3000);
+}
 
 
 
 function setPreset(presetName){
     preset = parsePreset(presetName);
-    console.log(preset);
     $('input').each(function(){
         $(this).prop("checked", false);
     });
