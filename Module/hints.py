@@ -121,7 +121,13 @@ class Hints:
                     for world in worldChecks:
                         if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
                             # found the world with this report, now to see if this report can hint the corresponding proof
-                            if worldsToHint[index] in reportRestrictions[reportNumber-1]:
+                            if index==0 and worldsToHint[proof_of_nonexistence_index] in reportRestrictions[reportNumber-1]:
+                                invalid=True
+                                break
+                            if index==1 and worldsToHint[proof_of_peace_index] in reportRestrictions[reportNumber-1]:
+                                invalid=True
+                                break
+                            if index==2 and worldsToHint[proof_of_connection_index] in reportRestrictions[reportNumber-1]:
                                 invalid=True
                                 break
 
