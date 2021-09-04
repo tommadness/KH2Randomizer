@@ -105,14 +105,13 @@ musicList = {
         {"name": "bgm\\music517.win32.scd", "kind": "battle"},
         {"name": "bgm\\music521.win32.scd", "kind": "battle"},
         {"name": "bgm\\music530.win32.scd", "kind": "battle"},
-        {"name": "vagstream\\End_Piano.win32.scd", "kind": "field"},
+        {"name": "vagstream\\End_Piano.win32.scd", "kind": "title"},
         {"name": "vagstream\\GM1_Asteroid.win32.scd", "kind": "battle"},
         {"name": "vagstream\\GM2_Highway.win32.scd", "kind": "battle"},
         {"name": "vagstream\\GM3_Cloud.win32.scd", "kind": "battle"},
         {"name": "vagstream\\GM4_Floating.win32.scd", "kind": "battle"},
         {"name": "vagstream\\GM5_Senkan.win32.scd", "kind": "battle"},
-        {"name": "vagstream\\Title.win32.scd", "kind": "field"}
-        ],
+        {"name": "vagstream\\Title.win32.scd", "kind": "title"}],
     "KH1": [
         #some music in kh1 is found in .dat folders and others in .bgm folders and somtimes both.
         #the ones in both .dat and .bgm folders are duplicates so you can ignore one of those.
@@ -122,7 +121,7 @@ musicList = {
         {"name": "music103.bgm\\music103.win32.scd", "kind": "field"}, #Olympus Coliseum
         {"name": "music104.dat\\music104.win32.scd", "kind": "field"}, #Traverse Town
         {"name": "music105.dat\\music105.win32.scd", "kind": "field"}, #Destiny Islands
-        {"name": "music110.bgm\\music110.win32.scd", "kind": "field"}, #Dearly Beloved
+        {"name": "music110.bgm\\music110.win32.scd", "kind": "title"}, #Dearly Beloved
         {"name": "music111.bgm\\music111.win32.scd", "kind": "battle"}, #Shrouding Dark Cloud
         {"name": "music112.dat\\music112.win32.scd", "kind": "battle"}, #Hand In Hand
         {"name": "music114.bgm\\music114.win32.scd", "kind": "battle"}, #Unknown 1 [Heartless Has Come, Pt.3]
@@ -176,7 +175,7 @@ musicList = {
         {"name": "music185.bgm\\music185.win32.scd", "kind": "battle"}, #Forze Del Male
         {"name": "music187.bgm\\music187.win32.scd", "kind": "unknown"}, #Just An Itty Bitty Too Much
         {"name": "music188.bgm\\music188.win32.scd", "kind": "field"}, #It Began With A Letter
-        {"name": "music193.bgm\\music193.win32.scd", "kind": "field"}, #Dearly Beloved Reprise       
+        {"name": "music193.bgm\\music193.win32.scd", "kind": "title"}, #Dearly Beloved Reprise       
         {"name": "music196.bgm\\music196.win32.scd", "kind": "battle"}, #One Winged Angel
         {"name": "music197.bgm\\music197.win32.scd", "kind": "battle", "dmca": True} #Night On Blad Mountain
         #a few of the no intro duplicates removed along with BGMs that are short and don't loop.
@@ -258,7 +257,7 @@ musicList = {
         {"name": 'Event2_.win32.scd', "kind": "battle"},
         {"name": 'Event4.win32.scd', "kind": "field"},
         {"name": 'Event_Unrest.win32.scd', "kind": "field"},
-        {"name": 'Title.win32.scd', "kind": "field"}],
+        {"name": 'Title.win32.scd', "kind": "title"}],
     "BBS": [
         {"name": "001sinde_f.win32.scd", "kind": "field"},
         {"name": "002sinde_b.win32.scd", "kind": "battle"},
@@ -302,7 +301,7 @@ musicList = {
         {"name": "047last_b2.win32.scd", "kind": "battle"},
         {"name": "048hanyo_b1.win32.scd", "kind": "battle"},
         {"name": "049hanyo_b2.win32.scd", "kind": "battle"},
-        {"name": "050title.win32.scd", "kind": "field"},
+        {"name": "050title.win32.scd", "kind": "title"},
         {"name": "051worldmap.win32.scd", "kind": "field"},
         {"name": "060tera.win32.scd", "kind": "field"},
         {"name": "061aqua.win32.scd", "kind": "field"},
@@ -330,7 +329,7 @@ musicList = {
         {"name": "110han_bt1.win32.scd", "kind": "battle"},
         {"name": "111han_bt2.win32.scd", "kind": "battle"},
         {"name": "112rage_bt.win32.scd", "kind": "battle"},
-        {"name": "113kh1tit.win32.scd", "kind": "field"},
+        {"name": "113kh1tit.win32.scd", "kind": "title"},
         {"name": "114raceview.win32.scd", "kind": "field"},
         {"name": "115boss.win32.scd", "kind": "battle"},
         #{"name": "116icon.win32.scd", "kind": "field"}, #intro to dearly beloved (short and doesn't loop)
@@ -345,8 +344,9 @@ musicList = {
         {"name": "126yami_b.win32.scd", "kind": "battle"},
         {"name": "127Xeha_b.win32.scd", "kind": "battle"},
         {"name": "128Eraqu_b.win32.scd", "kind": "battle"},
-        {"name": "129Pure_b.win32.scd", "kind": "battle"},
-        {"name": "130Mons_b.win32.scd", "kind": "battle"}],
+        {"name": "129Pure_b.win32.scd", "kind": "battle"}
+        #{"name": "130Mons_b.win32.scd", "kind": "battle"} #Monstro
+        ],
     "DDD": [
         {"name": "bgm_001.win32.scd", "kind": "field"},
 		{"name": "bgm_002.win32.scd", "kind": "field"},
@@ -385,7 +385,7 @@ musicList = {
 		{"name": "bgm_035.win32.scd", "kind": "field"},
 		{"name": "bgm_036.win32.scd", "kind": "field"},
 		{"name": "bgm_037.win32.scd", "kind": "field"},
-		{"name": "bgm_038.win32.scd", "kind": "field"},
+		{"name": "bgm_038.win32.scd", "kind": "title"},
 		{"name": "bgm_039.win32.scd", "kind": "field"},
 		{"name": "bgm_040.win32.scd", "kind": "field"},
 		{"name": "bgm_041.win32.scd", "kind": "field"},
@@ -410,8 +410,8 @@ musicList = {
 		{"name": "bgm_067.win32.scd", "kind": "field"},
 		{"name": "bgm_068.win32.scd", "kind": "battle"}, #twister -kingdom mix-
 		{"name": "bgm_069.win32.scd", "kind": "battle"}, #calling -kingdom mix-
-		{"name": "bgm_070.win32.scd", "kind": "field"},
-		{"name": "bgm_071.win32.scd", "kind": "field"},
+		#{"name": "bgm_070.win32.scd", "kind": "title"},
+		#{"name": "bgm_071.win32.scd", "kind": "title"},
 		{"name": "bgm_072.win32.scd", "kind": "field", "dmca": True},
 		{"name": "bgm_073.win32.scd", "kind": "field", "dmca": True},
 		{"name": "bgm_074.win32.scd", "kind": "field", "dmca": True},
@@ -434,11 +434,97 @@ musicList = {
 		{"name": "bgm_097.win32.scd", "kind": "unknown"},
 		{"name": "bgm_098.win32.scd", "kind": "battle"}, #twister
 		{"name": "bgm_099.win32.scd", "kind": "battle"}, #calling
-		{"name": "bgm_112.win32.scd", "kind": "field"},
-		{"name": "bgm_113.win32.scd", "kind": "field"},
+		#{"name": "bgm_112.win32.scd", "kind": "title"}, #Dearly beloved kh2
+		#{"name": "bgm_113.win32.scd", "kind": "title"}, #Dearly beloved -reprise- kh2
 		{"name": "bgm_114.win32.scd", "kind": "field"},
 		{"name": "bgm_115.win32.scd", "kind": "field"},
 		{"name": "bgm_116.win32.scd", "kind": "battle"}],
+    "MOVIES": [
+        #Recoded
+		#{"name": "bgm_000.win32.scd", "kind": "field"}, # Destiny's Union (From Birth by Sleep)
+		#{"name": "bgm_001.win32.scd", "kind": "field"}, # A Day in Agrabah
+		#{"name": "bgm_002.win32.scd", "kind": "field"}, # A Walk in Andante
+		#{"name": "bgm_003.win32.scd", "kind": "battle"}, # Apprehension (From Original KH2)
+		#{"name": "bgm_004.win32.scd", "kind": "battle"}, # Arabian Dream (From Original KH2)
+		#{"name": "bgm_005.win32.scd", "kind": "battle"}, # Courage (From Original KH2)
+ 		{"name": "bgm_006.win32.scd", "kind": "title"}, # Dearly Beloved (Re:coded Version)
+ 		{"name": "bgm_007.win32.scd", "kind": "field"}, # Destiny Islands (From Original KH1)
+ 		{"name": "bgm_008.win32.scd", "kind": "field"}, # Destati (Orchestrated Version) (Length: 5:49)
+		#{"name": "bgm_009.win32.scd", "kind": "battle"}, # Destiny's Force (From Original KH1)
+		#{"name": "bgm_010.win32.scd", "kind": "field"}, # Dive into the Heart -Destati- (From KH1) (Length: 9:56)
+		#{"name": "bgm_011.win32.scd", "kind": "field"}, # Friends in My Heart (From Original KH1)
+ 		{"name": "bgm_012.win32.scd", "kind": "battle"}, # Guardando nel buio (From Original KH1)
+		#{"name": "bgm_013.win32.scd", "kind": "field"}, # Hollow Bastion
+		#{"name": "bgm_014.win32.scd", "kind": "field"}, # It Began with a Letter
+		#{"name": "bgm_015.win32.scd", "kind": "field"}, # Link to All
+ 		{"name": "bgm_016.win32.scd", "kind": "battle"}, # Night of Fate (From Original KH1)
+		#{"name": "bgm_017.win32.scd", "kind": "field"}, # Namine
+		#{"name": "bgm_018.win32.scd", "kind": "battle"}, # No Time to Think (From Original KH1)
+		#{"name": "bgm_019.win32.scd", "kind": "field"}, # Olympus Coliseum (From Original KH1)
+		#{"name": "bgm_020.win32.scd", "kind": "field"}, # Organization XIII (From Original KH2)
+		#{"name": "bgm_021.win32.scd", "kind": "field"}, # Riku (From Original KH2)
+		#{"name": "bgm_022.win32.scd", "kind": "battle"}, # Rowdy Rumble (From Original KH2)
+		#{"name": "bgm_023.win32.scd", "kind": "field"}, # Roxas (From Original KH2)
+		#{"name": "bgm_024.win32.scd", "kind": "battle"}, # Scherzo Di Notte (From Original KH1)
+		#{"name": "bgm_025.win32.scd", "kind": "battle"}, # Shrouding Dark Cloud (From Original KH1)
+ 		{"name": "bgm_026.win32.scd", "kind": "battle"}, # Squirming Evil (From Original KH1)
+		#{"name": "bgm_027.win32.scd", "kind": "field"}, # Strange Whispers (From Original KH1)
+		#{"name": "bgm_028.win32.scd", "kind": "battle"}, # To Our Surprise (From Original KH1)
+ 		{"name": "bgm_029.win32.scd", "kind": "field"}, # Traverse Town (From Original KH1)
+		#{"name": "bgm_030.win32.scd", "kind": "field"}, # Villains of a Sort
+		#{"name": "bgm_031.win32.scd", "kind": "battle"}, # Vim & Vigor
+		#{"name": "bgm_032.win32.scd", "kind": "field"}, # Welcome to Wonderland (From Original KH1)
+		#{"name": "bgm_033.win32.scd", "kind": "field"}, # Castle Oblivion
+		#{"name": "bgm_034.win32.scd", "kind": "field"}, # Dive into the Heart -Destati- (From KH2)
+		#{"name": "bgm_035.win32.scd", "kind": "field"}, # Dearly Beloved -Reprise-
+ 		{"name": "bgm_036.win32.scd", "kind": "battle"}, # Forze Del Male (From Original KH1)
+        #Days
+ 		{"name": "bgm_201.win32.scd", "kind": "title"}, # Dearly Beloved (358/2 Days Version)
+		#{"name": "bgm_202.win32.scd", "kind": "battle"}, # Sinister Sundown
+		#{"name": "bgm_203.win32.scd", "kind": "field"}, # Lazy Afternoons
+		#{"name": "bgm_204.win32.scd", "kind": "battle"}, # Destiny's Force
+		#{"name": "bgm_205.win32.scd", "kind": "field"}, # Welcome to Wonderland
+		#{"name": "bgm_206.win32.scd", "kind": "battle"}, # To Our Surprise
+		#{"name": "bgm_207.win32.scd", "kind": "field"}, # Olympus Coliseum
+		#{"name": "bgm_208.win32.scd", "kind": "battle"}, # Go for It!
+		#{"name": "bgm_209.win32.scd", "kind": "field"}, # This is Halloween
+		#{"name": "bgm_210.win32.scd", "kind": "battle"}, # Spooks of Halloween Town
+		#{"name": "bgm_211.win32.scd", "kind": "field"}, # A Day in Agrabah
+		#{"name": "bgm_212.win32.scd", "kind": "battle"}, # Arabian Dream
+ 		{"name": "bgm_213.win32.scd", "kind": "field"}, # Mystic Moon
+ 		{"name": "bgm_214.win32.scd", "kind": "battle"}, # Critical Drive
+ 		{"name": "bgm_215.win32.scd", "kind": "field"}, # Sacred Moon (358/2 Days Version)
+		#{"name": "bgm_216.win32.scd", "kind": "field"}, # Waltz of the Damned
+		#{"name": "bgm_217.win32.scd", "kind": "battle"}, # Dance of the Daring
+		#{"name": "bgm_218.win32.scd", "kind": "field"}, # Organization XIII (From Original KH2)
+		#{"name": "bgm_219.win32.scd", "kind": "field"}, # Roxas
+ 		{"name": "bgm_220.win32.scd", "kind": "battle"}, # Tension Rising (From Original KH2)
+		#{"name": "bgm_221.win32.scd", "kind": "battle"}, # Rowdy Rumble
+ 		{"name": "bgm_222.win32.scd", "kind": "field"}, # Musique pour la tristesse de Xion (Xion's Theme)
+		#{"name": "bgm_223.win32.scd", "kind": "battle"}, # Shrouding Dark Cloud
+		#{"name": "bgm_224.win32.scd", "kind": "battle"}, # Vim & Vigor (From Original KH2)
+		#{"name": "bgm_225.win32.scd", "kind": "field"}, # Riku (From Original KH2)
+		#{"name": "bgm_226.win32.scd", "kind": "field"}, # Strange Whispers
+		#{"name": "bgm_227.win32.scd", "kind": "battle"}, # Apprehension
+		#{"name": "bgm_228.win32.scd", "kind": "field"}, # Friends in My Heart
+		#{"name": "bgm_229.win32.scd", "kind": "field"}, # Missing You (From Original KH2)
+ 		{"name": "bgm_230.win32.scd", "kind": "field"}, # Xemnas
+ 		{"name": "bgm_231.win32.scd", "kind": "field"}, # Secret of Neverland
+ 		{"name": "bgm_232.win32.scd", "kind": "battle"}, # Crossing to Neverland
+ 		{"name": "bgm_233.win32.scd", "kind": "field"}, # At Dusk, I Will Think of You...
+ 		{"name": "bgm_234.win32.scd", "kind": "battle"}, # Fight and Away
+ 		{"name": "bgm_235.win32.scd", "kind": "battle"}, # Another Side -Battle Ver.-
+ 		{"name": "bgm_236.win32.scd", "kind": "battle"}, # Vector to the Heavens
+		#{"name": "bgm_237.win32.scd", "kind": "field"}, # Dearly Beloved -Reprise-
+		#{"name": "bgm_238.win32.scd", "kind": "field"}, # Treasured Memories
+		#{"name": "bgm_239.win32.scd", "kind": "battle"}, # Face It! (From Re:Chain of Memories)
+		#{"name": "bgm_240.win32.scd", "kind": "field"}, # Kairi III
+		#{"name": "bgm_241.win32.scd", "kind": "field"}, # Treasured Memories (Same Version as bgm_238.win32.scd)
+		#{"name": "bgm_242.win32.scd", "kind": "field"}, # Disquieting (From Re:Chain of Memories)
+		#{"name": "bgm_243.win32.scd", "kind": "battle"}, # The Other Promise (From Original KH2)
+ 		{"name": "bgm_244.win32.scd", "kind": "field"}, # Another Side (No Intro)
+ 		{"name": "bgm_245.win32.scd", "kind": "battle"}, # Another Side -Battle Ver.- (No Intro)
+ 		{"name": "bgm_255.win32.scd", "kind": "title"}], # Dearly Beloved (Kingdom Hearts HD 1.5 + 2.5 ReMiX Launcher Version)
     "CUSTOM": [],
 }
 
@@ -448,26 +534,26 @@ musicPaths = {
     "BBS": "..\\bbs\\sound\\win\\bgm\\",
     "RECOM": "..\\recom\\STREAM\\0001\\",
     "DDD": "..\\ddd\\sound\\jp\\output\\BGM\\",
+    "MOVIES": "..\\mare\\sound\\",
     "CUSTOM": "..\\custom\\"
 }
 class RandomBGM():
     @staticmethod
     def randomizeBGM(selections, platform):
+    
         #for testing. you would want a option to set these to whatever number you want on the site.
         #if we don't care about categories then we could just set one number and set all tracks to "unknown" or something.
-        customlistf = 13
-        customlistb = 7
+        #customlistf = 13
+        #customlistb = 7
         #Uses the numbrers above to build the dict with appropriate categories.
-        for i in range(customlistf):
-            musicList["CUSTOM"].append({"name": "custom_f_{}.scd".format(f'{i+1:03d}'), "kind": "field"})
-        for i in range(customlistb):
-            musicList["CUSTOM"].append({"name": "custom_b_{}.scd".format(f'{i+1:03d}'), "kind": "battle"})
+        #for i in range(customlistf):
+        #    musicList["CUSTOM"].append({"name": "custom_f_{}.scd".format(f'{i+1:03d}'), "kind": "field"})
+        #for i in range(customlistb):
+        #    musicList["CUSTOM"].append({"name": "custom_b_{}.scd".format(f'{i+1:03d}'), "kind": "battle"})
         #print (musicList["CUSTOM"]),
         
         options = {
             #we don't need to separate CUSTOM from everything else anymore i think.
-            #"games": [s for s in selections if s in musicList or s.startswith("CUSTOM")],
-            #"options": [s for s in selections if not (s in musicList or s.startswith("CUSTOM"))]
             "games": [s for s in selections if s in musicList],
             "options": [s for s in selections if not (s in musicList)]
         }
@@ -475,27 +561,23 @@ class RandomBGM():
         if not platform == "PC" or len(options["games"]) < 1:
             return ""
         
-        BGMList = {"battle": [], "field": []}
+        BGMList = {"battle": [], "field": [], "title":[]}
         for game in options["games"]:
-            #if the lists above work correctly then this probably isn't needed anymore.
-            #if game.startswith("CUSTOM"):
-            #    nsongs = int(game.split(" ")[-1]) 
-            #    for i in range(nsongs):
-            #        kind = "battle" # default
-            #        if "Randomize Field and Battle Music Separately" in options["options"]:
-            #            kind = random.choice(["field", "battle"])
-            #        BGMList[kind].append({"name": "custom_{}.scd".format(i), "kind": kind, "game": "CUSTOM"})
-            #else:
             for song in musicList[game]:
                 if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
                     continue
                 kind = "battle" # default
                 if "Randomize Field and Battle Music Separately" in options["options"]:
                     kind = song.get("kind", "battle")
+                if "Randomize Dearly Beloved Separately" in options["options"]:
+                    kind = song.get("kind", "title")
+                if "Randomize Field and Battle Music Separately" in options["options"] and not "Randomize Dearly Beloved Separately" in options["options"] and kind == "title":
+                    kind = "field"
                 if kind == "unknown":
                     kind = random.choice(["field", "battle"])
                 song["game"] = game
                 BGMList[kind].append(song)
+                #print (BGMList["title"]),
 
         def _getMusicAsset(original_song, new_song):
             return {
@@ -506,29 +588,35 @@ class RandomBGM():
 
         shuffledBattle = BGMList["battle"][:]
         shuffledField = BGMList["field"][:]
+        shuffledTitle = BGMList["title"][:]
         random.shuffle(shuffledBattle)
         random.shuffle(shuffledField)
+        random.shuffle(shuffledTitle)
         numBattle = 0
         numField = 0
+        numTitle = 0
         BGMAssets = []
         for i in range(len(musicList["KH2"])):
             original_song = musicList["KH2"][i]
             kind = original_song.get("kind", "battle")
 
-            if "Randomize Field and Battle Music Separately" in options["options"] and kind == "field":
+            if "Randomize Dearly Beloved Separately" in options["options"] and kind == "title":
+                new_song = shuffledTitle[numTitle % len(shuffledTitle)]
+                numTitle += 1
+            if "Randomize Field and Battle Music Separately" in options["options"] and kind == "field" or "Randomize Field and Battle Music Separately" in options["options"] and kind == "title":
                 new_song = shuffledField[numField % len(shuffledField)]
                 numField += 1
             else:
                 new_song = shuffledBattle[numBattle % len(shuffledBattle)]
                 numBattle += 1
-
             BGMAssets.append(_getMusicAsset(original_song, new_song))
         return BGMAssets
 
     def getOptions():
         return [
             "DMCA-SAFE",
-            "Randomize Field and Battle Music Separately"
+            "Randomize Field and Battle Music Separately",
+            "Randomize Dearly Beloved Separately"
         ]
 
     def getGames():
@@ -537,7 +625,8 @@ class RandomBGM():
             "KH1",
             "BBS",
             "RECOM",
-            "DDD"
+            "DDD",
+            "MOVIES"
             #framework already done for this option. just needs options on the site to set the number of tracks to use
             #"CUSTOM"
         ]
