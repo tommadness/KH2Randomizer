@@ -4,7 +4,7 @@
 <h2>{{message}}</h2>
 <div class="container" id="daily">
     <div class="vertical">
-    <h4><a href="https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/dailyseeds.md">Daily Seed Modifiers</a></h4>
+    <h4><a href="https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/dailyseeds.md">Daily Seed Modifiers</a> - {{today_date}}</h4>
     {%for modifier in dailyModifiers%}
             <label title="{{modifier["description"]}}">{{modifier["name"]}}</label> 
     {%endfor%}
