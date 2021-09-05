@@ -338,14 +338,14 @@ musicList = {
         {"name": "119desti.win32.scd", "kind": "field"},
         {"name": "120hand.win32.scd", "kind": "battle"},
         {"name": "122nazono.win32.scd", "kind": "battle"}, #mysterious figure boss theme
-        #{"name": "123rev.win32.scd", "kind": "field"}, #mysterious figure boss theme revered (loops but is only 3s)
+        #{"name": "123rev.win32.scd", "kind": "field"}, #mysterious figure boss theme reversed (loops but is only 3s)
         #{"name": "124dp_amb.win32.scd", "kind": "field"}, #ambient sounds from Keyblade Graveyard
         {"name": "125yami_f.win32.scd", "kind": "field"},
         {"name": "126yami_b.win32.scd", "kind": "battle"},
         {"name": "127Xeha_b.win32.scd", "kind": "battle"},
         {"name": "128Eraqu_b.win32.scd", "kind": "battle"},
-        {"name": "129Pure_b.win32.scd", "kind": "battle"}
-        #{"name": "130Mons_b.win32.scd", "kind": "battle"} #Monstro
+        {"name": "129Pure_b.win32.scd", "kind": "battle"},
+        {"name": "130Mons_b.win32.scd", "kind": "battle"} #Monstro
         ],
     "DDD": [
         {"name": "bgm_001.win32.scd", "kind": "field"},
@@ -430,8 +430,8 @@ musicList = {
 		{"name": "bgm_093.win32.scd", "kind": "battle"},
 		{"name": "bgm_094.win32.scd", "kind": "battle"},
 		{"name": "bgm_095.win32.scd", "kind": "unknown"},
-		{"name": "bgm_096.win32.scd", "kind": "unknown"},
-		{"name": "bgm_097.win32.scd", "kind": "unknown"},
+		#{"name": "bgm_096.win32.scd", "kind": "unknown"}, (short ending bgm(?) no loop)
+		#{"name": "bgm_097.win32.scd", "kind": "unknown"}, (short no loop)
 		{"name": "bgm_098.win32.scd", "kind": "battle"}, #twister
 		{"name": "bgm_099.win32.scd", "kind": "battle"}, #calling
 		#{"name": "bgm_112.win32.scd", "kind": "title"}, #Dearly beloved kh2
@@ -566,18 +566,17 @@ class RandomBGM():
             for song in musicList[game]:
                 if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
                     continue
-                kind = "battle" # default
-                if "Randomize Field and Battle Music Separately" in options["options"]:
-                    kind = song.get("kind", "battle")
-                if "Randomize Dearly Beloved Separately" in options["options"]:
-                    kind = song.get("kind", "title")
-                if "Randomize Field and Battle Music Separately" in options["options"] and not "Randomize Dearly Beloved Separately" in options["options"] and kind == "title":
+                kind = "battle"
+                testkind = song.get("kind")
+                if "Randomize Field and Battle Music Separately" in options["options"] and testkind != "unknown" and testkind != "battle" or "Randomize Field and Battle Music Separately" in options["options"] and testkind == "title":
                     kind = "field"
-                if kind == "unknown":
+                if "Randomize Field and Battle Music Separately" in options["options"] and testkind == "unknown":
                     kind = random.choice(["field", "battle"])
+                if "Randomize Dearly Beloved Separately" in options["options"] and testkind == "title":
+                    kind = "title"
                 song["game"] = game
                 BGMList[kind].append(song)
-                #print (BGMList["title"]),
+        #print (BGMList["title"]),
 
         def _getMusicAsset(original_song, new_song):
             return {
@@ -598,12 +597,11 @@ class RandomBGM():
         BGMAssets = []
         for i in range(len(musicList["KH2"])):
             original_song = musicList["KH2"][i]
-            kind = original_song.get("kind", "battle")
-
+            kind = original_song.get("kind")
             if "Randomize Dearly Beloved Separately" in options["options"] and kind == "title":
                 new_song = shuffledTitle[numTitle % len(shuffledTitle)]
                 numTitle += 1
-            if "Randomize Field and Battle Music Separately" in options["options"] and kind == "field" or "Randomize Field and Battle Music Separately" in options["options"] and kind == "title":
+            elif "Randomize Field and Battle Music Separately" in options["options"] and kind == "field" or "Randomize Field and Battle Music Separately" in options["options"] and kind == "title":
                 new_song = shuffledField[numField % len(shuffledField)]
                 numField += 1
             else:
