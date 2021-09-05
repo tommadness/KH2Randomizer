@@ -41,7 +41,7 @@ def index(message=""):
             includeList = settings['includeList'][:]
             settings['includeList'].clear()
             for location in includeList:
-                settings['includeList'].append(locationType(location))
+                settings['include'].append(locationType(location))
             
     print(settings)
     return fl.render_template('index.jinja',
