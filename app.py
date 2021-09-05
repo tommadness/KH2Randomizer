@@ -38,6 +38,11 @@ def index(message=""):
             redisOut = r.hgetall(settingsHash)
             for var in redisOut:
                 settings[str(var, 'utf-8')] = json.loads(redisOut[var])
+            includeList = settings['includeList'][:]
+            settings['includeList'].clear()
+            for location in includeList:
+                settings['includeList'].append(locationType(location))
+            
     print(settings)
     return fl.render_template('index.jinja',
      settings = settings,
