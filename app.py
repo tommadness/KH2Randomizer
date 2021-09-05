@@ -31,8 +31,11 @@ def inject_today_date():
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    settingsHash = fl.request.args.get("settings")
-    settings = r.hgetall(settingsHash)
+    settingsHash = fl.request.args.get("settings") or ""
+    settings = ""
+    if not development_mode:
+        if settingsHash != "":
+            settings = r.hgetall(settingsHash)
     print(settings)
     return fl.render_template('index.jinja',
      settings = settings,
