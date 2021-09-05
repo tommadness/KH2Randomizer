@@ -40,6 +40,7 @@ def index(message=""):
                 settings[str(var, 'utf-8')] = json.loads(redisOut[var])
             includeList = settings['includeList'][:]
             settings['includeList'].clear()
+            settings['include'] = []
             for location in includeList:
                 settings['include'].append(locationType(location))
             
