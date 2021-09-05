@@ -338,14 +338,14 @@ musicList = {
         {"name": "119desti.win32.scd", "kind": "field"},
         {"name": "120hand.win32.scd", "kind": "battle"},
         {"name": "122nazono.win32.scd", "kind": "battle"}, #mysterious figure boss theme
-        #{"name": "123rev.win32.scd", "kind": "field"}, #mysterious figure boss theme revered (loops but is only 3s)
+        #{"name": "123rev.win32.scd", "kind": "field"}, #mysterious figure boss theme reversed (loops but is only 3s)
         #{"name": "124dp_amb.win32.scd", "kind": "field"}, #ambient sounds from Keyblade Graveyard
         {"name": "125yami_f.win32.scd", "kind": "field"},
         {"name": "126yami_b.win32.scd", "kind": "battle"},
         {"name": "127Xeha_b.win32.scd", "kind": "battle"},
         {"name": "128Eraqu_b.win32.scd", "kind": "battle"},
-        {"name": "129Pure_b.win32.scd", "kind": "battle"}
-        #{"name": "130Mons_b.win32.scd", "kind": "battle"} #Monstro
+        {"name": "129Pure_b.win32.scd", "kind": "battle"},
+        {"name": "130Mons_b.win32.scd", "kind": "battle"} #Monstro
         ],
     "DDD": [
         {"name": "bgm_001.win32.scd", "kind": "field"},
