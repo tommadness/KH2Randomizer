@@ -32,10 +32,12 @@ def inject_today_date():
 def index(message=""):
     session.clear()
     settingsHash = fl.request.args.get("settings") or ""
-    settings = ""
+    settings = {}
     if not development_mode:
         if settingsHash != "":
-            settings = r.hgetall(settingsHash)
+            redisOut = r.hgetall(settingsHash)
+            for var in redisOut:
+                settings[str(var, 'utf-8')] = json.loads(redisOut[var])
     print(settings)
     return fl.render_template('index.jinja',
      settings = settings,
