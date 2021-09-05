@@ -31,7 +31,20 @@ def inject_today_date():
 @app.route('/', methods=['GET','POST'])
 def index(message=""):
     session.clear()
-    return fl.render_template('index.jinja', locations = List.LocationList.getOptions(), expTypes = expTypes, miscConfig = miscConfig, keybladeAbilities = keybladeAbilities, message=message, bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), seedModifiers = SeedModifier.getOptions(), dailyModifiers = getDailyModifiers(datetime.date.today()))
+    settingsHash = fl.request.args.get("settings")
+    settings = r.hgetall(settingsHash)
+    print(settings)
+    return fl.render_template('index.jinja',
+     settings = settings,
+     locations = List.LocationList.getOptions(), 
+     expTypes = expTypes, 
+     miscConfig = miscConfig, 
+     keybladeAbilities = keybladeAbilities, 
+     message=message, 
+     bossEnemyConfig = khbr()._get_game(game="kh2").get_options(), 
+     hintSystems = Hints.getOptions(), startingInventory = StartingInventory.getOptions(), 
+     seedModifiers = SeedModifier.getOptions(), 
+     dailyModifiers = getDailyModifiers(datetime.date.today()))
 
 @app.route('/daily', methods=["GET", ])
 def dailySeed():
