@@ -60,30 +60,36 @@ class KH2Randomizer():
         self._validLocationListDonald = [location for location in self._allLocationListDonald if not set(location.LocationTypes).intersection(excludeWorlds)]
 
         late_item_weight = 1
+        normal_item_weight = 1
         early_item_weight = 1
-        insane = False
         if item_difficulty == "Super Easy":
-            early_item_weight = 50
-            late_item_weight = .1
+            early_item_weight = 500
+            normal_item_weight = 10
+            late_item_weight = 1
         if item_difficulty == "Easy":
-            early_item_weight = 1
-            late_item_weight = .1
+            early_item_weight = 10
+            normal_item_weight = 10
+            late_item_weight = 1
         if item_difficulty == "Hard":
             early_item_weight = 1
+            normal_item_weight = 1
             late_item_weight = 5
         if item_difficulty == "Very Hard":
-            early_item_weight = .1
-            late_item_weight = 5
-        if item_difficulty == "Insane":
-            early_item_weight = .01
+            early_item_weight = 1
+            normal_item_weight = 10
             late_item_weight = 50
-            insane = True
+        if item_difficulty == "Insane":
+            early_item_weight = 1
+            normal_item_weight = 100
+            late_item_weight = 5000
 
         for loc in self._validLocationList:
             if loc.LocationWeight>1:
                 loc.setLocationWeight(late_item_weight)
             elif loc.LocationWeight<1:
                 loc.setLocationWeight(early_item_weight)
+            elif loc.LocationWeight==1:
+                loc.setLocationWeight(normal_item_weight)
 
         if reportDepth is not None:
             for loc in self._validLocationList:

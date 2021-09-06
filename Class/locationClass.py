@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 import random
 
 class KH2Location:
-    LocationWeight: float = 1
+    LocationWeight: int = 1
     LocationDepth: locationDepth = locationDepth.FirstVisit
     def setLocationWeight(self,w=1):
         self.LocationWeight = w
