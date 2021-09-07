@@ -571,8 +571,8 @@ class RandomBGM():
                 #sort bgm as field first if splitFB is true.
                 if "Randomize Field and Battle Music Separately" in options["options"] and category != "battle":
                     kind = "field"
-                #give "unknown" bgm a random kind.
-                if "Randomize Field and Battle Music Separately" in options["options"] and category == "unknown":
+                #give "unknown" and "cutscene" bgm a random kind.
+                if "Randomize Field and Battle Music Separately" in options["options"] and (category == "unknown" or category == "cutscene"):
                     kind = random.choice(["field", "battle"])
                 #separate dearly beloved bgms
                 if "Randomize Dearly Beloved Separately" in options["options"] and category == "title":
@@ -621,7 +621,7 @@ class RandomBGM():
                 new_song = shuffledBattle[numBattle % len(shuffledBattle)]
                 numBattle += 1
             BGMAssets.append(_getMusicAsset(original_song, new_song))
-            #debug final sorting
+            ##debug final sorting
             #testFB = True if "Randomize Field and Battle Music Separately" in options["options"] else False
             #testDB = True if "Randomize Dearly Beloved Separately" in options["options"] else False
             #testCS = True if "Randomize Cutscene Music Separately" in options["options"] else False
@@ -633,7 +633,8 @@ class RandomBGM():
             ##check battle
             #if testFB and original_song["kind"] == "battle":
             #    if new_song["kind"] != "battle":
-            #        print ("Bad Battle Match! Orig = " + original_song["kind"] + " | New = " + new_song["kind"])
+            #        if testCS and new_song["kind"] == "cutscene":
+            #            print ("Bad Battle Match! Orig = " + original_song["kind"] + " | New = " + new_song["kind"])
             ##check title
             #if testDB and original_song["kind"] == "title":
             #    if new_song["kind"] != "title":
@@ -642,8 +643,8 @@ class RandomBGM():
             #if testCS and original_song["kind"] == "cutscene":
             #    if new_song["kind"] != "cutscene":
             #        print ("Bad Cutscene Match! Orig = " + original_song["kind"] + " | New = " + new_song["kind"])
-            #if new_song["kind"] == "unknown" and not "Randomize Field and Battle Music Separately" in options["options"]:
-            #    print ("New song was unknown! How did this happen?")
+            #if new_song["kind"] == "unknown":
+            #    print ("Orig = " + original_song["kind"] + " | New = " + new_song["kind"])
         return BGMAssets
 
     def getOptions():
