@@ -572,7 +572,7 @@ class RandomBGM():
                 if "Randomize Field and Battle Music Separately" in options["options"] and category != "battle":
                     kind = "field"
                 #give "unknown" and "cutscene" bgm a random kind.
-                if "Randomize Field and Battle Music Separately" in options["options"] and (category == "unknown" or category == "cutscene"):
+                if "Randomize Field and Battle Music Separately" in options["options"] and category == "unknown":
                     kind = random.choice(["field", "battle"])
                 #separate dearly beloved bgms
                 if "Randomize Dearly Beloved Separately" in options["options"] and category == "title":
