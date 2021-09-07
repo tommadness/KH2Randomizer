@@ -213,140 +213,139 @@ musicList = {
 
         ],
     "RECOM": [
-        {"name": '01F_Town_B.win32.scd', "kind": "battle"},
-        {"name": '01F_Town_F.win32.scd', "kind": "field"},
-        {"name": '03F_Hercul.win32.scd', "kind": "field"},
-        {"name": '03F_Hercules_B.win32.scd', "kind": "battle"},
-        {"name": '12_Event_Yuttari.win32.scd', "kind": "cutscene"},
-        {"name": '13_Event_Namine.win32.scd', "kind": "cutscene"},
-        {"name": '14_Event_Odayaka.win32.scd', "kind": "cutscene"},
-        {"name": '15_Event_XIII.win32.scd', "kind": "cutscene"},
-        {"name": '16_XIIIBoss1.win32.scd', "kind": "battle"},
-        {"name": '17_Halloween_F.win32.scd', "kind": "field"},
-        {"name": '18_Helloween_B.win32.scd', "kind": "battle"},
-        {"name": '19_Alice_Field.win32.scd', "kind": "field"},
-        {"name": '20_Event_13thFloor.win32.scd', "kind": "field"},
-        {"name": '21_Alice_Battle.win32.scd', "kind": "battle"},
-        {"name": '22_PeterPan_Field.win32.scd', "kind": "field"},
-        {"name": '23_PeterPan_Battle.win32.scd', "kind": "battle"},
-        {"name": '24_Pinocchio_Field.win32.scd', "kind": "field"},
-        {"name": '25_Aladdin_F.win32.scd', "kind": "field"},
-        {"name": '26_Aladdin_B.win32.scd', "kind": "battle"},
-        {"name": '27_Pinocchio_B.win32.scd', "kind": "battle"},
-        {"name": '28_Forget_F.win32.scd', "kind": "field"},
-        {"name": '29_Forget_B.win32.scd', "kind": "battle"},
-        {"name": '30_Twilight_F.win32.scd', "kind": "field"},
-        {"name": '31_Twilight_B.win32.scd', "kind": "battle"},
-        {"name": '32_Destiny_F.win32.scd', "kind": "field"},
-        {"name": '33_Destiny_B.win32.scd', "kind": "battle"},
-        {"name": '34_Boss_RikuAnsem.win32.scd', "kind": "battle"},
-        {"name": '35_Boss_NiseRiku.win32.scd', "kind": "battle"},
-        {"name": '36_WinnieThePooh.win32.scd', "kind": "field"},
-        {"name": '37_LastBoss1.win32.scd', "kind": "battle"},
-        {"name": '38_UnderTheSea.win32.scd', "kind": "field", "dmca": True},
-        {"name": '39_LittleMermaid_B.win32.scd', "kind": "battle"},
-        {"name": '40_LastBoss2.win32.scd', "kind": "battle"},
-        {"name": '41_LastBoss3.win32.scd', "kind": "battle"},
-        {"name": '42_Hollow_F.win32.scd', "kind": "field"},
-        {"name": '43_Hollow_B.win32.scd', "kind": "battle"},
-        {"name": '44_PooGame1.win32.scd', "kind": "field"},
-        {"name": '45_PoohGame2.win32.scd', "kind": "battle"},
-        {"name": 'Boss1.win32.scd', "kind": "battle"},
-        {"name": 'Boss2_World.win32.scd', "kind": "battle"},
-        {"name": 'Event1_Kinpak.win32.scd', "kind": "cutscene"},
-        {"name": 'Event2_.win32.scd', "kind": "battle"},
-        {"name": 'Event4.win32.scd', "kind": "cutscene"},
-        {"name": 'Event_Unrest.win32.scd', "kind": "cutscene"},
-        {"name": 'Title.win32.scd', "kind": "title"}],
+        {"name": '01F_Town_B.win32.scd', "kind": "battle"}, #Hand in Hand
+        {"name": '01F_Town_F.win32.scd', "kind": "field"}, #Traverse Town
+        {"name": '03F_Hercul.win32.scd', "kind": "field"}, #Olympus Coliseum
+        {"name": '03F_Hercules_B.win32.scd', "kind": "battle"}, #Go for It
+        {"name": '12_Event_Yuttari.win32.scd', "kind": "cutscene"}, #La Pace
+        {"name": '13_Event_Namine.win32.scd', "kind": "cutscene"}, #Naminé
+        {"name": '14_Event_Odayaka.win32.scd', "kind": "cutscene"}, #Piccolo Resto
+        {"name": '15_Event_XIII.win32.scd', "kind": "cutscene"}, #Thirteenth Discretion
+        {"name": '16_XIIIBoss1.win32.scd', "kind": "battle"}, #The 13th Struggle (Re:Chain of Memories Version)
+        {"name": '17_Halloween_F.win32.scd', "kind": "field"}, #This is Halloween
+        {"name": '18_Helloween_B.win32.scd', "kind": "battle"}, #Spooks of Halloween Town
+        {"name": '19_Alice_Field.win32.scd', "kind": "field"}, #Welcome to Wonderland
+        {"name": '20_Event_13thFloor.win32.scd', "kind": "field"}, #The 13th Floor
+        {"name": '21_Alice_Battle.win32.scd', "kind": "battle"}, #To Our Surprise
+        {"name": '22_PeterPan_Field.win32.scd', "kind": "field"}, #Captain Hook's Pirate Ship
+        {"name": '23_PeterPan_Battle.win32.scd', "kind": "battle"}, #Pirate's Gigue
+        {"name": '24_Pinocchio_Field.win32.scd', "kind": "field"}, #A Very Small Wish
+        {"name": '25_Aladdin_F.win32.scd', "kind": "field"}, #A Day in Agrabah
+        {"name": '26_Aladdin_B.win32.scd', "kind": "battle"}, #Arabian Dream
+        {"name": '27_Pinocchio_B.win32.scd', "kind": "battle"}, #Monstrous Monstro
+        {"name": '28_Forget_F.win32.scd', "kind": "field"}, #Castle Oblivion
+        {"name": '29_Forget_B.win32.scd', "kind": "battle"}, #Forgotten Challenge
+        {"name": '30_Twilight_F.win32.scd', "kind": "field"}, #Lazy Afternoons
+        {"name": '31_Twilight_B.win32.scd', "kind": "battle"}, #Sinister Sundown
+        {"name": '32_Destiny_F.win32.scd', "kind": "field"}, #Destiny Islands (Re:Chain of Memories Version)
+        {"name": '33_Destiny_B.win32.scd', "kind": "battle"}, #Night of Fate (Re:Chain of Memories Version)
+        {"name": '34_Boss_RikuAnsem.win32.scd', "kind": "battle"}, #Revenge of Chaos
+        {"name": '35_Boss_NiseRiku.win32.scd', "kind": "battle"}, #The Force in You
+        {"name": '36_WinnieThePooh.win32.scd', "kind": "field"}, #Winnie the Pooh
+        {"name": '37_LastBoss1.win32.scd', "kind": "battle"}, #Graceful Assassin
+        {"name": '38_UnderTheSea.win32.scd', "kind": "field", "dmca": True}, #Under the Sea
+        {"name": '39_LittleMermaid_B.win32.scd', "kind": "battle"}, #An Adventure in Atlantica
+        {"name": '40_LastBoss2.win32.scd', "kind": "battle"}, #Scythe of Petals
+        {"name": '41_LastBoss3.win32.scd', "kind": "battle"}, #Lord of the Castle
+        {"name": '42_Hollow_F.win32.scd', "kind": "field"}, #Hollow Bastion
+        {"name": '43_Hollow_B.win32.scd', "kind": "battle"}, #Scherzo Di Notte
+        {"name": '44_PooGame1.win32.scd', "kind": "field"}, #March-A-Long
+        {"name": '45_PoohGame2.win32.scd', "kind": "battle"}, #Dash-A-Long
+        {"name": 'Boss1.win32.scd', "kind": "battle"}, #Struggle Away
+        {"name": 'Boss2_World.win32.scd', "kind": "battle"}, #The Fight for My Friends
+        {"name": 'Event1_Kinpak.win32.scd', "kind": "cutscene"}, #Disquieting
+        {"name": 'Event2_.win32.scd', "kind": "battle"}, #Face It!
+        {"name": 'Event4.win32.scd', "kind": "cutscene"}, #Just Wondering
+        {"name": 'Event_Unrest.win32.scd', "kind": "cutscene"}, #Scent of Silence
+        {"name": 'Title.win32.scd', "kind": "title"}], #Dearly Beloved (Re:Chain of Memories Version)
     "BBS": [
-        {"name": "001sinde_f.win32.scd", "kind": "field"},
-        {"name": "002sinde_b.win32.scd", "kind": "battle"},
-        {"name": "003nemure_f.win32.scd", "kind": "field"},
-        {"name": "004nemure_b.win32.scd", "kind": "battle"},
-        {"name": "005syugyo_f.win32.scd", "kind": "field"},
-        {"name": "006syugyo_b.win32.scd", "kind": "battle"},
-        {"name": "007shira_f.win32.scd", "kind": "field"},
-        {"name": "008shira_b.win32.scd", "kind": "battle"},
-        {"name": "009raydi_f.win32.scd", "kind": "field"},
-        {"name": "010raydi_b.win32.scd", "kind": "battle"},
-        {"name": "011distow_f.win32.scd", "kind": "field"},
-        {"name": "012distow_b.win32.scd", "kind": "battle"},
-        {"name": "013never_f.win32.scd", "kind": "field"},
-        {"name": "014never_b.win32.scd", "kind": "battle"},
-        {"name": "015herc_f.win32.scd", "kind": "field"},
-        {"name": "016herc_b.win32.scd", "kind": "battle"},
-        {"name": "017riro_f.win32.scd", "kind": "field"},
-        {"name": "018riro_b.win32.scd", "kind": "battle"},
-        {"name": "019iensid_f.win32.scd", "kind": "field"},
-        {"name": "020iensid_b.win32.scd", "kind": "battle"},
-        {"name": "021kouya_f.win32.scd", "kind": "field"},
-        {"name": "022disice_f.win32.scd", "kind": "field"},
-        {"name": "023tsusin_f.win32.scd", "kind": "field"},
-        {"name": "030youki.win32.scd", "kind": "cutscene"},
-        {"name": "031isamashi.win32.scd", "kind": "cutscene"},
-        {"name": "032odayaka.win32.scd", "kind": "cutscene"},
-        {"name": "033fuon.win32.scd", "kind": "cutscene"},
-        {"name": "034kanasii.win32.scd", "kind": "cutscene"},
-        {"name": "035kinpaku.win32.scd", "kind": "cutscene"},
-        {"name": "036seisin.win32.scd", "kind": "field"},
-        {"name": "037yami.win32.scd", "kind": "cutscene"},
-        {"name": "038ria_deai.win32.scd", "kind": "cutscene"},
-        {"name": "040anba_b1.win32.scd", "kind": "battle"},
-        {"name": "041anba_b2.win32.scd", "kind": "battle"},
-        {"name": "042dis_b1.win32.scd", "kind": "battle"},
-        {"name": "043dis_b2.win32.scd", "kind": "battle"},
-        {"name": "044vanita_b.win32.scd", "kind": "battle"},
-        {"name": "045anthem_b.win32.scd", "kind": "battle"},
-        {"name": "046last_b1.win32.scd", "kind": "battle"},
-        {"name": "047last_b2.win32.scd", "kind": "battle"},
-        {"name": "048hanyo_b1.win32.scd", "kind": "battle"},
-        {"name": "049hanyo_b2.win32.scd", "kind": "battle"},
-        {"name": "050title.win32.scd", "kind": "title"},
-        {"name": "051worldmap.win32.scd", "kind": "field"},
-        {"name": "060tera.win32.scd", "kind": "cutscene"},
-        {"name": "061aqua.win32.scd", "kind": "cutscene"},
-        {"name": "062ven.win32.scd", "kind": "cutscene"},
-        {"name": "063kairi1.win32.scd", "kind": "cutscene"},
-        {"name": "066peet.win32.scd", "kind": "cutscene"},
-        {"name": "067disvill.win32.scd", "kind": "cutscene"},
-        {"name": "068zea.win32.scd", "kind": "cutscene"},
-        {"name": "069braig.win32.scd", "kind": "cutscene"},
-        {"name": "070key_l.win32.scd", "kind": "cutscene"},
-        {"name": "071key_d.win32.scd", "kind": "cutscene"},
-        {"name": "072key_l_d.win32.scd", "kind": "cutscene"},
-        {"name": "073kizuna.win32.scd", "kind": "cutscene"},
-        {"name": "074zack.win32.scd", "kind": "cutscene"},
-        {"name": "100ice1_128.win32.scd", "kind": "field"},
-        {"name": "101ice1_132.win32.scd", "kind": "field"},
-        {"name": "102ice_2.win32.scd", "kind": "field"},
-        {"name": "103fruit.win32.scd", "kind": "field"},
-        {"name": "104dice.win32.scd", "kind": "field"},
-        {"name": "105poomini.win32.scd", "kind": "field"},
-        {"name": "106cartrace.win32.scd", "kind": "battle"},
-        {"name": "107syugyo.win32.scd", "kind": "field"},
-        {"name": "108riro.win32.scd", "kind": "field"},
-        {"name": "109training.win32.scd", "kind": "battle"},
-        {"name": "110han_bt1.win32.scd", "kind": "battle"},
-        {"name": "111han_bt2.win32.scd", "kind": "battle"},
-        {"name": "112rage_bt.win32.scd", "kind": "battle"},
-        {"name": "113kh1tit.win32.scd", "kind": "title"},
-        {"name": "114raceview.win32.scd", "kind": "field"},
-        {"name": "115boss.win32.scd", "kind": "battle"},
-        #{"name": "116icon.win32.scd", "kind": "field"}, #intro to dearly beloved (psp xmb ver.) (short and doesn't loop)
-        {"name": "117short_l2.win32.scd", "kind": "field"},
-        {"name": "118gumi.win32.scd", "kind": "field"},
-        {"name": "119desti.win32.scd", "kind": "field"},
-        {"name": "120hand.win32.scd", "kind": "battle"},
-        {"name": "122nazono.win32.scd", "kind": "battle"}, #mysterious figure boss theme
-        #{"name": "123rev.win32.scd", "kind": "field"}, #mysterious figure boss theme reversed (loops but is only 3s)
-        {"name": "124dp_amb.win32.scd", "kind": "field"}, #destroyed land of departure
-        {"name": "125yami_f.win32.scd", "kind": "field"},
-        {"name": "126yami_b.win32.scd", "kind": "battle"},
-        {"name": "127Xeha_b.win32.scd", "kind": "battle"},
-        {"name": "128Eraqu_b.win32.scd", "kind": "battle"},
-        {"name": "129Pure_b.win32.scd", "kind": "battle"},
-        {"name": "130Mons_b.win32.scd", "kind": "battle"} #Monstro
-        ],
+        {"name": "001sinde_f.win32.scd", "kind": "field"}, #Bibbidi-Bobbidi-Boo (Castle of Dreams Field Music)
+        {"name": "002sinde_b.win32.scd", "kind": "battle"}, #Castle Escapade (Castle of Dreams Battle Music)
+        {"name": "003nemure_f.win32.scd", "kind": "field"}, #The Silent Forest (Enchanted Dominion Field Music)
+        {"name": "004nemure_b.win32.scd", "kind": "battle"}, #The Rustling Forest (Enchanted Dominion Battle Music)
+        {"name": "005syugyo_f.win32.scd", "kind": "field"}, #The Promised Beginning (The Land of Departure Field Music)
+        {"name": "006syugyo_b.win32.scd", "kind": "battle"}, #Future Masters (The Land of Departure Battle Music)
+        {"name": "007shira_f.win32.scd", "kind": "field"}, #The Secret Whispers (Dwarf Woodlands Field Music)
+        {"name": "008shira_b.win32.scd", "kind": "battle"}, #Risky Romp (Dwarf Woodlands Battle Music)
+        {"name": "009raydi_f.win32.scd", "kind": "field"}, #Radiant Garden (Radiant Garden Field Music)
+        {"name": "010raydi_b.win32.scd", "kind": "battle"}, #Black Garden (Radiant Garden Battle Music)
+        {"name": "011distow_f.win32.scd", "kind": "field"}, #Mickey Mouse March (Disney Town Field Music)
+        {"name": "012distow_b.win32.scd", "kind": "battle"}, #Up Down Adventure (Disney Town Battle Music)
+        {"name": "013never_f.win32.scd", "kind": "field"}, #Daydream upon Neverland (Neverland Field Music)
+        {"name": "014never_b.win32.scd", "kind": "battle"}, #Neverland's Scherzo (Neverland Battle Music)
+        {"name": "015herc_f.win32.scd", "kind": "field"}, #Olympus Coliseum (Olympus Coliseum Field Music)
+        {"name": "016herc_b.win32.scd", "kind": "battle"}, #Go for It! (Olympus Coliseum Battle Music)
+        {"name": "017riro_f.win32.scd", "kind": "field"}, #Hau'oli, Hau'oli (Deep Space Field Music)
+        {"name": "018riro_b.win32.scd", "kind": "battle"}, #Mákaukau? (Deep Space Battle Music)
+        {"name": "019iensid_f.win32.scd", "kind": "field"}, #Magical Mystery (Mysterious Tower Field Music)
+        {"name": "020iensid_b.win32.scd", "kind": "battle"}, #Working Together (Mysterious Tower Battle Music)
+        {"name": "021kouya_f.win32.scd", "kind": "field"}, #Keyblade Graveyard Horizon
+        {"name": "022disice_f.win32.scd", "kind": "field"}, #Destiny Islands (Birth by Sleep Version)
+        {"name": "023tsusin_f.win32.scd", "kind": "field"}, #Dearly Dreams
+        {"name": "030youki.win32.scd", "kind": "cutscene"}, #Innocent Times
+        {"name": "031isamashi.win32.scd", "kind": "cutscene"}, #Cheers for the Brave
+        {"name": "032odayaka.win32.scd", "kind": "cutscene"}, #Peaceful Hearts
+        {"name": "033fuon.win32.scd", "kind": "cutscene"}, #Drops of Poison
+        {"name": "034kanasii.win32.scd", "kind": "cutscene"}, #Tears of the Light
+        {"name": "035kinpaku.win32.scd", "kind": "cutscene"}, #Shaded Truths
+        {"name": "036seisin.win32.scd", "kind": "field"}, #Dive into the Heart -Destati-
+        {"name": "037yami.win32.scd", "kind": "cutscene"}, #Beyond the Door
+        {"name": "038ria_deai.win32.scd", "kind": "cutscene"}, #Eternal Moments
+        {"name": "040anba_b1.win32.scd", "kind": "battle"}, #The Tumbling
+        {"name": "041anba_b2.win32.scd", "kind": "battle"}, #Unforgettable
+        {"name": "042dis_b1.win32.scd", "kind": "battle"}, #Vim and Vigor -Birth by Sleep Version-
+        {"name": "043dis_b2.win32.scd", "kind": "battle"}, #The Encounter -Birth by Sleep Version-
+        {"name": "044vanita_b.win32.scd", "kind": "battle"}, #Enter the Darkness
+        {"name": "045anthem_b.win32.scd", "kind": "battle"}, #Black Powder
+        {"name": "046last_b1.win32.scd", "kind": "battle"}, #Unbreakable Chains
+        {"name": "047last_b2.win32.scd", "kind": "battle"}, #Dismiss
+        {"name": "048hanyo_b1.win32.scd", "kind": "battle"}, #Extreme Encounters
+        {"name": "049hanyo_b2.win32.scd", "kind": "battle"}, #Destiny's Force
+        {"name": "050title.win32.scd", "kind": "title"}, #Dearly Beloved (Birth by Sleep Version)
+        {"name": "051worldmap.win32.scd", "kind": "field"}, #The Worlds
+        {"name": "060tera.win32.scd", "kind": "cutscene"}, #Terra
+        {"name": "061aqua.win32.scd", "kind": "cutscene"}, #Aqua
+        {"name": "062ven.win32.scd", "kind": "cutscene"}, #Ventus
+        {"name": "063kairi1.win32.scd", "kind": "cutscene"}, #Kairi (Birth by Sleep Version)
+        {"name": "066peet.win32.scd", "kind": "cutscene"}, #Hero or Heel
+        {"name": "067disvill.win32.scd", "kind": "cutscene"}, #Villains of a Sort
+        {"name": "068zea.win32.scd", "kind": "cutscene"}, #Xehanort
+        {"name": "069braig.win32.scd", "kind": "cutscene"}, #Organization XIII
+        {"name": "070key_l.win32.scd", "kind": "cutscene"}, #The Key of Light
+        {"name": "071key_d.win32.scd", "kind": "cutscene"}, #The Key of Darkness
+        {"name": "072key_l_d.win32.scd", "kind": "cutscene"}, #The Key
+        {"name": "073kizuna.win32.scd", "kind": "cutscene"}, #Destiny's Union
+        {"name": "074zack.win32.scd", "kind": "cutscene"}, #A Date with Fate
+        {"name": "100ice1_128.win32.scd", "kind": "field"}, #It's a Small World
+        {"name": "101ice1_132.win32.scd", "kind": "field"}, #It's a Small World
+        {"name": "102ice_2.win32.scd", "kind": "field"}, #Dessert Paradise
+        {"name": "103fruit.win32.scd", "kind": "field"}, #Fresh Fruit Balls
+        {"name": "104dice.win32.scd", "kind": "field"}, #Dice & Shine
+        {"name": "105poomini.win32.scd", "kind": "field"}, #March-A-Long
+        {"name": "106cartrace.win32.scd", "kind": "battle"}, #Go! Go! Rumble Racer
+        {"name": "107syugyo.win32.scd", "kind": "field"}, #The Promised Beginning (The Land of Departure Field Music) (Command Board)
+        {"name": "108riro.win32.scd", "kind": "field"}, #Hau'oli, Hau'oli (Deep Space Field Music) (Command Board)
+        {"name": "109training.win32.scd", "kind": "battle"}, #Road to a Hero (Birth by Sleep Version)
+        {"name": "110han_bt1.win32.scd", "kind": "battle"}, #Rowdy Rumble -Birth by Sleep Version-
+        {"name": "111han_bt2.win32.scd", "kind": "battle"}, #Shrouding Dark Cloud -Birth by Sleep Version-
+        {"name": "112rage_bt.win32.scd", "kind": "battle"}, #Rage Awakened -The Origin-
+        {"name": "113kh1tit.win32.scd", "kind": "title"}, #Dearly Beloved (From KH1, used at Battle Report)
+        {"name": "114raceview.win32.scd", "kind": "field"}, #Big Race
+        {"name": "115boss.win32.scd", "kind": "battle"}, #Enter the Void
+        #{"name": "116icon.win32.scd", "kind": "field"}, #Dearly Beloved (Birth by Sleep Version) (10-Second Version)
+        {"name": "117short_l2.win32.scd", "kind": "field"}, #Another Side - Battle Ver. - (Birth by Sleep Version)
+        {"name": "118gumi.win32.scd", "kind": "field"}, #Blast Away! -Gummi Ship II- (From Original KH1)
+        {"name": "119desti.win32.scd", "kind": "field"}, #Destiny Islands (From Original KH1)
+        {"name": "120hand.win32.scd", "kind": "battle"}, #Hand in Hand (From Original KH1)
+        {"name": "122nazono.win32.scd", "kind": "battle"}, #Dark Impetus
+        #{"name": "123rev.win32.scd", "kind": "field"}, #Mysterious Figure's Time Reverse Loop
+        {"name": "124dp_amb.win32.scd", "kind": "field"}, #Ambient Wind Sounds from Destroyed Land of Departure
+        {"name": "125yami_f.win32.scd", "kind": "field"}, #Night of the Dark Dream (Realm of Darkness Field Music)
+        {"name": "126yami_b.win32.scd", "kind": "battle"}, #Night of Tragedy (Realm of Darkness Battle Music)
+        {"name": "127Xeha_b.win32.scd", "kind": "battle"}, #Forze dell Oscurita
+        {"name": "128Eraqu_b.win32.scd", "kind": "battle"}, #Master, Tell Me the Truth
+        {"name": "129Pure_b.win32.scd", "kind": "battle"}, #Hunter of the Dark
+        {"name": "130Mons_b.win32.scd", "kind": "battle"}], #Monstrous Monstro -Arena Ver.-
     "DDD": [
         {"name": "bgm_001.win32.scd", "kind": "field"}, # Traverse in Trance (Traverse Town Field Music)
 		{"name": "bgm_002.win32.scd", "kind": "field"}, # One for All (Country of the Musketeers Field Music)
