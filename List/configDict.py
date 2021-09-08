@@ -30,10 +30,19 @@ class locationType(str, Enum):
     AS = "Absent Silhouettes"
     Sephi = "Sephiroth"
     LW = "Lingering Will (Terra)"
+    Mush13 = "Mushroom 13"
     DataOrg = "Data Organization XIII"
     FormLevel =  "Form Levels"
     Free = "Garden of Assemblage"
     Critical = "Critical Bonuses"
+
+class locationDepth(str,Enum):
+    FirstVisit = "FirstVisit"
+    SecondVisit = "SecondVisit"
+    DataFight = "DataFight"
+    FirstBoss = "FirstBoss"
+    SecondBoss = "SecondBoss"
+
 
 class itemType(str, Enum):
     PROOF_OF_CONNECTION = "Proof of Connection"

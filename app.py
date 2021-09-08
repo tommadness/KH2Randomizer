@@ -4,7 +4,7 @@ from Module.randomBGM import RandomBGM
 from Module.startingInventory import StartingInventory
 from Module.modifier import SeedModifier
 from Module.seedEvaluation import SeedValidator
-from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities
+from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities, locationDepth
 import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
@@ -66,7 +66,7 @@ def hashedSeed(hash):
 @app.route('/seed',methods=['GET','POST'])
 def seed():
     if fl.request.method == "POST":
-        random.seed(datetime.datetime.now())
+        random.seed(str(datetime.datetime.now()))
 
         session['keybladeAbilities'] = fl.request.form.getlist('keybladeAbilities')
 
@@ -123,7 +123,14 @@ def seed():
         }
         session['enemyOptions'] = json.dumps(enemyOptions)
 
-        session['hintsType'] = fl.request.form.get("hintsType")
+        hintSubstrings = fl.request.form.get("hintsType").split('-')
+
+        session['hintsType'] = hintSubstrings[0]
+
+        if len(hintSubstrings)==1:
+            session['reportDepth'] = locationDepth("DataFight") # don't use report depth
+        else:
+            session['reportDepth'] = locationDepth(hintSubstrings[1])
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
 
@@ -154,6 +161,7 @@ def seed():
     keybladeAbilities = session.get('keybladeAbilities'),
     enemyOptions = json.loads(session.get("enemyOptions")),
     hintsType = session.get("hintsType"),
+    reportDepth = session.get("reportDepth"),
     startingInventory = session.get("startingInventory"),
     itemPlacementDifficulty = session.get("itemPlacementDifficulty"),
     seedModifiers = session.get("seedModifiers"),
@@ -185,7 +193,7 @@ def randomizePage(data, sessionDict):
     originalSeedName = sessionDict['seed']
     while notValidSeed:
         randomizer = KH2Randomizer(seedName = sessionDict["seed"], spoiler=bool(sessionDict["spoilerLog"]))
-        randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"])
+        randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"], reportDepth=sessionDict["reportDepth"])
         randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
         if randomizer.validateCount():
             randomizer.setKeybladeAbilities(
@@ -194,7 +202,7 @@ def randomizePage(data, sessionDict):
                 keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
             )
             randomizer.setNoAP("Start with No AP" in sessionDict["seedModifiers"])
-            randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]))
+            randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]), reportDepth=sessionDict["reportDepth"])
             randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
             randomizer.setBonusStats()
             if not seedValidation.validateSeed(sessionDict, randomizer):
@@ -203,9 +211,17 @@ def randomizePage(data, sessionDict):
                 sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
                 continue
             notValidSeed = False
+            randomizer.seedName = originalSeedName
+            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList)
+
+            if hintsText is not None and type(hintsText) is not dict:
+                # there was an error generating hints, return value provides context
+                print(f"ERROR: {hintsText}")
+                return
+
+            
             try:
-                randomizer.seedName = originalSeedName
-                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsType = sessionDict["hintsType"], cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
+                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsText = hintsText, cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
                 if development_mode:
                     development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
                     if development_mode_path:

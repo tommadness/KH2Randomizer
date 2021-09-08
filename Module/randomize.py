@@ -11,7 +11,7 @@ from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLev
 from Class.itemClass import KH2Item, ItemEncoder
 from Class.modYml import modYml
 
-from List.configDict import locationType, itemType
+from List.configDict import locationType, itemType, locationDepth
 from List.experienceValues import soraExp, formExp
 from List.LvupStats import Stats
 from List.LocationList import Locations
@@ -24,7 +24,7 @@ def noop(self, *args, **kw):
 @dataclass
 class KH2Randomizer():
     seedName: str
-    spoiler: bool
+    spoiler: bool = False
 
     _locationItems: list[tuple[KH2Location, KH2Item]] = field(default_factory=list)
 
@@ -46,7 +46,7 @@ class KH2Randomizer():
         if self.spoiler:
             random.seed(self.seedName+str(random.random()))
 
-    def populateLocations(self, excludeWorlds, maxItemLogic=False, item_difficulty="Normal"):
+    def populateLocations(self, excludeWorlds, maxItemLogic=False, item_difficulty="Normal",reportDepth=None):
         self._allLocationList = Locations.getTreasureList(maxItemLogic) + Locations.getSoraLevelList() + Locations.getSoraBonusList(maxItemLogic) + Locations.getFormLevelList(maxItemLogic) + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
 
         self._validLocationList = [location for location in self._allLocationList if not set(location.LocationTypes).intersection(excludeWorlds+["Level1Form", "SummonLevel"])]
@@ -60,30 +60,58 @@ class KH2Randomizer():
         self._validLocationListDonald = [location for location in self._allLocationListDonald if not set(location.LocationTypes).intersection(excludeWorlds)]
 
         late_item_weight = 1
+        normal_item_weight = 1
         early_item_weight = 1
-        insane = False
         if item_difficulty == "Super Easy":
-            early_item_weight = 50
-            late_item_weight = .1
+            early_item_weight = 500
+            normal_item_weight = 10
+            late_item_weight = 1
         if item_difficulty == "Easy":
-            early_item_weight = 1
-            late_item_weight = .1
+            early_item_weight = 10
+            normal_item_weight = 10
+            late_item_weight = 1
         if item_difficulty == "Hard":
             early_item_weight = 1
+            normal_item_weight = 1
             late_item_weight = 5
         if item_difficulty == "Very Hard":
-            early_item_weight = .1
-            late_item_weight = 5
-        if item_difficulty == "Insane":
-            early_item_weight = .01
+            early_item_weight = 1
+            normal_item_weight = 10
             late_item_weight = 50
-            insane = True
+        if item_difficulty == "Insane":
+            early_item_weight = 1
+            normal_item_weight = 100
+            late_item_weight = 5000
 
         for loc in self._validLocationList:
             if loc.LocationWeight>1:
                 loc.setLocationWeight(late_item_weight)
             elif loc.LocationWeight<1:
                 loc.setLocationWeight(early_item_weight)
+            elif loc.LocationWeight==1:
+                loc.setLocationWeight(normal_item_weight)
+
+        if reportDepth is not None:
+            for loc in self._validLocationList:
+                if loc.LocationDepth == locationDepth.FirstVisit:
+                    # if setting is Bosses, then first visits can't have reports
+                    if reportDepth==locationDepth.FirstBoss or reportDepth==locationDepth.SecondBoss:
+                        loc.InvalidChecks.append(itemType.REPORT)
+                elif loc.LocationDepth == locationDepth.SecondVisit:
+                    # if setting is Bosses or first visits, second visits can't have reports
+                    if reportDepth==locationDepth.FirstVisit or reportDepth==locationDepth.FirstBoss or reportDepth==locationDepth.SecondBoss:
+                        loc.InvalidChecks.append(itemType.REPORT)
+                elif loc.LocationDepth == locationDepth.FirstBoss:
+                    # if setting is for second second bosses, then first bosses can't have reports
+                    if reportDepth==locationDepth.SecondBoss:
+                        loc.InvalidChecks.append(itemType.REPORT)
+                elif loc.LocationDepth == locationDepth.SecondBoss:
+                    if reportDepth==locationDepth.FirstVisit or reportDepth==locationDepth.FirstBoss:
+                        loc.InvalidChecks.append(itemType.REPORT)
+                elif loc.LocationDepth == locationDepth.DataFight:
+                    # if setting is not for data fights, then data fights can't have reports
+                    if reportDepth != locationDepth.DataFight:
+                        loc.InvalidChecks.append(itemType.REPORT)
 
 
     def populateItems(self, promiseCharm = False, startingInventory=[], abilityListModifier=None):
@@ -147,16 +175,24 @@ class KH2Randomizer():
             staff.setReward(randomAbility.Id)
             self._locationItems.append((staff,randomAbility))
 
-    def setRewards(self, levelChoice="ExcludeFrom50", betterJunk=False):
+    def setRewards(self, levelChoice="ExcludeFrom50", betterJunk=False, reportDepth=None):
         locations = [location for location in self._validLocationList if not isinstance(location, KH2ItemStat)]
         location_weights = [location.LocationWeight for location in locations]
         weighted_item_list = getImportantChecks() + getUsefulItems()
         for item in self._validItemList:
             while True:
-                if item.Id in weighted_item_list:
+                if (reportDepth==locationDepth.FirstBoss or reportDepth==locationDepth.SecondBoss) and item.ItemType == itemType.REPORT:
+                    validReportLocations = [loc for loc in locations if itemType.REPORT not in loc.InvalidChecks]
+                    randomLocation = random.choice(validReportLocations)
+                elif item.Id in weighted_item_list:
                     randomLocation = random.choices(locations,location_weights)[0]
                 else:
                     randomLocation = random.choice(locations)
+
+                # if we have a restricted report setting, and we are trying to assign a restricted location with a non-report, try again
+                if (reportDepth==locationDepth.FirstBoss or reportDepth==locationDepth.SecondBoss) and randomLocation.LocationDepth==reportDepth and item.ItemType != itemType.REPORT:
+                    continue
+
                 if not item.ItemType in randomLocation.InvalidChecks:
                     randomLocation.setReward(item.Id)
                     location_index = locations.index(randomLocation)
@@ -240,7 +276,7 @@ class KH2Randomizer():
     def setNoAP(self, settrue=False):
         self._noap = settrue
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsType = "Disabled", startingInventory=[], platform="PCSX2"):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsText = None, startingInventory=[], platform="PCSX2"):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -376,8 +412,8 @@ class KH2Randomizer():
             outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
             outZip.writestr("jm.yml", yaml.dump(modYml.getJMYAML(), line_break="\r\n"))
 
-            if not hintsType == "Disabled":
-                Hints.generateHints(self._locationItems, hintsType, self.seedName, outZip)
+            if hintsText is not None:
+                Hints.writeHints(hintsText, self.seedName, outZip)
 
             enemySpoilers = None
             if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled" or enemyOptions["remove_damage_cap"]:
