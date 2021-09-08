@@ -5,6 +5,7 @@ from Module.startingInventory import StartingInventory
 from Module.modifier import SeedModifier
 from Module.seedEvaluation import SeedValidator
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities, locationDepth
+from List.hashTextEntries import generateHashIcons
 import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
@@ -84,7 +85,7 @@ def seed():
         includeList = fl.request.form.getlist('include') or []
 
         session['includeList'] = [locationType[location.replace("locationType.","")] for location in includeList]
-
+        session['seedHashIcons'] = generateHashIcons()
 
         session['formExpMult'] = {
             0: float(fl.request.form.get("SummonExp")),
@@ -154,6 +155,7 @@ def seed():
     levelChoice = session.get('levelChoice'), 
     include = [locationType(l) for l in session.get('includeList')], 
     seed = session.get('seed'), 
+    seedHashIcons = session.get('seedHashIcons'),
     worlds=locationType, 
     expTypes = expTypes, 
     formExpMult = session.get('formExpMult'), 
@@ -195,7 +197,7 @@ def randomizePage(data, sessionDict):
 
     originalSeedName = sessionDict['seed']
     while notValidSeed:
-        randomizer = KH2Randomizer(seedName = sessionDict["seed"], spoiler=bool(sessionDict["spoilerLog"]))
+        randomizer = KH2Randomizer(seedName = sessionDict["seed"], seedHashIcons = sessionDict["seedHashIcons"], spoiler=bool(sessionDict["spoilerLog"]))
         randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"], reportDepth=sessionDict["reportDepth"])
         randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
         if randomizer.validateCount():
