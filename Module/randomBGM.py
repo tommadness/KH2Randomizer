@@ -77,7 +77,7 @@ musicList = {
         {"name": "bgm\\music139.win32.scd", "kind": "field"}, # Gearing up
         {"name": "bgm\\music141.win32.scd", "kind": "field"}, # Winnie the Pooh Theme
         {"name": "bgm\\music142.win32.scd", "kind": "field"}, # Crossing the Finish Line
-        {"name": "bgm\\music143.win32.scd", "kind": "field"}, # Mickey Mouse Club March
+        {"name": "bgm\\music143.win32.scd", "kind": "field", "dmca": True}, # Mickey Mouse Club March
         {"name": "bgm\\music144.win32.scd", "kind": "field", "dmca": True}, # This is Halloween
         {"name": "bgm\\music145.win32.scd", "kind": "battle"}, # Vim and Vigor
         {"name": "bgm\\music146.win32.scd", "kind": "cutscene"}, # Roxas' Theme
@@ -143,7 +143,7 @@ musicList = {
         {"name": "music140.dat\\music140.win32.scd", "kind": "field", "dmca": True}, #Under The Sea
         {"name": "music141.dat\\music141.win32.scd", "kind": "field"}, #Winnie The Pooh
         {"name": "music142.bgm\\music142.win32.scd", "kind": "cutscene"}, #Dive Into The Heart (Part 9)
-        {"name": "music143.bgm\\music143.win32.scd", "kind": "cutscene"}, #Mickey Mouse Club March
+        {"name": "music143.bgm\\music143.win32.scd", "kind": "cutscene", "dmca": True}, #Mickey Mouse Club March
         {"name": "music144.dat\\music144.win32.scd", "kind": "field", "dmca": True}, #This Is Halloween
         {"name": "music145.bgm\\music145.win32.scd", "kind": "battle"}, #Destiny Force
         {"name": "music146.dat\\music146.win32.scd", "kind": "battle"}, #Pirate Gigue
@@ -269,7 +269,7 @@ musicList = {
         {"name": "008shira_b.win32.scd", "kind": "battle"}, #Risky Romp (Dwarf Woodlands Battle Music)
         {"name": "009raydi_f.win32.scd", "kind": "field"}, #Radiant Garden (Radiant Garden Field Music)
         {"name": "010raydi_b.win32.scd", "kind": "battle"}, #Black Garden (Radiant Garden Battle Music)
-        {"name": "011distow_f.win32.scd", "kind": "field"}, #Mickey Mouse March (Disney Town Field Music)
+        {"name": "011distow_f.win32.scd", "kind": "field", "dmca": True}, #Mickey Mouse March (Disney Town Field Music)
         {"name": "012distow_b.win32.scd", "kind": "battle"}, #Up Down Adventure (Disney Town Battle Music)
         {"name": "013never_f.win32.scd", "kind": "field"}, #Daydream upon Neverland (Neverland Field Music)
         {"name": "014never_b.win32.scd", "kind": "battle"}, #Neverland's Scherzo (Neverland Battle Music)
