@@ -78,7 +78,7 @@ musicList = {
         {"name": "bgm\\music141.win32.scd", "kind": "field"}, # Winnie the Pooh Theme
         {"name": "bgm\\music142.win32.scd", "kind": "field"}, # Crossing the Finish Line
         {"name": "bgm\\music143.win32.scd", "kind": "field"}, # Mickey Mouse Club March
-        {"name": "bgm\\music144.win32.scd", "kind": "field"}, # This is Halloween
+        {"name": "bgm\\music144.win32.scd", "kind": "field", "dmca": True}, # This is Halloween
         {"name": "bgm\\music145.win32.scd", "kind": "battle"}, # Vim and Vigor
         {"name": "bgm\\music146.win32.scd", "kind": "cutscene"}, # Roxas' Theme
         {"name": "bgm\\music148.win32.scd", "kind": "field"}, # Blast Off
@@ -144,7 +144,7 @@ musicList = {
         {"name": "music141.dat\\music141.win32.scd", "kind": "field"}, #Winnie The Pooh
         {"name": "music142.bgm\\music142.win32.scd", "kind": "cutscene"}, #Dive Into The Heart (Part 9)
         {"name": "music143.bgm\\music143.win32.scd", "kind": "cutscene"}, #Mickey Mouse Club March
-        {"name": "music144.dat\\music144.win32.scd", "kind": "field"}, #This Is Halloween
+        {"name": "music144.dat\\music144.win32.scd", "kind": "field", "dmca": True}, #This Is Halloween
         {"name": "music145.bgm\\music145.win32.scd", "kind": "battle"}, #Destiny Force
         {"name": "music146.dat\\music146.win32.scd", "kind": "battle"}, #Pirate Gigue
         {"name": "music147.dat\\music147.win32.scd", "kind": "battle"}, #An Adventure In Atlantica
@@ -163,7 +163,7 @@ musicList = {
         {"name": "music161.bgm\\music161.win32.scd", "kind": "cutscene"}, #Kairi II
         {"name": "music163.bgm\\music163.win32.scd", "kind": "cutscene"}, #Villains Of A Sort 
         {"name": "music164.bgm\\music164.win32.scd", "kind": "battle"}, #Road To Hero
-        {"name": "music165.bgm\\music165.win32.scd", "kind": "field"}, #This Is Halloween (Alternative)
+        {"name": "music165.bgm\\music165.win32.scd", "kind": "field", "dmca": True}, #This Is Halloween (Alternative)
         {"name": "music170.bgm\\music170.win32.scd", "kind": "cutscene"}, #A Piece Of Peace
         {"name": "music172.bgm\\music172.win32.scd", "kind": "cutscene"}, #A Walk In Adante
         {"name": "music173.bgm\\music173.win32.scd", "kind": "battle"}, #No Time To Think
@@ -222,7 +222,7 @@ musicList = {
         {"name": '14_Event_Odayaka.win32.scd', "kind": "cutscene"}, #Piccolo Resto
         {"name": '15_Event_XIII.win32.scd', "kind": "cutscene"}, #Thirteenth Discretion
         {"name": '16_XIIIBoss1.win32.scd', "kind": "battle"}, #The 13th Struggle (Re:Chain of Memories Version)
-        {"name": '17_Halloween_F.win32.scd', "kind": "field"}, #This is Halloween
+        {"name": '17_Halloween_F.win32.scd', "kind": "field", "dmca": True}, #This is Halloween
         {"name": '18_Helloween_B.win32.scd', "kind": "battle"}, #Spooks of Halloween Town
         {"name": '19_Alice_Field.win32.scd', "kind": "field"}, #Welcome to Wonderland
         {"name": '20_Event_13thFloor.win32.scd', "kind": "field"}, #The 13th Floor
@@ -486,7 +486,7 @@ musicList = {
 		#{"name": "bgm_206.win32.scd", "kind": "battle"}, # To Our Surprise
 		#{"name": "bgm_207.win32.scd", "kind": "field"}, # Olympus Coliseum
 		#{"name": "bgm_208.win32.scd", "kind": "battle"}, # Go for It!
-		#{"name": "bgm_209.win32.scd", "kind": "field"}, # This is Halloween
+		#{"name": "bgm_209.win32.scd", "kind": "field", "dmca": True}, # This is Halloween
 		#{"name": "bgm_210.win32.scd", "kind": "battle"}, # Spooks of Halloween Town
 		#{"name": "bgm_211.win32.scd", "kind": "field"}, # A Day in Agrabah
 		#{"name": "bgm_212.win32.scd", "kind": "battle"}, # Arabian Dream
