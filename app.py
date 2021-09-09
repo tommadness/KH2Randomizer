@@ -45,6 +45,8 @@ def dailySeed():
         else:
             session[k] = dailySession[k]
     session["permaLink"] = ""
+    session["reportDepth"] = locationDepth.SecondVisit
+    session["preventSelfHinting"] = False
     return fl.redirect(fl.url_for('seed'))
 
 @app.route('/seed/<hash>')
