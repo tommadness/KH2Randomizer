@@ -259,7 +259,7 @@ musicList = {
         {"name": 'Event_Unrest.win32.scd', "kind": "cutscene"}, #Scent of Silence
         {"name": 'Title.win32.scd', "kind": "title"}], #Dearly Beloved (Re:Chain of Memories Version)
     "BBS": [
-        {"name": "001sinde_f.win32.scd", "kind": "field"}, #Bibbidi-Bobbidi-Boo (Castle of Dreams Field Music)
+        {"name": "001sinde_f.win32.scd", "kind": "field", "dmca": True}, #Bibbidi-Bobbidi-Boo (Castle of Dreams Field Music)
         {"name": "002sinde_b.win32.scd", "kind": "battle"}, #Castle Escapade (Castle of Dreams Battle Music)
         {"name": "003nemure_f.win32.scd", "kind": "field"}, #The Silent Forest (Enchanted Dominion Field Music)
         {"name": "004nemure_b.win32.scd", "kind": "battle"}, #The Rustling Forest (Enchanted Dominion Battle Music)
@@ -567,10 +567,10 @@ class RandomBGM():
                     continue
                 kind = "battle" #default
                 category = song.get("kind") #current song
-                #sort bgm as field first if splitFB is true.
+                #sort bgm as field first if splitFB is true. (only populate the field list if we are separating feild/battle)
                 if "Randomize Field and Battle Music Separately" in options["options"] and category != "battle":
                     kind = "field"
-                #give "unknown" and "cutscene" bgm a random kind.
+                #give "unknown" and "cutscene" bgm a random kind. (again we only want to populate field list if we are separating feild/battle)
                 if "Randomize Field and Battle Music Separately" in options["options"] and (category == "unknown" or category == "cutscene"):
                     kind = random.choice(["field", "battle"])
                 #separate dearly beloved bgms
