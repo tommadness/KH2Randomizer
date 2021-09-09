@@ -132,6 +132,8 @@ def seed():
         else:
             session['reportDepth'] = locationDepth(hintSubstrings[1])
 
+        session['preventSelfHinting'] = bool(fl.request.form.get("preventSelfHinting") or False)
+
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
 
         session['itemPlacementDifficulty'] = fl.request.form.get("itemPlacementDifficulty")
@@ -162,6 +164,7 @@ def seed():
     enemyOptions = json.loads(session.get("enemyOptions")),
     hintsType = session.get("hintsType"),
     reportDepth = session.get("reportDepth"),
+    preventSelfHinting = session.get("preventSelfHinting"),
     startingInventory = session.get("startingInventory"),
     itemPlacementDifficulty = session.get("itemPlacementDifficulty"),
     seedModifiers = session.get("seedModifiers"),
@@ -212,7 +215,7 @@ def randomizePage(data, sessionDict):
                 continue
             notValidSeed = False
             randomizer.seedName = originalSeedName
-            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList)
+            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList, sessionDict["preventSelfHinting"])
 
             if hintsText is not None and type(hintsText) is not dict:
                 # there was an error generating hints, return value provides context

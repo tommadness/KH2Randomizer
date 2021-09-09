@@ -105,9 +105,19 @@ class Tests(unittest.TestCase):
 
     def test_LibraryOfAssemblage(self):
         for i in range(50):
-            seed = self.createSeed(f"test_RegularJSmartee{i}",[],[],[],[], reportDepth=None, library=True)
+            seed = self.createSeed(f"test_LibraryOfAssemblage{i}",[],[],[],[], reportDepth=None, library=True)
             hints = self.getHints(seed)
             self.sanityReportChecks(seed,hints)
+
+    def test_howManySelfHintedReportSeeds(self):
+        self_hinted_count = 0
+        for i in range(50):
+            seed = self.createSeed(f"test_howManySelfHintedReportSeeds{i}",[],[],[],[], reportDepth=None)
+            hints = self.getHints(seed,preventSelfHinted=False)
+            if self.areThereSelfHintedReports(hints):
+                self_hinted_count+=1
+        print(self_hinted_count)
+
 
 
     @staticmethod
@@ -177,6 +187,15 @@ class Tests(unittest.TestCase):
         for i in range(13):
             assert hinted_worlds[i] != hint_locations[i], f"A report was self hinted {hinted_worlds[i]} {hint_locations[i]}"
 
+    @staticmethod
+    def areThereSelfHintedReports(hints):
+        hinted_worlds = Tests.getHintedWorlds(hints)
+        hint_locations = Tests.getHintLocations(hints)
+        selfHinted = False
+        for i in range(13):
+            selfHinted |= hinted_worlds[i] == hint_locations[i]
+        return selfHinted
+
 
     @staticmethod
     def auxHintTests(randomizer,hints):
@@ -226,8 +245,8 @@ class Tests(unittest.TestCase):
     def getReportDepths(randomizer):
         return [location.LocationDepth for location,item in randomizer._locationItems if item.ItemType==itemType.REPORT]
     @staticmethod
-    def getHints(randomizer):
-        hints = Hints.generateHints(randomizer._locationItems, "JSmartee", randomizer.seedName, [])
+    def getHints(randomizer, preventSelfHinted=True):
+        hints = Hints.generateHints(randomizer._locationItems, "JSmartee", randomizer.seedName, [], preventSelfHinted)
         if type(hints) is not dict:
             return None
         return hints
