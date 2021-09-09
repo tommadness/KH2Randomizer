@@ -7,14 +7,25 @@
     <meta content="#e32733" data-react-helmet="true" name="theme-color">
 {%endblock%}
 {% block content %}
+<div class="container">
 {% if not permaLink[-1] == "/"%}
-<h4>Permalink:</h4> <a href="{{permaLink}}">{{permaLink}}</a>
+    <div class="vertical"><h5>Permalink</h5><a href="{{permaLink}}">{{permaLink}}</a></div>
 {% else %}
 {%endif%}
-<form action="/download">
 {%if spoilerLog != False%}
-<h4>Seed: {{seed}}</h4>
+    <div class="vertical"><h5>Seed</h5>{{seed}}</div>
 {%endif%}
+<div class="vertical">
+<h5>Hash</h5>
+<div>
+{% for hashIcon in seedHashIcons %}
+    {% set imagePath = url_for('static', filename='seed-hash-icons/' + hashIcon + '.png') %}
+    <img src="{{imagePath}}" />
+{% endfor %}
+</div>
+</div>
+</div>
+<form action="/download">
 <h4>Included:</h4>
 <div class="container">
     {% for key in include %}

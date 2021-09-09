@@ -2,5 +2,6 @@
 *.zip
 __pycache__
 venv
+.vs
 .vscode
 XYZ
