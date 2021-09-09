@@ -5,7 +5,7 @@ from itertools import permutations
 
 
 class Hints:
-    def generateHints(locationItems, hintsType, seedName, excludeList):
+    def generateHints(locationItems, hintsType, seedName, excludeList, preventSelfHinting=True):
         if hintsType=="Disabled":
             return None
         hintsText = {}
@@ -69,7 +69,8 @@ class Hints:
                 if item.ItemType is itemType.REPORT:
                     reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                     #report can't hint itself
-                    reportRestrictions[reportNumber-1].append(location.LocationTypes[0])
+                    if preventSelfHinting:
+                        reportRestrictions[reportNumber-1].append(location.LocationTypes[0])
                     if locationType.LW in location.LocationTypes:
                         # if report on LW, can't hint world that contains proof of connection
                         reportRestrictions[reportNumber-1].append(worldsToHint[proof_of_connection_index])
@@ -192,7 +193,7 @@ class Hints:
             if len(hintsText["Reports"])==0:
                 return "Unable to find valid assignment for hints..."
 
-            # slack worlds to hint, can point to anywhere as long as they don't self hint
+            # slack worlds to hint, can point to anywhere
             while len(reportsList) > 0:
                 random.shuffle(reportsList)
                 worlds = list(worldChecks.keys())

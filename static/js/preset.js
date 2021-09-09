@@ -385,6 +385,7 @@ const presets = {
         "keybladeAbilities":["Support"],
         "enemy":"Disabled",
         "hintsType":"JSmartee-SecondVisit",
+        "preventSelfHinting":"False",
         "PromiseCharm":[false],
         "starting-inventory":["138"]
     },

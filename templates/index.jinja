@@ -88,6 +88,11 @@
                     <option value={{option}}>{{option}}</option>
                 {%endfor%}
             </select>
+            <div>
+            <label for="preventSelfHinting" data-toggle="tooltip" data-placement="top" title="Prevent reports from hinting the world where a report is found">Jsmartee Only: No self-hinting reports</label> 
+            <label class="switch"><input type="checkbox" checked name="preventSelfHinting" value="True" id="preventSelfHinting"/><span class="slider round">
+            </label>
+            </div>
         </div>
         <div class="vertical top">
             <h4>Sora's Starting Inventory</h4>
