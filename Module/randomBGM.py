@@ -303,7 +303,7 @@ musicList = {
         {"name": "049hanyo_b2.win32.scd", "kind": "battle"}, #Destiny's Force
         {"name": "050title.win32.scd", "kind": "title"}, #Dearly Beloved (Birth by Sleep Version)
         {"name": "051worldmap.win32.scd", "kind": "field"}, #The Worlds
-        {"name": "060tera.win32.scd", "kind": "cutscene"}, #Terra
+        {"name": "060tera.win32.scd", "kind": "battle"}, #Terra
         {"name": "061aqua.win32.scd", "kind": "cutscene"}, #Aqua
         {"name": "062ven.win32.scd", "kind": "cutscene"}, #Ventus
         {"name": "063kairi1.win32.scd", "kind": "cutscene"}, #Kairi (Birth by Sleep Version)
@@ -313,7 +313,7 @@ musicList = {
         {"name": "069braig.win32.scd", "kind": "cutscene"}, #Organization XIII
         {"name": "070key_l.win32.scd", "kind": "cutscene"}, #The Key of Light
         {"name": "071key_d.win32.scd", "kind": "cutscene"}, #The Key of Darkness
-        {"name": "072key_l_d.win32.scd", "kind": "cutscene"}, #The Key
+        {"name": "072key_l_d.win32.scd", "kind": "battle"}, #The Key
         {"name": "073kizuna.win32.scd", "kind": "cutscene"}, #Destiny's Union
         {"name": "074zack.win32.scd", "kind": "cutscene"}, #A Date with Fate
         {"name": "100ice1_128.win32.scd", "kind": "field"}, #It's a Small World
