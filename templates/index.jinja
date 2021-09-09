@@ -88,6 +88,11 @@
                     <option value={{option}}>{{option}}</option>
                 {%endfor%}
             </select>
+            <div>
+            <label for="preventSelfHinting" data-toggle="tooltip" data-placement="top" title="Prevent reports from hinting the world where a report is found">Jsmartee Only: No self-hinting reports</label> 
+            <label class="switch"><input type="checkbox" checked name="preventSelfHinting" value="True" id="preventSelfHinting"/><span class="slider round">
+            </label>
+            </div>
         </div>
         <div class="vertical top">
             <h4>Sora's Starting Inventory</h4>
@@ -104,7 +109,7 @@
             </select>
         </div>
         <div class="vertical">
-            <h4>Seed Modifiers</h4>
+            <h4>Seed Modifiers <small><a href="https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/faq.md#what-do-the-seed-modifiers-do">?</a></small></h4>
             {%for modifier in seedModifiers%}
                 {%if modifier["name"] == "Max Logic Item Placement" %}
                 <div>
@@ -120,7 +125,7 @@
             {%endfor%}
         </div>
         <div class="vertical">
-            <h4>Seed Item Placement Difficulty</h4>
+            <h4>Seed Item Placement Difficulty <small><a href="https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/faq.md#what-does-seed-item-placement-difficulty-mean">?</a></small></h4>
             <select name="itemPlacementDifficulty" style="width:100%" id="itemPlacementDifficulty">
                 <option value="Super Easy">Super Easy</option>
                 <option value="Easy">Easy</option>

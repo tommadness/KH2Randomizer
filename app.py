@@ -5,6 +5,7 @@ from Module.startingInventory import StartingInventory
 from Module.modifier import SeedModifier
 from Module.seedEvaluation import SeedValidator
 from List.configDict import miscConfig, locationType, expTypes, keybladeAbilities, locationDepth
+from List.hashTextEntries import generateHashIcons
 import List.LocationList
 import flask as fl
 from urllib.parse import urlparse
@@ -45,6 +46,8 @@ def dailySeed():
         else:
             session[k] = dailySession[k]
     session["permaLink"] = ""
+    session["reportDepth"] = locationDepth.SecondVisit
+    session["preventSelfHinting"] = False
     return fl.redirect(fl.url_for('seed'))
 
 @app.route('/seed/<hash>')
@@ -84,7 +87,7 @@ def seed():
         includeList = fl.request.form.getlist('include') or []
 
         session['includeList'] = [locationType[location.replace("locationType.","")] for location in includeList]
-
+        session['seedHashIcons'] = generateHashIcons()
 
         session['formExpMult'] = {
             0: float(fl.request.form.get("SummonExp")),
@@ -132,6 +135,8 @@ def seed():
         else:
             session['reportDepth'] = locationDepth(hintSubstrings[1])
 
+        session['preventSelfHinting'] = bool(fl.request.form.get("preventSelfHinting") or False)
+
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
 
         session['itemPlacementDifficulty'] = fl.request.form.get("itemPlacementDifficulty")
@@ -152,6 +157,7 @@ def seed():
     levelChoice = session.get('levelChoice'), 
     include = [locationType(l) for l in session.get('includeList')], 
     seed = session.get('seed'), 
+    seedHashIcons = session.get('seedHashIcons'),
     worlds=locationType, 
     expTypes = expTypes, 
     formExpMult = session.get('formExpMult'), 
@@ -162,6 +168,7 @@ def seed():
     enemyOptions = json.loads(session.get("enemyOptions")),
     hintsType = session.get("hintsType"),
     reportDepth = session.get("reportDepth"),
+    preventSelfHinting = session.get("preventSelfHinting"),
     startingInventory = session.get("startingInventory"),
     itemPlacementDifficulty = session.get("itemPlacementDifficulty"),
     seedModifiers = session.get("seedModifiers"),
@@ -192,7 +199,7 @@ def randomizePage(data, sessionDict):
 
     originalSeedName = sessionDict['seed']
     while notValidSeed:
-        randomizer = KH2Randomizer(seedName = sessionDict["seed"], spoiler=bool(sessionDict["spoilerLog"]))
+        randomizer = KH2Randomizer(seedName = sessionDict["seed"], seedHashIcons = sessionDict["seedHashIcons"], spoiler=bool(sessionDict["spoilerLog"]))
         randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"], reportDepth=sessionDict["reportDepth"])
         randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
         if randomizer.validateCount():
@@ -212,7 +219,7 @@ def randomizePage(data, sessionDict):
                 continue
             notValidSeed = False
             randomizer.seedName = originalSeedName
-            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList)
+            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList, sessionDict["preventSelfHinting"])
 
             if hintsText is not None and type(hintsText) is not dict:
                 # there was an error generating hints, return value provides context

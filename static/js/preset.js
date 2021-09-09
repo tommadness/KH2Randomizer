@@ -34,7 +34,7 @@ function setPreset(presetName){
     $('#starting-inventory option').each(function(){
         $(this).prop('selected',preset["starting-inventory"].includes(this.value));
     });
-    $('#starting-inventory').multiselect('refresh');
+    tail.select('#starting-inventory').reload();
 
 
 
@@ -210,6 +210,7 @@ const presets = {
             "locationType.HUNDREDAW",
             "locationType.STT",
             "locationType.FormLevel",
+            "locationType.Critical",
             "locationType.Free",
         ],
         "levelChoice":"Level",
@@ -385,6 +386,7 @@ const presets = {
         "keybladeAbilities":["Support"],
         "enemy":"Disabled",
         "hintsType":"JSmartee-SecondVisit",
+        "preventSelfHinting":"False",
         "PromiseCharm":[false],
         "starting-inventory":["138"]
     },

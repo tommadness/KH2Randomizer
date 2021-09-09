@@ -1,5 +1,3 @@
-from List.hashTextEntries import hashTextEntries
-import random
 class modYml:
     def getDefaultMod():
         return {
@@ -192,12 +190,8 @@ class modYml:
             }
         ]
 
-    def getSysYAML():
-        sys = [{"id": 17198, "en":""}]
-        for i in range(7):
-            sys[0]["en"] += random.choice(hashTextEntries)
-            if i < 6:
-                sys[0]["en"] += " "
-
+    def getSysYAML(seedHashIcons):
+        seedHashString = " ".join(["{:icon " + icon + "}" for icon in seedHashIcons])
+        sys = [{"id": 17198, "en":seedHashString}]
         sys.append({"id": 19482, "en": "Important Checks Found"})
         return sys
