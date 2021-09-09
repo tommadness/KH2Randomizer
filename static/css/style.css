@@ -225,4 +225,8 @@ input[type=submit], button {
   font-size: 16px;
   margin-top: 5px;
 }
+
+small {
+  opacity: 40%;
+}
 /*# sourceMappingURL=style.css.map */
