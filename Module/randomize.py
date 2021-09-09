@@ -24,6 +24,7 @@ def noop(self, *args, **kw):
 @dataclass
 class KH2Randomizer():
     seedName: str
+    seedHashIcons: list[str] = field(default_factory=list)
     spoiler: bool = False
 
     _locationItems: list[tuple[KH2Location, KH2Item]] = field(default_factory=list)
@@ -393,7 +394,7 @@ class KH2Randomizer():
                 "Padding": [0] * 52
             })
 
-        sys = modYml.getSysYAML()
+        sys = modYml.getSysYAML(self.seedHashIcons)
 
         
 

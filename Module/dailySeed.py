@@ -1,5 +1,6 @@
 import random, datetime
 from collections import namedtuple
+from List.hashTextEntries import generateHashIcons
 
 DailyModifier = namedtuple('DailyModifier', ['modifier', 'name', 'description', 'categories'])
 
@@ -182,6 +183,7 @@ def generateDailySeed():
         mod.modifier(session)
         session["dailyModifiers"].append(mod.name)
     session["seed"] = "Daily Seed " + currentDate.strftime('%D')
+    session['seedHashIcons'] = generateHashIcons()
     return session
 
 if __name__ == '__main__':
