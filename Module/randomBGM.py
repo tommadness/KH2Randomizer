@@ -414,7 +414,7 @@ musicList = {
 		{"name": "bgm_072.win32.scd", "kind": "field", "dmca": True}, # Symphony of Sorcery Music
 		{"name": "bgm_073.win32.scd", "kind": "field", "dmca": True}, # Symphony of Sorcery Music (Spellican Battle Music)
 		{"name": "bgm_074.win32.scd", "kind": "field", "dmca": True}, # Symphony of Sorcery Music
-		{"name": "bgm_075.win32.scd", "kind": "field"}, # The Dream
+		{"name": "bgm_075.win32.scd", "kind": "cutscene"}, # The Dream
 		{"name": "bgm_076.win32.scd", "kind": "cutscene"}, # The Nightmare
 		{"name": "bgm_077.win32.scd", "kind": "cutscene"}, # Link to All
 		{"name": "bgm_078.win32.scd", "kind": "cutscene"}, # Distant from You...
