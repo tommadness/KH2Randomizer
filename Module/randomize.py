@@ -84,7 +84,12 @@ class KH2Randomizer():
             normal_item_weight = 100
             late_item_weight = 5000
 
+        modifiedCritBonus = False
         for loc in self._validLocationList:
+            if locationType.Critical in loc.LocationTypes:
+                if modifiedCritBonus:
+                    continue
+                modifiedCritBonus=True
             if loc.LocationWeight>1:
                 loc.setLocationWeight(late_item_weight)
             elif loc.LocationWeight<1:

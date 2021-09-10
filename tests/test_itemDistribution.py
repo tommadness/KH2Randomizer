@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 from Module.randomize import KH2Randomizer
-from Module.seedEvaluation import SeedValidator,SeedMetricsNumDatas
+from Module.seedEvaluation import SeedValidator,SeedMetricsNumDatas,SeedMetricsNumCritExtra
 import unittest
 
 
@@ -24,6 +24,26 @@ class Tests(unittest.TestCase):
         assert avgLateChecks["Normal"] <= avgLateChecks["Hard"]
         assert avgLateChecks["Hard"] <= avgLateChecks["Very Hard"]
         assert avgLateChecks["Very Hard"] <= avgLateChecks["Insane"]
+
+    def test_critChecks(self):
+        avgLateChecks = {}
+        metricCalculator = SeedMetricsNumCritExtra()
+        numSeeds = 50
+        for diff in ["Super Easy","Easy","Normal","Hard","Very Hard","Insane"]:
+            print(f"Start evaluating {diff}")
+            avgLateChecks[diff] = 0.0
+            for i in range(numSeeds):
+                randomizer = self.create_difficulty_seed(diff+str(i),diff)
+                results = metricCalculator.metrics(randomizer)
+                avgLateChecks[diff]+=results
+
+            avgLateChecks[diff] /= numSeeds
+            print(avgLateChecks[diff])
+        assert avgLateChecks["Super Easy"] >= avgLateChecks["Easy"]
+        assert avgLateChecks["Easy"] >= avgLateChecks["Normal"]
+        assert avgLateChecks["Normal"] >= avgLateChecks["Hard"]
+        assert avgLateChecks["Hard"] >= avgLateChecks["Very Hard"]
+        assert avgLateChecks["Very Hard"] >= avgLateChecks["Insane"]
 
     @staticmethod
     def create_difficulty_seed(seedName,difficulty):

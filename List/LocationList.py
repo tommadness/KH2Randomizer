@@ -626,7 +626,7 @@ class Locations:
         ]
 
     def getSoraStartingItemList():
-        soraStartingItem = KH2StartingItem(1,7, LocationTypes=[locationType.Critical], ArmorSlotMax=1, AccessorySlotMax=1, ItemSlotMax=3)
+        soraStartingItem = KH2StartingItem(1,7, LocationTypes=[locationType.Critical], ArmorSlotMax=1, AccessorySlotMax=1, ItemSlotMax=3).setLocationWeight(-10)
         return [soraStartingItem, soraStartingItem, soraStartingItem, soraStartingItem, soraStartingItem, soraStartingItem, soraStartingItem]
 
     def getFormLevelList(trueRandom=False):

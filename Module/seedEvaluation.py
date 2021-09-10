@@ -92,3 +92,19 @@ class SeedMetricsNumDatas:
                 num_data_checks+=1
 
         return num_data_checks
+
+
+class SeedMetricsNumCritExtra:
+    def metrics(self, randomizer):
+
+        trsrList = [location for location in randomizer._allLocationList if isinstance(location, KH2StartingItem)]
+        useful_items = getImportantChecks()+getUsefulItems()
+
+        num_starting_checks = 0
+        for i in trsrList:[]
+            rewards = i.Items
+            for reward_id in rewards:
+                if reward_id in useful_items:
+                    num_starting_checks+=1
+
+        return num_starting_checks
