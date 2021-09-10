@@ -101,7 +101,7 @@ class SeedMetricsNumCritExtra:
         useful_items = getImportantChecks()+getUsefulItems()
 
         num_starting_checks = 0
-        for i in trsrList:[]
+        for i in trsrList:
             rewards = i.Items
             for reward_id in rewards:
                 if reward_id in useful_items:
