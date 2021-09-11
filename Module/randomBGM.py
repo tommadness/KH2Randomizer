@@ -253,10 +253,10 @@ musicList = {
         {"name": '45_PoohGame2.win32.scd', "kind": "battle"}, #Dash-A-Long
         {"name": 'Boss1.win32.scd', "kind": "battle"}, #Struggle Away
         {"name": 'Boss2_World.win32.scd', "kind": "battle"}, #The Fight for My Friends
-        {"name": 'Event1_Kinpak.win32.scd', "kind": "cutscene"}, #Disquieting
-        {"name": 'Event2_.win32.scd', "kind": "battle"}, #Face It!
-        {"name": 'Event4.win32.scd', "kind": "cutscene"}, #Just Wondering
-        {"name": 'Event_Unrest.win32.scd', "kind": "cutscene"}, #Scent of Silence
+        {"name": 'Event_Unrest.win32.scd', "kind": "cutscene"}, #Disquieting 
+        {"name": 'Event1_Kinpak.win32.scd', "kind": "battle"}, #Face It!
+        {"name": 'Event2_.win32.scd', "kind": "cutscene"}, #Just Wondering
+        {"name": 'Event4.win32.scd', "kind": "cutscene"}, #Scent of Silence
         {"name": 'Title.win32.scd', "kind": "title"}], #Dearly Beloved (Re:Chain of Memories Version)
     "BBS": [
         {"name": "001sinde_f.win32.scd", "kind": "field", "dmca": True}, #Bibbidi-Bobbidi-Boo (Castle of Dreams Field Music)
@@ -542,14 +542,17 @@ class RandomBGM():
     
         #for testing. you would want a option to set these to whatever number you want on the site.
         #if we don't care about categories then we could just set one number and set all tracks to "unknown" or something.
-        #customlistf = 13
-        #customlistb = 7
-        #Uses the numbrers above to build the dict with appropriate categories.
+        #customlistf = 21
+        #customlistb = 55
+        #customlistt = 3
+        ##Uses the numbrers above to build the dict with appropriate categories.
         #for i in range(customlistf):
-        #    musicList["CUSTOM"].append({"name": "custom_f_{}.scd".format(f'{i+1:03d}'), "kind": "field"})
+        #    musicList["CUSTOM"].append({"name": "field_{}.scd".format(f'{i+1:03d}'), "kind": "field"})
         #for i in range(customlistb):
-        #    musicList["CUSTOM"].append({"name": "custom_b_{}.scd".format(f'{i+1:03d}'), "kind": "battle"})
-        #print (musicList["CUSTOM"]),
+        #    musicList["CUSTOM"].append({"name": "battle_{}.scd".format(f'{i+1:03d}'), "kind": "battle"})
+        #for i in range(customlistt):
+        #    musicList["CUSTOM"].append({"name": "title_{}.scd".format(f'{i+1:03d}'), "kind": "title"})
+        ##print (musicList["CUSTOM"]),
         
         options = {
             #we don't need to separate CUSTOM from everything else anymore i think.
