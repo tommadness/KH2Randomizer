@@ -217,15 +217,17 @@ def randomizePage(data, sessionDict):
                 characters = string.ascii_letters + string.digits
                 sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
                 continue
-            notValidSeed = False
             randomizer.seedName = originalSeedName
             hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList, sessionDict["preventSelfHinting"])
 
             if hintsText is not None and type(hintsText) is not dict:
                 # there was an error generating hints, return value provides context
                 print(f"ERROR: {hintsText}")
-                return
+                characters = string.ascii_letters + string.digits
+                sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
+                continue
 
+            notValidSeed = False
             
             try:
                 zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsText = hintsText, cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
