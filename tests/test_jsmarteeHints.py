@@ -109,6 +109,18 @@ class Tests(unittest.TestCase):
             hints = self.getHints(seed)
             self.sanityReportChecks(seed,hints)
 
+    def test_goMode(self):
+        for i in range(50):
+            seed = self.createSeed(f"test_goMode{i}",[],[],[],[], reportDepth=None, library=False, goMode=True )
+            hints = self.getHints(seed)
+            self.sanityReportChecks(seed,hints)
+
+    def test_LibraryGoMode(self):
+        for i in range(50):
+            seed = self.createSeed(f"test_LibraryGoMode{i}",[],[],[],[], reportDepth=None, library=True, goMode=True )
+            hints = self.getHints(seed)
+            self.sanityReportChecks(seed,hints)
+
     def test_howManySelfHintedReportSeeds(self):
         self_hinted_count = 0
         for i in range(50):
@@ -121,10 +133,10 @@ class Tests(unittest.TestCase):
 
 
     @staticmethod
-    def createSeed(seedName,treasure_items,treasure_locations,form_items,form_locations,reportDepth,library=False):
+    def createSeed(seedName,treasure_items,treasure_locations,form_items,form_locations,reportDepth,library=False,goMode=False):
         randomizer = KH2Randomizer(seedName = seedName)
         randomizer.populateLocations([], reportDepth=reportDepth)
-        randomizer.populateItems(promiseCharm = True, startingInventory = [SeedModifier.library(library)], abilityListModifier=None)
+        randomizer.populateItems(promiseCharm = True, startingInventory = [SeedModifier.library(library)] + (["593","594","595"] if goMode else []), abilityListModifier=None)
 
         treasures = [location for location in randomizer._validLocationList if isinstance(location,KH2Treasure)]
         formLevels = [location for location in randomizer._validLocationList if isinstance(location,KH2FormLevel)]

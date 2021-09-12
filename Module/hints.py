@@ -73,10 +73,12 @@ class Hints:
                         reportRestrictions[reportNumber-1].append(location.LocationTypes[0])
                     if locationType.LW in location.LocationTypes:
                         # if report on LW, can't hint world that contains proof of connection
-                        reportRestrictions[reportNumber-1].append(worldsToHint[proof_of_connection_index])
+                        if proof_of_connection_index is not None:
+                            reportRestrictions[reportNumber-1].append(worldsToHint[proof_of_connection_index])
                     if locationType.Mush13 in location.LocationTypes:
                         # if report on Mushroom, can't hint world that contains proof of peace
-                        reportRestrictions[reportNumber-1].append(worldsToHint[proof_of_peace_index])
+                        if proof_of_peace_index is not None:
+                            reportRestrictions[reportNumber-1].append(worldsToHint[proof_of_peace_index])
 
             if len(worldChecks.keys()) < 13:
                 return "Too few worlds. Add more worlds or change hint system."
@@ -115,83 +117,85 @@ class Hints:
                 worldsToHint = worldsToHint[0:13]
 
 
-            # different possibilities for how to make the reports hinting the proofs hinted
-            temp_ordering = permutations(reportsList, numProofWorlds)
-            reportOrdering = []
-            for o in temp_ordering:
-                reportOrdering.append(o)
-            random.shuffle(reportOrdering)
-            # for each assignment of reports to proof locations, try to assign hints to reports
-            for ordering in reportOrdering:
-                remaining_report_slots = 13-len(worldsToHint)
-                worlds_to_add = []
-                invalid = False
-                # for each of the chosen reports
-                for index,reportNumber in enumerate(ordering):
-                    # figure out which world has that report
-                    if reportNumber in freeReports:
-                        # if the report is free, it doesn't need to be hinted, and it won't have a restriction
-                        continue
-                    for world in worldChecks:
-                        if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
-                            # found the world with this report, now to see if this report can hint a proof location
-                            if worldsToHint[index] in reportRestrictions[reportNumber-1]:
-                                invalid = True
-                                break
-
-                            # we found a report that can hint this proof, add the report's world to the list of worlds we want to hint
-                            if world not in worldsToHint:
-                                # totally fine if we have space
-                                if world not in worlds_to_add:
-                                    worlds_to_add.append(world)
-                                    remaining_report_slots-=1
-                            break
-                    if invalid:
-                        break
-                # this check makes it's best attempt to get the proof reports hinted
-                if remaining_report_slots < 0:
-                    continue
-                # found a good assignment of reports to point to proofs, lets try assigning the rest
-                if not invalid:
-                    proof_report_order = ordering
-                    tempWorldsToHint=worldsToHint+worlds_to_add
-                    if len(tempWorldsToHint) > 13:
-                        tempWorldsToHint = tempWorldsToHint[0:13]
-
-                    # ------------------ Done filling required hinted worlds --------------------------------
-                    # ------------------ Attempting to find a good assignment for the hints, after too many tries, return an error
-                    for try_number in range(10):
-                        hintsText["Reports"] = {}
-                        reportsList = list(range(1,14))
-                        for index,world in enumerate(tempWorldsToHint):
-                            reportNumber = None
-                            if index < len(proof_report_order):
-                                reportNumber = proof_report_order[index]
-                                reportsList.remove(reportNumber)
-                            else:
-                                random.shuffle(reportsList)
-                                for maybeReportNumber in reportsList:
-                                    if world not in reportRestrictions[maybeReportNumber-1]:
-                                        reportsList.remove(maybeReportNumber)
-                                        reportNumber = maybeReportNumber
-                                        break
-                            if reportNumber is None:
-                                hintsText["Reports"] = {}
-                                break
-
-                            hintsText["Reports"][reportNumber] = {
-                                "World": world,
-                                "Count": len(worldChecks[world]),
-                                "Location": ""
-                            }
-                        if len(hintsText["Reports"])==0:
+            # at least 1 proof is in a hintable world, so we need to hint it
+            if numProofWorlds > 0:
+                # different possibilities for how to make the reports hinting the proofs hinted
+                temp_ordering = permutations(reportsList, numProofWorlds)
+                reportOrdering = []
+                for o in temp_ordering:
+                    reportOrdering.append(o)
+                random.shuffle(reportOrdering)
+                # for each assignment of reports to proof locations, try to assign hints to reports
+                for ordering in reportOrdering:
+                    remaining_report_slots = 13-len(worldsToHint)
+                    worlds_to_add = []
+                    invalid = False
+                    # for each of the chosen reports
+                    for index,reportNumber in enumerate(ordering):
+                        # figure out which world has that report
+                        if reportNumber in freeReports:
+                            # if the report is free, it doesn't need to be hinted, and it won't have a restriction
                             continue
-                    if len(hintsText["Reports"])!=0:
-                        worldsToHint = tempWorldsToHint
-                        break
+                        for world in worldChecks:
+                            if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
+                                # found the world with this report, now to see if this report can hint a proof location
+                                if worldsToHint[index] in reportRestrictions[reportNumber-1]:
+                                    invalid = True
+                                    break
 
-            if len(hintsText["Reports"])==0:
-                return "Unable to find valid assignment for hints..."
+                                # we found a report that can hint this proof, add the report's world to the list of worlds we want to hint
+                                if world not in worldsToHint:
+                                    # totally fine if we have space
+                                    if world not in worlds_to_add:
+                                        worlds_to_add.append(world)
+                                        remaining_report_slots-=1
+                                break
+                        if invalid:
+                            break
+                    # this check makes it's best attempt to get the proof reports hinted
+                    if remaining_report_slots < 0:
+                        continue
+                    # found a good assignment of reports to point to proofs, lets try assigning the rest
+                    if not invalid:
+                        proof_report_order = ordering
+                        tempWorldsToHint=worldsToHint+worlds_to_add
+                        if len(tempWorldsToHint) > 13:
+                            tempWorldsToHint = tempWorldsToHint[0:13]
+
+                        # ------------------ Done filling required hinted worlds --------------------------------
+                        # ------------------ Attempting to find a good assignment for the hints, after too many tries, return an error
+                        for try_number in range(10):
+                            hintsText["Reports"] = {}
+                            reportsList = list(range(1,14))
+                            for index,world in enumerate(tempWorldsToHint):
+                                reportNumber = None
+                                if index < len(proof_report_order):
+                                    reportNumber = proof_report_order[index]
+                                    reportsList.remove(reportNumber)
+                                else:
+                                    random.shuffle(reportsList)
+                                    for maybeReportNumber in reportsList:
+                                        if world not in reportRestrictions[maybeReportNumber-1]:
+                                            reportsList.remove(maybeReportNumber)
+                                            reportNumber = maybeReportNumber
+                                            break
+                                if reportNumber is None:
+                                    hintsText["Reports"] = {}
+                                    break
+
+                                hintsText["Reports"][reportNumber] = {
+                                    "World": world,
+                                    "Count": len(worldChecks[world]),
+                                    "Location": ""
+                                }
+                            if len(hintsText["Reports"])==0:
+                                continue
+                        if len(hintsText["Reports"])!=0:
+                            worldsToHint = tempWorldsToHint
+                            break
+
+                if len(hintsText["Reports"])==0:
+                    return "Unable to find valid assignment for hints..."
 
             # slack worlds to hint, can point to anywhere
             while len(reportsList) > 0:
