@@ -1,3 +1,23 @@
+## What are the hint systems?
+The KH2R community has come up with two different hint systems:
+- **JSmartee** - Inspired by [JSmartee](https://jsmartee.github.io/kh2fm-hints-demo/)'s implementation of hints. When you find an Ansem Report in-game, you are told how many [Important Checks](https://jsmartee.github.io/kh2fm-hints-demo/info.html#checks) exist in a world.
+- **Shananas** - Inspired by Shananas' implementation of hints. While playing, you are informed once you have found all Important Checks in a world.
+
+## How do I use hints?
+Your seed zip file can be loaded into the following trackers:
+- RedBuddha's [KH2Tracker](https://github.com/TrevorLuckey/KH2Tracker). [(Download `KhTracker.exe` here)](https://github.com/TrevorLuckey/KH2Tracker/releases)
+- DA's visual customization-focused fork of [KH2Tracker](https://github.com/o0DemonBoy0o/KH2Tracker). [(Download `KhTracker.exe` here)](https://github.com/o0DemonBoy0o/KH2Tracker/releases)
+
+## `(JSmartee Hints)` What are Hinted Hints? Why do they matter?
+Taken from https://jsmartee.github.io/kh2fm-hints-demo/info.html#logic:
+
+Reports pointing to proofs will be hinted.
+- Ex: There's a proof in Port Royal. Report 4 points to Port Royal. Report 4 is in Halloween Town. Halloween Town must be hinted by another report.
+If the priority items above (proofs, forms, pages, and magic) are already taking up all 13 hints, they will be prioritized over these reports.
+Note: If the reports are on drive forms or in 100 Acre Wood, there is no logic to hint forms or pages as of now.
+
+This is represented in RedBuddha's KH2Tracker by the world's check count turning blue.
+
 ## What do the Seed Modifiers do?
 - **Max Logic Item Placement** - Explained in its own section below
 - **Reverse Rando** - Alters item placement logic to work with `Reverse Garden of Assemblage`.
