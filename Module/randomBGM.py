@@ -407,8 +407,8 @@ musicList = {
 		{"name": "bgm_065.win32.scd", "kind": "cutscene"}, # Organization XIII
 		{"name": "bgm_066.win32.scd", "kind": "cutscene"}, # Destiny's Union
 		{"name": "bgm_067.win32.scd", "kind": "field"}, # Dream Eaters
-		{"name": "bgm_068.win32.scd", "kind": "battle"}, # TWISTER -KINGDOM MIX-
-		{"name": "bgm_069.win32.scd", "kind": "battle"}, # CALLING -KINGDOM MIX- (No Intro)
+		{"name": "bgm_068.win32.scd", "kind": "cutscene"}, # TWISTER -KINGDOM MIX-
+		{"name": "bgm_069.win32.scd", "kind": "cutscene"}, # CALLING -KINGDOM MIX- (No Intro)
 		{"name": "bgm_070.win32.scd", "kind": "title"}, # Dearly Beloved (End of Symphony of Sorcery Cutscene 1)
 		{"name": "bgm_071.win32.scd", "kind": "title"}, # Dearly Beloved (End of Symphony of Sorcery Cutscene 2)
 		{"name": "bgm_072.win32.scd", "kind": "field", "dmca": True}, # Symphony of Sorcery Music
@@ -428,11 +428,11 @@ musicList = {
 		#{"name": "bgm_091.win32.scd", "kind": "battle"}, # Dream Drop Distance -The Next Awakening- (no loop)
 		{"name": "bgm_093.win32.scd", "kind": "battle"}, # The Eye of Darkness
 		{"name": "bgm_094.win32.scd", "kind": "battle"}, # The Dread of Night
-		{"name": "bgm_095.win32.scd", "kind": "unknown"}, # SOMEDAY -KINGDOM MIX-
+		{"name": "bgm_095.win32.scd", "kind": "battle"}, # SOMEDAY -KINGDOM MIX-
 		#{"name": "bgm_096.win32.scd", "kind": "unknown"}, # Hand in Hand (KH2 Ending Version)
 		#{"name": "bgm_097.win32.scd", "kind": "unknown"}, # Oopsy-Daisy
-		{"name": "bgm_098.win32.scd", "kind": "battle"}, # TWISTER -KINGDOM MIX-
-		{"name": "bgm_099.win32.scd", "kind": "battle"}, # CALLING -KINGDOM MIX- (With Intro)
+		{"name": "bgm_098.win32.scd", "kind": "cutscene"}, # TWISTER -KINGDOM MIX-
+		{"name": "bgm_099.win32.scd", "kind": "cutscene"}, # CALLING -KINGDOM MIX- (With Intro)
 		#{"name": "bgm_112.win32.scd", "kind": "title"}, # Dearly Beloved (Kingdom Hearts II Version)
 		#{"name": "bgm_113.win32.scd", "kind": "title"}, # Dearly Beloved -Reprise-
 		{"name": "bgm_114.win32.scd", "kind": "cutscene"}, # Roxas
