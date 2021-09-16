@@ -19,6 +19,22 @@ Note: If the reports are on drive forms or in 100 Acre Wood, there is no logic t
 
 This is represented in RedBuddha's KH2Tracker by the world's check count turning blue.
 
+## `(JSmartee Hints)` What do the various JSmartee hint modes mean?
+The different modes determine where a report can be found:
+
+  - **JSmartee** - Reports can be found anywhere.
+  - **JSmartee-FirstVisit** - All reports can be found in the first visit to a world.
+    - First visits are considered:
+      * The first visit to any Disney world in the Vanilla game
+      * Up to and including Sora Level 30
+      * Up to and including level 3 on any Drive Forms
+      * Up to and including Piglet's Howse
+      * Up to and including Xigbar in The World That Never Was
+      * The entirety of Simulated Twilight Town
+  - **JSmartee-SecondVisit** - All reports can be found in the first or second visit to the world. (They can not be found on Data/Absent Silhouette fights)
+  - **JSmartee-FirstBoss** - All reports are guaranteed on the boss at the end of the first visit of a world (excluding 100 Acre Wood and Atlantica).
+  - **JSmartee-SecondBoss** - All reports are guaranteed on the end of the second visit to a world (excluding 100 Acre Wood and Atlantica).
+
 # Seed Modifiers
 
 ## What do the Seed Modifiers do?
