@@ -1,3 +1,27 @@
+# General FAQ
+## What version of Kingdom Hearts II can this be used with?
+This seed generator can be used with either the PC (Epic Games Store) or PCSX2 (emulated) version of Kingdom Hearts II: Final Mix. This will not work with Kingdom Hearts II (US PS2), and is not supported on the console versions of the game.
+
+## What are the differences between this and [Valaxor's Seed Generator](https://randomizer.valaxor.com/#/seed)?
+This seed generator is designed to be used with the [OpenKH](https://openkh.dev/) Mods Manager [(Download the latest release here)](https://github.com/Xeeynamo/OpenKh/releases). This enables some extra features:
+- Cosmetic randomization
+  - Currently this takes the form of Command Menu aesthetic randomization on PCSX2, and music randomization on PC
+- Boss/Enemy Randomizer improvements
+  - Field enemies are now randomized
+  - Certain bosses that were not reasonable to randomize can now be randomized
+  - Boss/Enemy randomization on PC
+- Starting inventory
+
+Other differences include:
+- No "Vanilla" option for any randomization setting
+- More item placement logic options
+- Additional seed modifiers
+- All armor and accessories exist in the item pool
+- Once all items are placed, all remaining slots are filled with random Synthesis Materials or Consumable items
+
+## Why are Consumables considered "junk"?
+"Junk" is a bit of a misnomer. After all "one-off" items (equipment, abilities, Important Checks, maps) are placed, all remaining locations are filled randomly with Synthesis Materials or Consumables, as the quantity of those per seed don't necessarily matter.
+
 # Hint Systems
 ## What are the hint systems?
 The KH2R community has come up with two different hint systems:
