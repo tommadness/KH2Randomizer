@@ -1,3 +1,4 @@
+# Hint Systems
 ## What are the hint systems?
 The KH2R community has come up with two different hint systems:
 - **JSmartee** - Inspired by [JSmartee](https://jsmartee.github.io/kh2fm-hints-demo/)'s implementation of hints. When you find an Ansem Report in-game, you are told how many [Important Checks](https://jsmartee.github.io/kh2fm-hints-demo/info.html#checks) exist in a world.
@@ -17,6 +18,8 @@ If the priority items above (proofs, forms, pages, and magic) are already taking
 Note: If the reports are on drive forms or in 100 Acre Wood, there is no logic to hint forms or pages as of now.
 
 This is represented in RedBuddha's KH2Tracker by the world's check count turning blue.
+
+# Seed Modifiers
 
 ## What do the Seed Modifiers do?
 - **Max Logic Item Placement** - Explained in its own section below
@@ -47,6 +50,8 @@ Common "Unusual" Occurances from standard item placement logic:
 By default, the ability pool is set. There are always 3 `Finishing Plus` abilities, 2 `Scan`s, 1 `Light & Darkness`, et cetera.
 
 **Randomize Ability Pool** makes it so the only guarantee is exactly 1 `Second Chance` and 1 `Once More` in the ability pool. This can result in, for example, 2 `Finishing Plus`es, 0 `Scan`s, 3 `Light & Darkness`es, et cetera.
+
+# Item Placement Difficulty
 
 ## What does Seed Item Placement Difficulty mean?
 **Seed Item Placement Difficulty** weights "favorable" checks earlier or later in a world, depending on the setting.
