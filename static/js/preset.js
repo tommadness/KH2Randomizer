@@ -77,7 +77,7 @@ const presets = {
         "keybladeAbilities":["Support"],
         "enemy":"Disabled",
         "hintsType":"JSmartee",
-        "PromiseCharm":[false],
+        "PromiseCharm":["off"],
         "starting-inventory":[]
     },
     "Escape STT":{
@@ -115,7 +115,7 @@ const presets = {
         "keybladeAbilities":["Support","Action"],
         "enemy":"Disabled",
         "hintsType":"JSmartee",
-        "PromiseCharm":[false],
+        "PromiseCharm":["off"],
         "starting-inventory":["537"]
     },
     "Cooperative":{
@@ -153,7 +153,7 @@ const presets = {
         "keybladeAbilities":["Support"],
         "enemy":"Disabled",
         "hintsType":"Shananas",
-        "PromiseCharm":[false],
+        "PromiseCharm":["off"],
         "starting-inventory":[]
     },
     "Beginner":{
@@ -189,7 +189,7 @@ const presets = {
         "keybladeAbilities":["Support"],
         "enemy":"Disabled",
         "hintsType":"Shananas",
-        "PromiseCharm":[false],
+        "PromiseCharm":["off"],
         "starting-inventory":[]
     },
     "Level 1":{
@@ -225,7 +225,7 @@ const presets = {
         "keybladeAbilities":["Support"],
         "enemy":"Disabled",
         "hintsType":"Shananas",
-        "PromiseCharm":[false],
+        "PromiseCharm":["off"],
         "starting-inventory":["404"]
     },
     "Bingo":{
@@ -264,7 +264,7 @@ const presets = {
         "keybladeAbilities":["Support"],
         "enemy":"Disabled",
         "hintsType":"Shananas",
-        "PromiseCharm":[false],
+        "PromiseCharm":["off"],
         "starting-inventory":[]
     },
     "Go Mode":{
@@ -305,7 +305,7 @@ const presets = {
         "keybladeAbilities":["Support"],
         "enemy":"Disabled",
         "hintsType":"Shananas",
-        "PromiseCharm":[false],
+        "PromiseCharm":["off"],
         "starting-inventory":["593","594","595"]
     },
     "Better All Blue Numbers":{
@@ -346,7 +346,7 @@ const presets = {
         "keybladeAbilities":["Support", "Action"],
         "enemy":"Disabled",
         "hintsType":"Shananas",
-        "PromiseCharm":[true],
+        "PromiseCharm":["off"],
         "starting-inventory":[],
         "seedModifiers": ["Schmovement", "Better Junk"]
     },
@@ -387,7 +387,49 @@ const presets = {
         "enemy":"Disabled",
         "hintsType":"JSmartee-SecondVisit",
         "preventSelfHinting":"False",
-        "PromiseCharm":[false],
+        "PromiseCharm":["off"],
         "starting-inventory":["138"]
+    },
+    "Ascending Difficulty ABN":{
+        "include":[
+            "locationType.LoD",
+            "locationType.BC",
+            "locationType.HB",
+            "locationType.CoR",
+            "locationType.TT",
+            "locationType.TWTNW",
+            "locationType.SP",
+            "locationType.PR",
+            "locationType.OC",
+            "locationType.Agrabah",
+            "locationType.HT",
+            "locationType.PL",
+            "locationType.DC",
+            "locationType.HUNDREDAW",
+            "locationType.STT",
+            "locationType.AS",
+            "locationType.Sephi",
+            "locationType.FormLevel",
+            "locationType.Free",
+            "locationType.Critical",
+            "locationType.Atlantica",
+            "locationType.DataOrg"
+        ],
+        "levelChoice":"ExcludeFrom99",
+        "keybladeMinStat":5,
+        "keybladeMaxStat":13,
+        "SoraExp":7,
+        "ValorExp":10,
+        "WisdomExp":7,
+        "LimitExp":7,
+        "MasterExp":5,
+        "FinalExp":7,
+        "SummonExp":5,
+        "keybladeAbilities":["Support", "Action"],
+        "enemy":"Disabled",
+        "hintsType":"Shananas",
+        "PromiseCharm":["on"],
+        "starting-inventory":[],
+        "seedModifiers": ["Max Logic Item Placement", "Randomize Ability Pool"]
     },
 };
