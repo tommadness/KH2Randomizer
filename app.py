@@ -190,6 +190,10 @@ def randomizePage(data, sessionDict):
     platform = data['platform']
     excludeList = list(set(locationType) - set(sessionDict['includeList']))
     excludeList.append(sessionDict["levelChoice"])
+
+    if sessionDict["itemPlacementDifficulty"] == "Nightmare" :
+        excludeList.remove(locationType.Puzzle)
+
     cmdMenuChoice = data["cmdMenuChoice"]
     randomBGM = data["randomBGM"]
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])

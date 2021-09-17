@@ -17,9 +17,10 @@ class Hints:
                 if isinstance(location, KH2ItemStat):
                     continue
                 if item.ItemType in importantChecks or item.Name == "Second Chance" or item.Name == "Once More":
-                    if not location.LocationTypes[0] in hintsText['world']:
-                        hintsText['world'][location.LocationTypes[0]] = []
-                    hintsText['world'][location.LocationTypes[0]].append(item.Name)
+                    if location.LocationTypes[0] != locationType.Puzzle:
+                        if not location.LocationTypes[0] in hintsText['world']:
+                            hintsText['world'][location.LocationTypes[0]] = []
+                        hintsText['world'][location.LocationTypes[0]].append(item.Name)
 
         if hintsType == "JSmartee":
             proof_of_connection_index = None
@@ -40,7 +41,7 @@ class Hints:
                 if h not in excludeList:
                     worldChecks[h] = []
             for location,item in locationItems:
-                if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical:
+                if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     worldChecks[location.LocationTypes[0]].append(item)
@@ -61,7 +62,7 @@ class Hints:
                             if item.ItemType is itemType.PROOF:
                                 proof_of_nonexistence_index = worldsToHint.index(location.LocationTypes[0])
             for location,item in locationItems:
-                if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical:
+                if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
                     if item.ItemType is itemType.REPORT:
                         reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                         freeReports.append(reportNumber)

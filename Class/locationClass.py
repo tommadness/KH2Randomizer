@@ -33,6 +33,29 @@ class KH2Treasure(KH2Location):
         return self.Description
 
 
+@dataclass
+class KH2Puzzle(KH2Location):
+    Id: int
+    Description: str = ""
+    ItemId: int = 1 # PC version crashes on pause when Trsr contains an ItemId0
+    InvalidChecks: list[itemType] = field(default_factory=list)
+    LocationTypes: list[str] = field(default_factory=list)
+    DoubleReward: bool = False
+
+    def setReward(self, itemId):
+        self.ItemId = itemId
+
+    def getReward(self):
+        return self.ItemId
+
+    def getDescription(self):
+        return self.Description
+
+    def getItemBytesAndLocs(self):
+        byteId1 = 24420+self.Id*16
+        byteId2 = 24420+self.Id*16+1
+        return byteId1,byteId2,self.ItemId
+
 
 class KH2LevelUp(KH2Location):
     excludeFrom50 = list(chain([1,3,5,6,8,11,13,16,18,19,21,22,24,26,27,29,31,33,35,37,38,40,42,43,45,47,49],range(51,100)))

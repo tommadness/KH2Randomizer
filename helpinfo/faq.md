@@ -57,3 +57,17 @@ Abilities that are weighted (when off keyblades) include:
 - Aerial Dive
 - Magnet Burst
 - Trinity Limit
+
+## What is the "Nightmare" Item Placement Difficulty?
+
+Nightmare difficulty is an extra difficult item placement setting that expands the pool of items that are pushed late in a seed, as well as changing the weighting for locked areas that you can get checks from (e.g. forms and 100 acre). The expanded pool of items is:
+
+- Combo Boost
+- Air Combo Boost
+- Berserk Charge
+- Form Boost
+- Draw
+- Drive Converter
+- Auto Forms
+
+Additionally, **puzzle rewards are guaranteed randomized in this setting, and likely to have important checks**, and those checks, while they are unhinted, may still be required to unlock other checks you need to finish the seed.

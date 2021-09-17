@@ -1,5 +1,5 @@
 
-from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat
+from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat, KH2Puzzle
 
 from List.configDict import itemType, locationType
 
@@ -10,10 +10,11 @@ from Module.startingInventory import StartingInventory
 
 class SeedValidator:
     def __init__(self,sessionDict):
+        nightmare = "Nightmare"==sessionDict["itemPlacementDifficulty"]
         if "Reverse Rando" in sessionDict["seedModifiers"]:
-            self.itemRestrictions = ItemPlacementRestriction("Reverse")
+            self.itemRestrictions = ItemPlacementRestriction("Reverse",nightmare)
         else:
-            self.itemRestrictions = ItemPlacementRestriction("Regular")
+            self.itemRestrictions = ItemPlacementRestriction("Regular",nightmare)
 
     def validateSeed(self, sessionDict, randomizer):
         startingInventory = sessionDict["startingInventory"]
@@ -22,6 +23,7 @@ class SeedValidator:
         lvupList = [location for location in randomizer._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in randomizer._allLocationList if isinstance(location, KH2Bonus)]
         fmlvList = [location for location in randomizer._allLocationList if isinstance(location, KH2FormLevel)]
+        puzzleList = [location for location in randomizer._allLocationList if isinstance(location, KH2Puzzle)]
         plrpList = []
         [plrpList.append(location) for location in randomizer._allLocationList if isinstance(location, KH2StartingItem) and not location in plrpList]
         StartingInventory.generateStartingInventory(plrpList[0], startingInventory)
@@ -37,18 +39,20 @@ class SeedValidator:
         for i in lvupList:
             inventory.append(i.getReward())
 
-        treasure_restriction,bonus_restriction,form_restriction = self.itemRestrictions.get_restriction_functions()
+        treasure_restriction,bonus_restriction,form_restriction,puzzle_restriction = self.itemRestrictions.get_restriction_functions()
 
         changed = True
         depth = 0
         while changed:
             depth+=1
             if len(trsrList)==0 and len(bonsList)==0 and len(fmlvList)==0:
+                print(f"Logic depth {depth}")
                 return True
             changed = False
             treasures_to_remove = []
             bonuses_to_remove = []
             forms_to_remove = []
+            puzzles_to_remove = []
             # pass through remaining treasures and find unlockable things
             for i in trsrList:
                 location_id = i.Id
@@ -70,12 +74,20 @@ class SeedValidator:
                     forms_to_remove.append(i)
                     inventory.append(reward_id)
                     changed = True
+            for i in puzzleList:
+                reward_id = i.ItemId
+                if puzzle_restriction(i.Id)(inventory):
+                    puzzles_to_remove.append(i)
+                    inventory.append(reward_id)
+                    changed = True
             for i in treasures_to_remove:
                 trsrList.remove(i)
             for i in bonuses_to_remove:
                 bonsList.remove(i)
             for i in forms_to_remove:
                 fmlvList.remove(i)
+            for i in puzzles_to_remove:
+                puzzleList.remove(i)
 
         return False
 

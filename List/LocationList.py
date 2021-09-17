@@ -711,6 +711,22 @@ class Locations:
             KH2ItemStat(149,Name="Winner's Proof"),
         ]
 
+    def getPuzzleLocations():
+        return [
+            # no need for anything
+            KH2Puzzle(0, "Awakening (AP Boost)", LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10),
+            # need growth
+            KH2Puzzle(1, "Heart (Serenity Crystal)", LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10),
+            # need growth
+            KH2Puzzle(2, "Duality (Rare Document)", LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10),
+            # need growth, magnet
+            KH2Puzzle(3, "Frontier (Manifest Illusion)", LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10),
+            # need starry hill, need growth
+            KH2Puzzle(4, "Daylight (Executive's Ring)", LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.TORN_PAGE, itemType.REPORT,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10),
+            # need growth
+            KH2Puzzle(5, "Sunset (Grand Ribbon)", LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT,itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10),
+        ]
+
     def getDonaldBonusList():
         return [
             KH2Bonus(42,2,locationTypes=[locationType.Agrabah],description="Abu Escort"),

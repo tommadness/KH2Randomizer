@@ -298,7 +298,7 @@ class Items:
 
     def getSupportAbilityList():
         return [
-            KH2Item(138,"g",itemType.SUPPORT_ABILITY),
+            KH2Item(138,"Scan",itemType.SUPPORT_ABILITY),
             KH2Item(138,"Scan",itemType.SUPPORT_ABILITY),
             KH2Item(158,"Aerial Recovery",itemType.SUPPORT_ABILITY),
             KH2Item(539,"Combo Master",itemType.SUPPORT_ABILITY),
