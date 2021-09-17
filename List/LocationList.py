@@ -412,9 +412,9 @@ class Locations:
             KH2Treasure(454, "Mansion Foyer Serenity Crystal", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit),
             KH2Treasure(457, "Mansion Dining Room Mythril Crystal", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit),
             KH2Treasure(458, "Mansion Dining Room Mythril Stone", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit),
-            KH2Treasure(460, "Mansion Library Orichalcum", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit),
-            KH2Treasure(534, "Beam Secret Ansem Report 10", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationDepth(locationDepth.SecondVisit),
-            KH2Treasure(464, "Mansion Basement Corridor Ultimate Recipe", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit),
+            KH2Treasure(460, "Mansion Library Orichalcum", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit).setLocationWeight(10),
+            KH2Treasure(534, "Beam Secret Ansem Report 10", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.SecondVisit),
+            KH2Treasure(464, "Mansion Basement Corridor Ultimate Recipe", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit).setLocationWeight(10),
             KH2Treasure(317, "Betwixt and Between Bond of Flame", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.SecondBoss),
             KH2Treasure(561, "Axel (Data) Magic Boost", LocationTypes=[locationType.TT, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.DataFight),
 

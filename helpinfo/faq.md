@@ -135,4 +135,6 @@ Nightmare difficulty is an extra difficult item placement setting that expands t
 - Drive Converter
 - Auto Forms
 
+If there are "good" abilities on keyblades, those keyblades are pushed late as well. Auto forms are also "in-logic" so you may need to use an auto form to unlock the form fully (e.g. Valor form can be on Valor 3, so you need to use auto-valor to get it).
+
 Additionally, **puzzle rewards are guaranteed randomized in this setting, and likely to have important checks**, and those checks, while they are unhinted, may still be required to unlock other checks you need to finish the seed.
