@@ -22,6 +22,7 @@ Other differences include:
 ## Why are Consumables considered "junk"?
 "Junk" is a bit of a misnomer. After all "one-off" items (equipment, abilities, Important Checks, maps) are placed, all remaining locations are filled randomly with Synthesis Materials or Consumables, as the quantity of those per seed don't necessarily matter.
 
+# OpenKH Mods Manager
 ## What priority should the seed be placed at in OpenKH Mods Manager?
 The seed should always be placed at the highest priority. The seed needs to overwrite some defaults set by the All In One mod.
 
