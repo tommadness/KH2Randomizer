@@ -91,6 +91,13 @@ By default, the ability pool is set. There are always 3 `Finishing Plus` abiliti
 
 **Randomize Ability Pool** makes it so the only guarantee is exactly 1 `Second Chance` and 1 `Once More` in the ability pool. This can result in, for example, 2 `Finishing Plus`es, 0 `Scan`s, 3 `Light & Darkness`es, et cetera.
 
+The exact possibilities are:
+- 0 or 1 of each `Action Ability`
+- Exactly 4 of each `Growth Ability`
+- Exactly 1 `Second Chance`
+- Exactly 1 `Once More`
+- 0 or more of each `Support Ability`
+
 # Item Placement Difficulty
 
 ## What does Seed Item Placement Difficulty mean?
