@@ -192,6 +192,9 @@ def randomizePage(data, sessionDict):
     excludeList.append(sessionDict["levelChoice"])
     cmdMenuChoice = data["cmdMenuChoice"]
     randomBGM = data["randomBGM"]
+    customlist_f = data["customlist_f"]
+    customlist_b = data["customlist_b"]
+    customlist_t = data["customlist_t"]
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
     seedValidation = SeedValidator(sessionDict)
@@ -230,7 +233,7 @@ def randomizePage(data, sessionDict):
             notValidSeed = False
             
             try:
-                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsText = hintsText, cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
+                zip = randomizer.generateZip(customlist_f = customlist_f, customlist_b = customlist_b, customlist_t = customlist_t, randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsText = hintsText, cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
                 if development_mode:
                     development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
                     if development_mode_path:
