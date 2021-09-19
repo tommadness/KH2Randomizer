@@ -64,25 +64,25 @@ class KH2Randomizer():
         normal_item_weight = 1
         early_item_weight = 1
         if item_difficulty == "Super Easy":
-            early_item_weight = 500
-            normal_item_weight = 10
+            early_item_weight = 100
+            normal_item_weight = 50
             late_item_weight = 1
         if item_difficulty == "Easy":
-            early_item_weight = 10
-            normal_item_weight = 10
+            early_item_weight = 50
+            normal_item_weight = 50
             late_item_weight = 1
         if item_difficulty == "Hard":
             early_item_weight = 1
-            normal_item_weight = 1
-            late_item_weight = 5
+            normal_item_weight = 50
+            late_item_weight = 20
         if item_difficulty == "Very Hard":
             early_item_weight = 1
-            normal_item_weight = 10
-            late_item_weight = 50
+            normal_item_weight = 25
+            late_item_weight = 75
         if item_difficulty == "Insane":
             early_item_weight = 1
             normal_item_weight = 100
-            late_item_weight = 5000
+            late_item_weight = 500
 
         modifiedCritBonus = False
         for loc in self._validLocationList:
@@ -91,11 +91,11 @@ class KH2Randomizer():
                     continue
                 modifiedCritBonus=True
             if loc.LocationWeight>1:
-                loc.setLocationWeight(late_item_weight)
+                loc.setLocationWeight(round(loc.LocationWeight * late_item_weight / 0.25, 0))
             elif loc.LocationWeight<1:
-                loc.setLocationWeight(early_item_weight)
+                loc.setLocationWeight(round(loc.LocationWeight * early_item_weight / 0.25, 0))
             elif loc.LocationWeight==1:
-                loc.setLocationWeight(normal_item_weight)
+                loc.setLocationWeight(round(loc.LocationWeight * normal_item_weight / 0.25, 0))
 
         if reportDepth is not None:
             for loc in self._validLocationList:
