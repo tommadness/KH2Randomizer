@@ -60,6 +60,25 @@
     <div class="vertical top"><h5>Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}<br>{%endfor%}</div>
     <div class="vertical top"><h5>Item Placement Difficulty</h5>{{itemPlacementDifficulty}}</div>
     <div class="vertical top"><h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}<br>{%endfor%}</div>
+	
+	<div class="vertical">
+	<h4>Custom Music settings (PC ONLY)</h4>
+		<div><input min="0" max="999" value="0" required type="number" name="customlist_b">
+				<option value="{{num}}">{{num}}</option>
+			<span> # of Custom Battle BGM</span>
+		</div>
+		<div>
+			<input name="customlist_f" min="0" value = "0" max="999" required type="number" >
+				<option value="{{num}}">{{num}}</option>
+			</input><span> # of Custom Field BGM</span>
+		</div>
+		<div>
+			<input min="0" max="999" value="0" required type="number" name="customlist_t">
+				<option value="{{num}}">{{num}}</option>
+			<span> # of Custom Dearly Beloved BGM</span>
+		</div>
+	</div> 
+	
 </div>
 
 <div class="container col-12">
@@ -109,11 +128,14 @@ $(function(){
         var platform = $(this).val();
         var cmdMenuChoice = $("select[name=cmdMenuChoice]").val();
         var randomBGM = $("select[name=randomBGM]").val();
+		var customlist_f = $("input[name=customlist_f]").val();
+		var customlist_b = $("input[name=customlist_b]").val();
+		var customlist_t = $("input[name=customlist_t]").val();
         $("#downloadButtons button").prop('disabled',true).text("Generating...");
         var HOST = location.origin.replace(/^http/, 'ws')
         var socket = io(HOST);
         socket.on('connect', function(){
-            socket.emit('download', {platform: platform, cmdMenuChoice: cmdMenuChoice, randomBGM: randomBGM});
+            socket.emit('download', {platform: platform, cmdMenuChoice: cmdMenuChoice, randomBGM: randomBGM, customlist_f: customlist_f, customlist_b: customlist_b, customlist_t: customlist_t});
         });
         socket.on('file', function(zip){
             console.log(zip);
