@@ -22,6 +22,10 @@ Other differences include:
 ## Why are Consumables considered "junk"?
 "Junk" is a bit of a misnomer. After all "one-off" items (equipment, abilities, Important Checks, maps) are placed, all remaining locations are filled randomly with Synthesis Materials or Consumables, as the quantity of those per seed don't necessarily matter.
 
+# OpenKH Mods Manager
+## What priority should the seed be placed at in OpenKH Mods Manager?
+The seed should always be placed at the highest priority. The seed needs to overwrite some defaults set by the All In One mod.
+
 # Hint Systems
 ## What are the hint systems?
 The KH2R community has come up with two different hint systems:
@@ -90,6 +94,13 @@ Common "Unusual" Occurances from standard item placement logic:
 By default, the ability pool is set. There are always 3 `Finishing Plus` abilities, 2 `Scan`s, 1 `Light & Darkness`, et cetera.
 
 **Randomize Ability Pool** makes it so the only guarantee is exactly 1 `Second Chance` and 1 `Once More` in the ability pool. This can result in, for example, 2 `Finishing Plus`es, 0 `Scan`s, 3 `Light & Darkness`es, et cetera.
+
+The exact possibilities are:
+- 0 or 1 of each `Action Ability`
+- Exactly 4 of each `Growth Ability`
+- Exactly 1 `Second Chance`
+- Exactly 1 `Once More`
+- 0 or more of each `Support Ability`
 
 # Item Placement Difficulty
 
