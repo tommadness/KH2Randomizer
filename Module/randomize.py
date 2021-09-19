@@ -64,25 +64,25 @@ class KH2Randomizer():
         normal_item_weight = 1
         early_item_weight = 1
         if item_difficulty == "Super Easy":
-            early_item_weight = 200
-            normal_item_weight = 20
+            early_item_weight = 500
+            normal_item_weight = 10
             late_item_weight = 1
         if item_difficulty == "Easy":
-            early_item_weight = 200
-            normal_item_weight = 100
+            early_item_weight = 10
+            normal_item_weight = 10
             late_item_weight = 1
         if item_difficulty == "Hard":
-            early_item_weight = 5
-            normal_item_weight = 100
-            late_item_weight = 50
+            early_item_weight = 1
+            normal_item_weight = 1
+            late_item_weight = 5
         if item_difficulty == "Very Hard":
-            early_item_weight = 2
-            normal_item_weight = 75
-            late_item_weight = 100
+            early_item_weight = 1
+            normal_item_weight = 10
+            late_item_weight = 50
         if item_difficulty == "Insane":
             early_item_weight = 1
-            normal_item_weight = 20
-            late_item_weight = 200
+            normal_item_weight = 100
+            late_item_weight = 5000
 
         modifiedCritBonus = False
         for loc in self._validLocationList:
@@ -90,12 +90,12 @@ class KH2Randomizer():
                 if modifiedCritBonus:
                     continue
                 modifiedCritBonus=True
-            if loc.LocationWeight>=5:
-                loc.setLocationWeight((loc.LocationWeight + 15) * late_item_weight)
-            elif loc.LocationWeight<=1:
-                loc.setLocationWeight((loc.LocationWeight + 15) * early_item_weight)
-            else:
-                loc.setLocationWeight((loc.LocationWeight + 15) * normal_item_weight)
+            if loc.LocationWeight>1:
+                loc.setLocationWeight(late_item_weight)
+            elif loc.LocationWeight<1:
+                loc.setLocationWeight(early_item_weight)
+            elif loc.LocationWeight==1:
+                loc.setLocationWeight(normal_item_weight)
 
         if reportDepth is not None:
             for loc in self._validLocationList:
