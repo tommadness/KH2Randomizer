@@ -64,25 +64,25 @@ class KH2Randomizer():
         normal_item_weight = 1
         early_item_weight = 1
         if item_difficulty == "Super Easy":
-            early_item_weight = 100
-            normal_item_weight = 10
+            early_item_weight = 200
+            normal_item_weight = 20
             late_item_weight = 1
         if item_difficulty == "Easy":
-            early_item_weight = 100
-            normal_item_weight = 50
+            early_item_weight = 200
+            normal_item_weight = 100
             late_item_weight = 1
         if item_difficulty == "Hard":
             early_item_weight = 5
-            normal_item_weight = 50
-            late_item_weight = 10
+            normal_item_weight = 100
+            late_item_weight = 50
         if item_difficulty == "Very Hard":
-            early_item_weight = 5
-            normal_item_weight = 25
-            late_item_weight = 75
+            early_item_weight = 2
+            normal_item_weight = 75
+            late_item_weight = 100
         if item_difficulty == "Insane":
             early_item_weight = 1
-            normal_item_weight = 10
-            late_item_weight = 100
+            normal_item_weight = 20
+            late_item_weight = 200
 
         modifiedCritBonus = False
         for loc in self._validLocationList:
