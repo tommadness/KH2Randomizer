@@ -282,7 +282,7 @@ class KH2Randomizer():
     def setNoAP(self, settrue=False):
         self._noap = settrue
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsText = None, startingInventory=[], platform="PCSX2"):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsText = None, startingInventory=[], platform="PCSX2", customlist_f = 0, customlist_b = 0, customlist_t = 0):
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -441,7 +441,7 @@ class KH2Randomizer():
 
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             
-            mod["assets"] += RandomBGM.randomizeBGM(randomBGM, platform)
+            mod["assets"] += RandomBGM.randomizeBGM(randomBGM, platform, customlist_f, customlist_b, customlist_t)
 
             outZip.write("Module/icon.png", "icon.png")
 

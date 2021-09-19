@@ -67,7 +67,7 @@ musicList = {
         {"name": "bgm\\music129.win32.scd", "kind": "field"}, # Isn't It Lovely
         #{"name": "bgm\\music130.win32.scd", "kind": "field"}, # Atlantica tutorials Combined (no loop)
         {"name": "bgm\\music131.win32.scd", "kind": "battle"}, # Dance to the Death 
-        #{"name": "bgm\\music132.win32.scd", "kind": "cutscene", "dmca": True}, # Beauty and the Beast (short no loop)
+        {"name": "bgm\\music132.win32.scd", "kind": "exclude", "dmca": True}, # Beauty and the Beast (short no loop) (still want this to randomize out if dmca on)
         {"name": "bgm\\music133.win32.scd", "kind": "field"}, # Magical Mystery
         {"name": "bgm\\music134.win32.scd", "kind": "battle"}, #Working Together
         {"name": "bgm\\music135.win32.scd", "kind": "field"}, # Space Paranoids Theme
@@ -538,21 +538,22 @@ musicPaths = {
 }
 class RandomBGM():
     @staticmethod
-    def randomizeBGM(selections, platform):
+    def randomizeBGM(selections, platform, listF, listB, listT):
     
         #for testing. you would want a option to set these to whatever number you want on the site.
         #if we don't care about categories then we could just set one number and set all tracks to "unknown" or something.
-        #customlistf = 21
-        #customlistb = 55
-        #customlistt = 3
-        ##Uses the numbrers above to build the dict with appropriate categories.
-        #for i in range(customlistf):
-        #    musicList["CUSTOM"].append({"name": "field_{}.scd".format(f'{i+1:03d}'), "kind": "field"})
-        #for i in range(customlistb):
-        #    musicList["CUSTOM"].append({"name": "battle_{}.scd".format(f'{i+1:03d}'), "kind": "battle"})
-        #for i in range(customlistt):
-        #    musicList["CUSTOM"].append({"name": "title_{}.scd".format(f'{i+1:03d}'), "kind": "title"})
-        ##print (musicList["CUSTOM"]),
+        customlistf = int(listF)
+        customlistb = int(listB)
+        customlistt = int(listT)
+        #print(customlistb, customlistf, customlistt)
+        #Uses the numbrers above to build the dict with appropriate categories.
+        for i in range(customlistf):
+            musicList["CUSTOM"].append({"name": "field_{}.scd".format(f'{i+1:03d}'), "kind": "field"})
+        for i in range(customlistb):
+            musicList["CUSTOM"].append({"name": "battle_{}.scd".format(f'{i+1:03d}'), "kind": "battle"})
+        for i in range(customlistt):
+            musicList["CUSTOM"].append({"name": "title_{}.scd".format(f'{i+1:03d}'), "kind": "title"})
+        #print (musicList["CUSTOM"]),
         
         options = {
             #we don't need to separate CUSTOM from everything else anymore i think.
@@ -566,7 +567,7 @@ class RandomBGM():
         BGMList = {"battle": [], "field": [], "title":[], "cutscene": []}
         for game in options["games"]:
             for song in musicList[game]:
-                if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
+                if "DMCA-SAFE" in options["options"] and (song.get("dmca", False) or song.get("kind") != "exclude"):
                     continue
                 kind = "battle" #default
                 category = song.get("kind") #current song
@@ -584,7 +585,6 @@ class RandomBGM():
                     kind = "cutscene"
                 song["game"] = game
                 BGMList[kind].append(song)
-        #print (BGMList["title"]),
 
         def _getMusicAsset(original_song, new_song):
             return {
@@ -664,7 +664,6 @@ class RandomBGM():
             "BBS",
             "RECOM",
             "DDD",
-            "MOVIES"
-            #framework already done for this option. just needs options on the site to set the number of tracks to use
-            #"CUSTOM"
+            "MOVIES",
+            "CUSTOM"
         ]
