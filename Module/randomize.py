@@ -27,6 +27,7 @@ class KH2Randomizer():
     seedHashIcons: list[str] = field(default_factory=list)
     spoiler: bool = False
     nightmareSetting: bool = False
+    puzzleRando: bool = False
 
     _locationItems: list[tuple[KH2Location, KH2Item]] = field(default_factory=list)
 
@@ -52,6 +53,8 @@ class KH2Randomizer():
         self._allLocationList = Locations.getTreasureList(maxItemLogic) + Locations.getSoraLevelList() + Locations.getSoraBonusList(maxItemLogic) + Locations.getFormLevelList(maxItemLogic) + Locations.getPuzzleLocations() + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
 
         self._validLocationList = [location for location in self._allLocationList if not set(location.LocationTypes).intersection(excludeWorlds+["Level1Form", "SummonLevel"])]
+
+        self.puzzleRando = "Puzzle" not in excludeWorlds
 
         self._allLocationListGoofy = Locations.getGoofyWeaponList() + Locations.getGoofyStartingItemList() + Locations.getGoofyBonusList()
 
@@ -107,7 +110,7 @@ class KH2Randomizer():
             elif loc.LocationWeight<1:
                 loc.setLocationWeight(early_item_weight)
             elif loc.LocationWeight==1:
-                loc.setLocationWeight(normal_item_weight)
+                loc.setLocationWeight(normal_item_weight if not extra_weight else late_item_weight)
 
         if reportDepth is not None:
             for loc in self._validLocationList:
@@ -327,7 +330,6 @@ class KH2Randomizer():
         [plrpList.append(location) for location in self._allLocationListGoofy if isinstance(location, KH2StartingItem) and not location in plrpList]
 
         mod = modYml.getDefaultMod()
-        mod["assets"] += [modYml.getPuzzleMod()]
 
         formattedTrsr = {}
         for trsr in trsrList:
@@ -440,17 +442,19 @@ class KH2Randomizer():
         with zipfile.ZipFile(data, "w") as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
-            with open("static/jiminy.bar","rb") as puzzleBar:
-                binaryContent = bytearray(puzzleBar.read())
-                for puzz in puzzleList:
-                    byte0, byte1, item = puzz.getItemBytesAndLocs()
-                    # for byte1, find the most significant bits from the item Id
-                    itemByte1 = item>>8
-                    # for byte0, isolate the least significant bits from the item Id
-                    itemByte0 = item & 0x00FF
-                    binaryContent[byte0] = itemByte0
-                    binaryContent[byte1] = itemByte1
-                outZip.writestr("modified_jiminy.bar",binaryContent)
+            if self.puzzleRando:
+                mod["assets"] += [modYml.getPuzzleMod()]
+                with open("static/jiminy.bar","rb") as puzzleBar:
+                    binaryContent = bytearray(puzzleBar.read())
+                    for puzz in puzzleList:
+                        byte0, byte1, item = puzz.getItemBytesAndLocs()
+                        # for byte1, find the most significant bits from the item Id
+                        itemByte1 = item>>8
+                        # for byte0, isolate the least significant bits from the item Id
+                        itemByte0 = item & 0x00FF
+                        binaryContent[byte0] = itemByte0
+                        binaryContent[byte1] = itemByte1
+                    outZip.writestr("modified_jiminy.bar",binaryContent)
 
             outZip.writestr("TrsrList.yml", yaml.dump(formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(formattedBons, line_break="\r\n"))

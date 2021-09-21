@@ -205,6 +205,9 @@ class modYml:
                         },
                         {
                             "name": "menu/uk/jiminy.bar"
+                        },
+                        {
+                            "name": "menu/fm/jiminy.bar"
                         }
                     ],
                     "method": "copy",

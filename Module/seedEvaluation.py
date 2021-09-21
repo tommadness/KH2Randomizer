@@ -120,3 +120,17 @@ class SeedMetricsNumCritExtra:
                     num_starting_checks+=1
 
         return num_starting_checks
+
+class SeedMetricsGenDataFrame:
+    def metrics(self, randomizer):
+        useful_items = getImportantChecks()+getUsefulItems()
+        item_dict = {}
+        crit_duplicates = 0
+        for loc,item in randomizer._locationItems:
+            if item.Id in useful_items:
+                desc = loc.getDescription()
+                if desc in item_dict:
+                    crit_duplicates+=1
+                    desc +=str(crit_duplicates)
+                item_dict[desc] = item.Id
+        return item_dict

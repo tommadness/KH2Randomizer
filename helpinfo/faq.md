@@ -11,6 +11,7 @@ This seed generator is designed to be used with the [OpenKH](https://openkh.dev/
   - Certain bosses that were not reasonable to randomize can now be randomized
   - Boss/Enemy randomization on PC
 - Starting inventory
+- Puzzle Reward Randomization Option
 
 Other differences include:
 - No "Vanilla" option for any randomization setting
@@ -125,6 +126,7 @@ Abilities that are weighted (when off keyblades) include:
 - Negative Combo
 - Experience Boost
 - Light & Darkness
+- Aerial Spiral
 - Horizontal Slash
 - Slide Dash
 - Flash Step
