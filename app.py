@@ -191,7 +191,8 @@ def randomizePage(data, sessionDict):
     excludeList = list(set(locationType) - set(sessionDict['includeList']))
     excludeList.append(sessionDict["levelChoice"])
 
-    if sessionDict["itemPlacementDifficulty"] == "Nightmare" :
+    if sessionDict["itemPlacementDifficulty"] == "Nightmare" and locationType.Puzzle in excludeList:
+        print("Removing puzzle exclusion due to nightmare...")
         excludeList.remove(locationType.Puzzle)
 
     cmdMenuChoice = data["cmdMenuChoice"]

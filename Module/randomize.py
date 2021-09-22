@@ -215,7 +215,7 @@ class KH2Randomizer():
 
             if self.nightmareSetting and item.ItemType==itemType.KEYBLADE:
                 # the item we are placing is a keyblade, does that keyblade have a good ability. if so, weight that placement
-                keybladeName = item.Name
+                keybladeName = item.Name +" (Slot)"
                 matching_keyblade = [location for location in self._validLocationList if isinstance(location, KH2ItemStat) and location.Name == keybladeName][0]
                 if matching_keyblade.getReward() in nightmareAbilityIds:
                     weighted_item = True
