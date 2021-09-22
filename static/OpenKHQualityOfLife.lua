@@ -59,7 +59,6 @@ WriteString(Obj0+0xEE30,'F_NM170_XL')
 WriteString(Obj0+0xEE50,'F_NM170_XL.mset')
 
 --Start with Dash
-WriteShort(Btl0+0x31A6C,0x0000820E)
 if ReadShort(Now+0) == 0x030A then
 	if Platform == 0 then
 		WriteShort(0x1C567C4,0x1E)
