@@ -105,7 +105,7 @@ The exact possibilities are:
 # Item Placement Difficulty
 
 ## What does Seed Item Placement Difficulty mean?
-**Seed Item Placement Difficulty** weights "favorable" checks earlier or later in a world, depending on the setting.
+**Seed Item Placement Difficulty** weights "favorable" checks earlier or later in a world, depending on the setting. Details on location weights can be found [here](https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/itemweights.md) 
 
 Items that are weighted include:
  
