@@ -412,9 +412,9 @@ class Locations:
             KH2Treasure(454, "Mansion Foyer Serenity Crystal", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit),
             KH2Treasure(457, "Mansion Dining Room Mythril Crystal", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit),
             KH2Treasure(458, "Mansion Dining Room Mythril Stone", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit),
-            KH2Treasure(460, "Mansion Library Orichalcum", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit).setLocationWeight(10),
+            KH2Treasure(460, "Mansion Library Orichalcum", LocationTypes=[locationType.TT]).setLocationWeight(10).setLocationDepth(locationDepth.SecondVisit),
             KH2Treasure(534, "Beam Secret Ansem Report 10", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.SecondVisit),
-            KH2Treasure(464, "Mansion Basement Corridor Ultimate Recipe", LocationTypes=[locationType.TT]).setLocationDepth(locationDepth.SecondVisit).setLocationWeight(10),
+            KH2Treasure(464, "Mansion Basement Corridor Ultimate Recipe", LocationTypes=[locationType.TT]).setLocationWeight(10).setLocationDepth(locationDepth.SecondVisit),
             KH2Treasure(317, "Betwixt and Between Bond of Flame", LocationTypes=[locationType.TT], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.SecondBoss),
             KH2Treasure(561, "Axel (Data) Magic Boost", LocationTypes=[locationType.TT, locationType.DataOrg], InvalidChecks=[itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.DataFight),
 
@@ -452,7 +452,7 @@ class Locations:
             KH2Treasure(586, "GoA Lost Illusion", LocationTypes=[locationType.Free]).setLocationWeight(-10),
             KH2Treasure(590, "Proof of Nonexistence", LocationTypes=[locationType.Free]).setLocationWeight(-10),
 
-            KH2Treasure(367, "Undersea Kingdom Map", LocationTypes=[locationType.Atlantica], InvalidChecks=([] if trueRandom else [itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM])+ [itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]),
+            KH2Treasure(367, "Undersea Kingdom Map", LocationTypes=[locationType.Atlantica], InvalidChecks=([] if trueRandom else [itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM])+ [itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(-10),
             KH2Treasure(287, "Mysterious Abyss", LocationTypes=[locationType.Atlantica], InvalidChecks=([] if trueRandom else [itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM]) + [itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.SecondVisit),
             KH2Treasure(279, "Musical Blizzard Element", LocationTypes=[locationType.Atlantica],  InvalidChecks=([] if trueRandom else [itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM]) + [itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.SecondVisit),
             KH2Treasure(538, "Musical Orichalcum+", LocationTypes=[locationType.Atlantica],  InvalidChecks=([] if trueRandom else [itemType.MAGNET, itemType.THUNDER, itemType.TORN_PAGE, itemType.FORM]) + [itemType.GROWTH_ABILITY, itemType.SUPPORT_ABILITY, itemType.ACTION_ABILITY]).setLocationWeight(10).setLocationDepth(locationDepth.SecondVisit),

@@ -7,67 +7,67 @@ import unittest,datetime,json,os
 
 
 class Tests(unittest.TestCase):
-    # def test_dataDistribution(self):
-    #     avgLateChecks = {}
-    #     metricCalculator = SeedMetricsNumDatas()
-    #     numSeeds = 50
-    #     for diff in ["Super Easy","Easy","Normal","Hard","Very Hard","Insane"]:
-    #         avgLateChecks[diff] = 0.0
-    #         for i in range(numSeeds):
-    #             randomizer = self.create_difficulty_seed(diff+str(i),diff)
-    #             results = metricCalculator.metrics(randomizer)
-    #             avgLateChecks[diff]+=results
-
-    #         avgLateChecks[diff] /= numSeeds
-    #     assert avgLateChecks["Super Easy"] <= avgLateChecks["Easy"]
-    #     assert avgLateChecks["Easy"] <= avgLateChecks["Normal"]
-    #     assert avgLateChecks["Normal"] <= avgLateChecks["Hard"]
-    #     assert avgLateChecks["Hard"] <= avgLateChecks["Very Hard"]
-    #     assert avgLateChecks["Very Hard"] <= avgLateChecks["Insane"]
-
-    # def test_critChecks(self):
-    #     avgLateChecks = {}
-    #     metricCalculator = SeedMetricsNumCritExtra()
-    #     numSeeds = 50
-    #     for diff in ["Super Easy","Easy","Normal","Hard","Very Hard","Insane"]:
-    #         print(f"Start evaluating {diff}")
-    #         avgLateChecks[diff] = 0.0
-    #         for i in range(numSeeds):
-    #             randomizer = self.create_difficulty_seed(diff+str(i),diff)
-    #             results = metricCalculator.metrics(randomizer)
-    #             avgLateChecks[diff]+=results
-
-    #         avgLateChecks[diff] /= numSeeds
-    #         print(avgLateChecks[diff])
-    #     assert avgLateChecks["Super Easy"] >= avgLateChecks["Easy"]
-    #     assert avgLateChecks["Easy"] >= avgLateChecks["Normal"]
-    #     assert avgLateChecks["Normal"] >= avgLateChecks["Hard"]
-    #     assert avgLateChecks["Hard"] >= avgLateChecks["Very Hard"]
-    #     assert avgLateChecks["Very Hard"] >= avgLateChecks["Insane"]
-
-
-    def test_allLocations(self):
-        data = {}
-        metricCalculator = SeedMetricsGenDataFrame()
-        numSeeds = 100
+    def test_dataDistribution(self):
+        avgLateChecks = {}
+        metricCalculator = SeedMetricsNumDatas()
+        numSeeds = 50
         for diff in ["Super Easy","Easy","Normal","Hard","Very Hard","Insane"]:
-            print(f"Start evaluating {diff}")
-            data[diff] = []
+            avgLateChecks[diff] = 0.0
             for i in range(numSeeds):
                 randomizer = self.create_difficulty_seed(diff+str(i),diff)
                 results = metricCalculator.metrics(randomizer)
-                data[diff]+=results
-        development_mode = os.environ.get("DEVELOPMENT_MODE")
-        if development_mode:
-            development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
-            if development_mode_path:
-                today = str(datetime.datetime.now())
-                today=today.replace(" ","-")
-                today=today.replace(":","-")
-                today=today.replace(".","-")
-                with open(development_mode_path+"\\"+today+".txt",'w') as file:
-                    file.write(json.dumps(data))
-            return
+                avgLateChecks[diff]+=results
+
+            avgLateChecks[diff] /= numSeeds
+        assert avgLateChecks["Super Easy"] <= avgLateChecks["Easy"]
+        assert avgLateChecks["Easy"] <= avgLateChecks["Normal"]
+        assert avgLateChecks["Normal"] <= avgLateChecks["Hard"]
+        assert avgLateChecks["Hard"] <= avgLateChecks["Very Hard"]
+        assert avgLateChecks["Very Hard"] <= avgLateChecks["Insane"]
+
+    def test_critChecks(self):
+        avgLateChecks = {}
+        metricCalculator = SeedMetricsNumCritExtra()
+        numSeeds = 50
+        for diff in ["Super Easy","Easy","Normal","Hard","Very Hard","Insane"]:
+            print(f"Start evaluating {diff}")
+            avgLateChecks[diff] = 0.0
+            for i in range(numSeeds):
+                randomizer = self.create_difficulty_seed(diff+str(i),diff)
+                results = metricCalculator.metrics(randomizer)
+                avgLateChecks[diff]+=results
+
+            avgLateChecks[diff] /= numSeeds
+            print(avgLateChecks[diff])
+        assert avgLateChecks["Super Easy"] >= avgLateChecks["Easy"]
+        assert avgLateChecks["Easy"] >= avgLateChecks["Normal"]
+        assert avgLateChecks["Normal"] >= avgLateChecks["Hard"]
+        assert avgLateChecks["Hard"] >= avgLateChecks["Very Hard"]
+        assert avgLateChecks["Very Hard"] >= avgLateChecks["Insane"]
+
+
+    # def test_allLocations(self):
+    #     data = {}
+    #     metricCalculator = SeedMetricsGenDataFrame()
+    #     numSeeds = 100
+    #     for diff in ["Super Easy","Easy","Normal","Hard","Very Hard","Insane"]:
+    #         print(f"Start evaluating {diff}")
+    #         data[diff] = []
+    #         for i in range(numSeeds):
+    #             randomizer = self.create_difficulty_seed(diff+str(i),diff)
+    #             results = metricCalculator.metrics(randomizer)
+    #             data[diff]+=results
+    #     development_mode = os.environ.get("DEVELOPMENT_MODE")
+    #     if development_mode:
+    #         development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
+    #         if development_mode_path:
+    #             today = str(datetime.datetime.now())
+    #             today=today.replace(" ","-")
+    #             today=today.replace(":","-")
+    #             today=today.replace(".","-")
+    #             with open(development_mode_path+"\\"+today+".txt",'w') as file:
+    #                 file.write(json.dumps(data))
+    #         return
 
 
     @staticmethod

@@ -1,4 +1,15 @@
-## 2021-09-08 update
+## 2021-24-Sep update
+- Added option to randomize puzzle rewards
+- Added Nightmare Item Placement Difficulty
+  - Auto forms will be in logic on Nightmare
+  - Forcing final will be in logic on Nightmare
+  - Keyblades with good abilities are weighted checks on Nightmare
+  - Puzzles rewards are guaranteed enabled on Nightmare
+- Adjusting some locations as early or late for item difficulty purposes
+  - Added some Twilight Town Mansion location as late instead of neutral
+  - Made Atlantica tutorial an early location
+
+## 2021-08-Sep update
 - Added settings for JSmartee Report depth.
   - **JSmartee** - Reports can be found anywhere.
   - **JSmartee-FirstVisit** - All reports can be found in the first visit to a world.
@@ -16,7 +27,7 @@
 - Fixed a bug relating to an extra bonus reward, resulting in a blank Donald reward.
 
 
-## 2021-29-08 update
+## 2021-29-Aug update
 - PC Support is here through the build_from_mm bridge program. See [here](https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/pc.md) for instructions.
 - Random Music (PC Only)! Can include music from KH2, BBS, and Recom (if including BBS/Recom music those games need to be extracted, as noted [here](https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/pc.md))
 - Daily seeds! Once a day seeds with different settings each day. see [here](https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/dailyseeds.md) for details.

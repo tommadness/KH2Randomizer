@@ -42,7 +42,7 @@ Below you can find a list of all world locations and their classification of ear
 | Throne Room Palace Map | Late |
 | Throne Room AP Boost | Late |
 | Throne Room Queen Recipe | Late |
-| Throne Room AP Boost | Late |
+| Throne Room AP Boost (2) | Late |
 | Throne Room Ogre Shield | Late |
 | Throne Room Mythril Crystal | Late |
 | Throne Room Orichalcum | Late |
@@ -53,9 +53,9 @@ Below you can find a list of all world locations and their classification of ear
 
 | Beast's Castle | Weight |
 | --- | --- |
-| Courtyard AP Boost | Early |
+| BC Courtyard AP Boost | Early |
 | Courtyard Hi-Potion | Early |
-| Courtyard Mythril Shard | Early |
+| BC Courtyard Mythril Shard | Early |
 | Belle's Room Castle Map | Early |
 | Belle's Room Mega-Recipe | Early |
 | The East Wing Mythril Shard | Early |
@@ -123,7 +123,7 @@ Below you can find a list of all world locations and their classification of ear
 | CoR Depths Power Crystal | Neutral |
 | CoR Depths Frost Crystal | Neutral |
 | CoR Depths Manifest Illusion | Neutral |
-| CoR Depths AP Boost | Neutral |
+| CoR Depths AP Boost (2) | Neutral |
 | CoR Mineshaft Lower Level Depths of Remembrance Map | Neutral |
 | CoR Mineshaft Lower Level AP Boost | Neutral |
 | CoR Depths Upper Level Remembrance Gem | Neutral |
@@ -131,7 +131,7 @@ Below you can find a list of all world locations and their classification of ear
 | CoR Mining Area AP Boost | Neutral |
 | CoR Mining Area Serenity Crystal | Neutral |
 | CoR Mining Area Manifest Illusion | Neutral |
-| CoR Mining Area Serenity Gem | Neutral |
+| CoR Mining Area Serenity Gem (2) | Neutral |
 | CoR Mining Area Dark Remembrance Map | Neutral |
 | CoR Mineshaft Mid Level Power Boost | Neutral |
 | CoR Engine Chamber Serenity Crystal | Late |
@@ -165,7 +165,7 @@ Below you can find a list of all world locations and their classification of ear
 | Munny Pouch (Mickey) | Neutral |
 | Crystal Orb | Neutral |
 | Central Station Tent | Neutral |
-| Central Station Hi-Potion | Neutral |
+| TT Central Station Hi-Potion | Neutral |
 | Central Station Mythril Shard | Neutral |
 | The Tower Potion | Neutral |
 | The Tower Hi-Potion | Neutral |
@@ -194,9 +194,9 @@ Below you can find a list of all world locations and their classification of ear
 | Mansion Foyer Serenity Crystal | Neutral |
 | Mansion Dining Room Mythril Crystal | Neutral |
 | Mansion Dining Room Mythril Stone | Neutral |
-| Mansion Library Orichalcum | Neutral |
-| Beam Secret Ansem Report 10 | Neutral |
-| Mansion Basement Corridor Ultimate Recipe | Neutral |
+| Mansion Library Orichalcum | Late |
+| Beam Secret Ansem Report 10 | Late |
+| Mansion Basement Corridor Ultimate Recipe | Late |
 | Betwixt and Between Bond of Flame | Late |
 | Axel (Data) Magic Boost | Late |
 | Betwixt and Between | Late |
@@ -260,7 +260,7 @@ Below you can find a list of all world locations and their classification of ear
 
 | Atlantica | Weight |
 | --- | --- |
-| Undersea Kingdom Map | Neutral |
+| Undersea Kingdom Map | Early |
 | Mysterious Abyss | Late |
 | Musical Blizzard Element | Late |
 | Musical Orichalcum+ | Late |
@@ -352,7 +352,7 @@ Below you can find a list of all world locations and their classification of ear
 | Agrabah Hi-Potion | Early |
 | Agrabah AP Boost | Early |
 | Agrabah Mythril Stone | Early |
-| Agrabah Mythril Shard | Early |
+| Agrabah Mythril Shard (2) | Early |
 | Agrabah Serenity Shard | Early |
 | Bazaar Mythril Gem | Neutral |
 | Bazaar Power Shard | Neutral |
@@ -439,13 +439,13 @@ Below you can find a list of all world locations and their classification of ear
 
 | Disney Castle / Timeless River | Weight |
 | --- | --- |
-| Courtyard Mythril Shard | Early |
+| DC Courtyard Mythril Shard | Early |
 | Courtyard Star Recipe | Early |
-| Courtyard AP Boost | Early |
+| DC Courtyard AP Boost | Early |
 | Courtyard Mythril Stone | Early |
 | Courtyard Blazing Stone | Early |
 | Courtyard Blazing Shard | Early |
-| Courtyard Mythril Shard | Early |
+| DC Courtyard Mythril Shard (2) | Early |
 | Library Torn Pages | Neutral |
 | Disney Castle Map | Neutral |
 | Cornerstone Hill Map | Neutral |
@@ -485,7 +485,7 @@ Below you can find a list of all world locations and their classification of ear
 | Spooky Cave Orichalcum | Late |
 | Spooky Cave Guard Recipe | Late |
 | Spooky Cave Mythril Crystal | Late |
-| Spooky Cave AP Boost | Late |
+| Spooky Cave AP Boost (2) | Late |
 | Sweet Memories | Late |
 | Spooky Cave Map | Late |
 | Starry Hill Cosmic Ring | Late |
@@ -503,7 +503,7 @@ Below you can find a list of all world locations and their classification of ear
 | (Junk) Medal | Neutral |
 | The Struggle Trophy | Neutral |
 | Central Station Potion (1) | Neutral |
-| Central Station Hi-Potion | Neutral |
+| STT Central Station Hi-Potion | Neutral |
 | Central Station Potion (2) | Neutral |
 | Sunset Terrace Ability Ring | Neutral |
 | Sunset Terrace Hi-Potion | Neutral |
