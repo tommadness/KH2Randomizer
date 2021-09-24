@@ -1,13 +1,13 @@
 from dataclasses import dataclass, field
-import random, zipfile, yaml, io, json, os, base64, asyncio
+import random, zipfile, yaml, io, json, os, base64, asyncio, struct
 from Module.spoilerLog import generateSpoilerLog
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
 from Module.hints import Hints
 from Module.startingInventory import StartingInventory
-from Module.importantItems import getImportantChecks,getUsefulItems
+from Module.importantItems import getImportantChecks,getUsefulItems,getUsefulAbilities,getUsefulNightmarePassiveAbilities,getUsefulNightmareActiveAbilities,getSCOM
 
-from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat
+from Class.locationClass import KH2Location, KH2ItemStat, KH2Puzzle, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat
 from Class.itemClass import KH2Item, ItemEncoder
 from Class.modYml import modYml
 
@@ -26,6 +26,8 @@ class KH2Randomizer():
     seedName: str
     seedHashIcons: list[str] = field(default_factory=list)
     spoiler: bool = False
+    nightmareSetting: bool = False
+    puzzleRando: bool = False
 
     _locationItems: list[tuple[KH2Location, KH2Item]] = field(default_factory=list)
 
@@ -48,9 +50,11 @@ class KH2Randomizer():
             random.seed(self.seedName+str(random.random()))
 
     def populateLocations(self, excludeWorlds, maxItemLogic=False, item_difficulty="Normal",reportDepth=None):
-        self._allLocationList = Locations.getTreasureList(maxItemLogic) + Locations.getSoraLevelList() + Locations.getSoraBonusList(maxItemLogic) + Locations.getFormLevelList(maxItemLogic) + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
+        self._allLocationList = Locations.getTreasureList(maxItemLogic) + Locations.getSoraLevelList() + Locations.getSoraBonusList(maxItemLogic) + Locations.getFormLevelList(maxItemLogic) + Locations.getPuzzleLocations() + Locations.getSoraWeaponList() + Locations.getSoraStartingItemList()
 
         self._validLocationList = [location for location in self._allLocationList if not set(location.LocationTypes).intersection(excludeWorlds+["Level1Form", "SummonLevel"])]
+
+        self.puzzleRando = "Puzzle" not in excludeWorlds
 
         self._allLocationListGoofy = Locations.getGoofyWeaponList() + Locations.getGoofyStartingItemList() + Locations.getGoofyBonusList()
 
@@ -83,6 +87,14 @@ class KH2Randomizer():
             early_item_weight = 1
             normal_item_weight = 100
             late_item_weight = 5000
+        if item_difficulty == "Nightmare":
+            early_item_weight = 1
+            normal_item_weight = 1
+            late_item_weight = 5000
+
+        self.nightmareSetting = (item_difficulty == "Nightmare")
+
+        nightmareMultiplier =  10 if self.nightmareSetting else 1
 
         modifiedCritBonus = False
         for loc in self._validLocationList:
@@ -90,12 +102,15 @@ class KH2Randomizer():
                 if modifiedCritBonus:
                     continue
                 modifiedCritBonus=True
+
+            extra_weight = locationType.Puzzle in loc.LocationTypes or locationType.FormLevel in loc.LocationTypes or locationType.HUNDREDAW in loc.LocationTypes 
+
             if loc.LocationWeight>1:
-                loc.setLocationWeight(late_item_weight)
+                loc.setLocationWeight(late_item_weight * (nightmareMultiplier if extra_weight else 1))
             elif loc.LocationWeight<1:
                 loc.setLocationWeight(early_item_weight)
             elif loc.LocationWeight==1:
-                loc.setLocationWeight(normal_item_weight)
+                loc.setLocationWeight(normal_item_weight if not extra_weight else late_item_weight)
 
         if reportDepth is not None:
             for loc in self._validLocationList:
@@ -134,9 +149,6 @@ class KH2Randomizer():
         self._validItemList = [item for item in validItemList if not str(item.Id) in startingInventory]
 
 
-
-
-
     def validateCount(self):
         #additionalGoofyLocations = Locations.getAdditionalGoofy(len(self._validItemListGoofy) - len(self._validLocationListGoofy))
         #additionalDonaldLocations = Locations.getAdditionalDonald(len(self._validItemListDonald) - len(self._validLocationListDonald))
@@ -159,8 +171,15 @@ class KH2Randomizer():
         keybladeList = [location for location in self._validLocationList if isinstance(location, KH2ItemStat)]
         abilityList = [item for item in self._validItemList if (item.ItemType == itemType.SUPPORT_ABILITY and "Support" in keybladeAbilities) or (item.ItemType == itemType.ACTION_ABILITY and "Action" in keybladeAbilities)]
 
+        nightmareAbilityIds = getUsefulNightmareActiveAbilities() + getUsefulNightmarePassiveAbilities() + getUsefulAbilities() + getSCOM()
+
         for keyblade in keybladeList:
             randomAbility = random.choice(abilityList)
+            if self.nightmareSetting and randomAbility.Id not in nightmareAbilityIds:
+                for i in range(3):
+                    randomAbility = random.choice(abilityList)
+                    if randomAbility.Id in nightmareAbilityIds:
+                        break
             keyblade.setReward(randomAbility.Id)
             keyblade.setStats(keybladeMinStat, keybladeMaxStat)
             self._locationItems.append((keyblade,randomAbility))
@@ -185,12 +204,27 @@ class KH2Randomizer():
         locations = [location for location in self._validLocationList if not isinstance(location, KH2ItemStat)]
         location_weights = [location.LocationWeight for location in locations]
         weighted_item_list = getImportantChecks() + getUsefulItems()
+        nightmareAbilityIds = getUsefulNightmareActiveAbilities() + getUsefulNightmarePassiveAbilities() + getUsefulAbilities() + getSCOM()
+
+        if self.nightmareSetting:
+            weighted_item_list += getUsefulNightmareActiveAbilities()
         for item in self._validItemList:
+            weighted_item = False
+            if item.Id in weighted_item_list:
+                weighted_item = True
+
+            if self.nightmareSetting and item.ItemType==itemType.KEYBLADE:
+                # the item we are placing is a keyblade, does that keyblade have a good ability. if so, weight that placement
+                keybladeName = item.Name +" (Slot)"
+                matching_keyblade = [location for location in self._validLocationList if isinstance(location, KH2ItemStat) and location.Name == keybladeName][0]
+                if matching_keyblade.getReward() in nightmareAbilityIds:
+                    weighted_item = True
+
             while True:
                 if (reportDepth==locationDepth.FirstBoss or reportDepth==locationDepth.SecondBoss) and item.ItemType == itemType.REPORT:
                     validReportLocations = [loc for loc in locations if itemType.REPORT not in loc.InvalidChecks]
                     randomLocation = random.choice(validReportLocations)
-                elif item.Id in weighted_item_list:
+                elif weighted_item:
                     randomLocation = random.choices(locations,location_weights)[0]
                 else:
                     randomLocation = random.choice(locations)
@@ -288,6 +322,7 @@ class KH2Randomizer():
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
         fmlvList = [location for location in self._allLocationList if isinstance(location, KH2FormLevel)]
         itemList = [location for location in self._allLocationList if isinstance(location, KH2ItemStat)] + [location for location in self._allLocationListDonald if isinstance(location, KH2ItemStat)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2ItemStat)]
+        puzzleList = [location for location in self._allLocationList if isinstance(location, KH2Puzzle)]
         plrpList = []
         [plrpList.append(location) for location in self._allLocationList if isinstance(location, KH2StartingItem) and not location in plrpList]
         StartingInventory.generateStartingInventory(plrpList[0], startingInventory)
@@ -407,7 +442,19 @@ class KH2Randomizer():
         with zipfile.ZipFile(data, "w") as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
-            
+            if self.puzzleRando:
+                mod["assets"] += [modYml.getPuzzleMod()]
+                with open("static/jiminy.bar","rb") as puzzleBar:
+                    binaryContent = bytearray(puzzleBar.read())
+                    for puzz in puzzleList:
+                        byte0, byte1, item = puzz.getItemBytesAndLocs()
+                        # for byte1, find the most significant bits from the item Id
+                        itemByte1 = item>>8
+                        # for byte0, isolate the least significant bits from the item Id
+                        itemByte0 = item & 0x00FF
+                        binaryContent[byte0] = itemByte0
+                        binaryContent[byte1] = itemByte1
+                    outZip.writestr("modified_jiminy.bar",binaryContent)
 
             outZip.writestr("TrsrList.yml", yaml.dump(formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(formattedBons, line_break="\r\n"))

@@ -195,3 +195,25 @@ class modYml:
         sys = [{"id": 17198, "en":seedHashString}]
         sys.append({"id": 19482, "en": "Important Checks Found"})
         return sys
+
+    def getPuzzleMod():
+        return {
+                    "name": "menu/jp/jiminy.bar",
+                    "multi": [
+                        {
+                            "name": "menu/us/jiminy.bar"
+                        },
+                        {
+                            "name": "menu/uk/jiminy.bar"
+                        },
+                        {
+                            "name": "menu/fm/jiminy.bar"
+                        }
+                    ],
+                    "method": "copy",
+                    "source": [
+                        {
+                            "name" : "modified_jiminy.bar"
+                        }
+                    ]
+                }

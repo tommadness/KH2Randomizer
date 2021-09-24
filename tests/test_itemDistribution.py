@@ -2,8 +2,8 @@
 import sys
 sys.path.append("..")
 from Module.randomize import KH2Randomizer
-from Module.seedEvaluation import SeedValidator,SeedMetricsNumDatas,SeedMetricsNumCritExtra
-import unittest
+from Module.seedEvaluation import SeedValidator,SeedMetricsNumDatas,SeedMetricsNumCritExtra,SeedMetricsGenDataFrame
+import unittest,datetime,json,os
 
 
 class Tests(unittest.TestCase):
@@ -45,11 +45,37 @@ class Tests(unittest.TestCase):
         assert avgLateChecks["Hard"] >= avgLateChecks["Very Hard"]
         assert avgLateChecks["Very Hard"] >= avgLateChecks["Insane"]
 
+
+    # def test_allLocations(self):
+    #     data = {}
+    #     metricCalculator = SeedMetricsGenDataFrame()
+    #     numSeeds = 100
+    #     for diff in ["Super Easy","Easy","Normal","Hard","Very Hard","Insane"]:
+    #         print(f"Start evaluating {diff}")
+    #         data[diff] = []
+    #         for i in range(numSeeds):
+    #             randomizer = self.create_difficulty_seed(diff+str(i),diff)
+    #             results = metricCalculator.metrics(randomizer)
+    #             data[diff]+=results
+    #     development_mode = os.environ.get("DEVELOPMENT_MODE")
+    #     if development_mode:
+    #         development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
+    #         if development_mode_path:
+    #             today = str(datetime.datetime.now())
+    #             today=today.replace(" ","-")
+    #             today=today.replace(":","-")
+    #             today=today.replace(".","-")
+    #             with open(development_mode_path+"\\"+today+".txt",'w') as file:
+    #                 file.write(json.dumps(data))
+    #         return
+
+
     @staticmethod
     def create_difficulty_seed(seedName,difficulty):
         fakeSessionDict = {}
         fakeSessionDict["seedModifiers"] = []
         fakeSessionDict["startingInventory"] = []
+        fakeSessionDict["itemPlacementDifficulty"] = difficulty
         validator = SeedValidator(fakeSessionDict)
         attemptNumber=0
         while True:

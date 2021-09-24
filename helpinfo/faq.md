@@ -11,6 +11,7 @@ This seed generator is designed to be used with the [OpenKH](https://openkh.dev/
   - Certain bosses that were not reasonable to randomize can now be randomized
   - Boss/Enemy randomization on PC
 - Starting inventory
+- Puzzle Reward Randomization Option
 
 Other differences include:
 - No "Vanilla" option for any randomization setting
@@ -125,6 +126,7 @@ Abilities that are weighted (when off keyblades) include:
 - Negative Combo
 - Experience Boost
 - Light & Darkness
+- Aerial Spiral
 - Horizontal Slash
 - Slide Dash
 - Flash Step
@@ -133,3 +135,19 @@ Abilities that are weighted (when off keyblades) include:
 - Aerial Dive
 - Magnet Burst
 - Trinity Limit
+
+## What is the "Nightmare" Item Placement Difficulty?
+
+Nightmare difficulty is an extra difficult item placement setting that expands the pool of items that are pushed late in a seed, as well as changing the weighting for locked areas that you can get checks from (e.g. forms and 100 acre). The expanded pool of items is:
+
+- Combo Boost
+- Air Combo Boost
+- Berserk Charge
+- Form Boost
+- Draw
+- Drive Converter
+- Auto Forms
+
+If there are "good" abilities on keyblades, those keyblades are pushed late as well. Auto forms are also "in-logic" so you may need to use an auto form to unlock the form fully (e.g. Valor form can be on Valor 3, so you need to use auto-valor to get it).
+
+Additionally, **puzzle rewards are guaranteed randomized in this setting, and likely to have important checks**, and those checks, while they are unhinted, may still be required to unlock other checks you need to finish the seed.

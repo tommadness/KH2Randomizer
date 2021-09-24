@@ -35,6 +35,7 @@ class locationType(str, Enum):
     FormLevel =  "Form Levels"
     Free = "Garden of Assemblage"
     Critical = "Critical Bonuses"
+    Puzzle = "Puzzle"
 
 class locationDepth(str,Enum):
     FirstVisit = "FirstVisit"
