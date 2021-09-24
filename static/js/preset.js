@@ -42,7 +42,48 @@ function setPreset(presetName){
 };
 
 const presets = {
-    "League":{
+    "League Fall 2021":{
+        "include":[
+            "locationType.LoD",
+            "locationType.BC",
+            "locationType.HB",
+            "locationType.CoR",
+            "locationType.TT",
+            "locationType.TWTNW",
+            "locationType.SP",
+            "locationType.PR",
+            "locationType.OC",
+            "locationType.Agrabah",
+            "locationType.HT",
+            "locationType.PL",
+            "locationType.DC",
+            "locationType.HUNDREDAW",
+            "locationType.STT",
+            "locationType.AS",
+            "locationType.DataOrg",
+            "locationType.Sephi",
+            "locationType.FormLevel",
+            "locationType.Free",
+            "locationType.Critical"
+        ],
+        "levelChoice":"ExcludeFrom50",
+        "keybladeMinStat":0,
+        "keybladeMaxStat":7,
+        "SoraExp":2,
+        "ValorExp":7,
+        "WisdomExp":3,
+        "LimitExp":4,
+        "MasterExp":3,
+        "FinalExp":3,
+        "SummonExp":2,
+        "keybladeAbilities":["Support"],
+        "enemy":"Disabled",
+        "hintsType":"Shananas",
+        "PromiseCharm":["off"],
+        "starting-inventory":["369"],
+        "seedModifiers": ["Schmovement"]
+    },
+    "League Spring 2021":{
         "include":[
             "locationType.LoD",
             "locationType.BC",
