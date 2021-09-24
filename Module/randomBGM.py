@@ -60,12 +60,12 @@ musicList = {
         {"name": "bgm\\music121.win32.scd", "kind": "battle"}, # Desire for All That is Lost
         {"name": "bgm\\music122.win32.scd", "kind": "field"}, # Atlantica Tutorial I
         {"name": "bgm\\music123.win32.scd", "kind": "field"}, # Atlantica Tutorial II
-        #{"name": "bgm\\music124.win32.scd", "kind": "field"}, # Atlantica Tutorial II.5 (no loop)
-        #{"name": "bgm\\music125.win32.scd", "kind": "field"}, # Atlantica Tutorial Finish (short no loop)
+        {"name": "bgm\\music124.win32.scd", "kind": "exclude"}, # Atlantica Tutorial II.5 (no loop)
+        {"name": "bgm\\music125.win32.scd", "kind": "exclude"}, # Atlantica Tutorial Finish (short no loop)
         {"name": "bgm\\music127.win32.scd", "kind": "field"}, # A Day in Agrabah
         {"name": "bgm\\music128.win32.scd", "kind": "battle"}, # Arabian Dream
         {"name": "bgm\\music129.win32.scd", "kind": "field"}, # Isn't It Lovely
-        #{"name": "bgm\\music130.win32.scd", "kind": "field"}, # Atlantica tutorials Combined (no loop)
+        {"name": "bgm\\music130.win32.scd", "kind": "exclude"}, # Atlantica tutorials Combined (no loop)
         {"name": "bgm\\music131.win32.scd", "kind": "battle"}, # Dance to the Death 
         {"name": "bgm\\music132.win32.scd", "kind": "exclude", "dmca": True}, # Beauty and the Beast (short no loop) (still want this to randomize out if dmca on)
         {"name": "bgm\\music133.win32.scd", "kind": "field"}, # Magical Mystery
@@ -567,7 +567,7 @@ class RandomBGM():
         BGMList = {"battle": [], "field": [], "title":[], "cutscene": []}
         for game in options["games"]:
             for song in musicList[game]:
-                if "DMCA-SAFE" in options["options"] and (song.get("dmca", False) or song.get("kind") != "exclude"):
+                if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
                     continue
                 kind = "battle" #default
                 category = song.get("kind") #current song
@@ -583,6 +583,10 @@ class RandomBGM():
                 #separate cutscene bgms
                 if "Randomize Cutscene Music Separately" in options["options"] and category == "cutscene":
                     kind = "cutscene"
+                #get rid of any tracks labed as exclude (i couldn't think of a better way to do this)
+		#we do this for kh2 tracks we want replaced but don't want added to the pool
+                if category == "exclude":
+                    kind = "exclude"
                 song["game"] = game
                 BGMList[kind].append(song)
 
