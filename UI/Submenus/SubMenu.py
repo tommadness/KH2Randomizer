@@ -12,6 +12,9 @@ class KH2Submenu(QWidget):
         layout.addWidget(option)
         self.menulayout.addLayout(layout)
 
+    def addHeader(self,label_text):
+        self.menulayout.addWidget(QLabel(f"<h3>{label_text}</h3>"))
+
     def finalizeMenu(self):
         self.setLayout(self.menulayout)
 

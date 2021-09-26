@@ -1,5 +1,5 @@
 from Submenus.SubMenu import KH2Submenu
-from PySide6.QtWidgets import QComboBox
+from PySide6.QtWidgets import QComboBox,QDoubleSpinBox
 
 class SoraMenu(KH2Submenu):
     def __init__(self):
@@ -12,5 +12,33 @@ class SoraMenu(KH2Submenu):
         soraLevels.setCurrentIndex(1)
 
         self.addOption("Sora Levels",soraLevels)
+
+        self.addHeader("Experience Multipliers")
+
+        soraExp = QDoubleSpinBox()
+        soraExp.setDecimals(1)
+        soraExp.setRange(.5,10)
+        soraExp.setSingleStep(.5)
+        soraExp.valueChanged.connect(lambda val : self.setKeyValue("soraExpMult",val))
+        soraExp.setValue(2)
+        line = soraExp.lineEdit()
+        line.setReadOnly(True)
+        self.addOption("Sora",soraExp)
+
+        drives = ["Valor","Wisdom","Limit","Master","Final","Summon"]
+        expMult = [7,3,4,3,3,2]
+
+        for i in range(len(drives)):
+            driveExp = QDoubleSpinBox()
+            driveExp.setDecimals(1)
+            driveExp.setRange(1,10)
+            driveExp.setSingleStep(.5)
+            driveExp.valueChanged.connect(lambda val : self.setKeyValue(f"{drives[i]}Exp",val))
+            driveExp.setValue(expMult[i])
+            line = driveExp.lineEdit()
+            line.setReadOnly(True)
+            self.addOption(drives[i],driveExp)
+
+
 
         self.finalizeMenu()
