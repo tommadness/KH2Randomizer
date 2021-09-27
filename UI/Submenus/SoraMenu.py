@@ -33,7 +33,7 @@ class SoraMenu(KH2Submenu):
             driveExp.setDecimals(1)
             driveExp.setRange(1,10)
             driveExp.setSingleStep(.5)
-            driveExp.valueChanged.connect(lambda val : self.setKeyValue(f"{drives[i]}Exp",val))
+            driveExp.valueChanged.connect(lambda val,i=i : self.setKeyValue(f"{drives[i]}Exp",val))
             driveExp.setValue(expMult[i])
             line = driveExp.lineEdit()
             line.setReadOnly(True)

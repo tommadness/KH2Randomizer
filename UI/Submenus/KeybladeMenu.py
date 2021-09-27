@@ -2,7 +2,6 @@ from Submenus.SubMenu import KH2Submenu
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QSpinBox,QCheckBox
 
-
 class KeybladeMenu(KH2Submenu):
     def __init__(self):
         super().__init__()
