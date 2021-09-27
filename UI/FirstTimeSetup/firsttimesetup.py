@@ -93,7 +93,7 @@ class FirstTimeSetup(QMainWindow):
         pageContentLayout = QHBoxLayout()
         directoryBox = QLineEdit()
         directoryButton = QPushButton()
-        directoryButton.setText("F")
+        directoryButton.setText("Choose Directory")
         directoryButton.clicked.connect(lambda: self.setPath(directoryBox, "Select OpenKH Directory"))
         pageContentLayout.addWidget(directoryBox)
         pageContentLayout.addWidget(directoryButton)
@@ -104,6 +104,7 @@ class FirstTimeSetup(QMainWindow):
 
         navLayout = QHBoxLayout()
         nextButton = QPushButton()
+        nextButton.setText("Next >")
         nextButton.setDisabled(True)
         navLayout.addWidget(nextButton)
         navWidget = QWidget()
