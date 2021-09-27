@@ -3,8 +3,9 @@ import sys
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QPushButton, 
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QStackedWidget
+    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QStackedWidget,QFileDialog,QTextEdit
 )
+from pathlib import Path
 
 from PySide6.QtGui import QFont
 
@@ -48,7 +49,7 @@ class FirstTimeSetup(QMainWindow):
 
         buttonWidget = QWidget()
         buttonLayout = QHBoxLayout()
-        
+
         pcsx2Button = QPushButton()
         pcsx2Button.setText("PCSX2")
         pcsx2Button.clicked.connect(self.goToPcsx2Page)
@@ -83,9 +84,36 @@ class FirstTimeSetup(QMainWindow):
     def pcsx2Page(self):
         widget = QWidget()
         layout = QVBoxLayout()
-        label = QLabel()
-        label.setText("PCSX2")
-        layout.addWidget(label)
+
+        pageTitleLabel = QLabel()
+        pageTitleLabel.setText("Select OpenKH Directory")
+        pageTitleLabel.setFont(self.titleFont)
+        pageTitleLabel.setMaximumHeight(30)
+
+        pageContentLayout = QHBoxLayout()
+        directoryBox = QLineEdit()
+        directoryButton = QPushButton()
+        directoryButton.setText("F")
+        directoryButton.clicked.connect(lambda: self.setPath(directoryBox, "Select OpenKH Directory"))
+        pageContentLayout.addWidget(directoryBox)
+        pageContentLayout.addWidget(directoryButton)
+
+        pageContentWidget = QWidget()
+        pageContentWidget.setLayout(pageContentLayout)
+        pageContentWidget.setMaximumHeight(45)
+
+        navLayout = QHBoxLayout()
+        nextButton = QPushButton()
+        nextButton.setDisabled(True)
+        navLayout.addWidget(nextButton)
+        navWidget = QWidget()
+        navWidget.setLayout(navLayout)
+
+        directoryBox.textChanged.connect(lambda: self.checkCorrectPath(directoryBox,"OpenKh.Tools.ModsManager.exe", nextButton))
+
+        layout.addWidget(pageTitleLabel)
+        layout.addWidget(pageContentWidget)
+        layout.addWidget(navWidget)
         widget.setLayout(layout)
         return widget
 
@@ -103,3 +131,14 @@ class FirstTimeSetup(QMainWindow):
 
     def goToPcPage(self):
         self.pages.setCurrentWidget(self.pc)
+
+    def setPath(self, textBox, title):
+        path = str(QFileDialog.getExistingDirectory(self, title))
+        textBox.setText(path)
+
+    def checkCorrectPath(self, path, fileName, nextButton):
+        file = Path(path.text()+"\\"+fileName)
+        print(file)
+        if file.is_file():
+
+            nextButton.setDisabled(False)
