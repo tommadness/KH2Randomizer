@@ -1,4 +1,5 @@
 import random,sys
+from pathlib import Path
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QPushButton, 
@@ -12,11 +13,14 @@ from Submenus.SuperbossMenu import SuperbossMenu
 from Submenus.MiscMenu import MiscMenu
 from Submenus.StartingMenu import StartingMenu
 
+from FirstTimeSetup.firsttimesetup import FirstTimeSetup
+
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("KH2 Randomizer Seed Generator")
+        self.setup = None
         pagelayout = QVBoxLayout()
         seed_layout = QHBoxLayout()
         submit_layout = QHBoxLayout()
@@ -46,16 +50,26 @@ class KH2RandomizerApp(QMainWindow):
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
 
+
     def makeSeed(self):
         settings = {}
         for x in self.widgets:
             settings[x.getName()] = x.getData()
         print(settings)
+        
+    def firstTimeSetup(self):
+        print("First Time Setup")
+        if self.setup is None:
+            self.setup = FirstTimeSetup()
+            self.setup.show()
 
 
 if __name__=="__main__":
     app = QApplication([])
     window = KH2RandomizerApp()
     window.show()
+    configPath = Path("rando-config.yml")
+    if not configPath.is_file():
+        window.firstTimeSetup()
 
     sys.exit(app.exec())
