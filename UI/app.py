@@ -11,6 +11,9 @@ from Submenus.WorldMenu import WorldMenu
 from Submenus.SuperbossMenu import SuperbossMenu
 from Submenus.MiscMenu import MiscMenu
 from Submenus.StartingMenu import StartingMenu
+from Submenus.HintsMenu import HintsMenu
+from Submenus.SeedModMenu import SeedModMenu
+from Submenus.ItemPlacementMenu import ItemPlacementMenu
 
 
 class KH2RandomizerApp(QMainWindow):
@@ -32,7 +35,7 @@ class KH2RandomizerApp(QMainWindow):
         seed_layout.addWidget(self.seedName)
 
 
-        self.widgets = [SoraMenu(),StartingMenu(),KeybladeMenu(),WorldMenu(),SuperbossMenu(),MiscMenu()] #["Hints", "Item Placement Modifiers", "Boss/Enemy"]
+        self.widgets = [SoraMenu(),StartingMenu(),HintsMenu(),KeybladeMenu(),WorldMenu(),SuperbossMenu(),MiscMenu(),SeedModMenu(),ItemPlacementMenu()] #["Item Placement Modifiers", "Boss/Enemy"]
 
         for i in range(len(self.widgets)):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())

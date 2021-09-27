@@ -1,5 +1,6 @@
 from Submenus.SubMenu import KH2Submenu
-from PySide6.QtWidgets import QComboBox,QDoubleSpinBox
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QComboBox,QDoubleSpinBox,QCheckBox
 
 class SoraMenu(KH2Submenu):
     def __init__(self):
@@ -12,6 +13,11 @@ class SoraMenu(KH2Submenu):
         soraLevels.setCurrentIndex(1)
 
         self.addOption("Sora Levels",soraLevels)
+
+        formLevels = QCheckBox()
+        formLevels.stateChanged.connect(lambda state : self.setKeyValue("Form Levels",state==Qt.Checked))
+        formLevels.setCheckState(Qt.Checked)
+        self.addOption("Form Levels",formLevels)
 
         self.addHeader("Experience Multipliers")
 
