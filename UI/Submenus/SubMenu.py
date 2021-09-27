@@ -5,6 +5,7 @@ class KH2Submenu(QWidget):
     def __init__(self,in_layout="vertical"):
         super().__init__()
         self.categoryData = {}
+        self.widgetList = []
         if in_layout=="vertical":
             self.menulayout = QVBoxLayout()
         if in_layout=="horizontal":
@@ -19,6 +20,7 @@ class KH2Submenu(QWidget):
             layout = QVBoxLayout()
         layout.addWidget(QLabel(label_text))
         layout.addWidget(option,alignment=Qt.AlignCenter)
+        self.widgetList.append(option)
         if grid_pos is not None:
             self.menulayout.addLayout(layout, grid_pos[0], grid_pos[1], alignment=Qt.AlignCenter)
         else:
@@ -43,9 +45,15 @@ class KH2Submenu(QWidget):
     def getData(self):
         return self.categoryData
 
+    def updateWidgets(self):
+        pass
+
     def setData(self,inData):
+        print(self.name)
+        print(inData)
         for key in inData:
             if key in self.categoryData:
                 self.setKeyValue(key,inData[key])
             else:
                 print(f"Trying to assign {key} to the {self.name} submenu category")
+        self.updateWidgets()
