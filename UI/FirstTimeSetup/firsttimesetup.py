@@ -1,9 +1,9 @@
 # This Python file uses the following encoding: utf-8
 import sys
 from PySide6.QtWidgets import (
-    QMainWindow, QApplication,
-    QLabel, QLineEdit, QPushButton, 
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QStackedWidget,QFileDialog,QTextEdit
+    QMainWindow,
+    QLabel, QLineEdit, QPushButton,
+    QVBoxLayout,QHBoxLayout,QWidget,QStackedWidget,QFileDialog
 )
 from pathlib import Path
 
@@ -24,6 +24,7 @@ class FirstTimeSetup(QMainWindow):
 
         self.firstPage = self.firstPage()
         self.pcsx2 = self.pcsx2Page()
+        self.pcsx22 = QWidget()
         self.pc = self.pcPage()
 
 
@@ -31,6 +32,7 @@ class FirstTimeSetup(QMainWindow):
 
         self.pages.addWidget(self.firstPage)
         self.pages.addWidget(self.pcsx2)
+        self.pages.addWidget(self.pcsx22)
         self.pages.addWidget(self.pc)
 
         self.setCentralWidget(self.pages)
@@ -100,15 +102,18 @@ class FirstTimeSetup(QMainWindow):
 
         pageContentWidget = QWidget()
         pageContentWidget.setLayout(pageContentLayout)
-        pageContentWidget.setMaximumHeight(45)
 
         navLayout = QHBoxLayout()
         nextButton = QPushButton()
         nextButton.setText("Next >")
         nextButton.setDisabled(True)
+        nextButton.clicked.connect(self.goToNextPage)
+        navLayout.addSpacing(400)
         navLayout.addWidget(nextButton)
+
         navWidget = QWidget()
         navWidget.setLayout(navLayout)
+        navWidget.setMaximumHeight(50)
 
         directoryBox.textChanged.connect(lambda: self.checkCorrectPath(directoryBox,"OpenKh.Tools.ModsManager.exe", nextButton))
 
@@ -132,6 +137,9 @@ class FirstTimeSetup(QMainWindow):
 
     def goToPcPage(self):
         self.pages.setCurrentWidget(self.pc)
+
+    def goToNextPage(self):
+        self.pages.setCurrentIndex(self.pages.currentIndex()+1)
 
     def setPath(self, textBox, title):
         path = str(QFileDialog.getExistingDirectory(self, title))
