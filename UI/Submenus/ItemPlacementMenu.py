@@ -17,6 +17,7 @@ class ItemPlacementMenu(KH2Submenu):
         itemDifficulty.addItems(["Super Easy","Easy","Normal","Hard","Very Hard","Insane","Nightmare"])
         itemDifficulty.currentTextChanged.connect(lambda txt : self.setKeyValue("itemPlacementDifficulty",txt))
         itemDifficulty.setCurrentIndex(2)
+        self.addOption("Item Placement Difficulty",itemDifficulty)
 
         maxLogic = QCheckBox()
         maxLogic.stateChanged.connect(lambda state : self.setKeyValue("Max Logic Item Placement",state==Qt.Checked))

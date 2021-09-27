@@ -27,7 +27,7 @@ class StartingMenu(KH2Submenu):
 
         libraryOfAssemblage = QCheckBox()
         libraryOfAssemblage.stateChanged.connect(lambda state : self.setKeyValue("Library of Assemblage",state==Qt.Checked))
-        libraryOfAssemblage.setCheckState(Qt.Checked)
+        libraryOfAssemblage.setCheckState(Qt.Unchecked)
         self.addOption("Library Of Assemblage",libraryOfAssemblage)
 
 

@@ -17,7 +17,7 @@ class SoraMenu(KH2Submenu):
         formLevels = QCheckBox()
         formLevels.stateChanged.connect(lambda state : self.setKeyValue("Form Levels",state==Qt.Checked))
         formLevels.setCheckState(Qt.Checked)
-        self.addOption("Form Levels",formLevels)
+        self.addOption("Form Level Rewards",formLevels)
 
         self.addHeader("Experience Multipliers")
 
@@ -31,20 +31,27 @@ class SoraMenu(KH2Submenu):
         line.setReadOnly(True)
         self.addOption("Sora",soraExp)
 
-        drives = ["Valor","Wisdom","Limit","Master","Final","Summon"]
+        self.drives = ["Valor","Wisdom","Limit","Master","Final","Summon"]
         expMult = [7,3,4,3,3,2]
 
-        for i in range(len(drives)):
+        for i in range(len(self.drives)):
             driveExp = QDoubleSpinBox()
             driveExp.setDecimals(1)
             driveExp.setRange(1,10)
             driveExp.setSingleStep(.5)
-            driveExp.valueChanged.connect(lambda val,i=i : self.setKeyValue(f"{drives[i]}Exp",val))
+            driveExp.valueChanged.connect(lambda val,i=i : self.setKeyValue(f"{self.drives[i]}Exp",val))
             driveExp.setValue(expMult[i])
             line = driveExp.lineEdit()
             line.setReadOnly(True)
-            self.addOption(drives[i],driveExp)
+            self.addOption(self.drives[i],driveExp)
 
 
 
         self.finalizeMenu()
+
+    def updateWidgets(self):
+        self.widgetList[0].setCurrentText(self.getKeyValue("levelChoice"))
+        self.widgetList[1].setCheckState(Qt.Checked if self.getKeyValue("Form Levels") else Qt.Unchecked)
+        self.widgetList[2].setValue(self.getKeyValue("soraExpMult"))
+        for i in range(len(self.drives)):
+            self.widgetList[i+3].setValue(self.getKeyValue(f"{self.drives[i]}Exp"))
