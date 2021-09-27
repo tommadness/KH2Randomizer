@@ -19,3 +19,7 @@ class FirstTimeSetup(QMainWindow):
         widget.setLayout(layout)
         self.setCentralWidget(widget)
 
+        configFile = open("rando-config.yml","w")
+        configFile.write("Test")
+        configFile.close()
+
