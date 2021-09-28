@@ -49,3 +49,16 @@ class ItemPlacementMenu(KH2Submenu):
 
 
         self.finalizeMenu()
+
+    def updateWidgets(self):
+        self.widgetList[0].setCheckState(Qt.Checked if self.getKeyValue("PromiseCharm") else Qt.Unchecked)
+        self.widgetList[1].setCurrentText(self.getKeyValue("itemPlacementDifficulty"))
+        self.widgetList[2].setCheckState(Qt.Checked if self.getKeyValue("Max Logic Item Placement") else Qt.Unchecked)
+        self.widgetList[3].setCheckState(Qt.Checked if self.getKeyValue("Reverse Rando") else Qt.Unchecked)
+
+        if self.getKeyValue("Randomize Ability Pool"):
+            self.widgetList[5].toggle()
+        else:
+            self.widgetList[4].toggle()
+
+

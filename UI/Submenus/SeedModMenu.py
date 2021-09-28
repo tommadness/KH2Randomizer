@@ -33,3 +33,9 @@ class SeedModMenu(KH2Submenu):
 
 
         self.finalizeMenu()
+
+    def updateWidgets(self):
+        self.widgetList[0].setCheckState(Qt.Checked if self.getKeyValue("Glass Cannon") else Qt.Unchecked)
+        self.widgetList[1].setCheckState(Qt.Checked if self.getKeyValue("Better Junk") else Qt.Unchecked)
+        self.widgetList[2].setCheckState(Qt.Checked if self.getKeyValue("Start with No AP") else Qt.Unchecked)
+        self.widgetList[3].setCheckState(Qt.Checked if self.getKeyValue("Remove Damage Cap") else Qt.Unchecked)

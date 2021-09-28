@@ -11,7 +11,7 @@ class SuperbossMenu(KH2Submenu):
         super().__init__("grid")
         self.name="Superbosses with Rewards"
 
-        worlds = [  {"name":"Absent Silhouettes","enabled":True,"icon":"icons/bosses/as.png"},
+        self.bosses = [  {"name":"Absent Silhouettes","enabled":True,"icon":"icons/bosses/as.png"},
                     {"name":"Data Organization XIII","enabled":True,"icon":"icons/bosses/datas.png"},
                     {"name":"Sephiroth","enabled":True,"icon":"icons/bosses/sephiroth.png"},
                     {"name":"Lingering Will (Terra)","enabled":False,"icon":"icons/bosses/lingering_will.png"},]
@@ -19,8 +19,8 @@ class SuperbossMenu(KH2Submenu):
         path = os.path.abspath(__file__)
         dir_path = os.path.dirname(path)
 
-        for i in range(len(worlds)):
-            world = worlds[i]
+        for i in range(len(self.bosses)):
+            world = self.bosses[i]
             worldWidget = QPushButton()
             icon = QIcon(dir_path+"/"+world["icon"])
             if i//2==0:
@@ -39,3 +39,10 @@ class SuperbossMenu(KH2Submenu):
             self.addOption(world["name"],worldWidget,option_layout="vertical",grid_pos=(i//2,i%2))
 
         self.finalizeMenu()
+
+    def updateWidgets(self):
+        for i in range(len(self.bosses)):
+            boss = self.bosses[i]
+            value = self.getKeyValue(boss["name"])
+            if value != self.widgetList[i].isChecked():
+                self.widgetList[i].toggle()

@@ -8,7 +8,7 @@ class MiscMenu(KH2Submenu):
         super().__init__("horizontal")
         self.name="Misc Locations with Rewards"
 
-        worlds = [  {"name":"Olympus Cups","enabled":False,"icon":"icons/misc/cups.png"},
+        self.miscOptions = [  {"name":"Olympus Cups","enabled":False,"icon":"icons/misc/cups.png"},
                     {"name":"Hades Cup","enabled":False,"icon":"icons/misc/paradox_cup.png"},
                     {"name":"Puzzles","enabled":False,"icon":"icons/misc/puzzle.png"},
                     ]
@@ -16,8 +16,8 @@ class MiscMenu(KH2Submenu):
         path = os.path.abspath(__file__)
         dir_path = os.path.dirname(path)
 
-        for i in range(len(worlds)):
-            world = worlds[i]
+        for i in range(len(self.miscOptions)):
+            world = self.miscOptions[i]
             worldWidget = QPushButton()
             icon = QIcon(dir_path+"/"+world["icon"])
             if i==0:
@@ -37,3 +37,10 @@ class MiscMenu(KH2Submenu):
             self.addOption(world["name"],worldWidget,option_layout="vertical")
 
         self.finalizeMenu()
+
+    def updateWidgets(self):
+        for i in range(len(self.miscOptions)):
+            option = self.miscOptions[i]
+            value = self.getKeyValue(option["name"])
+            if value != self.widgetList[i].isChecked():
+                self.widgetList[i].toggle()

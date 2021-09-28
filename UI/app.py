@@ -80,7 +80,6 @@ class KH2RandomizerApp(QMainWindow):
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
 
-
     def makeSeed(self):
         settings = {}
         for x in self.widgets:

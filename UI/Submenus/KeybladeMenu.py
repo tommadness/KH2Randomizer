@@ -39,3 +39,10 @@ class KeybladeMenu(KH2Submenu):
         self.addOption("Action Keyblade Abilities",actionAbilities)
 
         self.finalizeMenu()
+
+    def updateWidgets(self):
+        self.widgetList[0].setValue(self.getKeyValue("keybladeMinStat"))
+        self.widgetList[1].setValue(self.getKeyValue("keybladeMaxStat"))
+
+        self.widgetList[2].setCheckState(Qt.Checked if self.getKeyValue("keybladeSupport") else Qt.Unchecked)
+        self.widgetList[3].setCheckState(Qt.Checked if self.getKeyValue("keybladeAction") else Qt.Unchecked)

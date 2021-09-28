@@ -28,3 +28,7 @@ class HintsMenu(KH2Submenu):
             self.noSelfHinting.setEnabled(True)
         else:
             self.noSelfHinting.setEnabled(False)
+
+    def updateWidgets(self):
+        self.widgetList[0].setCurrentText(self.getKeyValue("hintsType"))
+        self.widgetList[1].setCheckState(Qt.Checked if self.getKeyValue("preventSelfHinting") else Qt.Unchecked)

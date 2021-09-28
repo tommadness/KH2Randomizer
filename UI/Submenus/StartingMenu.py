@@ -27,6 +27,7 @@ class StartingMenu(KH2Submenu):
 
         libraryOfAssemblage = QCheckBox()
         libraryOfAssemblage.stateChanged.connect(lambda state : self.setKeyValue("Library of Assemblage",state==Qt.Checked))
+        libraryOfAssemblage.setCheckState(Qt.Checked)
         libraryOfAssemblage.setCheckState(Qt.Unchecked)
         self.addOption("Library Of Assemblage",libraryOfAssemblage)
 
@@ -46,17 +47,26 @@ class StartingMenu(KH2Submenu):
 
         self.startingItems.itemSelectionChanged.connect(self.updateStartingItems) 
 
-        self.addRemoveSingleItem("Membership Card")
+        self.addSingleItem("Membership Card")
 
         self.addOption("Starting Inventory",self.startingItems)
 
         self.finalizeMenu()
 
-    def addRemoveSingleItem(self,item_name):
+    def addSingleItem(self,item_name):
         item_id = [x for x, y in enumerate(self.items) if y[1] == item_name][0]
         item = self.startingItems.item(item_id)
-        item.setSelected(not item.isSelected())
+        item.setSelected(True)
 
+    def removeSingleItem(self,item_name):
+        item_id = [x for x, y in enumerate(self.items) if y[1] == item_name][0]
+        item = self.startingItems.item(item_id)
+        item.setSelected(False)
+
+    def removeAllItems(self):
+        for item_id in range(self.startingItems.count()):
+            item = self.startingItems.item(item_id)
+            item.setSelected(False)
 
     def updateStartingItems(self):
         # create a list of selected item ids
@@ -68,3 +78,15 @@ class StartingMenu(KH2Submenu):
                 if itemText==b:
                     itemIds.append(a)
         self.setKeyValue("startingInventory",itemIds)
+
+
+    def updateWidgets(self):
+        self.widgetList[0].setCheckState(Qt.Checked if self.getKeyValue("critBonuses") else Qt.Unchecked)
+        self.widgetList[1].setCheckState(Qt.Checked if self.getKeyValue("goa") else Qt.Unchecked)
+        self.widgetList[2].setCheckState(Qt.Checked if self.getKeyValue("Schmovement") else Qt.Unchecked)
+        self.widgetList[3].setCheckState(Qt.Checked if self.getKeyValue("Library of Assemblage") else Qt.Unchecked)
+        tempItems = self.getKeyValue("startingInventory")[:]
+        self.removeAllItems()
+        for i in tempItems:
+            item_name = [x[1] for x in self.items if x[0] == i][0]
+            self.addSingleItem(item_name)

@@ -33,7 +33,6 @@ class KH2Submenu(QWidget):
         self.setLayout(self.menulayout)
 
     def setKeyValue(self,name,value):
-        print(f"{name} : {value}")
         self.categoryData[name]=value
 
     def getKeyValue(self,name):
@@ -49,8 +48,6 @@ class KH2Submenu(QWidget):
         pass
 
     def setData(self,inData):
-        print(self.name)
-        print(inData)
         for key in inData:
             if key in self.categoryData:
                 self.setKeyValue(key,inData[key])

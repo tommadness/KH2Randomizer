@@ -11,7 +11,7 @@ class WorldMenu(KH2Submenu):
         super().__init__("grid")
         self.name="Worlds with Rewards"
 
-        worlds = [  {"name":"Land of Dragons","enabled":True,"icon":"icons/worlds/land_of_dragons.png"},
+        self.worlds = [  {"name":"Land of Dragons","enabled":True,"icon":"icons/worlds/land_of_dragons.png"},
                     {"name":"Beast's Castle","enabled":True,"icon":"icons/worlds/beast's_castle.png"},
                     {"name":"Hollow Bastion","enabled":True,"icon":"icons/worlds/hollow_bastion.png"},
                     {"name":"Cavern of Remembrance","enabled":True,"icon":"icons/worlds/cor.png"},
@@ -32,8 +32,8 @@ class WorldMenu(KH2Submenu):
         path = os.path.abspath(__file__)
         dir_path = os.path.dirname(path)
 
-        for i in range(len(worlds)):
-            world = worlds[i]
+        for i in range(len(self.worlds)):
+            world = self.worlds[i]
             worldWidget = QPushButton()
             icon = QIcon(dir_path+"/"+world["icon"])
             worldWidget.setFixedSize(icon.actualSize(icon.availableSizes()[0]/8))
@@ -48,3 +48,10 @@ class WorldMenu(KH2Submenu):
             self.addOption(world["name"],worldWidget,option_layout="vertical",grid_pos=(i//4,i%4))
 
         self.finalizeMenu()
+
+    def updateWidgets(self):
+        for i in range(len(self.worlds)):
+            world = self.worlds[i]
+            value = self.getKeyValue(world["name"])
+            if value != self.widgetList[i].isChecked():
+                self.widgetList[i].toggle()
