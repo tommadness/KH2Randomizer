@@ -16,6 +16,8 @@ from Module.randomize import KH2Randomizer
 from Module.dailySeed import generateDailySeed, getDailyModifiers
 from flask_socketio import SocketIO
 
+from Module.randomizePage import randomizePage
+
 app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app, manage_session=False, always_connect=True, async_mode="threading", ping_interval=20)
 url = urlparse(os.environ.get("REDIS_TLS_URL"))
@@ -185,73 +187,6 @@ def startDownload(data):
     seed = socketio.start_background_task(randomizePage, data, dict(session))
     
 
-def randomizePage(data, sessionDict):
-    print(data['platform'])
-    platform = data['platform']
-    excludeList = list(set(locationType) - set(sessionDict['includeList']))
-    excludeList.append(sessionDict["levelChoice"])
-
-    if sessionDict["itemPlacementDifficulty"] == "Nightmare" and locationType.Puzzle in excludeList:
-        print("Removing puzzle exclusion due to nightmare...")
-        excludeList.remove(locationType.Puzzle)
-
-    cmdMenuChoice = data["cmdMenuChoice"]
-    randomBGM = data["randomBGM"]
-    sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
-
-    seedValidation = SeedValidator(sessionDict)
-    notValidSeed = True
-
-    originalSeedName = sessionDict['seed']
-    while notValidSeed:
-        randomizer = KH2Randomizer(seedName = sessionDict["seed"], seedHashIcons = sessionDict["seedHashIcons"], spoiler=bool(sessionDict["spoilerLog"]))
-        randomizer.populateLocations(excludeList,  maxItemLogic = "Max Logic Item Placement" in sessionDict["seedModifiers"],item_difficulty=sessionDict["itemPlacementDifficulty"], reportDepth=sessionDict["reportDepth"])
-        randomizer.populateItems(promiseCharm = sessionDict["promiseCharm"], startingInventory = sessionDict["startingInventory"], abilityListModifier=SeedModifier.randomAbilityPool if "Randomize Ability Pool" in sessionDict["seedModifiers"] else None)
-        if randomizer.validateCount():
-            randomizer.setKeybladeAbilities(
-                keybladeAbilities = sessionDict["keybladeAbilities"], 
-                keybladeMinStat = int(sessionDict["keybladeMinStat"]), 
-                keybladeMaxStat = int(sessionDict["keybladeMaxStat"])
-            )
-            randomizer.setNoAP("Start with No AP" in sessionDict["seedModifiers"])
-            randomizer.setRewards(levelChoice = sessionDict["levelChoice"], betterJunk=("Better Junk" in sessionDict["seedModifiers"]), reportDepth=sessionDict["reportDepth"])
-            randomizer.setLevels(sessionDict["soraExpMult"], formExpMult = sessionDict["formExpMult"], statsList = SeedModifier.glassCannon("Glass Cannon" in sessionDict["seedModifiers"]))
-            randomizer.setBonusStats()
-            if not seedValidation.validateSeed(sessionDict, randomizer):
-                print("ERROR: Seed is not completable! Trying another seed...")
-                characters = string.ascii_letters + string.digits
-                sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
-                continue
-            randomizer.seedName = originalSeedName
-            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList, sessionDict["preventSelfHinting"])
-
-            if hintsText is not None and type(hintsText) is not dict:
-                # there was an error generating hints, return value provides context
-                print(f"ERROR: {hintsText}")
-                characters = string.ascii_letters + string.digits
-                sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
-                continue
-
-            notValidSeed = False
-            
-            try:
-                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsText = hintsText, cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
-                if development_mode:
-                    development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
-                    if development_mode_path:
-                        if os.path.exists(development_mode_path):
-                            # Ensure a clean environment
-                            import shutil
-                            shutil.rmtree(development_mode_path)
-                        # Unzip mod into path
-                        import zipfile
-                        zipfile.ZipFile(zip).extractall(development_mode_path)
-                        print("unzipped into {}".format(development_mode_path))
-                    return
-                socketio.emit('file',zip.read())
-
-            except ValueError as err:
-                print("ERROR: ", err.args)
 
 @app.after_request
 def add_header(r):

@@ -17,6 +17,8 @@ from Submenus.SeedModMenu import SeedModMenu
 from Submenus.ItemPlacementMenu import ItemPlacementMenu
 from Submenus.BossEnemyMenu import BossEnemyMenu
 
+from Module.randomizePage import randomizePage
+
 from FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
 
@@ -72,15 +74,19 @@ class KH2RandomizerApp(QMainWindow):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())
 
 
-        submitButton = QPushButton("Generate Seed")
-        submitButton.clicked.connect(self.makeSeed)
+        submitButton = QPushButton("Generate Seed (PCSX2)")
+        submitButton.clicked.connect(lambda : self.makeSeed("PCSX2"))
+        submit_layout.addWidget(submitButton)
+
+        submitButton = QPushButton("Generate Seed (PC)")
+        submitButton.clicked.connect(lambda : self.makeSeed("PC"))
         submit_layout.addWidget(submitButton)
 
         widget = QWidget()
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
 
-    def makeSeed(self):
+    def makeSeed(self,platform):
         settings = {}
         for x in self.widgets:
             settings[x.getName()] = x.getData()
@@ -88,6 +94,35 @@ class KH2RandomizerApp(QMainWindow):
         makeSpoilerLog = self.spoiler_log.isChecked()
 
         # TODO pass to randomizer class and mimic the main app file functions
+        data={}
+        data["platform"]=platform
+        #TODO cmd menu
+        data["cmdMenuChoice"]="vanilla"
+        #TODO music menu
+        data["randomBGM"]=False
+
+        session={}
+
+        #includeList
+        #levelChoice
+        #startingInventory
+        #itemPlacementDifficulty
+        #seedModifiers
+        #seed
+        #seedHashIcons
+        #spoilerLog
+        #reportDepth
+        #promiseCharm
+        #keybladeAbilities
+        #keybladeMinStat
+        #keybladeMaxStat
+        #soraExpMult
+        #formExpMult
+        #hintsType
+        #preventSelfHinting
+        #enemyOptions
+
+        zip_file = randomizePage(data,session,local_ui=True)
 
     def savePreset(self):
         text, ok = QInputDialog.getText(self, 'Make New Preset', 
