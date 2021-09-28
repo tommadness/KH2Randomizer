@@ -124,7 +124,7 @@ if __name__=="__main__":
     window = KH2RandomizerApp()
     window.show()
     configPath = Path("rando-config.yml")
-    if not configPath.is_file():
+    if not configPath.is_file() or not os.environ.get("ALWAYS_SETUP") is None:
         window.firstTimeSetup()
 
     sys.exit(app.exec())

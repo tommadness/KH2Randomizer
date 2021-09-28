@@ -6,13 +6,19 @@ from PySide6.QtWidgets import (
     QVBoxLayout,QHBoxLayout,QWidget,QStackedWidget,QFileDialog
 )
 from pathlib import Path
+import hashlib
 
 from PySide6.QtGui import QFont
 
 
 class FirstTimeSetup(QMainWindow):
+
+    KH2ISOMD5 = "1BD351E1DF9FC5D783D8318010D17F03"
+
     def __init__(self):
         super().__init__()
+
+        self.config = {}
         w = 600
         h = 400
 
@@ -24,7 +30,7 @@ class FirstTimeSetup(QMainWindow):
 
         self.firstPage = self.firstPage()
         self.pcsx2 = self.pcsx2Page()
-        self.pcsx22 = QWidget()
+        self.pcsx2Iso = self.pcsx2IsoPage()
         self.pc = self.pcPage()
 
 
@@ -32,17 +38,15 @@ class FirstTimeSetup(QMainWindow):
 
         self.pages.addWidget(self.firstPage)
         self.pages.addWidget(self.pcsx2)
-        self.pages.addWidget(self.pcsx22)
+        self.pages.addWidget(self.pcsx2Iso)
         self.pages.addWidget(self.pc)
 
         self.setCentralWidget(self.pages)
 
+
     def firstPage(self):
         mainLayout = QVBoxLayout()
-        pageTitleLabel = QLabel()
-        pageTitleLabel.setText("Welcome to Kingdom Hearts 2: Final Mix Randomizer")
-        pageTitleLabel.setMaximumHeight(30)
-        pageTitleLabel.setFont(self.titleFont)
+        pageTitleLabel = self.pageTitle("Welcome to Kingdom Hearts 2: Final Mix Randomizer")
 
         pageContentLabel = QLabel()
         pageContentLabel.setText("This will guide you through setting up the Kingdom Hearts 2: Final Mix randomizer.\nPlease select your game edition below:")
@@ -76,21 +80,11 @@ class FirstTimeSetup(QMainWindow):
 
     
 
-
-
-
-        # configFile = open("rando-config.yml","w")
-        # configFile.write("Test")
-        # configFile.close()
-
     def pcsx2Page(self):
         widget = QWidget()
         layout = QVBoxLayout()
 
-        pageTitleLabel = QLabel()
-        pageTitleLabel.setText("Select OpenKH Directory")
-        pageTitleLabel.setFont(self.titleFont)
-        pageTitleLabel.setMaximumHeight(30)
+        pageTitleLabel = self.pageTitle("Select OpenKH Directory")
 
         pageContentLayout = QHBoxLayout()
         directoryBox = QLineEdit()
@@ -115,13 +109,61 @@ class FirstTimeSetup(QMainWindow):
         navWidget.setLayout(navLayout)
         navWidget.setMaximumHeight(50)
 
-        directoryBox.textChanged.connect(lambda: self.checkCorrectPath(directoryBox,"OpenKh.Tools.ModsManager.exe", nextButton))
+        directoryBox.textChanged.connect(lambda: self.checkCorrectPath(directoryBox,"OpenKh.Tools.ModsManager.exe", nextButton, "OpenKHDir"))
 
         layout.addWidget(pageTitleLabel)
         layout.addWidget(pageContentWidget)
         layout.addWidget(navWidget)
         widget.setLayout(layout)
         return widget
+
+    def pageTitle(self, text):
+        pageTitleLabel = QLabel()
+        pageTitleLabel.setText(text)
+        pageTitleLabel.setFont(self.titleFont)
+        pageTitleLabel.setMaximumHeight(30)
+        return pageTitleLabel
+
+    def pcsx2IsoPage(self):
+        page = QWidget()
+        pageLayout = QVBoxLayout()
+
+        pageTitleLabel = self.pageTitle("Select Kingdom Hearts 2: Final Mix ISO")
+        pageLayout.addWidget(pageTitleLabel)
+
+        pageContentWidget = QWidget()
+
+        pageContentLayout = QHBoxLayout()
+        directoryBox = QLineEdit()
+        directoryButton = QPushButton()
+        directoryButton.setText("Choose File")
+        directoryButton.clicked.connect(lambda: self.setFile(directoryBox, "Select Kingdom Hearts II: Final Mix ISO", "*.iso"))
+        directoryBox.textChanged.connect(lambda: self.checkCorrectFile(directoryBox,self.KH2ISOMD5, nextButton, "pcsx2Iso"))
+        pageContentLayout.addWidget(directoryBox)
+        pageContentLayout.addWidget(directoryButton)
+
+        pageContentWidget.setLayout(pageContentLayout)
+
+        pageLayout.addWidget(pageContentWidget)
+
+        navLayout = QHBoxLayout()
+        nextButton = QPushButton()
+        nextButton.setText("Next >")
+        nextButton.setDisabled(True)
+        nextButton.clicked.connect(self.goToNextPage)
+        navLayout.addSpacing(400)
+        navLayout.addWidget(nextButton)
+
+        navWidget = QWidget()
+        navWidget.setLayout(navLayout)
+        navWidget.setMaximumHeight(50)
+
+        pageLayout.addWidget(navWidget)
+
+
+
+        page.setLayout(pageLayout)
+        return page
 
     def pcPage(self):
         widget = QWidget()
@@ -145,9 +187,46 @@ class FirstTimeSetup(QMainWindow):
         path = str(QFileDialog.getExistingDirectory(self, title))
         textBox.setText(path)
 
-    def checkCorrectPath(self, path, fileName, nextButton):
+    def setFile(self, textBox, title, filter):
+        path = QFileDialog.getOpenFileName(self, title, filter=filter)[0]
+        print(path)
+        textBox.setText(path)
+
+    def checkCorrectPath(self, path, fileName, nextButton,configKey):
         file = Path(path.text()+"\\"+fileName)
         print(file)
         if file.is_file():
-
+            self.config[configKey] = str(file)
             nextButton.setDisabled(False)
+            print(self.config)
+
+    def checkCorrectFile(self,path,md5,nextButton,configKey):
+        print(path.text())
+        alert = Alert("Validating file", "Making sure this is the correct file")
+        inputMD5 = hashlib.md5(open(path.text(),'rb').read()).hexdigest().upper()
+        alert = None
+        print(inputMD5)
+        if inputMD5 == md5:
+            self.config[configKey] = str(path.text())
+            nextButton.setDisabled(False)
+            print(self.config)
+
+    def closeEvent(self, event):
+        configKeys = ["OpenKHDir"]
+        if all(key in self.config for key in configKeys):
+            configFile = open("rando-config.yml","w")
+            configFile.write(str(self.config))
+            configFile.close()
+
+class Alert(QMainWindow):
+    def __init__(self, title, message):
+        super().__init__()
+        self.setWindowTitle(title)
+        layout = QHBoxLayout()
+        layout.addWidget(QLabel(message))
+        self.setLayout(layout)
+        self.show()
+
+    def closeEvent(self, event):
+        event.ignore()
+
