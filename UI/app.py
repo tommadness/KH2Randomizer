@@ -193,10 +193,12 @@ class KH2RandomizerApp(QMainWindow):
 
         zip_file = randomizePage(data,session,local_ui=True)
 
-        saveFileWidget = QFileDialog(self,"Save seed zip",".")
-        saveFileWidget.setDefaultSuffix(".zip")
-        outfile_name,_ = saveFileWidget.getSaveFileName()
+        saveFileWidget = QFileDialog()
+        saveFileWidget.setNameFilters(["Zip Seed File (*.zip)"])
+        outfile_name,_ = saveFileWidget.getSaveFileName(self,"Save seed zip",".","Zip Seed File (.zip)")
         if outfile_name!="":
+            if not outfile_name.endswith(".zip"):
+                outfile_name+=".zip"
             open(outfile_name, "wb").write(zip_file.getbuffer())
 
 
