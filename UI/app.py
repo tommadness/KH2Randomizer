@@ -1,9 +1,9 @@
-import random,sys,copy,os,json
+import random,sys,copy,os,json,string,datetime
 from pathlib import Path
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QPushButton, QCheckBox, QComboBox,
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog
+    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog
 )
 
 from Submenus.SoraMenu import SoraMenu
@@ -17,7 +17,10 @@ from Submenus.SeedModMenu import SeedModMenu
 from Submenus.ItemPlacementMenu import ItemPlacementMenu
 from Submenus.BossEnemyMenu import BossEnemyMenu
 
+sys.path.append("..")
 from Module.randomizePage import randomizePage
+from List.hashTextEntries import generateHashIcons
+from List.configDict import locationDepth
 
 from FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
@@ -27,6 +30,7 @@ PRESET_FILE = "presets.json"
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
         super().__init__()
+        random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator")
         self.setup = None
         pagelayout = QVBoxLayout()
@@ -99,30 +103,102 @@ class KH2RandomizerApp(QMainWindow):
         #TODO cmd menu
         data["cmdMenuChoice"]="vanilla"
         #TODO music menu
-        data["randomBGM"]=False
+        data["randomBGM"]=[]
 
         session={}
-
         #includeList
+        session["includeList"] = []
+
+        includeListKeys = [("Sora","Form Levels"),
+                            ("Starting Items","Critical Bonuses"),
+                            ("Starting Items","Garden of Assemblage")]
+        for key in includeListKeys:
+            if settings[key[0]][key[1]]:
+                session["includeList"].append(key[1])
+
+
+        for world in settings["Worlds with Rewards"].keys():
+            if settings["Worlds with Rewards"][world]:
+                session["includeList"].append(world)
+        for boss_group in settings["Superbosses with Rewards"].keys():
+            if settings["Superbosses with Rewards"][boss_group]:
+                session["includeList"].append(boss_group)
+        for misc_group in settings["Misc Locations with Rewards"].keys():
+            if settings["Misc Locations with Rewards"][misc_group]:
+                session["includeList"].append(misc_group)
+
+
         #levelChoice
+        session["levelChoice"] = settings["Sora"]["levelChoice"]
         #startingInventory
+        session["startingInventory"] = settings["Starting Items"]["startingInventory"]
         #itemPlacementDifficulty
+        session["itemPlacementDifficulty"] = settings["Item Placement Options"]["itemPlacementDifficulty"]
         #seedModifiers
+        session["seedModifiers"] = []
+        seedModifierKeys = [("Item Placement Options","Max Logic Item Placement"),
+                            ("Item Placement Options","Reverse Rando"),
+                            ("Item Placement Options","Randomize Ability Pool"),
+                            ("Starting Items","Library of Assemblage"),
+                            ("Starting Items","Schmovement"),
+                            ("Seed Modifiers","Glass Cannon"),
+                            ("Seed Modifiers","Better Junk"),
+                            ("Seed Modifiers","Start with No AP"),
+                            ("Seed Modifiers","Remove Damage Cap"),]
+        for key in seedModifierKeys:
+            if settings[key[0]][key[1]]:
+                session["seedModifiers"].append(key[1])
+
+
         #seed
+        session["seed"] = self.seedName.text()
+        if session["seed"] == "":
+            characters = string.ascii_letters + string.digits
+            session["seed"] = (''.join(random.choice(characters) for i in range(30)))
         #seedHashIcons
+        session["seedHashIcons"] = generateHashIcons()
         #spoilerLog
+        session["spoilerLog"] = "on" if makeSpoilerLog else "off"
         #reportDepth
-        #promiseCharm
-        #keybladeAbilities
-        #keybladeMinStat
-        #keybladeMaxStat
-        #soraExpMult
-        #formExpMult
         #hintsType
+        reportStringList = settings["Hint Systems"]["hintsType"].split('-')
+        session["hintsType"] = reportStringList[0]
+        session["reportDepth"] = locationDepth("DataFight") if len(reportStringList)==1 else locationDepth(reportStringList[1])
         #preventSelfHinting
+        session["preventSelfHinting"] = settings["Hint Systems"]["preventSelfHinting"]
+        #promiseCharm
+        session["promiseCharm"] = settings["Item Placement Options"]["PromiseCharm"]
+        #keybladeAbilities
+        session["keybladeAbilities"] = []
+        session["keybladeAbilities"]+= ["Support"] if settings["Keyblades"]["keybladeSupport"] else []
+        session["keybladeAbilities"]+= ["Action"] if settings["Keyblades"]["keybladeAction"] else []
+        #keybladeMinStat
+        session["keybladeMinStat"] = settings["Keyblades"]["keybladeMinStat"]
+        #keybladeMaxStat
+        session["keybladeMaxStat"] = settings["Keyblades"]["keybladeMaxStat"]
+        #soraExpMult
+        session["soraExpMult"] = settings["Sora"]["soraExpMult"]
+        #formExpMult
+        session["formExpMult"] = {
+            "0": float(settings["Sora"]["soraExpMult"]),
+            "1": float(settings["Sora"]["ValorExp"]), 
+            "2": float(settings["Sora"]["WisdomExp"]), 
+            "3": float(settings["Sora"]["LimitExp"]), 
+            "4": float(settings["Sora"]["MasterExp"]), 
+            "5": float(settings["Sora"]["FinalExp"])
+            }
         #enemyOptions
+        settings["Boss/Enemy"]["remove_damage_cap"] = "Remove Damage Cap" in session["seedModifiers"]
+        session["enemyOptions"] = json.dumps(settings["Boss/Enemy"])
 
         zip_file = randomizePage(data,session,local_ui=True)
+
+        saveFileWidget = QFileDialog(self,"Save seed zip",".")
+        saveFileWidget.setDefaultSuffix(".zip")
+        outfile_name,_ = saveFileWidget.getSaveFileName()
+        if outfile_name!="":
+            open(outfile_name, "wb").write(zip_file.getbuffer())
+
 
     def savePreset(self):
         text, ok = QInputDialog.getText(self, 'Make New Preset', 

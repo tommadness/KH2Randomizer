@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 import random, zipfile, yaml, io, json, os, base64, asyncio, struct
+from pathlib import Path
 from Module.spoilerLog import generateSpoilerLog
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
@@ -442,9 +443,17 @@ class KH2Randomizer():
         with zipfile.ZipFile(data, "w") as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
+            path_to_static = Path("static")
+            path_to_module = Path("Module")
+
+            if not path_to_static.exists():
+                path_to_static = Path("../static")
+                path_to_module = Path("../Module")
+
+
             if self.puzzleRando:
                 mod["assets"] += [modYml.getPuzzleMod()]
-                with open("static/jiminy.bar","rb") as puzzleBar:
+                with open(path_to_static/Path("jiminy.bar"),"rb") as puzzleBar:
                     binaryContent = bytearray(puzzleBar.read())
                     for puzz in puzzleList:
                         byte0, byte1, item = puzz.getItemBytesAndLocs()
@@ -480,7 +489,7 @@ class KH2Randomizer():
 
             if spoilerLog:
                 mod["title"] += " {seedName}".format(seedName = self.seedName)
-                with open("static/spoilerlog.html") as spoiler_site:
+                with open(path_to_static/Path("spoilerlog.html")) as spoiler_site:
                     html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
                     outZip.writestr("spoilerlog.html",html_template)
                 if enemySpoilers:
@@ -490,7 +499,7 @@ class KH2Randomizer():
             
             mod["assets"] += RandomBGM.randomizeBGM(randomBGM, platform)
 
-            outZip.write("Module/icon.png", "icon.png")
+            outZip.write(path_to_module/"icon.png", "icon.png")
 
 
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))

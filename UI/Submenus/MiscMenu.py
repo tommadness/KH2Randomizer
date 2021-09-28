@@ -9,7 +9,7 @@ class MiscMenu(KH2Submenu):
         self.name="Misc Locations with Rewards"
 
         self.miscOptions = [  {"name":"Olympus Cups","enabled":False,"icon":"icons/misc/cups.png"},
-                    {"name":"Hades Cup","enabled":False,"icon":"icons/misc/paradox_cup.png"},
+                    {"name":"Hades Paradox Cup","enabled":False,"icon":"icons/misc/paradox_cup.png"},
                     {"name":"Puzzles","enabled":False,"icon":"icons/misc/puzzle.png"},
                     ]
 

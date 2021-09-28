@@ -8,7 +8,6 @@ from Module.randomize import KH2Randomizer
 development_mode = os.environ.get("DEVELOPMENT_MODE")
 
 def randomizePage(data, sessionDict, local_ui=False):
-    print(data['platform'])
     platform = data['platform']
     excludeList = list(set(locationType) - set(sessionDict['includeList']))
     excludeList.append(sessionDict["levelChoice"])
@@ -69,7 +68,8 @@ def randomizePage(data, sessionDict, local_ui=False):
                         import zipfile
                         zipfile.ZipFile(zip).extractall(development_mode_path)
                         print("unzipped into {}".format(development_mode_path))
-                    return
+                    if not local_ui:
+                        return
                 if not local_ui:
                     socketio.emit('file',zip.read())
                 else:

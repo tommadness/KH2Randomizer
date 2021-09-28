@@ -9,12 +9,12 @@ class StartingMenu(KH2Submenu):
         self.addHeader("Rewards in Starting Areas")
 
         critBonuses = QCheckBox()
-        critBonuses.stateChanged.connect(lambda state : self.setKeyValue("critBonuses",state==Qt.Checked))
+        critBonuses.stateChanged.connect(lambda state : self.setKeyValue("Critical Bonuses",state==Qt.Checked))
         critBonuses.setCheckState(Qt.Checked)
         self.addOption("Critical Bonuses",critBonuses)
 
         goa = QCheckBox()
-        goa.stateChanged.connect(lambda state : self.setKeyValue("goa",state==Qt.Checked))
+        goa.stateChanged.connect(lambda state : self.setKeyValue("Garden of Assemblage",state==Qt.Checked))
         goa.setCheckState(Qt.Checked)
         self.addOption("Garden of Assemblage",goa)
 
@@ -81,8 +81,8 @@ class StartingMenu(KH2Submenu):
 
 
     def updateWidgets(self):
-        self.widgetList[0].setCheckState(Qt.Checked if self.getKeyValue("critBonuses") else Qt.Unchecked)
-        self.widgetList[1].setCheckState(Qt.Checked if self.getKeyValue("goa") else Qt.Unchecked)
+        self.widgetList[0].setCheckState(Qt.Checked if self.getKeyValue("Critical Bonuses") else Qt.Unchecked)
+        self.widgetList[1].setCheckState(Qt.Checked if self.getKeyValue("Garden of Assemblage") else Qt.Unchecked)
         self.widgetList[2].setCheckState(Qt.Checked if self.getKeyValue("Schmovement") else Qt.Unchecked)
         self.widgetList[3].setCheckState(Qt.Checked if self.getKeyValue("Library of Assemblage") else Qt.Unchecked)
         tempItems = self.getKeyValue("startingInventory")[:]
