@@ -1,6 +1,0 @@
-Program 0x4D
-Party DEFAULT
-Spawn "b_98"
-
-Program 0x19
-Spawn "b_99"

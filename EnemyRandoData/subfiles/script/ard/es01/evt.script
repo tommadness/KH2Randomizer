@@ -1,6 +1,0 @@
-Program 0x38
-Bgm Default Default
-AreaSettings 0 -1
-	SetEvent "994" Type 2
-	SetJump Type 6 World ES Area 0 Entrance 0 LocalSet 0 FadeType -1
-	SetPartyMenu 0

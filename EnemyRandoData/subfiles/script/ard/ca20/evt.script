@@ -1,5 +1,0 @@
-Program 0x0A
-AreaSettings 7 -1
-	SetUnk05 0x3
-	SetJump Type 1 World CA Area 14 Entrance 1 LocalSet 0 FadeType 16385
-	SetPartyMenu 0

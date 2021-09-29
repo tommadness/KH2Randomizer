@@ -1,8 +1,0 @@
-Program 0x00
-
-
-Program 0x01
-Party DEFAULT
-AreaSettings 1 43
-	SetJump Type 2 World TT Area 0 Entrance 0 LocalSet 152 FadeType 0
-	SetPartyMenu 0
