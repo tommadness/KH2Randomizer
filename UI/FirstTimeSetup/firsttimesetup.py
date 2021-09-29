@@ -136,9 +136,10 @@ class FirstTimeSetup(QMainWindow):
 
     def setConfig(self):
         content = self.pages.currentWidget().findChild(QLineEdit)
-        configKey = content.objectName()
-        if not self.config[configKey] is None:
-            content.setText(self.config[configKey])
+        if not content is None:
+            configKey = content.objectName()
+            if not self.config[configKey] is None:
+                content.setText(self.config[configKey])
 
     def pageTitle(self, text):
         pageTitleLabel = QLabel()
