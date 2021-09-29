@@ -1,9 +1,11 @@
 import random,sys,copy,os,json,string,datetime
 from pathlib import Path
+from PySide6.QtGui import QIcon
+from PySide6.QtCore import QSize
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QPushButton, QCheckBox, QComboBox,
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog
+    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget
 )
 
 from Submenus.SoraMenu import SoraMenu
@@ -19,6 +21,8 @@ from Submenus.BossEnemyMenu import BossEnemyMenu
 
 sys.path.append("..")
 from Module.randomizePage import randomizePage
+from Module.randomCmdMenu import RandomCmdMenu
+from Module.randomBGM import RandomBGM
 from List.hashTextEntries import generateHashIcons
 from List.configDict import locationDepth
 
@@ -36,6 +40,8 @@ class KH2RandomizerApp(QMainWindow):
         pagelayout = QVBoxLayout()
         seed_layout = QHBoxLayout()
         submit_layout = QHBoxLayout()
+        self.seedhashlayout = QHBoxLayout()
+        self.cosmetic_layout = QHBoxLayout()
         self.tabs = QTabWidget()
 
         if not os.path.isfile(PRESET_FILE):
@@ -47,7 +53,9 @@ class KH2RandomizerApp(QMainWindow):
 
         pagelayout.addLayout(seed_layout)
         pagelayout.addWidget(self.tabs)
+        pagelayout.addLayout(self.cosmetic_layout)
         pagelayout.addLayout(submit_layout)
+        pagelayout.addLayout(self.seedhashlayout)
 
         seed_layout.addWidget(QLabel("Seed"))
         self.seedName=QLineEdit()
@@ -86,6 +94,38 @@ class KH2RandomizerApp(QMainWindow):
         submitButton.clicked.connect(lambda : self.makeSeed("PC"))
         submit_layout.addWidget(submitButton)
 
+        self.seedhashlayout.addWidget(QLabel("Seed Hash"))
+
+        self.hashIconPath = Path("../static/seed-hash-icons")
+        self.hashIcons = []
+        for i in range(7):
+            self.hashIcons.append(QPushButton())
+            self.hashIcons[-1].blockSignals(True)
+            self.hashIcons[-1].setIconSize(QSize(50,50))
+            self.hashIcons[-1].setIcon(QIcon(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
+            self.seedhashlayout.addWidget(self.hashIcons[-1])
+
+
+        self.commandMenuOptions = QComboBox()
+        self.commandMenuOptions.addItems(RandomCmdMenu.getOptions().values())
+        self.commandMenuOptions.setCurrentText("vanilla")  
+
+        self.bgmOptions = QListWidget()
+        self.bgmOptions.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
+        self.bgmOptions.addItems(RandomBGM.getOptions())
+        self.bgmOptions.setMinimumWidth(self.bgmOptions.sizeHintForColumn(0)+30)
+
+        self.bgmChoices = QListWidget()
+        self.bgmChoices.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
+        self.bgmChoices.addItems(RandomBGM.getGames())
+        self.bgmChoices.setMinimumWidth(self.bgmChoices.sizeHintForColumn(0)+30)
+
+        self.cosmetic_layout.addWidget(QLabel("Command Menu (PS2 Only)"))
+        self.cosmetic_layout.addWidget(self.commandMenuOptions)
+        self.cosmetic_layout.addWidget(QLabel("Randomize BGM (PC Only)"))
+        self.cosmetic_layout.addWidget(self.bgmOptions)
+        self.cosmetic_layout.addWidget(self.bgmChoices)
+
         widget = QWidget()
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
@@ -101,9 +141,18 @@ class KH2RandomizerApp(QMainWindow):
         data={}
         data["platform"]=platform
         #TODO cmd menu
-        data["cmdMenuChoice"]="vanilla"
+        cmdMap = RandomCmdMenu.getOptions()
+
+        selected = self.commandMenuOptions.currentText()
+
+        for key,value in cmdMap.items():
+            if value==selected:
+                data["cmdMenuChoice"]=key
         #TODO music menu
-        data["randomBGM"]=[]
+        selectedMusic = self.bgmOptions.selectedItems() + self.bgmChoices.selectedItems()
+        data["randomBGM"]=[s.text() for s in selectedMusic]
+
+        print(data)
 
         session={}
         #includeList
@@ -157,6 +206,11 @@ class KH2RandomizerApp(QMainWindow):
             session["seed"] = (''.join(random.choice(characters) for i in range(30)))
         #seedHashIcons
         session["seedHashIcons"] = generateHashIcons()
+
+        #update the seed hash display
+        for n,ic in enumerate(session["seedHashIcons"]):
+            self.hashIcons[n].setIcon(QIcon(str(self.hashIconPath.absolute())+"/"+ic+".png"))
+
         #spoilerLog
         session["spoilerLog"] = "on" if makeSpoilerLog else "off"
         #reportDepth
