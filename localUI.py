@@ -29,7 +29,7 @@ from List.configDict import locationDepth
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
 
-PRESET_FILE = "presets.json"
+PRESET_FOLDER = "presets"
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
@@ -44,12 +44,15 @@ class KH2RandomizerApp(QMainWindow):
         self.cosmetic_layout = QHBoxLayout()
         self.tabs = QTabWidget()
 
-        if not os.path.isfile(PRESET_FILE):
-            self.presetJSON = {}
-        else:
-            with open(PRESET_FILE,"r") as presetData:
-                data = presetData.read()
-                self.presetJSON = json.loads(data)                
+        presetFolderContents = os.listdir(PRESET_FOLDER)
+        self.presetJSON = {}
+
+        if not presetFolderContents == []:
+            for file in presetFolderContents:
+                with open(PRESET_FOLDER+"\\"+file,"r") as presetData:
+                    data = json.loads(presetData.read())
+                    for k,v in data.items():
+                        self.presetJSON[k] = v               
 
         pagelayout.addLayout(seed_layout)
         pagelayout.addWidget(self.tabs)
@@ -263,13 +266,15 @@ class KH2RandomizerApp(QMainWindow):
         if ok:
             #add current settings to saved presets, add to current preset list, change preset selection.
             settings = {}
+            preset = {}
             for x in self.widgets:
                 settings[x.getName()] = copy.deepcopy(x.getData())
+            preset[text] = settings
             self.presetJSON[text] = settings
             self.presets.addItem(text)
             self.presets.setCurrentIndex(self.presets.count()-1)
-            with open(PRESET_FILE,"w") as presetData:
-                presetData.write(json.dumps(self.presetJSON))
+            with open(PRESET_FOLDER+"\\"+text+".json","w") as presetData:
+                presetData.write(json.dumps(preset))
             
 
     def usePreset(self,presetName):
