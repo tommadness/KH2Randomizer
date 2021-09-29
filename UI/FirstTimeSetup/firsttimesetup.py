@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (
 )
 from pathlib import Path
 import hashlib
+import yaml
 
 from PySide6.QtGui import QFont
 
@@ -18,7 +19,16 @@ class FirstTimeSetup(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.configPath = Path("rando-config.yml")
         self.config = {}
+
+        if self.configPath.is_file():
+            self.configFile = open(self.configPath, "r")
+            configString = str(self.configFile.read())
+            self.config = yaml.safe_load(configString)
+            print(self.config)
+
+
         w = 600
         h = 400
 
@@ -40,6 +50,8 @@ class FirstTimeSetup(QMainWindow):
         self.pages.addWidget(self.pcsx2)
         self.pages.addWidget(self.pcsx2Iso)
         self.pages.addWidget(self.pc)
+
+        self.pages.currentChanged.connect(self.setConfig)
 
         self.setCentralWidget(self.pages)
 
@@ -87,7 +99,9 @@ class FirstTimeSetup(QMainWindow):
         pageTitleLabel = self.pageTitle("Select OpenKH Directory")
 
         pageContentLayout = QHBoxLayout()
+        pageContentLayout.setObjectName("content")
         directoryBox = QLineEdit()
+        directoryBox.setObjectName("OpenKHDir")
         directoryButton = QPushButton()
         directoryButton.setText("Choose Directory")
         directoryButton.clicked.connect(lambda: self.setPath(directoryBox, "Select OpenKH Directory"))
@@ -115,7 +129,16 @@ class FirstTimeSetup(QMainWindow):
         layout.addWidget(pageContentWidget)
         layout.addWidget(navWidget)
         widget.setLayout(layout)
+
+        #self.setConfig(directoryBox,"OpenKHDir")
+        
         return widget
+
+    def setConfig(self):
+        content = self.pages.currentWidget().findChild(QLineEdit)
+        configKey = content.objectName()
+        if not self.config[configKey] is None:
+            content.setText(self.config[configKey])
 
     def pageTitle(self, text):
         pageTitleLabel = QLabel()
@@ -135,9 +158,11 @@ class FirstTimeSetup(QMainWindow):
 
         pageContentLayout = QHBoxLayout()
         directoryBox = QLineEdit()
+        directoryBox.setObjectName("pcsx2Iso")
         directoryButton = QPushButton()
         directoryButton.setText("Choose File")
         directoryButton.clicked.connect(lambda: self.setFile(directoryBox, "Select Kingdom Hearts II: Final Mix ISO", "*.iso"))
+        #self.setConfig(directoryBox, "pcsx2Iso")
         directoryBox.textChanged.connect(lambda: self.checkCorrectFile(directoryBox,self.KH2ISOMD5, nextButton, "pcsx2Iso"))
         pageContentLayout.addWidget(directoryBox)
         pageContentLayout.addWidget(directoryButton)
@@ -163,6 +188,8 @@ class FirstTimeSetup(QMainWindow):
 
 
         page.setLayout(pageLayout)
+
+
         return page
 
     def pcPage(self):
@@ -196,11 +223,14 @@ class FirstTimeSetup(QMainWindow):
         file = Path(path.text()+"\\"+fileName)
         print(file)
         if file.is_file():
-            self.config[configKey] = str(file)
+            self.config[configKey] = str(path.text())
             nextButton.setDisabled(False)
             print(self.config)
 
     def checkCorrectFile(self,path,md5,nextButton,configKey):
+        if configKey+"Valid" in self.config.keys() and self.config[configKey+"Valid"] == True:
+            nextButton.setDisabled(False)
+            return
         print(path.text())
         alert = Alert("Validating file", "Making sure this is the correct file")
         inputMD5 = hashlib.md5(open(path.text(),'rb').read()).hexdigest().upper()
@@ -208,6 +238,7 @@ class FirstTimeSetup(QMainWindow):
         print(inputMD5)
         if inputMD5 == md5:
             self.config[configKey] = str(path.text())
+            self.config[configKey+"Valid"] = True
             nextButton.setDisabled(False)
             print(self.config)
 
@@ -215,14 +246,14 @@ class FirstTimeSetup(QMainWindow):
         configKeys = ["OpenKHDir"]
         if all(key in self.config for key in configKeys):
             configFile = open("rando-config.yml","w")
-            configFile.write(str(self.config))
+            configFile.write(yaml.safe_dump(self.config))
             configFile.close()
 
 class Alert(QMainWindow):
     def __init__(self, title, message):
         super().__init__()
         self.setWindowTitle(title)
-        layout = QHBoxLayout()
+        layout = QVBoxLayout()
         layout.addWidget(QLabel(message))
         self.setLayout(layout)
         self.show()
