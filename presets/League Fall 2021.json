@@ -1,1 +1,87 @@
-{"League Fall 2021": {"Sora": {"levelChoice": "Level 50", "Form Levels": true, "soraExpMult": 2.0, "ValorExp": 7.0, "WisdomExp": 3.0, "LimitExp": 4.0, "MasterExp": 3.0, "FinalExp": 3.0, "SummonExp": 2.0}, "Starting Items": {"Critical Bonuses": true, "Garden of Assemblage": true, "Schmovement": true, "Library of Assemblage": false, "startingInventory": [369]}, "Hint Systems": {"preventSelfHinting": true, "hintsType": "Shananas"}, "Keyblades": {"keybladeMinStat": 0, "keybladeMaxStat": 7, "keybladeSupport": true, "keybladeAction": false}, "Worlds with Rewards": {"Land of Dragons": true, "Beast's Castle": true, "Hollow Bastion": true, "Cavern of Remembrance": true, "Twilight Town": true, "The World that Never Was": true, "Space Paranoids": true, "Atlantica": false, "Port Royal": true, "Olympus Coliseum": true, "Agrabah": true, "Halloween Town": true, "Pride Lands": true, "Disney Castle/Timeless River": true, "Hundred Acre Wood": true, "Simulated Twilight Town": true}, "Superbosses with Rewards": {"Absent Silhouettes": true, "Data Organization XIII": true, "Sephiroth": true, "Lingering Will (Terra)": false}, "Misc Locations with Rewards": {"Olympus Cups": false, "Hades Paradox Cup": false, "Puzzles": false}, "Seed Modifiers": {"Glass Cannon": false, "Better Junk": false, "Start with No AP": false, "Remove Damage Cap": false}, "Item Placement Options": {"PromiseCharm": false, "itemPlacementDifficulty": "Normal", "Max Logic Item Placement": false, "Reverse Rando": false, "Randomize Ability Pool": false}, "Boss/Enemy": {"enemy": "Disabled", "selected_enemy": "", "nightmare_enemies": 0, "boss": "Disabled", "selected_boss": "", "nightmare_bosses": 0, "scale_boss_stats": 0, "cups_bosses": 0, "data_bosses": 0}}}
+{
+    "League Fall 2021": {
+        "Boss/Enemy": {
+            "boss": "Disabled",
+            "cups_bosses": 0,
+            "data_bosses": 0,
+            "enemy": "Disabled",
+            "nightmare_bosses": 0,
+            "nightmare_enemies": 0,
+            "scale_boss_stats": 0,
+            "selected_boss": "",
+            "selected_enemy": ""
+        },
+        "Hint Systems": {
+            "hintsType": "Shananas",
+            "preventSelfHinting": true
+        },
+        "Item Placement Options": {
+            "Max Logic Item Placement": false,
+            "PromiseCharm": false,
+            "Randomize Ability Pool": false,
+            "Reverse Rando": false,
+            "itemPlacementDifficulty": "Normal"
+        },
+        "Keyblades": {
+            "keybladeAction": false,
+            "keybladeMaxStat": 7,
+            "keybladeMinStat": 0,
+            "keybladeSupport": true
+        },
+        "Misc Locations with Rewards": {
+            "Hades Paradox Cup": false,
+            "Olympus Cups": false,
+            "Puzzles": false
+        },
+        "Seed Modifiers": {
+            "Better Junk": false,
+            "Glass Cannon": false,
+            "Remove Damage Cap": false,
+            "Start with No AP": false
+        },
+        "Sora": {
+            "FinalExp": 3.0,
+            "Form Levels": true,
+            "LimitExp": 4.0,
+            "MasterExp": 3.0,
+            "SummonExp": 2.0,
+            "ValorExp": 7.0,
+            "WisdomExp": 3.0,
+            "levelChoice": "Level 50",
+            "soraExpMult": 2.0
+        },
+        "Starting Items": {
+            "Critical Bonuses": true,
+            "Garden of Assemblage": true,
+            "Library of Assemblage": false,
+            "Schmovement": true,
+            "startingInventory": [
+                369
+            ]
+        },
+        "Superbosses with Rewards": {
+            "Absent Silhouettes": true,
+            "Data Organization XIII": true,
+            "Lingering Will (Terra)": false,
+            "Sephiroth": true
+        },
+        "Worlds with Rewards": {
+            "Agrabah": true,
+            "Atlantica": false,
+            "Beast's Castle": true,
+            "Cavern of Remembrance": true,
+            "Disney Castle/Timeless River": true,
+            "Halloween Town": true,
+            "Hollow Bastion": true,
+            "Hundred Acre Wood": true,
+            "Land of Dragons": true,
+            "Olympus Coliseum": true,
+            "Port Royal": true,
+            "Pride Lands": true,
+            "Simulated Twilight Town": true,
+            "Space Paranoids": true,
+            "The World that Never Was": true,
+            "Twilight Town": true
+        }
+    }
+}

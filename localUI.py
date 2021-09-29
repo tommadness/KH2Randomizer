@@ -274,7 +274,7 @@ class KH2RandomizerApp(QMainWindow):
             self.presets.addItem(text)
             self.presets.setCurrentIndex(self.presets.count()-1)
             with open(PRESET_FOLDER+"\\"+text+".json","w") as presetData:
-                presetData.write(json.dumps(preset))
+                presetData.write(json.dumps(preset, indent=4, sort_keys=True))
             
 
     def usePreset(self,presetName):
