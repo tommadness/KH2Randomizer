@@ -137,24 +137,30 @@ class KH2RandomizerApp(QMainWindow):
 
         makeSpoilerLog = self.spoiler_log.isChecked()
 
-        # TODO pass to randomizer class and mimic the main app file functions
         data={}
         data["platform"]=platform
-        #TODO cmd menu
         cmdMap = RandomCmdMenu.getOptions()
-
         selected = self.commandMenuOptions.currentText()
-
         for key,value in cmdMap.items():
             if value==selected:
                 data["cmdMenuChoice"]=key
-        #TODO music menu
+
         selectedMusic = self.bgmOptions.selectedItems() + self.bgmChoices.selectedItems()
         data["randomBGM"]=[s.text() for s in selectedMusic]
 
-        print(data)
-
         session={}
+
+        #seed
+        session["seed"] = self.seedName.text()
+        if session["seed"] == "":
+            characters = string.ascii_letters + string.digits
+            session["seed"] = (''.join(random.choice(characters) for i in range(30)))
+
+        random.seed(session["seed"])
+
+        #seedHashIcons
+        session["seedHashIcons"] = generateHashIcons()
+
         #includeList
         session["includeList"] = []
 
@@ -197,15 +203,6 @@ class KH2RandomizerApp(QMainWindow):
         for key in seedModifierKeys:
             if settings[key[0]][key[1]]:
                 session["seedModifiers"].append(key[1])
-
-
-        #seed
-        session["seed"] = self.seedName.text()
-        if session["seed"] == "":
-            characters = string.ascii_letters + string.digits
-            session["seed"] = (''.join(random.choice(characters) for i in range(30)))
-        #seedHashIcons
-        session["seedHashIcons"] = generateHashIcons()
 
         #update the seed hash display
         for n,ic in enumerate(session["seedHashIcons"]):
