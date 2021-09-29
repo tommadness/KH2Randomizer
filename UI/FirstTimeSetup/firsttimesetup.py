@@ -41,6 +41,7 @@ class FirstTimeSetup(QMainWindow):
         self.firstPage = self.firstPage()
         self.pcsx2 = self.pcsx2Page()
         self.pcsx2Iso = self.pcsx2IsoPage()
+        self.pcsx2GameData = self.pcsx2GameDataPage()
         self.pc = self.pcPage()
 
 
@@ -49,6 +50,7 @@ class FirstTimeSetup(QMainWindow):
         self.pages.addWidget(self.firstPage)
         self.pages.addWidget(self.pcsx2)
         self.pages.addWidget(self.pcsx2Iso)
+        self.pages.addWidget(self.pcsx2GameData)
         self.pages.addWidget(self.pc)
 
         self.pages.currentChanged.connect(self.setConfig)
@@ -130,7 +132,6 @@ class FirstTimeSetup(QMainWindow):
         layout.addWidget(navWidget)
         widget.setLayout(layout)
 
-        #self.setConfig(directoryBox,"OpenKHDir")
         
         return widget
 
@@ -192,6 +193,46 @@ class FirstTimeSetup(QMainWindow):
 
 
         return page
+
+    def pcsx2GameDataPage(self):
+        widget = QWidget()
+        layout = QVBoxLayout()
+
+        pageTitleLabel = self.pageTitle("Select Game Data Location")
+
+        pageContentLayout = QHBoxLayout()
+        pageContentLayout.setObjectName("content")
+        directoryBox = QLineEdit()
+        directoryBox.setObjectName("pcsx2GameData")
+        directoryButton = QPushButton()
+        directoryButton.setText("Choose Directory")
+        directoryButton.clicked.connect(lambda: self.setPath(directoryBox, "Select Game Data"))
+        pageContentLayout.addWidget(directoryBox)
+        pageContentLayout.addWidget(directoryButton)
+
+        pageContentWidget = QWidget()
+        pageContentWidget.setLayout(pageContentLayout)
+
+        navLayout = QHBoxLayout()
+        nextButton = QPushButton()
+        nextButton.setText("Close")
+        nextButton.setDisabled(True)
+        nextButton.clicked.connect(lambda: self.close())
+        navLayout.addSpacing(400)
+        navLayout.addWidget(nextButton)
+
+        navWidget = QWidget()
+        navWidget.setLayout(navLayout)
+        navWidget.setMaximumHeight(50)
+
+        directoryBox.textChanged.connect(lambda: self.checkCorrectPath(directoryBox,"03system.bin", nextButton, "pcsx2GameData"))
+
+        layout.addWidget(pageTitleLabel)
+        layout.addWidget(pageContentWidget)
+        layout.addWidget(navWidget)
+        widget.setLayout(layout)
+
+        return widget
 
     def pcPage(self):
         widget = QWidget()
