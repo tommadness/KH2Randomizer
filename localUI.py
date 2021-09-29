@@ -1,6 +1,6 @@
 import random,sys,copy,os,json,string,datetime
 from pathlib import Path
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
@@ -8,25 +8,25 @@ from PySide6.QtWidgets import (
     QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget
 )
 
-from Submenus.SoraMenu import SoraMenu
-from Submenus.KeybladeMenu import KeybladeMenu
-from Submenus.WorldMenu import WorldMenu
-from Submenus.SuperbossMenu import SuperbossMenu
-from Submenus.MiscMenu import MiscMenu
-from Submenus.StartingMenu import StartingMenu
-from Submenus.HintsMenu import HintsMenu
-from Submenus.SeedModMenu import SeedModMenu
-from Submenus.ItemPlacementMenu import ItemPlacementMenu
-from Submenus.BossEnemyMenu import BossEnemyMenu
+from UI.Submenus.SoraMenu import SoraMenu
+from UI.Submenus.KeybladeMenu import KeybladeMenu
+from UI.Submenus.WorldMenu import WorldMenu
+from UI.Submenus.SuperbossMenu import SuperbossMenu
+from UI.Submenus.MiscMenu import MiscMenu
+from UI.Submenus.StartingMenu import StartingMenu
+from UI.Submenus.HintsMenu import HintsMenu
+from UI.Submenus.SeedModMenu import SeedModMenu
+from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
+from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 
-sys.path.append("..")
+
 from Module.randomizePage import randomizePage
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
 from List.hashTextEntries import generateHashIcons
 from List.configDict import locationDepth
 
-from FirstTimeSetup.firsttimesetup import FirstTimeSetup
+from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
 
 PRESET_FILE = "presets.json"
@@ -96,13 +96,13 @@ class KH2RandomizerApp(QMainWindow):
 
         self.seedhashlayout.addWidget(QLabel("Seed Hash"))
 
-        self.hashIconPath = Path("../static/seed-hash-icons")
+        self.hashIconPath = Path("static/seed-hash-icons")
         self.hashIcons = []
         for i in range(7):
-            self.hashIcons.append(QPushButton())
+            self.hashIcons.append(QLabel())
             self.hashIcons[-1].blockSignals(True)
-            self.hashIcons[-1].setIconSize(QSize(50,50))
-            self.hashIcons[-1].setIcon(QIcon(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
+            #self.hashIcons[-1].setIconSize(QSize(50,50))
+            self.hashIcons[-1].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
             self.seedhashlayout.addWidget(self.hashIcons[-1])
 
 
@@ -209,7 +209,7 @@ class KH2RandomizerApp(QMainWindow):
 
         #update the seed hash display
         for n,ic in enumerate(session["seedHashIcons"]):
-            self.hashIcons[n].setIcon(QIcon(str(self.hashIconPath.absolute())+"/"+ic+".png"))
+            self.hashIcons[n].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+ic+".png"))
 
         #spoilerLog
         session["spoilerLog"] = "on" if makeSpoilerLog else "off"
