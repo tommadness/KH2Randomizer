@@ -54,8 +54,12 @@ class KH2RandomizerApp(QMainWindow):
         self.presetMenu = QMenu("Preset")
         self.presetMenu.addAction("Open Preset Folder", self.openPresetFolder)
         self.presetsMenu = QMenu("Presets")
+        self.seedMenu = QMenu("Share Seed")
+        self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
+        self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
         self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
         self.presetMenu.addMenu(self.presetsMenu)
+        self.menuBar.addMenu(self.seedMenu)
         self.menuBar.addMenu(self.presetMenu)
         
 
@@ -75,15 +79,6 @@ class KH2RandomizerApp(QMainWindow):
         pagelayout.addLayout(self.cosmetic_layout)
         pagelayout.addLayout(submit_layout)
         pagelayout.addLayout(self.seedhashlayout)
-
-        seedCopy = QPushButton("Share Seed")
-        seedCopy.clicked.connect(self.shareSeed)
-
-        seedReceiver = QPushButton("Receive Seed from Clipboard")
-        seedReceiver.clicked.connect(self.receiveSeed)
-
-        seed_layout.addWidget(seedCopy)
-        seed_layout.addWidget(seedReceiver)
         seed_layout.addWidget(QLabel("Seed"))
         self.seedName=QLineEdit()
         self.seedName.setPlaceholderText("Leave blank for a random seed")
