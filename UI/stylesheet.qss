@@ -158,3 +158,6 @@ QTabBar::tab:!selected {
 QStatusBar {
     color:rgb(240,240,240);
 }
+QCheckBox{
+    color:rgb(255,255,255); 
+}
