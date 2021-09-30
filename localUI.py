@@ -35,6 +35,11 @@ PRESET_FOLDER = "presets"
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        with open("UI/stylesheet.qss","r") as style:
+            data = style.read()
+            self.setStyleSheet(data)
+
         random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator")
         self.setup = None
