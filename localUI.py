@@ -4,8 +4,8 @@ from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
-    QLabel, QLineEdit, QPushButton, QCheckBox, QComboBox,
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget
+    QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QComboBox,
+    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar
 )
 
 from UI.Submenus.SoraMenu import SoraMenu
@@ -44,6 +44,15 @@ class KH2RandomizerApp(QMainWindow):
         self.cosmetic_layout = QHBoxLayout()
         self.tabs = QTabWidget()
 
+        self.menuBar = QMenuBar()
+        self.presetMenu = QMenu("Preset")
+        self.presetMenu.addAction("Open Preset Folder", self.openPresetFolder)
+        self.presetsMenu = QMenu("Presets")
+        self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
+        self.presetMenu.addMenu(self.presetsMenu)
+        self.menuBar.addMenu(self.presetMenu)
+        
+
         presetFolderContents = os.listdir(PRESET_FOLDER)
         self.presetJSON = {}
 
@@ -52,8 +61,9 @@ class KH2RandomizerApp(QMainWindow):
                 with open(PRESET_FOLDER+"\\"+file,"r") as presetData:
                     data = json.loads(presetData.read())
                     for k,v in data.items():
-                        self.presetJSON[k] = v               
-
+                        self.presetJSON[k] = v      
+                 
+        pagelayout.addWidget(self.menuBar)
         pagelayout.addLayout(seed_layout)
         pagelayout.addWidget(self.tabs)
         pagelayout.addLayout(self.cosmetic_layout)
@@ -65,17 +75,9 @@ class KH2RandomizerApp(QMainWindow):
         self.seedName.setPlaceholderText("Leave blank for a random seed")
         seed_layout.addWidget(self.seedName)
 
-        self.presets = QComboBox()
-        self.presets.setMinimumWidth(200)
-        self.presets.addItem("Presets")
-        for x in self.presetJSON.keys():
-            self.presets.addItem(x)
-        self.presets.currentTextChanged.connect(self.usePreset)
-        seed_layout.addWidget(self.presets)
 
-        savePresetButton = QPushButton("Save Settings as New Preset")
-        savePresetButton.clicked.connect(self.savePreset)
-        seed_layout.addWidget(savePresetButton)
+        for x in self.presetJSON.keys():
+            self.presetsMenu.addAction(x, lambda: self.usePreset(x))
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         seed_layout.addWidget(self.spoiler_log)
@@ -271,10 +273,12 @@ class KH2RandomizerApp(QMainWindow):
                 settings[x.getName()] = copy.deepcopy(x.getData())
             preset[text] = settings
             self.presetJSON[text] = settings
-            self.presets.addItem(text)
-            self.presets.setCurrentIndex(self.presets.count()-1)
+            self.presetsMenu.addAction(text, lambda: self.usePreset(text))
             with open(PRESET_FOLDER+"\\"+text+".json","w") as presetData:
                 presetData.write(json.dumps(preset, indent=4, sort_keys=True))
+
+    def openPresetFolder(self):
+        os.startfile(PRESET_FOLDER)
             
 
     def usePreset(self,presetName):
