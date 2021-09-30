@@ -5,3 +5,5 @@ venv
 .vs
 .vscode
 XYZ
+/build/
+/dist/

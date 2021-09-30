@@ -1,9 +1,17 @@
-import os
+import os,sys
 
 from UI.Submenus.SubMenu import KH2Submenu
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QPushButton
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(
+        sys,
+        '_MEIPASS',
+        os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 
 class WorldMenu(KH2Submenu):
@@ -35,7 +43,7 @@ class WorldMenu(KH2Submenu):
         for i in range(len(self.worlds)):
             world = self.worlds[i]
             worldWidget = QPushButton()
-            icon = QIcon(dir_path+"/"+world["icon"])
+            icon = QIcon(resource_path(dir_path+"/"+world["icon"]))
             worldWidget.setFixedSize(icon.actualSize(icon.availableSizes()[0]/8))
             worldWidget.setIcon(icon)
             worldWidget.setIconSize(icon.availableSizes()[0]/8)

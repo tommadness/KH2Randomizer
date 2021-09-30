@@ -31,12 +31,19 @@ from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
 
 PRESET_FOLDER = "presets"
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(
+        sys,
+        '_MEIPASS',
+        os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        with open("UI/stylesheet.qss","r") as style:
+        with open(resource_path("UI/stylesheet.qss"),"r") as style:
             data = style.read()
             self.setStyleSheet(data)
 
@@ -62,9 +69,11 @@ class KH2RandomizerApp(QMainWindow):
         self.menuBar.addMenu(self.seedMenu)
         self.menuBar.addMenu(self.presetMenu)
         
-
-        presetFolderContents = os.listdir(PRESET_FOLDER)
         self.presetJSON = {}
+        if not os.path.exists(PRESET_FOLDER):
+            os.makedirs(PRESET_FOLDER)
+        presetFolderContents = os.listdir(PRESET_FOLDER)
+
 
         if not presetFolderContents == []:
             for file in presetFolderContents:
@@ -110,7 +119,7 @@ class KH2RandomizerApp(QMainWindow):
 
         self.seedhashlayout.addWidget(QLabel("Seed Hash"))
 
-        self.hashIconPath = Path("static/seed-hash-icons")
+        self.hashIconPath = Path(resource_path("static/seed-hash-icons"))
         self.hashIcons = []
         for i in range(7):
             self.hashIcons.append(QLabel())

@@ -488,8 +488,15 @@ class KH2Randomizer():
                     enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
 
             if spoilerLog:
+                def resource_path(relative_path):
+                    """ Get absolute path to resource, works for dev and for PyInstaller """
+                    base_path = getattr(
+                        sys,
+                        '_MEIPASS',
+                        os.path.dirname(os.path.abspath(__file__)))
+                    return os.path.join(base_path, relative_path)
                 mod["title"] += " {seedName}".format(seedName = self.seedName)
-                with open(path_to_static/Path("spoilerlog.html")) as spoiler_site:
+                with open(resource_path(Path("..\static\spoilerlog.html"))) as spoiler_site:
                     html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
                     outZip.writestr("spoilerlog.html",html_template)
                 if enemySpoilers:
@@ -499,7 +506,7 @@ class KH2Randomizer():
             
             mod["assets"] += RandomBGM.randomizeBGM(randomBGM, platform)
 
-            outZip.write(path_to_module/"icon.png", "icon.png")
+            outZip.write(resource_path(Path("icon.png")), "icon.png")
 
 
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
