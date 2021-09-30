@@ -318,6 +318,15 @@ class KH2Randomizer():
         self._noap = settrue
 
     def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsText = None, startingInventory=[], platform="PCSX2"):
+
+        def resource_path(relative_path):
+            """ Get absolute path to resource, works for dev and for PyInstaller """
+            base_path = getattr(
+                sys,
+                '_MEIPASS',
+                os.path.dirname(os.path.abspath(__file__)))
+            return os.path.join(base_path, relative_path)
+
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -488,13 +497,7 @@ class KH2Randomizer():
                     enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
 
             if spoilerLog:
-                def resource_path(relative_path):
-                    """ Get absolute path to resource, works for dev and for PyInstaller """
-                    base_path = getattr(
-                        sys,
-                        '_MEIPASS',
-                        os.path.dirname(os.path.abspath(__file__)))
-                    return os.path.join(base_path, relative_path)
+
                 mod["title"] += " {seedName}".format(seedName = self.seedName)
                 with open(resource_path(Path("..\static\spoilerlog.html"))) as spoiler_site:
                     html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
