@@ -1,5 +1,5 @@
 {
-    "League Fall 2021": {
+    "Test": {
         "Boss/Enemy": {
             "boss": "Disabled",
             "cups_bosses": 0,
@@ -46,7 +46,7 @@
             "MasterExp": 3.0,
             "SummonExp": 2.0,
             "ValorExp": 7.0,
-            "WisdomExp": 3.0,
+            "WisdomExp": 4.5,
             "levelChoice": "Level 50",
             "soraExpMult": 2.0
         },
