@@ -1,11 +1,12 @@
 import random,sys,copy,os,json,string,datetime
+import pyperclip as pc
 from pathlib import Path
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QSize,Qt
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QComboBox,
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar
+    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar,QMessageBox
 )
 
 from UI.Submenus.SoraMenu import SoraMenu
@@ -70,6 +71,14 @@ class KH2RandomizerApp(QMainWindow):
         pagelayout.addLayout(submit_layout)
         pagelayout.addLayout(self.seedhashlayout)
 
+        seedCopy = QPushButton("Share Seed")
+        seedCopy.clicked.connect(self.shareSeed)
+
+        seedReceiver = QPushButton("Receive Seed from Clipboard")
+        seedReceiver.clicked.connect(self.receiveSeed)
+
+        seed_layout.addWidget(seedCopy)
+        seed_layout.addWidget(seedReceiver)
         seed_layout.addWidget(QLabel("Seed"))
         self.seedName=QLineEdit()
         self.seedName.setPlaceholderText("Leave blank for a random seed")
@@ -77,7 +86,7 @@ class KH2RandomizerApp(QMainWindow):
 
 
         for x in self.presetJSON.keys():
-            self.presetsMenu.addAction(x, lambda: self.usePreset(x))
+            self.presetsMenu.addAction(x, lambda x=x: self.usePreset(x))
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         seed_layout.addWidget(self.spoiler_log)
@@ -142,24 +151,30 @@ class KH2RandomizerApp(QMainWindow):
 
         makeSpoilerLog = self.spoiler_log.isChecked()
 
-        # TODO pass to randomizer class and mimic the main app file functions
         data={}
         data["platform"]=platform
-        #TODO cmd menu
         cmdMap = RandomCmdMenu.getOptions()
-
         selected = self.commandMenuOptions.currentText()
-
         for key,value in cmdMap.items():
             if value==selected:
                 data["cmdMenuChoice"]=key
-        #TODO music menu
+
         selectedMusic = self.bgmOptions.selectedItems() + self.bgmChoices.selectedItems()
         data["randomBGM"]=[s.text() for s in selectedMusic]
 
-        print(data)
-
         session={}
+
+        #seed
+        session["seed"] = self.seedName.text()
+        if session["seed"] == "":
+            characters = string.ascii_letters + string.digits
+            session["seed"] = (''.join(random.choice(characters) for i in range(30)))
+
+        random.seed(session["seed"])
+
+        #seedHashIcons
+        session["seedHashIcons"] = generateHashIcons()
+
         #includeList
         session["includeList"] = []
 
@@ -202,15 +217,6 @@ class KH2RandomizerApp(QMainWindow):
         for key in seedModifierKeys:
             if settings[key[0]][key[1]]:
                 session["seedModifiers"].append(key[1])
-
-
-        #seed
-        session["seed"] = self.seedName.text()
-        if session["seed"] == "":
-            characters = string.ascii_letters + string.digits
-            session["seed"] = (''.join(random.choice(characters) for i in range(30)))
-        #seedHashIcons
-        session["seedHashIcons"] = generateHashIcons()
 
         #update the seed hash display
         for n,ic in enumerate(session["seedHashIcons"]):
@@ -286,6 +292,42 @@ class KH2RandomizerApp(QMainWindow):
             preset_values = self.presetJSON[presetName]
             for x in self.widgets:
                 x.setData(preset_values[x.getName()])
+
+    def shareSeed(self):
+        settings = {}
+        for x in self.widgets:
+            settings[x.getName()] = copy.deepcopy(x.getData())
+
+        #if seed hasn't been set yet, make one
+        current_seed = self.seedName.text()
+        if current_seed == "":
+            characters = string.ascii_letters + string.digits
+            current_seed = (''.join(random.choice(characters) for i in range(30)))
+            self.seedName.setText(current_seed)
+
+        makeSpoilerLog = self.spoiler_log.isChecked()
+
+        seed = {}
+        seed["spoiler_log"] = makeSpoilerLog
+        seed["seed_name"] = current_seed
+        seed["settings"] = settings
+
+        pc.copy(json.dumps(seed))
+        message = QMessageBox(text="Copied seed to clipboard")
+        message.setWindowTitle("KH2 Seed Generator")
+        message.exec()
+    
+    def receiveSeed(self):
+        in_settings = json.loads(pc.paste())
+
+        self.spoiler_log.setCheckState(Qt.Checked if in_settings["spoiler_log"] else Qt.Unchecked)
+        self.seedName.setText(in_settings["seed_name"])
+        settings_values = in_settings["settings"]
+        for x in self.widgets:
+            x.setData(settings_values[x.getName()])
+        message = QMessageBox(text="Received seed from clipboard")
+        message.setWindowTitle("KH2 Seed Generator")
+        message.exec()
         
     def firstTimeSetup(self):
         print("First Time Setup")
