@@ -156,7 +156,7 @@ class KH2RandomizerApp(QMainWindow):
     def makeSeed(self,platform):
         settings = {}
         for x in self.widgets:
-            settings[x.getName()] = x.getData()
+            settings[x.getName()] = copy.deepcopy(x.getData())
 
         makeSpoilerLog = self.spoiler_log.isChecked()
 
