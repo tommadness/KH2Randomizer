@@ -11,11 +11,13 @@ class HintsMenu(KH2Submenu):
         hintSystem.addItems(["Disabled","Shananas","JSmartee","JSmartee-FirstVisit","JSmartee-SecondVisit","JSmartee-FirstBoss","JSmartee-SecondBoss"])
         hintSystem.currentTextChanged.connect(self.changeHintsType)
         self.addOption("Hint System",hintSystem)
+        self.addFlagOption(hintSystem,"hintsType")
         
         self.noSelfHinting = QCheckBox()
         self.noSelfHinting.stateChanged.connect(lambda state : self.setKeyValue("preventSelfHinting",state==Qt.Checked))
         self.noSelfHinting.setCheckState(Qt.Checked)
         self.addOption("Remove Self-Hinting Reports (JSmartee Only)",self.noSelfHinting)
+        self.addFlagOption(self.noSelfHinting,"preventSelfHinting")
 
         # setting hints after to trigger the enable/disable of self-hinting
         hintSystem.setCurrentIndex(1)

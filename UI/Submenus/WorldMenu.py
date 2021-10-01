@@ -54,6 +54,7 @@ class WorldMenu(KH2Submenu):
                 worldWidget.toggle()
 
             self.addOption(world["name"],worldWidget,option_layout="vertical",grid_pos=(i//4,i%4))
+            self.addFlagOption(worldWidget,world["name"])
 
         self.finalizeMenu()
 

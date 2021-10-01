@@ -13,11 +13,13 @@ class SoraMenu(KH2Submenu):
         soraLevels.setCurrentIndex(1)
 
         self.addOption("Sora Levels",soraLevels)
+        self.addFlagOption(soraLevels,"levelChoice")
 
         formLevels = QCheckBox()
         formLevels.stateChanged.connect(lambda state : self.setKeyValue("Form Levels",state==Qt.Checked))
         formLevels.setCheckState(Qt.Checked)
         self.addOption("Form Level Rewards",formLevels)
+        self.addFlagOption(formLevels,"Form Levels")
 
         self.addHeader("Experience Multipliers")
 
@@ -30,6 +32,7 @@ class SoraMenu(KH2Submenu):
         line = soraExp.lineEdit()
         line.setReadOnly(True)
         self.addOption("Sora",soraExp)
+        self.addFlagOption(soraExp,"soraExpMult")
 
         self.drives = ["Valor","Wisdom","Limit","Master","Final","Summon"]
         expMult = [7,3,4,3,3,2]
@@ -44,6 +47,7 @@ class SoraMenu(KH2Submenu):
             line = driveExp.lineEdit()
             line.setReadOnly(True)
             self.addOption(self.drives[i],driveExp)
+            self.addFlagOption(driveExp,f"{self.drives[i]}Exp")
 
 
 

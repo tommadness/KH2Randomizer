@@ -2,6 +2,12 @@ from UI.Submenus.SubMenu import KH2Submenu
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QCheckBox,QListWidget 
 
+StartingItemList = [(138,"Scan"),(404,"No Experience"),
+                (158,"Aerial Recovery"),(82,"Guard"),
+                (537,"Hades Cup Trophy"),(369,"Membership Card"),
+                (593,"Proof of Connection"),(594,"Proof of Nonexistence"),
+                (595,"Proof of Peace"),(524,"Promise Charm")]
+
 class StartingMenu(KH2Submenu):
     def __init__(self):
         super().__init__()
@@ -12,11 +18,13 @@ class StartingMenu(KH2Submenu):
         critBonuses.stateChanged.connect(lambda state : self.setKeyValue("Critical Bonuses",state==Qt.Checked))
         critBonuses.setCheckState(Qt.Checked)
         self.addOption("Critical Bonuses",critBonuses)
+        self.addFlagOption(critBonuses,"Critical Bonuses")
 
         goa = QCheckBox()
         goa.stateChanged.connect(lambda state : self.setKeyValue("Garden of Assemblage",state==Qt.Checked))
         goa.setCheckState(Qt.Checked)
         self.addOption("Garden of Assemblage",goa)
+        self.addFlagOption(goa,"Garden of Assemblage")
 
         self.addHeader("Starting Inventory Options")
 
@@ -24,19 +32,17 @@ class StartingMenu(KH2Submenu):
         schmovement.stateChanged.connect(lambda state : self.setKeyValue("Schmovement",state==Qt.Checked))
         schmovement.setCheckState(Qt.Checked)
         self.addOption("Schmovement",schmovement)
+        self.addFlagOption(schmovement,"Schmovement")
 
         libraryOfAssemblage = QCheckBox()
         libraryOfAssemblage.stateChanged.connect(lambda state : self.setKeyValue("Library of Assemblage",state==Qt.Checked))
         libraryOfAssemblage.setCheckState(Qt.Checked)
         libraryOfAssemblage.setCheckState(Qt.Unchecked)
         self.addOption("Library Of Assemblage",libraryOfAssemblage)
+        self.addFlagOption(libraryOfAssemblage,"Library of Assemblage")
 
 
-        self.items = [(138,"Scan"),(404,"No Experience"),
-                (158,"Aerial Recovery"),(82,"Guard"),
-                (537,"Hades Cup Trophy"),(369,"Membership Card"),
-                (593,"Proof of Connection"),(594,"Proof of Nonexistence"),
-                (595,"Proof of Peace"),(524,"Promise Charm")]
+        self.items = StartingItemList
 
 
         self.startingItems = QListWidget()
@@ -50,6 +56,7 @@ class StartingMenu(KH2Submenu):
         self.addSingleItem("Membership Card")
 
         self.addOption("Starting Inventory",self.startingItems)
+        self.addFlagOption(self.startingItems,"startingInventory")
 
         self.finalizeMenu()
 

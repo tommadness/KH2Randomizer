@@ -27,6 +27,8 @@ class KeybladeMenu(KH2Submenu):
 
         self.addOption("Keyblade Min Stat",minimumStats)
         self.addOption("Keyblade Max Stat",maximumStats)
+        self.addFlagOption(minimumStats,"keybladeMinStat")
+        self.addFlagOption(maximumStats,"keybladeMaxStat")
 
         supportAbilities = QCheckBox()
         supportAbilities.stateChanged.connect(lambda state : self.setKeyValue("keybladeSupport",state==Qt.Checked))
@@ -37,6 +39,8 @@ class KeybladeMenu(KH2Submenu):
         actionAbilities.setCheckState(Qt.Unchecked)
         self.addOption("Support Keyblade Abilities",supportAbilities)
         self.addOption("Action Keyblade Abilities",actionAbilities)
+        self.addFlagOption(supportAbilities,"keybladeSupport")
+        self.addFlagOption(actionAbilities,"keybladeAction")
 
         self.finalizeMenu()
 

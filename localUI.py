@@ -14,7 +14,7 @@ from UI.Submenus.KeybladeMenu import KeybladeMenu
 from UI.Submenus.WorldMenu import WorldMenu
 from UI.Submenus.SuperbossMenu import SuperbossMenu
 from UI.Submenus.MiscMenu import MiscMenu
-from UI.Submenus.StartingMenu import StartingMenu
+from UI.Submenus.StartingMenu import StartingMenu,StartingItemList
 from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
@@ -29,6 +29,87 @@ from List.configDict import locationDepth
 
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
+def convert_seed_to_flags(seed, flagOptions):
+    flagInts={}
+    flattened = []
+    for key in seed["settings"].keys():
+        flagInts[key] = {}
+        for subkey in seed["settings"][key].keys():
+            if flagOptions[key][subkey]["type"]=="bool":
+                flagInts[key][subkey] = 1 if seed["settings"][key][subkey] else 0
+                flattened.append((key+"-"+subkey,flagInts[key][subkey]))
+            if flagOptions[key][subkey]["type"]=="select":
+                flagInts[key][subkey] = flagOptions[key][subkey]["options"].index(seed["settings"][key][subkey])
+                flattened.append((key+"-"+subkey,flagInts[key][subkey]))
+            if flagOptions[key][subkey]["type"]=="multiselect":
+                bit_string="0b"
+                for item_id,item_string in StartingItemList:
+                    if item_id in seed["settings"][key][subkey]:
+                        bit_string+='1'
+                    else:
+                        bit_string+='0'
+                flagInts[key][subkey] = int(bit_string, 2)
+                flattened.append((key+"-"+subkey,flagInts[key][subkey]))
+
+            if flagOptions[key][subkey]["type"]=="spin":
+                val = seed["settings"][key][subkey]
+                flagInts[key][subkey] = int((val-flagOptions[key][subkey]["min"])/flagOptions[key][subkey]["step"])
+                flattened.append((key+"-"+subkey,flagInts[key][subkey]))
+
+
+    flattened.sort(key=lambda x: x[0])
+
+    flags = seed["seed_name"]+"***"+str(1 if seed["spoiler_log"] else 0)
+
+    for item in flattened:
+        flags+="*"
+        flags+=str(item[1])
+
+    return flags
+
+def convert_flags_to_seed(flags, flagOptions):
+    seed={}
+    seed["seed_name"] = flags.split("***")[0]
+    flags = flags.split("***")[1]
+    flag_list = flags.split("*")
+    seed["spoiler_log"] = bool(int(flag_list[0]))
+    flag_list.pop(0)
+
+    flattened = []
+    for key in flagOptions.keys():
+        for subkey in flagOptions[key].keys():
+            if flagOptions[key][subkey]["type"]=="bool":
+                flattened.append((key+"-"+subkey,key,subkey))
+            if flagOptions[key][subkey]["type"]=="select":
+                flattened.append((key+"-"+subkey,key,subkey))
+            if flagOptions[key][subkey]["type"]=="multiselect":
+                flattened.append((key+"-"+subkey,key,subkey))
+            if flagOptions[key][subkey]["type"]=="spin":
+                flattened.append((key+"-"+subkey,key,subkey))
+
+    flattened.sort(key=lambda x: x[0])
+    seed["settings"] = {}
+
+    for item,key,subkey in flattened:
+        flag = flag_list.pop(0)
+        if key not in seed["settings"]:
+            seed["settings"][key]={}
+        if flagOptions[key][subkey]["type"]=="bool":
+            seed["settings"][key][subkey] = bool(int(flag))
+        if flagOptions[key][subkey]["type"]=="select":
+            seed["settings"][key][subkey] = flagOptions[key][subkey]["options"][int(flag)]
+        if flagOptions[key][subkey]["type"]=="multiselect":
+            item_flags = format((int(flag)), "#0"+str(len(flagOptions[key][subkey]["options"])+2)+"b")
+            item_flags = item_flags[2:]
+            starting = []
+            for index,(item_id,item_string) in enumerate(StartingItemList):
+                if item_flags[index]=='1':
+                    starting.append(item_id)
+            seed["settings"][key][subkey] = starting
+        if flagOptions[key][subkey]["type"]=="spin":
+            seed["settings"][key][subkey] = flagOptions[key][subkey]["min"]+flagOptions[key][subkey]["step"]*int(flag)
+
+    return seed
 
 PRESET_FOLDER = "presets"
 def resource_path(relative_path):
@@ -156,7 +237,7 @@ class KH2RandomizerApp(QMainWindow):
     def makeSeed(self,platform):
         settings = {}
         for x in self.widgets:
-            settings[x.getName()] = x.getData()
+            settings[x.getName()] = copy.deepcopy(x.getData())
 
         makeSpoilerLog = self.spoiler_log.isChecked()
 
@@ -304,8 +385,10 @@ class KH2RandomizerApp(QMainWindow):
 
     def shareSeed(self):
         settings = {}
+        flags = {}
         for x in self.widgets:
             settings[x.getName()] = copy.deepcopy(x.getData())
+            flags[x.getName()] = copy.deepcopy(x.getFlagOptions())
 
         #if seed hasn't been set yet, make one
         current_seed = self.seedName.text()
@@ -321,13 +404,18 @@ class KH2RandomizerApp(QMainWindow):
         seed["seed_name"] = current_seed
         seed["settings"] = settings
 
-        pc.copy(json.dumps(seed))
+        output_text = convert_seed_to_flags(seed,flags)
+
+        pc.copy(output_text)
         message = QMessageBox(text="Copied seed to clipboard")
         message.setWindowTitle("KH2 Seed Generator")
         message.exec()
     
     def receiveSeed(self):
-        in_settings = json.loads(pc.paste())
+        flags = {}
+        for x in self.widgets:
+            flags[x.getName()] = copy.deepcopy(x.getFlagOptions())
+        in_settings = convert_flags_to_seed(pc.paste(),flags)
 
         self.spoiler_log.setCheckState(Qt.Checked if in_settings["spoiler_log"] else Qt.Unchecked)
         self.seedName.setText(in_settings["seed_name"])

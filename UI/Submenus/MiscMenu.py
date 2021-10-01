@@ -35,6 +35,7 @@ class MiscMenu(KH2Submenu):
                 worldWidget.toggle()
 
             self.addOption(world["name"],worldWidget,option_layout="vertical")
+            self.addFlagOption(worldWidget,world["name"])
 
         self.finalizeMenu()
 

@@ -17,10 +17,11 @@ class BossEnemyMenu(KH2Submenu):
                 if True in self.bossEnemyConfig[key]["possible_values"]:
                     # needs to be a toggle
                     box = QCheckBox()
-                    box.stateChanged.connect(lambda state, key=key: self.setKeyValue(key,state))
+                    box.stateChanged.connect(lambda state, key=key: self.setKeyValue(key,state==Qt.Checked))
                     box.setCheckState(Qt.Checked)
                     box.setCheckState(Qt.Unchecked)
                     self.addOption(self.bossEnemyConfig[key]["display_name"],box)
+                    self.addFlagOption(box,key)
                 else:
                     # combo box
                     box = QComboBox()
@@ -29,6 +30,7 @@ class BossEnemyMenu(KH2Submenu):
                     box.setCurrentIndex(1)
                     box.setCurrentIndex(0)
                     self.addOption(self.bossEnemyConfig[key]["display_name"],box)
+                    self.addFlagOption(box,key)
 
         self.finalizeMenu()
 

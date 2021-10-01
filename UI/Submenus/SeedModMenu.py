@@ -12,24 +12,28 @@ class SeedModMenu(KH2Submenu):
         glassCannon.setCheckState(Qt.Checked)
         glassCannon.setCheckState(Qt.Unchecked)
         self.addOption("Glass Cannon",glassCannon)
+        self.addFlagOption(glassCannon,"Glass Cannon")
 
         betterJunk = QCheckBox()
         betterJunk.stateChanged.connect(lambda state : self.setKeyValue("Better Junk",state==Qt.Checked))
         betterJunk.setCheckState(Qt.Checked)
         betterJunk.setCheckState(Qt.Unchecked)
         self.addOption("Better Junk",betterJunk)
+        self.addFlagOption(betterJunk,"Better Junk")
 
         startNoAp = QCheckBox()
         startNoAp.stateChanged.connect(lambda state : self.setKeyValue("Start with No AP",state==Qt.Checked))
         startNoAp.setCheckState(Qt.Checked)
         startNoAp.setCheckState(Qt.Unchecked)
         self.addOption("Start with No AP",startNoAp)
+        self.addFlagOption(startNoAp,"Start with No AP")
 
         removeDamageCap = QCheckBox()
         removeDamageCap.stateChanged.connect(lambda state : self.setKeyValue("Remove Damage Cap",state==Qt.Checked))
         removeDamageCap.setCheckState(Qt.Checked)
         removeDamageCap.setCheckState(Qt.Unchecked)
         self.addOption("Remove Damage Cap",removeDamageCap)
+        self.addFlagOption(removeDamageCap,"Remove Damage Cap")
 
 
         self.finalizeMenu()

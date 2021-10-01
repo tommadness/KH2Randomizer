@@ -37,6 +37,7 @@ class SuperbossMenu(KH2Submenu):
                 worldWidget.toggle()
 
             self.addOption(world["name"],worldWidget,option_layout="vertical",grid_pos=(i//2,i%2))
+            self.addFlagOption(worldWidget,world["name"])
 
         self.finalizeMenu()
 
