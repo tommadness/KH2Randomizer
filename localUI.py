@@ -288,7 +288,13 @@ class KH2RandomizerApp(QMainWindow):
 
 
         #levelChoice
-        session["levelChoice"] = settings["Sora"]["levelChoice"]
+        levelChoice = settings["Sora"]["levelChoice"]
+        if levelChoice =="Level 1":
+            session["levelChoice"] = "Level"
+        if levelChoice =="Level 50":
+            session["levelChoice"] = "ExcludeFrom50"
+        if levelChoice =="Level 99":
+            session["levelChoice"] = "ExcludeFrom99"
         #startingInventory
         session["startingInventory"] = settings["Starting Items"]["startingInventory"]
         #itemPlacementDifficulty
