@@ -24,7 +24,7 @@ class WorldMenu(KH2Submenu):
                     {"name":"Hollow Bastion","enabled":True,"icon":"icons/worlds/hollow_bastion.png"},
                     {"name":"Cavern of Remembrance","enabled":True,"icon":"icons/worlds/cor.png"},
                     {"name":"Twilight Town","enabled":True,"icon":"icons/worlds/twilight_town.png"},
-                    {"name":"The World that Never Was","enabled":True,"icon":"icons/worlds/the_world_that_never_was.png"},
+                    {"name":"The World That Never Was","enabled":True,"icon":"icons/worlds/the_world_that_never_was.png"},
                     {"name":"Space Paranoids","enabled":True,"icon":"icons/worlds/space_paranoids.png"},
                     {"name":"Atlantica","enabled":False,"icon":"icons/worlds/atlantica_musical.png"},
                     {"name":"Port Royal","enabled":True,"icon":"icons/worlds/port_royal.png"},
@@ -32,7 +32,7 @@ class WorldMenu(KH2Submenu):
                     {"name":"Agrabah","enabled":True,"icon":"icons/worlds/agrabah.png"},
                     {"name":"Halloween Town","enabled":True,"icon":"icons/worlds/halloween_town.png"},
                     {"name":"Pride Lands","enabled":True,"icon":"icons/worlds/pride_lands.png"},
-                    {"name":"Disney Castle/Timeless River","enabled":True,"icon":"icons/worlds/disney_castle.png"},
+                    {"name":"Disney Castle / Timeless River","enabled":True,"icon":"icons/worlds/disney_castle.png"},
                     {"name":"Hundred Acre Wood","enabled":True,"icon":"icons/worlds/100_acre_wood.png"},
                     {"name":"Simulated Twilight Town","enabled":True,"icon":"icons/worlds/simulated_twilight_town.png"},
                     ]
