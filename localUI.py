@@ -319,7 +319,7 @@ class KH2RandomizerApp(QMainWindow):
             self.hashIcons[n].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+ic+".png"))
 
         #spoilerLog
-        session["spoilerLog"] = "on" if makeSpoilerLog else "off"
+        session["spoilerLog"] = makeSpoilerLog
         #reportDepth
         #hintsType
         reportStringList = settings["Hint Systems"]["hintsType"].split('-')
