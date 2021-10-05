@@ -1,4 +1,16 @@
-## Item Weights
+## Location Differences between Difficulties
+
+| Difficulty | Early Weight | Neutral Weight | Late Weight |
+| --- |  --- | --- |  --- |
+| Super Easy |  500 | 10 |  1 |
+| Easy |  10 | 10 |  1 |
+| Normal |  1 | 1 |  1 |
+| Hard |  1 | 1 |  5 |
+| Very Hard |  1 | 10 |  50 |
+| Insane |  1 | 100 |  5000 |
+| Nightmare |  1 | 1 |  5000 |
+
+## Item Location Weights
 Below you can find a list of all world locations and their classification of early, neutral, and late. Early checks are weighted in easier item placement difficulties, and late checks are weighted in harder item placement difficulties.
 
 | Form Level | Weight |
@@ -176,7 +188,7 @@ Below you can find a list of all world locations and their classification of ear
 | Tower Wardrobe Mythril Stone | Neutral |
 | Star Seeker | Neutral |
 | Valor Form | Neutral |
-| Seifer´s Trophy | Neutral |
+| SeiferÂ´s Trophy | Neutral |
 | Oathkeeper | Neutral |
 | Limit Form | Neutral |
 | Underground Concourse Mythril Gem | Neutral |
@@ -324,8 +336,8 @@ Below you can find a list of all world locations and their classification of ear
 | The Lock Caverns Map | Neutral |
 | The Lock Mythril Shard | Neutral |
 | The Lock AP Boost | Neutral |
-| Hero´s Crest | Neutral |
-| Auron´s Statue | Late |
+| HeroÂ´s Crest | Neutral |
+| AuronÂ´s Statue | Late |
 | Guardian Soul | Late |
 | Protect Belt (Pain and Panic Cup) | Late |
 | Serenity Gem (Pain and Panic Cup) | Late |
@@ -514,7 +526,7 @@ Below you can find a list of all world locations and their classification of ear
 | Mansion Foyer Potion (2) | Neutral |
 | Mansion Dining Room Elven Bandanna | Neutral |
 | Mansion Dining Room Potion | Neutral |
-| Naminé´s Sketches | Neutral |
+| NaminÃ©Â´s Sketches | Neutral |
 | Mansion Map | Neutral |
 | Mansion Library Hi-Potion | Neutral |
 | Mansion Basement Corridor Hi-Potion | Neutral |
