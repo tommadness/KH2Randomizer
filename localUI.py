@@ -1,4 +1,4 @@
-import random,sys,copy,os,json,string,datetime
+import random,sys,copy,os,json,string,datetime,pytz
 import pyperclip as pc
 from pathlib import Path
 from PySide6.QtGui import QIcon, QPixmap
@@ -21,11 +21,12 @@ from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 
 
+from Module.dailySeed import getDailyModifiers
 from Module.randomizePage import randomizePage
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
 from List.hashTextEntries import generateHashIcons
-from List.configDict import locationDepth
+from List.configDict import locationDepth,locationType
 
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
@@ -123,6 +124,11 @@ def resource_path(relative_path):
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.UTC = pytz.utc
+        self.startTime = datetime.datetime.now(self.UTC)
+        self.dailySeedName = self.startTime.strftime('%d_%m_%Y')
+        self.mods = getDailyModifiers(self.startTime)
+
 
         with open(resource_path("UI/stylesheet.qss"),"r") as style:
             data = style.read()
@@ -149,6 +155,9 @@ class KH2RandomizerApp(QMainWindow):
         self.presetMenu.addMenu(self.presetsMenu)
         self.menuBar.addMenu(self.seedMenu)
         self.menuBar.addMenu(self.presetMenu)
+
+        # populate a menu item for the daily seed
+        self.menuBar.addAction("Load Daily Seed", self.loadDailySeed)
         
         self.presetJSON = {}
         if not os.path.exists(PRESET_FOLDER):
@@ -233,6 +242,24 @@ class KH2RandomizerApp(QMainWindow):
         widget = QWidget()
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
+
+    def loadDailySeed(self):
+        self.seedName.setText(self.dailySeedName)
+
+        preset_values = copy.deepcopy(self.presetJSON["BaseDailySeed"])
+        # use the modifications to change the preset
+        mod_string = f"Updated settings for Daily Seed {self.startTime.strftime('%a %b %d %Y')}\n\n"
+        for m in self.mods:
+            m.local_modifier(preset_values)
+            mod_string+=m.name+" - "+m.description+"\n"
+
+        for x in self.widgets:
+            x.setData(preset_values[x.getName()])
+
+        message = QMessageBox(text=mod_string)
+        message.setWindowTitle("KH2 Seed Generator - Daily Seed")
+        message.exec()
+
 
     def makeSeed(self,platform):
         settings = {}
