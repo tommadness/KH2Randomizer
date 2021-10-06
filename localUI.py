@@ -377,7 +377,15 @@ class KH2RandomizerApp(QMainWindow):
             }
         #enemyOptions
         settings["Boss/Enemy"]["remove_damage_cap"] = "Remove Damage Cap" in session["seedModifiers"]
+
+        if settings["Boss/Enemy"]["selected_enemy"]=="":
+            settings["Boss/Enemy"].pop("selected_enemy")
+        if settings["Boss/Enemy"]["selected_boss"]=="":
+            settings["Boss/Enemy"].pop("selected_boss")
+
         session["enemyOptions"] = json.dumps(settings["Boss/Enemy"])
+
+        print(session["enemyOptions"])
 
         zip_file = randomizePage(data,session,local_ui=True)
 
