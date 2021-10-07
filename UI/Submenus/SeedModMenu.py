@@ -1,45 +1,15 @@
+from Class import settingkey
+from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QCheckBox 
+
 
 class SeedModMenu(KH2Submenu):
-    def __init__(self):
-        super().__init__()
-        self.name="Seed Modifiers"
+    def __init__(self, settings: SeedSettings):
+        super().__init__(title='Seed Modifiers', settings=settings)
 
-        glassCannon = QCheckBox()
-        glassCannon.stateChanged.connect(lambda state : self.setKeyValue("Glass Cannon",state==Qt.Checked))
-        glassCannon.setCheckState(Qt.Checked)
-        glassCannon.setCheckState(Qt.Unchecked)
-        self.addOption("Glass Cannon",glassCannon)
-        self.addFlagOption(glassCannon,"Glass Cannon")
-
-        betterJunk = QCheckBox()
-        betterJunk.stateChanged.connect(lambda state : self.setKeyValue("Better Junk",state==Qt.Checked))
-        betterJunk.setCheckState(Qt.Checked)
-        betterJunk.setCheckState(Qt.Unchecked)
-        self.addOption("Better Junk",betterJunk)
-        self.addFlagOption(betterJunk,"Better Junk")
-
-        startNoAp = QCheckBox()
-        startNoAp.stateChanged.connect(lambda state : self.setKeyValue("Start with No AP",state==Qt.Checked))
-        startNoAp.setCheckState(Qt.Checked)
-        startNoAp.setCheckState(Qt.Unchecked)
-        self.addOption("Start with No AP",startNoAp)
-        self.addFlagOption(startNoAp,"Start with No AP")
-
-        removeDamageCap = QCheckBox()
-        removeDamageCap.stateChanged.connect(lambda state : self.setKeyValue("Remove Damage Cap",state==Qt.Checked))
-        removeDamageCap.setCheckState(Qt.Checked)
-        removeDamageCap.setCheckState(Qt.Unchecked)
-        self.addOption("Remove Damage Cap",removeDamageCap)
-        self.addFlagOption(removeDamageCap,"Remove Damage Cap")
-
+        self.add_option(settingkey.GLASS_CANNON)
+        self.add_option(settingkey.BETTER_JUNK)
+        self.add_option(settingkey.START_NO_AP)
+        self.add_option(settingkey.REMOVE_DAMAGE_CAP)
 
         self.finalizeMenu()
-
-    def updateWidgets(self):
-        self.widgetList[0].setCheckState(Qt.Checked if self.getKeyValue("Glass Cannon") else Qt.Unchecked)
-        self.widgetList[1].setCheckState(Qt.Checked if self.getKeyValue("Better Junk") else Qt.Unchecked)
-        self.widgetList[2].setCheckState(Qt.Checked if self.getKeyValue("Start with No AP") else Qt.Unchecked)
-        self.widgetList[3].setCheckState(Qt.Checked if self.getKeyValue("Remove Damage Cap") else Qt.Unchecked)

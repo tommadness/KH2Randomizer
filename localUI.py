@@ -1,46 +1,53 @@
-import random,sys,copy,os,json,string,datetime,pytz,re
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    base_path = getattr(
-        sys,
-        '_MEIPASS',
-        os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, relative_path)
-os.environ["USE_KH2_GITPATH"] = resource_path("extracted_data")
-import pyperclip as pc
+import datetime
+import json
+import os
+import random
+import re
+import string
+import sys
 from pathlib import Path
+
+import pyperclip as pc
+import pytz
+from PySide6.QtCore import Qt, QThread, Signal
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtCore import QSize,Qt,QThread,Signal
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
-    QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QComboBox,
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar,QMessageBox,QProgressDialog, QSizePolicy, QWidgetAction
+    QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
+    QFileDialog, QMenuBar, QMessageBox, QProgressDialog
 )
 
-from UI.Submenus.SoraMenu import SoraMenu
-from UI.Submenus.KeybladeMenu import KeybladeMenu
-from UI.Submenus.WorldMenu import WorldMenu
-from UI.Submenus.SuperbossMenu import SuperbossMenu
-from UI.Submenus.MiscMenu import MiscMenu
-from UI.Submenus.StartingMenu import StartingMenu,StartingItemList
-from UI.Submenus.HintsMenu import HintsMenu
-from UI.Submenus.SeedModMenu import SeedModMenu
-from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
-from UI.Submenus.BossEnemyMenu import BossEnemyMenu
-
-
+from Class import seedSettings, settingkey
+from Class.seedSettings import SeedSettings
+from List.configDict import locationType
+from List.hashTextEntries import generateHashIcons
+from Module import dailySeed
 from Module.dailySeed import getDailyModifiers
 from Module.randomizePage import randomizePage
-from Module.randomCmdMenu import RandomCmdMenu
-from Module.randomBGM import RandomBGM
-from List.hashTextEntries import generateHashIcons
-from List.configDict import locationDepth,locationType
-
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
+from UI.Submenus.BossEnemyMenu import BossEnemyMenu
+from UI.Submenus.CosmeticsMenu import CosmeticsMenu
+from UI.Submenus.HintsMenu import HintsMenu
+from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
+from UI.Submenus.KeybladeMenu import KeybladeMenu
+from UI.Submenus.MiscMenu import MiscMenu
+from UI.Submenus.SeedModMenu import SeedModMenu
+from UI.Submenus.SoraMenu import SoraMenu
+from UI.Submenus.StartingMenu import StartingMenu
+from UI.Submenus.WorldMenu import WorldMenu
 
-SEED_SPLITTER="---"
-OPTION_SPLITTER="-"
-LOCAL_UI_VERSION="1.0.0"
+SEED_SPLITTER = '---'
+LOCAL_UI_VERSION = '1.0.0'
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
+os.environ["USE_KH2_GITPATH"] = resource_path("extracted_data")
+
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -53,95 +60,28 @@ class Logger(object):
     def flush(self):
         self.orig_stream.flush()
 
-import sys
 logger = Logger(sys.stdout)
 
 sys.stdout = logger
 sys.stderr = logger
 
-def convert_seed_to_flags(seed, flagOptions):
-    flagInts={}
-    flattened = []
-    for key in seed["settings"].keys():
-        flagInts[key] = {}
-        for subkey in seed["settings"][key].keys():
-            if flagOptions[key][subkey]["type"]=="bool":
-                flagInts[key][subkey] = 1 if seed["settings"][key][subkey] else 0
-                flattened.append((key+"-"+subkey,flagInts[key][subkey]))
-            if flagOptions[key][subkey]["type"]=="select":
-                flagInts[key][subkey] = flagOptions[key][subkey]["options"].index(seed["settings"][key][subkey])
-                flattened.append((key+"-"+subkey,flagInts[key][subkey]))
-            if flagOptions[key][subkey]["type"]=="multiselect":
-                bit_string="0b"
-                for item_id,item_string in StartingItemList:
-                    if item_id in seed["settings"][key][subkey]:
-                        bit_string+='1'
-                    else:
-                        bit_string+='0'
-                flagInts[key][subkey] = int(bit_string, 2)
-                flattened.append((key+"-"+subkey,flagInts[key][subkey]))
 
-            if flagOptions[key][subkey]["type"]=="spin":
-                val = seed["settings"][key][subkey]
-                flagInts[key][subkey] = int((val-flagOptions[key][subkey]["min"])/flagOptions[key][subkey]["step"])
-                flattened.append((key+"-"+subkey,flagInts[key][subkey]))
+def convert_seed_to_share_string(seed: dict) -> str:
+    seed_name: str = seed['seed_name']
+    settings_string: str = seed['settings_string']
+    return SEED_SPLITTER.join([seed_name, settings_string])
 
 
-    flattened.sort(key=lambda x: x[0])
+def convert_share_string_to_seed(share_string: str) -> dict:
+    parts = share_string.split(SEED_SPLITTER)
+    return {
+        'seed_name': parts[0],
+        'settings_string': parts[1]
+    }
 
-    flags = seed["seed_name"]+SEED_SPLITTER+str(1 if seed["spoiler_log"] else 0)
-
-    for item in flattened:
-        flags+=OPTION_SPLITTER
-        flags+=str(item[1])
-
-    return flags
-
-def convert_flags_to_seed(flags, flagOptions):
-    seed={}
-    seed["seed_name"] = flags.split(SEED_SPLITTER)[0]
-    flags = flags.split(SEED_SPLITTER)[1]
-    flag_list = flags.split(OPTION_SPLITTER)
-    seed["spoiler_log"] = bool(int(flag_list[0]))
-    flag_list.pop(0)
-
-    flattened = []
-    for key in flagOptions.keys():
-        for subkey in flagOptions[key].keys():
-            if flagOptions[key][subkey]["type"]=="bool":
-                flattened.append((key+"-"+subkey,key,subkey))
-            if flagOptions[key][subkey]["type"]=="select":
-                flattened.append((key+"-"+subkey,key,subkey))
-            if flagOptions[key][subkey]["type"]=="multiselect":
-                flattened.append((key+"-"+subkey,key,subkey))
-            if flagOptions[key][subkey]["type"]=="spin":
-                flattened.append((key+"-"+subkey,key,subkey))
-
-    flattened.sort(key=lambda x: x[0])
-    seed["settings"] = {}
-
-    for item,key,subkey in flattened:
-        flag = flag_list.pop(0)
-        if key not in seed["settings"]:
-            seed["settings"][key]={}
-        if flagOptions[key][subkey]["type"]=="bool":
-            seed["settings"][key][subkey] = bool(int(flag))
-        if flagOptions[key][subkey]["type"]=="select":
-            seed["settings"][key][subkey] = flagOptions[key][subkey]["options"][int(flag)]
-        if flagOptions[key][subkey]["type"]=="multiselect":
-            item_flags = format((int(flag)), "#0"+str(len(flagOptions[key][subkey]["options"])+2)+"b")
-            item_flags = item_flags[2:]
-            starting = []
-            for index,(item_id,item_string) in enumerate(StartingItemList):
-                if item_flags[index]=='1':
-                    starting.append(item_id)
-            seed["settings"][key][subkey] = starting
-        if flagOptions[key][subkey]["type"]=="spin":
-            seed["settings"][key][subkey] = flagOptions[key][subkey]["min"]+flagOptions[key][subkey]["step"]*int(flag)
-
-    return seed
 
 PRESET_FOLDER = "presets"
+
 
 class GenSeedThread(QThread):
     finished = Signal(object)
@@ -155,6 +95,7 @@ class GenSeedThread(QThread):
         zip_file = randomizePage(self.data,self.session,local_ui=True)
         self.finished.emit(zip_file)
 
+
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -163,6 +104,19 @@ class KH2RandomizerApp(QMainWindow):
         self.dailySeedName = self.startTime.strftime('%d-%m-%Y')
         self.mods = getDailyModifiers(self.startTime)
 
+        self.settings = SeedSettings()
+
+        auto_settings_save_path = os.path.join(PRESET_FOLDER, 'auto_save.auto')
+        if os.path.exists(auto_settings_save_path):
+            with open(auto_settings_save_path, 'r') as source:
+                lines = source.read().splitlines()
+                if len(lines) > 0:
+                    settings_string = lines[0]
+                    try:
+                        self.settings.apply_settings_string(settings_string, include_private=True)
+                    except Exception:
+                        print('Unable to apply last settings - will use defaults')
+                        pass
 
         with open(resource_path("UI/stylesheet.qss"),"r") as style:
             data = style.read()
@@ -171,6 +125,7 @@ class KH2RandomizerApp(QMainWindow):
         random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator")
         self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
+        self.setMinimumWidth(1000)
         self.setup = None
         pagelayout = QVBoxLayout()
         seed_layout = QHBoxLayout()
@@ -191,25 +146,24 @@ class KH2RandomizerApp(QMainWindow):
         self.menuBar.addMenu(self.seedMenu)
         self.menuBar.addMenu(self.presetMenu)
 
-
         # populate a menu item for the daily seed
         self.menuBar.addAction("Load Daily Seed", self.loadDailySeed)
-        
-        self.presetJSON = {}
+
+        self.preset_strings = {}
         if not os.path.exists(PRESET_FOLDER):
             os.makedirs(PRESET_FOLDER)
         presetFolderContents = os.listdir(PRESET_FOLDER)
 
         self.menuBar.addAction("About", self.showAbout)
 
-
         if not presetFolderContents == []:
             for file in presetFolderContents:
-                with open(PRESET_FOLDER+"\\"+file,"r") as presetData:
-                    data = json.loads(presetData.read())
-                    for k,v in data.items():
-                        self.presetJSON[k] = v      
-                 
+                preset_name, extension = os.path.splitext(file)
+                if extension == '.preset':
+                    with open(os.path.join(PRESET_FOLDER, file), 'r') as presetData:
+                        settings_string = presetData.read().splitlines()[0]
+                        self.preset_strings[preset_name] = settings_string
+
         pagelayout.addWidget(self.menuBar)
         pagelayout.addLayout(seed_layout)
         pagelayout.addWidget(self.tabs)
@@ -221,17 +175,25 @@ class KH2RandomizerApp(QMainWindow):
         self.seedName.setPlaceholderText("Leave blank for a random seed")
         seed_layout.addWidget(self.seedName)
 
-
-        for x in self.presetJSON.keys():
+        for x in self.preset_strings.keys():
             self.presetsMenu.addAction(x, lambda x=x: self.usePreset(x))
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
+        self.spoiler_log.setCheckState(Qt.Checked)
         seed_layout.addWidget(self.spoiler_log)
 
-        self.widgets = [SoraMenu(),StartingMenu(),HintsMenu(),
-                        KeybladeMenu(),WorldMenu(),SuperbossMenu(),
-                        MiscMenu(),SeedModMenu(),ItemPlacementMenu(),
-                        BossEnemyMenu()]
+        self.widgets = [
+            SoraMenu(self.settings),
+            StartingMenu(self.settings),
+            HintsMenu(self.settings),
+            KeybladeMenu(self.settings),
+            WorldMenu(self.settings),
+            MiscMenu(self.settings),
+            SeedModMenu(self.settings),
+            ItemPlacementMenu(self.settings),
+            BossEnemyMenu(self.settings),
+            CosmeticsMenu(self.settings),
+        ]
 
         for i in range(len(self.widgets)):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())
@@ -256,77 +218,45 @@ class KH2RandomizerApp(QMainWindow):
             self.hashIcons[-1].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
             self.seedhashlayout.addWidget(self.hashIcons[-1])
 
-
-        self.commandMenuOptions = QComboBox()
-        self.commandMenuOptions.addItems(RandomCmdMenu.getOptions().values())
-        self.commandMenuOptions.setCurrentText("vanilla")  
-
-        self.bgmOptions = QListWidget()
-        self.bgmOptions.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        self.bgmOptions.addItems(RandomBGM.getOptions())
-        self.bgmOptions.setMinimumWidth(self.bgmOptions.sizeHintForColumn(0)+30)
-
-        self.bgmChoices = QListWidget()
-        self.bgmChoices.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        self.bgmChoices.addItems(RandomBGM.getGames())
-        self.bgmChoices.setMinimumWidth(self.bgmChoices.sizeHintForColumn(0)+30)
-
-        self.cosmetic_layout.addWidget(QLabel("Command Menu (PS2 Only)"))
-        self.cosmetic_layout.addWidget(self.commandMenuOptions)
-        self.cosmetic_layout.addWidget(QLabel("Randomize BGM (PC Only)"))
-        self.cosmetic_layout.addWidget(self.bgmOptions)
-        self.cosmetic_layout.addWidget(self.bgmChoices)
-
         widget = QWidget()
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
 
+    def closeEvent(self, e):
+        settings_string = self.settings.settings_string(include_private=True)
+        with open(os.path.join(PRESET_FOLDER, 'auto_save.auto'), 'w') as presetData:
+            presetData.writelines(settings_string)
+        e.accept()
+
     def loadDailySeed(self):
         self.seedName.setText(self.dailySeedName)
+        self.settings.apply_settings_string(dailySeed.BASE_DAILY_SETTINGS_STRING)
 
-        preset_values = copy.deepcopy(self.presetJSON["BaseDailySeed"])
         # use the modifications to change the preset
-        mod_string = f"Updated settings for Daily Seed {self.startTime.strftime('%a %b %d %Y')}\n\n"
+        mod_string = f'Updated settings for Daily Seed {self.startTime.strftime("%a %b %d %Y")}\n\n'
         for m in self.mods:
-            m.local_modifier(preset_values)
-            mod_string+=m.name+" - "+m.description+"\n"
+            m.local_modifier(self.settings)
+            mod_string += m.name + ' - ' + m.description + '\n'
 
-        for x in self.widgets:
-            x.setData(preset_values[x.getName()])
+        for widget in self.widgets:
+            widget.update_widgets()
 
         self.fixSeedName()
 
         message = QMessageBox(text=mod_string)
-        message.setWindowTitle("KH2 Seed Generator - Daily Seed")
+        message.setWindowTitle('KH2 Seed Generator - Daily Seed')
         message.exec()
 
     def fixSeedName(self):
         new_string = re.sub(r'[^a-zA-Z0-9]', '', self.seedName.text())
         self.seedName.setText(new_string)
 
-
-    def makeSeed(self,platform):
-        self.fixSeedName()
-        settings = {}
-        for x in self.widgets:
-            settings[x.getName()] = copy.deepcopy(x.getData())
-
+    def make_seed_session(self):
         makeSpoilerLog = self.spoiler_log.isChecked()
-
-        data={}
-        data["platform"]=platform
-        cmdMap = RandomCmdMenu.getOptions()
-        selected = self.commandMenuOptions.currentText()
-        for key,value in cmdMap.items():
-            if value==selected:
-                data["cmdMenuChoice"]=key
-
-        selectedMusic = self.bgmOptions.selectedItems() + self.bgmChoices.selectedItems()
-        data["randomBGM"]=[s.text() for s in selectedMusic]
 
         session={}
 
-        #seed
+        # seed
         session["seed"] = self.seedName.text()
         if session["seed"] == "":
             characters = string.ascii_letters + string.digits
@@ -335,102 +265,123 @@ class KH2RandomizerApp(QMainWindow):
         # make the seed hash dependent on ui version and if a spoiler log is generated or not.
         random.seed(session["seed"]+LOCAL_UI_VERSION+str(makeSpoilerLog))
 
-        #seedHashIcons
+        # seedHashIcons
         session["seedHashIcons"] = generateHashIcons()
 
-        #includeList
-        session["includeList"] = []
+        # includeList
+        include_list = []
+        session["includeList"] = include_list
+        include_list_keys = [
+            (settingkey.FORM_LEVEL_REWARDS, 'Form Levels'),
+            (settingkey.CRITICAL_BONUS_REWARDS, 'Critical Bonuses'),
+            (settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS, 'Garden of Assemblage'),
+        ]
+        for key in include_list_keys:
+            if self.settings.get(key[0]):
+                include_list.append(key[1])
+        for location in self.settings.get(settingkey.WORLDS_WITH_REWARDS):
+            include_list.append(locationType[location].value)
+        for location in self.settings.get(settingkey.SUPERBOSSES_WITH_REWARDS):
+            include_list.append(locationType[location].value)
+        for location in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS):
+            include_list.append(locationType[location].value)
 
-        includeListKeys = [("Sora","Form Levels"),
-                            ("Starting Items","Critical Bonuses"),
-                            ("Starting Items","Garden of Assemblage")]
-        for key in includeListKeys:
-            if settings[key[0]][key[1]]:
-                session["includeList"].append(key[1])
+        # levelChoice
+        session['levelChoice'] = self.settings.get(settingkey.SORA_LEVELS)
 
+        # startingInventory
+        session['startingInventory'] = [int(value) for value in self.settings.get(settingkey.STARTING_INVENTORY)]
 
-        for world in settings["Worlds with Rewards"].keys():
-            if settings["Worlds with Rewards"][world]:
-                session["includeList"].append(world)
-        for boss_group in settings["Superbosses with Rewards"].keys():
-            if settings["Superbosses with Rewards"][boss_group]:
-                session["includeList"].append(boss_group)
-        for misc_group in settings["Misc Locations with Rewards"].keys():
-            if settings["Misc Locations with Rewards"][misc_group]:
-                session["includeList"].append(misc_group)
+        # itemPlacementDifficulty
+        session['itemPlacementDifficulty'] = self.settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
 
+        # seedModifiers
+        seed_modifiers = []
+        session['seedModifiers'] = seed_modifiers
+        seed_modifier_keys = [
+            (settingkey.MAX_LOGIC_ITEM_PLACEMENT, 'Max Logic Item Placement'),
+            (settingkey.REVERSE_RANDO, 'Reverse Rando'),
+            (settingkey.LIBRARY_OF_ASSEMBLAGE, 'Library of Assemblage'),
+            (settingkey.SCHMOVEMENT, 'Schmovement'),
+            (settingkey.GLASS_CANNON, 'Glass Cannon'),
+            (settingkey.BETTER_JUNK, 'Better Junk'),
+            (settingkey.START_NO_AP, 'Start with No AP'),
+            (settingkey.REMOVE_DAMAGE_CAP, 'Remove Damage Cap')
+        ]
+        for key in seed_modifier_keys:
+            if self.settings.get(key[0]):
+                seed_modifiers.append(key[1])
+        if self.settings.get(settingkey.ABILITY_POOL) == 'randomize':
+            seed_modifiers.append('Randomize Ability Pool')
 
-        #levelChoice
-        levelChoice = settings["Sora"]["levelChoice"]
-        if levelChoice =="Level 1":
-            session["levelChoice"] = "Level"
-        if levelChoice =="Level 50":
-            session["levelChoice"] = "ExcludeFrom50"
-        if levelChoice =="Level 99":
-            session["levelChoice"] = "ExcludeFrom99"
-        #startingInventory
-        session["startingInventory"] = [str(i) for i in settings["Starting Items"]["startingInventory"]]
-        #itemPlacementDifficulty
-        session["itemPlacementDifficulty"] = settings["Item Placement Options"]["itemPlacementDifficulty"]
-        #seedModifiers
-        session["seedModifiers"] = []
-        seedModifierKeys = [("Item Placement Options","Max Logic Item Placement"),
-                            ("Item Placement Options","Reverse Rando"),
-                            ("Item Placement Options","Randomize Ability Pool"),
-                            ("Starting Items","Library of Assemblage"),
-                            ("Starting Items","Schmovement"),
-                            ("Seed Modifiers","Glass Cannon"),
-                            ("Seed Modifiers","Better Junk"),
-                            ("Seed Modifiers","Start with No AP"),
-                            ("Seed Modifiers","Remove Damage Cap"),]
-        for key in seedModifierKeys:
-            if settings[key[0]][key[1]]:
-                session["seedModifiers"].append(key[1])
+        # update the seed hash display
+        for index, icon in enumerate(session['seedHashIcons']):
+            self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
 
-        #update the seed hash display
-        for n,ic in enumerate(session["seedHashIcons"]):
-            self.hashIcons[n].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+ic+".png"))
-
-        #spoilerLog
+        # spoilerLog
         session["spoilerLog"] = makeSpoilerLog
-        #reportDepth
-        #hintsType
-        reportStringList = settings["Hint Systems"]["hintsType"].split('-')
-        session["hintsType"] = settings["Hint Systems"]["hintsType"]
-        session["reportDepth"] = locationDepth(settings["Hint Systems"]["reportDepth"])
-        #preventSelfHinting
-        session["preventSelfHinting"] = settings["Hint Systems"]["preventSelfHinting"]
-        session["allowProofHinting"] = settings["Hint Systems"]["allowProofHinting"]
-        #promiseCharm
-        session["promiseCharm"] = settings["Item Placement Options"]["PromiseCharm"]
-        #keybladeAbilities
-        session["keybladeAbilities"] = []
-        session["keybladeAbilities"]+= ["Support"] if settings["Keyblades"]["keybladeSupport"] else []
-        session["keybladeAbilities"]+= ["Action"] if settings["Keyblades"]["keybladeAction"] else []
-        #keybladeMinStat
-        session["keybladeMinStat"] = settings["Keyblades"]["keybladeMinStat"]
-        #keybladeMaxStat
-        session["keybladeMaxStat"] = settings["Keyblades"]["keybladeMaxStat"]
-        #soraExpMult
-        session["soraExpMult"] = settings["Sora"]["soraExpMult"]
-        #formExpMult
-        session["formExpMult"] = {
-            "0": float(settings["Sora"]["soraExpMult"]),
-            "1": float(settings["Sora"]["ValorExp"]), 
-            "2": float(settings["Sora"]["WisdomExp"]), 
-            "3": float(settings["Sora"]["LimitExp"]), 
-            "4": float(settings["Sora"]["MasterExp"]), 
-            "5": float(settings["Sora"]["FinalExp"])
-            }
-        #enemyOptions
-        settings["Boss/Enemy"]["remove_damage_cap"] = "Remove Damage Cap" in session["seedModifiers"]
 
-        if settings["Boss/Enemy"]["selected_enemy"]=="":
-            settings["Boss/Enemy"].pop("selected_enemy")
-        if settings["Boss/Enemy"]["selected_boss"]=="":
-            settings["Boss/Enemy"].pop("selected_boss")
+        # hintsType/reportDepth/preventSelfHinting/allowProofHinting
+        session['hintsType'] = self.settings.get(settingkey.HINT_SYSTEM)
+        session['reportDepth'] = self.settings.get(settingkey.REPORT_DEPTH)
+        session['preventSelfHinting'] = self.settings.get(settingkey.PREVENT_SELF_HINTING)
+        session['allowProofHinting'] = self.settings.get(settingkey.ALLOW_PROOF_HINTING)
 
-        session["enemyOptions"] = json.dumps(settings["Boss/Enemy"])
+        # promiseCharm
+        session['promiseCharm'] = self.settings.get(settingkey.ENABLE_PROMISE_CHARM)
+
+        # keybladeAbilities
+        keyblade_abilities = []
+        session['keybladeAbilities'] = keyblade_abilities
+        if self.settings.get(settingkey.SUPPORT_KEYBLADE_ABILITIES):
+            keyblade_abilities.append('Support')
+        if self.settings.get(settingkey.ACTION_KEYBLADE_ABILITIES):
+            keyblade_abilities.append('Action')
+
+        # keybladeMinStat
+        session['keybladeMinStat'] = self.settings.get(settingkey.KEYBLADE_MIN_STAT)
+
+        # keybladeMaxStat
+        session['keybladeMaxStat'] = self.settings.get(settingkey.KEYBLADE_MAX_STAT)
+
+        # soraExpMult
+        session['soraExpMult'] = self.settings.get(settingkey.SORA_EXP_MULTIPLIER)
+
+        # formExpMult
+        session['formExpMult'] = {
+            '0': self.settings.get(settingkey.SUMMON_EXP_MULTIPLIER),
+            '1': self.settings.get(settingkey.VALOR_EXP_MULTIPLIER),
+            '2': self.settings.get(settingkey.WISDOM_EXP_MULTIPLIER),
+            '3': self.settings.get(settingkey.LIMIT_EXP_MULTIPLIER),
+            '4': self.settings.get(settingkey.MASTER_EXP_MULTIPLIER),
+            '5': self.settings.get(settingkey.FINAL_EXP_MULTIPLIER)
+        }
+
+        # enemyOptions
+        enemy_options = {
+            'remove_damage_cap': self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
+        }
+        for setting in seedSettings.boss_enemy_settings:
+            value = self.settings.get(setting.name)
+            if value is not None:
+                enemy_options[setting.name] = value
+        session['enemyOptions'] = json.dumps(enemy_options)
+
+        # for key in sorted(session.keys()):
+        #     print(str(key) + ' : ' + str(session[key]))
+
+        return session
+
+    def makeSeed(self,platform):
+        self.fixSeedName()
+
+        data = {
+            'platform': platform,
+            'cmdMenuChoice': self.settings.get(settingkey.COMMAND_MENU),
+            'randomBGM': self.settings.get(settingkey.BGM_OPTIONS) + self.settings.get(settingkey.BGM_GAMES)
+        }
+
+        session = self.make_seed_session()
 
         self.genSeed(data,session)
 
@@ -463,77 +414,61 @@ class KH2RandomizerApp(QMainWindow):
         self.thread.finished.connect(self.handleResult)
         self.thread.start()
 
-
     def savePreset(self):
-        text, ok = QInputDialog.getText(self, 'Make New Preset', 
-            'Enter a name for your preset...')
-        
+        preset_name, ok = QInputDialog.getText(self, 'Make New Preset', 'Enter a name for your preset...')
+
         if ok:
-            #add current settings to saved presets, add to current preset list, change preset selection.
-            settings = {}
-            preset = {}
-            for x in self.widgets:
-                settings[x.getName()] = copy.deepcopy(x.getData())
-            preset[text] = settings
-            self.presetJSON[text] = settings
-            self.presetsMenu.addAction(text, lambda: self.usePreset(text))
-            with open(PRESET_FOLDER+"\\"+text+".json","w") as presetData:
-                presetData.write(json.dumps(preset, indent=4, sort_keys=True))
+            # add current settings to saved presets, add to current preset list, change preset selection.
+            settings_string = self.settings.settings_string()
+            self.preset_strings[preset_name] = settings_string
+            self.presetsMenu.addAction(preset_name, lambda: self.usePreset(preset_name))
+            with open(os.path.join(PRESET_FOLDER, preset_name + '.preset'), 'w') as presetData:
+                presetData.writelines(settings_string)
 
     def openPresetFolder(self):
         os.startfile(PRESET_FOLDER)
-            
 
-    def usePreset(self,presetName):
-        if presetName != "Presets":
-            preset_values = self.presetJSON[presetName]
-            for x in self.widgets:
-                x.setData(preset_values[x.getName()])
+    def usePreset(self, preset_name: str):
+        if preset_name != "Presets":
+            settings_string = self.preset_strings[preset_name]
+            self.settings.apply_settings_string(settings_string)
+            for widget in self.widgets:
+                widget.update_widgets()
 
     def shareSeed(self):
         self.fixSeedName()
-        settings = {}
-        flags = {}
-        for x in self.widgets:
-            settings[x.getName()] = copy.deepcopy(x.getData())
-            flags[x.getName()] = copy.deepcopy(x.getFlagOptions())
 
-        #if seed hasn't been set yet, make one
+        # if seed hasn't been set yet, make one
         current_seed = self.seedName.text()
         if current_seed == "":
             characters = string.ascii_letters + string.digits
             current_seed = (''.join(random.choice(characters) for i in range(30)))
             self.seedName.setText(current_seed)
 
-        makeSpoilerLog = self.spoiler_log.isChecked()
+        seed = {
+            'seed_name': current_seed,
+            'settings_string': self.settings.settings_string()
+        }
 
-        seed = {}
-        seed["spoiler_log"] = makeSpoilerLog
-        seed["seed_name"] = current_seed
-        seed["settings"] = settings
-
-        output_text = convert_seed_to_flags(seed,flags)
+        output_text = convert_seed_to_share_string(seed)
 
         pc.copy(output_text)
         message = QMessageBox(text="Copied seed to clipboard")
         message.setWindowTitle("KH2 Seed Generator")
         message.exec()
-    
-    def receiveSeed(self):
-        flags = {}
-        for x in self.widgets:
-            flags[x.getName()] = copy.deepcopy(x.getFlagOptions())
-        in_settings = convert_flags_to_seed(pc.paste(),flags)
 
-        self.spoiler_log.setCheckState(Qt.Checked if in_settings["spoiler_log"] else Qt.Unchecked)
-        self.seedName.setText(in_settings["seed_name"])
-        settings_values = in_settings["settings"]
-        for x in self.widgets:
-            x.setData(settings_values[x.getName()])
+    def receiveSeed(self):
+        in_settings = convert_share_string_to_seed(pc.paste())
+
+        self.seedName.setText(in_settings['seed_name'])
+        settings_string = in_settings['settings_string']
+        self.settings.apply_settings_string(settings_string)
+        for widget in self.widgets:
+            widget.update_widgets()
         message = QMessageBox(text="Received seed from clipboard")
         message.setWindowTitle("KH2 Seed Generator")
         message.exec()
-        
+
     def firstTimeSetup(self):
         print("First Time Setup")
         if self.setup is None:

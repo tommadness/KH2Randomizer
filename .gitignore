@@ -4,8 +4,10 @@ __pycache__
 venv
 .vs
 .vscode
+.idea/
 XYZ
 /build/
 /dist/
 extracted_data
 log.txt
+auto_save.auto
