@@ -1,4 +1,4 @@
-import random,sys,copy,os,json,string,datetime,pytz
+import random,sys,copy,os,json,string,datetime,pytz,re
 import pyperclip as pc
 from pathlib import Path
 from PySide6.QtGui import QIcon, QPixmap
@@ -30,6 +30,9 @@ from List.configDict import locationDepth,locationType
 
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
+SEED_SPLITTER="---"
+OPTION_SPLITTER="-"
+
 def convert_seed_to_flags(seed, flagOptions):
     flagInts={}
     flattened = []
@@ -60,10 +63,10 @@ def convert_seed_to_flags(seed, flagOptions):
 
     flattened.sort(key=lambda x: x[0])
 
-    flags = seed["seed_name"]+"***"+str(1 if seed["spoiler_log"] else 0)
+    flags = seed["seed_name"]+SEED_SPLITTER+str(1 if seed["spoiler_log"] else 0)
 
     for item in flattened:
-        flags+="*"
+        flags+=OPTION_SPLITTER
         flags+=str(item[1])
 
     return flags
@@ -71,8 +74,8 @@ def convert_seed_to_flags(seed, flagOptions):
 def convert_flags_to_seed(flags, flagOptions):
     seed={}
     seed["seed_name"] = flags.split("***")[0]
-    flags = flags.split("***")[1]
-    flag_list = flags.split("*")
+    flags = flags.split(SEED_SPLITTER)[1]
+    flag_list = flags.split(OPTION_SPLITTER)
     seed["spoiler_log"] = bool(int(flag_list[0]))
     flag_list.pop(0)
 
@@ -126,7 +129,7 @@ class KH2RandomizerApp(QMainWindow):
         super().__init__()
         self.UTC = pytz.utc
         self.startTime = datetime.datetime.now(self.UTC)
-        self.dailySeedName = self.startTime.strftime('%d_%m_%Y')
+        self.dailySeedName = self.startTime.strftime('%d-%m-%Y')
         self.mods = getDailyModifiers(self.startTime)
 
 
@@ -260,8 +263,13 @@ class KH2RandomizerApp(QMainWindow):
         message.setWindowTitle("KH2 Seed Generator - Daily Seed")
         message.exec()
 
+    def fixSeedName(self):
+        new_string = re.sub(r'[^a-zA-Z0-9]', '', self.seedName.text())
+        self.seedName.setText(new_string)
+
 
     def makeSeed(self,platform):
+        self.fixSeedName()
         settings = {}
         for x in self.widgets:
             settings[x.getName()] = copy.deepcopy(x.getData())
@@ -425,6 +433,7 @@ class KH2RandomizerApp(QMainWindow):
                 x.setData(preset_values[x.getName()])
 
     def shareSeed(self):
+        self.fixSeedName()
         settings = {}
         flags = {}
         for x in self.widgets:
