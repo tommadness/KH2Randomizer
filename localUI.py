@@ -32,6 +32,7 @@ from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 
 SEED_SPLITTER="---"
 OPTION_SPLITTER="-"
+LOCAL_UI_VERSION="1.0.0"
 
 def convert_seed_to_flags(seed, flagOptions):
     flagInts={}
@@ -295,7 +296,8 @@ class KH2RandomizerApp(QMainWindow):
             characters = string.ascii_letters + string.digits
             session["seed"] = (''.join(random.choice(characters) for i in range(30)))
 
-        random.seed(session["seed"])
+        # make the seed hash dependent on ui version and if a spoiler log is generated or not.
+        random.seed(session["seed"]+LOCAL_UI_VERSION+str(makeSpoilerLog))
 
         #seedHashIcons
         session["seedHashIcons"] = generateHashIcons()
@@ -487,8 +489,9 @@ if __name__=="__main__":
     app = QApplication([])
     window = KH2RandomizerApp()
     window.show()
-    configPath = Path("rando-config.yml")
-    if not configPath.is_file() or not os.environ.get("ALWAYS_SETUP") is None:
-        window.firstTimeSetup()
+    #commenting out first time setup for 2.999 version
+    # configPath = Path("rando-config.yml")
+    # if not configPath.is_file() or not os.environ.get("ALWAYS_SETUP") is None:
+    #     window.firstTimeSetup()
 
     sys.exit(app.exec())
