@@ -7,3 +7,5 @@ venv
 XYZ
 /build/
 /dist/
+extracted_data
+log.txt

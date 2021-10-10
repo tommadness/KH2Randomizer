@@ -34,6 +34,23 @@ SEED_SPLITTER="---"
 OPTION_SPLITTER="-"
 LOCAL_UI_VERSION="1.0.0"
 
+class Logger(object):
+    def __init__(self, orig_stream):
+        self.filename = "log.txt"
+        self.orig_stream = orig_stream
+    def write(self, data):
+        with open(self.filename, "a") as f:
+            f.write(str(data))
+        self.orig_stream.write(str(data))
+    def flush(self):
+        self.orig_stream.flush()
+
+import sys
+logger = Logger(sys.stdout)
+
+sys.stdout = logger
+sys.stderr = logger
+
 def convert_seed_to_flags(seed, flagOptions):
     flagInts={}
     flattened = []
