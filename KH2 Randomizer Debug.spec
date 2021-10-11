@@ -56,7 +56,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='KH2 Randomizer',
+    name='KH2 Randomizer DEBUG VERSION',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -78,3 +78,5 @@ if os.path.exists(presetPath):
   shutil.rmtree(presetPath)
 
 shutil.copytree('presets', presetPath)
+
+shutil.make_archive('Kingdom Hearts II Final Mix Randomizer DEBUG VERSION', 'zip', DISTPATH)
