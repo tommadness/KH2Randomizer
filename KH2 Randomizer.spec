@@ -34,7 +34,7 @@ a = Analysis(
         'static/seed-hash-icons/*.*',
         'Module/icon.png',
         'extracted_data/**/*.*'
-    ])+[(khbrpath+'/*.json','khbr'), (khbrpath+'/*.yaml','khbr'), (khbrpath+'/data/*.yml','khbr/data')],
+    ])+[(khbrpath+'/*.json','khbr'), (khbrpath+'/*.yaml','khbr'), (khbrpath+'/data/*.*','khbr/data'), (khbrpath+'/data/ai_mods/*','khbr/data/ai_mods')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
