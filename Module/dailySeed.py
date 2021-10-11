@@ -80,7 +80,7 @@ dailyModifiers = [
                 local_modifier=noLevelsLocal
                 ),
     DailyModifier(name="Promise Charm",
-                description="Start the game with the Promise Charm",
+                description="Promise Charm is added to the item pool",
                 categories={'progression'},
                 modifier=lambda s: exec('s["promiseCharm"] = True'),
                 local_modifier=lambda s: exec('s["Item Placement Options"]["PromiseCharm"]=True')
