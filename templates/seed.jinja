@@ -56,7 +56,7 @@
 </div>
 
 <div class="container">
-    <div class="vertical top"><h5>Hint System</h5>{{hintsType}}<h6>Jsmartee only: Prevent Self Hinting</h6>{{preventSelfHinting}}</div>
+    <div class="vertical top"><h5>Hint System</h5>{{hintsType}}<h6>Jsmartee/Points only: Prevent Self Hinting</h6>{{preventSelfHinting}}<h6>Points only: Reports can hint Proofs</h6>{{allowProofHinting}}</div>
     <div class="vertical top"><h5>Starting Inventory</h5>{%for item in startingInventory%}{{idConverter[item]}}<br>{%endfor%}</div>
     <div class="vertical top"><h5>Item Placement Difficulty</h5>{{itemPlacementDifficulty}}</div>
     <div class="vertical top"><h5>Seed Modifiers</h5>{%for modifier in seedModifiers%}{{modifier}}<br>{%endfor%}</div>

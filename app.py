@@ -138,6 +138,8 @@ def seed():
             session['reportDepth'] = locationDepth(hintSubstrings[1])
 
         session['preventSelfHinting'] = bool(fl.request.form.get("preventSelfHinting") or False)
+        
+        session['allowProofHinting'] = bool(fl.request.form.get("allowProofHinting") or False)
 
         session['startingInventory'] = fl.request.form.getlist("startingInventory")
 
@@ -171,6 +173,7 @@ def seed():
     hintsType = session.get("hintsType"),
     reportDepth = session.get("reportDepth"),
     preventSelfHinting = session.get("preventSelfHinting"),
+    allowProofHinting = session.get("allowProofHinting"),
     startingInventory = session.get("startingInventory"),
     itemPlacementDifficulty = session.get("itemPlacementDifficulty"),
     seedModifiers = session.get("seedModifiers"),
@@ -186,7 +189,6 @@ def startDownload(data):
     print("Started")
     seed = socketio.start_background_task(randomizePage, data, dict(session))
     
-
 
 @app.after_request
 def add_header(r):
