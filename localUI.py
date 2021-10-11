@@ -366,7 +366,7 @@ class KH2RandomizerApp(QMainWindow):
         if levelChoice =="Level 99":
             session["levelChoice"] = "ExcludeFrom99"
         #startingInventory
-        session["startingInventory"] = settings["Starting Items"]["startingInventory"]
+        session["startingInventory"] = [str(i) for i in settings["Starting Items"]["startingInventory"]]
         #itemPlacementDifficulty
         session["itemPlacementDifficulty"] = settings["Item Placement Options"]["itemPlacementDifficulty"]
         #seedModifiers
