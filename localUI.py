@@ -146,7 +146,6 @@ PRESET_FOLDER = "presets"
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
         self.UTC = pytz.utc
         self.startTime = datetime.datetime.now(self.UTC)
         self.dailySeedName = self.startTime.strftime('%d-%m-%Y')
@@ -159,6 +158,7 @@ class KH2RandomizerApp(QMainWindow):
 
         random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator")
+        self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
         self.setup = None
         pagelayout = QVBoxLayout()
         seed_layout = QHBoxLayout()
