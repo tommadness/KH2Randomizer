@@ -14,7 +14,7 @@ from PySide6.QtCore import QSize,Qt,QThread,Signal
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QComboBox,
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar,QMessageBox,QProgressDialog
+    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar,QMessageBox,QProgressDialog, QSizePolicy, QWidgetAction
 )
 
 from UI.Submenus.SoraMenu import SoraMenu
@@ -191,6 +191,7 @@ class KH2RandomizerApp(QMainWindow):
         self.menuBar.addMenu(self.seedMenu)
         self.menuBar.addMenu(self.presetMenu)
 
+
         # populate a menu item for the daily seed
         self.menuBar.addAction("Load Daily Seed", self.loadDailySeed)
         
@@ -198,6 +199,8 @@ class KH2RandomizerApp(QMainWindow):
         if not os.path.exists(PRESET_FOLDER):
             os.makedirs(PRESET_FOLDER)
         presetFolderContents = os.listdir(PRESET_FOLDER)
+
+        self.menuBar.addAction("About", self.showAbout)
 
 
         if not presetFolderContents == []:
@@ -536,6 +539,22 @@ class KH2RandomizerApp(QMainWindow):
         if self.setup is None:
             self.setup = FirstTimeSetup()
             self.setup.show()
+
+    def showAbout(self):
+        aboutText = '''
+Kingdom Hearts II Final Mix Zip Seed Generator<br>
+Created by Thundrio, Tommadness, and ZakTheRobot<br><br>
+
+<a href="https://github.com/tommadness/KH2Randomizer">Github Link</a><br><br>
+
+Icons by Televo<br><br>
+
+Special thanks to Xeeynamo and the OpenKH team for the OpenKH Mods Manager, which makes this all possible'''
+        message = QMessageBox(text=aboutText)
+        message.setTextFormat(Qt.RichText)
+        message.setWindowTitle("About")
+        message.setWindowIcon(QIcon(resource_path("Module/icon.png")))
+        message.exec()
 
 
 if __name__=="__main__":
