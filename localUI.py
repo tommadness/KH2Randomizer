@@ -2,11 +2,11 @@ import random,sys,copy,os,json,string,datetime,pytz,re
 import pyperclip as pc
 from pathlib import Path
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtCore import QSize,Qt
+from PySide6.QtCore import QSize,Qt,QThread,Signal
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QComboBox,
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar,QMessageBox
+    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar,QMessageBox,QProgressDialog
 )
 
 from UI.Submenus.SoraMenu import SoraMenu
@@ -141,6 +141,18 @@ def resource_path(relative_path):
         '_MEIPASS',
         os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
+
+class GenSeedThread(QThread):
+    finished = Signal(object)
+
+    def provideData(self,data,session):
+        self.data=data
+        self.session = session
+        self.zip_file = None
+
+    def run(self):
+        zip_file = randomizePage(self.data,self.session,local_ui=True)
+        self.finished.emit(zip_file)
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
@@ -413,17 +425,36 @@ class KH2RandomizerApp(QMainWindow):
 
         session["enemyOptions"] = json.dumps(settings["Boss/Enemy"])
 
-        print(session["enemyOptions"])
+        self.genSeed(data,session)
 
-        zip_file = randomizePage(data,session,local_ui=True)
-
+    def downloadSeed(self):
         saveFileWidget = QFileDialog()
         saveFileWidget.setNameFilters(["Zip Seed File (*.zip)"])
         outfile_name,_ = saveFileWidget.getSaveFileName(self,"Save seed zip","randoseed.zip","Zip Seed File (*.zip)")
         if outfile_name!="":
             if not outfile_name.endswith(".zip"):
                 outfile_name+=".zip"
-            open(outfile_name, "wb").write(zip_file.getbuffer())
+            open(outfile_name, "wb").write(self.zip_file.getbuffer())
+        self.zip_file=None
+
+    def handleResult(self,result):
+        self.progress.close()
+        self.zip_file = result
+        self.downloadSeed()
+
+    def genSeed(self,data,session):
+        self.thread = QThread()
+        displayedSeedName = session["seed"]
+        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","",0,0,None)
+        self.progress.setWindowTitle("Making your Seed, please wait...")
+        self.progress.setCancelButton(None)
+        self.progress.setModal(True)
+        self.progress.show()
+
+        self.thread = GenSeedThread()
+        self.thread.provideData(data,session)
+        self.thread.finished.connect(self.handleResult)
+        self.thread.start()
 
 
     def savePreset(self):
