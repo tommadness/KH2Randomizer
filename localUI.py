@@ -1,4 +1,12 @@
 import random,sys,copy,os,json,string,datetime,pytz,re
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(
+        sys,
+        '_MEIPASS',
+        os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+os.environ["USE_KH2_GITPATH"] = resource_path("extracted_data")
 import pyperclip as pc
 from pathlib import Path
 from PySide6.QtGui import QIcon, QPixmap
@@ -134,13 +142,6 @@ def convert_flags_to_seed(flags, flagOptions):
     return seed
 
 PRESET_FOLDER = "presets"
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    base_path = getattr(
-        sys,
-        '_MEIPASS',
-        os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, relative_path)
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
