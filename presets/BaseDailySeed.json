@@ -12,7 +12,8 @@
             "selected_enemy": ""
         },
         "Hint Systems": {
-            "hintsType": "JSmartee-SecondVisit",
+            "hintsType": "JSmartee",
+            "reportDepth": "SecondVisit",
             "preventSelfHinting": false
         },
         "Item Placement Options": {

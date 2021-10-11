@@ -13,6 +13,7 @@
         },
         "Hint Systems": {
             "hintsType": "Shananas",
+            "reportDepth": "DataFight",
             "preventSelfHinting": true
         },
         "Item Placement Options": {

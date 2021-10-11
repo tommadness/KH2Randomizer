@@ -377,10 +377,11 @@ class KH2RandomizerApp(QMainWindow):
         #reportDepth
         #hintsType
         reportStringList = settings["Hint Systems"]["hintsType"].split('-')
-        session["hintsType"] = reportStringList[0]
-        session["reportDepth"] = locationDepth("DataFight") if len(reportStringList)==1 else locationDepth(reportStringList[1])
+        session["hintsType"] = settings["Hint Systems"]["hintsType"]
+        session["reportDepth"] = locationDepth(settings["Hint Systems"]["reportDepth"])
         #preventSelfHinting
         session["preventSelfHinting"] = settings["Hint Systems"]["preventSelfHinting"]
+        session["allowProofHinting"] = settings["Hint Systems"]["allowProofHinting"]
         #promiseCharm
         session["promiseCharm"] = settings["Item Placement Options"]["PromiseCharm"]
         #keybladeAbilities
