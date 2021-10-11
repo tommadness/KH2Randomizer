@@ -29,9 +29,10 @@ The seed should always be placed at the highest priority. The seed needs to over
 
 # Hint Systems
 ## What are the hint systems?
-The KH2R community has come up with two different hint systems:
+The KH2R community has come up with three different hint systems:
 - **JSmartee** - Inspired by [JSmartee](https://jsmartee.github.io/kh2fm-hints-demo/)'s implementation of hints. When you find an Ansem Report in-game, you are told how many [Important Checks](https://jsmartee.github.io/kh2fm-hints-demo/info.html#checks) exist in a world.
 - **Shananas** - Inspired by Shananas' implementation of hints. While playing, you are informed once you have found all Important Checks in a world.
+- **Points** - An inspired mix of crescent's, Shananas', and JSmartee's implementation of hints. Each [Important Check](https://jsmartee.github.io/kh2fm-hints-demo/info.html#checks) is worth a set amount of points. You are able to see each world's Score right from the start and when you find an Ansem Report in-game, you are told about a single Important Check in a world.
 
 ## How do I use hints?
 Your seed zip file can be loaded into the following trackers:
@@ -48,11 +49,30 @@ Note: If the reports are on drive forms or in 100 Acre Wood, there is no logic t
 
 This is represented in RedBuddha's KH2Tracker by the world's check count turning blue.
 
-## `(JSmartee Hints)` What do the various JSmartee hint modes mean?
+## `(Points Hints)` What are Points? What is a world Score?
+Each Important Check is in category and each category is given a value for each item in it.
+The default values for each category are as follows:
+- Proofs and Promise Charm = 12 points
+- Drive Forms = 10 points
+- Each Magic Elemet = 8 points
+- Summon Charms = 6 points
+- Second Chance and Once More = 4 points
+- Torn Pages and Ansem Reports = 2 points
+
+Each world is given a Score based on how many of each of these it contains. You are able to see the Score for each world right from the start.
+- Ex. If Twilight Town has a Score of 12 that may mean is has a Proof, A Drive Form and a Torm Page, or any other combonation of items that add up to 12.
+
+Reports when gotten will hint a single Important Check a world contains.
+- If Proof-hinting reports is turned on then reports also have a chance of directly telling you which world a proof is in. 
+Note: Even with this setting on, Reports are not guaranteed to hint all or any Proofs.
+
+When all the Important Checks for a world are correctly placed, then that world's score will turn into a blue 0.
+
+## `(JSmartee / Points Hints)` What do the various hint modes mean?
 The different modes determine where a report can be found:
 
-  - **JSmartee** - Reports can be found anywhere.
-  - **JSmartee-FirstVisit** - All reports can be found in the first visit to a world.
+  - **JSmartee / Points** - Reports can be found anywhere.
+  - **FirstVisit** - All reports can be found in the first visit to a world.
     - First visits are considered:
       * The first visit to any Disney world in the Vanilla game
       * Up to and including Sora Level 30
@@ -60,9 +80,9 @@ The different modes determine where a report can be found:
       * Up to and including Piglet's Howse
       * Up to and including Xigbar in The World That Never Was
       * The entirety of Simulated Twilight Town
-  - **JSmartee-SecondVisit** - All reports can be found in the first or second visit to the world. (They can not be found on Data/Absent Silhouette fights)
-  - **JSmartee-FirstBoss** - All reports are guaranteed on the boss at the end of the first visit of a world (excluding 100 Acre Wood and Atlantica).
-  - **JSmartee-SecondBoss** - All reports are guaranteed on the end of the second visit to a world (excluding 100 Acre Wood and Atlantica).
+  - **SecondVisit** - All reports can be found in the first or second visit to the world. (They can not be found on Data/Absent Silhouette fights)
+  - **FirstBoss** - All reports are guaranteed on the boss at the end of the first visit of a world (excluding 100 Acre Wood and Atlantica).
+  - **SecondBoss** - All reports are guaranteed on the end of the second visit to a world (excluding 100 Acre Wood and Atlantica).
 
 # Seed Modifiers
 
@@ -70,7 +90,7 @@ The different modes determine where a report can be found:
 - **Max Logic Item Placement** - Explained in its own section below
 - **Reverse Rando** - Alters item placement logic to work with `Reverse Garden of Assemblage`.
 - **Glass Cannon** - All defense stat ups are removed from Sora's Levels
-- **Library of Assemblage** - Sora starts with all 13 Ansem Reports (used as hints in the JSmartee Hint System)
+- **Library of Assemblage** - Sora starts with all 13 Ansem Reports (used as hints in the JSmartee and Points Hint System)
 - **Schmovement** - Sora starts with level 1 of all movement abilities
 - **Better Junk** - All synthesis items in the filler item pool are replaced with consumables
 - **Randomize Ability Pool** - Explained in its own section below
