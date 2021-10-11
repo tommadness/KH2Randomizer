@@ -542,14 +542,19 @@ class KH2RandomizerApp(QMainWindow):
 
     def showAbout(self):
         aboutText = '''
-Kingdom Hearts II Final Mix Zip Seed Generator<br>
+Kingdom Hearts II Final Mix Zip Seed Generator Version {0}<br>
 Created by Thundrio, Tommadness, and ZakTheRobot<br><br>
 
-<a href="https://github.com/tommadness/KH2Randomizer">Github Link</a><br><br>
+Thank you to all contributors, testers, and advocates.<br><br>
 
-Icons by Televo<br><br>
+<a href="https://github.com/tommadness/KH2Randomizer">Github Link</a><br>
+<a href="https://discord.gg/KwfqM6GYzd">KH2 Randomizer Discord</a><br><br>
 
-Special thanks to Xeeynamo and the OpenKH team for their reverse engineering effort and the OpenKH Mods Manager, both of which makes this all possible'''
+<a href="https://github.com/tommadness/KH2Randomizer/tree/local_ui#acknowledgements">Acknowledgements</a>
+
+
+
+'''.format(LOCAL_UI_VERSION)
         message = QMessageBox(text=aboutText)
         message.setTextFormat(Qt.RichText)
         message.setWindowTitle("About")
