@@ -5,7 +5,7 @@ from itertools import permutations
 
 
 class Hints:
-    def generateHints(locationItems, hintsType, seedName, excludeList, preventSelfHinting=True):
+    def generateHints(locationItems, hintsType, seedName, excludeList, preventSelfHinting=True, allowProofHinting=True):
         if hintsType=="Disabled":
             return None
         hintsText = {}
@@ -40,6 +40,7 @@ class Hints:
             for h in hintableWorlds:
                 if h not in excludeList:
                     worldChecks[h] = []
+                    
             for location,item in locationItems:
                 if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
                     continue
@@ -96,12 +97,10 @@ class Hints:
                     if not world in worldsToHint and any(item.ItemType == itemType.FORM for item in worldChecks[world]):
                         worldsToHint.append(world)
 
-
             if pages_need_hints:
                 for world in worldChecks:
                     if not world in worldsToHint and any(item.ItemType == itemType.TORN_PAGE for item in worldChecks[world]):
                         worldsToHint.append(world)
-
 
             if mag_thun_need_hints:
                 for world in worldChecks:
@@ -116,7 +115,6 @@ class Hints:
             # worldsToHint is now all the required hinted worlds. We'll see if we can also hint the reports that hint proofs 
             if len(worldsToHint) > 13:
                 worldsToHint = worldsToHint[0:13]
-
 
             # at least 1 proof is in a hintable world, so we need to hint it
             if numProofWorlds > 0:
@@ -236,12 +234,8 @@ class Hints:
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))
             reportRepetition = 0
-            proofRepetition = 0
-            hintedProofs = True
             tempWorldR = None
             tempItemR = None
-            tempWorldP = None
-            tempItemP = None
             tempExcludeList = []
             importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"]
             hintableWorlds = ["Level",locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
@@ -314,51 +308,36 @@ class Hints:
                 randomItem = random.choice(worldChecksEdit[randomWorld])
                 #print("Report " + str(reportNumber) + ": World = " + randomWorld +" | item = " + randomItem.Name)
 
-                #compare current selected world and item to previously rerolled reports and proofs
+                #compare current selected world and item to previously rerolled reports
                 #more of a jank failsafe really
                 if randomWorld == tempWorldR and randomItem.Name == tempItemR:
                     reportRepetition = reportRepetition + 1
-                if randomWorld == tempWorldP and randomItem.Name == tempItemP:
-                    proofRepetition = proofRepetition + 1
 
-                #proof found try for reroll
-                if "Proof" in randomItem.Name and hintedProofs == True:
-                    #if we tried to roll for this twice already then stop trying and remove the proof from being hinted
-                    if proofRepetition > 1:
-                        #print("Proof repetition threshold reached! removing item and rerolling...")
+                #should we hint proofs?
+                if "Proof" in randomItem.Name:
+                    #print("Proof found! Is Proof Hinting On?")
+                    
+                    if allowProofHinting == True:
+                        #print("Yes! hinting Proof...")
+                        pass
+                    else:
+                        #print("No. removing item and rerolling...")
                         #print("-----------------------------------------------------------------------------")
                         worldChecksEdit[randomWorld].remove(randomItem)
-                        tempWorldP = None
-                        tempItemP = None
-                        proofRepetition = 0
                         reportsList.append(reportNumber)
                         continue
-
-                    random_number = random.randint(1, 20)
-                    #print("Random number = " + str(random_number))
-                    #print("Proof found! does " + str(random_number) + " = 5?")
-                    if random_number == 5:
-                        #print("Yes! hinting Proof...")
-                        tempWorldP = None
-                        tempItemP = None
-                        proofRepetition = 0
-                    else:
-                        #print("No. rerolling...")
-                        #print("-----------------------------------------------------------------------------")
-                        tempWorldP = randomWorld
-                        tempItemP = randomItem.Name
-                        reportsList.append(reportNumber)
-                        continue
-                elif "Proof" in randomItem.Name and hintedProofs == False:
-                    #print("Proof hinting off. rerolling...")
-                    #print("-----------------------------------------------------------------------------")
-                    tempWorldP = randomWorld
-                    tempItemP = randomItem.Name
-                    reportsList.append(reportNumber)
-                    continue
                     
-                #is report self hinting?
+                #try to hint other reports
                 if "Report" in randomItem.Name:
+                    #prevent reports from hinting themselves
+                    if reportNumber == int(randomItem.Name.replace("Secret Ansem's Report ","")):
+                        #print("Self hinting report! rerolling...")
+                        #print("-----------------------------------------------------------------------------")
+                        tempWorldR = randomWorld
+                        tempItemR = randomItem.Name
+                        reportsList.append(reportNumber)
+                        continue
+                
                     #if we tried to roll for this 3 times already then stop trying and remove the report from being hinted
                     if reportRepetition > 2:
                         #print("Report repetition threshold reached! removing item from world and rerolling...")
@@ -370,19 +349,13 @@ class Hints:
                         reportsList.append(reportNumber)
                         continue
                         
-                    random_number = random.randint(1, 2)
+                    random_number = random.randint(1, 3)
                     #print("Random number = " + str(random_number))
                     #print("Report found! does " + str(random_number) + " = 1?")
+                    
                     if random_number == 1:
-                        #print("Yes! let's try hinting...")
-                        #print("-----------------------------------------------------------------------------")
-                        if reportNumber == int(randomItem.Name.replace("Secret Ansem's Report ","")):
-                            #print("Self hinting report! rerolling...")
-                            #print("-----------------------------------------------------------------------------")
-                            tempWorldR = randomWorld
-                            tempItemR = randomItem.Name
-                            reportsList.append(reportNumber)
-                            continue
+                        #print("Yes! hinting report...")
+                        pass
                     else:
                         #print("No. rerolling...")
                         #print("-----------------------------------------------------------------------------")
@@ -414,7 +387,8 @@ class Hints:
         return hintsText
 
     def writeHints(hintsText,seedName,outZip):
-        outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
+        outZip.writestr("{seedName}.Hints".format(seedName = seedName), json.dumps(hintsText).encode('utf-8'))
+        #outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
 
     def getOptions():
-        return ["Disabled","Points","Shananas","JSmartee","JSmartee-FirstVisit","JSmartee-SecondVisit","JSmartee-FirstBoss","JSmartee-SecondBoss"]
+        return ["Disabled","Shananas","JSmartee","JSmartee-FirstVisit","JSmartee-SecondVisit","JSmartee-FirstBoss","JSmartee-SecondBoss","Points","Points-FirstVisit","Points-SecondVisit","Points-FirstBoss","Points-SecondBoss"]
