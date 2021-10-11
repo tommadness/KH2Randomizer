@@ -44,7 +44,7 @@ def randomizePage(data, sessionDict, local_ui=False):
                 sessionDict['seed'] = (''.join(random.choice(characters) for i in range(30)))
                 continue
             randomizer.seedName = originalSeedName
-            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList, sessionDict["preventSelfHinting"])
+            hintsText = Hints.generateHints(randomizer._locationItems, sessionDict["hintsType"], randomizer.seedName, excludeList, sessionDict["preventSelfHinting"], sessionDict["allowProofHinting"])
 
             if hintsText is not None and type(hintsText) is not dict:
                 # there was an error generating hints, return value provides context
