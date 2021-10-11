@@ -32,7 +32,7 @@ The seed should always be placed at the highest priority. The seed needs to over
 The KH2R community has come up with three different hint systems:
 - **JSmartee** - Inspired by [JSmartee](https://jsmartee.github.io/kh2fm-hints-demo/)'s implementation of hints. When you find an Ansem Report in-game, you are told how many [Important Checks](https://jsmartee.github.io/kh2fm-hints-demo/info.html#checks) exist in a world.
 - **Shananas** - Inspired by Shananas' implementation of hints. While playing, you are informed once you have found all Important Checks in a world.
-- **Points** - An inspired mix of crescent's, Shananas', and JSmartee's implementation of hints. Each [Important Check](https://jsmartee.github.io/kh2fm-hints-demo/info.html#checks) is worth a set amount of points. You are able to see each world's Score right from the start and when you find an Ansem Report in-game, you are told about a single Important Check in a world.
+- **Points** - An inspired mix of Shananas', and JSmartee's implementation of hints. Each [Important Check](https://jsmartee.github.io/kh2fm-hints-demo/info.html#checks) is worth a set amount of points. You are able to see each world's Score right from the start and when you find an Ansem Report in-game, you are told about a single Important Check in a world.
 
 ## How do I use hints?
 Your seed zip file can be loaded into the following trackers:
