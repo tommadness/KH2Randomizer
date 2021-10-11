@@ -387,8 +387,8 @@ class Hints:
         return hintsText
 
     def writeHints(hintsText,seedName,outZip):
-        outZip.writestr("{seedName}.Hints".format(seedName = seedName), json.dumps(hintsText).encode('utf-8'))
-        #outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
+        # outZip.writestr("{seedName}.Hints".format(seedName = seedName), json.dumps(hintsText).encode('utf-8'))
+        outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
 
     def getOptions():
         return ["Disabled","Shananas","JSmartee","JSmartee-FirstVisit","JSmartee-SecondVisit","JSmartee-FirstBoss","JSmartee-SecondBoss","Points","Points-FirstVisit","Points-SecondVisit","Points-FirstBoss","Points-SecondBoss"]
