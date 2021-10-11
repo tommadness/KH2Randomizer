@@ -221,7 +221,7 @@ class Items:
             KH2Item(373, "Presents", itemType.KEYITEM),
             KH2Item(374, "Decoy Presents", itemType.KEYITEM),
             KH2Item(375, "Ice Cream", itemType.KEYITEM),
-            KH2Item(373, "Picture", itemType.KEYITEM),
+            KH2Item(376, "Picture", itemType.KEYITEM),
             KH2Item(538, '"The Struggle" Trophy', itemType.KEYITEM),
 
             KH2Item(382, "Mega-Recipe", itemType.RECIPE),
