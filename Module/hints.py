@@ -5,7 +5,7 @@ from itertools import permutations
 
 
 class Hints:
-    def generateHints(locationItems, hintsType, seedName, excludeList, preventSelfHinting=True):
+    def generateHints(locationItems, hintsType, seedName, excludeList, preventSelfHinting=True, allowProofHinting=True):
         if hintsType=="Disabled":
             return None
         hintsText = {}
@@ -40,6 +40,7 @@ class Hints:
             for h in hintableWorlds:
                 if h not in excludeList:
                     worldChecks[h] = []
+                    
             for location,item in locationItems:
                 if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
                     continue
@@ -96,12 +97,10 @@ class Hints:
                     if not world in worldsToHint and any(item.ItemType == itemType.FORM for item in worldChecks[world]):
                         worldsToHint.append(world)
 
-
             if pages_need_hints:
                 for world in worldChecks:
                     if not world in worldsToHint and any(item.ItemType == itemType.TORN_PAGE for item in worldChecks[world]):
                         worldsToHint.append(world)
-
 
             if mag_thun_need_hints:
                 for world in worldChecks:
@@ -116,7 +115,6 @@ class Hints:
             # worldsToHint is now all the required hinted worlds. We'll see if we can also hint the reports that hint proofs 
             if len(worldsToHint) > 13:
                 worldsToHint = worldsToHint[0:13]
-
 
             # at least 1 proof is in a hintable world, so we need to hint it
             if numProofWorlds > 0:
@@ -229,10 +227,168 @@ class Hints:
             if len(worldsToHint) != len(set(worldsToHint)):
                 return "Two reports hint the same location. This is an error, try a new seedname."
 
+        if hintsType == "Points":
+            hintsText['checkValue'] = {"proof":12, "form":10, "magic":8, "summon":6, "ability":4, "page":2}
+            hintsText['world'] = {}
+            hintsText['Reports'] = {}
+            reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
+            reportsList = list(range(1,14))
+            reportRepetition = 0
+            tempWorldR = None
+            tempItemR = None
+            tempExcludeList = []
+            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"]
+            hintableWorlds = ["Level",locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
+            
+            worldChecks = {}
+            worldChecksEdit = {}
+            
+            for location,item in locationItems:
+                if isinstance(location, KH2ItemStat):
+                    continue
+                if item.ItemType in importantChecks or item.Name in importantChecks:
+                    if location.LocationTypes[0] != locationType.Puzzle:
+                        if not location.LocationTypes[0] in hintsText['world']:
+                            hintsText['world'][location.LocationTypes[0]] = []
+                        hintsText['world'][location.LocationTypes[0]].append(item.Name)
+
+            for h in hintableWorlds:
+                if h not in excludeList:
+                    worldChecks[h] = []
+                    worldChecksEdit[h] = []
+                    
+            for location,item in locationItems:
+                if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
+                    continue
+                if item.ItemType in importantChecks or item.Name in importantChecks:
+                    worldChecks[location.LocationTypes[0]].append(item)
+                    worldChecksEdit[location.LocationTypes[0]].append(item)
+
+                if item.ItemType is itemType.REPORT:
+                    reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
+                    #report can't hint itself
+                    if preventSelfHinting:
+                        reportRestrictions[reportNumber-1].append(location.LocationTypes[0])
+            
+            while len(reportsList) > 0:
+            
+                temp_worlds = list(worldChecksEdit.keys())
+                worlds = []
+                
+                for place in temp_worlds:
+                    if place not in tempExcludeList:
+                        worlds.append(place)
+            
+                random.shuffle(reportsList)
+                random.shuffle(worlds)
+                randomWorld = None
+                
+                #reset list
+                if len(worlds) == 0:
+                    #print("ran out of worlds! resetting worldlist...")
+                    #print("-----------------------------------------------------------------------------")
+                    worldChecksEdit = worldChecks
+                    tempExcludeList.clear()
+                    continue
+
+                if (len(worldChecksEdit[worlds[0]]) != 0):
+                    if worlds[0] not in reportRestrictions[reportsList[0]-1]:
+                        reportNumber = reportsList.pop(0)
+                        randomWorld = worlds[0]
+                    else:
+                        #print("Self hinting world! Rerolling...")
+                        #print("-----------------------------------------------------------------------------")
+                        continue
+                else:
+                    #print(worlds[0] + " has 0 checks! removing from list and rerolling...")
+                    #print("-----------------------------------------------------------------------------")
+                    tempExcludeList.append(worlds[0])
+                    continue
+                    
+                randomItem = random.choice(worldChecksEdit[randomWorld])
+                #print("Report " + str(reportNumber) + ": World = " + randomWorld +" | item = " + randomItem.Name)
+
+                #compare current selected world and item to previously rerolled reports
+                #more of a jank failsafe really
+                if randomWorld == tempWorldR and randomItem.Name == tempItemR:
+                    reportRepetition = reportRepetition + 1
+
+                #should we hint proofs?
+                if "Proof" in randomItem.Name:
+                    #print("Proof found! Is Proof Hinting On?")
+                    
+                    if allowProofHinting == True:
+                        #print("Yes! hinting Proof...")
+                        pass
+                    else:
+                        #print("No. removing item and rerolling...")
+                        #print("-----------------------------------------------------------------------------")
+                        worldChecksEdit[randomWorld].remove(randomItem)
+                        reportsList.append(reportNumber)
+                        continue
+                    
+                #try to hint other reports
+                if "Report" in randomItem.Name:
+                    #prevent reports from hinting themselves
+                    if reportNumber == int(randomItem.Name.replace("Secret Ansem's Report ","")):
+                        #print("Self hinting report! rerolling...")
+                        #print("-----------------------------------------------------------------------------")
+                        tempWorldR = randomWorld
+                        tempItemR = randomItem.Name
+                        reportsList.append(reportNumber)
+                        continue
+                
+                    #if we tried to roll for this 3 times already then stop trying and remove the report from being hinted
+                    if reportRepetition > 2:
+                        #print("Report repetition threshold reached! removing item from world and rerolling...")
+                        #print("-----------------------------------------------------------------------------")
+                        worldChecksEdit[randomWorld].remove(randomItem)
+                        tempWorldR = None
+                        tempItemR = None
+                        reportRepetition = 0
+                        reportsList.append(reportNumber)
+                        continue
+                        
+                    random_number = random.randint(1, 3)
+                    #print("Random number = " + str(random_number))
+                    #print("Report found! does " + str(random_number) + " = 1?")
+                    
+                    if random_number == 1:
+                        #print("Yes! hinting report...")
+                        pass
+                    else:
+                        #print("No. rerolling...")
+                        #print("-----------------------------------------------------------------------------")
+                        tempWorldR = randomWorld
+                        tempItemR = randomItem.Name
+                        reportsList.append(reportNumber)
+                        continue
+
+                hintsText["Reports"][reportNumber] = {
+                    "World": randomWorld,
+                    "check": randomItem.Name,
+                    "Location": ""
+                }
+                
+                # remove hinted item from list
+                #print("Removing " + randomItem.Name + " from hintable items")
+                #print("Removing " + randomWorld + " hintable worlds")
+                #print("-----------------------------------------------------------------------------")
+                worldChecksEdit[randomWorld].remove(randomItem)
+                tempExcludeList.append(randomWorld)
+                
+            for reportNumber in range(1,14):
+                if hintsText["Reports"][reportNumber]["Location"] != "":
+                    continue
+                for world in worldChecks:
+                    if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
+                        hintsText["Reports"][reportNumber]["Location"] = world
+            
         return hintsText
 
     def writeHints(hintsText,seedName,outZip):
-        outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
+        outZip.writestr("{seedName}.Hints".format(seedName = seedName), json.dumps(hintsText).encode('utf-8'))
+        #outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
 
     def getOptions():
-        return ["Disabled","Shananas","JSmartee","JSmartee-FirstVisit","JSmartee-SecondVisit","JSmartee-FirstBoss","JSmartee-SecondBoss"]
+        return ["Disabled","Shananas","JSmartee","JSmartee-FirstVisit","JSmartee-SecondVisit","JSmartee-FirstBoss","JSmartee-SecondBoss","Points","Points-FirstVisit","Points-SecondVisit","Points-FirstBoss","Points-SecondBoss"]
