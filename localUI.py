@@ -91,7 +91,7 @@ def convert_seed_to_flags(seed, flagOptions):
 
 def convert_flags_to_seed(flags, flagOptions):
     seed={}
-    seed["seed_name"] = flags.split("***")[0]
+    seed["seed_name"] = flags.split(SEED_SPLITTER)[0]
     flags = flags.split(SEED_SPLITTER)[1]
     flag_list = flags.split(OPTION_SPLITTER)
     seed["spoiler_log"] = bool(int(flag_list[0]))

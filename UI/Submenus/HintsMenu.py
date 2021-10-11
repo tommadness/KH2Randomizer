@@ -24,7 +24,7 @@ class HintsMenu(KH2Submenu):
         reportDepth.addItems(["DataFight","FirstVisit","SecondVisit","FirstBoss","SecondBoss"])
         reportDepth.currentTextChanged.connect(lambda text : self.setKeyValue("reportDepth",reportDepth.currentText()))
         self.addOption("Report Depth",reportDepth)
-        self.addFlagOption(reportDepth,"hintsType")
+        self.addFlagOption(reportDepth,"reportDepth")
         
         self.noSelfHinting = QCheckBox()
         self.noSelfHinting.stateChanged.connect(lambda state : self.setKeyValue("preventSelfHinting",state==Qt.Checked))
