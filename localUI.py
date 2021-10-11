@@ -549,7 +549,7 @@ Created by Thundrio, Tommadness, and ZakTheRobot<br><br>
 
 Icons by Televo<br><br>
 
-Special thanks to Xeeynamo and the OpenKH team for the OpenKH Mods Manager, which makes this all possible'''
+Special thanks to Xeeynamo and the OpenKH team for their reverse engineering effort and the OpenKH Mods Manager, both of which makes this all possible'''
         message = QMessageBox(text=aboutText)
         message.setTextFormat(Qt.RichText)
         message.setWindowTitle("About")
