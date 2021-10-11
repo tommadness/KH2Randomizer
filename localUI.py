@@ -279,6 +279,8 @@ class KH2RandomizerApp(QMainWindow):
         for x in self.widgets:
             x.setData(preset_values[x.getName()])
 
+        self.fixSeedName()
+
         message = QMessageBox(text=mod_string)
         message.setWindowTitle("KH2 Seed Generator - Daily Seed")
         message.exec()
