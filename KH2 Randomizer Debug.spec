@@ -56,7 +56,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='KH2 Randomizer',
+    name='KH2 Randomizer DEBUG VERSION',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -71,3 +71,10 @@ exe = EXE(
     entitlements_file=None,
     icon='rando.ico'
 )
+
+import shutil
+presetPath = '{0}/presets'.format(DISTPATH)
+if os.path.exists(presetPath):
+  shutil.rmtree(presetPath)
+
+shutil.copytree('presets', presetPath)

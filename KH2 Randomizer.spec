@@ -4,7 +4,15 @@
 block_cipher = None
 
 
-import os, glob, khbr
+import os, glob, khbr, shutil
+
+for root, dirs, files in os.walk(DISTPATH):
+    for f in files:
+        os.unlink(os.path.join(root, f))
+    for d in dirs:
+        shutil.rmtree(os.path.join(root, d))
+
+
 khbrpath = os.path.dirname(khbr.__file__)
 def build_datas_recursive(paths):
   datas = []
@@ -71,3 +79,10 @@ exe = EXE(
     entitlements_file=None,
     icon='rando.ico'
 )
+
+presetPath = '{0}/presets'.format(DISTPATH)
+if os.path.exists(presetPath):
+  shutil.rmtree(presetPath)
+
+shutil.copytree('presets', presetPath)
+shutil.make_archive('Kingdom Hearts II Final Mix Randomizer', 'zip', DISTPATH)
