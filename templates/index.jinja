@@ -89,8 +89,13 @@
                 {%endfor%}
             </select>
             <div>
-            <label for="preventSelfHinting" data-toggle="tooltip" data-placement="top" title="Prevent reports from hinting the world where a report is found">Jsmartee Only: No self-hinting reports</label> 
+            <label for="preventSelfHinting" data-toggle="tooltip" data-placement="top" title="Prevent reports from hinting the world where a report is found">Jsmartee/Points Only: No self-hinting reports</label> 
             <label class="switch"><input type="checkbox" checked name="preventSelfHinting" value="True" id="preventSelfHinting"/><span class="slider round">
+            </label>
+			</div>
+			<div>
+            <label for="allowProofHinting" data-toggle="tooltip" data-placement="top" title="Allows reports to directly hint where Proofs are">Points Only: Proof-hinting reports</label> 
+            <label class="switch"><input type="checkbox" checked name="allowProofHinting" value="True" id="allowProofHinting"/><span class="slider round">
             </label>
             </div>
         </div>
