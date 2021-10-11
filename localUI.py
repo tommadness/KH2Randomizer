@@ -14,7 +14,7 @@ from PySide6.QtCore import QSize,Qt,QThread,Signal
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QComboBox,
-    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar,QMessageBox,QProgressDialog
+    QTabWidget,QVBoxLayout,QHBoxLayout,QWidget,QInputDialog,QFileDialog,QListWidget, QMenuBar,QMessageBox,QProgressDialog, QSizePolicy, QWidgetAction
 )
 
 from UI.Submenus.SoraMenu import SoraMenu
@@ -191,6 +191,7 @@ class KH2RandomizerApp(QMainWindow):
         self.menuBar.addMenu(self.seedMenu)
         self.menuBar.addMenu(self.presetMenu)
 
+
         # populate a menu item for the daily seed
         self.menuBar.addAction("Load Daily Seed", self.loadDailySeed)
         
@@ -198,6 +199,8 @@ class KH2RandomizerApp(QMainWindow):
         if not os.path.exists(PRESET_FOLDER):
             os.makedirs(PRESET_FOLDER)
         presetFolderContents = os.listdir(PRESET_FOLDER)
+
+        self.menuBar.addAction("About", self.showAbout)
 
 
         if not presetFolderContents == []:
@@ -536,6 +539,27 @@ class KH2RandomizerApp(QMainWindow):
         if self.setup is None:
             self.setup = FirstTimeSetup()
             self.setup.show()
+
+    def showAbout(self):
+        aboutText = '''
+Kingdom Hearts II Final Mix Zip Seed Generator Version {0}<br>
+Created by Thundrio, Tommadness, and ZakTheRobot<br><br>
+
+Thank you to all contributors, testers, and advocates.<br><br>
+
+<a href="https://github.com/tommadness/KH2Randomizer">Github Link</a><br>
+<a href="https://discord.gg/KwfqM6GYzd">KH2 Randomizer Discord</a><br><br>
+
+<a href="https://github.com/tommadness/KH2Randomizer/tree/local_ui#acknowledgements">Acknowledgements</a>
+
+
+
+'''.format(LOCAL_UI_VERSION)
+        message = QMessageBox(text=aboutText)
+        message.setTextFormat(Qt.RichText)
+        message.setWindowTitle("About")
+        message.setWindowIcon(QIcon(resource_path("Module/icon.png")))
+        message.exec()
 
 
 if __name__=="__main__":
