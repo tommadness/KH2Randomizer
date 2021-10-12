@@ -6,8 +6,8 @@ venv
 .vscode
 .idea/
 XYZ
+/auto-save/
 /build/
 /dist/
 extracted_data
 log.txt
-auto_save.auto

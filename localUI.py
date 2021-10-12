@@ -1,10 +1,23 @@
+import os
+import sys
+
+
+# Keep resource_path definition and the setting of the environment variable as close to the top as possible.
+# These need to happen before anything Boss/Enemy Rando gets loaded for the sake of the distributed binary.
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
+os.environ["USE_KH2_GITPATH"] = resource_path("extracted_data")
+
+
 import datetime
 import json
-import os
 import random
 import re
 import string
-import sys
 from pathlib import Path
 
 import pyperclip as pc
@@ -21,7 +34,6 @@ from Class import seedSettings, settingkey
 from Class.seedSettings import SeedSettings
 from List.configDict import locationType
 from List.hashTextEntries import generateHashIcons
-from Module import dailySeed
 from Module.dailySeed import getDailyModifiers
 from Module.randomizePage import randomizePage
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
@@ -38,15 +50,6 @@ from UI.Submenus.WorldMenu import WorldMenu
 
 SEED_SPLITTER = '---'
 LOCAL_UI_VERSION = '1.0.0'
-
-
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, relative_path)
-
-
-os.environ["USE_KH2_GITPATH"] = resource_path("extracted_data")
 
 
 class Logger(object):
@@ -80,6 +83,7 @@ def convert_share_string_to_seed(share_string: str) -> dict:
     }
 
 
+AUTOSAVE_FOLDER = "auto-save"
 PRESET_FOLDER = "presets"
 
 
@@ -106,17 +110,17 @@ class KH2RandomizerApp(QMainWindow):
 
         self.settings = SeedSettings()
 
-        auto_settings_save_path = os.path.join(PRESET_FOLDER, 'auto_save.auto')
+        if not os.path.exists(AUTOSAVE_FOLDER):
+            os.makedirs(AUTOSAVE_FOLDER)
+        auto_settings_save_path = os.path.join(AUTOSAVE_FOLDER, 'auto-save.json')
         if os.path.exists(auto_settings_save_path):
             with open(auto_settings_save_path, 'r') as source:
-                lines = source.read().splitlines()
-                if len(lines) > 0:
-                    settings_string = lines[0]
-                    try:
-                        self.settings.apply_settings_string(settings_string, include_private=True)
-                    except Exception:
-                        print('Unable to apply last settings - will use defaults')
-                        pass
+                try:
+                    auto_settings_json = json.loads(source.read())
+                    self.settings.apply_settings_json(auto_settings_json, include_private=True)
+                except Exception:
+                    print('Unable to apply last settings - will use defaults')
+                    pass
 
         with open(resource_path("UI/stylesheet.qss"),"r") as style:
             data = style.read()
@@ -131,7 +135,6 @@ class KH2RandomizerApp(QMainWindow):
         seed_layout = QHBoxLayout()
         submit_layout = QHBoxLayout()
         self.seedhashlayout = QHBoxLayout()
-        self.cosmetic_layout = QHBoxLayout()
         self.tabs = QTabWidget()
 
         self.menuBar = QMenuBar()
@@ -149,25 +152,21 @@ class KH2RandomizerApp(QMainWindow):
         # populate a menu item for the daily seed
         self.menuBar.addAction("Load Daily Seed", self.loadDailySeed)
 
-        self.preset_strings = {}
-        if not os.path.exists(PRESET_FOLDER):
-            os.makedirs(PRESET_FOLDER)
-        presetFolderContents = os.listdir(PRESET_FOLDER)
-
         self.menuBar.addAction("About", self.showAbout)
 
-        if not presetFolderContents == []:
-            for file in presetFolderContents:
-                preset_name, extension = os.path.splitext(file)
-                if extension == '.preset':
-                    with open(os.path.join(PRESET_FOLDER, file), 'r') as presetData:
-                        settings_string = presetData.read().splitlines()[0]
-                        self.preset_strings[preset_name] = settings_string
+        self.preset_json = {}
+        if not os.path.exists(PRESET_FOLDER):
+            os.makedirs(PRESET_FOLDER)
+        for file in os.listdir(PRESET_FOLDER):
+            preset_name, extension = os.path.splitext(file)
+            if extension == '.json':
+                with open(os.path.join(PRESET_FOLDER, file), 'r') as presetData:
+                    settings_json = json.loads(presetData.read())
+                    self.preset_json[preset_name] = settings_json
 
         pagelayout.addWidget(self.menuBar)
         pagelayout.addLayout(seed_layout)
         pagelayout.addWidget(self.tabs)
-        pagelayout.addLayout(self.cosmetic_layout)
         pagelayout.addLayout(submit_layout)
         pagelayout.addLayout(self.seedhashlayout)
         seed_layout.addWidget(QLabel("Seed"))
@@ -175,8 +174,9 @@ class KH2RandomizerApp(QMainWindow):
         self.seedName.setPlaceholderText("Leave blank for a random seed")
         seed_layout.addWidget(self.seedName)
 
-        for x in self.preset_strings.keys():
-            self.presetsMenu.addAction(x, lambda x=x: self.usePreset(x))
+        for x in self.preset_json.keys():
+            if x != 'BaseDailySeed':
+                self.presetsMenu.addAction(x, lambda x=x: self.usePreset(x))
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         self.spoiler_log.setCheckState(Qt.Checked)
@@ -223,14 +223,14 @@ class KH2RandomizerApp(QMainWindow):
         self.setCentralWidget(widget)
 
     def closeEvent(self, e):
-        settings_string = self.settings.settings_string(include_private=True)
-        with open(os.path.join(PRESET_FOLDER, 'auto_save.auto'), 'w') as presetData:
-            presetData.writelines(settings_string)
+        settings_json = self.settings.settings_json(include_private=True)
+        with open(os.path.join(AUTOSAVE_FOLDER, 'auto-save.json'), 'w') as presetData:
+            presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
         e.accept()
 
     def loadDailySeed(self):
         self.seedName.setText(self.dailySeedName)
-        self.settings.apply_settings_string(dailySeed.BASE_DAILY_SETTINGS_STRING)
+        self.settings.apply_settings_json(self.preset_json['BaseDailySeed'])
 
         # use the modifications to change the preset
         mod_string = f'Updated settings for Daily Seed {self.startTime.strftime("%a %b %d %Y")}\n\n'
@@ -419,21 +419,20 @@ class KH2RandomizerApp(QMainWindow):
 
         if ok:
             # add current settings to saved presets, add to current preset list, change preset selection.
-            settings_string = self.settings.settings_string()
-            self.preset_strings[preset_name] = settings_string
+            settings_json = self.settings.settings_json()
+            self.preset_json[preset_name] = settings_json
             self.presetsMenu.addAction(preset_name, lambda: self.usePreset(preset_name))
-            with open(os.path.join(PRESET_FOLDER, preset_name + '.preset'), 'w') as presetData:
-                presetData.writelines(settings_string)
+            with open(os.path.join(PRESET_FOLDER, preset_name + '.json'), 'w') as presetData:
+                presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
 
     def openPresetFolder(self):
         os.startfile(PRESET_FOLDER)
 
     def usePreset(self, preset_name: str):
-        if preset_name != "Presets":
-            settings_string = self.preset_strings[preset_name]
-            self.settings.apply_settings_string(settings_string)
-            for widget in self.widgets:
-                widget.update_widgets()
+        settings_json = self.preset_json[preset_name]
+        self.settings.apply_settings_json(settings_json)
+        for widget in self.widgets:
+            widget.update_widgets()
 
     def shareSeed(self):
         self.fixSeedName()

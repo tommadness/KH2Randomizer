@@ -333,7 +333,7 @@ _all_settings = [
             locationDepth.SecondBoss.name: 'Second Boss'
         },
         shared=True,
-        default='SecondVisit'
+        default=locationDepth.SecondVisit.name
     ),
 
     Toggle(
@@ -660,3 +660,13 @@ class SeedSettings:
         for index, name in enumerate(sorted(self._filtered_settings(include_private))):
             setting = settings_by_name[name]
             self.values[name] = setting.parse_settings_string(parts[index])
+
+    def settings_json(self, include_private: bool = False):
+        filtered_settings = {key: self.get(key) for key in self._filtered_settings(include_private).keys()}
+        return filtered_settings
+
+    def apply_settings_json(self, settings_json, include_private: bool = False):
+        filtered_keys = self._filtered_settings(include_private).keys()
+        for key, value in settings_json.items():
+            if key in filtered_keys:
+                self.values[key] = value

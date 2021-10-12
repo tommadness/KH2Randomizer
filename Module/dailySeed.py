@@ -8,10 +8,6 @@ from List.hashTextEntries import generateHashIcons
 
 DailyModifier = namedtuple('DailyModifier', ['local_modifier','modifier', 'name', 'description', 'categories'])
 
-# This will need to stay updated as we add/change settings
-BASE_DAILY_SETTINGS_STRING = \
-    '1|0|0|0|0|1|1|1|0|0|1|4|1|1|0|2|2|7|0|0|4|2|1||0|0|0|0|2|0|1|0|0|0|5|1|0||0|02|1|8|4|02468ACE13579BD'
-
 # Default Settings are League + Enemy One-to-One + Boss One-to-One
 def get_default_settings():
     return {
