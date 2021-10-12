@@ -128,7 +128,7 @@ class KH2Submenu(QWidget):
                 widget.setValue(self.settings.get(name))
             elif isinstance(setting, SingleSelect):
                 index = setting.choice_keys.index(self.settings.get(name))
-                widget.setCurrentText(setting.choice_values[index])
+                widget.setCurrentIndex(index)
             elif isinstance(setting, MultiSelect):
                 if isinstance(widget, QListWidget):
                     selected_keys = self.settings.get(name)
