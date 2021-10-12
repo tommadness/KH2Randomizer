@@ -1,89 +1,67 @@
 {
-    "League Fall 2021": {
-        "Boss/Enemy": {
-            "boss": "Disabled",
-            "cups_bosses": 0,
-            "data_bosses": 0,
-            "enemy": "Disabled",
-            "nightmare_bosses": 0,
-            "nightmare_enemies": 0,
-            "scale_boss_stats": 0,
-            "selected_boss": "",
-            "selected_enemy": ""
-        },
-        "Hint Systems": {
-            "hintsType": "Shananas",
-            "reportDepth": "DataFight",
-            "preventSelfHinting": true
-        },
-        "Item Placement Options": {
-            "Max Logic Item Placement": false,
-            "PromiseCharm": false,
-            "Default Ability Pool": true,
-            "Randomize Ability Pool": false,
-            "Reverse Rando": false,
-            "itemPlacementDifficulty": "Normal"
-        },
-        "Keyblades": {
-            "keybladeAction": false,
-            "keybladeMaxStat": 7,
-            "keybladeMinStat": 0,
-            "keybladeSupport": true
-        },
-        "Misc Locations with Rewards": {
-            "Hades Paradox Cup": false,
-            "Olympus Cups": false,
-            "Puzzles": false
-        },
-        "Seed Modifiers": {
-            "Better Junk": false,
-            "Glass Cannon": false,
-            "Remove Damage Cap": false,
-            "Start with No AP": false
-        },
-        "Sora": {
-            "FinalExp": 3.0,
-            "Form Levels": true,
-            "LimitExp": 4.0,
-            "MasterExp": 3.0,
-            "SummonExp": 2.0,
-            "ValorExp": 7.0,
-            "WisdomExp": 3.0,
-            "levelChoice": "Level 50",
-            "soraExpMult": 2.0
-        },
-        "Starting Items": {
-            "Critical Bonuses": true,
-            "Garden of Assemblage": true,
-            "Library of Assemblage": false,
-            "Schmovement": true,
-            "startingInventory": [
-                369
-            ]
-        },
-        "Superbosses with Rewards": {
-            "Absent Silhouettes": true,
-            "Data Organization XIII": true,
-            "Lingering Will (Terra)": false,
-            "Sephiroth": true
-        },
-        "Worlds with Rewards": {
-            "Agrabah": true,
-            "Atlantica": false,
-            "Beast's Castle": true,
-            "Cavern of Remembrance": true,
-            "Disney Castle / Timeless River": true,
-            "Halloween Town": true,
-            "Hollow Bastion": true,
-            "Hundred Acre Wood": true,
-            "Land of Dragons": true,
-            "Olympus Coliseum": true,
-            "Port Royal": true,
-            "Pride Lands": true,
-            "Simulated Twilight Town": true,
-            "Space Paranoids": true,
-            "The World That Never Was": true,
-            "Twilight Town": true
-        }
-    }
+    "ability_pool": "default",
+    "action_keyblade_abilities": false,
+    "allow_proof_hinting": false,
+    "better_junk": false,
+    "boss": "Disabled",
+    "critical_bonus_rewards": true,
+    "cups_bosses": false,
+    "data_bosses": false,
+    "enable_promise_charm": false,
+    "enemy": "Disabled",
+    "final_exp_multiplier": 3.0,
+    "form_level_rewards": true,
+    "garden_of_assemblage_rewards": true,
+    "glass_cannon": false,
+    "hint_system": "Shananas",
+    "item_placement_difficulty": "Normal",
+    "keyblade_max_stat": 7,
+    "keyblade_min_stat": 0,
+    "library_of_assemblage": false,
+    "limit_exp_multiplier": 4.0,
+    "master_exp_multiplier": 3.0,
+    "max_logic_item_placement": false,
+    "misc_locations_with_rewards": [],
+    "nightmare_bosses": false,
+    "nightmare_enemies": false,
+    "prevent_self_hinting": false,
+    "remove_damage_cap": false,
+    "report_depth": "DataFight",
+    "reverse_rando": false,
+    "scale_boss_stats": false,
+    "schmovement": true,
+    "selected_boss": null,
+    "selected_enemy": null,
+    "sora_exp_multiplier": 2.0,
+    "sora_levels": "ExcludeFrom50",
+    "start_no_ap": false,
+    "starting_inventory": [
+        "369"
+    ],
+    "summon_exp_multiplier": 2.0,
+    "superbosses_with_rewards": [
+        "AS",
+        "DataOrg",
+        "Sephi"
+    ],
+    "support_keyblade_abilities": true,
+    "valor_exp_multiplier": 7.0,
+    "wisdom_exp_multiplier": 3.0,
+    "worlds_with_rewards": [
+        "STT",
+        "HB",
+        "OC",
+        "LoD",
+        "PL",
+        "HT",
+        "SP",
+        "CoR",
+        "TT",
+        "BC",
+        "Agrabah",
+        "HUNDREDAW",
+        "DC",
+        "PR",
+        "TWTNW"
+    ]
 }

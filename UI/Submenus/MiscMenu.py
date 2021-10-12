@@ -1,47 +1,13 @@
-import os
+from Class import settingkey
+from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QPushButton
+
 
 class MiscMenu(KH2Submenu):
-    def __init__(self):
-        super().__init__("horizontal")
-        self.name="Misc Locations with Rewards"
+    def __init__(self, settings: SeedSettings):
+        super().__init__(title='Other Reward Locations', in_layout='horizontal', settings=settings)
 
-        self.miscOptions = [  {"name":"Olympus Cups","enabled":False,"icon":"icons/misc/cups.png"},
-                    {"name":"Hades Paradox Cup","enabled":False,"icon":"icons/misc/paradox_cup.png"},
-                    {"name":"Puzzles","enabled":False,"icon":"icons/misc/puzzle.png"},
-                    ]
-
-        path = os.path.abspath(__file__)
-        dir_path = os.path.dirname(path)
-
-        for i in range(len(self.miscOptions)):
-            world = self.miscOptions[i]
-            worldWidget = QPushButton()
-            icon = QIcon(dir_path+"/"+world["icon"])
-            if i==0:
-                size = icon.actualSize(icon.availableSizes()[0]/5)
-            else:
-                size = icon.actualSize(icon.availableSizes()[0]/2.5)
-
-            worldWidget.setFixedSize(size)
-            worldWidget.setIcon(icon)
-            worldWidget.setIconSize(size)
-            worldWidget.setCheckable(True)
-            worldWidget.toggled.connect(lambda state, val=world["name"] : self.setKeyValue(val,state))
-            worldWidget.toggle()
-            if not world["enabled"]:
-                worldWidget.toggle()
-
-            self.addOption(world["name"],worldWidget,option_layout="vertical")
-            self.addFlagOption(worldWidget,world["name"])
+        self.add_multiselect_buttons(settingkey.SUPERBOSSES_WITH_REWARDS, columns=1, group_title="Superbosses")
+        self.add_multiselect_buttons(settingkey.MISC_LOCATIONS_WITH_REWARDS, columns=1, group_title='Misc Locations')
 
         self.finalizeMenu()
-
-    def updateWidgets(self):
-        for i in range(len(self.miscOptions)):
-            option = self.miscOptions[i]
-            value = self.getKeyValue(option["name"])
-            if value != self.widgetList[i].isChecked():
-                self.widgetList[i].toggle()

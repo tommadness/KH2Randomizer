@@ -161,3 +161,24 @@ QStatusBar {
 QCheckBox{
     color:rgb(255,255,255); 
 }
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+QGroupBox::title {
+    color: rgb(255, 255, 255);
+}
+
+QComboBox {
+    padding: 8px;
+    width: 160px;
+}
+QComboBox QListView:item {
+    padding: 8px;
+}
+
+QSpinBox, QDoubleSpinBox {
+    height: 36px;
+    width: 160px;
+}

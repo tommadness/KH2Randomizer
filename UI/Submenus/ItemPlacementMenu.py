@@ -1,71 +1,16 @@
+from Class import settingkey
+from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QCheckBox,QRadioButton,QButtonGroup,QComboBox
+
 
 class ItemPlacementMenu(KH2Submenu):
-    def __init__(self):
-        super().__init__()
-        self.name="Item Placement Options"
+    def __init__(self, settings: SeedSettings):
+        super().__init__(title='Item Placement Options', settings=settings)
 
-        promiseCharm = QCheckBox()
-        promiseCharm.stateChanged.connect(lambda state : self.setKeyValue("PromiseCharm",state==Qt.Checked))
-        promiseCharm.setCheckState(Qt.Checked)
-        promiseCharm.setCheckState(Qt.Unchecked)
-        self.addOption("Enable Promise Charm",promiseCharm)
-        self.addFlagOption(promiseCharm,"PromiseCharm")
-
-        itemDifficulty = QComboBox()
-        itemDifficulty.addItems(["Super Easy","Easy","Normal","Hard","Very Hard","Insane","Nightmare"])
-        itemDifficulty.currentTextChanged.connect(lambda txt : self.setKeyValue("itemPlacementDifficulty",txt))
-        itemDifficulty.setCurrentIndex(2)
-        self.addOption("Item Placement Difficulty",itemDifficulty)
-        self.addFlagOption(itemDifficulty,"itemPlacementDifficulty")
-
-        maxLogic = QCheckBox()
-        maxLogic.stateChanged.connect(lambda state : self.setKeyValue("Max Logic Item Placement",state==Qt.Checked))
-        maxLogic.setCheckState(Qt.Checked)
-        maxLogic.setCheckState(Qt.Unchecked)
-        self.addOption("Max Logic Item Placement",maxLogic)
-        self.addFlagOption(maxLogic,"Max Logic Item Placement")
-
-        reverseRando = QCheckBox()
-        reverseRando.stateChanged.connect(lambda state : self.setKeyValue("Reverse Rando",state==Qt.Checked))
-        reverseRando.setCheckState(Qt.Checked)
-        reverseRando.setCheckState(Qt.Unchecked)
-        self.addOption("Reverse Rando",reverseRando)
-        self.addFlagOption(reverseRando,"Reverse Rando")
-
-        self.addHeader("Ability Pool")
-
-        defaultAbilities = QRadioButton()
-        defaultAbilities.toggled.connect(lambda : self.setKeyValue("Default Ability Pool",defaultAbilities.isChecked()))
-        self.addOption("Default Abilities",defaultAbilities)
-        self.addFlagOption(defaultAbilities,"Default Ability Pool")
-
-        randomAbilities = QRadioButton()
-        randomAbilities.toggled.connect(lambda : self.setKeyValue("Randomize Ability Pool",randomAbilities.isChecked()))
-        self.addOption("Randomize Ability Pool",randomAbilities)
-        self.addFlagOption(randomAbilities,"Randomize Ability Pool")
-
-        abilityGroup = QButtonGroup()
-        abilityGroup.addButton(defaultAbilities)
-        abilityGroup.addButton(randomAbilities)
-
-        randomAbilities.toggle()
-        defaultAbilities.toggle()
-
+        self.add_option(settingkey.ENABLE_PROMISE_CHARM)
+        self.add_option(settingkey.ITEM_PLACEMENT_DIFFICULTY)
+        self.add_option(settingkey.MAX_LOGIC_ITEM_PLACEMENT)
+        self.add_option(settingkey.REVERSE_RANDO)
+        self.add_option(settingkey.ABILITY_POOL)
 
         self.finalizeMenu()
-
-    def updateWidgets(self):
-        self.widgetList[0].setCheckState(Qt.Checked if self.getKeyValue("PromiseCharm") else Qt.Unchecked)
-        self.widgetList[1].setCurrentText(self.getKeyValue("itemPlacementDifficulty"))
-        self.widgetList[2].setCheckState(Qt.Checked if self.getKeyValue("Max Logic Item Placement") else Qt.Unchecked)
-        self.widgetList[3].setCheckState(Qt.Checked if self.getKeyValue("Reverse Rando") else Qt.Unchecked)
-
-        if self.getKeyValue("Randomize Ability Pool"):
-            self.widgetList[5].toggle()
-        else:
-            self.widgetList[4].toggle()
-
-
