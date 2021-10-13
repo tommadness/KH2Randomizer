@@ -147,7 +147,7 @@ class KH2Randomizer():
         if promiseCharm:
             validItemList.append(KH2Item(524, "PromiseCharm",itemType.PROMISE_CHARM))
 
-        self._validItemList = [item for item in validItemList if not str(item.Id) in startingInventory]
+        self._validItemList = [item for item in validItemList if not int(item.Id) in startingInventory]
 
 
     def validateCount(self):
