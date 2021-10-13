@@ -70,8 +70,6 @@ def randomizePage(data, sessionDict, local_ui=False):
                         print("unzipped into {}".format(development_mode_path))
                     if not local_ui:
                         return
-                if not local_ui:
-                    socketio.emit('file',zip.read())
                 else:
                     return zip
 
