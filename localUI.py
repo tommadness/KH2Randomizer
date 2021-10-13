@@ -49,7 +49,7 @@ from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.WorldMenu import WorldMenu
 
 SEED_SPLITTER = '---'
-LOCAL_UI_VERSION = '1.99.2'
+LOCAL_UI_VERSION = '1.99.3'
 
 
 class Logger(object):
