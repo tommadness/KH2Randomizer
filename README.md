@@ -1,5 +1,7 @@
 # KH2Randomizer
 
+![Screenshot of the seed generator user interface](https://github.com/tommadness/KH2Randomizer/blob/local_ui/helpinfo/img/Readme/KH2SeedGen.png?raw=true)
+
 ## Acknowledgements
 Icons by Televo
 
