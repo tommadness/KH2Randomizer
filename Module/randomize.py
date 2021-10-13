@@ -462,7 +462,7 @@ class KH2Randomizer():
 
             if self.puzzleRando:
                 mod["assets"] += [modYml.getPuzzleMod()]
-                with open(path_to_static/Path("jiminy.bar"),"rb") as puzzleBar:
+                with open(resource_path(path_to_static/Path("jiminy.bar")),"rb") as puzzleBar:
                     binaryContent = bytearray(puzzleBar.read())
                     for puzz in puzzleList:
                         byte0, byte1, item = puzz.getItemBytesAndLocs()

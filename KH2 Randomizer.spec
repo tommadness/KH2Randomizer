@@ -40,6 +40,7 @@ a = Analysis(
         'UI/*.*',
         'static/spoilerlog.html',
         'static/seed-hash-icons/*.*',
+        'static/jiminy.bar',
         'Module/icon.png',
         'extracted_data/**/*.*'
     ])+[(khbrpath+'/*.json','khbr'), (khbrpath+'/*.yaml','khbr'), (khbrpath+'/data/*.*','khbr/data'), (khbrpath+'/data/ai_mods/*','khbr/data/ai_mods')],
