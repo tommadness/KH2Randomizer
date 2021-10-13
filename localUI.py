@@ -71,15 +71,17 @@ sys.stderr = logger
 
 def convert_seed_to_share_string(seed: dict) -> str:
     seed_name: str = seed['seed_name']
+    spoiler_log = '1' if seed['spoiler_log'] else '0'
     settings_string: str = seed['settings_string']
-    return SEED_SPLITTER.join([seed_name, settings_string])
+    return SEED_SPLITTER.join([seed_name, spoiler_log, settings_string])
 
 
 def convert_share_string_to_seed(share_string: str) -> dict:
     parts = share_string.split(SEED_SPLITTER)
     return {
         'seed_name': parts[0],
-        'settings_string': parts[1]
+        'spoiler_log': True if parts[1] == '1' else False,
+        'settings_string': parts[2]
     }
 
 
@@ -446,6 +448,7 @@ class KH2RandomizerApp(QMainWindow):
 
         seed = {
             'seed_name': current_seed,
+            'spoiler_log': self.spoiler_log.isChecked(),
             'settings_string': self.settings.settings_string()
         }
 
@@ -460,6 +463,7 @@ class KH2RandomizerApp(QMainWindow):
         in_settings = convert_share_string_to_seed(pc.paste())
 
         self.seedName.setText(in_settings['seed_name'])
+        self.spoiler_log.setCheckState(Qt.Checked if in_settings['spoiler_log'] else Qt.Unchecked)
         settings_string = in_settings['settings_string']
         self.settings.apply_settings_string(settings_string)
         for widget in self.widgets:
