@@ -247,6 +247,7 @@ class KH2RandomizerApp(QMainWindow):
         if session["seed"] == "":
             characters = string.ascii_letters + string.digits
             session["seed"] = (''.join(random.choice(characters) for i in range(30)))
+            self.seedName.setText(session["seed"])
 
         # make the seed hash dependent on ui version and if a spoiler log is generated or not.
         random.seed(session["seed"]+LOCAL_UI_VERSION+str(makeSpoilerLog))
