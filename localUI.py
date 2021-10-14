@@ -36,6 +36,7 @@ from List.configDict import locationType
 from List.hashTextEntries import generateHashIcons
 from Module.dailySeed import getDailyModifiers
 from Module.randomizePage import randomizePage
+from Module.seedshare import SharedSeed, ShareStringException
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CosmeticsMenu import CosmeticsMenu
@@ -48,7 +49,6 @@ from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.WorldMenu import WorldMenu
 
-SEED_SPLITTER = '---'
 LOCAL_UI_VERSION = '1.99.3'
 
 
@@ -67,22 +67,6 @@ logger = Logger(sys.stdout)
 
 sys.stdout = logger
 sys.stderr = logger
-
-
-def convert_seed_to_share_string(seed: dict) -> str:
-    seed_name: str = seed['seed_name']
-    spoiler_log = '1' if seed['spoiler_log'] else '0'
-    settings_string: str = seed['settings_string']
-    return SEED_SPLITTER.join([seed_name, spoiler_log, settings_string])
-
-
-def convert_share_string_to_seed(share_string: str) -> dict:
-    parts = share_string.split(SEED_SPLITTER)
-    return {
-        'seed_name': parts[0],
-        'spoiler_log': True if parts[1] == '1' else False,
-        'settings_string': parts[2]
-    }
 
 
 AUTOSAVE_FOLDER = "auto-save"
@@ -129,7 +113,7 @@ class KH2RandomizerApp(QMainWindow):
             self.setStyleSheet(data)
 
         random.seed(str(datetime.datetime.now()))
-        self.setWindowTitle("KH2 Randomizer Seed Generator")
+        self.setWindowTitle("KH2 Randomizer Seed Generator ({0})".format(LOCAL_UI_VERSION))
         self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
         self.setMinimumWidth(1000)
         self.setup = None
@@ -446,13 +430,13 @@ class KH2RandomizerApp(QMainWindow):
             current_seed = (''.join(random.choice(characters) for i in range(30)))
             self.seedName.setText(current_seed)
 
-        seed = {
-            'seed_name': current_seed,
-            'spoiler_log': self.spoiler_log.isChecked(),
-            'settings_string': self.settings.settings_string()
-        }
-
-        output_text = convert_seed_to_share_string(seed)
+        shared_seed = SharedSeed(
+            generator_version=LOCAL_UI_VERSION,
+            seed_name=current_seed,
+            spoiler_log=self.spoiler_log.isChecked(),
+            settings_string=self.settings.settings_string()
+        )
+        output_text = shared_seed.to_share_string()
 
         pc.copy(output_text)
         message = QMessageBox(text="Copied seed to clipboard")
@@ -460,12 +444,20 @@ class KH2RandomizerApp(QMainWindow):
         message.exec()
 
     def receiveSeed(self):
-        in_settings = convert_share_string_to_seed(pc.paste())
+        try:
+            shared_seed = SharedSeed.from_share_string(
+                local_generator_version=LOCAL_UI_VERSION,
+                share_string=pc.paste()
+            )
+        except ShareStringException as exception:
+            message = QMessageBox(text=exception.message)
+            message.setWindowTitle("KH2 Seed Generator")
+            message.exec()
+            return
 
-        self.seedName.setText(in_settings['seed_name'])
-        self.spoiler_log.setCheckState(Qt.Checked if in_settings['spoiler_log'] else Qt.Unchecked)
-        settings_string = in_settings['settings_string']
-        self.settings.apply_settings_string(settings_string)
+        self.seedName.setText(shared_seed.seed_name)
+        self.spoiler_log.setCheckState(Qt.Checked if shared_seed.spoiler_log else Qt.Unchecked)
+        self.settings.apply_settings_string(shared_seed.settings_string)
         for widget in self.widgets:
             widget.update_widgets()
         message = QMessageBox(text="Received seed from clipboard")
