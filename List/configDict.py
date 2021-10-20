@@ -99,5 +99,5 @@ class itemType(str, Enum):
     MEMBERSHIPCARD = "Membership Card"
     TROPHY = "OC Trophy"
     STAT = "Stat Up"
-    JUNK = "Junk"
+    SYNTH = "SYNTH"
     
