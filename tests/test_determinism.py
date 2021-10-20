@@ -33,7 +33,7 @@ class Tests(unittest.TestCase):
             t_location.setReward(treasure_items[index])
             item_obj = [obj for obj in randomizer._validItemList if obj.Id==treasure_items[index]][0]
             randomizer._validLocationList.remove(t_location)
-            t_location.InvalidChecks.append(itemType.JUNK)
+            t_location.InvalidChecks.append(itemType.SYNTH)
             randomizer._validItemList.remove(item_obj)
             randomizer._locationItems.append((t_location, item_obj))
 
@@ -42,7 +42,7 @@ class Tests(unittest.TestCase):
             f_location.setReward(form_items[index])
             item_obj = [obj for obj in randomizer._validItemList if obj.Id==form_items[index]][0]
             randomizer._validLocationList.remove(f_location)
-            f_location.InvalidChecks.append(itemType.JUNK)
+            f_location.InvalidChecks.append(itemType.SYNTH)
             randomizer._validItemList.remove(item_obj)
             randomizer._locationItems.append((f_location, item_obj))
 

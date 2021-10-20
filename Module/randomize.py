@@ -163,7 +163,7 @@ class KH2Randomizer():
         for index, location in enumerate(locations):
             location.setReward(proofs[index].Id)
             self._validLocationList.remove(location)
-            location.InvalidChecks.append(itemType.JUNK)
+            location.InvalidChecks.append(itemType.SYNTH)
             self._validItemList.remove(proofs[index])
             self._locationItems.append((location, proofs[index]))
 
@@ -242,7 +242,7 @@ class KH2Randomizer():
                     self._locationItems.append((randomLocation,item))
                     break
         
-        junkLocations = locations + [location for location in self._allLocationList if (not location in self._validLocationList and not set(location.LocationTypes).intersection([levelChoice]) and not set(location.InvalidChecks).intersection([itemType.JUNK]))]
+        junkLocations = locations + [location for location in self._allLocationList if (not location in self._validLocationList and not set(location.LocationTypes).intersection([levelChoice]) and not set(location.InvalidChecks).intersection([itemType.SYNTH]))]
 
 
         for location in junkLocations:

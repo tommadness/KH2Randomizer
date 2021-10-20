@@ -33,9 +33,30 @@ class locationType(str, Enum):
     Mush13 = "Mushroom 13"
     DataOrg = "Data Organization XIII"
     FormLevel =  "Form Levels"
+    Level = "Level"
+    FormLevel1 = "Level1Form"
+    SummonLevel = "SummonLevel"
     Free = "Garden of Assemblage"
     Critical = "Critical Bonuses"
     Puzzle = "Puzzle"
+    WeaponSlot = "Slot"
+
+class locationCategory(str,Enum):
+    CHEST = "Chest"
+    POPUP = "Popup"
+    ITEMBONUS = "Item Bonus"
+    STATBONUS = "Stat Bonus"
+    HYBRIDBONUS = "Item and Stat Bonus"
+    DOUBLEBONUS = "Double Stat Bonus"
+    LEVEL = "Level"
+    SUMMONLEVEL = "Summon Level"
+    VALORLEVEL = "Valor Level"
+    WISDOMLEVEL = "Wisdom Level"
+    LIMITLEVEL = "Limit Level"
+    MASTERLEVEL = "Master Level"
+    FINALLEVEL = "Final Level"
+    WEAPONSLOT = "Weapon Slot"
+
 
 class locationDepth(str,Enum):
     FirstVisit = "FirstVisit"
@@ -77,5 +98,6 @@ class itemType(str, Enum):
     MUNNY_POUCH = "Munny Pouch"
     MEMBERSHIPCARD = "Membership Card"
     TROPHY = "OC Trophy"
+    STAT = "Stat Up"
     JUNK = "Junk"
     

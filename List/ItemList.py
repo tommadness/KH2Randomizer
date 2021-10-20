@@ -4,6 +4,7 @@ import itertools
 
 
 class Items:
+    @staticmethod
     def getItemList():
         return [
             KH2Item(593, "Proof of Connection", itemType.PROOF_OF_CONNECTION),
@@ -296,6 +297,7 @@ class Items:
             KH2Item(536, "Castle That Never Was Map", itemType.MAP),
         ] + list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50))
 
+    @staticmethod
     def getSupportAbilityList():
         return [
             KH2Item(138,"Scan",itemType.SUPPORT_ABILITY),
@@ -371,6 +373,7 @@ class Items:
             KH2Item(541,"Light & Darkness",itemType.SUPPORT_ABILITY),
         ]
 
+    @staticmethod
     def getActionAbilityList():
         return [
             KH2Item(82, "Guard", itemType.ACTION_ABILITY),
@@ -400,6 +403,7 @@ class Items:
             KH2Item(198, "Trinity Limit", itemType.ACTION_ABILITY),
         ]
 
+    @staticmethod
     def getJunkList(betterJunk):
         if betterJunk:
             return [
@@ -419,66 +423,66 @@ class Items:
                 KH2Item(279, "AP Boost", itemType.ITEM),
             ]
         return [
-            KH2Item(317, "Blazing Shard", itemType.JUNK),
-            KH2Item(318, "Blazing Stone", itemType.JUNK),
-            KH2Item(319, "Blazing Gem", itemType.JUNK),
-            KH2Item(320, "Blazing Crystal", itemType.JUNK),
-            KH2Item(378, "Frost Shard", itemType.JUNK),
-            KH2Item(379, "Frost Stone", itemType.JUNK),
-            KH2Item(380, "Frost Gem", itemType.JUNK),
-            KH2Item(381, "Frost Crystal", itemType.JUNK),
-            KH2Item(325, "Lightning Shard", itemType.JUNK),
-            KH2Item(326, "Lightning Stone", itemType.JUNK),
-            KH2Item(327, "Lightning Gem", itemType.JUNK),
-            KH2Item(328, "Lightning Crystal", itemType.JUNK),
-            KH2Item(333, "Lucid Shard", itemType.JUNK),
-            KH2Item(334, "Lucid Stone", itemType.JUNK),
-            KH2Item(335, "Lucid Gem", itemType.JUNK),
-            KH2Item(336, "Lucid Crystal", itemType.JUNK),
-            KH2Item(329, "Power Shard", itemType.JUNK),
-            KH2Item(330, "Power Stone", itemType.JUNK),
-            KH2Item(331, "Power Gem", itemType.JUNK),
-            KH2Item(332, "Power Crystal", itemType.JUNK),
-            KH2Item(280, "Dark Shard", itemType.JUNK),
-            KH2Item(281, "Dark Stone", itemType.JUNK),
-            KH2Item(282, "Dark Gem", itemType.JUNK),
-            KH2Item(283, "Dark Crystal", itemType.JUNK),
-            KH2Item(337, "Dense Shard", itemType.JUNK),
-            KH2Item(338, "Dense Stone", itemType.JUNK),
-            KH2Item(339, "Dense Gem", itemType.JUNK),
-            KH2Item(340, "Dense Crystal", itemType.JUNK),
-            KH2Item(341, "Twilight Shard", itemType.JUNK),
-            KH2Item(342, "Twilight Stone", itemType.JUNK),
-            KH2Item(343, "Twilight Gem", itemType.JUNK),
-            KH2Item(344, "Twilight Crystal", itemType.JUNK),
-            KH2Item(345, "Mythril Shard", itemType.JUNK),
-            KH2Item(346, "Mythril Stone", itemType.JUNK),
-            KH2Item(347, "Mythril Gem", itemType.JUNK),
-            KH2Item(348, "Mythril Crystal", itemType.JUNK),
-            KH2Item(576, "Remembrance Shard", itemType.JUNK),
-            KH2Item(577, "Remembrance Stone", itemType.JUNK),
-            KH2Item(578, "Remembrance Gem", itemType.JUNK),
-            KH2Item(579, "Remembrance Crystal", itemType.JUNK),
-            KH2Item(580, "Tranquility Shard", itemType.JUNK),
-            KH2Item(581, "Tranquility Stone", itemType.JUNK),
-            KH2Item(582, "Tranquility Gem", itemType.JUNK),
-            KH2Item(583, "Tranquility Crystal", itemType.JUNK),
-            KH2Item(349, "Bright Shard", itemType.JUNK),
-            KH2Item(350, "Bright Stone", itemType.JUNK),
-            KH2Item(351, "Bright Gem", itemType.JUNK),
-            KH2Item(352, "Bright Crystal", itemType.JUNK),
-            KH2Item(353, "Energy Shard", itemType.JUNK),
-            KH2Item(354, "Energy Stone", itemType.JUNK),
-            KH2Item(355, "Energy Gem", itemType.JUNK),
-            KH2Item(356, "Energy Crystal", itemType.JUNK),
-            KH2Item(357, "Serenity Shard", itemType.JUNK),
-            KH2Item(358, "Serenity Stone", itemType.JUNK),
-            KH2Item(359, "Serenity Gem", itemType.JUNK),
-            KH2Item(360, "Serenity Crystal", itemType.JUNK),
-            KH2Item(584, "Lost Illusion", itemType.JUNK),
-            KH2Item(585, "Manifest Illusion", itemType.JUNK),
-            KH2Item(377, "Orichalcum", itemType.JUNK),
-            KH2Item(361, "Orichalcum+", itemType.JUNK),
+            KH2Item(317, "Blazing Shard", itemType.SYNTH),
+            KH2Item(318, "Blazing Stone", itemType.SYNTH),
+            KH2Item(319, "Blazing Gem", itemType.SYNTH),
+            KH2Item(320, "Blazing Crystal", itemType.SYNTH),
+            KH2Item(378, "Frost Shard", itemType.SYNTH),
+            KH2Item(379, "Frost Stone", itemType.SYNTH),
+            KH2Item(380, "Frost Gem", itemType.SYNTH),
+            KH2Item(381, "Frost Crystal", itemType.SYNTH),
+            KH2Item(325, "Lightning Shard", itemType.SYNTH),
+            KH2Item(326, "Lightning Stone", itemType.SYNTH),
+            KH2Item(327, "Lightning Gem", itemType.SYNTH),
+            KH2Item(328, "Lightning Crystal", itemType.SYNTH),
+            KH2Item(333, "Lucid Shard", itemType.SYNTH),
+            KH2Item(334, "Lucid Stone", itemType.SYNTH),
+            KH2Item(335, "Lucid Gem", itemType.SYNTH),
+            KH2Item(336, "Lucid Crystal", itemType.SYNTH),
+            KH2Item(329, "Power Shard", itemType.SYNTH),
+            KH2Item(330, "Power Stone", itemType.SYNTH),
+            KH2Item(331, "Power Gem", itemType.SYNTH),
+            KH2Item(332, "Power Crystal", itemType.SYNTH),
+            KH2Item(280, "Dark Shard", itemType.SYNTH),
+            KH2Item(281, "Dark Stone", itemType.SYNTH),
+            KH2Item(282, "Dark Gem", itemType.SYNTH),
+            KH2Item(283, "Dark Crystal", itemType.SYNTH),
+            KH2Item(337, "Dense Shard", itemType.SYNTH),
+            KH2Item(338, "Dense Stone", itemType.SYNTH),
+            KH2Item(339, "Dense Gem", itemType.SYNTH),
+            KH2Item(340, "Dense Crystal", itemType.SYNTH),
+            KH2Item(341, "Twilight Shard", itemType.SYNTH),
+            KH2Item(342, "Twilight Stone", itemType.SYNTH),
+            KH2Item(343, "Twilight Gem", itemType.SYNTH),
+            KH2Item(344, "Twilight Crystal", itemType.SYNTH),
+            KH2Item(345, "Mythril Shard", itemType.SYNTH),
+            KH2Item(346, "Mythril Stone", itemType.SYNTH),
+            KH2Item(347, "Mythril Gem", itemType.SYNTH),
+            KH2Item(348, "Mythril Crystal", itemType.SYNTH),
+            KH2Item(576, "Remembrance Shard", itemType.SYNTH),
+            KH2Item(577, "Remembrance Stone", itemType.SYNTH),
+            KH2Item(578, "Remembrance Gem", itemType.SYNTH),
+            KH2Item(579, "Remembrance Crystal", itemType.SYNTH),
+            KH2Item(580, "Tranquility Shard", itemType.SYNTH),
+            KH2Item(581, "Tranquility Stone", itemType.SYNTH),
+            KH2Item(582, "Tranquility Gem", itemType.SYNTH),
+            KH2Item(583, "Tranquility Crystal", itemType.SYNTH),
+            KH2Item(349, "Bright Shard", itemType.SYNTH),
+            KH2Item(350, "Bright Stone", itemType.SYNTH),
+            KH2Item(351, "Bright Gem", itemType.SYNTH),
+            KH2Item(352, "Bright Crystal", itemType.SYNTH),
+            KH2Item(353, "Energy Shard", itemType.SYNTH),
+            KH2Item(354, "Energy Stone", itemType.SYNTH),
+            KH2Item(355, "Energy Gem", itemType.SYNTH),
+            KH2Item(356, "Energy Crystal", itemType.SYNTH),
+            KH2Item(357, "Serenity Shard", itemType.SYNTH),
+            KH2Item(358, "Serenity Stone", itemType.SYNTH),
+            KH2Item(359, "Serenity Gem", itemType.SYNTH),
+            KH2Item(360, "Serenity Crystal", itemType.SYNTH),
+            KH2Item(584, "Lost Illusion", itemType.SYNTH),
+            KH2Item(585, "Manifest Illusion", itemType.SYNTH),
+            KH2Item(377, "Orichalcum", itemType.SYNTH),
+            KH2Item(361, "Orichalcum+", itemType.SYNTH),
             KH2Item(1, "Potion", itemType.ITEM),
             KH2Item(2, "Hi-Potion", itemType.ITEM),
             KH2Item(3, "Ether", itemType.ITEM),
@@ -495,6 +499,7 @@ class Items:
             KH2Item(279, "AP Boost", itemType.ITEM),
         ]
 
+    @staticmethod
     def getDonaldAbilityList():
         return [
             KH2Item(165, "Donald Fire", itemType.DONALD_ABILITY),
