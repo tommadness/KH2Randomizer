@@ -3,8 +3,10 @@ import sys
 
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QCheckBox, QComboBox, QSpinBox, QDoubleSpinBox, QListWidget, QPushButton, QGroupBox
-from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QGridLayout
+from PySide6.QtWidgets import (
+    QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
+    QPushButton, QSpinBox, QWidget, QVBoxLayout
+)
 
 import Class.seedSettings
 from Class.seedSettings import SeedSettings, Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect
@@ -35,9 +37,13 @@ class KH2Submenu(QWidget):
             label.setToolTip(tooltip)
 
         layout = QHBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(label, stretch=1)
         layout.addWidget(option, stretch=2, alignment=Qt.AlignLeft)
-        self.menulayout.addLayout(layout)
+
+        frame = QFrame()
+        frame.setLayout(layout)
+        self.menulayout.addWidget(frame)
 
     def add_option(self, setting_name: str):
         setting = Class.seedSettings.settings_by_name[setting_name]
@@ -61,6 +67,17 @@ class KH2Submenu(QWidget):
 
         self._add_option_widget(setting.ui_label, setting.tooltip, widget)
         self.widgets_and_settings_by_name[setting_name] = (setting, widget)
+
+    def set_option_visibility(self, name: str, visible: bool):
+        (_, widget) = self.widgets_and_settings_by_name[name]
+
+        if isinstance(widget, QWidget):
+            # Most option widgets have a direct parent (containing the label and widget)
+            # that can have its visibility toggled
+            widget.parentWidget().setVisible(visible)
+        elif isinstance(widget, list) and len(widget) > 0:
+            # The multi-select buttons are represented as a list but they're contained within a parent widget as well
+            widget[0].parentWidget().setVisible(visible)
 
     def make_multiselect_buttons(self, setting_name: str) -> (MultiSelect, list[QPushButton]):
         setting = Class.seedSettings.settings_by_name[setting_name]

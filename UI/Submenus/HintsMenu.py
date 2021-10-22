@@ -3,8 +3,8 @@ from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
 
 
-# TODO: Come up with a way to only show settings for the selected hint system
 class HintsMenu(KH2Submenu):
+
     def __init__(self, settings: SeedSettings):
         super().__init__(title='Hint Systems', settings=settings)
 
@@ -14,3 +14,11 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.ALLOW_PROOF_HINTING)
 
         self.finalizeMenu()
+
+        settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
+
+    def _hint_system_changed(self):
+        hint_system = self.settings.get(settingkey.HINT_SYSTEM)
+        self.set_option_visibility(settingkey.REPORT_DEPTH, visible=hint_system in ['JSmartee', 'Points'])
+        self.set_option_visibility(settingkey.PREVENT_SELF_HINTING, visible=hint_system in ['JSmartee', 'Points'])
+        self.set_option_visibility(settingkey.ALLOW_PROOF_HINTING, visible=hint_system == 'Points')

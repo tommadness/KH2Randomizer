@@ -342,7 +342,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.ALLOW_PROOF_HINTING,
-        ui_label='(Points Only) Reports can Hint Proofs',
+        ui_label='Reports can Hint Proofs',
         shared=True,
         default=False
     ),
@@ -632,13 +632,29 @@ DELIMITER = "-"
 class SeedSettings:
 
     def __init__(self):
-        self.values = {setting.name: setting.default for setting in _all_settings}
+        self._values = {setting.name: setting.default for setting in _all_settings}
+        self._observers = {}
 
     def get(self, name: str):
-        return self.values[name]
+        return self._values[name]
 
     def set(self, name: str, value):
-        self.values[name] = value
+        self._values[name] = value
+        if name in self._observers:
+            for observer in self._observers[name]:
+                observer()
+
+    def observe(self, name: str, observer):
+        """Calls the provided observer whenever the setting with the given name is changed."""
+        if name in self._observers:
+            observers = self._observers[name]
+        else:
+            observers = []
+            self._observers[name] = observers
+        observers.append(observer)
+
+        # Trigger an initial observation
+        observer()
 
     def _filtered_settings(self, include_private: bool) -> dict:
         return {name: setting for (name, setting) in settings_by_name.items() if setting.shared or include_private}
@@ -647,14 +663,14 @@ class SeedSettings:
         values = []
         for name in sorted(self._filtered_settings(include_private)):
             setting = settings_by_name[name]
-            values.append(setting.settings_string(self.values[name]))
+            values.append(setting.settings_string(self._values[name]))
         return DELIMITER.join(values)
 
     def apply_settings_string(self, settings_string: str, include_private: bool = False):
         parts = settings_string.split(DELIMITER)
         for index, name in enumerate(sorted(self._filtered_settings(include_private))):
             setting = settings_by_name[name]
-            self.values[name] = setting.parse_settings_string(parts[index])
+            self.set(name, setting.parse_settings_string(parts[index]))
 
     def settings_json(self, include_private: bool = False):
         filtered_settings = {key: self.get(key) for key in self._filtered_settings(include_private).keys()}
@@ -664,4 +680,4 @@ class SeedSettings:
         filtered_keys = self._filtered_settings(include_private).keys()
         for key, value in settings_json.items():
             if key in filtered_keys:
-                self.values[key] = value
+                self.set(key, value)
