@@ -1,4 +1,4 @@
-import random, os, zipfile
+import random, os, json
 
 musicList = {
     "KH2": [
@@ -523,9 +523,9 @@ musicList = {
 		#{"name": "bgm_243.win32.scd", "kind": "battle"}, # The Other Promise (From Original KH2)
  		{"name": "bgm_244.win32.scd", "kind": "field"}, # Another Side (No Intro)
  		{"name": "bgm_245.win32.scd", "kind": "battle"}, # Another Side -Battle Ver.- (No Intro)
- 		{"name": "bgm_255.win32.scd", "kind": "title"}], # Dearly Beloved (Kingdom Hearts HD 1.5 + 2.5 ReMiX Launcher Version)
-    "CUSTOM": [],
+ 		{"name": "bgm_255.win32.scd", "kind": "title"}] # Dearly Beloved (Kingdom Hearts HD 1.5 + 2.5 ReMiX Launcher Version)
 }
+
 
 musicPaths = {
     "KH2": "",
@@ -538,30 +538,49 @@ musicPaths = {
 }
 class RandomBGM():
     @staticmethod
-    def randomizeBGM(selections, platform):
-    
-        #for testing. you would want a option to set these to whatever number you want on the site.
-        #if we don't care about categories then we could just set one number and set all tracks to "unknown" or something.
-        #customlistf = 21
-        #customlistb = 55
-        #customlistt = 3
-        ##Uses the numbrers above to build the dict with appropriate categories.
-        #for i in range(customlistf):
-        #    musicList["CUSTOM"].append({"name": "field_{}.scd".format(f'{i+1:03d}'), "kind": "field"})
-        #for i in range(customlistb):
-        #    musicList["CUSTOM"].append({"name": "battle_{}.scd".format(f'{i+1:03d}'), "kind": "battle"})
-        #for i in range(customlistt):
-        #    musicList["CUSTOM"].append({"name": "title_{}.scd".format(f'{i+1:03d}'), "kind": "title"})
-        ##print (musicList["CUSTOM"]),
-        
-        options = {
-            #we don't need to separate CUSTOM from everything else anymore i think.
-            "games": [s for s in selections if s in musicList],
-            "options": [s for s in selections if not (s in musicList)]
-        }
-        
+    def randomizeBGM(options, platform):
+
+        # Options looks like {"games": ["KH2"], "options": ["DMCA-SAFE"]}
         if not platform == "PC" or len(options["games"]) < 1:
             return ""
+
+        # FIXME default custom category for when songs are just placed in "custom" category
+
+        def _getsong(songlist, category, name):
+            if category in songlist:
+                for song in songlist[category]["songs"]:
+                    if song["name"] == name:
+                        return song
+            return None
+
+        songlist = {}
+        old_songlist = {}
+
+        if os.path.exists("custom_songlist.json"):
+            with open("custom_songlist.json","r") as f:
+                old_songlist = json.load(f)
+
+        for category in options["games"]:
+            if category not in musicList: # it's custom
+                if category not in songlist:
+                    default_category = old_songlist.get(category, {}).get("default_category", "unknown")
+                    songlist[category] = {"default_category": default_category, "songs": []}
+                dirname = os.path.join(os.environ.get("KHGAMES_PATH"), "custom", category)
+                for song_name in os.listdir(dirname):
+                    if not song_name.endswith(".scd"):
+                        continue
+                    song_record = _getsong(old_songlist, category, song_name)
+                    if not song_record:
+                        song_record = {"name": song_name, "category": default_category}
+                    songlist[category]["songs"].append(song_record)
+
+        with open("custom_songlist.json", "w") as f:
+            json.dump(songlist, f, indent=4)
+
+        # Add the custom songlist into the musiclist so it works normally
+        for category in songlist:
+            musicList[category] = songlist[category]["songs"]
+            musicPaths[category] = os.path.join(musicPaths["CUSTOM"], category) + "\\"
         
         BGMList = {"battle": [], "field": [], "title":[], "cutscene": []}
         for game in options["games"]:
@@ -658,13 +677,18 @@ class RandomBGM():
         ]
 
     def getGames():
-        return [
-            "KH2",
-            "KH1",
-            "BBS",
-            "RECOM",
-            "DDD",
-            "MOVIES"
-            #framework already done for this option. just needs options on the site to set the number of tracks to use
-            #"CUSTOM"
-        ]
+        available_games = []
+
+        for game in musicPaths:
+            if game == "CUSTOM":
+                continue
+            path = os.path.join(os.environ.get("KHGAMES_PATH"), "kh2", musicPaths[game])
+            if os.path.isdir(path):
+                available_games.append(game)
+
+        custom_path = os.path.join(os.environ.get("KHGAMES_PATH"), "custom")
+        if os.path.isdir(custom_path):
+            available_games += os.listdir(custom_path)
+
+        return available_games
+

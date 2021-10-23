@@ -577,7 +577,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.BGM_GAMES,
-        ui_label='Games To Include',
+        ui_label='Music Games To Include',
         choices={option: option for option in RandomBGM.getGames()},
         shared=False,
         default=[]

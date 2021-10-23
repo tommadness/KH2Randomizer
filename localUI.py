@@ -365,7 +365,10 @@ class KH2RandomizerApp(QMainWindow):
         data = {
             'platform': platform,
             'cmdMenuChoice': self.settings.get(settingkey.COMMAND_MENU),
-            'randomBGM': self.settings.get(settingkey.BGM_OPTIONS) + self.settings.get(settingkey.BGM_GAMES)
+            'randomBGM': {
+                "options": self.settings.get(settingkey.BGM_OPTIONS),
+                "games": self.settings.get(settingkey.BGM_GAMES)
+            }
         }
 
         session = self.make_seed_session()
