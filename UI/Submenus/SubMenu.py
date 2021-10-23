@@ -186,8 +186,9 @@ class KH2Submenu(QWidget):
         list_widget.addItems(setting.choice_values)
 
         for selected in self.settings.get(name):
-            index = setting.choice_keys.index(selected)
-            list_widget.item(index).setSelected(True)
+            if selected in setting.choice_keys:
+                index = setting.choice_keys.index(selected)
+                list_widget.item(index).setSelected(True)
 
         list_widget.itemSelectionChanged.connect(lambda: self._update_multi_list(setting, list_widget))
         return list_widget

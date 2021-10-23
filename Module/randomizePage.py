@@ -17,7 +17,7 @@ def randomizePage(data, sessionDict, local_ui=False):
         excludeList.remove(locationType.Puzzle)
 
     cmdMenuChoice = data["cmdMenuChoice"]
-    randomBGM = data["randomBGM"]
+    randomBGMOptions = data["randomBGM"]
     sessionDict["startingInventory"] += SeedModifier.library("Library of Assemblage" in sessionDict["seedModifiers"]) + SeedModifier.schmovement("Schmovement" in sessionDict["seedModifiers"])
 
     seedValidation = SeedValidator(sessionDict)
@@ -56,7 +56,7 @@ def randomizePage(data, sessionDict, local_ui=False):
             notValidSeed = False
             
             try:
-                zip = randomizer.generateZip(randomBGM = randomBGM, platform = platform, startingInventory = sessionDict["startingInventory"], hintsText = hintsText, cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
+                zip = randomizer.generateZip(randomBGMOptions = randomBGMOptions, platform = platform, startingInventory = sessionDict["startingInventory"], hintsText = hintsText, cmdMenuChoice = cmdMenuChoice, spoilerLog = bool(sessionDict["spoilerLog"]), enemyOptions = json.loads(sessionDict["enemyOptions"]))
                 if development_mode:
                     development_mode_path = os.environ.get("DEVELOPMENT_MODE_PATH")
                     if development_mode_path:

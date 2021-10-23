@@ -317,7 +317,7 @@ class KH2Randomizer():
     def setNoAP(self, settrue=False):
         self._noap = settrue
 
-    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGM = False, hintsText = None, startingInventory=[], platform="PCSX2"):
+    def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGMOptions = {}, hintsText = None, startingInventory=[], platform="PCSX2"):
 
         def resource_path(relative_path):
             """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -507,7 +507,7 @@ class KH2Randomizer():
 
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             
-            mod["assets"] += RandomBGM.randomizeBGM(randomBGM, platform)
+            mod["assets"] += RandomBGM.randomizeBGM(randomBGMOptions, platform)
 
             outZip.write(resource_path(Path("icon.png")), "icon.png")
 

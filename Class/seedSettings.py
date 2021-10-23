@@ -8,9 +8,6 @@ from List.configDict import locationType, locationDepth
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 
-# Token stored with the settings string to determine if a settings string is compatible with this application version
-SETTINGS_STRING_VERSION = 1
-
 # Characters safe to use in settings strings
 _available_chars = string.digits + string.ascii_uppercase + string.ascii_lowercase
 
@@ -580,7 +577,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.BGM_GAMES,
-        ui_label='Games To Include',
+        ui_label='Music Games To Include',
         choices={option: option for option in RandomBGM.getGames()},
         shared=False,
         default=[]
@@ -629,6 +626,8 @@ for boss_enemy_setting in boss_enemy_settings:
 
 settings_by_name = {setting.name: setting for setting in _all_settings}
 
+DELIMITER = "-"
+
 
 class SeedSettings:
 
@@ -645,18 +644,14 @@ class SeedSettings:
         return {name: setting for (name, setting) in settings_by_name.items() if setting.shared or include_private}
 
     def settings_string(self, include_private: bool = False):
-        values = [str(SETTINGS_STRING_VERSION)]
+        values = []
         for name in sorted(self._filtered_settings(include_private)):
             setting = settings_by_name[name]
             values.append(setting.settings_string(self.values[name]))
-        return '|'.join(values)
+        return DELIMITER.join(values)
 
     def apply_settings_string(self, settings_string: str, include_private: bool = False):
-        parts = settings_string.split('|')
-        version = int(parts.pop(0))
-        if version != SETTINGS_STRING_VERSION:
-            print('Versions do not match - cannot import settings string')
-            return
+        parts = settings_string.split(DELIMITER)
         for index, name in enumerate(sorted(self._filtered_settings(include_private))):
             setting = settings_by_name[name]
             self.values[name] = setting.parse_settings_string(parts[index])
