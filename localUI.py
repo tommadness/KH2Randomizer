@@ -89,6 +89,7 @@ class GenSeedThread(QThread):
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
+        self.config = self.loadConfig()
         super().__init__()
         self.UTC = pytz.utc
         self.startTime = datetime.datetime.now(self.UTC)
@@ -208,6 +209,8 @@ class KH2RandomizerApp(QMainWindow):
         widget = QWidget()
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
+
+
 
     def closeEvent(self, e):
         settings_json = self.settings.settings_json(include_private=True)
@@ -469,11 +472,18 @@ class KH2RandomizerApp(QMainWindow):
         message.setWindowTitle("KH2 Seed Generator")
         message.exec()
 
-    def firstTimeSetup(self):
+    def loadConfig(self):
+        config = uiConfig()
+        if config.setupDone:
+            return config
+        self.firstTimeSetup(config)
+        return config
+
+
+    def firstTimeSetup(self, config):
         print("First Time Setup")
-        if self.setup is None:
-            self.setup = FirstTimeSetup()
-            self.setup.show()
+        setup = FirstTimeSetup(config)
+        setup.exec()
 
     def showAbout(self):
         aboutText = '''

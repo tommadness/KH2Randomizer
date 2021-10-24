@@ -3,7 +3,7 @@ import sys
 from PySide6.QtWidgets import (
     QMainWindow,
     QLabel, QLineEdit, QPushButton,
-    QVBoxLayout,QHBoxLayout,QWidget,QStackedWidget,QFileDialog
+    QVBoxLayout,QHBoxLayout,QWidget,QStackedWidget,QFileDialog, QDialog
 )
 from pathlib import Path
 import hashlib
@@ -12,21 +12,14 @@ import yaml
 from PySide6.QtGui import QFont
 
 
-class FirstTimeSetup(QMainWindow):
+class FirstTimeSetup(QDialog):
 
     KH2ISOMD5 = "1BD351E1DF9FC5D783D8318010D17F03"
 
-    def __init__(self):
+    def __init__(self, config):
         super().__init__()
 
-        self.configPath = Path("rando-config.yml")
-        self.config = {}
-
-        if self.configPath.is_file():
-            self.configFile = open(self.configPath, "r")
-            configString = str(self.configFile.read())
-            self.config = yaml.safe_load(configString)
-            print(self.config)
+        self.config = config
 
 
         w = 600
@@ -55,7 +48,10 @@ class FirstTimeSetup(QMainWindow):
 
         self.pages.currentChanged.connect(self.setConfig)
 
-        self.setCentralWidget(self.pages)
+        self.pageLayout = QVBoxLayout()
+        self.pageLayout.addWidget(self.pages)
+
+        self.setLayout(self.pageLayout)
 
 
     def firstPage(self):
