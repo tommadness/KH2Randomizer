@@ -11,6 +11,7 @@ def resource_path(relative_path):
 
 
 os.environ["USE_KH2_GITPATH"] = resource_path("extracted_data")
+os.environ["KHGAMES_PATH"] = "null"
 
 
 import datetime
