@@ -32,6 +32,7 @@ from PySide6.QtWidgets import (
 
 from Class import seedSettings, settingkey
 from Class.seedSettings import SeedSettings
+from Class.uiConfig import uiConfig
 from List.configDict import locationType
 from List.hashTextEntries import generateHashIcons
 from Module.dailySeed import getDailyModifiers
