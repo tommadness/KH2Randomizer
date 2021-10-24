@@ -499,7 +499,7 @@ class KH2Randomizer():
             if spoilerLog:
 
                 mod["title"] += " {seedName}".format(seedName = self.seedName)
-                with open(resource_path(Path("..\static\spoilerlog.html"))) as spoiler_site:
+                with open(resource_path(Path("../static/spoilerlog.html"))) as spoiler_site:
                     html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
                     outZip.writestr("spoilerlog.html",html_template)
                 if enemySpoilers:
