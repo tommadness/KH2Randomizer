@@ -280,13 +280,6 @@ class FirstTimeSetup(QDialog):
             nextButton.setDisabled(False)
             print(self.config)
 
-    def closeEvent(self, event):
-        configKeys = ["OpenKHDir"]
-        if all(key in self.config for key in configKeys):
-            configFile = open("rando-config.yml","w")
-            configFile.write(yaml.safe_dump(self.config))
-            configFile.close()
-
 class Alert(QMainWindow):
     def __init__(self, title, message):
         super().__init__()
