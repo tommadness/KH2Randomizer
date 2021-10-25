@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QTextEdit,
     QVBoxLayout,QHBoxLayout,QWidget,QStackedWidget,QFileDialog, QDialog, QGridLayout
 )
+
 from pathlib import Path
 import hashlib
 import yaml
@@ -40,8 +41,10 @@ class FirstTimeSetup(QDialog):
 
 
         pcsx2Page = self.basePage(title="Setup PCSX2", description="Set location of files required for PCSX2 Randomizer")
-        pcsx2Page.layout().addWidget(self.validationField("ISO Location"))
-        pcsx2Page.layout().addWidget(self.validationField("Game Data Location"))
+        isoField = self.validationField("ISO Location")
+        pcsx2GameDataField = self.validationField("Game Data Location")
+        pcsx2Page.layout().addWidget(isoField)
+        pcsx2Page.layout().addWidget(pcsx2GameDataField)
 
         pcPage = self.basePage(title="Setup PC", description="Set location of files required for PC Randomizer")
         pcPage.layout().addWidget(self.validationField("Game Install Location"))
@@ -83,16 +86,17 @@ class FirstTimeSetup(QDialog):
         page.setLayout(layout)
         return page
 
-    def validationField(self, label, type="Folder", validate=lambda: print("Changed"), disabled=False):
+    def validationField(self, label, type="Folder", disabled=False):
         widget = QWidget()
 
         layout = QGridLayout(widget)
         layout.addWidget(QLabel(label),1,1)
         
         textBox = QLineEdit()
+        textBox.setReadOnly(True)
         textBox.setMaximumHeight(20)
         textBox.setDisabled(disabled)
-        textBox.textChanged.connect(lambda: validate())
+        textBox.setValidator(ValidatePath("BaseDailySeed.json"))
         layout.addWidget(textBox,2,1)
 
         button = QPushButton("Browse")
@@ -103,10 +107,6 @@ class FirstTimeSetup(QDialog):
 
         return widget
 
-    def validatePath(self, path, validFile, onSuccess, onFailure):
-        
-        pass
-
     def validateFile(self,path,md5, onSuccess, onFailure):
         pass
 
@@ -116,6 +116,19 @@ class FirstTimeSetup(QDialog):
         
         pass
 
+class ValidatePath(QtGui.QValidator):
+    def __init__(self, contains):
+        super().__init__()
+        self.contains=contains
+
+    def validate(self, input, int):
+        print(input)
+        print(self.contains)
+        if Path(input).is_dir() and Path(input+"/{contains}".format(contains=self.contains)).is_file():
+            print("Acceptable")
+            return QtGui.QValidator.Acceptable
+        print("Invalid")
+        return QtGui.QValidator.Invalid
 class Alert(QMainWindow):
     def __init__(self, title, message):
         super().__init__()
