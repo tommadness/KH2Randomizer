@@ -3,6 +3,7 @@ import sys
 from PySide6 import QtGui
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import (
+    QDialogButtonBox,
     QMainWindow,
     QLabel, QLineEdit, QPushButton,
     QTextEdit,
@@ -113,11 +114,22 @@ class FirstTimeSetup(QDialog):
         pass
 
 class ValidatePath(QtGui.QValidator):
-    def __init__(self, contains):
+    def __init__(self, contains, download=None):
         super().__init__()
-        self.contains=contains
+        self.contains = contains
+        self.downloadLink = download
+        self.downloadPrompted = False
 
     def validate(self, input, int):
         if Path(input).is_dir() and Path(input+"/{contains}".format(contains=self.contains)).is_file():
             return QtGui.QValidator.Acceptable
+
+        if not self.downloadPrompted:
+            dialog = QDialog()
+            dialog.setWindowTitle("Download")
+            dialog.setFixedSize(400,100)
+            self.downloadPrompted = True
+            dialog.exec()
+
         return QtGui.QValidator.Invalid
+
