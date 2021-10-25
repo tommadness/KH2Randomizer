@@ -36,16 +36,16 @@ class FirstTimeSetup(QDialog):
 
         self.pages = QStackedWidget()
         firstPage = self.basePage(title="Welcome to Kingdom Hearts II: Final Mix Randomizer", description="Please select a game version to setup.")
-        
+        firstPage.layout().addWidget(self.validationField("OpenKH Location"))
+
+
         pcsx2Page = self.basePage(title="Setup PCSX2", description="Set location of files required for PCSX2 Randomizer")
-        pcsx2Page.layout().addWidget(self.validationField("OpenKH Location",type="Folder"))
-        pcsx2Page.layout().addWidget(self.validationField("ISO Location", disabled=True))
-        pcsx2Page.layout().addWidget(self.validationField("Game Data Location", disabled=True))
+        pcsx2Page.layout().addWidget(self.validationField("ISO Location"))
+        pcsx2Page.layout().addWidget(self.validationField("Game Data Location"))
 
         pcPage = self.basePage(title="Setup PC", description="Set location of files required for PC Randomizer")
-        pcPage.layout().addWidget(self.validationField("OpenKH Location",type="Folder"))
-        pcPage.layout().addWidget(self.validationField("Game Install Location", disabled=True))
-        pcPage.layout().addWidget(self.validationField("Game Data Location", disabled=True))
+        pcPage.layout().addWidget(self.validationField("Game Install Location"))
+        pcPage.layout().addWidget(self.validationField("Game Data Location"))
 
         self.pages.addWidget(firstPage)
         self.pages.addWidget(pcsx2Page)
