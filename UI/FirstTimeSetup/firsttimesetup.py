@@ -122,12 +122,8 @@ class ValidatePath(QtGui.QValidator):
         self.contains=contains
 
     def validate(self, input, int):
-        print(input)
-        print(self.contains)
         if Path(input).is_dir() and Path(input+"/{contains}".format(contains=self.contains)).is_file():
-            print("Acceptable")
             return QtGui.QValidator.Acceptable
-        print("Invalid")
         return QtGui.QValidator.Invalid
 class Alert(QMainWindow):
     def __init__(self, title, message):
