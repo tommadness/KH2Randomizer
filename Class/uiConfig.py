@@ -13,6 +13,7 @@ class uiConfig():
                 "gameDataPath": "",
             }
     setupDone = False
+    openKHPath = ""
     def __init__(self):
         if self.loadConfig() == False:
 
@@ -23,12 +24,17 @@ class uiConfig():
         configPath = Path("rando-config.yml")
         if not configPath.is_file():
             return False
-        configFile = open(configPath, "r")
-        configString = str(configFile.read())
-        config = yaml.safe_load(configString)
-        self.pcsx2 = config['pcsx2']
-        self.PC = config['PC']
-        self.setupDone = config['setupDone']
+        try:
+            configFile = open(configPath, "r")
+            configString = str(configFile.read())
+            config = yaml.safe_load(configString)
+            self.pcsx2 = config['pcsx2']
+            self.PC = config['PC']
+            self.setupDone = config['setupDone']
+            self.openKHPath = config['openKHPath']
+        except:
+            print("Config file invalid. Recreating.")
+            return False
         return True
 
     @classmethod
@@ -36,7 +42,8 @@ class uiConfig():
         config = {
             "pcsx2": self.pcsx2,
             "PC": self.PC,
-            "setupDone": self.setupDone
+            "setupDone": self.setupDone,
+            "openKHPath": self.openKHPath
         }
         configFile = open("rando-config.yml","w")
         configFile.write(yaml.safe_dump(config))
