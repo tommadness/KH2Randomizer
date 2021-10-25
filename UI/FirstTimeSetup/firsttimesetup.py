@@ -37,7 +37,7 @@ class FirstTimeSetup(QDialog):
 
         self.pages = QStackedWidget()
         firstPage = self.basePage(title="Welcome to Kingdom Hearts II: Final Mix Randomizer", description="Please select a game version to setup.")
-        firstPage.layout().addWidget(self.validationField("OpenKH Location"))
+        firstPage.layout().addWidget(self.validationField("OpenKH Location", validFileName="OpenKh.Tools.ModsManager.exe"))
 
 
         pcsx2Page = self.basePage(title="Setup PCSX2", description="Set location of files required for PCSX2 Randomizer")
@@ -86,7 +86,7 @@ class FirstTimeSetup(QDialog):
         page.setLayout(layout)
         return page
 
-    def validationField(self, label, type="Folder", disabled=False):
+    def validationField(self, label, validFileName, type="Folder", disabled=False):
         widget = QWidget()
 
         layout = QGridLayout(widget)
@@ -96,7 +96,7 @@ class FirstTimeSetup(QDialog):
         textBox.setReadOnly(True)
         textBox.setMaximumHeight(20)
         textBox.setDisabled(disabled)
-        textBox.setValidator(ValidatePath("BaseDailySeed.json"))
+        textBox.setValidator(ValidatePath(validFileName))
         layout.addWidget(textBox,2,1)
 
         button = QPushButton("Browse")
