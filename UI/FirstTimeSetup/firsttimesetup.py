@@ -11,7 +11,6 @@ from PySide6.QtWidgets import (
 
 from pathlib import Path
 import hashlib
-import yaml
 
 from PySide6.QtGui import QFont
 
@@ -107,9 +106,6 @@ class FirstTimeSetup(QDialog):
 
         return widget
 
-    def validateFile(self,path,md5, onSuccess, onFailure):
-        pass
-
     def selectFolder(self, title, textBox):
         path = str(QFileDialog.getExistingDirectory(self, title))
         textBox.setText(path)
@@ -125,15 +121,3 @@ class ValidatePath(QtGui.QValidator):
         if Path(input).is_dir() and Path(input+"/{contains}".format(contains=self.contains)).is_file():
             return QtGui.QValidator.Acceptable
         return QtGui.QValidator.Invalid
-class Alert(QMainWindow):
-    def __init__(self, title, message):
-        super().__init__()
-        self.setWindowTitle(title)
-        layout = QVBoxLayout()
-        layout.addWidget(QLabel(message))
-        self.setLayout(layout)
-        self.show()
-
-    def closeEvent(self, event):
-        event.ignore()
-
