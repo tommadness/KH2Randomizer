@@ -1,6 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import sys
-from PySide6 import QtGui
+from PySide6 import QtGui, QtCore
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import (
     QDialogButtonBox,
@@ -13,12 +13,16 @@ from PySide6.QtWidgets import (
 from pathlib import Path
 import hashlib
 
+from Class.downloader import Downloader
+
 from PySide6.QtGui import QFont
 
 
 class FirstTimeSetup(QDialog):
 
     KH2ISOMD5 = "1BD351E1DF9FC5D783D8318010D17F03"
+
+
 
     def __init__(self, config):
         super().__init__()
@@ -37,7 +41,7 @@ class FirstTimeSetup(QDialog):
 
         self.pages = QStackedWidget()
         firstPage = self.basePage(title="Welcome to Kingdom Hearts II: Final Mix Randomizer", description="Please select a game version to setup.")
-        firstPage.layout().addWidget(self.validationField("OpenKH Location", validFileName="OpenKh.Tools.ModsManager.exe"))
+        firstPage.layout().addWidget(self.validationField("OpenKH Location", validFileName="OpenKh.Tools.ModsManager.exe", download=Downloader.openKHDownload))
 
 
         pcsx2Page = self.basePage(title="Setup PCSX2", description="Set location of files required for PCSX2 Randomizer")
@@ -86,7 +90,7 @@ class FirstTimeSetup(QDialog):
         page.setLayout(layout)
         return page
 
-    def validationField(self, label, validFileName, type="Folder", disabled=False):
+    def validationField(self, label, validFileName=None, type="Folder", disabled=False, download=None):
         widget = QWidget()
 
         layout = QGridLayout(widget)
@@ -96,7 +100,7 @@ class FirstTimeSetup(QDialog):
         textBox.setReadOnly(True)
         textBox.setMaximumHeight(20)
         textBox.setDisabled(disabled)
-        textBox.setValidator(ValidatePath(validFileName))
+        textBox.setValidator(ValidatePath(validFileName, download=download))
         layout.addWidget(textBox,2,1)
 
         button = QPushButton("Browse")
@@ -117,19 +121,38 @@ class ValidatePath(QtGui.QValidator):
     def __init__(self, contains, download=None):
         super().__init__()
         self.contains = contains
-        self.downloadLink = download
+        self.download = download
         self.downloadPrompted = False
 
     def validate(self, input, int):
         if Path(input).is_dir() and Path(input+"/{contains}".format(contains=self.contains)).is_file():
             return QtGui.QValidator.Acceptable
 
-        if not self.downloadPrompted:
+        if not self.downloadPrompted and not self.download == None:
             dialog = QDialog()
             dialog.setWindowTitle("Download")
+            layout = QVBoxLayout()
+            label = QLabel("{downloadName} will be downloaded to\r\n{input}".format(input=input, downloadName=self.download["name"]))
+            label.setWordWrap(True)
+            buttonBox = QDialogButtonBox(QDialogButtonBox.Ok or QDialogButtonBox.Cancel, QtCore.Qt.Horizontal)
+            buttonBox.accepted.connect(lambda: dialog.accept())
+            buttonBox.rejected.connect(lambda: dialog.reject())
+            layout.addWidget(label)
+            layout.addWidget(buttonBox)
+            dialog.setLayout(layout)
             dialog.setFixedSize(400,100)
             self.downloadPrompted = True
-            dialog.exec()
 
-        return QtGui.QValidator.Invalid
+            if dialog.exec():
+                try:
+                    Downloader(self.download["url"]).downloadZip(input)
+                except:
+                    print("Download Failed")
+                    return QtGui.QValidator.Invalid
+                return QtGui.QValidator.Acceptable
+            else:
+                return QtGui.QValidator.Invalid
+
+        else:
+            return QtGui.QValidator.Invalid
 
