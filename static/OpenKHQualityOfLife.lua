@@ -59,6 +59,7 @@ WriteString(Obj0+0xEE30,'F_NM170_XL')
 WriteString(Obj0+0xEE50,'F_NM170_XL.mset')
 
 --Start with Dash
+WriteShort(Btl0+0x31A6C,0x0000820E)
 if ReadShort(Now+0) == 0x030A then
 	if Platform == 0 then
 		WriteShort(0x1C567C4,0x1E)
@@ -154,4 +155,9 @@ if FinalLv == 1 or FinalLv == 2 then WriteShort(Save+0x33DC,0x806A)
 elseif FinalLv == 3 or FinalLv == 4 then WriteShort(Save+0x33DC,0x806B)
 elseif FinalLv == 5 or FinalLv == 6 then WriteShort(Save+0x33DC,0x806C)
 elseif FinalLv == 7 then WriteShort(Save+0x33DC,0x806D) end
+
+--Summon Animation "None"
+if ReadShort(Now+0) == 0x2002 and ReadShort(Now+8) == 0x01 then
+    WriteByte(Save+0x41A5,ReadByte(Save+0x41A5)~0x6) --Default No Summon Animations
+end
 end
