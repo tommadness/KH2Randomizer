@@ -9,6 +9,6 @@ class KH2Location:
     LocationCategory: locationCategory
     LocationTypes: list[locationType]
     InvalidChecks: list[itemType] = field(default_factory=list)
-    LocationWeight: int = 1
-    LocationDepth: locationDepth = locationDepth.FirstVisit
 
+    def __eq__(self, obj):
+        return self.LocationId==obj.LocationId and self.LocationCategory==obj.LocationCategory and self.LocationTypes==obj.LocationTypes

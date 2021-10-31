@@ -59,6 +59,9 @@ class SeedModifier():
         randomabilitypool.append(abilitydict["Once More"])
         return randomabilitypool
 
+    def defaultAbilityPool(action, support):
+        return action+support
+
     def glassCannon(enabled):
         if enabled:
             return [{"Stat":"Str","Value": 2},{"Stat":"Mag", "Value": 2},{"Stat": "Ap", "Value": 2}]

@@ -52,7 +52,7 @@ class Locations:
                 KH2Location(129, "Throne Room Ogre Shield", locationCategory.CHEST,[locationType.LoD]),
                 KH2Location(130, "Throne Room Mythril Crystal", locationCategory.CHEST,[locationType.LoD]),
                 KH2Location(131, "Throne Room Orichalcum", locationCategory.CHEST,[locationType.LoD]),
-                KH2Location(10, "Storm Rider", locationCategory.HYBRIDBONUS,[locationType.LoD]),
+                KH2Location(10, "Storm Rider", locationCategory.ITEMBONUS,[locationType.LoD]),
                 KH2Location(555, "Xigbar (Data) Defense Boost", locationCategory.POPUP,[locationType.LoD, locationType.DataOrg]),
                 ]
 
@@ -401,7 +401,7 @@ class Locations:
                 KH2Location(582, "CoR Mineshaft Upper Level Magic Boost", locationCategory.CHEST,[locationType.HB, locationType.CoR]),
                 #last chest
                 KH2Location(579, "CoR Mineshaft Upper Level AP Boost", locationCategory.CHEST,[locationType.HB, locationType.CoR]),
-                KH2Location(72, "Transport to Remembrance", locationCategory.STATBONUS,[locationType.HB, locationType.CoR]),
+                KH2Location(72, "Transport to Remembrance", locationCategory.STATBONUS,[locationType.HB, locationType.CoR, locationType.TTR]),
                 ]
 
     @staticmethod
@@ -449,8 +449,8 @@ class Locations:
                 KH2Location(472, "Station of Calling Potion", locationCategory.CHEST,[locationType.STT]),
                 KH2Location(33, "Twilight Thorn", locationCategory.ITEMBONUS,[locationType.STT]),
                 KH2Location(73, "Axel 1", locationCategory.ITEMBONUS,[locationType.STT]),
-                KH2Location(389, "(Junk) Champion Belt", locationCategory.CHEST,[locationType.STT], InvalidChecks=[e for e in itemType]),
-                KH2Location(390, "(Junk) Medal", locationCategory.CHEST,[locationType.STT], InvalidChecks=[e for e in itemType]),
+                KH2Location(389, "(Junk) Champion Belt", locationCategory.CHEST,[locationType.STT], InvalidChecks=[e for e in itemType if e not in [itemType.SYNTH,itemType.ITEM] ]),
+                KH2Location(390, "(Junk) Medal", locationCategory.CHEST,[locationType.STT], InvalidChecks=[e for e in itemType if e not in [itemType.SYNTH,itemType.ITEM] ]),
                 KH2Location(519, "The Struggle Trophy", locationCategory.POPUP,[locationType.STT]),
                 KH2Location(428, "Central Station Potion (1)", locationCategory.CHEST,[locationType.STT]),
                 KH2Location(429, "STT Central Station Hi-Potion", locationCategory.CHEST,[locationType.STT]),

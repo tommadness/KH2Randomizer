@@ -40,6 +40,7 @@ class locationType(str, Enum):
     Critical = "Critical Bonuses"
     Puzzle = "Puzzle"
     WeaponSlot = "Slot"
+    TTR = "Transport to Remembrance"
 
 class locationCategory(str,Enum):
     CHEST = "Chest"
@@ -56,6 +57,13 @@ class locationCategory(str,Enum):
     MASTERLEVEL = "Master Level"
     FINALLEVEL = "Final Level"
     WEAPONSLOT = "Weapon Slot"
+
+
+def isFormCheck(loc: locationCategory):
+    return loc in [locationCategory.VALORLEVEL,locationCategory.WISDOMLEVEL,locationCategory.LIMITLEVEL,locationCategory.MASTERLEVEL,locationCategory.FINALLEVEL]
+
+def isStatBonusCheck(loc: locationCategory):
+    return loc in [locationCategory.STATBONUS,locationCategory.HYBRIDBONUS,locationCategory.DOUBLEBONUS]
 
 
 class locationDepth(str,Enum):
