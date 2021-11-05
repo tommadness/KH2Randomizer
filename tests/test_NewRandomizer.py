@@ -1,16 +1,16 @@
 
-import sys
-sys.path.append("..")
-from Module.newRandomize import RandomizerSettings,Randomizer
-import unittest
+# import sys
+# sys.path.append("..")
+# from Module.newRandomize import RandomizerSettings,Randomizer
+# import unittest
 
 
-class Tests(unittest.TestCase):
-    def test_constructingRandomizer(self):
-        settings = RandomizerSettings()
-        randomizer = Randomizer(settings)
+# class Tests(unittest.TestCase):
+#     def test_constructingRandomizer(self):
+#         settings = RandomizerSettings()
+#         randomizer = Randomizer(settings)
         
 
-ut = Tests()
+# ut = Tests()
 
-unittest.main()
+# unittest.main()
