@@ -62,10 +62,11 @@ class SeedModifier():
     def defaultAbilityPool(action, support):
         return action+support
 
-    def glassCannon(enabled):
-        if enabled:
-            return [{"Stat":"Str","Value": 2},{"Stat":"Mag", "Value": 2},{"Stat": "Ap", "Value": 2}]
-        return None
+    def glassCannon():
+        return [{"Stat":"Str","Value": 2},{"Stat":"Mag", "Value": 2},{"Stat": "Ap", "Value": 2}]
+    
+    def regularStats():
+        return [{"Stat":"Str","Value": 2},{"Stat":"Mag", "Value": 2},{"Stat":"Def", "Value": 1},{"Stat": "Ap", "Value": 2}]
 
     def library(enabled):
         if enabled:
