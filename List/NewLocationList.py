@@ -769,4 +769,4 @@ class Locations:
 
     @staticmethod
     def GoofyStartingItems():
-        return [KH2Location(i, f"Goofy Starting Item {i}", locationCategory.CHEST, [locationType.Free]) for i in range(1,4)]
+        return [KH2Location(i, f"Goofy Starting Item {i}", locationCategory.CHEST, [locationType.Free]) for i in range(1,3)]

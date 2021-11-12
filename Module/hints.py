@@ -5,7 +5,18 @@ from itertools import permutations
 
 
 class Hints:
+    def convertItemAssignmentToTuple(itemAssignment):
+        locationItems = []
+        for assignment in itemAssignment:
+            locationItems.append((assignment.location,assignment.item))
+            if assignment.item2 is not None:
+                locationItems.append((assignment.location,assignment.item2))
+        return locationItems
+
+
+
     def generateHints(locationItems, hintsType, seedName, excludeList, preventSelfHinting=True, allowProofHinting=True):
+        locationItems = Hints.convertItemAssignmentToTuple(locationItems)
         if hintsType=="Disabled":
             return None
         hintsText = {}

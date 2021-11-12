@@ -1,10 +1,12 @@
 from dataclasses import dataclass
 from itertools import chain
+import math
 
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item
 from List.configDict import locationCategory, locationType, itemType, locationDepth
 from List.experienceValues import soraExp, formExp
+from List.hashTextEntries import generateHashIcons
 from List.ItemList import Items
 from List.NewLocationList import Locations
 from Module.modifier import SeedModifier
@@ -123,29 +125,60 @@ class RandomizerSettings():
         self.random_seed = "8adshiuhov87zhjb2783"
         self.keyblade_min_stat = 0
         self.keyblade_max_stat = 7
-        self.level_checks = 99
+        self.level_stat_pool = SeedModifier.regularStats
+        self.hintsType="Shananas"
+        self.setLevelChecks(99)
+        self.setSoraExp(2.0)
+        self.setValorExp(7.0)
+        self.setWisdomExp(3.0)
+        self.setLimitExp(4.0)
+        self.setMasterExp(3.0)
+        self.setFinalExp(3.0)
+        self.setSummonExp(2.0)
+        self.startingItems = [SeedModifier.schmovement(True)]
+        self.no_ap = False
+        self.seedHashIcons = generateHashIcons()
+
+    def setLevelChecks(self,maxLevel):
+        self.level_checks = maxLevel
         if self.level_checks==99:
             levels_to_exclude = self.excludeFrom99
         elif self.level_checks==50:
             levels_to_exclude = self.excludeFrom50
         elif self.level_checks==None:
             levels_to_exclude = range(1,100)
+        else:
+            raise RuntimeError(f"Incorrect level choice {maxLevel}")
         self.excludedLevels = [f"Level {i}" for i in range(1,100) if i in levels_to_exclude]
-        self.level_stat_pool = SeedModifier.regularStats
-        self.sora_exp_multiplier = 2.0
-        self.valor_exp_multiplier = 7.0
-        self.wisdom_exp_multiplier = 3.0
-        self.limit_exp_multiplier = 4.0
-        self.master_exp_multiplier = 3.0
-        self.final_exp_multiplier = 3.0
-        self.summon_exp_multiplier = 2.0
-        self.sora_exp = [round(a/b) for a,b in zip(soraExp,[self.sora_exp_multiplier]*100)]
-        self.valor_exp = [round(a/b) for a,b in zip([0]+[formExp[1][i] for i in range(1,8)],[self.valor_exp_multiplier]*8)]
-        self.wisdom_exp = [round(a/b) for a,b in zip([0]+[formExp[2][i] for i in range(1,8)],[self.wisdom_exp_multiplier]*8)]
-        self.limit_exp = [round(a/b) for a,b in zip([0]+[formExp[3][i] for i in range(1,8)],[self.limit_exp_multiplier]*8)]
-        self.master_exp = [round(a/b) for a,b in zip([0]+[formExp[4][i] for i in range(1,8)],[self.master_exp_multiplier]*8)]
-        self.final_exp = [round(a/b) for a,b in zip([0]+[formExp[5][i] for i in range(1,8)],[self.final_exp_multiplier]*8)]
-        self.summon_exp = [round(a/b) for a,b in zip([0]+[formExp[0][i] for i in range(1,8)],[self.summon_exp_multiplier]*8)]
+
+
+    def setSoraExp(self,rate):
+        self.sora_exp_multiplier = rate
+        self.sora_exp = [math.ceil(a/b) for a,b in zip(soraExp,[self.sora_exp_multiplier]*100)]
+    
+    def setValorExp(self, rate):
+        self.valor_exp_multiplier = rate
+        self.valor_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[1][i] for i in range(1,8)],[self.valor_exp_multiplier]*8)]
+    
+    def setWisdomExp(self,rate):
+        self.wisdom_exp_multiplier = rate
+        self.wisdom_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[2][i] for i in range(1,8)],[self.wisdom_exp_multiplier]*8)]
+
+    def setLimitExp(self,rate):
+        self.limit_exp_multiplier = rate
+        self.limit_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[3][i] for i in range(1,8)],[self.limit_exp_multiplier]*8)]
+
+    def setMasterExp(self,rate):
+        self.master_exp_multiplier = rate
+        self.master_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[4][i] for i in range(1,8)],[self.master_exp_multiplier]*8)]
+
+    def setFinalExp(self,rate):
+        self.final_exp_multiplier = rate
+        self.final_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[5][i] for i in range(1,8)],[self.final_exp_multiplier]*8)]
+
+    def setSummonExp(self,rate):
+        self.summon_exp_multiplier = rate
+        self.summon_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[0][i] for i in range(1,8)],[self.summon_exp_multiplier]*8)]
 
 class CantAssignItemException(Exception):
     pass
@@ -250,7 +283,7 @@ class Randomizer():
                 goofyLocations.remove(randomLocation)
 
     def assignSoraItems(self, settings):
-        allItems = Items.getItemList()
+        allItems = [i for i in Items.getItemList() if i not in settings.startingItems]
         allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList())
         if settings.promiseCharm:
             allItems+=[Items.getPromiseCharm()]

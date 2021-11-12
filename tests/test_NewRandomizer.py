@@ -1,5 +1,3 @@
-
-from random import random
 from Module.newRandomize import RandomizerSettings,Randomizer
 import unittest
 
