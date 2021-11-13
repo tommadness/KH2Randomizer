@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item
-from List.configDict import locationCategory, itemType, locationDepth
+from List.configDict import locationCategory, itemType, locationDepth, locationType
 from List.ItemList import Items
 from List.NewLocationList import Locations
 from Module.RandomizerSettings import RandomizerSettings
@@ -59,10 +59,12 @@ class ItemAssignment():
             return [self.item]
         return [self.item,self.item2]
     
-    def __eq__(self, obj):
+    def __eq__(self, obj:"ItemAssignment"):
         return self.location==obj.location
 
     def __eq__(self, obj: KH2Location):
+        if not isinstance(obj,KH2Location):
+            return NotImplemented
         return self.location==obj
 
 @dataclass
@@ -272,6 +274,17 @@ class Randomizer():
             self.assignItem(keyblade,randomAbility)
             allAbilities.remove(randomAbility)
             keybladeAbilities.remove(randomAbility)
+
+        # Assign draws to struggle weapons
+        struggleWeapons = [KH2Location(122,"Struggle Sword (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
+                            KH2Location(144,"Struggle Wand (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
+                            KH2Location(145,"Struggle Hammer (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])]
+        draw = KH2Item(405,"Draw",itemType.SUPPORT_ABILITY)
+
+        for weapon in struggleWeapons:
+            self.assignItem(weapon,draw)
+
+
 
     def assignStatBonuses(self,allLocations):
         """Assign all the stat items to bonuses for stats"""

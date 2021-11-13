@@ -643,7 +643,7 @@ class Locations:
                                             KH2Location(388, "Ruin and Creation's Passage Orichalcum", locationCategory.CHEST,[locationType.TWTNW]),]))
         self.add_node("TWTNW-18",LocationNode([KH2Location(26, "Xemnas 1 Bonus", locationCategory.DOUBLEBONUS, [locationType.TWTNW]),]))
         self.add_node("TWTNW-19",LocationNode([KH2Location(537, "Xemnas 1 Secret Ansem Report 13", locationCategory.POPUP,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-20",LocationNode([KH2Location(71, "Final Xemnas", locationCategory.STATBONUS,[locationType.TWTNW]),]))
+        self.add_node("TWTNW-20",LocationNode([KH2Location(71, "Final Xemnas", locationCategory.STATBONUS,[locationType.TWTNW],InvalidChecks=[e for e in itemType if e not in [itemType.STAT, itemType.SYNTH,itemType.ITEM]]),]))
         self.add_node("TWTNW-21",LocationNode([KH2Location(554, "Xemnas (Data) Power Boost", locationCategory.POPUP,[locationType.TWTNW, locationType.DataOrg]),]))
 
 

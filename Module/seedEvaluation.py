@@ -1,43 +1,37 @@
 
-from Class.locationClass import KH2Location, KH2ItemStat, KH2LevelUp, KH2FormLevel, KH2Bonus, KH2Treasure, KH2StartingItem, KH2ItemStat, KH2Puzzle
+from List.configDict import isFormCheck, locationCategory, locationType
+from Module.RandomizerSettings import RandomizerSettings
 
-from List.configDict import itemType, locationType
-
-from Module.importantItems import getImportantChecks,getUsefulItems
 from Module.itemPlacementRestriction import ItemPlacementRestriction
-from Module.startingInventory import StartingInventory
+from Module.newRandomize import Randomizer
 
 
 class SeedValidator:
-    def __init__(self,sessionDict):
-        nightmare = "Nightmare"==sessionDict["itemPlacementDifficulty"]
-        if "Reverse Rando" in sessionDict["seedModifiers"]:
+    def __init__(self,settings: RandomizerSettings):
+        nightmare = "Nightmare"==settings.itemPlacementDifficulty
+        if settings.reverse_rando:
             self.itemRestrictions = ItemPlacementRestriction("Reverse",nightmare)
         else:
             self.itemRestrictions = ItemPlacementRestriction("Regular",nightmare)
 
-    def validateSeed(self, sessionDict, randomizer):
-        startingInventory = sessionDict["startingInventory"]
+    def validateSeed(self, settings: RandomizerSettings, randomizer: Randomizer):
+        startingInventory = settings.startingItems
 
-        trsrList = [location for location in randomizer._allLocationList if isinstance(location, KH2Treasure)]
-        lvupList = [location for location in randomizer._allLocationList if isinstance(location, KH2LevelUp)]
-        bonsList = [location for location in randomizer._allLocationList if isinstance(location, KH2Bonus)]
-        fmlvList = [location for location in randomizer._allLocationList if isinstance(location, KH2FormLevel)]
-        puzzleList = [location for location in randomizer._allLocationList if isinstance(location, KH2Puzzle)]
-        plrpList = []
-        [plrpList.append(location) for location in randomizer._allLocationList if isinstance(location, KH2StartingItem) and not location in plrpList]
-        StartingInventory.generateStartingInventory(plrpList[0], startingInventory)
+        trsrList = [assignment for assignment in randomizer.assignedItems if assignment.location.LocationCategory in [locationCategory.CHEST,locationCategory.POPUP] and locationType.Puzzle not in assignment.location.LocationTypes]
+        lvupList =  [assignment for assignment in randomizer.assignedItems if assignment.location.LocationCategory in [locationCategory.LEVEL]]
+        bonsList = [assignment for assignment in randomizer.assignedItems if assignment.location.LocationCategory in [locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS,locationCategory.ITEMBONUS,locationCategory.STATBONUS]]
+        fmlvList = [assignment for assignment in randomizer.assignedItems if isFormCheck(assignment.location.LocationCategory)]
+        puzzleList =  [assignment for assignment in randomizer.assignedItems if locationType.Puzzle in assignment.location.LocationTypes]
+
         inventory = []
 
 
         # grab everything that can't possibly be locked by items
-        for i in plrpList:
-            inventory += i.Items
-            # remove the starting inventory to prevent duplication
-            for j in startingInventory:
-                i.Items.remove(int(j))
+        inventory += startingInventory
         for i in lvupList:
-            inventory.append(i.getReward())
+            inventory.append(i.item.Id)
+            if i.item2 is not None: 
+                inventory.append(i.item2.Id)
 
         treasure_restriction,bonus_restriction,form_restriction,puzzle_restriction = self.itemRestrictions.get_restriction_functions()
 
@@ -55,30 +49,36 @@ class SeedValidator:
             puzzles_to_remove = []
             # pass through remaining treasures and find unlockable things
             for i in trsrList:
-                location_id = i.Id
-                reward_id = i.ItemId
+                location_id = i.location
                 if treasure_restriction(location_id)(inventory):
                     treasures_to_remove.append(i)
-                    inventory.append(reward_id)
+                    inventory.append(i.item.Id)
+                    if i.item2 is not None:
+                        inventory.append(i.item2.Id)
                     changed = True
             for i in bonsList:
-                location_id = i.RewardId
-                reward_id = i.getReward()
+                location_id = i.location
                 if bonus_restriction(location_id)(inventory):
                     bonuses_to_remove.append(i)
-                    inventory.append(reward_id)
+                    inventory.append(i.item.Id)
+                    if i.item2 is not None:
+                        inventory.append(i.item2.Id)
                     changed = True
             for i in fmlvList:
-                reward_id = i.Ability
-                if form_restriction(i.FormId,i.FormLevel)(inventory):
+                location_id = i.location
+                if form_restriction(location_id)(inventory):
                     forms_to_remove.append(i)
-                    inventory.append(reward_id)
+                    inventory.append(i.item.Id)
+                    if i.item2 is not None:
+                        inventory.append(i.item2.Id)
                     changed = True
             for i in puzzleList:
-                reward_id = i.ItemId
-                if puzzle_restriction(i.Id)(inventory):
+                location_id = i.location
+                if puzzle_restriction(location_id)(inventory):
                     puzzles_to_remove.append(i)
-                    inventory.append(reward_id)
+                    inventory.append(i.item.Id)
+                    if i.item2 is not None:
+                        inventory.append(i.item2.Id)
                     changed = True
             for i in treasures_to_remove:
                 trsrList.remove(i)
@@ -89,48 +89,5 @@ class SeedValidator:
             for i in puzzles_to_remove:
                 puzzleList.remove(i)
 
-        return False
-
-class SeedMetricsNumDatas:
-    def metrics(self, randomizer):
-
-        trsrList = [location for location in randomizer._allLocationList if isinstance(location, KH2Treasure)]
-        useful_items = getImportantChecks()+getUsefulItems()
-
-        num_data_checks = 0
-        for i in trsrList:
-            reward_id = i.ItemId
-            if locationType.DataOrg in i.LocationTypes and reward_id in useful_items:
-                num_data_checks+=1
-
-        return num_data_checks
-
-
-class SeedMetricsNumCritExtra:
-    def metrics(self, randomizer):
-
-        trsrList = [location for location in randomizer._allLocationList if isinstance(location, KH2StartingItem)]
-        useful_items = getImportantChecks()+getUsefulItems()
-
-        num_starting_checks = 0
-        for i in trsrList:
-            rewards = i.Items
-            for reward_id in rewards:
-                if reward_id in useful_items:
-                    num_starting_checks+=1
-
-        return num_starting_checks
-
-class SeedMetricsGenDataFrame:
-    def metrics(self, randomizer):
-        useful_items = getImportantChecks()+getUsefulItems()
-        item_dict = {}
-        crit_duplicates = 0
-        for loc,item in randomizer._locationItems:
-            if item.Id in useful_items:
-                desc = loc.getDescription()
-                if desc in item_dict:
-                    crit_duplicates+=1
-                    desc +=str(crit_duplicates)
-                item_dict[desc] = item.Id
-        return item_dict
+        print("Failed seed, trying again")
+        raise RuntimeError(f"We couldn't access trsr {trsrList} bons {bonsList} form {fmlvList} puzz {puzzleList}")

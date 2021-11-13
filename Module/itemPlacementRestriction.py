@@ -38,7 +38,6 @@ class ItemPlacementRestriction():
         need_5_pages = lambda inventory : count_pages(inventory) == 5
 
         if mode=="Reverse":
-            print("Reverse Rando Restrictions")
             restricted_treasures = [([34,486,303,545,550,250,251,35,36,137,138,487,37,502,503,300],need_fire_blizzard_thunder),
                                     ([287],need_1_magnet),
                                     ([367],need_2_magnets_all_thunders),
@@ -70,15 +69,15 @@ class ItemPlacementRestriction():
 
 
         def make_form_lambda(form_id,form_level):
-            if form_id==1:
+            if form_id=="Valor":
                 return lambda inventory : has_valor(inventory) and count_forms(inventory)>=form_level-2
-            if form_id==2:
+            if form_id=="Wisdom":
                 return lambda inventory : has_wisdom(inventory) and count_forms(inventory)>=form_level-2
-            if form_id==3:
+            if form_id=="Limit":
                 return lambda inventory : has_limit(inventory) and count_forms(inventory)>=form_level-2
-            if form_id==4:
+            if form_id=="Master":
                 return lambda inventory : has_master(inventory) and count_forms(inventory)>=form_level-2
-            if form_id==5:
+            if form_id=="Final":
                 return lambda inventory : has_final(inventory) and count_forms(inventory)>=form_level-2
 
             return lambda inventory : False
@@ -87,15 +86,15 @@ class ItemPlacementRestriction():
             final_possible_but_not_obtained = lambda inventory : (has_valor(inventory) or has_wisdom(inventory) or has_limit(inventory) or has_master(inventory) or count_auto_forms(inventory)>=1) and not has_final(inventory)
             form_level_obtainable = lambda inventory : count_forms(inventory) + (1 if final_possible_but_not_obtained(inventory) else 0) + 2
 
-            if form_id==1:
+            if form_id=="Valor":
                 return lambda inventory : (has_valor(inventory) or has_auto_valor(inventory) ) and form_level_obtainable(inventory)>=form_level
-            if form_id==2:
+            if form_id=="Wisdom":
                 return lambda inventory : (has_wisdom(inventory) or has_auto_wisdom(inventory) ) and form_level_obtainable(inventory)>=form_level
-            if form_id==3:
+            if form_id=="Limit":
                 return lambda inventory : (has_limit(inventory) or has_auto_limit(inventory) ) and form_level_obtainable(inventory)>=form_level
-            if form_id==4:
+            if form_id=="Master":
                 return lambda inventory : (has_master(inventory) or has_auto_master(inventory) ) and form_level_obtainable(inventory)>=form_level
-            if form_id==5:
+            if form_id=="Final":
                 have_final_form = lambda inventory : final_possible_but_not_obtained(inventory) or has_final(inventory)
                 if form_level==2:
                     return lambda inventory : have_final_form(inventory) or has_auto_final(inventory)
@@ -105,67 +104,67 @@ class ItemPlacementRestriction():
             return lambda inventory : False
 
         if not nightmare:
-            restricted_forms = [(1,2,make_form_lambda(1,2)),
-                                (1,3,make_form_lambda(1,3)),
-                                (1,4,make_form_lambda(1,4)),
-                                (1,5,make_form_lambda(1,5)),
-                                (1,6,make_form_lambda(1,6)),
-                                (1,7,make_form_lambda(1,7)),
-                                (2,2,make_form_lambda(2,2)),
-                                (2,3,make_form_lambda(2,3)),
-                                (2,4,make_form_lambda(2,4)),
-                                (2,5,make_form_lambda(2,5)),
-                                (2,6,make_form_lambda(2,6)),
-                                (2,7,make_form_lambda(2,7)),
-                                (3,2,make_form_lambda(3,2)),
-                                (3,3,make_form_lambda(3,3)),
-                                (3,4,make_form_lambda(3,4)),
-                                (3,5,make_form_lambda(3,5)),
-                                (3,6,make_form_lambda(3,6)),
-                                (3,7,make_form_lambda(3,7)),
-                                (4,2,make_form_lambda(4,2)),
-                                (4,3,make_form_lambda(4,3)),
-                                (4,4,make_form_lambda(4,4)),
-                                (4,5,make_form_lambda(4,5)),
-                                (4,6,make_form_lambda(4,6)),
-                                (4,7,make_form_lambda(4,7)),
-                                (5,2,make_form_lambda(5,2)),
-                                (5,3,make_form_lambda(5,3)),
-                                (5,4,make_form_lambda(5,4)),
-                                (5,5,make_form_lambda(5,5)),
-                                (5,6,make_form_lambda(5,6)),
-                                (5,7,make_form_lambda(5,7))]
+            restricted_forms = [("Valor",2,make_form_lambda("Valor",2)),
+                                ("Valor",3,make_form_lambda("Valor",3)),
+                                ("Valor",4,make_form_lambda("Valor",4)),
+                                ("Valor",5,make_form_lambda("Valor",5)),
+                                ("Valor",6,make_form_lambda("Valor",6)),
+                                ("Valor",7,make_form_lambda("Valor",7)),
+                                ("Wisdom",2,make_form_lambda("Wisdom",2)),
+                                ("Wisdom",3,make_form_lambda("Wisdom",3)),
+                                ("Wisdom",4,make_form_lambda("Wisdom",4)),
+                                ("Wisdom",5,make_form_lambda("Wisdom",5)),
+                                ("Wisdom",6,make_form_lambda("Wisdom",6)),
+                                ("Wisdom",7,make_form_lambda("Wisdom",7)),
+                                ("Limit",2,make_form_lambda("Limit",2)),
+                                ("Limit",3,make_form_lambda("Limit",3)),
+                                ("Limit",4,make_form_lambda("Limit",4)),
+                                ("Limit",5,make_form_lambda("Limit",5)),
+                                ("Limit",6,make_form_lambda("Limit",6)),
+                                ("Limit",7,make_form_lambda("Limit",7)),
+                                ("Master",2,make_form_lambda("Master",2)),
+                                ("Master",3,make_form_lambda("Master",3)),
+                                ("Master",4,make_form_lambda("Master",4)),
+                                ("Master",5,make_form_lambda("Master",5)),
+                                ("Master",6,make_form_lambda("Master",6)),
+                                ("Master",7,make_form_lambda("Master",7)),
+                                ("Final",2,make_form_lambda("Final",2)),
+                                ("Final",3,make_form_lambda("Final",3)),
+                                ("Final",4,make_form_lambda("Final",4)),
+                                ("Final",5,make_form_lambda("Final",5)),
+                                ("Final",6,make_form_lambda("Final",6)),
+                                ("Final",7,make_form_lambda("Final",7))]
         else:
-            restricted_forms = [(1,2,make_form_lambda_nightmare(1,2)),
-                            (1,3,make_form_lambda_nightmare(1,3)),
-                            (1,4,make_form_lambda_nightmare(1,4)),
-                            (1,5,make_form_lambda_nightmare(1,5)),
-                            (1,6,make_form_lambda_nightmare(1,6)),
-                            (1,7,make_form_lambda_nightmare(1,7)),
-                            (2,2,make_form_lambda_nightmare(2,2)),
-                            (2,3,make_form_lambda_nightmare(2,3)),
-                            (2,4,make_form_lambda_nightmare(2,4)),
-                            (2,5,make_form_lambda_nightmare(2,5)),
-                            (2,6,make_form_lambda_nightmare(2,6)),
-                            (2,7,make_form_lambda_nightmare(2,7)),
-                            (3,2,make_form_lambda_nightmare(3,2)),
-                            (3,3,make_form_lambda_nightmare(3,3)),
-                            (3,4,make_form_lambda_nightmare(3,4)),
-                            (3,5,make_form_lambda_nightmare(3,5)),
-                            (3,6,make_form_lambda_nightmare(3,6)),
-                            (3,7,make_form_lambda_nightmare(3,7)),
-                            (4,2,make_form_lambda_nightmare(4,2)),
-                            (4,3,make_form_lambda_nightmare(4,3)),
-                            (4,4,make_form_lambda_nightmare(4,4)),
-                            (4,5,make_form_lambda_nightmare(4,5)),
-                            (4,6,make_form_lambda_nightmare(4,6)),
-                            (4,7,make_form_lambda_nightmare(4,7)),
-                            (5,2,make_form_lambda_nightmare(5,2)),
-                            (5,3,make_form_lambda_nightmare(5,3)),
-                            (5,4,make_form_lambda_nightmare(5,4)),
-                            (5,5,make_form_lambda_nightmare(5,5)),
-                            (5,6,make_form_lambda_nightmare(5,6)),
-                            (5,7,make_form_lambda_nightmare(5,7))]
+            restricted_forms = [("Valor",2,make_form_lambda_nightmare("Valor",2)),
+                            ("Valor",3,make_form_lambda_nightmare("Valor",3)),
+                            ("Valor",4,make_form_lambda_nightmare("Valor",4)),
+                            ("Valor",5,make_form_lambda_nightmare("Valor",5)),
+                            ("Valor",6,make_form_lambda_nightmare("Valor",6)),
+                            ("Valor",7,make_form_lambda_nightmare("Valor",7)),
+                            ("Wisdom",2,make_form_lambda_nightmare("Wisdom",2)),
+                            ("Wisdom",3,make_form_lambda_nightmare("Wisdom",3)),
+                            ("Wisdom",4,make_form_lambda_nightmare("Wisdom",4)),
+                            ("Wisdom",5,make_form_lambda_nightmare("Wisdom",5)),
+                            ("Wisdom",6,make_form_lambda_nightmare("Wisdom",6)),
+                            ("Wisdom",7,make_form_lambda_nightmare("Wisdom",7)),
+                            ("Limit",2,make_form_lambda_nightmare("Limit",2)),
+                            ("Limit",3,make_form_lambda_nightmare("Limit",3)),
+                            ("Limit",4,make_form_lambda_nightmare("Limit",4)),
+                            ("Limit",5,make_form_lambda_nightmare("Limit",5)),
+                            ("Limit",6,make_form_lambda_nightmare("Limit",6)),
+                            ("Limit",7,make_form_lambda_nightmare("Limit",7)),
+                            ("Master",2,make_form_lambda_nightmare("Master",2)),
+                            ("Master",3,make_form_lambda_nightmare("Master",3)),
+                            ("Master",4,make_form_lambda_nightmare("Master",4)),
+                            ("Master",5,make_form_lambda_nightmare("Master",5)),
+                            ("Master",6,make_form_lambda_nightmare("Master",6)),
+                            ("Master",7,make_form_lambda_nightmare("Master",7)),
+                            ("Final",2,make_form_lambda_nightmare("Final",2)),
+                            ("Final",3,make_form_lambda_nightmare("Final",3)),
+                            ("Final",4,make_form_lambda_nightmare("Final",4)),
+                            ("Final",5,make_form_lambda_nightmare("Final",5)),
+                            ("Final",6,make_form_lambda_nightmare("Final",6)),
+                            ("Final",7,make_form_lambda_nightmare("Final",7))]
 
 
         restricted_puzzles = [(1,need_growths),
@@ -174,22 +173,23 @@ class ItemPlacementRestriction():
                               (4,lambda inventory : need_growths(inventory) and need_5_pages(inventory)),
                               (5,need_growths)]
 
-        def treasure_restriction(location_id):
+        def treasure_restriction(location):
             for loc_list,condition in restricted_treasures:
-                if location_id in loc_list:
+                if location.LocationId in loc_list:
                     return condition
             return lambda inventory: True
-        def bonus_restriction(location_id):
+        def bonus_restriction(location):
             for loc_list,condition in restricted_bonuses:
-                if location_id in loc_list:
+                if location.LocationId in loc_list:
                     return condition
             return lambda inventory: True
-        def form_restriction(form_id,form_level):
+        def form_restriction(location):
             for f_id,f_level,condition in restricted_forms:
-                if f_id == form_id and f_level==form_level:
+                if f_id in location.Description and str(f_level) in location.Description:
                     return condition
             return lambda inventory: True
-        def puzzle_restriction(puzzle_id):
+        def puzzle_restriction(location):
+            puzzle_id = location.LocationId
             for p_id,condition in restricted_puzzles:
                 if p_id == puzzle_id :
                     return condition

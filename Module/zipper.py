@@ -197,6 +197,8 @@ class SeedZip():
             self.getAssignmentSubset(randomizer.assignedGoofyItems,[locationCategory.WEAPONSLOT])
         
         for weapon in weapons:
+            if "Struggle" in weapon.location.Description:
+                continue
             weaponStats = [stat for stat in randomizer.weaponStats if stat.location==weapon.location][0]
             self.formattedItem["Stats"].append({
                 "Id": weapon.location.LocationId,
