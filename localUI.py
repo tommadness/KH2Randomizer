@@ -35,7 +35,8 @@ from Class.seedSettings import SeedSettings
 from List.configDict import locationType
 from List.hashTextEntries import generateHashIcons
 from Module.dailySeed import getDailyModifiers
-from Module.randomizePage import randomizePage
+from Module.generate import generateSeed
+from Module.newRandomize import RandomizerSettings
 from Module.seedshare import SharedSeed, ShareStringException
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
@@ -49,7 +50,7 @@ from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.WorldMenu import WorldMenu
 
-LOCAL_UI_VERSION = '1.99.3'
+LOCAL_UI_VERSION = '2.0.0'
 
 
 class Logger(object):
@@ -76,13 +77,13 @@ PRESET_FOLDER = "presets"
 class GenSeedThread(QThread):
     finished = Signal(object)
 
-    def provideData(self,data,session):
+    def provideData(self,data,rando_settings):
         self.data=data
-        self.session = session
+        self.rando_settings = rando_settings
         self.zip_file = None
 
     def run(self):
-        zip_file = randomizePage(self.data,self.session,local_ui=True)
+        zip_file = generateSeed(self.rando_settings,self.data)
         self.finished.emit(zip_file)
 
 
@@ -237,127 +238,23 @@ class KH2RandomizerApp(QMainWindow):
         new_string = re.sub(r'[^a-zA-Z0-9]', '', self.seedName.text())
         self.seedName.setText(new_string)
 
-    def make_seed_session(self):
+    def make_rando_settings(self):
         makeSpoilerLog = self.spoiler_log.isChecked()
 
-        session={}
-
         # seed
-        session["seed"] = self.seedName.text()
-        if session["seed"] == "":
+        seedString = self.seedName.text()
+        if seedString == "":
             characters = string.ascii_letters + string.digits
-            session["seed"] = (''.join(random.choice(characters) for i in range(30)))
-            self.seedName.setText(session["seed"])
+            seedString = (''.join(random.choice(characters) for i in range(30)))
+            self.seedName.setText(seedString)
 
-        # make the seed hash dependent on ui version and if a spoiler log is generated or not.
-        random.seed(session["seed"]+LOCAL_UI_VERSION+str(makeSpoilerLog))
-
-        # seedHashIcons
-        session["seedHashIcons"] = generateHashIcons()
-
-        # includeList
-        include_list = []
-        session["includeList"] = include_list
-        include_list_keys = [
-            (settingkey.FORM_LEVEL_REWARDS, 'Form Levels'),
-            (settingkey.CRITICAL_BONUS_REWARDS, 'Critical Bonuses'),
-            (settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS, 'Garden of Assemblage'),
-        ]
-        for key in include_list_keys:
-            if self.settings.get(key[0]):
-                include_list.append(key[1])
-        for location in self.settings.get(settingkey.WORLDS_WITH_REWARDS):
-            include_list.append(locationType[location].value)
-        for location in self.settings.get(settingkey.SUPERBOSSES_WITH_REWARDS):
-            include_list.append(locationType[location].value)
-        for location in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS):
-            include_list.append(locationType[location].value)
-
-        # levelChoice
-        session['levelChoice'] = self.settings.get(settingkey.SORA_LEVELS)
-
-        # startingInventory
-        session['startingInventory'] = [int(value) for value in self.settings.get(settingkey.STARTING_INVENTORY)]
-
-        # itemPlacementDifficulty
-        session['itemPlacementDifficulty'] = self.settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
-
-        # seedModifiers
-        seed_modifiers = []
-        session['seedModifiers'] = seed_modifiers
-        seed_modifier_keys = [
-            (settingkey.MAX_LOGIC_ITEM_PLACEMENT, 'Max Logic Item Placement'),
-            (settingkey.REVERSE_RANDO, 'Reverse Rando'),
-            (settingkey.LIBRARY_OF_ASSEMBLAGE, 'Library of Assemblage'),
-            (settingkey.SCHMOVEMENT, 'Schmovement'),
-            (settingkey.GLASS_CANNON, 'Glass Cannon'),
-            (settingkey.BETTER_JUNK, 'Better Junk'),
-            (settingkey.START_NO_AP, 'Start with No AP'),
-            (settingkey.REMOVE_DAMAGE_CAP, 'Remove Damage Cap')
-        ]
-        for key in seed_modifier_keys:
-            if self.settings.get(key[0]):
-                seed_modifiers.append(key[1])
-        if self.settings.get(settingkey.ABILITY_POOL) == 'randomize':
-            seed_modifiers.append('Randomize Ability Pool')
+        rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings)
 
         # update the seed hash display
-        for index, icon in enumerate(session['seedHashIcons']):
+        for index, icon in enumerate(rando_settings.seedHashIcons):
             self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
 
-        # spoilerLog
-        session["spoilerLog"] = makeSpoilerLog
-
-        # hintsType/reportDepth/preventSelfHinting/allowProofHinting
-        session['hintsType'] = self.settings.get(settingkey.HINT_SYSTEM)
-        session['reportDepth'] = self.settings.get(settingkey.REPORT_DEPTH)
-        session['preventSelfHinting'] = self.settings.get(settingkey.PREVENT_SELF_HINTING)
-        session['allowProofHinting'] = self.settings.get(settingkey.ALLOW_PROOF_HINTING)
-
-        # promiseCharm
-        session['promiseCharm'] = self.settings.get(settingkey.ENABLE_PROMISE_CHARM)
-
-        # keybladeAbilities
-        keyblade_abilities = []
-        session['keybladeAbilities'] = keyblade_abilities
-        if self.settings.get(settingkey.SUPPORT_KEYBLADE_ABILITIES):
-            keyblade_abilities.append('Support')
-        if self.settings.get(settingkey.ACTION_KEYBLADE_ABILITIES):
-            keyblade_abilities.append('Action')
-
-        # keybladeMinStat
-        session['keybladeMinStat'] = self.settings.get(settingkey.KEYBLADE_MIN_STAT)
-
-        # keybladeMaxStat
-        session['keybladeMaxStat'] = self.settings.get(settingkey.KEYBLADE_MAX_STAT)
-
-        # soraExpMult
-        session['soraExpMult'] = self.settings.get(settingkey.SORA_EXP_MULTIPLIER)
-
-        # formExpMult
-        session['formExpMult'] = {
-            '0': self.settings.get(settingkey.SUMMON_EXP_MULTIPLIER),
-            '1': self.settings.get(settingkey.VALOR_EXP_MULTIPLIER),
-            '2': self.settings.get(settingkey.WISDOM_EXP_MULTIPLIER),
-            '3': self.settings.get(settingkey.LIMIT_EXP_MULTIPLIER),
-            '4': self.settings.get(settingkey.MASTER_EXP_MULTIPLIER),
-            '5': self.settings.get(settingkey.FINAL_EXP_MULTIPLIER)
-        }
-
-        # enemyOptions
-        enemy_options = {
-            'remove_damage_cap': self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
-        }
-        for setting in seedSettings.boss_enemy_settings:
-            value = self.settings.get(setting.name)
-            if value is not None:
-                enemy_options[setting.name] = value
-        session['enemyOptions'] = json.dumps(enemy_options)
-
-        # for key in sorted(session.keys()):
-        #     print(str(key) + ' : ' + str(session[key]))
-
-        return session
+        return rando_settings
 
     def makeSeed(self,platform):
         self.fixSeedName()
@@ -371,9 +268,9 @@ class KH2RandomizerApp(QMainWindow):
             }
         }
 
-        session = self.make_seed_session()
+        rando_settings = self.make_rando_settings()
 
-        self.genSeed(data,session)
+        self.genSeed(data,rando_settings)
 
     def downloadSeed(self):
         saveFileWidget = QFileDialog()
@@ -390,9 +287,9 @@ class KH2RandomizerApp(QMainWindow):
         self.zip_file = result
         self.downloadSeed()
 
-    def genSeed(self,data,session):
+    def genSeed(self,data,rando_settings):
         self.thread = QThread()
-        displayedSeedName = session["seed"]
+        displayedSeedName = rando_settings.random_seed
         self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","",0,0,None)
         self.progress.setWindowTitle("Making your Seed, please wait...")
         self.progress.setCancelButton(None)
@@ -400,7 +297,7 @@ class KH2RandomizerApp(QMainWindow):
         self.progress.show()
 
         self.thread = GenSeedThread()
-        self.thread.provideData(data,session)
+        self.thread.provideData(data,rando_settings)
         self.thread.finished.connect(self.handleResult)
         self.thread.start()
 

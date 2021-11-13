@@ -25,7 +25,7 @@ class Hints:
             importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON]
             hintsText['world'] = {}
             for location,item in locationItems:
-                if isinstance(location, KH2ItemStat):
+                if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
                 if item.ItemType in importantChecks or item.Name == "Second Chance" or item.Name == "Once More":
                     if location.LocationTypes[0] != locationType.Puzzle:
@@ -43,7 +43,7 @@ class Hints:
             hintsText['Reports'] = {}
             importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"]
             
-            hintableWorlds = ["Level",locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
+            hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
 
             freeReports = []
 
@@ -53,7 +53,7 @@ class Hints:
                     worldChecks[h] = []
                     
             for location,item in locationItems:
-                if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
+                if location.LocationTypes[0] == locationType.WeaponSlot or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     worldChecks[location.LocationTypes[0]].append(item)
@@ -74,7 +74,7 @@ class Hints:
                             if item.ItemType is itemType.PROOF:
                                 proof_of_nonexistence_index = worldsToHint.index(location.LocationTypes[0])
             for location,item in locationItems:
-                if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
+                if location.LocationTypes[0] == locationType.WeaponSlot or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
                     if item.ItemType is itemType.REPORT:
                         reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                         freeReports.append(reportNumber)
@@ -249,13 +249,13 @@ class Hints:
             tempItemR = None
             tempExcludeList = []
             importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"]
-            hintableWorlds = ["Level",locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
+            hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
             
             worldChecks = {}
             worldChecksEdit = {}
             
             for location,item in locationItems:
-                if isinstance(location, KH2ItemStat):
+                if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     if location.LocationTypes[0] != locationType.Puzzle:
@@ -269,7 +269,7 @@ class Hints:
                     worldChecksEdit[h] = []
                     
             for location,item in locationItems:
-                if isinstance(location, KH2ItemStat) or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
+                if location.LocationTypes[0] == locationType.WeaponSlot or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     worldChecks[location.LocationTypes[0]].append(item)

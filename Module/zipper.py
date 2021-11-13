@@ -1,17 +1,28 @@
 
-import zipfile, yaml, io, json, os, base64, asyncio, struct
+import zipfile, yaml, io, json, os, sys
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
 from pathlib import Path
 from List.configDict import itemType, locationCategory,locationType
+from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
-from Module.newRandomize import RandomizerSettings,Randomizer
-from Class.itemClass import KH2Item, ItemEncoder
+from Module.newRandomize import Randomizer
+from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
-from Module.randomize import noop
-from localUI import resource_path
+from Module.randomBGM import RandomBGM
+from Module.randomCmdMenu import RandomCmdMenu
+from Module.spoilerLog import generateSpoilerLog
 
+
+def noop(self, *args, **kw):
+    pass
 
 class SeedZip():
-    def __init__(self,settings: RandomizerSettings, randomizer: Randomizer,hints):
+    def __init__(self,settings: RandomizerSettings, randomizer: Randomizer, hints, cosmetics_data):
         self.formattedTrsr = {}
         self.formattedLvup = {"Sora":{}}
         self.formattedBons = {}
@@ -27,7 +38,9 @@ class SeedZip():
         self.assignFormLevels(randomizer)
         self.assignWeaponStats(randomizer)
         self.assignStartingItems(settings, randomizer)
+        self.createZip(settings, randomizer, hints, cosmetics_data)
 
+    def createZip(self, settings, randomizer, hints, cosmetics_data):
         mod = modYml.getDefaultMod()
         sys = modYml.getSysYAML(settings.seedHashIcons)
 
@@ -35,9 +48,11 @@ class SeedZip():
         with zipfile.ZipFile(data,"w") as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
-            path_to_static = Path("static")
-            if not path_to_static.exists():
-                path_to_static = Path("../static")
+
+            #TODO This may need adjusting for the exe, since the "static" version doesn't work for whatever reason
+            path_to_static = Path("../static")
+            # if not path_to_static.exists():
+            #     path_to_static = Path("../static")
 
             if locationType.Puzzle not in settings.disabledLocations:
                 mod["assets"] += [modYml.getPuzzleMod()]
@@ -69,28 +84,31 @@ class SeedZip():
             if hints is not None:
                 Hints.writeHints(hints, settings.random_seed, outZip)
 
-            # enemySpoilers = None
-            # if not enemyOptions["boss"] == "Disabled" or not enemyOptions["enemy"] == "Disabled" or enemyOptions["remove_damage_cap"]:
-            #     if platform == "PC":
-            #         enemyOptions["memory_expansion"] = True
-            #     else:
-            #         enemyOptions["memory_expansion"] = False
-            #     if enemyOptions.get("boss", False) or enemyOptions.get("enemy", False) or enemyOptions.get("remove_damage_cap", False):
-            #         from khbr.randomizer import Randomizer as khbr
-            #         enemySpoilers = khbr().generateToZip("kh2", enemyOptions, mod, outZip)
+            cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
+            platform = cosmetics_data["platform"]
+            randomBGMOptions = cosmetics_data["randomBGM"]
 
-            # if spoilerLog:
+            enemySpoilers = None
+            if not settings.enemy_options["boss"] == "Disabled" or not settings.enemy_options["enemy"] == "Disabled" or settings.enemy_options["remove_damage_cap"]:
+                if platform == "PC":
+                    settings.enemy_options["memory_expansion"] = True
+                else:
+                    settings.enemy_options["memory_expansion"] = False
+                if settings.enemy_options.get("boss", False) or settings.enemy_options.get("enemy", False) or settings.enemy_options.get("remove_damage_cap", False):
+                    from khbr.randomizer import Randomizer as khbr
+                    enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
 
-            #     mod["title"] += " {seedName}".format(seedName = self.seedName)
-            #     with open(resource_path(Path("../static/spoilerlog.html"))) as spoiler_site:
-            #         html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
-            #         outZip.writestr("spoilerlog.html",html_template)
-            #     if enemySpoilers:
-            #         outZip.writestr("enemyspoilers.txt", enemySpoilers)
+            if settings.spoiler_log:
+                mod["title"] += " w/ Spoiler"
+                with open(resource_path(Path("../static/spoilerlog.html"))) as spoiler_site:
+                    html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(randomizer.assignedItems), indent=4, cls=ItemEncoder))
+                    outZip.writestr("spoilerlog.html",html_template)
+                if enemySpoilers:
+                    outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
-            # mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
-            
-            # mod["assets"] += RandomBGM.randomizeBGM(randomBGMOptions, platform)
+
+            mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
+            mod["assets"] += RandomBGM.randomizeBGM(randomBGMOptions, platform)
 
             outZip.write(resource_path(path_to_static/Path("icon.png")), "icon.png")
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))

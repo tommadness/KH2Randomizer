@@ -1,15 +1,11 @@
 from dataclasses import dataclass
-from itertools import chain
-import math
 
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item
-from List.configDict import locationCategory, locationType, itemType, locationDepth
-from List.experienceValues import soraExp, formExp
-from List.hashTextEntries import generateHashIcons
+from List.configDict import locationCategory, itemType, locationDepth
 from List.ItemList import Items
 from List.NewLocationList import Locations
-from Module.modifier import SeedModifier
+from Module.RandomizerSettings import RandomizerSettings
 
 import random
 
@@ -107,78 +103,6 @@ class FormExp():
     def __eq__(self, obj: KH2Location):
         return self.location==obj
 
-class RandomizerSettings():
-    excludeFrom50 = list(chain([1,3,5,6,8,11,13,16,18,19,21,22,24,26,27,29,31,33,35,37,38,40,42,43,45,47,49],range(51,100)))
-    excludeFrom99 = [1,2,3,4,5,6,8,10,11,13,14,16,18,19,21,22,24,26,27,29,30,32,34,35,37,38,40,42,43,45,46,48,50,51,52,54,55,56,57,58,60,61,62,63,64,66,67,68,69,70,71,72,74,75,76,77,78,79,80,81,82,83,84,86,87,88,89,90,91,92,93,94,95,96,97,98]
-    
-    def __init__(self):
-        self.abilityListModifier = SeedModifier.defaultAbilityPool
-        # self.weights = LocationWeights()
-        # self.depths = LocationDepths()
-        self.promiseCharm = True
-        self.disabledLocations = [locationType.TTR,locationType.OCParadoxCup,locationType.OCCups,locationType.Atlantica,locationType.FormLevel1,locationType.SummonLevel]
-        self.statSanity = False
-        self.keybladeAbilities = [itemType.SUPPORT_ABILITY]
-        self.reportDepth = locationDepth.SecondVisit
-        self.betterJunk = False
-        self.reverse_rando = False
-        self.random_seed = "8adshiuhov87zhjb2783"
-        self.keyblade_min_stat = 0
-        self.keyblade_max_stat = 7
-        self.level_stat_pool = SeedModifier.regularStats
-        self.hintsType="Shananas"
-        self.setLevelChecks(99)
-        self.setSoraExp(2.0)
-        self.setValorExp(7.0)
-        self.setWisdomExp(3.0)
-        self.setLimitExp(4.0)
-        self.setMasterExp(3.0)
-        self.setFinalExp(3.0)
-        self.setSummonExp(2.0)
-        self.startingItems = [SeedModifier.schmovement(True)]
-        self.no_ap = False
-        self.seedHashIcons = generateHashIcons()
-
-    def setLevelChecks(self,maxLevel):
-        self.level_checks = maxLevel
-        if self.level_checks==99:
-            levels_to_exclude = self.excludeFrom99
-        elif self.level_checks==50:
-            levels_to_exclude = self.excludeFrom50
-        elif self.level_checks==None:
-            levels_to_exclude = range(1,100)
-        else:
-            raise RuntimeError(f"Incorrect level choice {maxLevel}")
-        self.excludedLevels = [f"Level {i}" for i in range(1,100) if i in levels_to_exclude]
-
-
-    def setSoraExp(self,rate):
-        self.sora_exp_multiplier = rate
-        self.sora_exp = [math.ceil(a/b) for a,b in zip(soraExp,[self.sora_exp_multiplier]*100)]
-    
-    def setValorExp(self, rate):
-        self.valor_exp_multiplier = rate
-        self.valor_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[1][i] for i in range(1,8)],[self.valor_exp_multiplier]*8)]
-    
-    def setWisdomExp(self,rate):
-        self.wisdom_exp_multiplier = rate
-        self.wisdom_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[2][i] for i in range(1,8)],[self.wisdom_exp_multiplier]*8)]
-
-    def setLimitExp(self,rate):
-        self.limit_exp_multiplier = rate
-        self.limit_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[3][i] for i in range(1,8)],[self.limit_exp_multiplier]*8)]
-
-    def setMasterExp(self,rate):
-        self.master_exp_multiplier = rate
-        self.master_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[4][i] for i in range(1,8)],[self.master_exp_multiplier]*8)]
-
-    def setFinalExp(self,rate):
-        self.final_exp_multiplier = rate
-        self.final_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[5][i] for i in range(1,8)],[self.final_exp_multiplier]*8)]
-
-    def setSummonExp(self,rate):
-        self.summon_exp_multiplier = rate
-        self.summon_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[0][i] for i in range(1,8)],[self.summon_exp_multiplier]*8)]
 
 class CantAssignItemException(Exception):
     pass

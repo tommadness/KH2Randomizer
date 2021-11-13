@@ -299,12 +299,13 @@ class Items:
 
     @staticmethod
     def getStatItems():
-        return list(itertools.repeat(KH2Item(470, "Dummy 23 (Max HP Up)", itemType.STAT),20)) + \
-            list(itertools.repeat(KH2Item(471, "Dummy 24 (Max MP Up)", itemType.STAT),4)) + \
-            list(itertools.repeat(KH2Item(472, "Dummy 25 (Drive Gauge Up)", itemType.STAT),6)) + \
-            list(itertools.repeat(KH2Item(473, "Dummy 26 (Armor Slot Up)", itemType.STAT),3)) + \
-            list(itertools.repeat(KH2Item(474, "Dummy 27 (Accessory Slot Up)", itemType.STAT),3)) + \
-            list(itertools.repeat(KH2Item(463, "Dummy 16 (Item Slot Up)", itemType.STAT),5))
+        """Get different dummy items that represent stat bonuses (Dummy 23, 24, 25, 26, 27, 16)"""
+        return list(itertools.repeat(KH2Item(470, "Max HP Up", itemType.STAT),20)) + \
+            list(itertools.repeat(KH2Item(471, "Max MP Up", itemType.STAT),4)) + \
+            list(itertools.repeat(KH2Item(472, "Drive Gauge Up", itemType.STAT),6)) + \
+            list(itertools.repeat(KH2Item(473, "Armor Slot Up", itemType.STAT),3)) + \
+            list(itertools.repeat(KH2Item(474, "Accessory Slot Up", itemType.STAT),3)) + \
+            list(itertools.repeat(KH2Item(463, "Item Slot Up", itemType.STAT),5))
 
     @staticmethod
     def getPromiseCharm():
