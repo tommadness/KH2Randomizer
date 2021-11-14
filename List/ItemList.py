@@ -418,6 +418,10 @@ class Items:
         ]
 
     @staticmethod
+    def getNullItem():
+        return KH2Item(0,"", itemType.SYNTH)
+
+    @staticmethod
     def getJunkList(betterJunk):
         if betterJunk:
             return [

@@ -361,15 +361,19 @@ class SeedZip():
 
         for lvup in levels:
             levelStats = [lv for lv in randomizer.levelStats if lv.location==lvup.location][0]
+            if lvup.item is None:
+                item_id = 0
+            else:
+                item_id = lvup.item.Id
             self.formattedLvup["Sora"][lvup.location.LocationId] = {
                 "Exp": levelStats.experience,
                 "Strength": levelStats.strength,
                 "Magic": levelStats.magic,
                 "Defense": levelStats.defense,
                 "Ap": levelStats.ap,
-                "SwordAbility": lvup.item.Id,
-                "ShieldAbility": lvup.item.Id,
-                "StaffAbility": lvup.item.Id,
+                "SwordAbility": item_id,
+                "ShieldAbility": item_id,
+                "StaffAbility": item_id,
                 "Padding": 0,
                 "Character": "Sora",
                 "Level": lvup.location.LocationId

@@ -251,8 +251,15 @@ class Randomizer():
         """ assign the rest of the locations with "junk" """
         junkItems = Items.getJunkList(settings.betterJunk)
         for loc in invalidLocations:
-            junk_item = random.choice(junkItems)
-            self.assignItem(loc,junk_item)
+            if loc.LocationCategory is not locationCategory.LEVEL:
+                junk_item = random.choice(junkItems)
+                #assign another junk item if that location needs another item
+                if not self.assignItem(loc,junk_item):
+                    junk_item = random.choice(junkItems)
+                    self.assignItem(loc,junk_item)
+
+            else:
+                self.assignItem(loc,Items.getNullItem())
 
     def augmentInvalidChecks(self, settings, allLocations):
         """Add invalid check types to locations."""
@@ -279,10 +286,9 @@ class Randomizer():
         struggleWeapons = [KH2Location(122,"Struggle Sword (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                             KH2Location(144,"Struggle Wand (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                             KH2Location(145,"Struggle Hammer (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])]
-        draw = KH2Item(405,"Draw",itemType.SUPPORT_ABILITY)
 
         for weapon in struggleWeapons:
-            self.assignItem(weapon,draw)
+            self.assignItem(weapon,KH2Item(405,"Draw",itemType.SUPPORT_ABILITY))
 
 
 
