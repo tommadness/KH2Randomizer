@@ -111,7 +111,6 @@ class CantAssignItemException(Exception):
 
 class Randomizer():
     def __init__(self, settings: RandomizerSettings):
-        self.excludedLevels = settings.excludedLevels
         random.seed(settings.random_seed)
         self.master_locations = Locations(settings.reverse_rando)
         self.assignedItems = []
@@ -173,7 +172,7 @@ class Randomizer():
             self.levelStats.append(LevelStats(l,exp,strength,magic,defense,ap))
             stat_choices = random.choices(levelStats,k=2)
             addStat(stat_choices[0])
-            if l.Description in self.excludedLevels:
+            if l.Description in settings.excludedLevels:
                 addStat(stat_choices[1])
 
     def assignWeaponStats(self,settings):
@@ -222,7 +221,7 @@ class Randomizer():
         else:
             self.assignStatBonuses(allLocations)
 
-        invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or loc.Description in self.excludedLevels)]
+        invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or loc.Description in settings.excludedLevels)]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
 
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):
@@ -251,13 +250,12 @@ class Randomizer():
         """ assign the rest of the locations with "junk" """
         junkItems = Items.getJunkList(settings.betterJunk)
         for loc in invalidLocations:
-            if loc.LocationCategory is not locationCategory.LEVEL:
+            if loc.LocationCategory is not locationCategory.LEVEL or loc.Description not in settings.excludedLevels:
                 junk_item = random.choice(junkItems)
                 #assign another junk item if that location needs another item
                 if not self.assignItem(loc,junk_item):
                     junk_item = random.choice(junkItems)
                     self.assignItem(loc,junk_item)
-
             else:
                 self.assignItem(loc,Items.getNullItem())
 

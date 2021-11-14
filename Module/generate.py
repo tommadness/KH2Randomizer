@@ -1,4 +1,5 @@
 
+from List.configDict import locationCategory
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
 from Module.newRandomize import Randomizer
@@ -10,7 +11,7 @@ def generateSeed(settings: RandomizerSettings,data):
     seedValidation = SeedValidator(settings)
     while True:
         try:
-            randomizer = Randomizer(settings)      
+            randomizer = Randomizer(settings)
             seedValidation.validateSeed(settings,randomizer)
             hints = Hints.generateHints(randomizer.assignedItems,settings.hintsType,settings.random_seed,settings.disabledLocations)
             zipper = SeedZip(settings,randomizer,hints,data)
