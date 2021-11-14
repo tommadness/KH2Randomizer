@@ -282,13 +282,13 @@ class Randomizer():
             allAbilities.remove(randomAbility)
             keybladeAbilities.remove(randomAbility)
 
-        # Assign draws to struggle weapons
-        struggleWeapons = [KH2Location(122,"Struggle Sword (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
-                            KH2Location(144,"Struggle Wand (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
-                            KH2Location(145,"Struggle Hammer (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])]
+        # # Assign draws to struggle weapons
+        # struggleWeapons = [KH2Location(122,"Struggle Sword (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
+        #                     KH2Location(144,"Struggle Wand (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
+        #                     KH2Location(145,"Struggle Hammer (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])]
 
-        for weapon in struggleWeapons:
-            self.assignItem(weapon,KH2Item(405,"Draw",itemType.SUPPORT_ABILITY))
+        # for weapon in struggleWeapons:
+        #     self.assignItem(weapon,KH2Item(405,"Draw",itemType.SUPPORT_ABILITY))
 
 
 
