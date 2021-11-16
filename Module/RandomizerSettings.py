@@ -113,24 +113,24 @@ class RandomizerSettings():
     
     def setValorExp(self, rate):
         self.valor_exp_multiplier = rate
-        self.valor_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[1][i] for i in range(1,8)],[self.valor_exp_multiplier]*8)]
+        self.valor_exp = [math.ceil(a/b) for a,b in zip([formExp[1][i] for i in range(1,8)],[self.valor_exp_multiplier]*7)]
     
     def setWisdomExp(self,rate):
         self.wisdom_exp_multiplier = rate
-        self.wisdom_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[2][i] for i in range(1,8)],[self.wisdom_exp_multiplier]*8)]
+        self.wisdom_exp = [math.ceil(a/b) for a,b in zip([formExp[2][i] for i in range(1,8)],[self.wisdom_exp_multiplier]*7)]
 
     def setLimitExp(self,rate):
         self.limit_exp_multiplier = rate
-        self.limit_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[3][i] for i in range(1,8)],[self.limit_exp_multiplier]*8)]
+        self.limit_exp = [math.ceil(a/b) for a,b in zip([formExp[3][i] for i in range(1,8)],[self.limit_exp_multiplier]*7)]
 
     def setMasterExp(self,rate):
         self.master_exp_multiplier = rate
-        self.master_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[4][i] for i in range(1,8)],[self.master_exp_multiplier]*8)]
+        self.master_exp = [math.ceil(a/b) for a,b in zip([formExp[4][i] for i in range(1,8)],[self.master_exp_multiplier]*7)]
 
     def setFinalExp(self,rate):
         self.final_exp_multiplier = rate
-        self.final_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[5][i] for i in range(1,8)],[self.final_exp_multiplier]*8)]
+        self.final_exp = [math.ceil(a/b) for a,b in zip([formExp[5][i] for i in range(1,8)],[self.final_exp_multiplier]*7)]
 
     def setSummonExp(self,rate):
         self.summon_exp_multiplier = rate
-        self.summon_exp = [math.ceil(a/b) for a,b in zip([0]+[formExp[0][i] for i in range(1,8)],[self.summon_exp_multiplier]*8)]
+        self.summon_exp = [math.ceil(a/b) for a,b in zip([formExp[0][i] for i in range(1,8)],[self.summon_exp_multiplier]*7)]

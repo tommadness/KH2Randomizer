@@ -159,21 +159,24 @@ class Randomizer():
             nonlocal ap
             if choice["Stat"]=="Str":
                 strength+=choice["Value"]
-            if choice["Stat"]=="Mag":
+            elif choice["Stat"]=="Mag":
                 magic+=choice["Value"]
-            if choice["Stat"]=="Def":
+            elif choice["Stat"]=="Def":
                 defense+=choice["Value"]
-            if choice["Stat"]=="Ap":
+            elif choice["Stat"]=="Ap":
                 ap+=choice["Value"]
+            else:
+                raise RuntimeError("We had a problem assigning stats to levels")
 
 
         for index,l in enumerate(levelLocations):
+            if index!=0:
+                stat_choices = random.sample(levelStats,k=2)
+                addStat(stat_choices[0])
+                if l.Description in settings.excludedLevels:
+                    addStat(stat_choices[1])
             exp+=(settings.sora_exp[index+1]-settings.sora_exp[index])
             self.levelStats.append(LevelStats(l,exp,strength,magic,defense,ap))
-            stat_choices = random.choices(levelStats,k=2)
-            addStat(stat_choices[0])
-            if l.Description in settings.excludedLevels:
-                addStat(stat_choices[1])
 
     def assignWeaponStats(self,settings):
         soraMin = settings.keyblade_min_stat
@@ -181,6 +184,10 @@ class Randomizer():
         keybladeLocations =  Locations.WeaponList()
         for key in keybladeLocations:
             self.weaponStats.append(WeaponStats(key,random.randint(soraMin,soraMax),random.randint(soraMin,soraMax)))
+            
+        struggleWeapons = self.master_locations.getStruggleWeapons()
+        for key in struggleWeapons:
+            self.weaponStats.append(WeaponStats(key,(soraMin+soraMax)//2,(soraMin+soraMax)//2))
 
         donaldStaves = [l for l in self.master_locations.getAllDonaldLocations() if l.LocationCategory is locationCategory.WEAPONSLOT]
         for staff in donaldStaves:
@@ -263,7 +270,9 @@ class Randomizer():
         """Add invalid check types to locations."""
         for loc in allLocations:
             if loc.LocationCategory == locationCategory.POPUP:
-                loc.InvalidChecks+=[itemType.GROWTH_ABILITY,itemType.ACTION_ABILITY,itemType.SUPPORT_ABILITY]
+                loc.InvalidChecks+=[itemType.GROWTH_ABILITY,itemType.ACTION_ABILITY,itemType.SUPPORT_ABILITY,itemType.GAUGE]
+            if locationType.STT in loc.LocationTypes:
+                loc.InvalidChecks+=[itemType.GAUGE]
 
             # if not settings.depths.isReportValid(loc,settings.reportDepth):
             #     loc.InvalidChecks+=[itemType.REPORT]
@@ -280,13 +289,11 @@ class Randomizer():
             allAbilities.remove(randomAbility)
             keybladeAbilities.remove(randomAbility)
 
-        # # Assign draws to struggle weapons
-        # struggleWeapons = [KH2Location(122,"Struggle Sword (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
-        #                     KH2Location(144,"Struggle Wand (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
-        #                     KH2Location(145,"Struggle Hammer (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])]
+        # Assign draws to struggle weapons
+        struggleWeapons = self.master_locations.getStruggleWeapons()
 
-        # for weapon in struggleWeapons:
-        #     self.assignItem(weapon,KH2Item(405,"Draw",itemType.SUPPORT_ABILITY))
+        for weapon in struggleWeapons:
+            self.assignItem(weapon,KH2Item(405,"Draw",itemType.SUPPORT_ABILITY))
 
 
 

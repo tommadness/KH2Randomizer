@@ -177,6 +177,8 @@ class SeedZip():
             "Items": soraStartingItems[:7],
             "Padding": [0] * 52
         })
+        lionSoraItems = [32930, 32930, 32931, 32931, 33288, 33289, 33290, 33294]
+        padItems(lionSoraItems)
         self.formattedPlrp.append({
             "Character": 135, # Lion Dash on Lion Sora
             "Id": 0,
@@ -186,7 +188,7 @@ class SeedZip():
             "ArmorSlotMax": 0,
             "AccessorySlotMax": 0,
             "ItemSlotMax": 0,
-            "Items": [32930, 32930, 32931, 32931, 33288, 33289, 33290, 33294],
+            "Items": lionSoraItems,
             "Padding": [0] * 52
         })
 
@@ -197,8 +199,6 @@ class SeedZip():
             self.getAssignmentSubset(randomizer.assignedGoofyItems,[locationCategory.WEAPONSLOT])
         
         for weapon in weapons:
-            if "Struggle" in weapon.location.Description:
-                continue
             weaponStats = [stat for stat in randomizer.weaponStats if stat.location==weapon.location][0]
             self.formattedItem["Stats"].append({
                 "Id": weapon.location.LocationId,
@@ -308,7 +308,7 @@ class SeedZip():
             armorIncrease = 0
             item1 = 0
             item2 = 0
-            if bon.item.ItemType == itemType.STAT:
+            if bon.item.ItemType == itemType.SLOT or bon.item.ItemType == itemType.GAUGE:
                 if bon.item.Id == 470: # HP increase
                     hpIncrease+=5
                 if bon.item.Id == 471: # MP increase
@@ -323,7 +323,7 @@ class SeedZip():
                     itemIncrease+=1
             else:
                 item1 = bon.item.Id
-            if bon.item2 is not None and bon.item2.ItemType==itemType.STAT:
+            if bon.item2 is not None and (bon.item2.ItemType==itemType.SLOT or bon.item2.ItemType == itemType.GAUGE):
                 if bon.item2.Id == 470: # HP increase
                     hpIncrease+=5
                 if bon.item2.Id == 471: # MP increase
@@ -380,7 +380,7 @@ class SeedZip():
 
     def assignTreasures(self, randomizer):
         treasures = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.POPUP,locationCategory.CHEST])
-        treasures = [trsr for trsr in treasures if locationType.Puzzle not in trsr.location.LocationTypes]
+        treasures = [trsr for trsr in treasures if locationType.Puzzle not in trsr.location.LocationTypes and locationType.Critical not in trsr.location.LocationTypes]
 
         for trsr in treasures:
             self.formattedTrsr[trsr.location.LocationId] = {"ItemId":trsr.item.Id}
