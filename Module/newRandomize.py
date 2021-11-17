@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from Class.exceptions import GeneratorException
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item
 from List.configDict import locationCategory, itemType, locationDepth, locationType
@@ -166,7 +167,7 @@ class Randomizer():
             elif choice["Stat"]=="Ap":
                 ap+=choice["Value"]
             else:
-                raise RuntimeError("We had a problem assigning stats to levels")
+                raise GeneratorException("We had a problem assigning stats to levels")
 
 
         for index,l in enumerate(levelLocations):
@@ -227,12 +228,15 @@ class Randomizer():
             allItems+=Items.getStatItems()
         else:
             self.assignStatBonuses(allLocations)
+        
+        if settings.antiform:
+            allItems.append(Items.getAntiform())
 
         invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or loc.Description in settings.excludedLevels)]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
 
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):
-            raise RuntimeError(f"Separating valid {len(validLocations)} and invalid {len(invalidLocations)} locations removed locations from existence (total {len(allLocations)} )")
+            raise GeneratorException(f"Separating valid {len(validLocations)} and invalid {len(invalidLocations)} locations removed locations from existence (total {len(allLocations)} )")
         
         self.assignKeybladeAbilities(settings, allAbilities)
         allItems+=allAbilities
@@ -303,7 +307,7 @@ class Randomizer():
         doubleStat = [loc for loc in allLocations if loc.LocationCategory == locationCategory.DOUBLEBONUS]
         singleStat = [loc for loc in allLocations if loc.LocationCategory in [locationCategory.STATBONUS,locationCategory.HYBRIDBONUS]]
         if len(doubleStat)!=1:
-            raise RuntimeError(f"Somehow have two locations with double stat gains {doubleStat}")
+            raise GeneratorException(f"Somehow have two locations with double stat gains {doubleStat}")
         #select two different stats to put on Xemnas 1
         stat1 = random.choice(statItems)
         statItems.remove(stat1)
@@ -315,7 +319,7 @@ class Randomizer():
         self.assignItem(doubleStat[0],stat2)
         allLocations.remove(doubleStat[0])
         if len(singleStat)!=len(statItems):
-            raise RuntimeError(f"The number of stat bonus locations {len(singleStat)} doesn't match remaining stat items {len(statItems)}")
+            raise GeneratorException(f"The number of stat bonus locations {len(singleStat)} doesn't match remaining stat items {len(statItems)}")
         #assign the rest
         for item in statItems:
             loc = random.choice(singleStat)
@@ -324,7 +328,7 @@ class Randomizer():
                 allLocations.remove(loc)
 
         if len(singleStat)!=0:
-            raise RuntimeError(f"Leftover stat locations were not assigned. Num remaining {len(singleStat)}")
+            raise GeneratorException(f"Leftover stat locations were not assigned. Num remaining {len(singleStat)}")
 
 
     def assignItem(self,loc: KH2Location,item: KH2Item, character="Sora"):
@@ -339,14 +343,14 @@ class Randomizer():
             assignedItems = self.assignedGoofyItems
 
         if item.ItemType in loc.InvalidChecks:
-            raise RuntimeError(f"Trying to assign {item} to {loc} even though it's invalid.")
+            raise GeneratorException(f"Trying to assign {item} to {loc} even though it's invalid.")
 
         if loc in assignedItems:
             assigned = [a for a in assignedItems if a==loc][0]
             if assigned.item is None:
-                raise RuntimeError(f"Somehow assigned no item to a location {assigned}")
+                raise GeneratorException(f"Somehow assigned no item to a location {assigned}")
             if not doubleItem:
-                raise RuntimeError(f"Assigning a second item to a location that can't have a second item {assigned}")
+                raise GeneratorException(f"Assigning a second item to a location that can't have a second item {assigned}")
 
             assigned.item2 = item
             return True

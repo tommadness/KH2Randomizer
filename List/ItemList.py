@@ -310,6 +310,10 @@ class Items:
     @staticmethod
     def getPromiseCharm():
         return KH2Item(524, "PromiseCharm",itemType.PROMISE_CHARM)
+    
+    @staticmethod
+    def getAntiform():
+        return KH2Item(71, "Anti-form", itemType.FORM)
 
     @staticmethod
     def getSupportAbilityList():

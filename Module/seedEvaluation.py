@@ -1,4 +1,5 @@
 
+from Class.exceptions import ValidationException
 from List.configDict import isFormCheck, locationCategory, locationType
 from Module.RandomizerSettings import RandomizerSettings
 
@@ -90,4 +91,4 @@ class SeedValidator:
                 puzzleList.remove(i)
 
         print("Failed seed, trying again")
-        raise RuntimeError(f"We couldn't access trsr {trsrList} bons {bonsList} form {fmlvList} puzz {puzzleList}")
+        raise ValidationException(f"We couldn't access trsr {trsrList} bons {bonsList} form {fmlvList} puzz {puzzleList}")

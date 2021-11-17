@@ -1,10 +1,11 @@
 
+from Class.exceptions import SettingsException
 from Module.modifier import SeedModifier
 from List.experienceValues import soraExp, formExp
 from List.hashTextEntries import generateHashIcons
-from List.configDict import locationCategory, locationType, itemType, locationDepth
+from List.configDict import locationType, itemType, locationDepth
 from itertools import chain
-import math,random,json
+import math,random
 from Class import seedSettings, settingkey
 from Class.seedSettings import SeedSettings
 
@@ -40,7 +41,7 @@ class RandomizerSettings():
         elif level_setting=="ExcludeFrom99":
             self.setLevelChecks(99)
         else:
-            raise RuntimeError("Invalid Level choice")
+            raise SettingsException("Invalid Level choice")
         self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT)) + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE))
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.reverse_rando = ui_settings.get(settingkey.REVERSE_RANDO)
@@ -54,7 +55,7 @@ class RandomizerSettings():
         elif ui_ability_pool == "randomize":
             self.abilityListModifier = SeedModifier.randomAbilityPool
         else:
-            raise RuntimeError("Invalid ability pool option")
+            raise SettingsException("Invalid ability pool option")
 
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
@@ -90,6 +91,7 @@ class RandomizerSettings():
         self.seedHashIcons = generateHashIcons()
 
         self.statSanity = True
+        self.antiform = False
 
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel
@@ -103,7 +105,7 @@ class RandomizerSettings():
             self.disabledLocations.append(locationType.Level)
             levels_to_exclude = range(1,100)
         else:
-            raise RuntimeError(f"Incorrect level choice {maxLevel}")
+            raise SettingsException(f"Incorrect level choice {maxLevel}")
         self.excludedLevels = [f"Level {i}" for i in range(1,100) if i in levels_to_exclude]
 
 

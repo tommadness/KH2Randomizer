@@ -30,10 +30,8 @@ from PySide6.QtWidgets import (
     QFileDialog, QMenuBar, QMessageBox, QProgressDialog
 )
 
-from Class import seedSettings, settingkey
+from Class import settingkey
 from Class.seedSettings import SeedSettings
-from List.configDict import locationType
-from List.hashTextEntries import generateHashIcons
 from Module.dailySeed import getDailyModifiers
 from Module.generate import generateSeed
 from Module.newRandomize import RandomizerSettings

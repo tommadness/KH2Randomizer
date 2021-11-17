@@ -1,3 +1,4 @@
+from Class.exceptions import HintException
 from List.configDict import itemType, locationType
 from Class.locationClass import KH2ItemStat,KH2Treasure
 import zipfile, base64, json, random
@@ -94,7 +95,7 @@ class Hints:
                             reportRestrictions[reportNumber-1].append(worldsToHint[proof_of_peace_index])
 
             if len(worldChecks.keys()) < 13:
-                raise RuntimeError("Too few worlds. Add more worlds or change hint system.")
+                raise HintException("Too few worlds. Add more worlds or change hint system.")
 
             numProofWorlds = len(worldsToHint)
 
@@ -205,7 +206,7 @@ class Hints:
                             break
 
                 if len(hintsText["Reports"])==0:
-                    raise RuntimeError("Unable to find valid assignment for hints...")
+                    raise HintException("Unable to find valid assignment for hints...")
 
             # slack worlds to hint, can point to anywhere
             while len(reportsList) > 0:
@@ -236,7 +237,7 @@ class Hints:
                         hintsText["Reports"][reportNumber]["Location"] = world
 
             if len(worldsToHint) != len(set(worldsToHint)):
-                raise RuntimeError("Two reports hint the same location. This is an error, try a new seedname.")
+                raise HintException("Two reports hint the same location. This is an error, try a new seedname.")
 
         if hintsType == "Points":
             hintsText['checkValue'] = {"proof":12, "form":10, "magic":8, "summon":6, "ability":4, "page":2}

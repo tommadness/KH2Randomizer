@@ -1,5 +1,5 @@
 
-from List.configDict import locationCategory
+from Class.exceptions import RandomizerExceptions
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
 from Module.newRandomize import Randomizer
@@ -16,7 +16,7 @@ def generateSeed(settings: RandomizerSettings,data):
             hints = Hints.generateHints(randomizer.assignedItems,settings.hintsType,settings.random_seed,settings.disabledLocations)
             zipper = SeedZip(settings,randomizer,hints,data)
             return zipper.outputZip
-        except:
+        except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
             settings.random_seed =  (''.join(random.choice(characters) for i in range(30)))
             continue
