@@ -2,6 +2,7 @@ from Class.newLocationClass import *
 from Class.itemClass import *
 from List.configDict import itemType, locationType, locationCategory
 from altgraph.Graph import Graph
+from altgraph.Dot import Dot
 
 class LocationNode:
     def __init__(self,in_loc=None):
@@ -56,6 +57,9 @@ class Locations:
 
     def makeLocationGraph(self):
         self.makeLoDGraph()
+
+        dot = Dot(self.location_graph)
+        dot.save_img("graph","gif")
         self.makeAGGraph()
         self.makeDCGraph()
         self.makeHundredAcreGraph()
@@ -143,14 +147,20 @@ class Locations:
 
         if not self.reverse_rando:
             self.add_edge("LoD-1","LoD-2",RequirementEdge())
-            self.add_edge("LoD-2","LoD-3",RequirementEdge())
-            self.add_edge("LoD-3","LoD-4",RequirementEdge())
+            self.add_edge("LoD-2","LoD-3",RequirementEdge(battle=True))
+            self.add_edge("LoD-2","LoD-4",RequirementEdge())
+            self.add_edge("LoD-3","LoD-5",RequirementEdge())
             self.add_edge("LoD-4","LoD-5",RequirementEdge())
             self.add_edge("LoD-5","LoD-6",RequirementEdge())
             self.add_edge("LoD-6","LoD-7",RequirementEdge())
             self.add_edge("LoD-7","LoD-8",RequirementEdge())
+            #early throne room
+            self.add_edge("LoD-8","LoD-10",RequirementEdge(strict=False))
             self.add_edge("LoD-8","LoD-9",RequirementEdge())
-            self.add_edge("LoD-9","LoD-10",RequirementEdge())
+            #Shan Yu, then throne room
+            self.add_edge("LoD-9","LoD-10",RequirementEdge(strict=False))
+            # can't do stormrider without shan yu
+            self.add_edge("LoD-9","LoD-11",RequirementEdge())
             self.add_edge("LoD-10","LoD-11",RequirementEdge())
             self.add_edge("LoD-11","LoD-12",RequirementEdge())
 
