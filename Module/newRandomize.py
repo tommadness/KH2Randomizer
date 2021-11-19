@@ -216,7 +216,7 @@ class Randomizer():
                 goofyLocations.remove(randomLocation)
 
     def assignSoraItems(self, settings):
-        allItems = [i for i in Items.getItemList() if i not in settings.startingItems]
+        allItems = [i for i in Items.getItemList() if i.Id not in settings.startingItems]
         allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList())
         if settings.promiseCharm:
             allItems+=[Items.getPromiseCharm()]
