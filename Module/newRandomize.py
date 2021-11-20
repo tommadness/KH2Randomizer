@@ -113,7 +113,7 @@ class CantAssignItemException(Exception):
 class Randomizer():
     def __init__(self, settings: RandomizerSettings):
         random.seed(settings.random_seed)
-        self.master_locations = Locations(settings.reverse_rando)
+        self.master_locations = Locations(settings)
         self.assignedItems = []
         self.assignedDonaldItems = []
         self.assignedGoofyItems = []
@@ -146,6 +146,7 @@ class Randomizer():
 
     def assignLevelStats(self,settings):
         levelLocations = [loc for loc in self.master_locations.getAllSoraLocations() if loc.LocationCategory is locationCategory.LEVEL]
+        levelLocations.sort(key=lambda x: x.LocationId)
         levelStats = settings.level_stat_pool()
         strength = 2
         magic = 6

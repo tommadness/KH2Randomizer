@@ -1,11 +1,15 @@
 
+from Class.seedSettings import SeedSettings
 from List.NewLocationList import Locations
+from Module.RandomizerSettings import RandomizerSettings
+
 import unittest
+
 
 
 class Tests(unittest.TestCase):
     def test_allLocations(self):
-        l = Locations()
+        l = Locations(RandomizerSettings("test_name",True,"version",SeedSettings()))
         graph = l.location_graph
         locations = Tests.create_list_from_nodes(graph)
         self.assertEqual(len(locations),len(l.getAllSoraLocations()))
