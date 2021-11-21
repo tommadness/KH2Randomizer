@@ -4,6 +4,7 @@ import textwrap
 from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
+from List.ItemList import Items
 from List.configDict import locationType, locationDepth
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
@@ -374,18 +375,22 @@ _all_settings = [
         default=7
     ),
 
-    Toggle(
-        name=settingkey.SUPPORT_KEYBLADE_ABILITIES,
-        ui_label="Support Keyblade Abilities",
+    MultiSelect(
+        name=settingkey.KEYBLADE_SUPPORT_ABILITIES,
+        ui_label='Support Keyblade-Eligible Abilities',
+        choices={str(item.Id): item.Name for item in Items.getSupportAbilityList()},
         shared=True,
-        default=True
+        default=list(set([str(item.Id) for item in Items.getSupportAbilityList()])),
+        tooltip='Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.'
     ),
 
-    Toggle(
-        name=settingkey.ACTION_KEYBLADE_ABILITIES,
-        ui_label="Action Keyblade Abilities",
+    MultiSelect(
+        name=settingkey.KEYBLADE_ACTION_ABILITIES,
+        ui_label='Action Keyblade-Eligible Abilities',
+        choices={str(item.Id): item.Name for item in Items.getActionAbilityList()},
         shared=True,
-        default=False
+        default=[],
+        tooltip='Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.'
     ),
 
     MultiSelect(

@@ -3,6 +3,7 @@ from collections import namedtuple
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
+from List.ItemList import Items
 from List.configDict import locationType
 from List.hashTextEntries import generateHashIcons
 
@@ -67,6 +68,17 @@ def enableSuperbosses(s):
     s["locations"] += ["Sephiroth", "Lingering Will (Terra)", "Data Organization XIII"]
 
 
+def actionKeybladesLocal(settings: SeedSettings):
+    settings.set(
+        settingkey.KEYBLADE_SUPPORT_ABILITIES,
+        list(set([str(item.Id) for item in Items.getSupportAbilityList()]))
+    )
+    settings.set(
+        settingkey.KEYBLADE_ACTION_ABILITIES,
+        list(set([str(item.Id) for item in Items.getActionAbilityList()]))
+    )
+
+
 def enableSuperbossesLocal(settings: SeedSettings):
     settings.set(settingkey.SORA_EXP_MULTIPLIER, max(settings.get(settingkey.SORA_EXP_MULTIPLIER), 5.0))
     settings.set('data_bosses', True)
@@ -104,7 +116,7 @@ dailyModifiers = [
                 description="Keyblades can have action or support abilities",
                 categories={'keyblades'},
                 modifier=lambda s: s["keybladeAbilities"].append("Action"),
-                local_modifier=lambda settings: settings.set(settingkey.ACTION_KEYBLADE_ABILITIES, True)
+                local_modifier=actionKeybladesLocal
                 ),
     DailyModifier(name="Wild Bosses",
                 description="Bosses are randomized using the Wild setting",

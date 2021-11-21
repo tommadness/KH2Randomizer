@@ -75,6 +75,7 @@ PRESET_FOLDER = "presets"
 
 class GenSeedThread(QThread):
     finished = Signal(object)
+    failed = Signal(Exception)
 
     def provideData(self,data,rando_settings):
         self.data=data
@@ -82,8 +83,11 @@ class GenSeedThread(QThread):
         self.zip_file = None
 
     def run(self):
-        zip_file = generateSeed(self.rando_settings,self.data)
-        self.finished.emit(zip_file)
+        try:
+            zip_file = generateSeed(self.rando_settings, self.data)
+            self.finished.emit(zip_file)
+        except Exception as e:
+            self.failed.emit(e)
 
 
 class KH2RandomizerApp(QMainWindow):
@@ -280,6 +284,12 @@ class KH2RandomizerApp(QMainWindow):
         self.zip_file = result
         self.downloadSeed()
 
+    def handleFailure(self, failure: Exception):
+        self.progress.close()
+        message = QMessageBox(text=str(failure))
+        message.setWindowTitle("Seed Generation Error")
+        message.exec()
+
     def genSeed(self,data,rando_settings):
         self.thread = QThread()
         displayedSeedName = rando_settings.random_seed
@@ -292,6 +302,7 @@ class KH2RandomizerApp(QMainWindow):
         self.thread = GenSeedThread()
         self.thread.provideData(data,rando_settings)
         self.thread.finished.connect(self.handleResult)
+        self.thread.failed.connect(self.handleFailure)
         self.thread.start()
 
     def savePreset(self):
