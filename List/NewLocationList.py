@@ -1,7 +1,6 @@
 from Class.newLocationClass import KH2Location
 from List.configDict import itemType, locationType, locationCategory
 from altgraph.Graph import Graph
-from altgraph.Dot import Dot
 
 from Module.RandomizerSettings import RandomizerSettings
 
@@ -78,10 +77,6 @@ class Locations:
         self.makeATLGraph()
         self.makeFormGraph()
         self.makeLevelGraph(excludeLevels)
-
-        dot = Dot(self.location_graph)
-        dot.save_img("graph","gif")
-
 
 
     def makePuzzleGraph(self):

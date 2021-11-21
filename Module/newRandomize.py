@@ -10,12 +10,7 @@ from Module.RandomizerSettings import RandomizerSettings
 
 import random
 
-class LocationWeights():
-    def __init__(self):
-        pass
-
-    def getWeight(self,loc: KH2Location):
-        return 1
+from Module.weighting import LocationWeights
 
 
 class LocationDepths():
@@ -114,6 +109,7 @@ class Randomizer():
     def __init__(self, settings: RandomizerSettings):
         random.seed(settings.random_seed)
         self.master_locations = Locations(settings)
+        self.location_weights = LocationWeights(settings,self.master_locations)
         self.assignedItems = []
         self.assignedDonaldItems = []
         self.assignedGoofyItems = []
@@ -244,10 +240,11 @@ class Randomizer():
 
         #assign valid items to all valid locations remaining
         for item in allItems:
+            weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
             count=0
             while True:
                 count+=1
-                randomLocation = random.choice(validLocations)
+                randomLocation = random.choices(validLocations,weights)[0]
                 if item.ItemType not in randomLocation.InvalidChecks:
                     if self.assignItem(randomLocation,item):
                         validLocations.remove(randomLocation)
@@ -276,7 +273,7 @@ class Randomizer():
         for loc in allLocations:
             if loc.LocationCategory == locationCategory.POPUP:
                 loc.InvalidChecks+=[itemType.GROWTH_ABILITY,itemType.ACTION_ABILITY,itemType.SUPPORT_ABILITY,itemType.GAUGE]
-            if locationType.STT in loc.LocationTypes:
+            if locationType.STT in loc.LocationTypes and loc.LocationCategory != locationCategory.STATBONUS:
                 loc.InvalidChecks+=[itemType.GAUGE]
 
             # if not settings.depths.isReportValid(loc,settings.reportDepth):
