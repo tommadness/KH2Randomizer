@@ -36,6 +36,7 @@
     "sora_levels": "ExcludeFrom50",
     "start_no_ap": false,
     "starting_inventory": [],
+    "statsanity": false,
     "summon_exp_multiplier": 1.0,
     "superbosses_with_rewards": [
         "AS",

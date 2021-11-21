@@ -9,6 +9,7 @@ class SoraMenu(KH2Submenu):
 
         self.add_option(settingkey.SORA_LEVELS)
         self.add_option(settingkey.FORM_LEVEL_REWARDS)
+        self.add_option(settingkey.STATSANITY)
 
         self.addHeader("Experience Multipliers")
 

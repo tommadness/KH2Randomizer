@@ -181,6 +181,13 @@ _all_settings = [
         default=True
     ),
 
+    Toggle(
+        name=settingkey.STATSANITY,
+        ui_label='Statsanity',
+        shared=True,
+        default=False
+    ),
+
     FloatSpinner(
         name=settingkey.SORA_EXP_MULTIPLIER,
         ui_label='Sora',

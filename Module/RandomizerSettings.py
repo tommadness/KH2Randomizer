@@ -90,7 +90,9 @@ class RandomizerSettings():
         random.seed(self.random_seed + str(spoiler_log) + ui_version + str(ui_settings.settings_json()))
         self.seedHashIcons = generateHashIcons()
 
-        self.statSanity = True
+
+        self.statSanity = ui_settings.get(settingkey.STATSANITY)
+
         self.antiform = False
 
     def setLevelChecks(self,maxLevel):
