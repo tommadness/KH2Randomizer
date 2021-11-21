@@ -3,7 +3,7 @@
 ![Screenshot of the seed generator user interface](https://github.com/tommadness/KH2Randomizer/blob/local_ui/helpinfo/img/Readme/KH2SeedGen.png?raw=true)
 
 ## Acknowledgements
-Icons by Televo
+Icons and font by Televo
 
 Special thanks to Sonicshadowsilver2 for the creation of the Garden of Assemblage mod, 1234567890num for helping bring it to PC, and Bizkit047, Valaxor, and Desa3579 for the original Randomizer
 
