@@ -1,0 +1,43 @@
+QCheckBox {{
+    font-family: KhMenu;
+    font-size: 16px;
+}}
+
+QComboBox::drop-down {{
+    width: 36px;
+}}
+
+QGroupBox {{
+    font-family: KhMenu;
+    font-size: 16px;
+    text-transform: none;
+}}
+
+QGroupBox::title {{
+    color: {QTMATERIAL_SECONDARYTEXTCOLOR};
+}}
+
+QLabel {{
+    font-family: KhMenu;
+    font-size: 16px;
+}}
+
+QLabel[cssClass~="header"] {{
+    font-size: 20px;
+}}
+
+QListView::item:selected {{
+  background-color: {QTMATERIAL_PRIMARYCOLOR};
+  selection-background-color: {QTMATERIAL_PRIMARYCOLOR};
+  color: {QTMATERIAL_PRIMARYTEXTCOLOR};
+  selection-color: {QTMATERIAL_PRIMARYTEXTCOLOR}; /* For Windows */
+}}
+
+QPushButton {{
+    text-transform: none;
+}}
+
+QTabBar {{
+    text-transform: none;
+    font-weight: normal;
+}}

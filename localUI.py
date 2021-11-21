@@ -22,6 +22,7 @@ from pathlib import Path
 
 import pyperclip as pc
 import pytz
+from PySide6 import QtGui
 from PySide6.QtCore import Qt, QThread, Signal
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import (
@@ -30,6 +31,7 @@ from PySide6.QtWidgets import (
     QFileDialog, QMenuBar, QMessageBox, QProgressDialog
 )
 
+from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from Module.dailySeed import getDailyModifiers
@@ -42,11 +44,10 @@ from UI.Submenus.CosmeticsMenu import CosmeticsMenu
 from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
 from UI.Submenus.KeybladeMenu import KeybladeMenu
-from UI.Submenus.MiscMenu import MiscMenu
+from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
-from UI.Submenus.WorldMenu import WorldMenu
 
 LOCAL_UI_VERSION = '2.0.0'
 
@@ -107,10 +108,6 @@ class KH2RandomizerApp(QMainWindow):
                     print('Unable to apply last settings - will use defaults')
                     pass
 
-        with open(resource_path("UI/stylesheet.qss"),"r") as style:
-            data = style.read()
-            self.setStyleSheet(data)
-
         random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator ({0})".format(LOCAL_UI_VERSION))
         self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
@@ -119,25 +116,9 @@ class KH2RandomizerApp(QMainWindow):
         pagelayout = QVBoxLayout()
         seed_layout = QHBoxLayout()
         submit_layout = QHBoxLayout()
-        self.seedhashlayout = QHBoxLayout()
         self.tabs = QTabWidget()
 
-        self.menuBar = QMenuBar()
-        self.presetMenu = QMenu("Preset")
-        self.presetMenu.addAction("Open Preset Folder", self.openPresetFolder)
-        self.presetsMenu = QMenu("Presets")
-        self.seedMenu = QMenu("Share Seed")
-        self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
-        self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
-        self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
-        self.presetMenu.addMenu(self.presetsMenu)
-        self.menuBar.addMenu(self.seedMenu)
-        self.menuBar.addMenu(self.presetMenu)
-
-        # populate a menu item for the daily seed
-        self.menuBar.addAction("Load Daily Seed", self.loadDailySeed)
-
-        self.menuBar.addAction("About", self.showAbout)
+        self._configure_menu_bar()
 
         self.preset_json = {}
         if not os.path.exists(PRESET_FOLDER):
@@ -149,11 +130,9 @@ class KH2RandomizerApp(QMainWindow):
                     settings_json = json.loads(presetData.read())
                     self.preset_json[preset_name] = settings_json
 
-        pagelayout.addWidget(self.menuBar)
         pagelayout.addLayout(seed_layout)
         pagelayout.addWidget(self.tabs)
         pagelayout.addLayout(submit_layout)
-        pagelayout.addLayout(self.seedhashlayout)
         seed_layout.addWidget(QLabel("Seed"))
         self.seedName=QLineEdit()
         self.seedName.setPlaceholderText("Leave blank for a random seed")
@@ -172,8 +151,7 @@ class KH2RandomizerApp(QMainWindow):
             StartingMenu(self.settings),
             HintsMenu(self.settings),
             KeybladeMenu(self.settings),
-            WorldMenu(self.settings),
-            MiscMenu(self.settings),
+            RewardLocationsMenu(self.settings),
             SeedModMenu(self.settings),
             ItemPlacementMenu(self.settings),
             BossEnemyMenu(self.settings),
@@ -183,16 +161,7 @@ class KH2RandomizerApp(QMainWindow):
         for i in range(len(self.widgets)):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())
 
-
-        submitButton = QPushButton("Generate Seed (PCSX2)")
-        submitButton.clicked.connect(lambda : self.makeSeed("PCSX2"))
-        submit_layout.addWidget(submitButton)
-
-        submitButton = QPushButton("Generate Seed (PC)")
-        submitButton.clicked.connect(lambda : self.makeSeed("PC"))
-        submit_layout.addWidget(submitButton)
-
-        self.seedhashlayout.addWidget(QLabel("Seed Hash"))
+        submit_layout.addWidget(QLabel("Seed Hash"))
 
         self.hashIconPath = Path(resource_path("static/seed-hash-icons"))
         self.hashIcons = []
@@ -201,11 +170,37 @@ class KH2RandomizerApp(QMainWindow):
             self.hashIcons[-1].blockSignals(True)
             #self.hashIcons[-1].setIconSize(QSize(50,50))
             self.hashIcons[-1].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
-            self.seedhashlayout.addWidget(self.hashIcons[-1])
+            submit_layout.addWidget(self.hashIcons[-1])
+
+        submit_layout.addSpacing(16)
+
+        submitButton = QPushButton("Generate Seed (PCSX2)")
+        submitButton.clicked.connect(lambda : self.makeSeed("PCSX2"))
+        submit_layout.addWidget(submitButton, stretch=1)
+
+        submitButton = QPushButton("Generate Seed (PC)")
+        submitButton.clicked.connect(lambda : self.makeSeed("PC"))
+        submit_layout.addWidget(submitButton, stretch=1)
 
         widget = QWidget()
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
+
+    def _configure_menu_bar(self):
+        menu_bar = self.menuBar()
+        self.presetMenu = QMenu("Preset")
+        self.presetMenu.addAction("Open Preset Folder", self.openPresetFolder)
+        self.presetsMenu = QMenu("Presets")
+        self.seedMenu = QMenu("Share Seed")
+        self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
+        self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
+        self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
+        self.presetMenu.addMenu(self.presetsMenu)
+        menu_bar.addMenu(self.seedMenu)
+        menu_bar.addMenu(self.presetMenu)
+
+        menu_bar.addAction("Load Daily Seed", self.loadDailySeed)
+        menu_bar.addAction("About", self.showAbout)
 
     def closeEvent(self, e):
         settings_json = self.settings.settings_json(include_private=True)
@@ -376,10 +371,13 @@ Created by Thundrio, Tommadness, and ZakTheRobot<br><br>
 
 Thank you to all contributors, testers, and advocates.<br><br>
 
-<a href="https://github.com/tommadness/KH2Randomizer">Github Link</a><br>
-<a href="https://discord.gg/KwfqM6GYzd">KH2 Randomizer Discord</a><br><br>
+<a href="https://github.com/tommadness/KH2Randomizer" style="color: #4dd0e1">Github Link</a><br>
+<a href="https://discord.gg/KwfqM6GYzd" style="color: #4dd0e1">KH2 Randomizer Discord</a><br><br>
 
-<a href="https://github.com/tommadness/KH2Randomizer/tree/local_ui#acknowledgements">Acknowledgements</a>
+<a href="https://github.com/tommadness/KH2Randomizer/tree/local_ui#acknowledgements" style="color: #4dd0e1">Acknowledgements</a><br><br>
+
+Uses the qt-material library for theming.<br>Copyright (c) 2020, GCPDS
+<a href="https://github.com/UN-GCPDS/qt-material/blob/master/LICENSE" style="color: #4dd0e1">License</a>
 
 
 
@@ -393,7 +391,16 @@ Thank you to all contributors, testers, and advocates.<br><br>
 
 if __name__=="__main__":
     app = QApplication([])
+
+    QtGui.QFontDatabase.addApplicationFont(resource_path('UI/KHMenu.otf'))
+
     window = KH2RandomizerApp()
+
+    apply_stylesheet(app, theme='dark_cyan.xml')
+    stylesheet = app.styleSheet()
+    with open(resource_path('UI/stylesheet.css')) as file:
+        app.setStyleSheet(stylesheet + file.read().format(**os.environ))
+
     window.show()
     #commenting out first time setup for 2.999 version
     # configPath = Path("rando-config.yml")

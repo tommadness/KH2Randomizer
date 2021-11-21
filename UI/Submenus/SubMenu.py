@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import Optional
 
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
@@ -19,6 +20,7 @@ def resource_path(relative_path):
 
 
 class KH2Submenu(QWidget):
+
     def __init__(self, title: str, in_layout="vertical", settings: SeedSettings = None):
         super().__init__()
 
@@ -31,19 +33,63 @@ class KH2Submenu(QWidget):
         if in_layout == "horizontal":
             self.menulayout = QHBoxLayout()
 
+        self.pending_column: Optional[QVBoxLayout] = None
+
+    def start_column(self):
+        self.pending_column = QVBoxLayout()
+
+    def end_column(self, stretch_at_end=True):
+        if stretch_at_end:
+            self.pending_column.addStretch()
+        frame = QFrame()
+        frame.setLayout(self.pending_column)
+        self.menulayout.addWidget(frame)
+        self.menulayout.addSpacing(8)
+        self.pending_column = None
+
     def _add_option_widget(self, label_text: str, tooltip: str, option):
         label = QLabel(label_text)
         if tooltip != '':
             label.setToolTip(tooltip)
 
-        layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(label, stretch=1)
-        layout.addWidget(option, stretch=2, alignment=Qt.AlignLeft)
+        if self.pending_column:
+            if isinstance(option, QCheckBox):
+                option.setText(label_text)
 
-        frame = QFrame()
-        frame.setLayout(layout)
-        self.menulayout.addWidget(frame)
+                layout = QVBoxLayout()
+                layout.setContentsMargins(0, 0, 0, 0)
+                layout.addWidget(option)
+
+                layout_widget = QWidget()
+                layout_widget.setLayout(layout)
+                self.pending_column.addWidget(layout_widget)
+            elif isinstance(option, QListWidget):
+                layout = QVBoxLayout()
+                layout.setContentsMargins(0, 0, 0, 0)
+                layout.addWidget(label)
+                layout.addWidget(option, alignment=Qt.AlignLeft)
+
+                layout_widget = QWidget()
+                layout_widget.setLayout(layout)
+                self.pending_column.addWidget(layout_widget)
+            else:
+                layout = QHBoxLayout()
+                layout.setContentsMargins(0, 0, 0, 0)
+                layout.addWidget(label)
+                layout.addWidget(option, alignment=Qt.AlignRight)
+
+                layout_widget = QWidget()
+                layout_widget.setLayout(layout)
+                self.pending_column.addWidget(layout_widget)
+        else:
+            layout = QHBoxLayout()
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.addWidget(label, stretch=1)
+            layout.addWidget(option, stretch=2, alignment=Qt.AlignLeft)
+
+            layout_widget = QWidget()
+            layout_widget.setLayout(layout)
+            self.menulayout.addWidget(layout_widget)
 
     def add_option(self, setting_name: str):
         setting = Class.seedSettings.settings_by_name[setting_name]
@@ -106,11 +152,11 @@ class KH2Submenu(QWidget):
 
         return setting, widgets
 
-    def add_multiselect_buttons(self, setting_name: str, columns: int, group_title):
+    def add_multiselect_buttons(self, setting_name: str, columns: int, group_title: str):
         setting, widgets = self.make_multiselect_buttons(setting_name)
 
-        group_box = QGroupBox(group_title)
         grid = QGridLayout()
+        grid.setAlignment(Qt.AlignTop)
 
         for index, choice_key in enumerate(setting.choice_keys):
             button = widgets[index]
@@ -118,16 +164,28 @@ class KH2Submenu(QWidget):
         if columns == 1:
             grid.addWidget(QLabel(''))
 
-        group_box.setLayout(grid)
-
-        self.menulayout.addWidget(group_box)
+        if self.pending_column:
+            label = QLabel(group_title)
+            tooltip = setting.tooltip
+            if tooltip != '':
+                label.setToolTip(tooltip)
+            self.pending_column.addWidget(label)
+            self.pending_column.addLayout(grid)
+        else:
+            group_box = QGroupBox(group_title)
+            group_box.setLayout(grid)
+            self.menulayout.addWidget(group_box)
 
     def addHeader(self, label_text):
-        self.menulayout.addWidget(QLabel(f"<h3>{label_text}</h3>"))
+        label = QLabel(label_text)
+        label.setProperty('cssClass', 'header')
+        if self.pending_column:
+            self.pending_column.addWidget(label)
+        else:
+            self.menulayout.addWidget(label)
 
     def finalizeMenu(self):
-        if isinstance(self.menulayout, QVBoxLayout):
-            self.menulayout.addStretch()
+        self.menulayout.addStretch(1)
         self.setLayout(self.menulayout)
 
     def getName(self):

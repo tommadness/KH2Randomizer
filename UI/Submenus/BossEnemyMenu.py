@@ -4,10 +4,13 @@ from UI.Submenus.SubMenu import KH2Submenu
 
 
 class BossEnemyMenu(KH2Submenu):
-    def __init__(self, settings: SeedSettings):
-        super().__init__(title='Boss/Enemy', settings=settings)
 
+    def __init__(self, settings: SeedSettings):
+        super().__init__(title='Boss/Enemy', settings=settings, in_layout='horizontal')
+
+        self.start_column()
         for setting in seedSettings.boss_enemy_settings:
             self.add_option(setting.name)
+        self.end_column()
 
         self.finalizeMenu()

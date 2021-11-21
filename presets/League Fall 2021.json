@@ -38,6 +38,7 @@
     "starting_inventory": [
         "369"
     ],
+    "statsanity": false,
     "summon_exp_multiplier": 2.0,
     "superbosses_with_rewards": [
         "AS",
