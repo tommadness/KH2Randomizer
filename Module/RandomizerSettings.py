@@ -62,11 +62,12 @@ class RandomizerSettings():
         self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
         self.prevent_self_hinting = ui_settings.get(settingkey.PREVENT_SELF_HINTING)
         self.allow_proof_hinting = ui_settings.get(settingkey.ALLOW_PROOF_HINTING)
-        self.keybladeAbilities = []
-        if ui_settings.get(settingkey.SUPPORT_KEYBLADE_ABILITIES):
-             self.keybladeAbilities.append(itemType.SUPPORT_ABILITY)
-        if ui_settings.get(settingkey.ACTION_KEYBLADE_ABILITIES):
-             self.keybladeAbilities.append(itemType.ACTION_ABILITY)
+        self.keyblade_support_abilities = [
+            int(ability_id) for ability_id in ui_settings.get(settingkey.KEYBLADE_SUPPORT_ABILITIES)
+        ]
+        self.keyblade_action_abilities = [
+            int(ability_id) for ability_id in ui_settings.get(settingkey.KEYBLADE_ACTION_ABILITIES)
+        ]
         self.keyblade_min_stat = ui_settings.get(settingkey.KEYBLADE_MIN_STAT)
         self.keyblade_max_stat = ui_settings.get(settingkey.KEYBLADE_MAX_STAT)
         self.setSoraExp(ui_settings.get(settingkey.SORA_EXP_MULTIPLIER))

@@ -9,7 +9,8 @@ import string,random
 
 def generateSeed(settings: RandomizerSettings,data):
     seedValidation = SeedValidator(settings)
-    while True:
+    last_error = None
+    for attempt in range(50):
         try:
             randomizer = Randomizer(settings)
             seedValidation.validateSeed(settings,randomizer)
@@ -18,5 +19,7 @@ def generateSeed(settings: RandomizerSettings,data):
             return zipper.outputZip
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
-            settings.random_seed =  (''.join(random.choice(characters) for i in range(30)))
+            settings.random_seed = (''.join(random.choice(characters) for i in range(30)))
+            last_error = e
             continue
+    raise last_error

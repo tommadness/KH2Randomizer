@@ -153,21 +153,21 @@
             }
         }
 
-        if ("Weapons" in spoiler_data)
+        if ("Slot" in spoiler_data)
         {
-            for (var i = 0; i <  spoiler_data["Weapons"].length; i++)
+            for (var i = 0; i <  spoiler_data["Slot"].length; i++)
             {
                 var table_entry = document.createElement("tr");
                 var world_table_html = "";
                 world_table_html+="<td>";
                 world_table_html+="Weapons";
                 world_table_html+="</td>";
-                var weapon = spoiler_data["Weapons"][i]
+                var weapon = spoiler_data["Slot"][i]
                 world_table_html+="<td>";
                 world_table_html+=weapon[0];
                 world_table_html+="</td>";
                 world_table_html+="<td>";
-                world_table_html+=weapon[1];
+                world_table_html+=weapon[1]["Name"];
                 world_table_html+="</td>";
                 table_entry.innerHTML += world_table_html;
                 mainContainer.appendChild(table_entry);

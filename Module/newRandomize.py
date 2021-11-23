@@ -281,17 +281,21 @@ class Randomizer():
     
     def assignKeybladeAbilities(self, settings, allAbilities):
         """Assign abilities to keyblades. """
-        keybladeLocations =  Locations.WeaponList()
-        keybladeAbilities = [abil for abil in allAbilities if abil.ItemType in settings.keybladeAbilities]
-        random.shuffle(keybladeLocations)
+        keybladeLocations = Locations.WeaponList()
+        eligible_ids = set(settings.keyblade_support_abilities + settings.keyblade_action_abilities)
+        keybladeAbilities = [abil for abil in allAbilities if abil.Id in eligible_ids]
 
         #assign all the abilities for keyblades
         for keyblade in keybladeLocations:
-            if allAbilities: # by checking this here, we can avoid situations where we softlock generation
+            if keybladeAbilities:
                 randomAbility = random.choice(keybladeAbilities)
                 self.assignItem(keyblade,randomAbility)
                 allAbilities.remove(randomAbility)
                 keybladeAbilities.remove(randomAbility)
+            else:
+                raise GeneratorException(
+                    'Keyblades: Not enough abilities are available to assign an ability to every keyblade'
+                )
 
         # Assign draws to struggle weapons
         struggleWeapons = self.master_locations.getStruggleWeapons()
