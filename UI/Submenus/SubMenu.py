@@ -1,5 +1,4 @@
 import os
-import sys
 from typing import Optional
 
 from PySide6.QtCore import Qt, QSize
@@ -11,12 +10,7 @@ from PySide6.QtWidgets import (
 
 import Class.seedSettings
 from Class.seedSettings import SeedSettings, Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect
-
-
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, relative_path)
+from Module.resources import resource_path
 
 
 class KH2Submenu(QWidget):

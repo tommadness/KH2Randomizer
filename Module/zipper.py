@@ -1,20 +1,17 @@
+import io
+import json
+import yaml
+import zipfile
 
-import zipfile, yaml, io, json, os, sys
-
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, relative_path)
-
-from pathlib import Path
-from List.configDict import itemType, locationCategory,locationType
+from Class.itemClass import ItemEncoder
+from Class.modYml import modYml
+from List.configDict import itemType, locationCategory, locationType
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
 from Module.newRandomize import Randomizer
-from Class.itemClass import ItemEncoder
-from Class.modYml import modYml
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
+from Module.resources import resource_path
 from Module.spoilerLog import generateSpoilerLog
 
 
@@ -48,16 +45,10 @@ class SeedZip():
         with zipfile.ZipFile(data,"w") as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
-
-            #TODO This may need adjusting for the exe, since the "static" version doesn't work for whatever reason
-            path_to_static = Path("../static")
-            # if not path_to_static.exists():
-            #     path_to_static = Path("../static")
-
             if locationType.Puzzle not in settings.disabledLocations:
                 mod["assets"] += [modYml.getPuzzleMod()]
                 assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
-                with open(resource_path(path_to_static/Path("jiminy.bar")),"rb") as puzzleBar:
+                with open(resource_path("static/jiminy.bar"), "rb") as puzzleBar:
                     binaryContent = bytearray(puzzleBar.read())
                     for puzz in assignedPuzzles:
                         byte0 = 24420+puzz.location.LocationId*16
@@ -100,7 +91,7 @@ class SeedZip():
 
             if settings.spoiler_log:
                 mod["title"] += " w/ Spoiler"
-                with open(resource_path(Path("../static/spoilerlog.html"))) as spoiler_site:
+                with open(resource_path("static/spoilerlog.html")) as spoiler_site:
                     html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(randomizer.assignedItems), indent=4, cls=ItemEncoder))
                     outZip.writestr("spoilerlog.html",html_template)
                 if enemySpoilers:
@@ -110,7 +101,7 @@ class SeedZip():
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
             mod["assets"] += RandomBGM.randomizeBGM(randomBGMOptions, platform)
 
-            outZip.write(resource_path(path_to_static/Path("icon.png")), "icon.png")
+            outZip.write(resource_path("Module/icon.png"), "icon.png")
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             outZip.close()
         data.seek(0)

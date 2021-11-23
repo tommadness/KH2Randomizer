@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
-import random, zipfile, yaml, io, json, os, base64, asyncio, struct
-from pathlib import Path
+import random, zipfile, yaml, io, json
 from Module.spoilerLog import generateSpoilerLog
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.randomBGM import RandomBGM
+from Module.resources import resource_path
 from Module.hints import Hints
 from Module.startingInventory import StartingInventory
 from Module.importantItems import getImportantChecks,getUsefulItems,getUsefulAbilities,getUsefulNightmarePassiveAbilities,getUsefulNightmareActiveAbilities,getSCOM
@@ -318,15 +318,6 @@ class KH2Randomizer():
         self._noap = settrue
 
     def generateZip(self, enemyOptions={"boss":"Disabled"}, spoilerLog = False, cmdMenuChoice = "vanilla", randomBGMOptions = {}, hintsText = None, startingInventory=[], platform="PCSX2"):
-
-        def resource_path(relative_path):
-            """ Get absolute path to resource, works for dev and for PyInstaller """
-            base_path = getattr(
-                sys,
-                '_MEIPASS',
-                os.path.dirname(os.path.abspath(__file__)))
-            return os.path.join(base_path, relative_path)
-
         trsrList = [location for location in self._allLocationList if isinstance(location, KH2Treasure)]
         lvupList = [location for location in self._allLocationList if isinstance(location, KH2LevelUp)]
         bonsList = [location for location in self._allLocationList if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListDonald if isinstance(location, KH2Bonus)] + [location for location in self._allLocationListGoofy if isinstance(location, KH2Bonus)]
@@ -452,17 +443,9 @@ class KH2Randomizer():
         with zipfile.ZipFile(data, "w") as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
-            path_to_static = Path("static")
-            path_to_module = Path("Module")
-
-            if not path_to_static.exists():
-                path_to_static = Path("../static")
-                path_to_module = Path("../Module")
-
-
             if self.puzzleRando:
                 mod["assets"] += [modYml.getPuzzleMod()]
-                with open(resource_path(path_to_static/Path("jiminy.bar")),"rb") as puzzleBar:
+                with open(resource_path("static/jiminy.bar"), "rb") as puzzleBar:
                     binaryContent = bytearray(puzzleBar.read())
                     for puzz in puzzleList:
                         byte0, byte1, item = puzz.getItemBytesAndLocs()
@@ -499,7 +482,7 @@ class KH2Randomizer():
             if spoilerLog:
 
                 mod["title"] += " {seedName}".format(seedName = self.seedName)
-                with open(resource_path(Path("../static/spoilerlog.html"))) as spoiler_site:
+                with open(resource_path("static/spoilerlog.html")) as spoiler_site:
                     html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(self._locationItems), indent=4, cls=ItemEncoder))
                     outZip.writestr("spoilerlog.html",html_template)
                 if enemySpoilers:
@@ -509,8 +492,7 @@ class KH2Randomizer():
             
             mod["assets"] += RandomBGM.randomizeBGM(randomBGMOptions, platform)
 
-            outZip.write(resource_path(Path("icon.png")), "icon.png")
-
+            outZip.write(resource_path("Module/icon.png"), "icon.png")
 
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             outZip.close()
