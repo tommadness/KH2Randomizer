@@ -286,7 +286,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def handleFailure(self, failure: Exception):
         self.progress.close()
-        message = QMessageBox(text=str(failure))
+        message = QMessageBox(text=str(repr(failure)))
         message.setWindowTitle("Seed Generation Error")
         message.exec()
 

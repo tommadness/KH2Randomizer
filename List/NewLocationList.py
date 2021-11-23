@@ -26,6 +26,7 @@ class Locations:
     def __init__(self, settings: RandomizerSettings):
         self.location_graph = Graph()
         self.reverse_rando = settings.reverse_rando
+        self.first_boss_nodes = []
         self.makeLocationGraph(settings.excludedLevels)
 
     """A set of methods to get all the location information for Sora, Donald, and Goofy. Limited logic about item placement here"""
@@ -87,7 +88,13 @@ class Locations:
         self.add_node("Puzzle-5",LocationNode([KH2Location(4, "Daylight (Executive's Ring)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.TORN_PAGE, itemType.REPORT]),]))
         self.add_node("Puzzle-6",LocationNode([KH2Location(5, "Sunset (Grand Ribbon)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
 
-
+        #TODO put these in their proper location in the graph
+        self.add_edge("Starting","Puzzle-1",RequirementEdge())
+        self.add_edge("Starting","Puzzle-2",RequirementEdge())
+        self.add_edge("Starting","Puzzle-3",RequirementEdge())
+        self.add_edge("Starting","Puzzle-4",RequirementEdge())
+        self.add_edge("Starting","Puzzle-5",RequirementEdge())
+        self.add_edge("Starting","Puzzle-6",RequirementEdge())
     
     def makeFormGraph(self):
         for i in range(1,8):
@@ -118,16 +125,21 @@ class Locations:
     def makeLevelGraph(self,excludeLevels):
         node_index = 0
         current_location_list = []
+        double_level_reward = False
         for i in range(1,100):
             current_location_list.append(KH2Location(i, f"Level {i}", locationCategory.LEVEL,[locationType.Level]))
             if f"Level {i}" not in excludeLevels:
-                self.add_node(f"LevelGroup-{node_index}",LocationNode(current_location_list))
-                current_location_list = []
-                if node_index == 0:
-                    self.add_edge("Starting",f"LevelGroup-{node_index}",RequirementEdge())
+                if double_level_reward:
+                    self.add_node(f"LevelGroup-{node_index}",LocationNode(current_location_list))
+                    current_location_list = []
+                    if node_index == 0:
+                        self.add_edge("Starting",f"LevelGroup-{node_index}",RequirementEdge())
+                    else:
+                        self.add_edge(f"LevelGroup-{node_index-1}",f"LevelGroup-{node_index}",RequirementEdge())
+                    node_index+=1
+                    double_level_reward = False
                 else:
-                    self.add_edge(f"LevelGroup-{node_index-1}",f"LevelGroup-{node_index}",RequirementEdge())
-                node_index+=1
+                    double_level_reward = True
 
         self.add_node(f"LevelGroup-{node_index}",LocationNode(current_location_list))
         if node_index == 0:
@@ -189,6 +201,7 @@ class Locations:
             self.add_edge("LoD-10","LoD-11",RequirementEdge(battle=True))
             self.add_edge("LoD-11","LoD-12",RequirementEdge(battle=True))
             self.add_edge("LoD-12","LoD-13",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("LoD-10")
 
 
     def makeAGGraph(self):
@@ -245,6 +258,7 @@ class Locations:
             self.add_edge("AG-12","AG-13",RequirementEdge(battle=True))
             self.add_edge("AG-13","AG-14",RequirementEdge(battle=True))
             self.add_edge("AG-14","AG-15",RequirementEdge())
+            self.first_boss_nodes.append("AG-11")
 
     def makeDCGraph(self):
         self.add_node("DC-1",LocationNode([KH2Location(16, "DC Courtyard Mythril Shard", locationCategory.CHEST,[locationType.DC]),
@@ -291,6 +305,7 @@ class Locations:
             self.add_edge("DC-11","DC-12",RequirementEdge(battle=True))
             self.add_edge("DC-12","DC-13",RequirementEdge())
             self.add_edge("DC-11","DC-14",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("DC-10")
 
 
     def makeHundredAcreGraph(self):
@@ -398,6 +413,7 @@ class Locations:
             self.add_edge("OC-15","OC-20",RequirementEdge(battle=True))
             self.add_edge("OC-15","OC-21",RequirementEdge(battle=True))
             self.add_edge("OC-21","OC-22",RequirementEdge())
+            self.first_boss_nodes.append("OC-13")
 
 
     def makeBCGraph(self):
@@ -448,6 +464,7 @@ class Locations:
             self.add_edge("BC-12","BC-13",RequirementEdge(battle=True))
             self.add_edge("BC-13","BC-14",RequirementEdge(battle=True))
             self.add_edge("BC-14","BC-15",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("BC-12")
 
 
     def makeSPGraph(self):
@@ -487,6 +504,7 @@ class Locations:
             self.add_edge("SP-9","SP-10",RequirementEdge(battle=True))
             self.add_edge("SP-10","SP-11",RequirementEdge(battle=True))
             self.add_edge("SP-11","SP-12",RequirementEdge())
+            self.first_boss_nodes.append("SP-6")
 
 
     def makeHTGraph(self):
@@ -531,6 +549,7 @@ class Locations:
             self.add_edge("HT-11","HT-12",RequirementEdge(battle=True))
             self.add_edge("HT-12","HT-13",RequirementEdge(battle=True))
             self.add_edge("HT-13","HT-14",RequirementEdge())
+            self.first_boss_nodes.append("HT-8")
 
     
     def makePRGraph(self):
@@ -584,6 +603,7 @@ class Locations:
             self.add_edge("PR-13","PR-14",RequirementEdge(battle=True))
             self.add_edge("PR-14","PR-15",RequirementEdge(battle=True))
             self.add_edge("PR-15","PR-16",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("PR-9")
 
 
     def makeHBGraph(self):
@@ -652,6 +672,7 @@ class Locations:
             self.add_edge("HB-15","HB-18",RequirementEdge(battle=True))
             self.add_edge("HB-15","HB-19",RequirementEdge())
             self.add_edge("HB-15","HB-20",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("HB-4")
 
     def makeCoRGraph(self):
         self.add_node("CoR-1",LocationNode([KH2Location(562, "CoR Depths AP Boost", locationCategory.CHEST,[locationType.HB, locationType.CoR]),
@@ -739,6 +760,7 @@ class Locations:
             self.add_edge("PL-10","PL-11",RequirementEdge(battle=True))
             self.add_edge("PL-11","PL-12",RequirementEdge(battle=True))
             self.add_edge("PL-12","PL-13",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("PL-10")
 
     def makeSTTGraph(self):
         self.add_node("STT-1",LocationNode([KH2Location(319, "Twilight Town Map", locationCategory.POPUP,[locationType.STT]),]))
@@ -786,6 +808,7 @@ class Locations:
             self.add_edge("STT-11","STT-13",RequirementEdge(battle=True))
             self.add_edge("STT-13","STT-14",RequirementEdge())
             self.add_edge("STT-14","STT-15",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("STT-14")
 
     
     def makeTTGraph(self):
@@ -866,6 +889,7 @@ class Locations:
             self.add_edge("TT-17","TT-21",RequirementEdge())
             self.add_edge("TT-20","TT-22",RequirementEdge(battle=True))
             self.add_edge("TT-22","TT-23",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("TT-10")
 
 
     def makeTWTNWGraph(self):
@@ -927,6 +951,7 @@ class Locations:
             self.add_edge("TWTNW-18","TWTNW-19",RequirementEdge())
             self.add_edge("TWTNW-19","TWTNW-20",RequirementEdge())
             self.add_edge("TWTNW-19","TWTNW-21",RequirementEdge())
+            self.first_boss_nodes.append("TWTNW-19")
 
 
 
