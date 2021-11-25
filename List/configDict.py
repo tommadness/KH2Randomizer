@@ -72,6 +72,7 @@ class locationDepth(str,Enum):
     DataFight = "DataFight"
     FirstBoss = "FirstBoss"
     SecondBoss = "SecondBoss"
+    Anywhere = "Anywhere"
 
 
 class itemType(str, Enum):

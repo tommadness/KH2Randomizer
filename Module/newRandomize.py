@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
-from Class.exceptions import GeneratorException
+from Class.exceptions import GeneratorException,CantAssignItemException
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item
-from List.configDict import locationCategory, itemType, locationDepth, locationType
+from List.configDict import locationCategory, itemType, locationType
 from List.ItemList import Items
 from List.NewLocationList import Locations
 from Module.RandomizerSettings import RandomizerSettings
@@ -11,7 +11,7 @@ from Module.RandomizerSettings import RandomizerSettings
 import random
 
 from Module.weighting import LocationWeights
-from Module.depths import ReportDepths
+from Module.depths import ItemDepths
 
 @dataclass
 class ItemAssignment():
@@ -72,16 +72,13 @@ class FormExp():
     def __eq__(self, obj: KH2Location):
         return self.location==obj
 
-
-class CantAssignItemException(Exception):
-    pass
-
 class Randomizer():
     def __init__(self, settings: RandomizerSettings):
         random.seed(settings.random_seed)
         self.master_locations = Locations(settings)
         self.location_weights = LocationWeights(settings,self.master_locations)
-        self.report_depths = ReportDepths(settings,self.master_locations)
+        self.report_depths = ItemDepths(settings.reportDepth,self.master_locations)
+        self.proof_depths = ItemDepths(settings.proofDepth,self.master_locations)
         self.assignedItems = []
         self.assignedDonaldItems = []
         self.assignedGoofyItems = []
@@ -210,17 +207,22 @@ class Randomizer():
         self.assignKeybladeAbilities(settings, allAbilities)
         allItems+=allAbilities
 
-        restricted_reports = settings.reportDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss]
+        restricted_reports = self.report_depths.very_restricted_locations
+        restricted_proofs = self.proof_depths.very_restricted_locations
 
         #assign valid items to all valid locations remaining
         for item in allItems:
             if restricted_reports:
-                weights = [self.location_weights.getWeight(item,loc) if itemType.REPORT in loc.InvalidChecks else 0 for loc in validLocations]                
+                weights = [self.location_weights.getWeight(item,loc) if itemType.REPORT in loc.InvalidChecks else 0 for loc in validLocations]
+            elif restricted_proofs:
+                weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations]
             else:
                 weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
             # modify the weights for reports if the report depth is specific
             if restricted_reports and item.ItemType is itemType.REPORT:
                 weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
+            elif restricted_proofs and item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
+                weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations ]
             count=0
             while True:
                 count+=1
@@ -256,8 +258,10 @@ class Randomizer():
             if locationType.STT in loc.LocationTypes and loc.LocationCategory != locationCategory.STATBONUS:
                 loc.InvalidChecks+=[itemType.GAUGE]
 
-            if not self.report_depths.isReportValid(loc):
+            if not self.report_depths.isValid(loc):
                 loc.InvalidChecks+=[itemType.REPORT]
+            if not self.proof_depths.isValid(loc):
+                loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
     
     def assignKeybladeAbilities(self, settings, allAbilities):
         """Assign abilities to keyblades. """

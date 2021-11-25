@@ -12,4 +12,7 @@ class SettingsException(Exception):
 class ValidationException(Exception):
     pass
 
+class CantAssignItemException(Exception):
+    pass
+
 RandomizerExceptions = (GeneratorException,HintException,SettingsException,ValidationException)
