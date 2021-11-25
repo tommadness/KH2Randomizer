@@ -11,36 +11,7 @@ from Module.RandomizerSettings import RandomizerSettings
 import random
 
 from Module.weighting import LocationWeights
-
-
-class LocationDepths():
-    def __init__(self):
-        pass
-
-    def getDepth(self, loc: KH2Location):
-        return locationDepth.FirstVisit
-
-    def isReportValid(self, loc: KH2Location, reportDepth: locationDepth):
-        if self.getDepth(loc) == locationDepth.FirstVisit:
-            # if setting is Bosses, then first visits can't have reports
-            if reportDepth==locationDepth.FirstBoss or reportDepth==locationDepth.SecondBoss:
-                return False
-        elif self.getDepth(loc) == locationDepth.SecondVisit:
-            # if setting is Bosses or first visits, second visits can't have reports
-            if reportDepth==locationDepth.FirstVisit or reportDepth==locationDepth.FirstBoss or reportDepth==locationDepth.SecondBoss:
-                return False
-        elif self.getDepth(loc) == locationDepth.FirstBoss:
-            # if setting is for second second bosses, then first bosses can't have reports
-            if reportDepth==locationDepth.SecondBoss:
-                return False
-        elif self.getDepth(loc) == locationDepth.SecondBoss:
-            if reportDepth==locationDepth.FirstVisit or reportDepth==locationDepth.FirstBoss:
-                return False
-        elif self.getDepth(loc) == locationDepth.DataFight:
-            # if setting is not for data fights, then data fights can't have reports
-            if reportDepth != locationDepth.DataFight:
-                return False
-        return True
+from Module.depths import ReportDepths
 
 @dataclass
 class ItemAssignment():
@@ -110,6 +81,7 @@ class Randomizer():
         random.seed(settings.random_seed)
         self.master_locations = Locations(settings)
         self.location_weights = LocationWeights(settings,self.master_locations)
+        self.report_depths = ReportDepths(settings,self.master_locations)
         self.assignedItems = []
         self.assignedDonaldItems = []
         self.assignedGoofyItems = []
@@ -212,14 +184,14 @@ class Randomizer():
             if self.assignItem(randomLocation,item,"Goofy"):
                 goofyLocations.remove(randomLocation)
 
-    def assignSoraItems(self, settings):
+    def assignSoraItems(self, settings: RandomizerSettings):
         allItems = [i for i in Items.getItemList() if i.Id not in settings.startingItems]
         allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList())
         if settings.promiseCharm:
             allItems+=[Items.getPromiseCharm()]
         allLocations = self.master_locations.getAllSoraLocations()
 
-        self.augmentInvalidChecks(settings, allLocations)
+        self.augmentInvalidChecks(allLocations)
 
         if settings.statSanity:
             allItems+=Items.getStatItems()
@@ -238,9 +210,17 @@ class Randomizer():
         self.assignKeybladeAbilities(settings, allAbilities)
         allItems+=allAbilities
 
+        restricted_reports = settings.reportDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss]
+
         #assign valid items to all valid locations remaining
         for item in allItems:
-            weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
+            if restricted_reports:
+                weights = [self.location_weights.getWeight(item,loc) if itemType.REPORT in loc.InvalidChecks else 0 for loc in validLocations]                
+            else:
+                weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
+            # modify the weights for reports if the report depth is specific
+            if restricted_reports and item.ItemType is itemType.REPORT:
+                weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
             count=0
             while True:
                 count+=1
@@ -268,7 +248,7 @@ class Randomizer():
             else:
                 self.assignItem(loc,Items.getNullItem())
 
-    def augmentInvalidChecks(self, settings, allLocations):
+    def augmentInvalidChecks(self, allLocations):
         """Add invalid check types to locations."""
         for loc in allLocations:
             if loc.LocationCategory == locationCategory.POPUP:
@@ -276,8 +256,8 @@ class Randomizer():
             if locationType.STT in loc.LocationTypes and loc.LocationCategory != locationCategory.STATBONUS:
                 loc.InvalidChecks+=[itemType.GAUGE]
 
-            # if not settings.depths.isReportValid(loc,settings.reportDepth):
-            #     loc.InvalidChecks+=[itemType.REPORT]
+            if not self.report_depths.isReportValid(loc):
+                loc.InvalidChecks+=[itemType.REPORT]
     
     def assignKeybladeAbilities(self, settings, allAbilities):
         """Assign abilities to keyblades. """

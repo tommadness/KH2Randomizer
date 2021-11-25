@@ -27,6 +27,8 @@ class Locations:
         self.location_graph = Graph()
         self.reverse_rando = settings.reverse_rando
         self.first_boss_nodes = []
+        self.second_boss_nodes = []
+        self.data_nodes = []
         self.makeLocationGraph(settings.excludedLevels)
 
     """A set of methods to get all the location information for Sora, Donald, and Goofy. Limited logic about item placement here"""
@@ -187,6 +189,8 @@ class Locations:
         self.add_node("LoD-12",LocationNode([KH2Location(10, "Storm Rider", locationCategory.ITEMBONUS,[locationType.LoD]),]))
         self.add_node("LoD-13",LocationNode([KH2Location(555, "Xigbar (Data) Defense Boost", locationCategory.POPUP,[locationType.LoD, locationType.DataOrg]),]))
 
+        self.data_nodes.append("LoD-13")
+
         if not self.reverse_rando:
             self.add_edge("Starting","LoD-1",RequirementEdge())
             self.add_edge("LoD-1","LoD-2",RequirementEdge())
@@ -202,6 +206,7 @@ class Locations:
             self.add_edge("LoD-11","LoD-12",RequirementEdge(battle=True))
             self.add_edge("LoD-12","LoD-13",RequirementEdge(battle=True))
             self.first_boss_nodes.append("LoD-10")
+            self.second_boss_nodes.append("LoD-12")
 
 
     def makeAGGraph(self):
@@ -242,6 +247,8 @@ class Locations:
                                          KH2Location(545, "Lexaeus (AS) Strength Beyond Strength", locationCategory.POPUP,[locationType.Agrabah, locationType.AS]),]))
         self.add_node("AG-15",LocationNode([KH2Location(550, "Lexaeus (Data) Lost Illusion", locationCategory.POPUP,[locationType.Agrabah, locationType.DataOrg]),]))
 
+        self.data_nodes.append("AG-15")
+
         if not self.reverse_rando:
             self.add_edge("Starting","AG-1",RequirementEdge())
             self.add_edge("AG-1","AG-2",RequirementEdge())
@@ -259,6 +266,7 @@ class Locations:
             self.add_edge("AG-13","AG-14",RequirementEdge(battle=True))
             self.add_edge("AG-14","AG-15",RequirementEdge())
             self.first_boss_nodes.append("AG-11")
+            self.second_boss_nodes.append("AG-13")
 
     def makeDCGraph(self):
         self.add_node("DC-1",LocationNode([KH2Location(16, "DC Courtyard Mythril Shard", locationCategory.CHEST,[locationType.DC]),
@@ -289,6 +297,7 @@ class Locations:
         self.add_node("DC-14",LocationNode([KH2Location(70, "Lingering Will Bonus", locationCategory.STATBONUS,[locationType.HT, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),
                                         KH2Location(587, "Lingering Will Proof of Connection", locationCategory.POPUP,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),
                                         KH2Location(591, "Lingering Will Manifest Illusion", locationCategory.POPUP,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),]))
+        self.data_nodes.append("DC-13")
 
         if not self.reverse_rando:
             self.add_edge("Starting","DC-1",RequirementEdge())
@@ -306,6 +315,7 @@ class Locations:
             self.add_edge("DC-12","DC-13",RequirementEdge())
             self.add_edge("DC-11","DC-14",RequirementEdge(battle=True))
             self.first_boss_nodes.append("DC-10")
+            self.second_boss_nodes.append("DC-10")
 
 
     def makeHundredAcreGraph(self):
@@ -389,6 +399,8 @@ class Locations:
                                         KH2Location(546, "Zexion (AS) Book of Shadows", locationCategory.POPUP,[locationType.OC, locationType.AS]),]))
         self.add_node("OC-22",LocationNode([KH2Location(551, "Zexion (Data) Lost Illusion", locationCategory.POPUP,[locationType.OC, locationType.DataOrg]),]))
 
+        self.data_nodes.append("OC-22")
+
         if not self.reverse_rando:
             self.add_edge("Starting","OC-1",RequirementEdge())
             self.add_edge("OC-1","OC-2",RequirementEdge())
@@ -414,6 +426,7 @@ class Locations:
             self.add_edge("OC-15","OC-21",RequirementEdge(battle=True))
             self.add_edge("OC-21","OC-22",RequirementEdge())
             self.first_boss_nodes.append("OC-13")
+            self.second_boss_nodes.append("OC-15")
 
 
     def makeBCGraph(self):
@@ -448,6 +461,8 @@ class Locations:
                                         KH2Location(528, "Secret Ansem Report 6", locationCategory.POPUP,[locationType.BC]),]))
         self.add_node("BC-15",LocationNode([KH2Location(559, "Xaldin (Data) Defense Boost", locationCategory.POPUP,[locationType.BC, locationType.DataOrg]),]))
 
+        self.data_nodes.append("BC-15")
+
         if not self.reverse_rando:
             self.add_edge("Starting","BC-1",RequirementEdge())
             self.add_edge("BC-1","BC-2",RequirementEdge())
@@ -465,6 +480,7 @@ class Locations:
             self.add_edge("BC-13","BC-14",RequirementEdge(battle=True))
             self.add_edge("BC-14","BC-15",RequirementEdge(battle=True))
             self.first_boss_nodes.append("BC-12")
+            self.second_boss_nodes.append("BC-14")
 
 
     def makeSPGraph(self):
@@ -491,6 +507,8 @@ class Locations:
                                         KH2Location(547, "Larxene (AS) Cloaked Thunder", locationCategory.POPUP,[locationType.SP, locationType.AS]),]))
         self.add_node("SP-12",LocationNode([KH2Location(552, "Larxene (Data) Lost Illusion", locationCategory.POPUP,[locationType.SP, locationType.DataOrg]),]))
 
+        self.data_nodes.append("SP-12")
+
         if not self.reverse_rando:
             self.add_edge("Starting","SP-1",RequirementEdge())
             self.add_edge("SP-1","SP-2",RequirementEdge())
@@ -505,6 +523,7 @@ class Locations:
             self.add_edge("SP-10","SP-11",RequirementEdge(battle=True))
             self.add_edge("SP-11","SP-12",RequirementEdge())
             self.first_boss_nodes.append("SP-6")
+            self.second_boss_nodes.append("SP-10")
 
 
     def makeHTGraph(self):
@@ -534,6 +553,8 @@ class Locations:
                                         KH2Location(544, "Vexen (AS) Road to Discovery", locationCategory.POPUP,[locationType.HT, locationType.AS]),]))
         self.add_node("HT-14",LocationNode([KH2Location(549, "Vexen (Data) Lost Illusion", locationCategory.POPUP,[locationType.HT, locationType.DataOrg])]))
 
+        self.data_nodes.append("HT-14")
+
         if not self.reverse_rando:
             self.add_edge("Starting","HT-1",RequirementEdge())
             self.add_edge("HT-1","HT-2",RequirementEdge())
@@ -550,6 +571,7 @@ class Locations:
             self.add_edge("HT-12","HT-13",RequirementEdge(battle=True))
             self.add_edge("HT-13","HT-14",RequirementEdge())
             self.first_boss_nodes.append("HT-8")
+            self.second_boss_nodes.append("HT-12")
 
     
     def makePRGraph(self):
@@ -586,6 +608,8 @@ class Locations:
                                         KH2Location(530, "Secret Ansem Report 4", locationCategory.POPUP,[locationType.PR]),]))
         self.add_node("PR-16",LocationNode([KH2Location(557, "Luxord (Data) AP Boost", locationCategory.POPUP,[locationType.PR, locationType.DataOrg]),]))
 
+        self.data_nodes.append("PR-16")
+
         if not self.reverse_rando:
             self.add_edge("Starting","PR-1",RequirementEdge())
             self.add_edge("PR-1","PR-2",RequirementEdge(battle=True))
@@ -604,6 +628,7 @@ class Locations:
             self.add_edge("PR-14","PR-15",RequirementEdge(battle=True))
             self.add_edge("PR-15","PR-16",RequirementEdge(battle=True))
             self.first_boss_nodes.append("PR-9")
+            self.second_boss_nodes.append("PR-15")
 
 
     def makeHBGraph(self):
@@ -649,6 +674,8 @@ class Locations:
                                         KH2Location(589, "Proof of Peace", locationCategory.POPUP,[locationType.HB, locationType.Mush13], InvalidChecks=[itemType.PROOF_OF_PEACE]),]))
         self.add_node("HB-20",LocationNode([KH2Location(560, "Demyx (Data) AP Boost", locationCategory.POPUP,[locationType.HB, locationType.DataOrg], InvalidChecks=[itemType.FORM]),]))
 
+        self.data_nodes.append("HB-20")
+
         self.built_hb_graph = True
         if not self.reverse_rando:
             self.add_edge("Starting","HB-1",RequirementEdge())
@@ -673,6 +700,7 @@ class Locations:
             self.add_edge("HB-15","HB-19",RequirementEdge())
             self.add_edge("HB-15","HB-20",RequirementEdge(battle=True))
             self.first_boss_nodes.append("HB-4")
+            self.second_boss_nodes.append("HB-15")
 
     def makeCoRGraph(self):
         self.add_node("CoR-1",LocationNode([KH2Location(562, "CoR Depths AP Boost", locationCategory.CHEST,[locationType.HB, locationType.CoR]),
@@ -746,6 +774,8 @@ class Locations:
         self.add_node("PL-12",LocationNode([KH2Location(30, "Groundshaker", locationCategory.HYBRIDBONUS,[locationType.PL]),]))
         self.add_node("PL-13",LocationNode([KH2Location(556, "Saix (Data) Defense Boost", locationCategory.POPUP,[locationType.PL, locationType.DataOrg]),]))
 
+        self.data_nodes.append("PL-13")
+
         if not self.reverse_rando:
             self.add_edge("Starting","PL-1",RequirementEdge())
             self.add_edge("PL-1","PL-2",RequirementEdge(battle=True))
@@ -761,6 +791,7 @@ class Locations:
             self.add_edge("PL-11","PL-12",RequirementEdge(battle=True))
             self.add_edge("PL-12","PL-13",RequirementEdge(battle=True))
             self.first_boss_nodes.append("PL-10")
+            self.second_boss_nodes.append("PL-12")
 
     def makeSTTGraph(self):
         self.add_node("STT-1",LocationNode([KH2Location(319, "Twilight Town Map", locationCategory.POPUP,[locationType.STT]),]))
@@ -792,6 +823,8 @@ class Locations:
         self.add_node("STT-14",LocationNode([KH2Location(463, "Mansion Basement Corridor Hi-Potion", locationCategory.CHEST,[locationType.STT]),]))
         self.add_node("STT-15",LocationNode([KH2Location(558, "Roxas (Data) Magic Boost", locationCategory.POPUP,[locationType.STT, locationType.DataOrg]),]))
 
+        self.data_nodes.append("STT-15")
+
         if not self.reverse_rando:
             self.add_edge("Starting","STT-1",RequirementEdge())
             self.add_edge("STT-1","STT-2",RequirementEdge())
@@ -809,6 +842,7 @@ class Locations:
             self.add_edge("STT-13","STT-14",RequirementEdge())
             self.add_edge("STT-14","STT-15",RequirementEdge(battle=True))
             self.first_boss_nodes.append("STT-14")
+            self.second_boss_nodes.append("STT-14")
 
     
     def makeTTGraph(self):
@@ -865,6 +899,8 @@ class Locations:
                                         KH2Location(317, "Betwixt and Between Bond of Flame", locationCategory.POPUP,[locationType.TT]),]))
         self.add_node("TT-23",LocationNode([KH2Location(561, "Axel (Data) Magic Boost", locationCategory.POPUP,[locationType.TT, locationType.DataOrg]),]))
 
+        self.data_nodes.append("TT-23")
+
         if not self.reverse_rando:
             self.add_edge("Starting","TT-1",RequirementEdge())
             self.add_edge("TT-1","TT-2",RequirementEdge())
@@ -890,6 +926,7 @@ class Locations:
             self.add_edge("TT-20","TT-22",RequirementEdge(battle=True))
             self.add_edge("TT-22","TT-23",RequirementEdge(battle=True))
             self.first_boss_nodes.append("TT-10")
+            self.second_boss_nodes.append("TT-22")
 
 
     def makeTWTNWGraph(self):
@@ -929,6 +966,8 @@ class Locations:
         self.add_node("TWTNW-20",LocationNode([KH2Location(71, "Final Xemnas", locationCategory.STATBONUS,[locationType.TWTNW],InvalidChecks=[e for e in itemType if e not in [itemType.GAUGE, itemType.SLOT, itemType.SYNTH,itemType.ITEM]]),]))
         self.add_node("TWTNW-21",LocationNode([KH2Location(554, "Xemnas (Data) Power Boost", locationCategory.POPUP,[locationType.TWTNW, locationType.DataOrg]),]))
 
+        self.data_nodes.append("TWTNW-21")
+
         if not self.reverse_rando:
             self.add_edge("Starting","TWTNW-1",RequirementEdge())
             self.add_edge("TWTNW-1","TWTNW-2",RequirementEdge(battle=True))
@@ -952,6 +991,7 @@ class Locations:
             self.add_edge("TWTNW-19","TWTNW-20",RequirementEdge())
             self.add_edge("TWTNW-19","TWTNW-21",RequirementEdge())
             self.first_boss_nodes.append("TWTNW-19")
+            self.second_boss_nodes.append("TWTNW-19")
 
 
 
