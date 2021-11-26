@@ -9,7 +9,12 @@ class BossEnemyMenu(KH2Submenu):
         super().__init__(title='Boss/Enemy', settings=settings, in_layout='horizontal')
 
         self.start_column()
-        for setting in seedSettings.boss_enemy_settings:
+        for setting in seedSettings.boss_settings:
+            self.add_option(setting.name)
+        self.end_column()
+
+        self.start_column()
+        for setting in seedSettings.enemy_settings:
             self.add_option(setting.name)
         self.end_column()
 
