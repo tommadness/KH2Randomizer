@@ -60,6 +60,7 @@ class RandomizerSettings():
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
         self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
+        self.proofDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.PROOF_DEPTH)][0]
         self.prevent_self_hinting = ui_settings.get(settingkey.PREVENT_SELF_HINTING)
         self.allow_proof_hinting = ui_settings.get(settingkey.ALLOW_PROOF_HINTING)
         self.keyblade_support_abilities = [
@@ -95,6 +96,12 @@ class RandomizerSettings():
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
 
         self.antiform = False
+
+        self.validateSettings()
+
+    def validateSettings(self):
+        if self.reportDepth == self.proofDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
+            raise SettingsException("Proof depth and report depth can't be the same")
 
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel

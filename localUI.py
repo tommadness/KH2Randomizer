@@ -1,5 +1,6 @@
 import os
 import sys
+from Class.exceptions import RandomizerExceptions
 
 
 from Module.resources import resource_path
@@ -93,6 +94,7 @@ class KH2RandomizerApp(QMainWindow):
         self.startTime = datetime.datetime.now(self.UTC)
         self.dailySeedName = self.startTime.strftime('%d-%m-%Y')
         self.mods = getDailyModifiers(self.startTime)
+        self.progress = None
 
         self.settings = SeedSettings()
 
@@ -241,13 +243,17 @@ class KH2RandomizerApp(QMainWindow):
             seedString = (''.join(random.choice(characters) for i in range(30)))
             self.seedName.setText(seedString)
 
-        rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings)
+        try:
+            rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings)
+            # update the seed hash display
+            for index, icon in enumerate(rando_settings.seedHashIcons):
+                self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
 
-        # update the seed hash display
-        for index, icon in enumerate(rando_settings.seedHashIcons):
-            self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
+            return rando_settings
+        except RandomizerExceptions as e:
+            self.handleFailure(e)
+            return None
 
-        return rando_settings
 
     def makeSeed(self,platform):
         self.fixSeedName()
@@ -262,8 +268,8 @@ class KH2RandomizerApp(QMainWindow):
         }
 
         rando_settings = self.make_rando_settings()
-
-        self.genSeed(data,rando_settings)
+        if rando_settings is not None:
+            self.genSeed(data,rando_settings)
 
     def downloadSeed(self):
         saveFileWidget = QFileDialog()
@@ -277,11 +283,14 @@ class KH2RandomizerApp(QMainWindow):
 
     def handleResult(self,result):
         self.progress.close()
+        self.progress = None
         self.zip_file = result
         self.downloadSeed()
 
     def handleFailure(self, failure: Exception):
-        self.progress.close()
+        if self.progress is not None:
+            self.progress.close()
+        self.progress = None
         message = QMessageBox(text=str(repr(failure)))
         message.setWindowTitle("Seed Generation Error")
         message.exec()

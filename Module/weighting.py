@@ -1,5 +1,3 @@
-
-
 from math import ceil
 from Class.itemClass import KH2Item, itemRarity
 from Class.newLocationClass import KH2Location

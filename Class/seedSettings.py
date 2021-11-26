@@ -333,12 +333,27 @@ _all_settings = [
         choices={
             locationDepth.DataFight.name: 'Data Fights',
             locationDepth.FirstVisit.name: 'First Visit',
-            locationDepth.SecondVisit.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'First/Second Visit',
             locationDepth.FirstBoss.name: 'First Boss',
-            locationDepth.SecondBoss.name: 'Second Boss'
+            locationDepth.SecondBoss.name: 'Second Boss',
+            locationDepth.Anywhere.name: "Anywhere"
         },
         shared=True,
         default=locationDepth.SecondVisit.name
+    ),
+    SingleSelect(
+        name=settingkey.PROOF_DEPTH,
+        ui_label='Proof Depth',
+        choices={
+            locationDepth.DataFight.name: 'Data Fights',
+            locationDepth.FirstVisit.name: 'First Visit',
+            locationDepth.SecondVisit.name: 'First/Second Visit',
+            locationDepth.FirstBoss.name: 'First Boss',
+            locationDepth.SecondBoss.name: 'Second Boss',
+            locationDepth.Anywhere.name: "Anywhere"
+        },
+        shared=True,
+        default=locationDepth.Anywhere.name
     ),
 
     Toggle(
