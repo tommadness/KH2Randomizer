@@ -599,7 +599,8 @@ _all_settings = [
 
 
 def _get_boss_enemy_settings():
-    settings = []
+    boss_settings = []
+    enemy_settings = []
     boss_enemy_config = khbr()._get_game('kh2').get_options()
     for key in boss_enemy_config.keys():
         if key == 'memory_expansion':
@@ -608,18 +609,17 @@ def _get_boss_enemy_settings():
         possible_values = config['possible_values']
         if True in possible_values:
             # needs to be a toggle
-            toggle = Toggle(
+            ui_widget = Toggle(
                 name=key,
                 ui_label=config['display_name'],
                 shared=True,
                 default=False,
                 tooltip=config['description']
             )
-            settings.append(toggle)
         else:
             # single select
             choices = {choice: choice for choice in possible_values}
-            select = SingleSelect(
+            ui_widget = SingleSelect(
                 name=key,
                 ui_label=config['display_name'],
                 choices=choices,
@@ -627,13 +627,15 @@ def _get_boss_enemy_settings():
                 default=possible_values[0],
                 tooltip=config['description']
             )
-            settings.append(select)
+        if config.get("type") == "enemy":
+            enemy_settings.append(ui_widget)
+        else:
+            boss_settings.append(ui_widget)
+    return boss_settings, enemy_settings
 
-    return settings
 
-
-boss_enemy_settings = _get_boss_enemy_settings()
-for boss_enemy_setting in boss_enemy_settings:
+boss_settings, enemy_settings = _get_boss_enemy_settings()
+for boss_enemy_setting in boss_settings+enemy_settings:
     _all_settings.append(boss_enemy_setting)
 
 settings_by_name = {setting.name: setting for setting in _all_settings}

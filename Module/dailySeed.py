@@ -197,7 +197,7 @@ dailyModifiers = [
                 local_modifier=lambda settings: settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, 'Easy')
                 ),
     DailyModifier(name="Late Checks",
-                description="Worlds are more likely to have better checks early, than late",
+                description="Worlds are more likely to have less early checks, and more late",
                 categories={'itemdifficulty'},
                 modifier=lambda s: exec('s["itemPlacementDifficulty"] = "Hard"'),
                 local_modifier=lambda settings: settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, 'Hard')
@@ -207,6 +207,12 @@ dailyModifiers = [
                 categories= {"abilities"},
                 modifier=lambda s: s["seedModifiers"].append("Start with No AP"),
                 local_modifier=lambda settings: settings.set(settingkey.START_NO_AP, True)
+                ),
+    DailyModifier(name="Statsanity",
+                description="Stat boosts are added into the pool of randomized checks",
+                categories= {"checks"},
+                modifier=lambda s: exec('s["statsanity"] = True'),
+                local_modifier=lambda settings: settings.set(settingkey.STATSANITY, True)
                 )
 ]
 
