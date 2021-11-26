@@ -80,7 +80,11 @@ class RandomizerSettings():
         self.setSummonExp(ui_settings.get(settingkey.SUMMON_EXP_MULTIPLIER))
 
         self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP)}
-        for setting in seedSettings.boss_enemy_settings:
+        for setting in seedSettings.boss_settings:
+            value = ui_settings.get(setting.name)
+            if value is not None:
+                self.enemy_options[setting.name] = value
+        for setting in seedSettings.enemy_settings:
             value = ui_settings.get(setting.name)
             if value is not None:
                 self.enemy_options[setting.name] = value
