@@ -12,7 +12,7 @@ from Module.newRandomize import Randomizer
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.resources import resource_path
-from Module.spoilerLog import generateSpoilerLog
+from Module.spoilerLog import itemSpoilerDictionary
 
 
 def noop(self, *args, **kw):
@@ -45,23 +45,7 @@ class SeedZip():
         with zipfile.ZipFile(data,"w") as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
-            if locationType.Puzzle not in settings.disabledLocations:
-                mod["assets"] += [modYml.getPuzzleMod()]
-                assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
-                with open(resource_path("static/jiminy.bar"), "rb") as puzzleBar:
-                    binaryContent = bytearray(puzzleBar.read())
-                    for puzz in assignedPuzzles:
-                        byte0 = 24420+puzz.location.LocationId*16
-                        byte1 = 24420+puzz.location.LocationId*16+1
-                        item = puzz.item.Id
-                        
-                        # for byte1, find the most significant bits from the item Id
-                        itemByte1 = item>>8
-                        # for byte0, isolate the least significant bits from the item Id
-                        itemByte0 = item & 0x00FF
-                        binaryContent[byte0] = itemByte0
-                        binaryContent[byte1] = itemByte1
-                    outZip.writestr("modified_jiminy.bar",binaryContent)
+            self.createPuzzleAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -92,8 +76,11 @@ class SeedZip():
             if settings.spoiler_log:
                 mod["title"] += " w/ Spoiler"
                 with open(resource_path("static/spoilerlog.html")) as spoiler_site:
-                    html_template = spoiler_site.read().replace("SPOILER_JSON_FROM_SEED",json.dumps(generateSpoilerLog(randomizer.assignedItems), indent=4, cls=ItemEncoder))
+                    html_template = spoiler_site.read().replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems), indent=4, cls=ItemEncoder)) \
+                                                       .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
+                                                       .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))
                     outZip.writestr("spoilerlog.html",html_template)
+                    outZip.write(resource_path("static/KHMenu.otf"), "KHMenu.otf")
                 if enemySpoilers:
                     outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
@@ -106,6 +93,25 @@ class SeedZip():
             outZip.close()
         data.seek(0)
         self.outputZip = data
+
+    def createPuzzleAssets(self, settings, randomizer, mod, outZip):
+        if locationType.Puzzle not in settings.disabledLocations:
+            mod["assets"] += [modYml.getPuzzleMod()]
+            assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
+            with open(resource_path("static/jiminy.bar"), "rb") as puzzleBar:
+                binaryContent = bytearray(puzzleBar.read())
+                for puzz in assignedPuzzles:
+                    byte0 = 24420+puzz.location.LocationId*16
+                    byte1 = 24420+puzz.location.LocationId*16+1
+                    item = puzz.item.Id
+                        
+                        # for byte1, find the most significant bits from the item Id
+                    itemByte1 = item>>8
+                        # for byte0, isolate the least significant bits from the item Id
+                    itemByte0 = item & 0x00FF
+                    binaryContent[byte0] = itemByte0
+                    binaryContent[byte1] = itemByte1
+                outZip.writestr("modified_jiminy.bar",binaryContent)
 
     def assignStartingItems(self, settings, randomizer):
         def padItems(itemList):

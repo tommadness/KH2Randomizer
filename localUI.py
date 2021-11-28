@@ -408,7 +408,7 @@ Uses the qt-material library for theming.<br>Copyright (c) 2020, GCPDS
 if __name__=="__main__":
     app = QApplication([])
 
-    QtGui.QFontDatabase.addApplicationFont(resource_path('UI/KHMenu.otf'))
+    QtGui.QFontDatabase.addApplicationFont(resource_path('static/KHMenu.otf'))
 
     window = KH2RandomizerApp()
 
