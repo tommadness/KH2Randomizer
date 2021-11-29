@@ -3,7 +3,7 @@ import Class.locationClass
 
 
 
-def generateSpoilerLog(locationItems):
+def itemSpoilerDictionary(locationItems):
     outDict = {}
     for assignment in locationItems:
         location = assignment.location

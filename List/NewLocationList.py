@@ -1,6 +1,7 @@
 from Class.newLocationClass import KH2Location
 from List.configDict import itemType, locationType, locationCategory
 from altgraph.Graph import Graph
+from altgraph.Dot import Dot
 
 from Module.RandomizerSettings import RandomizerSettings
 
@@ -72,7 +73,6 @@ class Locations:
         self.makeHTGraph()
         self.makePRGraph()
         self.makeHBGraph()
-        self.makeCoRGraph()
         self.makePLGraph()
         self.makeSTTGraph()
         self.makeTTGraph()
@@ -80,6 +80,9 @@ class Locations:
         self.makeATLGraph()
         self.makeFormGraph()
         self.makeLevelGraph(excludeLevels)
+
+        dot = Dot(self.location_graph)
+        dot.save_img(file_name='graph',file_type="gif")
 
 
     def makePuzzleGraph(self):
@@ -207,6 +210,22 @@ class Locations:
             self.add_edge("LoD-12","LoD-13",RequirementEdge(battle=True))
             self.first_boss_nodes.append("LoD-10")
             self.second_boss_nodes.append("LoD-12")
+        else:
+            self.add_edge("Starting","LoD-5",RequirementEdge())
+            self.add_edge("LoD-5","LoD-4",RequirementEdge())
+            self.add_edge("LoD-5","LoD-9",RequirementEdge())
+            self.add_edge("LoD-9","LoD-11",RequirementEdge(battle=True))
+            self.add_edge("LoD-11","LoD-12",RequirementEdge(battle=True))
+            self.add_edge("LoD-12","LoD-1",RequirementEdge())
+            self.add_edge("LoD-1","LoD-2",RequirementEdge(battle=True))
+            self.add_edge("LoD-2","LoD-3",RequirementEdge())
+            self.add_edge("LoD-3","LoD-6",RequirementEdge(battle=True))
+            self.add_edge("LoD-6","LoD-7",RequirementEdge())
+            self.add_edge("LoD-7","LoD-8",RequirementEdge(battle=True))
+            self.add_edge("LoD-8","LoD-10",RequirementEdge(battle=True))
+            self.add_edge("LoD-10","LoD-13",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("LoD-12")
+            self.second_boss_nodes.append("LoD-10")
 
 
     def makeAGGraph(self):
@@ -267,6 +286,24 @@ class Locations:
             self.add_edge("AG-14","AG-15",RequirementEdge())
             self.first_boss_nodes.append("AG-11")
             self.second_boss_nodes.append("AG-13")
+        else:
+            self.add_edge("Starting","AG-2",RequirementEdge())
+            self.add_edge("AG-2","AG-3",RequirementEdge())
+            self.add_edge("AG-3","AG-4",RequirementEdge())
+            self.add_edge("AG-4","AG-12",RequirementEdge(battle=True))
+            self.add_edge("AG-12","AG-13",RequirementEdge(battle=True))
+            self.add_edge("AG-13","AG-14",RequirementEdge(battle=True))
+            self.add_edge("AG-14","AG-1",RequirementEdge())
+            self.add_edge("AG-1","AG-5",RequirementEdge())
+            self.add_edge("AG-5","AG-6",RequirementEdge())
+            self.add_edge("AG-6","AG-7",RequirementEdge())
+            self.add_edge("AG-7","AG-8",RequirementEdge(battle=True))
+            self.add_edge("AG-8","AG-9",RequirementEdge(battle=True))
+            self.add_edge("AG-9","AG-10",RequirementEdge())
+            self.add_edge("AG-10","AG-11",RequirementEdge(battle=True))
+            self.add_edge("AG-11","AG-15",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("AG-13")
+            self.second_boss_nodes.append("AG-11")
 
     def makeDCGraph(self):
         self.add_node("DC-1",LocationNode([KH2Location(16, "DC Courtyard Mythril Shard", locationCategory.CHEST,[locationType.DC]),
@@ -298,6 +335,8 @@ class Locations:
                                         KH2Location(587, "Lingering Will Proof of Connection", locationCategory.POPUP,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),
                                         KH2Location(591, "Lingering Will Manifest Illusion", locationCategory.POPUP,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),]))
         self.data_nodes.append("DC-13")
+        self.first_boss_nodes.append("DC-11")
+        self.second_boss_nodes.append("DC-11")
 
         if not self.reverse_rando:
             self.add_edge("Starting","DC-1",RequirementEdge())
@@ -314,8 +353,21 @@ class Locations:
             self.add_edge("DC-11","DC-12",RequirementEdge(battle=True))
             self.add_edge("DC-12","DC-13",RequirementEdge())
             self.add_edge("DC-11","DC-14",RequirementEdge(battle=True))
-            self.first_boss_nodes.append("DC-10")
-            self.second_boss_nodes.append("DC-10")
+        else:
+            self.add_edge("Starting","DC-5",RequirementEdge())
+            self.add_edge("DC-5","DC-6",RequirementEdge())
+            self.add_edge("DC-6","DC-7",RequirementEdge(battle=True))
+            self.add_edge("DC-7","DC-8",RequirementEdge(battle=True))
+            self.add_edge("DC-8","DC-9",RequirementEdge(battle=True))
+            self.add_edge("DC-9","DC-10",RequirementEdge(battle=True))
+            self.add_edge("DC-10","DC-12",RequirementEdge(battle=True))
+            self.add_edge("DC-12","DC-1",RequirementEdge())
+            self.add_edge("DC-1","DC-2",RequirementEdge())
+            self.add_edge("DC-2","DC-3",RequirementEdge())
+            self.add_edge("DC-3","DC-4",RequirementEdge())
+            self.add_edge("DC-4","DC-11",RequirementEdge())
+            self.add_edge("DC-11","DC-13",RequirementEdge(battle=True))
+            self.add_edge("DC-11","DC-14",RequirementEdge(battle=True))
 
 
     def makeHundredAcreGraph(self):
@@ -351,6 +403,13 @@ class Locations:
             self.add_edge("100-3","100-4",RequirementEdge())
             self.add_edge("100-4","100-5",RequirementEdge())
             self.add_edge("100-5","100-6",RequirementEdge())
+        else:
+            self.add_edge("Starting","100-6",RequirementEdge())
+            self.add_edge("100-6","100-5",RequirementEdge())
+            self.add_edge("100-5","100-4",RequirementEdge())
+            self.add_edge("100-4","100-3",RequirementEdge())
+            self.add_edge("100-3","100-2",RequirementEdge())
+            self.add_edge("100-2","100-1",RequirementEdge())
 
 
     def makeOCGraph(self):
@@ -427,6 +486,31 @@ class Locations:
             self.add_edge("OC-21","OC-22",RequirementEdge())
             self.first_boss_nodes.append("OC-13")
             self.second_boss_nodes.append("OC-15")
+        else:
+            self.add_edge("Starting","OC-6",RequirementEdge())
+            self.add_edge("OC-6","OC-1",RequirementEdge())
+            self.add_edge("OC-1","OC-2",RequirementEdge())
+            self.add_edge("OC-2","OC-14",RequirementEdge(battle=True))
+            self.add_edge("OC-14","OC-15",RequirementEdge(battle=True))
+            self.add_edge("OC-15","OC-21",RequirementEdge(battle=True))
+            self.add_edge("OC-21","OC-3",RequirementEdge(battle=True))
+            self.add_edge("OC-3","OC-4",RequirementEdge())
+            self.add_edge("OC-4","OC-5",RequirementEdge())
+            self.add_edge("OC-5","OC-7",RequirementEdge())
+            self.add_edge("OC-7","OC-8",RequirementEdge())
+            self.add_edge("OC-8","OC-9",RequirementEdge())
+            self.add_edge("OC-9","OC-10",RequirementEdge(battle=True))
+            self.add_edge("OC-10","OC-11",RequirementEdge())
+            self.add_edge("OC-11","OC-12",RequirementEdge(battle=True))
+            self.add_edge("OC-12","OC-13",RequirementEdge(battle=True))
+            self.add_edge("OC-13","OC-16",RequirementEdge(battle=True))
+            self.add_edge("OC-13","OC-17",RequirementEdge(battle=True))
+            self.add_edge("OC-13","OC-18",RequirementEdge(battle=True))
+            self.add_edge("OC-13","OC-19",RequirementEdge(battle=True))
+            self.add_edge("OC-13","OC-20",RequirementEdge(battle=True))
+            self.add_edge("OC-13","OC-22",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("OC-15")
+            self.second_boss_nodes.append("OC-13")
 
 
     def makeBCGraph(self):
@@ -481,6 +565,24 @@ class Locations:
             self.add_edge("BC-14","BC-15",RequirementEdge(battle=True))
             self.first_boss_nodes.append("BC-12")
             self.second_boss_nodes.append("BC-14")
+        else:
+            self.add_edge("Starting","BC-4",RequirementEdge(battle=True))
+            self.add_edge("BC-4","BC-8",RequirementEdge())
+            self.add_edge("BC-4","BC-9",RequirementEdge())
+            self.add_edge("BC-9","BC-11",RequirementEdge())
+            self.add_edge("BC-11","BC-13",RequirementEdge())
+            self.add_edge("BC-13","BC-14",RequirementEdge(battle=True))
+            self.add_edge("BC-14","BC-1",RequirementEdge())
+            self.add_edge("BC-1","BC-2",RequirementEdge())
+            self.add_edge("BC-2","BC-3",RequirementEdge())
+            self.add_edge("BC-3","BC-5",RequirementEdge(battle=True))
+            self.add_edge("BC-5","BC-6",RequirementEdge())
+            self.add_edge("BC-6","BC-7",RequirementEdge())
+            self.add_edge("BC-7","BC-10",RequirementEdge(battle=True))
+            self.add_edge("BC-10","BC-12",RequirementEdge(battle=True))
+            self.add_edge("BC-12","BC-15",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("BC-14")
+            self.second_boss_nodes.append("BC-12")
 
 
     def makeSPGraph(self):
@@ -524,6 +626,21 @@ class Locations:
             self.add_edge("SP-11","SP-12",RequirementEdge())
             self.first_boss_nodes.append("SP-6")
             self.second_boss_nodes.append("SP-10")
+        else:
+            self.add_edge("Starting","SP-1",RequirementEdge())
+            self.add_edge("SP-1","SP-2",RequirementEdge())
+            self.add_edge("SP-2","SP-5",RequirementEdge(battle=True))
+            self.add_edge("SP-5","SP-4",RequirementEdge())
+            self.add_edge("SP-4","SP-8",RequirementEdge(battle=True))
+            self.add_edge("SP-8","SP-9",RequirementEdge())
+            self.add_edge("SP-9","SP-10",RequirementEdge(battle=True))
+            self.add_edge("SP-10","SP-11",RequirementEdge(battle=True))
+            self.add_edge("SP-11","SP-3",RequirementEdge(battle=True))
+            self.add_edge("SP-3","SP-6",RequirementEdge(battle=True))
+            self.add_edge("SP-6","SP-7",RequirementEdge())
+            self.add_edge("SP-7","SP-12",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("SP-10")
+            self.second_boss_nodes.append("SP-6")
 
 
     def makeHTGraph(self):
@@ -572,6 +689,23 @@ class Locations:
             self.add_edge("HT-13","HT-14",RequirementEdge())
             self.first_boss_nodes.append("HT-8")
             self.second_boss_nodes.append("HT-12")
+        else:
+            self.add_edge("Starting","HT-6",RequirementEdge())
+            self.add_edge("HT-6","HT-5",RequirementEdge())
+            self.add_edge("HT-5","HT-4",RequirementEdge())
+            self.add_edge("HT-4","HT-1",RequirementEdge())
+            self.add_edge("HT-1","HT-3",RequirementEdge())
+            self.add_edge("HT-6","HT-9",RequirementEdge(battle=True))
+            self.add_edge("HT-9","HT-10",RequirementEdge(battle=True))
+            self.add_edge("HT-10","HT-11",RequirementEdge())
+            self.add_edge("HT-11","HT-12",RequirementEdge(battle=True))
+            self.add_edge("HT-12","HT-13",RequirementEdge(battle=True))
+            self.add_edge("HT-13","HT-2",RequirementEdge())
+            self.add_edge("HT-2","HT-7",RequirementEdge(battle=True))
+            self.add_edge("HT-7","HT-8",RequirementEdge(battle=True))
+            self.add_edge("HT-8","HT-14",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("HT-12")
+            self.second_boss_nodes.append("HT-8")
 
     
     def makePRGraph(self):
@@ -629,6 +763,25 @@ class Locations:
             self.add_edge("PR-15","PR-16",RequirementEdge(battle=True))
             self.first_boss_nodes.append("PR-9")
             self.second_boss_nodes.append("PR-15")
+        else:
+            self.add_edge("Starting","PR-1",RequirementEdge())
+            self.add_edge("PR-1","PR-10",RequirementEdge(battle=True))
+            self.add_edge("PR-10","PR-11",RequirementEdge())
+            self.add_edge("PR-11","PR-12",RequirementEdge())
+            self.add_edge("PR-12","PR-13",RequirementEdge())
+            self.add_edge("PR-13","PR-14",RequirementEdge(battle=True))
+            self.add_edge("PR-14","PR-3",RequirementEdge())
+            self.add_edge("PR-3","PR-15",RequirementEdge(battle=True))
+            self.add_edge("PR-15","PR-2",RequirementEdge(battle=True))
+            self.add_edge("PR-2","PR-4",RequirementEdge(battle=True))
+            self.add_edge("PR-4","PR-5",RequirementEdge(battle=True))
+            self.add_edge("PR-5","PR-6",RequirementEdge())
+            self.add_edge("PR-6","PR-7",RequirementEdge())
+            self.add_edge("PR-7","PR-8",RequirementEdge())
+            self.add_edge("PR-8","PR-9",RequirementEdge(battle=True))
+            self.add_edge("PR-9","PR-16",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("PR-15")
+            self.second_boss_nodes.append("PR-9")
 
 
     def makeHBGraph(self):
@@ -674,35 +827,7 @@ class Locations:
                                         KH2Location(589, "Proof of Peace", locationCategory.POPUP,[locationType.HB, locationType.Mush13], InvalidChecks=[itemType.PROOF_OF_PEACE]),]))
         self.add_node("HB-20",LocationNode([KH2Location(560, "Demyx (Data) AP Boost", locationCategory.POPUP,[locationType.HB, locationType.DataOrg], InvalidChecks=[itemType.FORM]),]))
 
-        self.data_nodes.append("HB-20")
 
-        self.built_hb_graph = True
-        if not self.reverse_rando:
-            self.add_edge("Starting","HB-1",RequirementEdge())
-            self.add_edge("HB-1","HB-2",RequirementEdge())
-            self.add_edge("HB-2","HB-3",RequirementEdge())
-            self.add_edge("HB-3","HB-4",RequirementEdge(battle=True))
-            self.add_edge("HB-4","HB-5",RequirementEdge())
-            self.add_edge("HB-5","HB-6",RequirementEdge())
-            self.add_edge("HB-6","HB-7",RequirementEdge())
-            self.add_edge("HB-7","HB-8",RequirementEdge())
-            self.add_edge("HB-7","HB-9",RequirementEdge())
-            self.add_edge("HB-8","HB-10",RequirementEdge())
-
-            self.add_edge("HB-8","HB-11",RequirementEdge(battle=True))
-            self.add_edge("HB-11","HB-12",RequirementEdge(battle=True))
-            self.add_edge("HB-12","HB-13",RequirementEdge(battle=True))
-            self.add_edge("HB-13","HB-14",RequirementEdge())
-            self.add_edge("HB-14","HB-15",RequirementEdge(battle=True))
-            self.add_edge("HB-15","HB-16",RequirementEdge())
-            self.add_edge("HB-15","HB-17",RequirementEdge())
-            self.add_edge("HB-15","HB-18",RequirementEdge(battle=True))
-            self.add_edge("HB-15","HB-19",RequirementEdge())
-            self.add_edge("HB-15","HB-20",RequirementEdge(battle=True))
-            self.first_boss_nodes.append("HB-4")
-            self.second_boss_nodes.append("HB-15")
-
-    def makeCoRGraph(self):
         self.add_node("CoR-1",LocationNode([KH2Location(562, "CoR Depths AP Boost", locationCategory.CHEST,[locationType.HB, locationType.CoR]),
                                         KH2Location(563, "CoR Depths Power Crystal", locationCategory.CHEST,[locationType.HB, locationType.CoR]),
                                         KH2Location(564, "CoR Depths Frost Crystal", locationCategory.CHEST,[locationType.HB, locationType.CoR]),
@@ -726,10 +851,21 @@ class Locations:
         self.add_node("CoR-8",LocationNode([KH2Location(579, "CoR Mineshaft Upper Level AP Boost", locationCategory.CHEST,[locationType.HB, locationType.CoR]),]))
         self.add_node("CoR-9",LocationNode([KH2Location(72, "Transport to Remembrance", locationCategory.STATBONUS,[locationType.HB, locationType.CoR, locationType.TTR]),]))
 
-        if not self.built_hb_graph:
-            raise AssertionError("Need to initialize the HB graph before CoR graph")
+
+        self.data_nodes.append("HB-20")
 
         if not self.reverse_rando:
+            self.add_edge("Starting","HB-1",RequirementEdge())
+            self.add_edge("HB-1","HB-2",RequirementEdge())
+            self.add_edge("HB-2","HB-3",RequirementEdge())
+            self.add_edge("HB-3","HB-4",RequirementEdge(battle=True))
+            self.add_edge("HB-4","HB-5",RequirementEdge())
+            self.add_edge("HB-5","HB-6",RequirementEdge())
+            self.add_edge("HB-6","HB-7",RequirementEdge())
+            self.add_edge("HB-7","HB-8",RequirementEdge())
+            self.add_edge("HB-7","HB-9",RequirementEdge())
+            self.add_edge("HB-8","HB-10",RequirementEdge())
+
             self.add_edge("HB-8","CoR-1",RequirementEdge())
             self.add_edge("CoR-1","CoR-2",RequirementEdge())
             self.add_edge("CoR-2","CoR-3",RequirementEdge(battle=True))
@@ -738,7 +874,52 @@ class Locations:
             self.add_edge("CoR-5","CoR-6",RequirementEdge(battle=True))
             self.add_edge("CoR-6","CoR-7",RequirementEdge())
             self.add_edge("CoR-7","CoR-8",RequirementEdge())
-            self.add_edge("CoR-8","CoR-9",RequirementEdge())
+            self.add_edge("CoR-8","CoR-9",RequirementEdge(battle=True))
+
+            self.add_edge("HB-8","HB-11",RequirementEdge(battle=True))
+            self.add_edge("HB-11","HB-12",RequirementEdge(battle=True))
+            self.add_edge("HB-12","HB-13",RequirementEdge(battle=True))
+            self.add_edge("HB-13","HB-14",RequirementEdge())
+            self.add_edge("HB-14","HB-15",RequirementEdge(battle=True))
+            self.add_edge("HB-15","HB-16",RequirementEdge())
+            self.add_edge("HB-15","HB-17",RequirementEdge())
+            self.add_edge("HB-15","HB-18",RequirementEdge(battle=True))
+            self.add_edge("HB-15","HB-19",RequirementEdge())
+            self.add_edge("HB-15","HB-20",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("HB-4")
+            self.second_boss_nodes.append("HB-15")
+        else:
+            self.add_edge("Starting","HB-2",RequirementEdge())
+            self.add_edge("HB-2","HB-6",RequirementEdge())
+            self.add_edge("HB-6","HB-7",RequirementEdge())
+            self.add_edge("HB-7","HB-8",RequirementEdge())
+            self.add_edge("HB-7","HB-9",RequirementEdge())
+            self.add_edge("HB-8","HB-10",RequirementEdge())
+            self.add_edge("HB-8","HB-11",RequirementEdge(battle=True))
+            self.add_edge("HB-11","HB-12",RequirementEdge(battle=True))
+            self.add_edge("HB-12","HB-13",RequirementEdge(battle=True))
+            self.add_edge("HB-13","HB-14",RequirementEdge())
+            self.add_edge("HB-14","HB-15",RequirementEdge(battle=True))
+            self.add_edge("HB-15","HB-16",RequirementEdge())
+            self.add_edge("HB-15","HB-17",RequirementEdge())
+            self.add_edge("HB-15","CoR-1",RequirementEdge())
+            self.add_edge("CoR-1","CoR-2",RequirementEdge())
+            self.add_edge("CoR-2","CoR-3",RequirementEdge(battle=True))
+            self.add_edge("CoR-3","CoR-4",RequirementEdge())
+            self.add_edge("CoR-4","CoR-5",RequirementEdge())
+            self.add_edge("CoR-5","CoR-6",RequirementEdge(battle=True))
+            self.add_edge("CoR-6","CoR-7",RequirementEdge())
+            self.add_edge("CoR-7","CoR-8",RequirementEdge())
+            self.add_edge("CoR-8","CoR-9",RequirementEdge(battle=True))
+            self.add_edge("CoR-9","HB-19",RequirementEdge())
+            self.add_edge("CoR-9","HB-18",RequirementEdge())
+            self.add_edge("HB-18","HB-1",RequirementEdge())
+            self.add_edge("HB-1","HB-3",RequirementEdge())
+            self.add_edge("HB-3","HB-4",RequirementEdge(battle=True))
+            self.add_edge("HB-4","HB-5",RequirementEdge())
+            self.add_edge("HB-5","HB-20",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("HB-15")
+            self.second_boss_nodes.append("HB-4")
 
     def makePLGraph(self):
         self.add_node("PL-1",LocationNode([KH2Location(492, "Gorge Savannah Map", locationCategory.CHEST,[locationType.PL]),
@@ -792,6 +973,22 @@ class Locations:
             self.add_edge("PL-12","PL-13",RequirementEdge(battle=True))
             self.first_boss_nodes.append("PL-10")
             self.second_boss_nodes.append("PL-12")
+        else:
+            self.add_edge("Starting","PL-3",RequirementEdge())
+            self.add_edge("PL-3","PL-2",RequirementEdge())
+            self.add_edge("PL-2","PL-11",RequirementEdge(battle=True))
+            self.add_edge("PL-11","PL-4",RequirementEdge())
+            self.add_edge("PL-4","PL-5",RequirementEdge())
+            self.add_edge("PL-5","PL-6",RequirementEdge())
+            self.add_edge("PL-6","PL-12",RequirementEdge(battle=True))
+            self.add_edge("PL-12","PL-1",RequirementEdge())
+            self.add_edge("PL-1","PL-7",RequirementEdge(battle=True))
+            self.add_edge("PL-7","PL-8",RequirementEdge())
+            self.add_edge("PL-8","PL-9",RequirementEdge(battle=True))
+            self.add_edge("PL-9","PL-10",RequirementEdge(battle=True))
+            self.add_edge("PL-10","PL-13",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("PL-12")
+            self.second_boss_nodes.append("PL-10")
 
     def makeSTTGraph(self):
         self.add_node("STT-1",LocationNode([KH2Location(319, "Twilight Town Map", locationCategory.POPUP,[locationType.STT]),]))
@@ -837,12 +1034,30 @@ class Locations:
             self.add_edge("STT-8","STT-9",RequirementEdge(battle=True))
             self.add_edge("STT-9","STT-10",RequirementEdge())
             self.add_edge("STT-9","STT-11",RequirementEdge())
-            self.add_edge("STT-9","STT-12",RequirementEdge())
+            self.add_edge("STT-11","STT-12",RequirementEdge())
             self.add_edge("STT-11","STT-13",RequirementEdge(battle=True))
             self.add_edge("STT-13","STT-14",RequirementEdge())
             self.add_edge("STT-14","STT-15",RequirementEdge(battle=True))
             self.first_boss_nodes.append("STT-14")
             self.second_boss_nodes.append("STT-14")
+        else:
+            self.add_edge("Starting","STT-9",RequirementEdge())
+            self.add_edge("STT-9","STT-10",RequirementEdge())
+            self.add_edge("STT-9","STT-11",RequirementEdge())
+            self.add_edge("STT-11","STT-12",RequirementEdge())
+            self.add_edge("STT-11","STT-13",RequirementEdge(battle=True))
+            self.add_edge("STT-13","STT-14",RequirementEdge())
+            self.add_edge("STT-14","STT-7",RequirementEdge())
+            self.add_edge("STT-14","STT-8",RequirementEdge())
+            self.add_edge("STT-8","STT-5",RequirementEdge(battle=True))
+            self.add_edge("STT-5","STT-6",RequirementEdge(battle=True))
+            self.add_edge("STT-6","STT-3",RequirementEdge())
+            self.add_edge("STT-3","STT-4",RequirementEdge(battle=True))
+            self.add_edge("STT-4","STT-1",RequirementEdge(battle=True))
+            self.add_edge("STT-1","STT-2",RequirementEdge())
+            self.add_edge("STT-2","STT-15",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("STT-2")
+            self.second_boss_nodes.append("STT-2")
 
     
     def makeTTGraph(self):
@@ -927,6 +1142,32 @@ class Locations:
             self.add_edge("TT-22","TT-23",RequirementEdge(battle=True))
             self.first_boss_nodes.append("TT-10")
             self.second_boss_nodes.append("TT-22")
+        else:
+            self.add_edge("Starting","TT-5",RequirementEdge())
+            self.add_edge("TT-5","TT-13",RequirementEdge())
+            self.add_edge("TT-5","TT-3",RequirementEdge())
+            self.add_edge("TT-3","TT-2",RequirementEdge())
+            self.add_edge("TT-13","TT-14",RequirementEdge())
+            self.add_edge("TT-14","TT-15",RequirementEdge())
+            self.add_edge("TT-2","TT-16",RequirementEdge(battle=True))
+            self.add_edge("TT-16","TT-1",RequirementEdge())
+            self.add_edge("TT-16","TT-17",RequirementEdge())
+            self.add_edge("TT-17","TT-18",RequirementEdge())
+            self.add_edge("TT-17","TT-19",RequirementEdge())
+            self.add_edge("TT-17","TT-20",RequirementEdge())
+            self.add_edge("TT-17","TT-21",RequirementEdge())
+            self.add_edge("TT-20","TT-22",RequirementEdge(battle=True))
+            self.add_edge("TT-22","TT-11",RequirementEdge(battle=True))
+            self.add_edge("TT-11","TT-12",RequirementEdge())
+            self.add_edge("TT-12","TT-4",RequirementEdge(battle=True))
+            self.add_edge("TT-4","TT-6",RequirementEdge())
+            self.add_edge("TT-6","TT-7",RequirementEdge())
+            self.add_edge("TT-7","TT-8",RequirementEdge(battle=True))
+            self.add_edge("TT-8","TT-9",RequirementEdge())
+            self.add_edge("TT-9","TT-10",RequirementEdge())
+            self.add_edge("TT-10","TT-23",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("TT-22")
+            self.second_boss_nodes.append("TT-10")
 
 
     def makeTWTNWGraph(self):
@@ -988,10 +1229,34 @@ class Locations:
             self.add_edge("TWTNW-16","TWTNW-17",RequirementEdge())
             self.add_edge("TWTNW-17","TWTNW-18",RequirementEdge(battle=True))
             self.add_edge("TWTNW-18","TWTNW-19",RequirementEdge())
-            self.add_edge("TWTNW-19","TWTNW-20",RequirementEdge())
-            self.add_edge("TWTNW-19","TWTNW-21",RequirementEdge())
+            self.add_edge("TWTNW-19","TWTNW-20",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-19","TWTNW-21",RequirementEdge(battle=True))
             self.first_boss_nodes.append("TWTNW-19")
             self.second_boss_nodes.append("TWTNW-19")
+        else:
+            self.add_edge("Starting","TWTNW-1",RequirementEdge())
+            self.add_edge("TWTNW-1","TWTNW-18",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-18","TWTNW-19",RequirementEdge())
+            self.add_edge("TWTNW-19","TWTNW-4",RequirementEdge())
+            self.add_edge("TWTNW-4","TWTNW-5",RequirementEdge())
+            self.add_edge("TWTNW-5","TWTNW-6",RequirementEdge())
+            self.add_edge("TWTNW-6","TWTNW-7",RequirementEdge())
+            self.add_edge("TWTNW-7","TWTNW-14",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-14","TWTNW-15",RequirementEdge())
+            self.add_edge("TWTNW-15","TWTNW-10",RequirementEdge())
+            self.add_edge("TWTNW-10","TWTNW-11",RequirementEdge())
+            self.add_edge("TWTNW-11","TWTNW-12",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-12","TWTNW-13",RequirementEdge())
+            self.add_edge("TWTNW-13","TWTNW-8",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-8","TWTNW-9",RequirementEdge())
+            self.add_edge("TWTNW-9","TWTNW-16",RequirementEdge())
+            self.add_edge("TWTNW-16","TWTNW-17",RequirementEdge())
+            self.add_edge("TWTNW-17","TWTNW-2",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-2","TWTNW-3",RequirementEdge())
+            self.add_edge("TWTNW-3","TWTNW-20",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-3","TWTNW-21",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("TWTNW-3")
+            self.second_boss_nodes.append("TWTNW-3")
 
 
 
@@ -1005,6 +1270,10 @@ class Locations:
             self.add_edge("Starting","ATL-1",RequirementEdge())
             self.add_edge("ATL-1","ATL-2",RequirementEdge())
             self.add_edge("ATL-2","ATL-3",RequirementEdge())
+        else:
+            self.add_edge("Starting","ATL-3",RequirementEdge())
+            self.add_edge("ATL-3","ATL-2",RequirementEdge())
+            self.add_edge("ATL-2","ATL-1",RequirementEdge())
 
 
     @staticmethod
