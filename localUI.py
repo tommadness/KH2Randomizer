@@ -482,7 +482,6 @@ class KH2RandomizerApp(QMainWindow):
 
 
     def firstTimeSetup(self, config):
-        print("First Time Setup")
         setup = FirstTimeSetup(config)
         setup.exec()
 

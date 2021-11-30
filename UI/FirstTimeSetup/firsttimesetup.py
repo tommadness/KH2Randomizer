@@ -41,7 +41,17 @@ class FirstTimeSetup(QDialog):
 
         self.pages = QStackedWidget()
         firstPage = self.basePage(title="Welcome to Kingdom Hearts II: Final Mix Randomizer", description="Please select a game version to setup.")
+
+        navWidget = QWidget()
+        nav = QHBoxLayout(navWidget)
+        pcsx2Button = QPushButton(text="PCSX2")
+        pcButton = QPushButton(text="PC")
+        nav.addWidget(pcsx2Button)
+        nav.addWidget(pcButton)
+
         firstPage.layout().addWidget(self.validationField("OpenKH Location", validFileName="OpenKh.Tools.ModsManager.exe", download=Downloader.openKHDownload))
+
+
 
 
         pcsx2Page = self.basePage(title="Setup PCSX2", description="Set location of files required for PCSX2 Randomizer")
@@ -58,16 +68,11 @@ class FirstTimeSetup(QDialog):
         self.pages.addWidget(pcsx2Page)
         self.pages.addWidget(pcPage)
 
-        pcsx2Button = QPushButton(text="PCSX2")
         pcsx2Button.clicked.connect(lambda pcsx2Page=pcsx2Page, pages=self.pages: pages.setCurrentWidget(pcsx2Page))
 
-        pcButton = QPushButton(text="PC")
         pcButton.clicked.connect(lambda pcPage=pcPage, pages=self.pages: pages.setCurrentWidget(pcPage))
 
-        navWidget = QWidget()
-        nav = QHBoxLayout(navWidget)
-        nav.addWidget(pcsx2Button)
-        nav.addWidget(pcButton)
+
         firstPage.layout().addWidget(navWidget)
 
 
@@ -90,7 +95,7 @@ class FirstTimeSetup(QDialog):
         page.setLayout(layout)
         return page
 
-    def validationField(self, label, validFileName=None, type="Folder", disabled=False, download=None):
+    def validationField(self, label, onValid=lambda: print("Lambda Not Passed"), validFileName=None, type="Folder", disabled=False, download=None):
         widget = QWidget()
 
         layout = QGridLayout(widget)
@@ -108,6 +113,7 @@ class FirstTimeSetup(QDialog):
         if type=="Folder":
             button.clicked.connect(lambda label=label, textBox=textBox: self.selectFolder(label, textBox))
         layout.addWidget(button,2,2)
+        textBox.editingFinished.connect(lambda: onValid())
 
         return widget
 
@@ -116,6 +122,7 @@ class FirstTimeSetup(QDialog):
         textBox.setText(path)
         
         pass
+
 
 class ValidatePath(QtGui.QValidator):
     def __init__(self, contains, download=None):
@@ -134,7 +141,8 @@ class ValidatePath(QtGui.QValidator):
             layout = QVBoxLayout()
             label = QLabel("{downloadName} will be downloaded to\r\n{input}".format(input=input, downloadName=self.download["name"]))
             label.setWordWrap(True)
-            buttonBox = QDialogButtonBox(QDialogButtonBox.Ok or QDialogButtonBox.Cancel, QtCore.Qt.Horizontal)
+            buttonBox = QDialogButtonBox(QDialogButtonBox.Ok, QtCore.Qt.Horizontal)
+            buttonBox.addButton(QDialogButtonBox.Cancel)
             buttonBox.accepted.connect(lambda: dialog.accept())
             buttonBox.rejected.connect(lambda: dialog.reject())
             layout.addWidget(label)
