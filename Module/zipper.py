@@ -26,6 +26,7 @@ class SeedZip():
         self.formattedFmlv = {}
         self.formattedItem = {"Stats":[]}
         self.formattedPlrp = []
+        self.spoiler_log = None
 
         self.assignTreasures(randomizer)
         self.assignLevels(randomizer)
@@ -76,10 +77,12 @@ class SeedZip():
             if settings.spoiler_log:
                 mod["title"] += " w/ Spoiler"
                 with open(resource_path("static/spoilerlog.html")) as spoiler_site:
-                    html_template = spoiler_site.read().replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems), indent=4, cls=ItemEncoder)) \
+                    html_template = spoiler_site.read().replace("SEED_NAME_STRING",settings.random_seed) \
+                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))
                     outZip.writestr("spoilerlog.html",html_template)
+                    self.spoiler_log = html_template
                     outZip.write(resource_path("static/KHMenu.otf"), "KHMenu.otf")
                 if enemySpoilers:
                     outZip.writestr("enemyspoilers.txt", enemySpoilers)
@@ -105,9 +108,9 @@ class SeedZip():
                     byte1 = 24420+puzz.location.LocationId*16+1
                     item = puzz.item.Id
                         
-                        # for byte1, find the most significant bits from the item Id
+                    # for byte1, find the most significant bits from the item Id
                     itemByte1 = item>>8
-                        # for byte0, isolate the least significant bits from the item Id
+                    # for byte0, isolate the least significant bits from the item Id
                     itemByte0 = item & 0x00FF
                     binaryContent[byte0] = itemByte0
                     binaryContent[byte1] = itemByte1

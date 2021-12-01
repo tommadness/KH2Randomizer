@@ -339,7 +339,15 @@ _all_settings = [
             locationDepth.Anywhere.name: "Anywhere"
         },
         shared=True,
-        default=locationDepth.SecondVisit.name
+        default=locationDepth.SecondVisit.name,
+        tooltip=textwrap.dedent('''
+            Data Fights - Force the item onto datas
+            First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
+            First/Second Visit - Force the item to not be on a data (all other locations possible)
+            First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
+            Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
+            Anywhere - No restriction
+        ''')
     ),
     SingleSelect(
         name=settingkey.PROOF_DEPTH,
@@ -353,21 +361,31 @@ _all_settings = [
             locationDepth.Anywhere.name: "Anywhere"
         },
         shared=True,
-        default=locationDepth.Anywhere.name
+        default=locationDepth.Anywhere.name,
+        tooltip=textwrap.dedent('''
+            Data Fights - Force the item onto datas
+            First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
+            First/Second Visit - Force the item to not be on a data (all other locations possible)
+            First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
+            Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
+            Anywhere - No restriction
+        ''')
     ),
 
     Toggle(
         name=settingkey.PREVENT_SELF_HINTING,
         ui_label='Remove Self-Hinting Reports',
         shared=True,
-        default=False
+        default=False,
+        tooltip="Reports must hint a world that is different from where that report was found."
     ),
 
     Toggle(
         name=settingkey.ALLOW_PROOF_HINTING,
         ui_label='Reports can Hint Proofs',
         shared=True,
-        default=False
+        default=False,
+        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports"
     ),
 
     IntSpinner(
@@ -539,7 +557,8 @@ _all_settings = [
         name=settingkey.ENABLE_PROMISE_CHARM,
         ui_label='Enable Promise Charm',
         shared=True,
-        default=False
+        default=False,
+        tooltip="If enabled, the promise charm will be added to the item pool, which can allow skipping TWTNW."
     ),
 
     SingleSelect(
@@ -557,15 +576,6 @@ _all_settings = [
         shared=True,
         default='Normal'
     ),
-
-    Toggle(
-        name=settingkey.MAX_LOGIC_ITEM_PLACEMENT,
-        ui_label='Max Logic Item Placement',
-        shared=True,
-        default=False,
-        tooltip='Less restricted item placement (all checks still obtainable)'
-    ),
-
     Toggle(
         name=settingkey.REVERSE_RANDO,
         ui_label='Reverse Rando',

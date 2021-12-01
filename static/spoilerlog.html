@@ -3,6 +3,7 @@
     <head>
         <title>KH2FM Randomizer Spoiler Log</title>
     <script>
+        seed_name = "SEED_NAME_STRING"
         sora_item_data = SORA_ITEM_JSON
         donald_item_data = DONALD_ITEM_JSON
         goofy_item_data = GOOFY_ITEM_JSON
@@ -113,6 +114,7 @@
     </head>
     <body>
         <div class="content">
+            <h1 id="seed_header"></h1>
             <button class="accordion">Sora Item Placement</button>
             <div class="panel">
                 <div class="table-wrapper">
@@ -141,6 +143,8 @@
     </body>
 
     <script>
+        document.getElementById("seed_header").innerText = seed_name;
+
         var acc = document.getElementsByClassName("accordion");
         for(var i = 0; i < acc.length; i++)
         {

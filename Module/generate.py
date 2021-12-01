@@ -16,7 +16,7 @@ def generateSeed(settings: RandomizerSettings,data):
             seedValidation.validateSeed(settings,randomizer)
             hints = Hints.generateHints(randomizer.assignedItems,settings.hintsType,settings.random_seed,settings.disabledLocations)
             zipper = SeedZip(settings,randomizer,hints,data)
-            return zipper.outputZip
+            return zipper.outputZip, zipper.spoiler_log
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
             settings.random_seed = (''.join(random.choice(characters) for i in range(30)))

@@ -22,6 +22,7 @@ import pytz
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QThread, Signal
 from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
@@ -81,8 +82,8 @@ class GenSeedThread(QThread):
 
     def run(self):
         try:
-            zip_file = generateSeed(self.rando_settings, self.data)
-            self.finished.emit(zip_file)
+            zip_file,spoiler_log = generateSeed(self.rando_settings, self.data)
+            self.finished.emit((zip_file,spoiler_log))
         except Exception as e:
             self.failed.emit(e)
 
@@ -162,6 +163,9 @@ class KH2RandomizerApp(QMainWindow):
 
         for i in range(len(self.widgets)):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())
+
+        self.spoiler_log_widget = QWebEngineView()
+        self.tabs.addTab(self.spoiler_log_widget,"Spoiler")
 
         submit_layout.addWidget(QLabel("Seed Hash"))
 
@@ -281,10 +285,15 @@ class KH2RandomizerApp(QMainWindow):
             open(outfile_name, "wb").write(self.zip_file.getbuffer())
         self.zip_file=None
 
+    def showSpoiler(self):
+        self.spoiler_log_widget.setHtml(self.spoiler_log_output)
+
     def handleResult(self,result):
         self.progress.close()
         self.progress = None
-        self.zip_file = result
+        self.zip_file = result[0]
+        self.spoiler_log_output = result[1] if result[1] else "<html>No spoiler log generated</html>"
+        self.showSpoiler()
         self.downloadSeed()
 
     def handleFailure(self, failure: Exception):
@@ -292,6 +301,7 @@ class KH2RandomizerApp(QMainWindow):
             self.progress.close()
         self.progress = None
         message = QMessageBox(text=str(repr(failure)))
+        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
         message.setWindowTitle("Seed Generation Error")
         message.exec()
 
