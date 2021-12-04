@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from Class.exceptions import GeneratorException,CantAssignItemException
 from Class.newLocationClass import KH2Location
-from Class.itemClass import KH2Item
+from Class.itemClass import KH2Item, itemRarity
 from List.configDict import locationCategory, itemType, locationType
 from List.ItemList import Items
 from List.NewLocationList import Locations
@@ -204,7 +204,7 @@ class Randomizer():
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):
             raise GeneratorException(f"Separating valid {len(validLocations)} and invalid {len(invalidLocations)} locations removed locations from existence (total {len(allLocations)} )")
         
-        self.assignKeybladeAbilities(settings, allAbilities)
+        self.assignKeybladeAbilities(settings, allAbilities, allItems)
         allItems+=allAbilities
 
         restricted_reports = self.report_depths.very_restricted_locations
@@ -263,19 +263,42 @@ class Randomizer():
             if not self.proof_depths.isValid(loc):
                 loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
     
-    def assignKeybladeAbilities(self, settings, allAbilities):
+    def assignKeybladeAbilities(self, settings: RandomizerSettings, allAbilities, allItems):
         """Assign abilities to keyblades. """
         keybladeLocations = Locations.WeaponList()
         eligible_ids = set(settings.keyblade_support_abilities + settings.keyblade_action_abilities)
+
+        #remove auto abilities from keyblades
+        if settings.itemPlacementDifficulty == "Nightmare":
+            eligible_ids.discard(385)
+            eligible_ids.discard(386)
+            eligible_ids.discard(387)
+            eligible_ids.discard(388)
+            eligible_ids.discard(568)
+
         keybladeAbilities = [abil for abil in allAbilities if abil.Id in eligible_ids]
+        nightmareRarityWeights = {itemRarity.COMMON:1, itemRarity.UNCOMMON:2, itemRarity.RARE:5, itemRarity.MYTHIC: 5}
 
         #assign all the abilities for keyblades
         for keyblade in keybladeLocations:
             if keybladeAbilities:
-                randomAbility = random.choice(keybladeAbilities)
+                if settings.itemPlacementDifficulty == "Nightmare" and keyblade.LocationId not in [116,83,84,80]:
+                    abilityWeights = [nightmareRarityWeights[abil.Rarity] for abil in keybladeAbilities]
+                else:
+                    abilityWeights = [1 for abil in keybladeAbilities]
+                randomAbility = random.choices(keybladeAbilities,abilityWeights)[0]
                 self.assignItem(keyblade,randomAbility)
                 allAbilities.remove(randomAbility)
                 keybladeAbilities.remove(randomAbility)
+
+                if settings.itemPlacementDifficulty == "Nightmare" and randomAbility.Rarity in [itemRarity.RARE,itemRarity.MYTHIC]:
+                    # change the rarity of the keyblade item to the rarity of the ability
+                    keyItemId = Items.locationToKeybladeItem(keyblade.LocationId)
+                    if keyItemId:
+                        keybladeItem = [key for key in allItems if key.Id == keyItemId][0]
+                        allItems.remove(keybladeItem)
+                        allItems.append(KH2Item(keybladeItem.Id,keybladeItem.Name,keybladeItem.ItemType,randomAbility.Rarity))
+
             else:
                 raise GeneratorException(
                     'Keyblades: Not enough abilities are available to assign an ability to every keyblade'

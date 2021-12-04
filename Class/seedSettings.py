@@ -510,14 +510,16 @@ _all_settings = [
         choices={location.name: location.value for location in [
             locationType.OCCups,
             locationType.OCParadoxCup,
-            locationType.Puzzle
+            locationType.Puzzle,
+            locationType.TTR
         ]},
         shared=True,
         default=[],
         choice_icons={
             locationType.OCCups.name: 'icons/misc/cups.png',
             locationType.OCParadoxCup.name: 'icons/misc/paradox_cup.png',
-            locationType.Puzzle.name: 'icons/misc/puzzle.png'
+            locationType.Puzzle.name: 'icons/misc/puzzle.png',
+            locationType.TTR.name: 'icons/misc/transport.png'
         }
     ),
 

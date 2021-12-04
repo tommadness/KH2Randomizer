@@ -425,6 +425,38 @@ class Items:
     def getNullItem():
         return KH2Item(0,"", itemType.SYNTH)
 
+
+    @staticmethod
+    def locationToKeybladeItem(location_id):
+        location_to_item = {116:None,
+                            83:None,
+                            84:None,
+                            80:None,
+                            81:42,
+                            82:43,
+                            123:480,
+                            124:481,
+                            127:484,
+                            128:485,
+                            129:486,
+                            130:487,
+                            131:488,
+                            132:489,
+                            133:490,
+                            134:491,
+                            135:492,
+                            136:493,
+                            138:495,
+                            139:496,
+                            137:494,
+                            141:498,
+                            148:543,
+                            140:497,
+                            142:499,
+                            143:500,
+                            149:544}
+        return location_to_item[location_id]
+
     @staticmethod
     def getJunkList(betterJunk):
         if betterJunk:

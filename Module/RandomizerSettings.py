@@ -61,7 +61,10 @@ class RandomizerSettings():
 
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
-        self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
+        if self.hintsType in ["JSmartee","Points"]:
+            self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
+        else:
+            self.reportDepth = locationDepth.Anywhere
         self.proofDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.PROOF_DEPTH)][0]
         self.prevent_self_hinting = ui_settings.get(settingkey.PREVENT_SELF_HINTING)
         self.allow_proof_hinting = ui_settings.get(settingkey.ALLOW_PROOF_HINTING)
@@ -94,7 +97,6 @@ class RandomizerSettings():
         random.seed(self.random_seed + str(spoiler_log) + ui_version + str(ui_settings.settings_json()))
         self.seedHashIcons = generateHashIcons()
 
-
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
 
         self.antiform = False
@@ -104,6 +106,9 @@ class RandomizerSettings():
     def validateSettings(self):
         if self.reportDepth == self.proofDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
             raise SettingsException("Proof depth and report depth can't be the same")
+        
+        if locationType.TTR in self.enabledLocations and not self.statSanity:
+            raise SettingsException("Enabling Transport to Remembrance when not in Statsanity is incorrect. Enable Statsanity or disable TTR.")
 
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel
