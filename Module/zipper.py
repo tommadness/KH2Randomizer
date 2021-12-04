@@ -2,6 +2,7 @@ import io
 import json
 import yaml
 import zipfile
+from itertools import accumulate
 
 from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
@@ -12,7 +13,7 @@ from Module.newRandomize import Randomizer
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.resources import resource_path
-from Module.spoilerLog import itemSpoilerDictionary
+from Module.spoilerLog import itemSpoilerDictionary, levelStatsDictionary
 
 
 def noop(self, *args, **kw):
@@ -38,7 +39,7 @@ class SeedZip():
         self.assignStartingItems(settings, randomizer)
         self.createZip(settings, randomizer, hints, cosmetics_data)
 
-    def createZip(self, settings, randomizer, hints, cosmetics_data):
+    def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data):
         mod = modYml.getDefaultMod()
         sys = modYml.getSysYAML(settings.seedHashIcons)
 
@@ -65,6 +66,7 @@ class SeedZip():
             randomBGMOptions = cosmetics_data["randomBGM"]
 
             enemySpoilers = None
+            enemySpoilersJSON = {}
             if not settings.enemy_options["boss"] == "Disabled" or not settings.enemy_options["enemy"] == "Disabled" or settings.enemy_options["remove_damage_cap"]:
                 if platform == "PC":
                     settings.enemy_options["memory_expansion"] = True
@@ -73,14 +75,39 @@ class SeedZip():
                 if settings.enemy_options.get("boss", False) or settings.enemy_options.get("enemy", False) or settings.enemy_options.get("remove_damage_cap", False):
                     from khbr.randomizer import Randomizer as khbr
                     enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
+                    lines = enemySpoilers.split("\n")
+
+                    current_key = ""
+                    for line in lines:
+                        if '\t' in line:
+                            modded_line = line.replace('\t','')
+                            enemies = modded_line.split(" became ")
+                            # this is adding to the current list
+                            new_entry = {}
+                            new_entry["original"] = enemies[0]
+                            new_entry["new"] = enemies[1]
+                            enemySpoilersJSON[current_key].append(new_entry)
+                        elif line!="":
+                            current_key = line
+                            enemySpoilersJSON[current_key] = []
 
             if settings.spoiler_log:
                 mod["title"] += " w/ Spoiler"
                 with open(resource_path("static/spoilerlog.html")) as spoiler_site:
                     html_template = spoiler_site.read().replace("SEED_NAME_STRING",settings.random_seed) \
-                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems), indent=4, cls=ItemEncoder)) \
+                                                       .replace("LEVEL_STATS_JSON",json.dumps(levelStatsDictionary(randomizer.levelStats))) \
+                                                       .replace("FORM_EXP_JSON",json.dumps({"Summon": {"multiplier": settings.summon_exp_multiplier, "values": list(accumulate(settings.summon_exp))},
+                                                                                            "Valor": {"multiplier": settings.valor_exp_multiplier, "values": list(accumulate(settings.valor_exp))},
+                                                                                            "Wisdom": {"multiplier": settings.wisdom_exp_multiplier, "values": list(accumulate(settings.wisdom_exp))},
+                                                                                            "Limit": {"multiplier": settings.limit_exp_multiplier, "values": list(accumulate(settings.limit_exp))},
+                                                                                            "Master": {"multiplier": settings.master_exp_multiplier, "values": list(accumulate(settings.master_exp))},
+                                                                                            "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
+                                                       .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
+                                                       .replace("SETTINGS_JSON",json.dumps(settings.full_ui_settings)) \
+                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
-                                                       .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))
+                                                       .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
+                                                       .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON))
                     outZip.writestr("spoilerlog.html",html_template)
                     self.spoiler_log = html_template
                     outZip.write(resource_path("static/KHMenu.otf"), "KHMenu.otf")

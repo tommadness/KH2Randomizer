@@ -22,7 +22,6 @@ import pytz
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QThread, Signal
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
@@ -96,6 +95,7 @@ class KH2RandomizerApp(QMainWindow):
         self.dailySeedName = self.startTime.strftime('%d-%m-%Y')
         self.mods = getDailyModifiers(self.startTime)
         self.progress = None
+        self.spoiler_log_output = "<html>No spoiler log generated</html>"
 
         self.settings = SeedSettings()
 
@@ -163,9 +163,6 @@ class KH2RandomizerApp(QMainWindow):
 
         for i in range(len(self.widgets)):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())
-
-        self.spoiler_log_widget = QWebEngineView()
-        self.tabs.addTab(self.spoiler_log_widget,"Spoiler")
 
         submit_layout.addWidget(QLabel("Seed Hash"))
 
@@ -248,7 +245,7 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setText(seedString)
 
         try:
-            rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings)
+            rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
             # update the seed hash display
             for index, icon in enumerate(rando_settings.seedHashIcons):
                 self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
@@ -285,15 +282,12 @@ class KH2RandomizerApp(QMainWindow):
             open(outfile_name, "wb").write(self.zip_file.getbuffer())
         self.zip_file=None
 
-    def showSpoiler(self):
-        self.spoiler_log_widget.setHtml(self.spoiler_log_output)
 
     def handleResult(self,result):
         self.progress.close()
         self.progress = None
         self.zip_file = result[0]
         self.spoiler_log_output = result[1] if result[1] else "<html>No spoiler log generated</html>"
-        self.showSpoiler()
         self.downloadSeed()
 
     def handleFailure(self, failure: Exception):
@@ -341,6 +335,14 @@ class KH2RandomizerApp(QMainWindow):
             widget.update_widgets()
 
     def shareSeed(self):
+        output_text = self.createSharedString()
+
+        pc.copy(output_text)
+        message = QMessageBox(text="Copied seed to clipboard")
+        message.setWindowTitle("KH2 Seed Generator")
+        message.exec()
+
+    def createSharedString(self):
         self.fixSeedName()
 
         # if seed hasn't been set yet, make one
@@ -357,11 +359,7 @@ class KH2RandomizerApp(QMainWindow):
             settings_string=self.settings.settings_string()
         )
         output_text = shared_seed.to_share_string()
-
-        pc.copy(output_text)
-        message = QMessageBox(text="Copied seed to clipboard")
-        message.setWindowTitle("KH2 Seed Generator")
-        message.exec()
+        return output_text
 
     def receiveSeed(self):
         try:

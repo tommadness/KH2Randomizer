@@ -1175,8 +1175,8 @@ class Locations:
                                             KH2Location(375, "Fragment Crossing Mythril Crystal", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(376, "Fragment Crossing AP Boost", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(377, "Fragment Crossing Orichalcum", locationCategory.CHEST,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-2",LocationNode([KH2Location(69, "Roxas", locationCategory.HYBRIDBONUS,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-3",LocationNode([KH2Location(532, "Roxas Secret Ansem Report 8", locationCategory.POPUP,[locationType.TWTNW]),
+        self.add_node("TWTNW-2",LocationNode([KH2Location(69, "Roxas", locationCategory.HYBRIDBONUS,[locationType.TWTNW]),
+                                            KH2Location(532, "Roxas Secret Ansem Report 8", locationCategory.POPUP,[locationType.TWTNW]),
                                             KH2Location(277, "Two Become One", locationCategory.POPUP,[locationType.TWTNW]),]))
         self.add_node("TWTNW-4",LocationNode([KH2Location(391, "Memory's Skyscaper Mythril Crystal", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(523, "Memory's Skyscaper AP Boost", locationCategory.CHEST,[locationType.TWTNW]),
@@ -1186,24 +1186,24 @@ class Locations:
         self.add_node("TWTNW-6",LocationNode([KH2Location(378, "Nothing's Call Mythril Gem", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(379, "Nothing's Call Orichalcum", locationCategory.CHEST,[locationType.TWTNW]),]))
         self.add_node("TWTNW-7",LocationNode([KH2Location(336, "Twilight's View Cosmic Belt", locationCategory.CHEST,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-8",LocationNode([KH2Location(23, "Xigbar Bonus", locationCategory.STATBONUS,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-9",LocationNode([KH2Location(527, "Xigbar Secret Ansem Report 3", locationCategory.POPUP,[locationType.TWTNW]),]))
+        self.add_node("TWTNW-8",LocationNode([KH2Location(23, "Xigbar Bonus", locationCategory.STATBONUS,[locationType.TWTNW]),
+                                              KH2Location(527, "Xigbar Secret Ansem Report 3", locationCategory.POPUP,[locationType.TWTNW]),]))
         self.add_node("TWTNW-10",LocationNode([KH2Location(380, "Naught's Skyway Mythril Gem", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(381, "Naught's Skyway Orichalcum", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(382, "Naught's Skyway Mythril Crystal", locationCategory.CHEST,[locationType.TWTNW]),]))
         self.add_node("TWTNW-11",LocationNode([KH2Location(278, "Oblivion", locationCategory.POPUP,[locationType.TWTNW]),
                                             KH2Location(496, "Castle That Never Was Map", locationCategory.POPUP,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-12",LocationNode([KH2Location(24, "Luxord Bonus", locationCategory.HYBRIDBONUS,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-13",LocationNode([KH2Location(533, "Luxord Secret Ansem Report 9", locationCategory.POPUP,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-14",LocationNode([KH2Location(25, "Saix Bonus", locationCategory.STATBONUS,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-15",LocationNode([KH2Location(536, "Saix Secret Ansem Report 12", locationCategory.POPUP,[locationType.TWTNW]),]))
+        self.add_node("TWTNW-12",LocationNode([KH2Location(24, "Luxord Bonus", locationCategory.HYBRIDBONUS,[locationType.TWTNW]),
+                                               KH2Location(533, "Luxord Secret Ansem Report 9", locationCategory.POPUP,[locationType.TWTNW]),]))
+        self.add_node("TWTNW-14",LocationNode([KH2Location(25, "Saix Bonus", locationCategory.STATBONUS,[locationType.TWTNW]),
+                                               KH2Location(536, "Saix Secret Ansem Report 12", locationCategory.POPUP,[locationType.TWTNW]),]))
         self.add_node("TWTNW-16",LocationNode([KH2Location(535, "(Pre-Xemnas 1) Secret Ansem Report 11", locationCategory.POPUP,[locationType.TWTNW]),]))
         self.add_node("TWTNW-17",LocationNode([KH2Location(385, "Ruin and Creation's Passage Mythril Stone", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(386, "Ruin and Creation's Passage AP Boost", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(387, "Ruin and Creation's Passage Mythril Crystal", locationCategory.CHEST,[locationType.TWTNW]),
                                             KH2Location(388, "Ruin and Creation's Passage Orichalcum", locationCategory.CHEST,[locationType.TWTNW]),]))
-        self.add_node("TWTNW-18",LocationNode([KH2Location(26, "Xemnas 1 Bonus", locationCategory.DOUBLEBONUS, [locationType.TWTNW]),]))
-        self.add_node("TWTNW-19",LocationNode([KH2Location(537, "Xemnas 1 Secret Ansem Report 13", locationCategory.POPUP,[locationType.TWTNW]),]))
+        self.add_node("TWTNW-18",LocationNode([KH2Location(26, "Xemnas 1 Bonus", locationCategory.DOUBLEBONUS, [locationType.TWTNW]),
+                                              KH2Location(537, "Xemnas 1 Secret Ansem Report 13", locationCategory.POPUP,[locationType.TWTNW]),]))
         self.add_node("TWTNW-20",LocationNode([KH2Location(71, "Final Xemnas", locationCategory.STATBONUS,[locationType.TWTNW],InvalidChecks=[e for e in itemType if e not in [itemType.GAUGE, itemType.SLOT, itemType.SYNTH,itemType.ITEM]]),]))
         self.add_node("TWTNW-21",LocationNode([KH2Location(554, "Xemnas (Data) Power Boost", locationCategory.POPUP,[locationType.TWTNW, locationType.DataOrg]),]))
 
@@ -1212,51 +1212,41 @@ class Locations:
         if not self.reverse_rando:
             self.add_edge("Starting","TWTNW-1",RequirementEdge())
             self.add_edge("TWTNW-1","TWTNW-2",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-2","TWTNW-3",RequirementEdge())
-            self.add_edge("TWTNW-3","TWTNW-4",RequirementEdge())
+            self.add_edge("TWTNW-2","TWTNW-4",RequirementEdge())
             self.add_edge("TWTNW-4","TWTNW-5",RequirementEdge())
             self.add_edge("TWTNW-5","TWTNW-6",RequirementEdge())
             self.add_edge("TWTNW-6","TWTNW-7",RequirementEdge())
             self.add_edge("TWTNW-7","TWTNW-8",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-8","TWTNW-9",RequirementEdge())
-            self.add_edge("TWTNW-9","TWTNW-10",RequirementEdge())
+            self.add_edge("TWTNW-8","TWTNW-10",RequirementEdge())
             self.add_edge("TWTNW-10","TWTNW-11",RequirementEdge())
             self.add_edge("TWTNW-11","TWTNW-12",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-12","TWTNW-13",RequirementEdge())
-            self.add_edge("TWTNW-13","TWTNW-14",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-14","TWTNW-15",RequirementEdge())
-            self.add_edge("TWTNW-15","TWTNW-16",RequirementEdge())
+            self.add_edge("TWTNW-12","TWTNW-14",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-14","TWTNW-16",RequirementEdge())
             self.add_edge("TWTNW-16","TWTNW-17",RequirementEdge())
             self.add_edge("TWTNW-17","TWTNW-18",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-18","TWTNW-19",RequirementEdge())
-            self.add_edge("TWTNW-19","TWTNW-20",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-19","TWTNW-21",RequirementEdge(battle=True))
-            self.first_boss_nodes.append("TWTNW-19")
-            self.second_boss_nodes.append("TWTNW-19")
+            self.add_edge("TWTNW-18","TWTNW-20",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-18","TWTNW-21",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("TWTNW-18")
+            self.second_boss_nodes.append("TWTNW-18")
         else:
             self.add_edge("Starting","TWTNW-1",RequirementEdge())
             self.add_edge("TWTNW-1","TWTNW-18",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-18","TWTNW-19",RequirementEdge())
-            self.add_edge("TWTNW-19","TWTNW-4",RequirementEdge())
+            self.add_edge("TWTNW-18","TWTNW-4",RequirementEdge())
             self.add_edge("TWTNW-4","TWTNW-5",RequirementEdge())
             self.add_edge("TWTNW-5","TWTNW-6",RequirementEdge())
             self.add_edge("TWTNW-6","TWTNW-7",RequirementEdge())
             self.add_edge("TWTNW-7","TWTNW-14",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-14","TWTNW-15",RequirementEdge())
-            self.add_edge("TWTNW-15","TWTNW-10",RequirementEdge())
+            self.add_edge("TWTNW-14","TWTNW-10",RequirementEdge())
             self.add_edge("TWTNW-10","TWTNW-11",RequirementEdge())
             self.add_edge("TWTNW-11","TWTNW-12",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-12","TWTNW-13",RequirementEdge())
-            self.add_edge("TWTNW-13","TWTNW-8",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-8","TWTNW-9",RequirementEdge())
-            self.add_edge("TWTNW-9","TWTNW-16",RequirementEdge())
+            self.add_edge("TWTNW-12","TWTNW-8",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-8","TWTNW-16",RequirementEdge())
             self.add_edge("TWTNW-16","TWTNW-17",RequirementEdge())
             self.add_edge("TWTNW-17","TWTNW-2",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-2","TWTNW-3",RequirementEdge())
-            self.add_edge("TWTNW-3","TWTNW-20",RequirementEdge(battle=True))
-            self.add_edge("TWTNW-3","TWTNW-21",RequirementEdge(battle=True))
-            self.first_boss_nodes.append("TWTNW-3")
-            self.second_boss_nodes.append("TWTNW-3")
+            self.add_edge("TWTNW-2","TWTNW-20",RequirementEdge(battle=True))
+            self.add_edge("TWTNW-2","TWTNW-21",RequirementEdge(battle=True))
+            self.first_boss_nodes.append("TWTNW-2")
+            self.second_boss_nodes.append("TWTNW-2")
 
 
 

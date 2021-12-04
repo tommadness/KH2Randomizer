@@ -7,6 +7,11 @@
         sora_item_data = SORA_ITEM_JSON
         donald_item_data = DONALD_ITEM_JSON
         goofy_item_data = GOOFY_ITEM_JSON
+        level_data = LEVEL_STATS_JSON
+        form_exp_data = FORM_EXP_JSON
+        depth_data = DEPTH_VALUES_JSON
+        settings_data = SETTINGS_JSON
+        boss_enemy_data = BOSS_ENEMY_JSON
 
     </script>
 
@@ -17,10 +22,14 @@
                 src: url("KHMenu.otf") format("opentype");
             }
             :root {
-                --background: rgba(0,214,170,.85);
+                --background: #1f2123;
             }
             *,*::before,*::after {
                 box-sizing: border-box;
+            }
+            body{
+                background-color: #31363b;
+                color: #ffffff;
             }
             .content {
                 height: 95hv;
@@ -36,17 +45,18 @@
             }
 
             .styled-table {
+                background-color: #31363b;
                 border-collapse: collapse;
                 margin: 0px 0;
                 font-size: 0.8em;
                 font-family: KHMenu, sans-serif;
                 min-width: 500px;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
                 position: relative;
             }
             .styled-table thead tr {
-                background-color: #009879;
-                color: #ffffff;
+                background-color: #53575c;
+                color: #4dd0e1;
                 text-align: center;
             }
             .styled-table th,
@@ -56,14 +66,15 @@
             .styled-table th {
                 position: sticky;
                 top: 0px;
-                background-color: #bee3db;
+                background-color: #53575c;
+                color: #4dd0e1;
             }
             .styled-table tbody tr {
-                border-bottom: 1px solid #dddddd;
+                border-bottom: 1px solid #31363b;
             }
 
             .styled-table tbody tr:nth-of-type(odd) {
-                background-color: #f3f3f3;
+                background-color: #686f75;
             }
 
             .styled-table tbody tr:last-of-type {
@@ -74,9 +85,9 @@
                 color: #009879;
             }
             .accordion {
-                background-color: #009879;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-                color: #3238e1;
+                background-color: #1f2123;
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+                color: #ffffff;
                 font-size: 1.8em;
                 font-family: KHMenu, sans-serif;
                 cursor: pointer;
@@ -89,11 +100,11 @@
 
             }
             .active, .accordion:hover {
-                background-color: #ccc;
+                color: #4dd0e1;
             }
             .panel {
                 padding: 0 18px;
-                background-color: white;
+                background-color: #31363b;
                 overflow: hidden;
                 max-height: 0;
                 transition: max-height 0.2s ease-out;
@@ -113,15 +124,45 @@
         </style>
     </head>
     <body>
-        <div class="content">
+        <div class="content" id="all_content">
             <h1 id="seed_header"></h1>
+            <h3 id="settings-string"></h3>
+            <button class="accordion">Form Experience Data</button>
+            <div class="panel">
+                <div class="table-wrapper">
+                    <table class="styled-table" id="formExpTable">
+                    </table>
+                </div>
+            </div>
+            <button class="accordion">Level Experience Data</button>
+            <div class="panel">
+                <div class="table-wrapper">
+                    <table class="styled-table" id="expTable">
+                        <tr>
+                            <th>Level</th>
+                            <th>Experience</th>
+                            <th>Strength</th>
+                            <th>Magic</th>
+                            <th>Defense</th>
+                            <th>AP</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <button class="accordion">Seed Depth Weights for Items</button>
+            <div class="panel">
+                <div class="table-wrapper">
+                    <table class="styled-table" id="weightTable">
+                    </table>
+                </div>
+            </div>
             <button class="accordion">Sora Item Placement</button>
             <div class="panel">
                 <div class="table-wrapper">
                     <table class="styled-table" id="spoilerTable">
                         <tr>
                             <th>World <input type="text" id="world_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for world.."></th>
-                            <th>Location <input type="text" id="location_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for location.."></th>
+                            <th>Location &lt;Depth&gt; <input type="text" id="location_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for location.."></th>
                             <th>Item <input type="text" id="item_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for item.."></th>
                         </tr>
                     </table>
@@ -143,7 +184,146 @@
     </body>
 
     <script>
-        document.getElementById("seed_header").innerText = seed_name;
+        if ("BOSSES" in boss_enemy_data)
+        {
+            tabs = document.getElementById("all_content");
+            //make a bosses tab
+            var enemy_table = "<button class=\"accordion\">Boss Replacements</button><div class=\"panel\"><div class=\"table-wrapper\"><table class=\"styled-table\">"
+            enemy_table+="<tr><th>Original Boss</th><th>New Boss</th></tr>";
+
+            all_replaced = boss_enemy_data["BOSSES"];
+            for(var i=0;i<all_replaced.length;i++)
+            {
+                enemy_table+="<tr><td>"+all_replaced[i]["original"]+"</td><td>"+all_replaced[i]["new"]+"</td></tr>";
+            }
+            enemy_table+="</table></div></div>";
+            tabs.innerHTML+=enemy_table;
+        }
+        if ("ENEMIES" in boss_enemy_data)
+        {
+            tabs = document.getElementById("all_content");
+            //make an enemies tab
+            var enemy_table = "<button class=\"accordion\">Enemy Replacements</button><div class=\"panel\"><div class=\"table-wrapper\"><table class=\"styled-table\">"
+            enemy_table+="<tr><th>Original Enemy</th><th>New Enemy</th></tr>";
+
+            all_replaced = boss_enemy_data["ENEMIES"];
+            for(var i=0;i<all_replaced.length;i++)
+            {
+                enemy_table+="<tr><td>"+all_replaced[i]["original"]+"</td><td>"+all_replaced[i]["new"]+"</td></tr>";
+            }
+            enemy_table+="</table></div></div>";
+            tabs.innerHTML+=enemy_table;
+        }
+
+
+        document.getElementById("seed_header").innerText = "Seed name: " + seed_name;
+        document.getElementById("settings-string").innerText = "Seed settings: " + settings_data;
+
+        function populateWeightTable()
+        {
+            weight_table = document.getElementById("weightTable");
+            var weight_header = document.createElement("tr");
+            weight_header.innerHTML+="<th></th><th colspan=\""+String(depth_data["Common"].length)+"\">Depth Weights</th>";
+            weight_table.appendChild(weight_header);
+
+            var data_row = document.createElement("tr");
+            data_row.innerHTML+="<th>Item Rarity</th>";
+            for(var i=0;i<depth_data["Common"].length;i++)
+            { 
+                data_row.innerHTML+="<th>"+String(i)+"</th>";
+            }
+            weight_table.appendChild(data_row);
+
+            var data_row = document.createElement("tr");
+            data_row.innerHTML+="<td>Common</td>";
+            for(var i=0;i<depth_data["Common"].length;i++)
+            { 
+                data_row.innerHTML+="<td>"+String(depth_data["Common"][i])+"</td>";
+            }
+            weight_table.appendChild(data_row);
+            var data_row = document.createElement("tr");
+            data_row.innerHTML+="<td>Uncommon</td>";
+            for(var i=0;i<depth_data["Uncommon"].length;i++)
+            { 
+                data_row.innerHTML+="<td>"+String(depth_data["Uncommon"][i])+"</td>";
+            }
+            weight_table.appendChild(data_row);
+            var data_row = document.createElement("tr");
+            data_row.innerHTML+="<td>Rare</td>";
+            for(var i=0;i<depth_data["Rare"].length;i++)
+            { 
+                data_row.innerHTML+="<td>"+String(depth_data["Rare"][i])+"</td>";
+            }
+            weight_table.appendChild(data_row);
+            var data_row = document.createElement("tr");
+            data_row.innerHTML+="<td>Mythic</td>";
+            for(var i=0;i<depth_data["Mythic"].length;i++)
+            { 
+                data_row.innerHTML+="<td>"+String(depth_data["Mythic"][i])+"</td>";
+            }
+            weight_table.appendChild(data_row);
+        }
+
+        populateWeightTable();
+
+        var formExpTable = document.getElementById("formExpTable");
+        var form_header = document.createElement("tr");
+        form_header.innerHTML+="<th>Form</th><th>Exp Multiplier</th><th>Level 2</th><th>Level 3</th><th>Level 4</th><th>Level 5</th><th>Level 6</th><th>Level 7</th>";
+        formExpTable.appendChild(form_header);
+        forms = ["Summon","Valor","Wisdom","Limit","Master","Final"];
+        for(var i=0;i<forms.length;i++)
+        {
+            form_name = forms[i];
+            var form_exp_row = document.createElement("tr");
+            var form_exp_string = ""
+            form_exp_string+="<td>";
+            form_exp_string+=form_name;
+            form_exp_string+="</td><td>";
+            form_exp_string+=String(form_exp_data[form_name]["multiplier"]);
+            for(var j=0;j<6;j++)
+            {
+                form_exp_string+="</td><td>";
+                form_exp_string+=String(form_exp_data[form_name]["values"][j]);
+            }
+            form_exp_string+="</td>";
+            form_exp_row.innerHTML+=form_exp_string;
+            formExpTable.appendChild(form_exp_row);
+        }
+
+        var levelStatTable = document.getElementById("expTable");
+        for (var i=1; i < 100; i++)
+        {
+            var level_string = "Level "+String(i)
+            var level_entry = level_data[level_string]
+            var experience_value = "0";
+            if (i!=1)
+            {
+                experience_value = level_data["Level "+String(i-1)]["experience"]
+            }
+
+            var table_entry = document.createElement("tr");
+            var level_html = "";
+            level_html+="<td>"
+            level_html+=String(i)
+            level_html+="</td>"
+            level_html+="<td>"
+            level_html+=experience_value
+            level_html+="</td>"
+            level_html+="<td>"
+            level_html+=level_entry["strength"]
+            level_html+="</td>"
+            level_html+="<td>"
+            level_html+=level_entry["magic"]
+            level_html+="</td>"
+            level_html+="<td>"
+            level_html+=level_entry["defense"]
+            level_html+="</td>"
+            level_html+="<td>"
+            level_html+=level_entry["ap"]
+            level_html+="</td>"
+            table_entry.innerHTML += level_html;
+            levelStatTable.appendChild(table_entry);
+        }
 
         var acc = document.getElementsByClassName("accordion");
         for(var i = 0; i < acc.length; i++)
@@ -185,7 +365,7 @@
                         world_table_html+=item_data[0]
                         world_table_html+="</td>"
                         world_table_html+="<td>"
-                        world_table_html+=item_data[1]["Name"]
+                        world_table_html+=item_data[1]["Name"] + " (" +item_data[1]["Rarity"] + ")";
                         world_table_html+="</td>"
                         table_entry.innerHTML += world_table_html;
                         container.appendChild(table_entry);
@@ -207,7 +387,7 @@
                     world_table_html+=level_data[0];
                     world_table_html+="</td>";
                     world_table_html+="<td>";
-                    world_table_html+=level_data[1]["Name"];
+                    world_table_html+=level_data[1]["Name"] + " (" +level_data[1]["Rarity"] + ")";
                     world_table_html+="</td>";
                     table_entry.innerHTML += world_table_html;
                     container.appendChild(table_entry);
@@ -228,7 +408,7 @@
                     world_table_html+=level_data[0];
                     world_table_html+="</td>";
                     world_table_html+="<td>";
-                    world_table_html+=level_data[1]["Name"];
+                    world_table_html+=level_data[1]["Name"] + " (" +level_data[1]["Rarity"] + ")";
                     world_table_html+="</td>";
                     table_entry.innerHTML += world_table_html;
                     container.appendChild(table_entry);
@@ -249,7 +429,7 @@
                     world_table_html+=weapon[0];
                     world_table_html+="</td>";
                     world_table_html+="<td>";
-                    world_table_html+=weapon[1]["Name"];
+                    world_table_html+=weapon[1]["Name"] + " (" +weapon[1]["Rarity"] + ")";
                     world_table_html+="</td>";
                     table_entry.innerHTML += world_table_html;
                     container.appendChild(table_entry);
