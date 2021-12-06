@@ -624,7 +624,7 @@ class Locations:
             self.add_edge("SP-9","SP-10",RequirementEdge(battle=True))
             self.add_edge("SP-10","SP-11",RequirementEdge(battle=True))
             self.add_edge("SP-11","SP-12",RequirementEdge())
-            self.first_boss_nodes.append("SP-6")
+            self.first_boss_nodes.append("SP-7")
             self.second_boss_nodes.append("SP-10")
         else:
             self.add_edge("Starting","SP-1",RequirementEdge())
@@ -640,7 +640,7 @@ class Locations:
             self.add_edge("SP-6","SP-7",RequirementEdge())
             self.add_edge("SP-7","SP-12",RequirementEdge(battle=True))
             self.first_boss_nodes.append("SP-10")
-            self.second_boss_nodes.append("SP-6")
+            self.second_boss_nodes.append("SP-7")
 
 
     def makeHTGraph(self):

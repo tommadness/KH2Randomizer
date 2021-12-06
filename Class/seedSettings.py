@@ -5,7 +5,7 @@ from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
 from List.ItemList import Items
-from List.configDict import locationType, locationDepth
+from List.configDict import expCurve, locationType, locationDepth
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 
@@ -161,6 +161,13 @@ class MultiSelect(Setting):
             selected_values.append(self.choice_keys[index])
         return selected_values
 
+_drive_exp_curve_tooltip_text = textwrap.dedent('''
+        Experience curve options, inspired by KH1's experience curves. Midday and dusk will reduce the total 
+                EXP needed to get to Level 7, but levels 2,3, and 4 will need more EXP to compensate.
+        Dawn: This is the default exp rate from the game, adjusted as well from the multipiers.
+        Midday: Early levels (2,3,4) have their required exp increased, later levels (5,6,7) have been lowered.
+        Dusk: Early levels (2,3,4) have their required exp further increased, and later levels (5,6,7) are lowered more. 
+    ''')
 
 _all_settings = [
     SingleSelect(
@@ -257,6 +264,103 @@ _all_settings = [
         step=0.5,
         shared=True,
         default=2.0
+    ),
+    
+    SingleSelect(
+        name=settingkey.SORA_EXP_CURVE,
+        ui_label='Sora',
+        choices={
+            expCurve.DAWN.name: "Dawn (Normal)",
+            expCurve.MIDDAY.name: "Midday",
+            expCurve.DUSK.name: "Dusk"
+        },
+        shared=True,
+        default=expCurve.DAWN.name,
+        tooltip=textwrap.dedent('''
+            Experience curve options, inspired by KH1's experience curves. Midday and dusk will reduce the total 
+                EXP needed to get to 99, but levels before 50 will take more EXP to compensate
+            Dawn: This is the default exp rate from the game, adjusted as well from the multipiers.
+            Midday: Early levels (up to 50) have their required exp increased, and 50 and later have been lowered.
+            Dusk: Early levels (up to 50) have their required exp further increased, and 50 and higher are lowered more. 
+        ''')
+    ),
+    
+    SingleSelect(
+        name=settingkey.VALOR_EXP_CURVE,
+        ui_label='Valor',
+        choices={
+            expCurve.DAWN.name: "Dawn (Normal)",
+            expCurve.MIDDAY.name: "Midday",
+            expCurve.DUSK.name: "Dusk"
+        },
+        shared=True,
+        default=expCurve.DAWN.name,
+        tooltip=_drive_exp_curve_tooltip_text
+    ),
+    
+    SingleSelect(
+        name=settingkey.WISDOM_EXP_CURVE,
+        ui_label='Wisdom',
+        choices={
+            expCurve.DAWN.name: "Dawn (Normal)",
+            expCurve.MIDDAY.name: "Midday",
+            expCurve.DUSK.name: "Dusk"
+        },
+        shared=True,
+        default=expCurve.DAWN.name,
+        tooltip=_drive_exp_curve_tooltip_text
+    ),
+    
+    SingleSelect(
+        name=settingkey.LIMIT_EXP_CURVE,
+        ui_label='Limit',
+        choices={
+            expCurve.DAWN.name: "Dawn (Normal)",
+            expCurve.MIDDAY.name: "Midday",
+            expCurve.DUSK.name: "Dusk"
+        },
+        shared=True,
+        default=expCurve.DAWN.name,
+        tooltip=_drive_exp_curve_tooltip_text
+    ),
+    
+    SingleSelect(
+        name=settingkey.MASTER_EXP_CURVE,
+        ui_label='Master',
+        choices={
+            expCurve.DAWN.name: "Dawn (Normal)",
+            expCurve.MIDDAY.name: "Midday",
+            expCurve.DUSK.name: "Dusk"
+        },
+        shared=True,
+        default=expCurve.DAWN.name,
+        tooltip=_drive_exp_curve_tooltip_text
+    ),
+    
+    SingleSelect(
+        name=settingkey.FINAL_EXP_CURVE,
+        ui_label='Final',
+        choices={
+            expCurve.DAWN.name: "Dawn (Normal)",
+            expCurve.MIDDAY.name: "Midday",
+            expCurve.DUSK.name: "Dusk"
+        },
+        shared=True,
+        default=expCurve.DAWN.name,
+        tooltip=_drive_exp_curve_tooltip_text
+    ),
+    
+    SingleSelect(
+        name=settingkey.SUMMON_EXP_CURVE,
+        ui_label='Summon',
+        choices={
+            expCurve.DAWN.name: "Dawn (Normal)",
+            expCurve.MIDDAY.name: "Midday",
+            expCurve.DUSK.name: "Dusk"
+        },
+        shared=True,
+        default=expCurve.DAWN.name,
+        tooltip=_drive_exp_curve_tooltip_text
     ),
 
     Toggle(
@@ -370,6 +474,13 @@ _all_settings = [
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
         ''')
+    ),
+    Toggle(
+        name=settingkey.YEET_THE_BEAR,
+        ui_label='Yeet The Bear Required',
+        shared=True,
+        default=False,
+        tooltip="Force the Proof of Nonexistence onto Starry Hill popup in 100 acre"
     ),
 
     Toggle(

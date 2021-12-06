@@ -9,7 +9,7 @@ import unittest
 
 class Tests(unittest.TestCase):
     def test_allLocations(self):
-        l = Locations(RandomizerSettings("test_name",True,"version",SeedSettings()))
+        l = Locations(RandomizerSettings("test_name",True,"version",SeedSettings(), ""))
         graph = l.location_graph
         locations = Tests.create_list_from_nodes(graph)
         self.assertEqual(len(locations),len(l.getAllSoraLocations()))

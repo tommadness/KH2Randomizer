@@ -1,9 +1,9 @@
 
 from Class.exceptions import SettingsException
 from Module.modifier import SeedModifier
-from List.experienceValues import soraExp, formExp
+from List.experienceValues import duskExp, duskFormExp, middayFormExp, vanillaExp, middayExp, vanillaFormExp
 from List.hashTextEntries import generateHashIcons
-from List.configDict import locationType, itemType, locationDepth
+from List.configDict import expCurve, locationType, itemType, locationDepth
 from itertools import chain
 import math,random
 from Class import seedSettings, settingkey
@@ -76,13 +76,13 @@ class RandomizerSettings():
         ]
         self.keyblade_min_stat = ui_settings.get(settingkey.KEYBLADE_MIN_STAT)
         self.keyblade_max_stat = ui_settings.get(settingkey.KEYBLADE_MAX_STAT)
-        self.setSoraExp(ui_settings.get(settingkey.SORA_EXP_MULTIPLIER))
-        self.setValorExp(ui_settings.get(settingkey.VALOR_EXP_MULTIPLIER))
-        self.setWisdomExp(ui_settings.get(settingkey.WISDOM_EXP_MULTIPLIER))
-        self.setLimitExp(ui_settings.get(settingkey.LIMIT_EXP_MULTIPLIER))
-        self.setMasterExp(ui_settings.get(settingkey.MASTER_EXP_MULTIPLIER))
-        self.setFinalExp(ui_settings.get(settingkey.FINAL_EXP_MULTIPLIER))
-        self.setSummonExp(ui_settings.get(settingkey.SUMMON_EXP_MULTIPLIER))
+        self.setSoraExp(ui_settings.get(settingkey.SORA_EXP_MULTIPLIER),ui_settings.get(settingkey.SORA_EXP_CURVE))
+        self.setValorExp(ui_settings.get(settingkey.VALOR_EXP_MULTIPLIER),ui_settings.get(settingkey.VALOR_EXP_CURVE))
+        self.setWisdomExp(ui_settings.get(settingkey.WISDOM_EXP_MULTIPLIER),ui_settings.get(settingkey.WISDOM_EXP_CURVE))
+        self.setLimitExp(ui_settings.get(settingkey.LIMIT_EXP_MULTIPLIER),ui_settings.get(settingkey.LIMIT_EXP_CURVE))
+        self.setMasterExp(ui_settings.get(settingkey.MASTER_EXP_MULTIPLIER),ui_settings.get(settingkey.MASTER_EXP_CURVE))
+        self.setFinalExp(ui_settings.get(settingkey.FINAL_EXP_MULTIPLIER),ui_settings.get(settingkey.FINAL_EXP_CURVE))
+        self.setSummonExp(ui_settings.get(settingkey.SUMMON_EXP_MULTIPLIER),ui_settings.get(settingkey.SUMMON_EXP_CURVE))
 
         self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP)}
         for setting in seedSettings.boss_settings + seedSettings.enemy_settings:
@@ -98,6 +98,8 @@ class RandomizerSettings():
         self.seedHashIcons = generateHashIcons()
 
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
+
+        self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
 
         self.antiform = False
 
@@ -126,30 +128,87 @@ class RandomizerSettings():
         self.excludedLevels = [f"Level {i}" for i in range(1,100) if i in levels_to_exclude]
 
 
-    def setSoraExp(self,rate):
+    def setSoraExp(self,rate,curve):
+        if curve == expCurve.DAWN.name:
+            exp_function = vanillaExp
+        elif curve == expCurve.MIDDAY.name:
+            exp_function = middayExp
+        elif curve == expCurve.DUSK.name:
+            exp_function = duskExp
+        else:
+            raise SettingsException(f"Incorrect exp curve value {curve}")
+
         self.sora_exp_multiplier = rate
-        self.sora_exp = [math.ceil(a/b) for a,b in zip(soraExp,[self.sora_exp_multiplier]*100)]
+        self.sora_exp = [math.ceil(a/b) for a,b in zip(exp_function(),[self.sora_exp_multiplier]*100)]
     
-    def setValorExp(self, rate):
+    def setValorExp(self, rate, curve):
+        if curve == expCurve.DAWN.name:
+            exp_list = vanillaFormExp()
+        elif curve == expCurve.MIDDAY.name:
+            exp_list = middayFormExp()
+        elif curve == expCurve.DUSK.name:
+            exp_list = duskFormExp()
+        else:
+            raise SettingsException(f"Incorrect exp curve value {curve}")
         self.valor_exp_multiplier = rate
-        self.valor_exp = [math.ceil(a/b) for a,b in zip([formExp[1][i] for i in range(1,8)],[self.valor_exp_multiplier]*7)]
+        self.valor_exp = [math.ceil(a/b) for a,b in zip([exp_list[1][i] for i in range(1,8)],[self.valor_exp_multiplier]*7)]
     
-    def setWisdomExp(self,rate):
+    def setWisdomExp(self,rate,curve):
+        if curve == expCurve.DAWN.name:
+            exp_list = vanillaFormExp()
+        elif curve == expCurve.MIDDAY.name:
+            exp_list = middayFormExp()
+        elif curve == expCurve.DUSK.name:
+            exp_list = duskFormExp()
+        else:
+            raise SettingsException(f"Incorrect exp curve value {curve}")
         self.wisdom_exp_multiplier = rate
-        self.wisdom_exp = [math.ceil(a/b) for a,b in zip([formExp[2][i] for i in range(1,8)],[self.wisdom_exp_multiplier]*7)]
+        self.wisdom_exp = [math.ceil(a/b) for a,b in zip([exp_list[2][i] for i in range(1,8)],[self.wisdom_exp_multiplier]*7)]
 
-    def setLimitExp(self,rate):
+    def setLimitExp(self,rate,curve):
+        if curve == expCurve.DAWN.name:
+            exp_list = vanillaFormExp()
+        elif curve == expCurve.MIDDAY.name:
+            exp_list = middayFormExp()
+        elif curve == expCurve.DUSK.name:
+            exp_list = duskFormExp()
+        else:
+            raise SettingsException(f"Incorrect exp curve value {curve}")
         self.limit_exp_multiplier = rate
-        self.limit_exp = [math.ceil(a/b) for a,b in zip([formExp[3][i] for i in range(1,8)],[self.limit_exp_multiplier]*7)]
+        self.limit_exp = [math.ceil(a/b) for a,b in zip([exp_list[3][i] for i in range(1,8)],[self.limit_exp_multiplier]*7)]
 
-    def setMasterExp(self,rate):
+    def setMasterExp(self,rate,curve):
+        if curve == expCurve.DAWN.name:
+            exp_list = vanillaFormExp()
+        elif curve == expCurve.MIDDAY.name:
+            exp_list = middayFormExp()
+        elif curve == expCurve.DUSK.name:
+            exp_list = duskFormExp()
+        else:
+            raise SettingsException(f"Incorrect exp curve value {curve}")
         self.master_exp_multiplier = rate
-        self.master_exp = [math.ceil(a/b) for a,b in zip([formExp[4][i] for i in range(1,8)],[self.master_exp_multiplier]*7)]
+        self.master_exp = [math.ceil(a/b) for a,b in zip([exp_list[4][i] for i in range(1,8)],[self.master_exp_multiplier]*7)]
 
-    def setFinalExp(self,rate):
+    def setFinalExp(self,rate,curve):
+        if curve == expCurve.DAWN.name:
+            exp_list = vanillaFormExp()
+        elif curve == expCurve.MIDDAY.name:
+            exp_list = middayFormExp()
+        elif curve == expCurve.DUSK.name:
+            exp_list = duskFormExp()
+        else:
+            raise SettingsException(f"Incorrect exp curve value {curve}")
         self.final_exp_multiplier = rate
-        self.final_exp = [math.ceil(a/b) for a,b in zip([formExp[5][i] for i in range(1,8)],[self.final_exp_multiplier]*7)]
+        self.final_exp = [math.ceil(a/b) for a,b in zip([exp_list[5][i] for i in range(1,8)],[self.final_exp_multiplier]*7)]
 
-    def setSummonExp(self,rate):
+    def setSummonExp(self,rate,curve):
+        if curve == expCurve.DAWN.name:
+            exp_list = vanillaFormExp()
+        elif curve == expCurve.MIDDAY.name:
+            exp_list = middayFormExp()
+        elif curve == expCurve.DUSK.name:
+            exp_list = duskFormExp()
+        else:
+            raise SettingsException(f"Incorrect exp curve value {curve}")
         self.summon_exp_multiplier = rate
-        self.summon_exp = [math.ceil(a/b) for a,b in zip([formExp[0][i] for i in range(1,8)],[self.summon_exp_multiplier]*7)]
+        self.summon_exp = [math.ceil(a/b) for a,b in zip([exp_list[0][i] for i in range(1,8)],[self.summon_exp_multiplier]*7)]

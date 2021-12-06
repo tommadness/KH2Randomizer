@@ -75,6 +75,11 @@ class locationDepth(str,Enum):
     Anywhere = "Anywhere"
 
 
+class expCurve(str,Enum):
+    DAWN = "Dawn"
+    MIDDAY = "Midday"
+    DUSK = "Dusk"
+
 class itemType(str, Enum):
     PROOF_OF_CONNECTION = "Proof of Connection"
     PROOF_OF_PEACE = "Proof of Peace"

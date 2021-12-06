@@ -79,6 +79,7 @@ class Randomizer():
         self.location_weights = LocationWeights(settings,self.master_locations)
         self.report_depths = ItemDepths(settings.reportDepth,self.master_locations)
         self.proof_depths = ItemDepths(settings.proofDepth,self.master_locations)
+        self.yeet_the_bear = settings.yeetTheBear
         self.assignedItems = []
         self.assignedDonaldItems = []
         self.assignedGoofyItems = []
@@ -212,6 +213,13 @@ class Randomizer():
 
         #assign valid items to all valid locations remaining
         for item in allItems:
+            if item.ItemType is itemType.PROOF and self.yeet_the_bear:
+                # do manual assignment of this item to starry hill
+                starry_hill_cure = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==285][0]
+                if self.assignItem(starry_hill_cure,item):
+                    validLocations.remove(starry_hill_cure)
+                continue
+
             if restricted_reports:
                 weights = [self.location_weights.getWeight(item,loc) if itemType.REPORT in loc.InvalidChecks else 0 for loc in validLocations]
             elif restricted_proofs:
@@ -260,8 +268,16 @@ class Randomizer():
 
             if not self.report_depths.isValid(loc):
                 loc.InvalidChecks+=[itemType.REPORT]
+
             if not self.proof_depths.isValid(loc):
                 loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
+                if self.yeet_the_bear and loc.LocationCategory is locationCategory.POPUP and loc.LocationId==285:
+                    loc.InvalidChecks.remove(itemType.PROOF)
+
+            # if both reports and proofs are very restricted (only in 13 locations) add extra proof restrictions to allow reports to be assigned
+            if self.report_depths.isValid(loc) and self.proof_depths.isValid(loc):
+                if self.report_depths.very_restricted_locations and self.proof_depths.very_restricted_locations:
+                    loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
     
     def assignKeybladeAbilities(self, settings: RandomizerSettings, allAbilities, allItems):
         """Assign abilities to keyblades. """

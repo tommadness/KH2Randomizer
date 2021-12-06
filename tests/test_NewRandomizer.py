@@ -5,7 +5,7 @@ import unittest
 
 class Tests(unittest.TestCase):
     def test_constructingRandomizer(self):
-        settings = RandomizerSettings("test_name",True,"version",SeedSettings())
+        settings = RandomizerSettings("test_name",True,"version",SeedSettings(), "")
         randomizer = Randomizer(settings)
         self.assertEqual(len(randomizer.assignedItems),671)
         self.assertEqual(len(randomizer.assignedDonaldItems),31)
