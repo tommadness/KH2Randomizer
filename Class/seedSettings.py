@@ -431,6 +431,66 @@ _all_settings = [
         ''')
     ),
 
+    IntSpinner(
+        name=settingkey.POINTS_PROOF,
+        ui_label="Proof Point Value",
+        minimum=1,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=12
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_FORM,
+        ui_label="Forms Point Value",
+        minimum=1,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=10
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_MAGIC,
+        ui_label="Magic Point Value",
+        minimum=1,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=8
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_SUMMON,
+        ui_label="Summon Point Value",
+        minimum=1,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=6
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_ABILITY,
+        ui_label="Ability Point Value",
+        minimum=1,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=4
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_PAGE,
+        ui_label="Page/Report Point Value",
+        minimum=1,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=2
+    ),
+
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
         ui_label='Report Depth',

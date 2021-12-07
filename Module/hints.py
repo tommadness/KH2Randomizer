@@ -16,7 +16,7 @@ class Hints:
 
 
 
-    def generateHints(locationItems, hintsType, seedName, excludeList, preventSelfHinting=True, allowProofHinting=True):
+    def generateHints(locationItems, hintsType, excludeList, preventSelfHinting, allowProofHinting, pointHintValues):
         locationItems = Hints.convertItemAssignmentToTuple(locationItems)
         if hintsType=="Disabled":
             return None
@@ -240,7 +240,7 @@ class Hints:
                 raise HintException("Two reports hint the same location. This is an error, try a new seedname.")
 
         if hintsType == "Points":
-            hintsText['checkValue'] = {"proof":12, "form":10, "magic":8, "summon":6, "ability":4, "page":2}
+            hintsText['checkValue'] = pointHintValues
             hintsText['world'] = {}
             hintsText['Reports'] = {}
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]

@@ -90,7 +90,6 @@ class RandomizerSettings():
             if value is not None:
                 self.enemy_options[setting.name] = value
 
-
         self.random_seed = seed_name
         self.spoiler_log = spoiler_log
         self.ui_version = ui_version
@@ -98,8 +97,14 @@ class RandomizerSettings():
         self.seedHashIcons = generateHashIcons()
 
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
-
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
+
+        self.point_hint_values = {"proof":ui_settings.get(settingkey.POINTS_PROOF),
+                                    "form":ui_settings.get(settingkey.POINTS_FORM),
+                                    "magic":ui_settings.get(settingkey.POINTS_MAGIC), 
+                                    "summon":ui_settings.get(settingkey.POINTS_SUMMON), 
+                                    "ability":ui_settings.get(settingkey.POINTS_ABILITY), 
+                                    "page":ui_settings.get(settingkey.POINTS_PAGE)}
 
         self.antiform = False
 
