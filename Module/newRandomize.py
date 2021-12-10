@@ -197,7 +197,7 @@ class Randomizer():
             self.assignStatBonuses(allLocations)
         
         if settings.antiform:
-            allItems.append(Items.getAntiform())
+            allItems.append(Items.getAntiformDummy())
 
         invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or loc.Description in settings.excludedLevels)]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]

@@ -25,7 +25,7 @@ from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
-    QFileDialog, QMenuBar, QMessageBox, QProgressDialog
+    QFileDialog, QMessageBox, QProgressDialog
 )
 
 from qt_material import apply_stylesheet
@@ -46,8 +46,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '2.0.0'
-
+LOCAL_UI_VERSION = '2.0.0-beta'
 
 class Logger(object):
     def __init__(self, orig_stream):

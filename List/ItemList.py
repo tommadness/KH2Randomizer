@@ -312,8 +312,8 @@ class Items:
         return KH2Item(524, "PromiseCharm",itemType.PROMISE_CHARM, itemRarity.MYTHIC)
     
     @staticmethod
-    def getAntiform():
-        return KH2Item(71, "Anti-form", itemType.FORM,itemRarity.MYTHIC)
+    def getAntiformDummy():
+        return KH2Item(71, "Antiform Dummy", itemType.KEYBLADE)
 
     @staticmethod
     def getSupportAbilityList():

@@ -15,13 +15,14 @@ _available_chars = string.digits + string.ascii_uppercase + string.ascii_lowerca
 
 class Setting:
 
-    def __init__(self, name: str, setting_type: type, ui_label: str, shared: bool, default, tooltip: str):
+    def __init__(self, name: str, setting_type: type, ui_label: str, shared: bool, default, tooltip: str, randomizable = None):
         self.name = name
         self.type = setting_type
         self.ui_label = ui_label
         self.shared = shared
         self.default = default
         self.tooltip = tooltip
+        self.randomizable = randomizable
 
     def settings_string(self, value) -> str:
         raise NotImplementedError
@@ -53,9 +54,10 @@ class IntSpinner(Setting):
             step: int,
             shared: bool,
             default: int,
-            tooltip: str = ''
+            tooltip: str = '',
+            randomizable = None
     ):
-        super().__init__(name, int, ui_label, shared, default, tooltip)
+        super().__init__(name, int, ui_label, shared, default, tooltip, randomizable)
         self.min = minimum
         self.max = maximum
         self.step = step
@@ -82,9 +84,10 @@ class FloatSpinner(Setting):
             step: float,
             shared: bool,
             default: float,
-            tooltip: str = ''
+            tooltip: str = '',
+            randomizable = None
     ):
-        super().__init__(name, float, ui_label, shared, default, tooltip)
+        super().__init__(name, float, ui_label, shared, default, tooltip, randomizable)
         self.min = minimum
         self.max = maximum
         self.step = step
@@ -114,9 +117,10 @@ class SingleSelect(Setting):
             choices: dict[str, str],
             shared: bool,
             default: str,
-            tooltip: str = ''
+            tooltip: str = '',
+            randomizable = None
     ):
-        super().__init__(name, str, ui_label, shared, default, tooltip)
+        super().__init__(name, str, ui_label, shared, default, tooltip, randomizable)
         self.choices = choices
         self.choice_keys = list(choices.keys())
         self.choice_values = list(choices.values())
@@ -140,8 +144,9 @@ class MultiSelect(Setting):
             shared: bool,
             default: list[str],
             choice_icons: dict[str, str] = None,
-            tooltip: str = ''):
-        super().__init__(name, str, ui_label, shared, default, tooltip)
+            tooltip: str = '',
+            randomizable = None):
+        super().__init__(name, str, ui_label, shared, default, tooltip, randomizable)
         self.choices = choices
         self.choice_keys = list(choices.keys())
         self.choice_values = list(choices.values())
