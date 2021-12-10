@@ -135,16 +135,16 @@ class RandomizerSettings():
 
     def setSoraExp(self,rate,curve):
         if curve == expCurve.DAWN.name:
-            exp_function = vanillaExp
+            exp_list = vanillaExp()
         elif curve == expCurve.MIDDAY.name:
-            exp_function = middayExp
+            exp_list = middayExp()
         elif curve == expCurve.DUSK.name:
-            exp_function = duskExp
+            exp_list = duskExp()
         else:
             raise SettingsException(f"Incorrect exp curve value {curve}")
 
         self.sora_exp_multiplier = rate
-        self.sora_exp = [math.ceil(a/b) for a,b in zip(exp_function(),[self.sora_exp_multiplier]*100)]
+        self.sora_exp = [math.ceil(a/b) for a,b in zip(exp_list,[self.sora_exp_multiplier]*100)]
     
     def setValorExp(self, rate, curve):
         if curve == expCurve.DAWN.name:

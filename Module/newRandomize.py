@@ -213,6 +213,9 @@ class Randomizer():
 
         #assign valid items to all valid locations remaining
         for item in allItems:
+            if len(validLocations) == 0:
+                raise CantAssignItemException(f"Ran out of locations to assign items")
+
             if item.ItemType is itemType.PROOF and self.yeet_the_bear:
                 # do manual assignment of this item to starry hill
                 starry_hill_cure = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==285][0]

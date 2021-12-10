@@ -1,9 +1,12 @@
+import math
+import random
 import string
 import textwrap
 
 from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
+from Class.exceptions import SettingsException
 from List.ItemList import Items
 from List.configDict import expCurve, locationType, locationDepth
 from Module.randomBGM import RandomBGM
@@ -33,8 +36,8 @@ class Setting:
 
 class Toggle(Setting):
 
-    def __init__(self, name: str, ui_label: str, shared: bool, default: bool, tooltip: str = ''):
-        super().__init__(name, bool, ui_label, shared, default, tooltip)
+    def __init__(self, name: str, ui_label: str, shared: bool, default: bool, tooltip: str = '',randomizable = None):
+        super().__init__(name, bool, ui_label, shared, default, tooltip, randomizable)
 
     def settings_string(self, value) -> str:
         return '1' if value else '0'
@@ -184,21 +187,24 @@ _all_settings = [
             'ExcludeFrom99': 'Level 99'
         },
         shared=True,
-        default='ExcludeFrom50'
+        default='ExcludeFrom50',
+        randomizable=True
     ),
 
     Toggle(
         name=settingkey.FORM_LEVEL_REWARDS,
         ui_label='Form Level Rewards',
         shared=True,
-        default=True
+        default=True,
+        randomizable=True
     ),
 
     Toggle(
         name=settingkey.STATSANITY,
         ui_label='Statsanity',
         shared=True,
-        default=False
+        default=False,
+        randomizable=True
     ),
 
     FloatSpinner(
@@ -208,7 +214,8 @@ _all_settings = [
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=1.5
+        default=1.5,
+        randomizable=True
     ),
 
     FloatSpinner(
@@ -218,7 +225,8 @@ _all_settings = [
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=7.0
+        default=7.0,
+        randomizable=True
     ),
 
     FloatSpinner(
@@ -228,7 +236,8 @@ _all_settings = [
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=3.0
+        default=3.0,
+        randomizable=True
     ),
 
     FloatSpinner(
@@ -238,7 +247,8 @@ _all_settings = [
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=3.0
+        default=3.0,
+        randomizable=True
     ),
 
     FloatSpinner(
@@ -248,7 +258,8 @@ _all_settings = [
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=3.0
+        default=3.0,
+        randomizable=True
     ),
 
     FloatSpinner(
@@ -258,7 +269,8 @@ _all_settings = [
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=3.0
+        default=3.0,
+        randomizable=True
     ),
 
     FloatSpinner(
@@ -268,7 +280,8 @@ _all_settings = [
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=2.0
+        default=2.0,
+        randomizable=True
     ),
     
     SingleSelect(
@@ -287,7 +300,8 @@ _all_settings = [
             Dawn: This is the default exp rate from the game, adjusted as well from the multipiers.
             Midday: Early levels (up to 50) have their required exp increased, and 50 and later have been lowered.
             Dusk: Early levels (up to 50) have their required exp further increased, and 50 and higher are lowered more. 
-        ''')
+        '''),
+        randomizable=True
     ),
     
     SingleSelect(
@@ -300,7 +314,8 @@ _all_settings = [
         },
         shared=True,
         default=expCurve.DAWN.name,
-        tooltip=_drive_exp_curve_tooltip_text
+        tooltip=_drive_exp_curve_tooltip_text,
+        randomizable=True
     ),
     
     SingleSelect(
@@ -313,7 +328,8 @@ _all_settings = [
         },
         shared=True,
         default=expCurve.DAWN.name,
-        tooltip=_drive_exp_curve_tooltip_text
+        tooltip=_drive_exp_curve_tooltip_text,
+        randomizable=True
     ),
     
     SingleSelect(
@@ -326,7 +342,8 @@ _all_settings = [
         },
         shared=True,
         default=expCurve.DAWN.name,
-        tooltip=_drive_exp_curve_tooltip_text
+        tooltip=_drive_exp_curve_tooltip_text,
+        randomizable=True
     ),
     
     SingleSelect(
@@ -339,7 +356,8 @@ _all_settings = [
         },
         shared=True,
         default=expCurve.DAWN.name,
-        tooltip=_drive_exp_curve_tooltip_text
+        tooltip=_drive_exp_curve_tooltip_text,
+        randomizable=True
     ),
     
     SingleSelect(
@@ -352,7 +370,8 @@ _all_settings = [
         },
         shared=True,
         default=expCurve.DAWN.name,
-        tooltip=_drive_exp_curve_tooltip_text
+        tooltip=_drive_exp_curve_tooltip_text,
+        randomizable=True
     ),
     
     SingleSelect(
@@ -365,21 +384,24 @@ _all_settings = [
         },
         shared=True,
         default=expCurve.DAWN.name,
-        tooltip=_drive_exp_curve_tooltip_text
+        tooltip=_drive_exp_curve_tooltip_text,
+        randomizable=True
     ),
 
     Toggle(
         name=settingkey.CRITICAL_BONUS_REWARDS,
         ui_label='Critical Bonuses',
         shared=True,
-        default=True
+        default=True,
+        randomizable=True
     ),
 
     Toggle(
         name=settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS,
         ui_label='Garden of Assemblage',
         shared=True,
-        default=True
+        default=True,
+        randomizable=True
     ),
 
     Toggle(
@@ -433,7 +455,8 @@ _all_settings = [
             JSmartee - Secret Ansem Reports provide information for how many "important checks" are in a world
             Shananas - Each world informs you once the world has no more "important checks"
             Points - Each "important check" is assigned a point value, and you are told the number of points in each world. Secret Ansem Reports tell you where items are.
-        ''')
+        '''),
+        randomizable=["Shananas","JSmartee","Points"]
     ),
 
     IntSpinner(
@@ -443,7 +466,8 @@ _all_settings = [
         maximum=20,
         step=1,
         shared=True,
-        default=12
+        default=12,
+        randomizable=True
     ),
 
     IntSpinner(
@@ -453,7 +477,8 @@ _all_settings = [
         maximum=20,
         step=1,
         shared=True,
-        default=10
+        default=10,
+        randomizable=True
     ),
 
     IntSpinner(
@@ -463,7 +488,8 @@ _all_settings = [
         maximum=20,
         step=1,
         shared=True,
-        default=8
+        default=8,
+        randomizable=True
     ),
 
     IntSpinner(
@@ -473,7 +499,8 @@ _all_settings = [
         maximum=20,
         step=1,
         shared=True,
-        default=6
+        default=6,
+        randomizable=True
     ),
 
     IntSpinner(
@@ -483,7 +510,8 @@ _all_settings = [
         maximum=20,
         step=1,
         shared=True,
-        default=4
+        default=4,
+        randomizable=True
     ),
 
     IntSpinner(
@@ -493,7 +521,8 @@ _all_settings = [
         maximum=20,
         step=1,
         shared=True,
-        default=2
+        default=2,
+        randomizable=True
     ),
 
     SingleSelect(
@@ -516,7 +545,8 @@ _all_settings = [
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
-        ''')
+        '''),
+        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),
     SingleSelect(
         name=settingkey.PROOF_DEPTH,
@@ -538,14 +568,16 @@ _all_settings = [
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
-        ''')
+        '''),
+        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),
     Toggle(
         name=settingkey.YEET_THE_BEAR,
         ui_label='Yeet The Bear Required',
         shared=True,
         default=False,
-        tooltip="Force the Proof of Nonexistence onto Starry Hill popup in 100 acre"
+        tooltip="Force the Proof of Nonexistence onto Starry Hill popup in 100 acre",
+        randomizable=True
     ),
 
     Toggle(
@@ -553,7 +585,8 @@ _all_settings = [
         ui_label='Remove Self-Hinting Reports',
         shared=True,
         default=False,
-        tooltip="Reports must hint a world that is different from where that report was found."
+        tooltip="Reports must hint a world that is different from where that report was found.",
+        randomizable=True
     ),
 
     Toggle(
@@ -561,7 +594,8 @@ _all_settings = [
         ui_label='Reports can Hint Proofs',
         shared=True,
         default=False,
-        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports"
+        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports",
+        randomizable=True
     ),
 
     IntSpinner(
@@ -571,7 +605,8 @@ _all_settings = [
         maximum=20,
         step=1,
         shared=True,
-        default=0
+        default=0,
+        randomizable=True
     ),
 
     IntSpinner(
@@ -581,7 +616,8 @@ _all_settings = [
         maximum=20,
         step=1,
         shared=True,
-        default=7
+        default=7,
+        randomizable=True
     ),
 
     MultiSelect(
@@ -658,7 +694,8 @@ _all_settings = [
             locationType.PR.name: "icons/worlds/port_royal.png",
             locationType.TWTNW.name: "icons/worlds/the_world_that_never_was.png",
             locationType.Atlantica.name: "icons/worlds/atlantica.png"
-        }
+        },
+        randomizable=True
     ),
 
     MultiSelect(
@@ -677,7 +714,8 @@ _all_settings = [
             locationType.DataOrg.name: 'icons/bosses/datas.png',
             locationType.Sephi.name: 'icons/bosses/sephiroth.png',
             locationType.LW.name: 'icons/bosses/lingering_will.png'
-        }
+        },
+        randomizable=True
     ),
 
     MultiSelect(
@@ -696,7 +734,8 @@ _all_settings = [
             locationType.OCParadoxCup.name: 'icons/misc/paradox_cup.png',
             locationType.Puzzle.name: 'icons/misc/puzzle.png',
             locationType.TTR.name: 'icons/misc/transport.png'
-        }
+        },
+        randomizable=True
     ),
 
     Toggle(
@@ -736,7 +775,8 @@ _all_settings = [
         ui_label='Enable Promise Charm',
         shared=True,
         default=False,
-        tooltip="If enabled, the promise charm will be added to the item pool, which can allow skipping TWTNW."
+        tooltip="If enabled, the promise charm will be added to the item pool, which can allow skipping TWTNW.",
+        randomizable=True
     ),
 
     SingleSelect(
@@ -752,7 +792,8 @@ _all_settings = [
             'Nightmare': 'Nightmare'
         },
         shared=True,
-        default='Normal'
+        default='Normal',
+        randomizable=["Easy","Normal","Hard","Very Hard"]
     ),
     Toggle(
         name=settingkey.REVERSE_RANDO,
@@ -898,3 +939,60 @@ class SeedSettings:
         for key, value in settings_json.items():
             if key in filtered_keys:
                 self.set(key, value)
+
+class RandoRandoSettings:
+    def __init__(self, real_settings_object: SeedSettings):
+        self.randomizable_settings = [setting for setting in _all_settings if setting.randomizable]
+        self.static_settings = [setting for setting in _all_settings if setting.randomizable is None]
+        self.setting_choices = {}
+        self.multi_selects = []
+        for r in self.randomizable_settings:
+            if isinstance(r,SingleSelect):
+                if r.randomizable is True: # randomize all choices
+                    self.setting_choices[r.name] = [c for c in r.choices]
+                elif isinstance(r.randomizable, list):
+                    self.setting_choices[r.name] = [c for c in r.randomizable]
+            if isinstance(r,Toggle):
+                self.setting_choices[r.name] = [True,False]
+            if isinstance(r,IntSpinner):
+                self.setting_choices[r.name] = [c for c in r.selectable_values]
+            if isinstance(r,FloatSpinner):
+                # get set value from settings, and then allow all values larger than that
+                self.setting_choices[r.name] = [c for c in r.selectable_values if c >= real_settings_object.get(r.name)]
+            if isinstance(r,MultiSelect):
+                # get the current set of values, will allow for some to be removed
+                self.setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
+                self.multi_selects.append(r.name)
+
+        
+        for r in self.randomizable_settings:
+            if r.name not in self.setting_choices:
+                raise SettingsException(f"Improper configuration of rando rando settings object. Missing configuration for {r.name}")
+
+        self.random_choices = {}
+        for r in self.randomizable_settings:
+            if r.name in self.multi_selects:
+                self.random_choices[r.name] = [c for c in self.setting_choices[r.name]]
+                # pick a fraction of the multi's to keep
+                num_to_remove = random.randint(0,math.ceil(.2*len(self.setting_choices[r.name])))
+                for iter in range(num_to_remove):
+                    choice = random.choice(self.random_choices[r.name])
+                    self.random_choices[r.name].remove(choice)
+            else:
+                self.random_choices[r.name] = random.choice(self.setting_choices[r.name])
+
+        while self.random_choices[settingkey.REPORT_DEPTH]==self.random_choices[settingkey.PROOF_DEPTH] and self.random_choices[settingkey.PROOF_DEPTH] in [locationDepth.DataFight.name,locationDepth.FirstBoss.name,locationDepth.SecondBoss.name]:
+            # can't make these depths the same very restricted location
+            self.random_choices[settingkey.REPORT_DEPTH] = random.choice(self.setting_choices[settingkey.REPORT_DEPTH])
+            self.random_choices[settingkey.PROOF_DEPTH] = random.choice(self.setting_choices[settingkey.PROOF_DEPTH])
+        
+        if locationType.TTR.name in self.random_choices[settingkey.MISC_LOCATIONS_WITH_REWARDS] and self.random_choices[settingkey.STATSANITY] is False:
+            # can't enable TTR and not be in statsanity
+            self.random_choices[settingkey.STATSANITY] = True
+
+        if self.random_choices[settingkey.KEYBLADE_MIN_STAT] > self.random_choices[settingkey.KEYBLADE_MAX_STAT]:
+            self.random_choices[settingkey.KEYBLADE_MAX_STAT] = self.random_choices[settingkey.KEYBLADE_MIN_STAT]
+
+        for r in self.randomizable_settings:
+            real_settings_object.set(r.name,self.random_choices[r.name])
+

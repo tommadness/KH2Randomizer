@@ -30,7 +30,7 @@ from PySide6.QtWidgets import (
 
 from qt_material import apply_stylesheet
 from Class import settingkey
-from Class.seedSettings import SeedSettings
+from Class.seedSettings import RandoRandoSettings, SeedSettings
 from Module.dailySeed import getDailyModifiers
 from Module.generate import generateSeed
 from Module.newRandomize import RandomizerSettings
@@ -135,6 +135,7 @@ class KH2RandomizerApp(QMainWindow):
         pagelayout.addLayout(seed_layout)
         pagelayout.addWidget(self.tabs)
         pagelayout.addLayout(submit_layout)
+
         seed_layout.addWidget(QLabel("Seed"))
         self.seedName=QLineEdit()
         self.seedName.setPlaceholderText("Leave blank for a random seed")
@@ -147,6 +148,10 @@ class KH2RandomizerApp(QMainWindow):
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         self.spoiler_log.setCheckState(Qt.Checked)
         seed_layout.addWidget(self.spoiler_log)
+        
+        self.rando_rando = QCheckBox("Rando Settings (Experimental)")
+        self.rando_rando.setCheckState(Qt.Unchecked)
+        seed_layout.addWidget(self.rando_rando)
 
         self.widgets = [
             SoraMenu(self.settings),
@@ -244,6 +249,10 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setText(seedString)
 
         try:
+            if self.rando_rando.isChecked():
+                print("Generating randomized settings...")
+                random.seed(seedString)
+                _ = RandoRandoSettings(self.settings)
             rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
             # update the seed hash display
             for index, icon in enumerate(rando_settings.seedHashIcons):
