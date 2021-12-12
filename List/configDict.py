@@ -65,6 +65,15 @@ def isFormCheck(loc: locationCategory):
 def isStatBonusCheck(loc: locationCategory):
     return loc in [locationCategory.STATBONUS,locationCategory.HYBRIDBONUS,locationCategory.DOUBLEBONUS]
 
+class itemDifficulty(str,Enum):
+    SUPEREASY = "Super Easy"
+    EASY = "Easy"
+    NORMAL = "Normal"
+    HARD = "Hard"
+    VERYHARD = "Very Hard"
+    INSANE = "Insane"
+    NIGHTMARE = "Nightmare"
+
 
 class locationDepth(str,Enum):
     FirstVisit = "FirstVisit"

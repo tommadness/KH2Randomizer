@@ -1,7 +1,6 @@
 from Class.exceptions import HintException
 from List.configDict import itemType, locationType
-from Class.locationClass import KH2ItemStat,KH2Treasure
-import zipfile, base64, json, random
+import base64, json, random
 from itertools import permutations
 
 

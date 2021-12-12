@@ -1,4 +1,4 @@
-from math import ceil
+from math import ceil,floor,fmod
 from Class.itemClass import KH2Item, itemRarity
 from Class.newLocationClass import KH2Location
 from List.NewLocationList import Locations
@@ -37,12 +37,25 @@ class LocationWeights():
         location_graph = locations.location_graph
         hops = location_graph.get_hops("Starting")
         self.location_depths = {}
+        self.location_type_maxes = {}
         max_hops = 0
-
         for hop in hops:
             max_hops = max(max_hops,hop[1])
+        for hop in hops:
             for loc in location_graph.node_data(hop[0]).locations:
-                self.location_depths[loc] = hop[1]
+                if loc.LocationTypes[0] not in self.location_type_maxes:
+                    self.location_type_maxes[loc.LocationTypes[0]] = hop[1]
+                else:
+                    self.location_type_maxes[loc.LocationTypes[0]] = max(hop[1],self.location_type_maxes[loc.LocationTypes[0]])
+
+
+        for hop in hops:
+            for loc in location_graph.node_data(hop[0]).locations:
+                if self.location_type_maxes[loc.LocationTypes[0]] != 0:
+                    scaled_depth = floor((hop[1]*1.0/self.location_type_maxes[loc.LocationTypes[0]])*max_hops)
+                else:
+                    scaled_depth = hop[1]
+                self.location_depths[loc] = scaled_depth
         
         self.weights = WeightDistributions(max_hops).getRarityWeighting(settings.itemPlacementDifficulty)
 
