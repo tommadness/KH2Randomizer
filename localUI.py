@@ -306,6 +306,8 @@ class KH2RandomizerApp(QMainWindow):
         message.setTextInteractionFlags(Qt.TextSelectableByMouse)
         message.setWindowTitle("Seed Generation Error")
         message.exec()
+        if not isinstance(failure,RandomizerExceptions):
+            raise failure
 
     def genSeed(self,data,rando_settings):
         self.thread = QThread()
