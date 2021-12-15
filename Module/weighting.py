@@ -28,15 +28,12 @@ class WeightDistributions():
             self.weighting_function[difficulty][itemRarity.RARE] = [max(1,floor(3.0/pow((max_depth+2-x)/(max_depth/3.0),diff_index_modded*.5+1))) for x in range(1,max_depth+2)]
             self.weighting_function[difficulty][itemRarity.MYTHIC] = [max(1,floor(10.0/pow((max_depth+2-x)/(max_depth/3.0),diff_index_modded*.5+1))) for x in range(1,max_depth+2)]
 
-
-
-        
-        for diff_index,difficulty in enumerate(["Super Easy","Easy","Hard","Very Hard","Insane","Nightmare"]):
-            print(self.weighting_function[difficulty][itemRarity.COMMON])
-            print(self.weighting_function[difficulty][itemRarity.UNCOMMON])
-            print(self.weighting_function[difficulty][itemRarity.RARE])
-            print(self.weighting_function[difficulty][itemRarity.MYTHIC])
-            print("--------------------")
+        # for diff_index,difficulty in enumerate(["Super Easy","Easy","Hard","Very Hard","Insane","Nightmare"]):
+        #     print(self.weighting_function[difficulty][itemRarity.COMMON])
+        #     print(self.weighting_function[difficulty][itemRarity.UNCOMMON])
+        #     print(self.weighting_function[difficulty][itemRarity.RARE])
+        #     print(self.weighting_function[difficulty][itemRarity.MYTHIC])
+        #     print("--------------------")
 
     def getRarityWeighting(self,difficulty):
         if difficulty not in self.weighting_function:
