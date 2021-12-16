@@ -185,6 +185,16 @@ class Randomizer():
     def assignSoraItems(self, settings: RandomizerSettings):
         allItems = [i for i in Items.getItemList() if i.Id not in settings.startingItems]
         allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList())
+        # if there abilities in the starting inventory, remove them from the pool
+        removeAbilities = []
+        for startItem in settings.startingItems:
+            for i in allAbilities:
+                if i.Id == startItem:
+                    removeAbilities.append(i)
+                    break
+        for i in removeAbilities:
+            allAbilities.remove(i)
+
         if settings.promiseCharm:
             allItems+=[Items.getPromiseCharm()]
         allLocations = self.master_locations.getAllSoraLocations()
