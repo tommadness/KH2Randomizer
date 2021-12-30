@@ -30,7 +30,7 @@ from PySide6.QtWidgets import (
 
 from qt_material import apply_stylesheet
 from Class import settingkey
-from Class.seedSettings import RandoRandoSettings, SeedSettings
+from Class.seedSettings import RandoRandoSettings, SeedSettings, getRandoRandoTooltip
 from Module.dailySeed import getDailyModifiers
 from Module.generate import generateSeed
 from Module.newRandomize import RandomizerSettings
@@ -150,6 +150,7 @@ class KH2RandomizerApp(QMainWindow):
         seed_layout.addWidget(self.spoiler_log)
         
         self.rando_rando = QCheckBox("Rando Settings (Experimental)")
+        self.rando_rando.setToolTip(getRandoRandoTooltip())
         self.rando_rando.setCheckState(Qt.Unchecked)
         seed_layout.addWidget(self.rando_rando)
 
