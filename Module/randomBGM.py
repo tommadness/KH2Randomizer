@@ -544,38 +544,57 @@ class RandomBGM():
         if not platform == "PC" or len(options["games"]) < 1:
             return ""
 
-        # FIXME default custom category for when songs are just placed in "custom" category
+        custom_config_cache = {}
 
-        def _getsong(songlist, category, name):
-            if category in songlist:
-                for song in songlist[category]["songs"]:
-                    if song["name"] == name:
-                        return song
-            return None
+        def _readconfig(path):
+            print(path)
+            if path in custom_config_cache:
+                return custom_config_cache[path]
+            config = {"category": "unknown", "songs": {}}
+            for line in open(path):
+                line = line.strip()
+                if "=" in line:
+                    rule = line.split("=")
+                    if len(rule) != 2:
+                        raise Exception("Config Rule {} is invalid!".format(line))
+                    if rule[0] == "category":
+                        config["category"] = rule[1]
+                    elif rule[0].endswith(".scd"):
+                        config["songs"][rule[0]] = rule[1]
+            custom_config_cache[path] = config
+            return config
+
+        def _getsong(subpath, fullpath):
+            basedir = os.path.dirname(fullpath)
+            song_name = os.path.basename(subpath)
+            song_record = {"name": subpath, "category": "unknown"}
+            print(path)
+            if "config.txt" in os.listdir(basedir):
+                config = _readconfig(os.path.join(basedir, "config.txt"))
+                song_record["category"] = config.get("category", "unknown")
+                print(config.get("songs"))
+                if song_name in config.get("songs"):
+                    song_record["category"] = config["songs"].get(song_name)
+            return song_record
 
         songlist = {}
-        old_songlist = {}
-
-        if os.path.exists("custom_songlist.json"):
-            with open("custom_songlist.json","r") as f:
-                old_songlist = json.load(f)
 
         for category in options["games"]:
             if category not in musicList: # it's custom
                 if category not in songlist:
-                    default_category = old_songlist.get(category, {}).get("default_category", "unknown")
-                    songlist[category] = {"default_category": default_category, "songs": []}
+                    songlist[category] = {"default_category": "unknown", "songs": []}
                 dirname = os.path.join(os.environ.get("KHGAMES_PATH"), "custom", category)
-                for song_name in os.listdir(dirname):
-                    if not song_name.endswith(".scd"):
+                for path, subdirs, files in os.walk(dirname):
+                    if os.path.basename(path).startswith("_"):
                         continue
-                    song_record = _getsong(old_songlist, category, song_name)
-                    if not song_record:
-                        song_record = {"name": song_name, "category": default_category}
-                    songlist[category]["songs"].append(song_record)
-
-        with open("custom_songlist.json", "w") as f:
-            json.dump(songlist, f, indent=4)
+                    for song_name in files:
+                        if not song_name.endswith(".scd"):
+                            continue
+                        song_path = os.path.join(path, song_name)
+                        song_subpath = song_path.replace(dirname, '')[1:] # We don't want to use the absolute path
+                        song_record = _getsong(song_subpath, song_path)
+                        songlist[category]["songs"].append(song_record)
+            print(songlist[category])
 
         # Add the custom songlist into the musiclist so it works normally
         for category in songlist:
@@ -688,7 +707,7 @@ class RandomBGM():
 
         custom_path = os.path.join(os.environ.get("KHGAMES_PATH"), "custom")
         if os.path.isdir(custom_path):
-            available_games += os.listdir(custom_path)
+            available_games += [d for d in os.listdir(custom_path) if not d.startswith("_")]
 
         return available_games
 
