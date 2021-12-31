@@ -547,7 +547,6 @@ class RandomBGM():
         custom_config_cache = {}
 
         def _readconfig(path):
-            print(path)
             if path in custom_config_cache:
                 return custom_config_cache[path]
             config = {"category": "unknown", "songs": {}}
@@ -568,11 +567,9 @@ class RandomBGM():
             basedir = os.path.dirname(fullpath)
             song_name = os.path.basename(subpath)
             song_record = {"name": subpath, "category": "unknown"}
-            print(path)
             if "config.txt" in os.listdir(basedir):
                 config = _readconfig(os.path.join(basedir, "config.txt"))
                 song_record["category"] = config.get("category", "unknown")
-                print(config.get("songs"))
                 if song_name in config.get("songs"):
                     song_record["category"] = config["songs"].get(song_name)
             return song_record
@@ -594,7 +591,6 @@ class RandomBGM():
                         song_subpath = song_path.replace(dirname, '')[1:] # We don't want to use the absolute path
                         song_record = _getsong(song_subpath, song_path)
                         songlist[category]["songs"].append(song_record)
-            print(songlist[category])
 
         # Add the custom songlist into the musiclist so it works normally
         for category in songlist:

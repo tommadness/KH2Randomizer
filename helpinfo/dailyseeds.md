@@ -13,7 +13,7 @@ The default ruleset:
 - Max Logic Item Placement
 - All locations except Terra/Datas/Atlantica/Cups
 - Normal Item Placement Difficulty
-- Enemy/Boss Randomization set to One to One with scaled health
+- Enemy Randomization set to One to One
 
 Each day 3 modifiers are randomly picked from the below list, to change the default ruleset (on Fri-Sun 5 modifiers are picked instead)
 
@@ -35,7 +35,12 @@ Each day 3 modifiers are randomly picked from the below list, to change the defa
 - Remove Damage Cap: Remove the damage cap for Sora dealing damage to enemies
 - More Powerful keyblades: Keyblades can have maximum stats of up to 20
 - Early Checks: Worlds are more likely to have better checks early, than late
-- Late Checks: Worlds are more likely to have better checks late, rather than early
 - No Starting AP: Sora/Donald/Goofy start the game with 0 AP
+- Statsanity: Stat boosts are added into the pool of randomized checks
+- One to One Bosses: Bosses are randomized using the One to One setting
+- Vanilla Enemies: Enemies are vanilla
+- Cups Give XP: Olympus cups are ON, but you start with Hades Cup and you will gain XP and Form XP in the cups
+- Stay out of Twilight Town: Twilight Town and Simulated Twilight Town are both turned off
+- Shut Out of Worlds: 4 random worlds (the daily seed will tell you which) will have no good checks. HB and COR are combined into one world for this modifier.
 
 In the 2Fm Rando discord you can find both spoiler and non spoiler channels to compare times and discuss the ruleset/modifiers for daily seeds.

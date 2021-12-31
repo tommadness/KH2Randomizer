@@ -1,10 +1,12 @@
-## Daily Seeds
+## Randomized Music
 
 The KH2 Randomizer supports randomizing music from any of the games in KH 1.5/2.5/2.8, as well as your own custom music. Below are some basic guidelines for how to set this up
 
 ### KH Music
 
 For Kingdom Hearts 2, this is setup automatically once you have the rest of the randomizer working. For the other games in the series, the games need to be extracted into the same folder as the extracted copy of KH2 (instructions for this are outside the scope of this page). In the list of music choices, the randomizer will only show the games that you have properly extracted. 
+
+A mapping of the built in songs used, and what category they are assigned, can be found at the top [here](https://github.com/tommadness/KH2Randomizer/blob/master/Module/randomBGM.py)
 
 ### Custom Music
 
@@ -49,6 +51,7 @@ kh_games
         > Kokiri Forest.scd
         > Market.scd
       * dungeon   
+        > config.txt
         > Middle Boss Battle.scd
         > Dinosaur Boss Battle.scd
         > Dodongo's Cavern.scd
