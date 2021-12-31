@@ -779,6 +779,14 @@ _all_settings = [
     ),
 
     Toggle(
+        name=settingkey.RETRY_DFX,
+        ui_label='Retry Data Final Xemnas',
+        shared=True,
+        default=False,
+        tooltip='If you die to Data Final Xemnas, continue will put you right back into the fight, instead of having to fight Data Xemnas I again (warning will be a softlock if you are unable to beat Final Xemnas)'
+    ),
+
+    Toggle(
         name=settingkey.ENABLE_PROMISE_CHARM,
         ui_label='Enable Promise Charm',
         shared=True,

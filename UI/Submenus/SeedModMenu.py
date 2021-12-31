@@ -13,7 +13,11 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.BETTER_JUNK)
         self.add_option(settingkey.START_NO_AP)
         self.add_option(settingkey.REMOVE_DAMAGE_CAP)
+        self.end_column()
+
+        self.start_column()
         self.add_option(settingkey.CUPS_GIVE_XP)
+        self.add_option(settingkey.RETRY_DFX)
         self.end_column()
 
         self.finalizeMenu()

@@ -74,6 +74,8 @@ class SeedZip():
                     return True
                 if settings.enemy_options.get("cups_give_xp", False):
                     return True
+                if settings.enemy_options.get("retry_data_final_xemnas", False):
+                    return True
 
             enemySpoilers = None
             enemySpoilersJSON = {}

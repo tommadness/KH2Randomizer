@@ -26,6 +26,7 @@ MISC_LOCATIONS_WITH_REWARDS = 'misc_locations_with_rewards'
 PREVENT_SELF_HINTING = 'prevent_self_hinting'
 REMOVE_DAMAGE_CAP = 'remove_damage_cap'
 CUPS_GIVE_XP = 'cups_give_xp'
+RETRY_DFX = 'retry_data_final_xemnas'
 REPORT_DEPTH = 'report_depth'
 POINTS_PROOF = "points_proofs"
 POINTS_FORM = "points_forms"
