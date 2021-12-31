@@ -96,6 +96,7 @@ The different modes determine where a report can be found:
 - **Randomize Ability Pool** - Explained in its own section below
 - **Start with No AP** - Sora, Donald, and Goofy start with 0 AP
 - **Remove Damage Cap** - Bosses and enemies no longer have a maximum damage that can be applied in one hit.
+- **Cups Give XP** - Enemies fought while in a OC Cup will give out XP and Form XP.
 
 ## What does Max Logic Item Placement do?
 **Max Logic Item Placement** is a seed modifier that makes all items obtainable, removing most "hard" restrictions on locations.

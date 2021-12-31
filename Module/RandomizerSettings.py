@@ -84,7 +84,8 @@ class RandomizerSettings():
         self.setFinalExp(ui_settings.get(settingkey.FINAL_EXP_MULTIPLIER),ui_settings.get(settingkey.FINAL_EXP_CURVE))
         self.setSummonExp(ui_settings.get(settingkey.SUMMON_EXP_MULTIPLIER),ui_settings.get(settingkey.SUMMON_EXP_CURVE))
 
-        self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP)}
+        self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
+                              'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP)}
         for setting in seedSettings.boss_settings + seedSettings.enemy_settings:
             value = ui_settings.get(setting.name)
             if value is not None:

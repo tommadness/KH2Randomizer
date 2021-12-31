@@ -771,6 +771,14 @@ _all_settings = [
     ),
 
     Toggle(
+        name=settingkey.CUPS_GIVE_XP,
+        ui_label='Cups Give XP',
+        shared=True,
+        default=False,
+        tooltip='Defeating enemies while in an OC Cup will give you XP and Form XP'
+    ),
+
+    Toggle(
         name=settingkey.ENABLE_PROMISE_CHARM,
         ui_label='Enable Promise Charm',
         shared=True,

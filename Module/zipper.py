@@ -65,31 +65,41 @@ class SeedZip():
             platform = cosmetics_data["platform"]
             randomBGMOptions = cosmetics_data["randomBGM"]
 
+            def _shouldRunKHBR():
+                if not settings.enemy_options.get("boss", False) in [False, "Disabled"]:
+                    return True
+                if not settings.enemy_options.get("enemy", False) in [False, "Disabled"]:
+                    return True
+                if settings.enemy_options.get("remove_damage_cap", False):
+                    return True
+                if settings.enemy_options.get("cups_give_xp", False):
+                    return True
+
             enemySpoilers = None
             enemySpoilersJSON = {}
-            if not settings.enemy_options["boss"] == "Disabled" or not settings.enemy_options["enemy"] == "Disabled" or settings.enemy_options["remove_damage_cap"]:
+            if _shouldRunKHBR():
                 if platform == "PC":
                     settings.enemy_options["memory_expansion"] = True
                 else:
                     settings.enemy_options["memory_expansion"] = False
-                if settings.enemy_options.get("boss", False) or settings.enemy_options.get("enemy", False) or settings.enemy_options.get("remove_damage_cap", False):
-                    from khbr.randomizer import Randomizer as khbr
-                    enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
-                    lines = enemySpoilers.split("\n")
+                
+                from khbr.randomizer import Randomizer as khbr
+                enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
+                lines = enemySpoilers.split("\n")
 
-                    current_key = ""
-                    for line in lines:
-                        if '\t' in line:
-                            modded_line = line.replace('\t','')
-                            enemies = modded_line.split(" became ")
-                            # this is adding to the current list
-                            new_entry = {}
-                            new_entry["original"] = enemies[0]
-                            new_entry["new"] = enemies[1]
-                            enemySpoilersJSON[current_key].append(new_entry)
-                        elif line!="":
-                            current_key = line
-                            enemySpoilersJSON[current_key] = []
+                current_key = ""
+                for line in lines:
+                    if '\t' in line:
+                        modded_line = line.replace('\t','')
+                        enemies = modded_line.split(" became ")
+                        # this is adding to the current list
+                        new_entry = {}
+                        new_entry["original"] = enemies[0]
+                        new_entry["new"] = enemies[1]
+                        enemySpoilersJSON[current_key].append(new_entry)
+                    elif line!="":
+                        current_key = line
+                        enemySpoilersJSON[current_key] = []
 
             if settings.spoiler_log:
                 mod["title"] += " w/ Spoiler"

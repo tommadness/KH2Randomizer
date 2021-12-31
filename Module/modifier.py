@@ -38,6 +38,10 @@ class SeedModifier():
             {
                 "name": "Remove Damage Cap",
                 "description": "Removes the damage cap for every enemy/boss in the game."
+            },
+            {
+                "name": "Cups Give XP",
+                "description": "Defeating enemies while in an OC Cup will give you XP and Form XP"
             }
         ]
 
