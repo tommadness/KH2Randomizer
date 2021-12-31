@@ -948,6 +948,16 @@ class SeedSettings:
             if key in filtered_keys:
                 self.set(key, value)
 
+
+def getRandoRandoTooltip():
+    randomizable_settings = [setting for setting in _all_settings if setting.randomizable]
+    text = "Randomized settings will randomize the following options: ["
+    for r in randomizable_settings:
+        text+=r.ui_label+", "
+    text+="] \n Worlds/Bosses/Misc Locations will only be turned off randomly, so anything that is set to off before generating a seed will stay off (e.g. if Datas are off, they will stay off)"
+    return text
+    
+
 class RandoRandoSettings:
     def __init__(self, real_settings_object: SeedSettings):
         self.randomizable_settings = [setting for setting in _all_settings if setting.randomizable]
