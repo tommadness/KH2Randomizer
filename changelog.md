@@ -11,8 +11,8 @@
 - Yeet the Bear Option: Forces the Proof of Nonexistence onto the Starry Hill popup of 100 Acre Wood
 - Customizable Point Hint values
 - Randomized Settings Option (Rando Rando) - Experimental option to pick random settings for a seed. Will randomize exp values, keyblade stats, hint system, point values for point hints (if picked as the hint system), item placement level (up to very hard), and worlds/bosses/misc locations (only if you left them on before generating a random settings seed, if you left an option off, it will stay off).
-- Randomized Music (Improved): Now supports custom music, please see [here](https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/music.md) for an explanation.
-- More Daily Seed settings: Full list can be found [here](https://github.com/tommadness/KH2Randomizer/blob/master/helpinfo/dailyseeds.md). The default settings now only have enemies randomized, as boss randomization has too many edge cases to always be on in Daily Seeds.
+- Randomized Music (Improved): Now supports custom music, please see [here](https://github.com/tommadness/KH2Randomizer/blob/2.0/helpinfo/music.md) for an explanation.
+- More Daily Seed settings: Full list can be found [here](https://github.com/tommadness/KH2Randomizer/blob/2.0/helpinfo/dailyseeds.md). The default settings now only have enemies randomized, as boss randomization has too many edge cases to always be on in Daily Seeds.
 - Boss/Enemy related features/improvements: See the full list [here](https://github.com/thundrio-kh/khbr/blob/master/CHANGELOG)
 
 ## 2021-24-Sep update
