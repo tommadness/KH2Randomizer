@@ -36,7 +36,7 @@ a = Analysis(
         'static/KHMenu.otf',
         'Module/icon.png',
         'extracted_data/**/*.*'
-    ])+[(khbrpath+'/*.json','khbr'), (khbrpath+'/*.yaml','khbr'), (khbrpath+'/data/*.*','khbr/data'), (khbrpath+'/data/ai_mods/*','khbr/data/ai_mods')],
+    ])+[(khbrpath+'/KH2/data/*','khbr/KH2/data'), (khbrpath+'/KH2/data/ai_mods/*','khbr/KH2/data/ai_mods')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
