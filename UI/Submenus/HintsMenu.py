@@ -22,6 +22,7 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_SUMMON)
         self.add_option(settingkey.POINTS_ABILITY)
         self.add_option(settingkey.POINTS_PAGE)
+        self.add_option(settingkey.POINTS_REPORT)
         self.end_column()
         self.finalizeMenu()
 
@@ -38,3 +39,4 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.POINTS_SUMMON, visible=hint_system == 'Points')
         self.set_option_visibility(settingkey.POINTS_ABILITY, visible=hint_system == 'Points')
         self.set_option_visibility(settingkey.POINTS_PAGE, visible=hint_system == 'Points')
+        self.set_option_visibility(settingkey.POINTS_REPORT, visible=hint_system == 'Points')
