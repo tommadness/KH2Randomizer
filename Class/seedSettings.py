@@ -516,7 +516,17 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_PAGE,
-        ui_label="Page/Report Point Value",
+        ui_label="Page Point Value",
+        minimum=1,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=2,
+        randomizable=True
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_REPORT,
+        ui_label="Report Point Value",
         minimum=1,
         maximum=20,
         step=1,

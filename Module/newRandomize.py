@@ -216,7 +216,7 @@ class Randomizer():
             raise GeneratorException(f"Separating valid {len(validLocations)} and invalid {len(invalidLocations)} locations removed locations from existence (total {len(allLocations)} )")
         
         self.assignKeybladeAbilities(settings, allAbilities, allItems)
-        allItems+=allAbilities
+        allItems=allAbilities+allItems
 
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
@@ -253,8 +253,7 @@ class Randomizer():
                         validLocations.remove(randomLocation)
                     break
                 if count==100:
-                    raise CantAssignItemException(f"Trying to assign {item} and failed 100 times")
-
+                    raise CantAssignItemException(f"Trying to assign {item} and failed 100 times in {len([i for i in validLocations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(validLocations)}")
         invalidLocations+=validLocations
         self.assignJunkLocations(settings, invalidLocations)
 
@@ -277,6 +276,8 @@ class Randomizer():
             if loc.LocationCategory == locationCategory.POPUP:
                 loc.InvalidChecks+=[itemType.GROWTH_ABILITY,itemType.ACTION_ABILITY,itemType.SUPPORT_ABILITY,itemType.GAUGE]
             if locationType.STT in loc.LocationTypes and loc.LocationCategory != locationCategory.STATBONUS:
+                loc.InvalidChecks+=[itemType.GAUGE]
+            if locationType.Critical in loc.LocationTypes:
                 loc.InvalidChecks+=[itemType.GAUGE]
 
             if not self.report_depths.isValid(loc):

@@ -253,7 +253,7 @@ class Hints:
             
             worldChecks = {}
             worldChecksEdit = {}
-            
+
             for location,item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
@@ -280,8 +280,11 @@ class Hints:
                     #report can't hint itself
                     if preventSelfHinting:
                         reportRestrictions[reportNumber-1].append(location.LocationTypes[0])
-            
+            attempts = 0
             while len(reportsList) > 0:
+                attempts+=1
+                if attempts > 500:
+                    raise HintException(f"Points hints got stuck assigning report text with {len(reportsList)}")
             
                 temp_worlds = list(worldChecksEdit.keys())
                 worlds = []

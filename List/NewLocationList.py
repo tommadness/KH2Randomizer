@@ -331,7 +331,7 @@ class Locations:
         self.add_node("DC-12",LocationNode([KH2Location(67, "Marluxia Bonus", locationCategory.STATBONUS,[locationType.DC, locationType.AS]),
                                         KH2Location(548, "Marluxia (AS) Eternal Blossom", locationCategory.POPUP,[locationType.DC, locationType.AS]),]))
         self.add_node("DC-13",LocationNode([KH2Location(553, "Marluxia (Data) Lost Illusion", locationCategory.POPUP,[locationType.DC, locationType.DataOrg]),]))
-        self.add_node("DC-14",LocationNode([KH2Location(70, "Lingering Will Bonus", locationCategory.STATBONUS,[locationType.HT, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),
+        self.add_node("DC-14",LocationNode([KH2Location(70, "Lingering Will Bonus", locationCategory.STATBONUS,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),
                                         KH2Location(587, "Lingering Will Proof of Connection", locationCategory.POPUP,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),
                                         KH2Location(591, "Lingering Will Manifest Illusion", locationCategory.POPUP,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),]))
         self.data_nodes.append("DC-13")

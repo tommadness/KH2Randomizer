@@ -106,7 +106,8 @@ class RandomizerSettings():
                                     "magic":ui_settings.get(settingkey.POINTS_MAGIC), 
                                     "summon":ui_settings.get(settingkey.POINTS_SUMMON), 
                                     "ability":ui_settings.get(settingkey.POINTS_ABILITY), 
-                                    "page":ui_settings.get(settingkey.POINTS_PAGE)}
+                                    "page":ui_settings.get(settingkey.POINTS_PAGE), 
+                                    "report":ui_settings.get(settingkey.POINTS_REPORT)}
 
         self.antiform = False
 

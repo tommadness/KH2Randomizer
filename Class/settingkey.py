@@ -34,6 +34,7 @@ POINTS_MAGIC = "points_magic"
 POINTS_SUMMON = "points_summon"
 POINTS_ABILITY = "points_abilities"
 POINTS_PAGE = "points_page"
+POINTS_REPORT = "points_report"
 PROOF_DEPTH = 'proof_depth'
 REVERSE_RANDO = 'reverse_rando'
 SCHMOVEMENT = 'schmovement'
