@@ -160,6 +160,22 @@ class SeedZip():
             while(len(itemList)<32):
                 itemList.append(0)
 
+
+        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] + settings.startingItems
+        padItems(soraStartingItems)
+        self.formattedPlrp.append({
+            "Character": 1, # Sora Starting Items (Crit)
+            "Id": 7, # crit difficulty
+            "Hp": 20,
+            "Mp": 100,
+            "Ap": 0 if settings.no_ap else 50,
+            "ArmorSlotMax": 1,
+            "AccessorySlotMax": 1,
+            "ItemSlotMax": 3,
+            "Items": soraStartingItems[:7],
+            "Padding": [0] * 52
+        })
+
         donaldStartingItems = [1+0x8000,3+0x8000]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedDonaldItems,[locationType.Free])]
         padItems(donaldStartingItems)
         self.formattedPlrp.append({
@@ -189,33 +205,6 @@ class SeedZip():
             "Items": goofyStartingItems,
             "Padding": [0] * 52
         })
-
-        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] + settings.startingItems
-        padItems(soraStartingItems)
-        self.formattedPlrp.append({
-            "Character": 1, # Sora Starting Items (Non Crit)
-            "Id": 0,
-            "Hp": 20,
-            "Mp": 100,
-            "Ap": 0 if settings.no_ap else 50,
-            "ArmorSlotMax": 1,
-            "AccessorySlotMax": 1,
-            "ItemSlotMax": 3,
-            "Items": soraStartingItems[7:],
-            "Padding": [0] * 52
-        })
-        self.formattedPlrp.append({
-            "Character": 1, # Sora Starting Items (Crit)
-            "Id": 7, # crit difficulty
-            "Hp": 20,
-            "Mp": 100,
-            "Ap": 0 if settings.no_ap else 50,
-            "ArmorSlotMax": 1,
-            "AccessorySlotMax": 1,
-            "ItemSlotMax": 3,
-            "Items": soraStartingItems[:7],
-            "Padding": [0] * 52
-        })
         lionSoraItems = [32930, 32930, 32931, 32931, 33288, 33289, 33290, 33294]
         padItems(lionSoraItems)
         self.formattedPlrp.append({
@@ -228,6 +217,19 @@ class SeedZip():
             "AccessorySlotMax": 0,
             "ItemSlotMax": 0,
             "Items": lionSoraItems,
+            "Padding": [0] * 52
+        })
+        
+        self.formattedPlrp.append({
+            "Character": 1, # Sora Starting Items (Non Crit)
+            "Id": 0,
+            "Hp": 20,
+            "Mp": 100,
+            "Ap": 0 if settings.no_ap else 50,
+            "ArmorSlotMax": 1,
+            "AccessorySlotMax": 1,
+            "ItemSlotMax": 3,
+            "Items": soraStartingItems[7:],
             "Padding": [0] * 52
         })
 
@@ -265,15 +267,17 @@ class SeedZip():
             levels = self.getAssignmentSubset(randomizer.assignedItems,[levelType])
             formName = formDict[index]
             self.formattedFmlv[formName] = []
-            for lvl in levels:
-                formExp = [l for l in randomizer.formLevelExp if l == lvl.location][0]
-                self.formattedFmlv[formName].append({
-                    "Ability": lvl.item.Id,
-                    "Experience": formExp.experience,
-                    "FormId": index,
-                    "FormLevel": lvl.location.LocationId,
-                    "GrowthAbilityLevel": 0,
-                })
+            for level_number in range(1,8):
+                for lvl in levels:
+                    if lvl.location.LocationId == level_number:
+                        formExp = [l for l in randomizer.formLevelExp if l == lvl.location][0]
+                        self.formattedFmlv[formName].append({
+                            "Ability": lvl.item.Id,
+                            "Experience": formExp.experience,
+                            "FormId": index,
+                            "FormLevel": lvl.location.LocationId,
+                            "GrowthAbilityLevel": 0,
+                        })
 
     def assignGoofyBonuses(self, randomizer):
         goofyBonuses = self.getAssignmentSubset(randomizer.assignedGoofyItems,[locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS,locationCategory.ITEMBONUS,locationCategory.STATBONUS])
