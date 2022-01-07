@@ -734,6 +734,10 @@ class RandomBGM():
     def getGames():
         available_games = []
 
+        if "KHGAMES_PATH" not in os.environ:
+            print("testing123")
+            return available_games
+	
         for game in musicPaths:
             if game == "CUSTOM":
                 continue
