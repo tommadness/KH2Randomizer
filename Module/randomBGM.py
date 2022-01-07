@@ -2,29 +2,126 @@ import random, os, json
 
 musicList = {
     "KH2": [
+        #sorting this for my sanity rn
+        #Station of Awakening
         {"name": "bgm\\music050.win32.scd", "kind": "field"}, # Destati
         {"name": "bgm\\music051.win32.scd", "kind": "battle"}, # Fragments of Sorrow
+        #Simulated Twilight Town
+        {"name": "bgm\\music118.win32.scd", "kind": "field"}, # Lazy Afternoons
+        {"name": "bgm\\music119.win32.scd", "kind": "battle"}, # Sinister Sundown
+        #Twilight Town
         {"name": "bgm\\music052.win32.scd", "kind": "field"}, # The Afternoon Streets
         {"name": "bgm\\music053.win32.scd", "kind": "battle"}, # Working Together
+        #TWTNW
         {"name": "bgm\\music054.win32.scd", "kind": "field"}, #Sacred Moon
         {"name": "bgm\\music055.win32.scd", "kind": "battle"}, #Deep Drive
-        {"name": "bgm\\music059.win32.scd", "kind": "battle"}, #A Fight to the Death
-        {"name": "bgm\\music060.win32.scd", "kind": "battle"}, #Darkness of the Unknown I
-        {"name": "bgm\\music061.win32.scd", "kind": "battle"}, #Darkness of the unknown II
-        {"name": "bgm\\music062.win32.scd", "kind": "battle"}, # Darkness of the Unknown III
-        {"name": "bgm\\music063.win32.scd", "kind": "battle"}, # The 13th Reflection
-        {"name": "bgm\\music064.win32.scd", "kind": "field"}, #What a Surprise
+        #Haloween Town
+        {"name": "bgm\\music144.win32.scd", "kind": "field", "dmca": True}, # This is Halloween
+        {"name": "bgm\\music086.win32.scd", "kind": "battle"}, # Spooks of Halloween Town
+        {"name": "bgm\\music149.win32.scd", "kind": "battle"}, # Spooks of Halloween (Variation)
+        #Christmas Town
+        {"name": "bgm\\music064.win32.scd", "kind": "field"}, # What a Surprise
         {"name": "bgm\\music065.win32.scd", "kind": "battle"}, # Happy Holidays
-        {"name": "bgm\\music066.win32.scd", "kind": "battle"},  # The other Promise
-        {"name": "bgm\\music067.win32.scd", "kind": "battle"}, # Rage Awakened
+        #GoA/CoR
         {"name": "bgm\\music068.win32.scd", "kind": "field"}, # Cavern of Remembrance
         {"name": "bgm\\music069.win32.scd", "kind": "battle"}, # Deep Anxiety
+        #Beast's Castle
+        {"name": "bgm\\music101.win32.scd", "kind": "field"}, # Waltz of the Damned
+        {"name": "bgm\\music104.win32.scd", "kind": "battle"}, # Dance of the Daring
+        #Olympus Coliseum
+        {"name": "bgm\\music103.win32.scd", "kind": "field"}, # Olympus Coliseum
+        {"name": "bgm\\music164.win32.scd", "kind": "battle"}, # Road to a Hero
+        #Olympus Coliseum (Underworld)
+        {"name": "bgm\\music100.win32.scd", "kind": "field"}, # The Underworld
+        {"name": "bgm\\music102.win32.scd", "kind": "battle"}, # What Lies Beneath
         {"name": "bgm\\music081.win32.scd", "kind": "battle"}, # Beneath the Ground A
-        {"name": "bgm\\music082.win32.scd", "kind": "field"}, # The Escapade
+        {"name": "bgm\\music120.win32.scd", "kind": "battle"}, # Beneath the Ground B
+        #Agrabah
+        {"name": "bgm\\music127.win32.scd", "kind": "field"}, # A Day in Agrabah
+        {"name": "bgm\\music128.win32.scd", "kind": "battle"}, # Arabian Dream
         {"name": "bgm\\music084.win32.scd", "kind": "battle"}, # Arabian Daydream
+        #Land of Dragons
+        {"name": "bgm\\music116.win32.scd", "kind": "field"}, # The Home of Dragons
+        {"name": "bgm\\music112.win32.scd", "kind": "battle"}, # Fields of Honor 
+        #100 Acre Wood
+        {"name": "bgm\\music141.win32.scd", "kind": "field"}, # Winnie the Pooh Theme
+        {"name": "bgm\\music158.win32.scd", "kind": "field"}, # Bounce-o-Rama
+        {"name": "bgm\\music159.win32.scd", "kind": "battle"}, # Bounce-o-Rama Ver 2
+        #Disney Castle
+        {"name": "bgm\\music143.win32.scd", "kind": "field", "dmca": True}, # Mickey Mouse Club March
+        {"name": "bgm\\music189.win32.scd", "kind": "field"}, # Monochrome Dreams
+        {"name": "bgm\\music190.win32.scd", "kind": "battle"}, # Old Friends, Old Rivals
+        #Space paranoids
         {"name": "bgm\\music085.win32.scd", "kind": "battle"}, # Byte Striking
-        {"name": "bgm\\music086.win32.scd", "kind": "battle"}, # Spooks of Halloween Town
-        {"name": "bgm\\music087.win32.scd", "kind": "battle"}, # Disappeared
+        {"name": "bgm\\music135.win32.scd", "kind": "field"}, # Space Paranoids Theme
+        {"name": "bgm\\music136.win32.scd", "kind": "battle"}, # Byte Bashing
+        #mysterious Tower
+        {"name": "bgm\\music133.win32.scd", "kind": "field"}, # Magical Mystery
+        {"name": "bgm\\music134.win32.scd", "kind": "battle"}, # Working Together
+        #Hallow Bastion
+        {"name": "bgm\\music152.win32.scd", "kind": "field"}, # Reviving Hallow Bastion
+        {"name": "bgm\\music153.win32.scd", "kind": "battle"}, # Scherzo Di Notte
+        #Port Royal
+        {"name": "bgm\\music154.win32.scd", "kind": "field"}, # Nights of the Cursed
+        {"name": "bgm\\music155.win32.scd", "kind": "battle"}, # He's a Pirate
+        {"name": "bgm\\music530.win32.scd", "kind": "battle"}, # He's A Pirate (variation?)
+        #Pride Lands
+        {"name": "bgm\\music186.win32.scd", "kind": "field"}, # Adventures in the Savannah
+        {"name": "bgm\\music187.win32.scd", "kind": "battle"}, # Savannah Pride
+        #boss/special
+        {"name": "bgm\\music059.win32.scd", "kind": "boss"}, # A Fight to the Death
+        {"name": "bgm\\music060.win32.scd", "kind": "boss"}, # Darkness of the Unknown I
+        {"name": "bgm\\music061.win32.scd", "kind": "boss"}, # Darkness of the unknown II
+        {"name": "bgm\\music062.win32.scd", "kind": "boss"}, # Darkness of the Unknown III
+        {"name": "bgm\\music063.win32.scd", "kind": "boss"}, # The 13th Reflection
+        {"name": "bgm\\music066.win32.scd", "kind": "boss"}, # The other Promise
+        {"name": "bgm\\music067.win32.scd", "kind": "boss"}, # Rage Awakened
+        {"name": "bgm\\music087.win32.scd", "kind": "boss"}, # Disappeared
+        {"name": "bgm\\music110.win32.scd", "kind": "boss"}, # The Encounter
+        {"name": "bgm\\music111.win32.scd", "kind": "boss"}, # Sinister Shadows
+        {"name": "bgm\\music114.win32.scd", "kind": "boss"}, # Tension Rising
+        {"name": "bgm\\music115.win32.scd", "kind": "boss"}, # The Corrupted
+        {"name": "bgm\\music117.win32.scd", "kind": "boss"}, # Rowdy Rumble
+        {"name": "bgm\\music121.win32.scd", "kind": "boss"}, # Desire for All That is Lost
+        {"name": "bgm\\music131.win32.scd", "kind": "boss"}, # Dance to the Death 
+        {"name": "bgm\\music145.win32.scd", "kind": "boss"}, # Vim and Vigor
+        {"name": "bgm\\music151.win32.scd", "kind": "boss"}, # The 13th Struggle
+        {"name": "bgm\\music185.win32.scd", "kind": "boss"}, # The 13th Dilemma
+        {"name": "bgm\\music188.win32.scd", "kind": "boss"}, # One-Winged Angel
+        {"name": "bgm\\music517.win32.scd", "kind": "boss"}, # Rowdy Rumble (Timeless River)
+        {"name": "bgm\\music521.win32.scd", "kind": "boss"}, # Desire For All That Lost (Timeless River)
+        #Atlantica
+        {"name": "bgm\\music129.win32.scd", "kind": "field"}, # Isn't It Lovely
+        {"name": "bgm\\music122.win32.scd", "kind": "field"}, # Atlantica Tutorial I
+        {"name": "bgm\\music123.win32.scd", "kind": "field"}, # Atlantica Tutorial II
+        #{"name": "bgm\\music124.win32.scd", "kind": "field"}, # Atlantica Tutorial II.5 (no loop)
+        #{"name": "bgm\\music125.win32.scd", "kind": "field"}, # Atlantica Tutorial Finish (short no loop)
+        #{"name": "bgm\\music130.win32.scd", "kind": "field"}, # Atlantica tutorials Combined (no loop)
+        {"name": "bgm\\music106.win32.scd", "kind": "field", "dmca": True}, # Under the Sea
+        {"name": "bgm\\music107.win32.scd", "kind": "battle"}, # Ursula's Revenge
+        {"name": "bgm\\music108.win32.scd", "kind": "field", "dmca": True}, # Part of your World
+        {"name": "bgm\\music109.win32.scd", "kind": "field"}, # A New Day is Dawning
+        {"name": "bgm\\music113.win32.scd", "kind": "field"}, # Swim This Way
+        {"name": "bgm\\music506.win32.scd", "kind": "field", "dmca": True}, # Under The Sea (JP)
+        {"name": "bgm\\music507.win32.scd", "kind": "battle"}, # Ursula Revenge (JP)
+        {"name": "bgm\\music508.win32.scd", "kind": "field", "dmca": True}, # Part Of Your World (JP)
+        {"name": "bgm\\music509.win32.scd", "kind": "field"}, # A New Day Is Dawning (JP)
+        {"name": "bgm\\music513.win32.scd", "kind": "field"}, # Swim This Way (JP)
+        #Gummi Ship
+        {"name": "bgm\\music137.win32.scd", "kind": "field"}, # A Twinkle in the Sky
+        {"name": "bgm\\music138.win32.scd", "kind": "battle"}, # Shipmeisters' Shanty
+        {"name": "bgm\\music139.win32.scd", "kind": "field"}, # Gearing up
+        {"name": "bgm\\music142.win32.scd", "kind": "field"}, # Crossing the Finish Line
+        {"name": "bgm\\music148.win32.scd", "kind": "field"}, # Blast Off
+        {"name": "vagstream\\GM1_Asteroid.win32.scd", "kind": "battle"}, #Asteroids Attack
+        {"name": "vagstream\\GM2_Highway.win32.scd", "kind": "battle"}, #Hazardous Highway
+        {"name": "vagstream\\GM3_Cloud.win32.scd", "kind": "battle"}, #Cloudchasers
+        {"name": "vagstream\\GM4_Floating.win32.scd", "kind": "battle"}, #Floating in Bliss
+        {"name": "vagstream\\GM5_Senkan.win32.scd", "kind": "battle"}, #Battleship Bravery
+        #Other
+        {"name": "vagstream\\End_Piano.win32.scd", "kind": "title"}, #Dearly Beloved Reprise
+        {"name": "vagstream\\Title.win32.scd", "kind": "title"}, #Dearly Beloved
+        {"name": "bgm\\music082.win32.scd", "kind": "field"}, # The Escapade
         {"name": "bgm\\music088.win32.scd", "kind": "cutscene"}, # Sora's Theme
         {"name": "bgm\\music089.win32.scd", "kind": "cutscene"}, # Friends in my heart
         {"name": "bgm\\music090.win32.scd", "kind": "cutscene"}, # Riku's Theme
@@ -37,147 +134,89 @@ musicList = {
         {"name": "bgm\\music097.win32.scd", "kind": "cutscene"}, # Laughter and Merriment
         {"name": "bgm\\music098.win32.scd", "kind": "cutscene"}, # Hesitation
         {"name": "bgm\\music099.win32.scd", "kind": "cutscene"}, # Missing You
-        {"name": "bgm\\music100.win32.scd", "kind": "field"}, # The Underworld
-        {"name": "bgm\\music101.win32.scd", "kind": "field"}, # Waltz of the Damned
-        {"name": "bgm\\music102.win32.scd", "kind": "battle"}, # What Lies Beneath
-        {"name": "bgm\\music103.win32.scd", "kind": "field"}, # Olympus Coliseum
-        {"name": "bgm\\music104.win32.scd", "kind": "battle"}, # Dance of the Daring
-        {"name": "bgm\\music106.win32.scd", "kind": "field", "dmca": True}, # Under the Sea
-        {"name": "bgm\\music107.win32.scd", "kind": "battle"}, # Ursula's Revenge
-        {"name": "bgm\\music108.win32.scd", "kind": "field", "dmca": True}, # Part of your World
-        {"name": "bgm\\music109.win32.scd", "kind": "field"}, # A New Day is Dawning
-        {"name": "bgm\\music110.win32.scd", "kind": "battle"}, # The Encounter
-        {"name": "bgm\\music111.win32.scd", "kind": "battle"}, # Sinister Shadows
-        {"name": "bgm\\music112.win32.scd", "kind": "battle"}, # Fields of Honor 
-        {"name": "bgm\\music113.win32.scd", "kind": "field"}, # Swim This Way
-        {"name": "bgm\\music114.win32.scd", "kind": "battle"}, # Tension Rising
-        {"name": "bgm\\music115.win32.scd", "kind": "battle"}, # The Corrupted
-        {"name": "bgm\\music116.win32.scd", "kind": "field"}, # The Home of Dragons
-        {"name": "bgm\\music117.win32.scd", "kind": "battle"}, # Rowdy Rumble
-        {"name": "bgm\\music118.win32.scd", "kind": "field"}, # Lazy Afternoons
-        {"name": "bgm\\music119.win32.scd", "kind": "battle"}, # Sinister Sundown
-        {"name": "bgm\\music120.win32.scd", "kind": "battle"}, #benieth the Ground B
-        {"name": "bgm\\music121.win32.scd", "kind": "battle"}, # Desire for All That is Lost
-        {"name": "bgm\\music122.win32.scd", "kind": "field"}, # Atlantica Tutorial I
-        {"name": "bgm\\music123.win32.scd", "kind": "field"}, # Atlantica Tutorial II
-        #{"name": "bgm\\music124.win32.scd", "kind": "field"}, # Atlantica Tutorial II.5 (no loop)
-        #{"name": "bgm\\music125.win32.scd", "kind": "field"}, # Atlantica Tutorial Finish (short no loop)
-        {"name": "bgm\\music127.win32.scd", "kind": "field"}, # A Day in Agrabah
-        {"name": "bgm\\music128.win32.scd", "kind": "battle"}, # Arabian Dream
-        {"name": "bgm\\music129.win32.scd", "kind": "field"}, # Isn't It Lovely
-        #{"name": "bgm\\music130.win32.scd", "kind": "field"}, # Atlantica tutorials Combined (no loop)
-        {"name": "bgm\\music131.win32.scd", "kind": "battle"}, # Dance to the Death 
-        #{"name": "bgm\\music132.win32.scd", "kind": "cutscene", "dmca": True}, # Beauty and the Beast (short no loop)
-        {"name": "bgm\\music133.win32.scd", "kind": "field"}, # Magical Mystery
-        {"name": "bgm\\music134.win32.scd", "kind": "battle"}, #Working Together
-        {"name": "bgm\\music135.win32.scd", "kind": "field"}, # Space Paranoids Theme
-        {"name": "bgm\\music136.win32.scd", "kind": "battle"}, # Byte Bashing
-        {"name": "bgm\\music137.win32.scd", "kind": "field"}, # A Twinkle in the Sky
-        {"name": "bgm\\music138.win32.scd", "kind": "battle"}, # Shipmeisters' Shanty
-        {"name": "bgm\\music139.win32.scd", "kind": "field"}, # Gearing up
-        {"name": "bgm\\music141.win32.scd", "kind": "field"}, # Winnie the Pooh Theme
-        {"name": "bgm\\music142.win32.scd", "kind": "field"}, # Crossing the Finish Line
-        {"name": "bgm\\music143.win32.scd", "kind": "field", "dmca": True}, # Mickey Mouse Club March
-        {"name": "bgm\\music144.win32.scd", "kind": "field", "dmca": True}, # This is Halloween
-        {"name": "bgm\\music145.win32.scd", "kind": "battle"}, # Vim and Vigor
-        {"name": "bgm\\music146.win32.scd", "kind": "cutscene"}, # Roxas' Theme
-        {"name": "bgm\\music148.win32.scd", "kind": "field"}, # Blast Off
-        {"name": "bgm\\music149.win32.scd", "kind": "battle"}, #Sppoks of Halloween (Variation)
-        {"name": "bgm\\music151.win32.scd", "kind": "battle"}, # The 13th Struggle
-        {"name": "bgm\\music152.win32.scd", "kind": "field"}, # Reviving Hallow Bastion
-        {"name": "bgm\\music153.win32.scd", "kind": "battle"}, # Scherzo Di Notte
-        {"name": "bgm\\music154.win32.scd", "kind": "field"}, # Nights of the Cursed
-        {"name": "bgm\\music155.win32.scd", "kind": "battle"}, # He's a Pirate
-        {"name": "bgm\\music158.win32.scd", "kind": "field"}, # Bounce-o-Rama
-        {"name": "bgm\\music159.win32.scd", "kind": "battle"}, # Bounce-o-Rama Ver 2
-        {"name": "bgm\\music164.win32.scd", "kind": "battle"}, # Road to a Hero
-        {"name": "bgm\\music185.win32.scd", "kind": "battle"}, # The 13th Dilemma
-        {"name": "bgm\\music186.win32.scd", "kind": "field"}, # Adventures in the Savannah
-        {"name": "bgm\\music187.win32.scd", "kind": "battle"}, # Savannah Pride
-        {"name": "bgm\\music188.win32.scd", "kind": "battle"}, # One-Winged Angel
-        {"name": "bgm\\music189.win32.scd", "kind": "field"}, # Monochrome Dreams
-        {"name": "bgm\\music190.win32.scd", "kind": "battle"}, # Old Friends, Old Rivals
-        {"name": "bgm\\music506.win32.scd", "kind": "field", "dmca": True}, #Under The Sea
-        {"name": "bgm\\music507.win32.scd", "kind": "battle"}, #Ursula Revenge
-        {"name": "bgm\\music508.win32.scd", "kind": "field", "dmca": True}, #Part Of Your World
-        {"name": "bgm\\music509.win32.scd", "kind": "field"}, #A New Day Is Dawning
-        {"name": "bgm\\music513.win32.scd", "kind": "field"}, #Swim This Way
-        {"name": "bgm\\music517.win32.scd", "kind": "battle"}, #Rowdy Rumble (Timeless River)
-        {"name": "bgm\\music521.win32.scd", "kind": "battle"}, #Desire For All That Lost (Timeless River)
-        {"name": "bgm\\music530.win32.scd", "kind": "battle"}, #He's A Pirate 
-        {"name": "vagstream\\End_Piano.win32.scd", "kind": "title"}, #Dearly Beloved Reprise
-        {"name": "vagstream\\GM1_Asteroid.win32.scd", "kind": "battle"}, #Asteroids Attack
-        {"name": "vagstream\\GM2_Highway.win32.scd", "kind": "battle"}, #Hazardous Highway
-        {"name": "vagstream\\GM3_Cloud.win32.scd", "kind": "battle"}, #Cloudchasers
-        {"name": "vagstream\\GM4_Floating.win32.scd", "kind": "battle"}, #Floating in Bliss
-        {"name": "vagstream\\GM5_Senkan.win32.scd", "kind": "battle"}, #Battleship Bravery
-        {"name": "vagstream\\Title.win32.scd", "kind": "title"}], #Dearly Beloved
+        {"name": "bgm\\music132.win32.scd", "kind": "cutscene", "dmca": True}, # Beauty and the Beast (short no loop)
+        {"name": "bgm\\music146.win32.scd", "kind": "cutscene"}], # Roxas' Theme
     "KH1": [
         #some music in kh1 is found in .dat folders and others in .bgm folders and somtimes both.
         #the ones in both .dat and .bgm folders are duplicates so you can ignore one of those.
-        {"name": "music099.bgm\\music099.win32.scd", "kind": "battle"},#Dissapeared
+        #DP
         {"name": "music101.dat\\music101.win32.scd", "kind": "field"}, #Deep Jungle
         {"name": "music102.dat\\music102.win32.scd", "kind": "battle"}, #Having a Wild Time
+        {"name": "music157.bgm\\music157.win32.scd", "kind": "battle"}, #Holy Bananas
+        #OC
         {"name": "music103.bgm\\music103.win32.scd", "kind": "field"}, #Olympus Coliseum
-        {"name": "music104.dat\\music104.win32.scd", "kind": "field"}, #Traverse Town
-        {"name": "music105.dat\\music105.win32.scd", "kind": "field"}, #Destiny Islands
-        {"name": "music110.bgm\\music110.win32.scd", "kind": "title"}, #Dearly Beloved
-        {"name": "music111.bgm\\music111.win32.scd", "kind": "battle"}, #Shrouding Dark Cloud
-        {"name": "music112.dat\\music112.win32.scd", "kind": "battle"}, #Hand In Hand
-        {"name": "music114.bgm\\music114.win32.scd", "kind": "cutscene"}, #Unknown 1 [Heartless Has Come, Pt.3]
-        {"name": "music116.dat\\music116.win32.scd", "kind": "field"}, #Welcome To Wonderland
-        {"name": "music117.dat\\music117.win32.scd", "kind": "field"}, #A Very Small Wish
-        {"name": "music118.bgm\\music118.win32.scd", "kind": "battle"}, #To Our Surprise
-        {"name": "music119.dat\\music119.win32.scd", "kind": "battle"}, #Busting Up On The Beach
+        {"name": "music164.bgm\\music164.win32.scd", "kind": "battle"}, #Road To Hero
         {"name": "music120.bgm\\music120.win32.scd", "kind": "battle"}, #Go For It
+        #TT
+        {"name": "music104.dat\\music104.win32.scd", "kind": "field"}, #Traverse Town
+        {"name": "music112.dat\\music112.win32.scd", "kind": "battle"}, #Hand In Hand
+        {"name": "music184.bgm\\music184.win32.scd", "kind": "field"}, #Merlin Magical House
+        #DI
+        {"name": "music105.dat\\music105.win32.scd", "kind": "field"}, #Destiny Islands
+        {"name": "music119.dat\\music119.win32.scd", "kind": "battle"}, #Busting Up On The Beach
+        #WL
+        {"name": "music116.dat\\music116.win32.scd", "kind": "field"}, #Welcome To Wonderland
+        {"name": "music118.bgm\\music118.win32.scd", "kind": "battle"}, #To Our Surprise
+        #AG
+        {"name": "music127.dat\\music127.win32.scd", "kind": "field"}, #A Day In Agrabah
+        {"name": "music128.dat\\music128.win32.scd", "kind": "battle"}, #Arabian Dream
+        #HT
+        {"name": "music144.dat\\music144.win32.scd", "kind": "field", "dmca": True}, #This Is Halloween
+        {"name": "music165.bgm\\music165.win32.scd", "kind": "field", "dmca": True}, #This Is Halloween (Alternative)
+        {"name": "music149.dat\\music149.win32.scd", "kind": "battle"}, #Spooks Of Halloween Town
+        #HB
+        {"name": "music152.dat\\music152.win32.scd", "kind": "field"}, #Hollow Bastion
+        {"name": "music153.dat\\music153.win32.scd", "kind": "battle"}, #Scherzo Di Notte
+        #EW
+        {"name": "music154.dat\\music154.win32.scd", "kind": "field"}, #End Of The World
+        {"name": "music155.dat\\music155.win32.scd", "kind": "battle"}, #Fragments Of Sorrow
+        #PP
+        {"name": "music129.dat\\music129.win32.scd", "kind": "field"}, #Captain Hook Pirate Ship
+        {"name": "music146.dat\\music146.win32.scd", "kind": "battle"}, #Pirate Gigue
+        {"name": "music130.dat\\music130.win32.scd", "kind": "field"}, #Never Land Sky
+        #PN
+        {"name": "music117.dat\\music117.win32.scd", "kind": "field"}, #A Very Small Wish
         {"name": "music121.dat\\music121.win32.scd", "kind": "battle"}, #Monstrous Monstro
+        #AT
+        {"name": "music140.dat\\music140.win32.scd", "kind": "field", "dmca": True}, #Under The Sea
+        {"name": "music147.dat\\music147.win32.scd", "kind": "battle"}, #An Adventure In Atlantica
+        #HAW
+        {"name": "music141.dat\\music141.win32.scd", "kind": "field"}, #Winnie The Pooh
+        {"name": "music158.bgm\\music158.win32.scd", "kind": "field"}, #Bounce-O-Rama
+        #Boss/Special
+        {"name": "music099.bgm\\music099.win32.scd", "kind": "boss"},#Dissapeared
+        {"name": "music111.bgm\\music111.win32.scd", "kind": "boss"}, #Shrouding Dark Cloud
+        {"name": "music131.dat\\music131.win32.scd", "kind": "boss"}, #Night Of Fate
+        {"name": "music145.bgm\\music145.win32.scd", "kind": "boss"}, #Destiny Force
+        {"name": "music150.bgm\\music150.win32.scd", "kind": "boss"}, #Squirming Evil
+        {"name": "music151.bgm\\music151.win32.scd", "kind": "boss"}, #The Deep End
+        {"name": "music156.bgm\\music156.win32.scd", "kind": "boss"}, #Guardando Nel Buio
+        {"name": "music173.bgm\\music173.win32.scd", "kind": "boss"}, #No Time To Think
+        {"name": "music174.bgm\\music174.win32.scd", "kind": "boss"}, #An Intense Situation
+        {"name": "music185.bgm\\music185.win32.scd", "kind": "boss"}, #Forze Del Male
+        {"name": "music196.bgm\\music196.win32.scd", "kind": "boss"}, #One Winged Angel
+        {"name": "music197.bgm\\music197.win32.scd", "kind": "boss", "dmca": True}, #Night On Blad Mountain
+        #Other
+        {"name": "music110.bgm\\music110.win32.scd", "kind": "title"}, #Dearly Beloved
+        {"name": "music193.bgm\\music193.win32.scd", "kind": "title"}, #Dearly Beloved Reprise   
         {"name": "music122.dat\\music122.win32.scd", "kind": "battle"}, #Blast Away Gummi Ship I
         {"name": "music123.dat\\music123.win32.scd", "kind": "battle"}, #Blast Away Gummi Ship II
         {"name": "music124.dat\\music124.win32.scd", "kind": "field"}, #Shipmeisters Humoresque
         {"name": "music125.dat\\music125.win32.scd", "kind": "field"}, #Precious Stars In The Sky
-        {"name": "music127.dat\\music127.win32.scd", "kind": "field"}, #A Day In Agrabah
-        {"name": "music128.dat\\music128.win32.scd", "kind": "battle"}, #Arabian Dream
-        {"name": "music129.dat\\music129.win32.scd", "kind": "field"}, #Captain Hook Pirate Ship
-        {"name": "music130.dat\\music130.win32.scd", "kind": "field"}, #Never Land Sky
-        {"name": "music131.dat\\music131.win32.scd", "kind": "battle"}, #Night Of Fate
-        {"name": "music140.dat\\music140.win32.scd", "kind": "field", "dmca": True}, #Under The Sea
-        {"name": "music141.dat\\music141.win32.scd", "kind": "field"}, #Winnie The Pooh
+        {"name": "music148.dat\\music148.win32.scd", "kind": "battle"}, #Blast Away Gummi Ship III
+        {"name": "music114.bgm\\music114.win32.scd", "kind": "cutscene"}, #Unknown 1 [Heartless Has Come, Pt.3]
         {"name": "music142.bgm\\music142.win32.scd", "kind": "cutscene"}, #Dive Into The Heart (Part 9)
         {"name": "music143.bgm\\music143.win32.scd", "kind": "cutscene", "dmca": True}, #Mickey Mouse Club March
-        {"name": "music144.dat\\music144.win32.scd", "kind": "field", "dmca": True}, #This Is Halloween
-        {"name": "music145.bgm\\music145.win32.scd", "kind": "battle"}, #Destiny Force
-        {"name": "music146.dat\\music146.win32.scd", "kind": "battle"}, #Pirate Gigue
-        {"name": "music147.dat\\music147.win32.scd", "kind": "battle"}, #An Adventure In Atlantica
-        {"name": "music148.dat\\music148.win32.scd", "kind": "battle"}, #Blast Away Gummi Ship III
-        {"name": "music149.dat\\music149.win32.scd", "kind": "battle"}, #Spooks Of Halloween Town
-        {"name": "music150.bgm\\music150.win32.scd", "kind": "battle"}, #Squirming Evil
-        {"name": "music151.bgm\\music151.win32.scd", "kind": "battle"}, #The Deep End
-        {"name": "music152.dat\\music152.win32.scd", "kind": "field"}, #Hollow Bastion
-        {"name": "music153.dat\\music153.win32.scd", "kind": "battle"}, #Scherzo Di Notte
-        {"name": "music154.dat\\music154.win32.scd", "kind": "field"}, #End Of The World
-        {"name": "music155.dat\\music155.win32.scd", "kind": "battle"}, #Fragments Of Sorrow
-        {"name": "music156.bgm\\music156.win32.scd", "kind": "battle"}, #Guardando Nel Buio
-        {"name": "music157.bgm\\music157.win32.scd", "kind": "battle"}, #Holy Bananas
-        {"name": "music158.bgm\\music158.win32.scd", "kind": "field"}, #Bounce-O-Rama
         {"name": "music160.bgm\\music160.win32.scd", "kind": "cutscene"}, #Kairi I
         {"name": "music161.bgm\\music161.win32.scd", "kind": "cutscene"}, #Kairi II
         {"name": "music163.bgm\\music163.win32.scd", "kind": "cutscene"}, #Villains Of A Sort 
-        {"name": "music164.bgm\\music164.win32.scd", "kind": "battle"}, #Road To Hero
-        {"name": "music165.bgm\\music165.win32.scd", "kind": "field", "dmca": True}, #This Is Halloween (Alternative)
         {"name": "music170.bgm\\music170.win32.scd", "kind": "cutscene"}, #A Piece Of Peace
         {"name": "music172.bgm\\music172.win32.scd", "kind": "cutscene"}, #A Walk In Adante
-        {"name": "music173.bgm\\music173.win32.scd", "kind": "battle"}, #No Time To Think
-        {"name": "music174.bgm\\music174.win32.scd", "kind": "battle"}, #An Intense Situation
         {"name": "music176.bgm\\music176.win32.scd", "kind": "cutscene"}, #Friends In My Heart
         {"name": "music178.bgm\\music178.win32.scd", "kind": "cutscene"}, #Treasured Memories
         {"name": "music180.bgm\\music180.win32.scd", "kind": "cutscene"}, #Kairi III
-        {"name": "music184.bgm\\music184.win32.scd", "kind": "field"}, #Merlin Magical House
-        {"name": "music185.bgm\\music185.win32.scd", "kind": "battle"}, #Forze Del Male
         {"name": "music187.bgm\\music187.win32.scd", "kind": "cutscene"}, #Just An Itty Bitty Too Much
-        {"name": "music188.bgm\\music188.win32.scd", "kind": "cutscene"}, #It Began With A Letter
-        {"name": "music193.bgm\\music193.win32.scd", "kind": "title"}, #Dearly Beloved Reprise       
-        {"name": "music196.bgm\\music196.win32.scd", "kind": "battle"}, #One Winged Angel
-        {"name": "music197.bgm\\music197.win32.scd", "kind": "battle", "dmca": True} #Night On Blad Mountain
+        {"name": "music188.bgm\\music188.win32.scd", "kind": "cutscene"} #It Began With A Letter
         #a few of the no intro duplicates removed along with BGMs that are short and don't loop.
         #{"name": "music194.bgm\\music194.win32.scd", "kind": "battle"}, #Guardando Nel Buio (No Intro)
         #{"name": "music097.bgm\\music097.win32.scd", "kind": "battle"}, #Dissapeared (No Intro)
@@ -210,18 +249,12 @@ musicList = {
         #{"name": "music192.bgm\\music192.win32.scd", "kind": "unknown"}, #Always On My Mind (Final Mix Version) (no loop)
         #{"name": "music100.win32.scd", "kind": "unknown"}, #empty 1kb file
         #{"name": "music137.win32.scd", "kind": "unknown"}, #empty 1kb file
-
         ],
     "RECOM": [
         {"name": '01F_Town_B.win32.scd', "kind": "battle"}, #Hand in Hand
         {"name": '01F_Town_F.win32.scd', "kind": "field"}, #Traverse Town
         {"name": '03F_Hercul.win32.scd', "kind": "field"}, #Olympus Coliseum
         {"name": '03F_Hercules_B.win32.scd', "kind": "battle"}, #Go for It
-        {"name": '12_Event_Yuttari.win32.scd', "kind": "cutscene"}, #La Pace
-        {"name": '13_Event_Namine.win32.scd', "kind": "cutscene"}, #Naminé
-        {"name": '14_Event_Odayaka.win32.scd', "kind": "cutscene"}, #Piccolo Resto
-        {"name": '15_Event_XIII.win32.scd', "kind": "cutscene"}, #Thirteenth Discretion
-        {"name": '16_XIIIBoss1.win32.scd', "kind": "battle"}, #The 13th Struggle (Re:Chain of Memories Version)
         {"name": '17_Halloween_F.win32.scd', "kind": "field", "dmca": True}, #This is Halloween
         {"name": '18_Helloween_B.win32.scd', "kind": "battle"}, #Spooks of Halloween Town
         {"name": '19_Alice_Field.win32.scd', "kind": "field"}, #Welcome to Wonderland
@@ -239,25 +272,32 @@ musicList = {
         {"name": '31_Twilight_B.win32.scd', "kind": "battle"}, #Sinister Sundown
         {"name": '32_Destiny_F.win32.scd', "kind": "field"}, #Destiny Islands (Re:Chain of Memories Version)
         {"name": '33_Destiny_B.win32.scd', "kind": "battle"}, #Night of Fate (Re:Chain of Memories Version)
-        {"name": '34_Boss_RikuAnsem.win32.scd', "kind": "battle"}, #Revenge of Chaos
-        {"name": '35_Boss_NiseRiku.win32.scd', "kind": "battle"}, #The Force in You
         {"name": '36_WinnieThePooh.win32.scd', "kind": "field"}, #Winnie the Pooh
-        {"name": '37_LastBoss1.win32.scd', "kind": "battle"}, #Graceful Assassin
         {"name": '38_UnderTheSea.win32.scd', "kind": "field", "dmca": True}, #Under the Sea
         {"name": '39_LittleMermaid_B.win32.scd', "kind": "battle"}, #An Adventure in Atlantica
-        {"name": '40_LastBoss2.win32.scd', "kind": "battle"}, #Scythe of Petals
-        {"name": '41_LastBoss3.win32.scd', "kind": "battle"}, #Lord of the Castle
         {"name": '42_Hollow_F.win32.scd', "kind": "field"}, #Hollow Bastion
         {"name": '43_Hollow_B.win32.scd', "kind": "battle"}, #Scherzo Di Notte
         {"name": '44_PooGame1.win32.scd', "kind": "field"}, #March-A-Long
         {"name": '45_PoohGame2.win32.scd', "kind": "battle"}, #Dash-A-Long
-        {"name": 'Boss1.win32.scd', "kind": "battle"}, #Struggle Away
-        {"name": 'Boss2_World.win32.scd', "kind": "battle"}, #The Fight for My Friends
+        #boss/special
+        {"name": '16_XIIIBoss1.win32.scd', "kind": "boss"}, #The 13th Struggle (Re:Chain of Memories Version)
+        {"name": '34_Boss_RikuAnsem.win32.scd', "kind": "boss"}, #Revenge of Chaos
+        {"name": '35_Boss_NiseRiku.win32.scd', "kind": "boss"}, #The Force in You
+        {"name": '37_LastBoss1.win32.scd', "kind": "boss"}, #Graceful Assassin
+        {"name": '40_LastBoss2.win32.scd', "kind": "boss"}, #Scythe of Petals
+        {"name": '41_LastBoss3.win32.scd', "kind": "boss"}, #Lord of the Castle
+        {"name": 'Boss1.win32.scd', "kind": "boss"}, #Struggle Away
+        {"name": 'Boss2_World.win32.scd', "kind": "boss"}, #The Fight for My Friends
+        {"name": 'Event1_Kinpak.win32.scd', "kind": "boss"}, #Face It!
+        #Other
+        {"name": 'Title.win32.scd', "kind": "title"}, #Dearly Beloved (Re:Chain of Memories Version)
+        {"name": '12_Event_Yuttari.win32.scd', "kind": "cutscene"}, #La Pace
+        {"name": '13_Event_Namine.win32.scd', "kind": "cutscene"}, #Naminé
+        {"name": '14_Event_Odayaka.win32.scd', "kind": "cutscene"}, #Piccolo Resto
+        {"name": '15_Event_XIII.win32.scd', "kind": "cutscene"}, #Thirteenth Discretion
         {"name": 'Event_Unrest.win32.scd', "kind": "cutscene"}, #Disquieting 
-        {"name": 'Event1_Kinpak.win32.scd', "kind": "battle"}, #Face It!
         {"name": 'Event2_.win32.scd', "kind": "cutscene"}, #Just Wondering
-        {"name": 'Event4.win32.scd', "kind": "cutscene"}, #Scent of Silence
-        {"name": 'Title.win32.scd', "kind": "title"}], #Dearly Beloved (Re:Chain of Memories Version)
+        {"name": 'Event4.win32.scd', "kind": "cutscene"}], #Scent of Silence       
     "BBS": [
         {"name": "001sinde_f.win32.scd", "kind": "field", "dmca": True}, #Bibbidi-Bobbidi-Boo (Castle of Dreams Field Music)
         {"name": "002sinde_b.win32.scd", "kind": "battle"}, #Castle Escapade (Castle of Dreams Battle Music)
@@ -291,16 +331,6 @@ musicList = {
         {"name": "036seisin.win32.scd", "kind": "field"}, #Dive into the Heart -Destati-
         {"name": "037yami.win32.scd", "kind": "cutscene"}, #Beyond the Door
         {"name": "038ria_deai.win32.scd", "kind": "cutscene"}, #Eternal Moments
-        {"name": "040anba_b1.win32.scd", "kind": "battle"}, #The Tumbling
-        {"name": "041anba_b2.win32.scd", "kind": "battle"}, #Unforgettable
-        {"name": "042dis_b1.win32.scd", "kind": "battle"}, #Vim and Vigor -Birth by Sleep Version-
-        {"name": "043dis_b2.win32.scd", "kind": "battle"}, #The Encounter -Birth by Sleep Version-
-        {"name": "044vanita_b.win32.scd", "kind": "battle"}, #Enter the Darkness
-        {"name": "045anthem_b.win32.scd", "kind": "battle"}, #Black Powder
-        {"name": "046last_b1.win32.scd", "kind": "battle"}, #Unbreakable Chains
-        {"name": "047last_b2.win32.scd", "kind": "battle"}, #Dismiss
-        {"name": "048hanyo_b1.win32.scd", "kind": "battle"}, #Extreme Encounters
-        {"name": "049hanyo_b2.win32.scd", "kind": "battle"}, #Destiny's Force
         {"name": "050title.win32.scd", "kind": "title"}, #Dearly Beloved (Birth by Sleep Version)
         {"name": "051worldmap.win32.scd", "kind": "field"}, #The Worlds
         {"name": "060tera.win32.scd", "kind": "battle"}, #Terra
@@ -326,26 +356,37 @@ musicList = {
         {"name": "107syugyo.win32.scd", "kind": "field"}, #The Promised Beginning (The Land of Departure Field Music) (Command Board)
         {"name": "108riro.win32.scd", "kind": "field"}, #Hau'oli, Hau'oli (Deep Space Field Music) (Command Board)
         {"name": "109training.win32.scd", "kind": "battle"}, #Road to a Hero (Birth by Sleep Version)
-        {"name": "110han_bt1.win32.scd", "kind": "battle"}, #Rowdy Rumble -Birth by Sleep Version-
-        {"name": "111han_bt2.win32.scd", "kind": "battle"}, #Shrouding Dark Cloud -Birth by Sleep Version-
-        {"name": "112rage_bt.win32.scd", "kind": "battle"}, #Rage Awakened -The Origin-
         {"name": "113kh1tit.win32.scd", "kind": "title"}, #Dearly Beloved (From KH1, used at Battle Report)
         {"name": "114raceview.win32.scd", "kind": "field"}, #Big Race
-        {"name": "115boss.win32.scd", "kind": "battle"}, #Enter the Void
         #{"name": "116icon.win32.scd", "kind": "field"}, #Dearly Beloved (Birth by Sleep Version) (10-Second Version)
         {"name": "117short_l2.win32.scd", "kind": "field"}, #Another Side - Battle Ver. - (Birth by Sleep Version)
         {"name": "118gumi.win32.scd", "kind": "field"}, #Blast Away! -Gummi Ship II- (From Original KH1)
         {"name": "119desti.win32.scd", "kind": "field"}, #Destiny Islands (From Original KH1)
         {"name": "120hand.win32.scd", "kind": "battle"}, #Hand in Hand (From Original KH1)
-        {"name": "122nazono.win32.scd", "kind": "battle"}, #Dark Impetus
         #{"name": "123rev.win32.scd", "kind": "field"}, #Mysterious Figure's Time Reverse Loop
         {"name": "124dp_amb.win32.scd", "kind": "field"}, #Ambient Wind Sounds from Destroyed Land of Departure
         {"name": "125yami_f.win32.scd", "kind": "field"}, #Night of the Dark Dream (Realm of Darkness Field Music)
         {"name": "126yami_b.win32.scd", "kind": "battle"}, #Night of Tragedy (Realm of Darkness Battle Music)
-        {"name": "127Xeha_b.win32.scd", "kind": "battle"}, #Forze dell Oscurita
-        {"name": "128Eraqu_b.win32.scd", "kind": "battle"}, #Master, Tell Me the Truth
-        {"name": "129Pure_b.win32.scd", "kind": "battle"}, #Hunter of the Dark
-        {"name": "130Mons_b.win32.scd", "kind": "battle"}], #Monstrous Monstro -Arena Ver.-
+        #Boss/Special
+        {"name": "040anba_b1.win32.scd", "kind": "boss"}, #The Tumbling
+        {"name": "041anba_b2.win32.scd", "kind": "boss"}, #Unforgettable
+        {"name": "042dis_b1.win32.scd", "kind": "boss"}, #Vim and Vigor -Birth by Sleep Version-
+        {"name": "043dis_b2.win32.scd", "kind": "boss"}, #The Encounter -Birth by Sleep Version-
+        {"name": "044vanita_b.win32.scd", "kind": "boss"}, #Enter the Darkness
+        {"name": "045anthem_b.win32.scd", "kind": "boss"}, #Black Powder
+        {"name": "046last_b1.win32.scd", "kind": "boss"}, #Unbreakable Chains
+        {"name": "047last_b2.win32.scd", "kind": "boss"}, #Dismiss
+        {"name": "048hanyo_b1.win32.scd", "kind": "boss"}, #Extreme Encounters
+        {"name": "049hanyo_b2.win32.scd", "kind": "boss"}, #Destiny's Force
+        {"name": "110han_bt1.win32.scd", "kind": "boss"}, #Rowdy Rumble -Birth by Sleep Version-
+        {"name": "111han_bt2.win32.scd", "kind": "boss"}, #Shrouding Dark Cloud -Birth by Sleep Version-
+        {"name": "112rage_bt.win32.scd", "kind": "boss"}, #Rage Awakened -The Origin-
+        {"name": "115boss.win32.scd", "kind": "boss"}, #Enter the Void
+        {"name": "122nazono.win32.scd", "kind": "boss"}, #Dark Impetus
+        {"name": "127Xeha_b.win32.scd", "kind": "boss"}, #Forze dell Oscurita
+        {"name": "128Eraqu_b.win32.scd", "kind": "boss"}, #Master, Tell Me the Truth
+        {"name": "129Pure_b.win32.scd", "kind": "boss"}, #Hunter of the Dark
+        {"name": "130Mons_b.win32.scd", "kind": "boss"}], #Monstrous Monstro -Arena Ver.-
     "DDD": [
         {"name": "bgm_001.win32.scd", "kind": "field"}, # Traverse in Trance (Traverse Town Field Music)
 		{"name": "bgm_002.win32.scd", "kind": "field"}, # One for All (Country of the Musketeers Field Music)
@@ -369,18 +410,6 @@ musicList = {
 		{"name": "bgm_020.win32.scd", "kind": "battle"}, # Digital Domination (The Grid Battle Music)
 		{"name": "bgm_021.win32.scd", "kind": "battle"}, # Deep Drop (KH3D The World That Never Was Battle Music)
 		{"name": "bgm_022.win32.scd", "kind": "battle"}, # Deep Drive (KH2 The World That Never Was Battle Music)
-		{"name": "bgm_023.win32.scd", "kind": "battle"}, # Majestic Wings
-		{"name": "bgm_024.win32.scd", "kind": "battle"}, # UNTAMABLE
-		{"name": "bgm_025.win32.scd", "kind": "battle"}, # Ice-hot Lobster
-		{"name": "bgm_026.win32.scd", "kind": "battle"}, # Gigabyte Mantis
-		{"name": "bgm_027.win32.scd", "kind": "battle"}, # Rowdy Rumble
-		{"name": "bgm_028.win32.scd", "kind": "battle"}, # The Encounter -Birth by Sleep Version-
-		{"name": "bgm_029.win32.scd", "kind": "battle"}, # L'Oscurità dell' Ignoto
-		{"name": "bgm_030.win32.scd", "kind": "battle"}, # L'Eminenza Oscura I 
-		{"name": "bgm_031.win32.scd", "kind": "battle"}, # L'Eminenza Oscura II
-		{"name": "bgm_032.win32.scd", "kind": "battle"}, # L'Impeto Oscuro
-		{"name": "bgm_033.win32.scd", "kind": "battle"}, # Destiny's Force
-		{"name": "bgm_034.win32.scd", "kind": "battle"}, # Shrouding Dark Cloud
 		{"name": "bgm_035.win32.scd", "kind": "field"}, # Dream Matchup
 		{"name": "bgm_036.win32.scd", "kind": "field"}, # The Flick Finalist
 		{"name": "bgm_037.win32.scd", "kind": "field"}, # The World of Dream Drops (World Map Music)
@@ -422,12 +451,8 @@ musicList = {
 		{"name": "bgm_084.win32.scd", "kind": "field"}, # Ready to Rush
 		{"name": "bgm_085.win32.scd", "kind": "field"}, # Victor's Pride
 		{"name": "bgm_086.win32.scd", "kind": "battle"}, # Keyblade Cycle
-		{"name": "bgm_087.win32.scd", "kind": "battle"}, # Storm Diver
-		{"name": "bgm_088.win32.scd", "kind": "battle"}, # Wild Blue
 		{"name": "bgm_089.win32.scd", "kind": "field"}, # My Heart's Descent
 		#{"name": "bgm_091.win32.scd", "kind": "battle"}, # Dream Drop Distance -The Next Awakening- (no loop)
-		{"name": "bgm_093.win32.scd", "kind": "battle"}, # The Eye of Darkness
-		{"name": "bgm_094.win32.scd", "kind": "battle"}, # The Dread of Night
 		{"name": "bgm_095.win32.scd", "kind": "battle"}, # SOMEDAY -KINGDOM MIX-
 		#{"name": "bgm_096.win32.scd", "kind": "unknown"}, # Hand in Hand (KH2 Ending Version)
 		#{"name": "bgm_097.win32.scd", "kind": "unknown"}, # Oopsy-Daisy
@@ -437,7 +462,24 @@ musicList = {
 		#{"name": "bgm_113.win32.scd", "kind": "title"}, # Dearly Beloved -Reprise-
 		{"name": "bgm_114.win32.scd", "kind": "cutscene"}, # Roxas
 		{"name": "bgm_115.win32.scd", "kind": "cutscene"}, # Ventus
-		{"name": "bgm_116.win32.scd", "kind": "battle"}], # Rinzler Recompiled
+        #boss/Special
+		{"name": "bgm_023.win32.scd", "kind": "boss"}, # Majestic Wings
+		{"name": "bgm_024.win32.scd", "kind": "boss"}, # UNTAMABLE
+		{"name": "bgm_025.win32.scd", "kind": "boss"}, # Ice-hot Lobster
+		{"name": "bgm_026.win32.scd", "kind": "boss"}, # Gigabyte Mantis
+		{"name": "bgm_027.win32.scd", "kind": "boss"}, # Rowdy Rumble
+		{"name": "bgm_028.win32.scd", "kind": "boss"}, # The Encounter -Birth by Sleep Version-
+		{"name": "bgm_029.win32.scd", "kind": "boss"}, # L'Oscurità dell' Ignoto
+		{"name": "bgm_030.win32.scd", "kind": "boss"}, # L'Eminenza Oscura I 
+		{"name": "bgm_031.win32.scd", "kind": "boss"}, # L'Eminenza Oscura II
+		{"name": "bgm_032.win32.scd", "kind": "boss"}, # L'Impeto Oscuro
+		{"name": "bgm_033.win32.scd", "kind": "boss"}, # Destiny's Force
+		{"name": "bgm_034.win32.scd", "kind": "boss"}, # Shrouding Dark Cloud
+		{"name": "bgm_087.win32.scd", "kind": "boss"}, # Storm Diver
+		{"name": "bgm_088.win32.scd", "kind": "boss"}, # Wild Blue
+		{"name": "bgm_093.win32.scd", "kind": "boss"}, # The Eye of Darkness
+		{"name": "bgm_094.win32.scd", "kind": "boss"}, # The Dread of Night
+		{"name": "bgm_116.win32.scd", "kind": "boss"}], # Rinzler Recompiled        
     "MOVIES": [
         #Recoded
 		#{"name": "bgm_000.win32.scd", "kind": "field"}, # Destiny's Union (From Birth by Sleep)
@@ -476,7 +518,7 @@ musicList = {
 		#{"name": "bgm_033.win32.scd", "kind": "field"}, # Castle Oblivion
 		#{"name": "bgm_034.win32.scd", "kind": "field"}, # Dive into the Heart -Destati- (From KH2)
 		#{"name": "bgm_035.win32.scd", "kind": "field"}, # Dearly Beloved -Reprise-
- 		{"name": "bgm_036.win32.scd", "kind": "battle"}, # Forze Del Male (From Original KH1)
+ 		{"name": "bgm_036.win32.scd", "kind": "boss"}, # Forze Del Male (From Original KH1)
         #Days
  		{"name": "bgm_201.win32.scd", "kind": "title"}, # Dearly Beloved (358/2 Days Version)
 		#{"name": "bgm_202.win32.scd", "kind": "battle"}, # Sinister Sundown
@@ -512,8 +554,8 @@ musicList = {
  		{"name": "bgm_232.win32.scd", "kind": "battle"}, # Crossing to Neverland
  		{"name": "bgm_233.win32.scd", "kind": "field"}, # At Dusk, I Will Think of You...
  		{"name": "bgm_234.win32.scd", "kind": "battle"}, # Fight and Away
- 		{"name": "bgm_235.win32.scd", "kind": "battle"}, # Another Side -Battle Ver.-
- 		{"name": "bgm_236.win32.scd", "kind": "battle"}, # Vector to the Heavens
+ 		{"name": "bgm_235.win32.scd", "kind": "boss"}, # Another Side -Battle Ver.-
+ 		{"name": "bgm_236.win32.scd", "kind": "boss"}, # Vector to the Heavens
 		#{"name": "bgm_237.win32.scd", "kind": "field"}, # Dearly Beloved -Reprise-
 		#{"name": "bgm_238.win32.scd", "kind": "field"}, # Treasured Memories
 		#{"name": "bgm_239.win32.scd", "kind": "battle"}, # Face It! (From Re:Chain of Memories)
@@ -522,10 +564,9 @@ musicList = {
 		#{"name": "bgm_242.win32.scd", "kind": "field"}, # Disquieting (From Re:Chain of Memories)
 		#{"name": "bgm_243.win32.scd", "kind": "battle"}, # The Other Promise (From Original KH2)
  		{"name": "bgm_244.win32.scd", "kind": "field"}, # Another Side (No Intro)
- 		{"name": "bgm_245.win32.scd", "kind": "battle"}, # Another Side -Battle Ver.- (No Intro)
+ 		{"name": "bgm_245.win32.scd", "kind": "boss"}, # Another Side -Battle Ver.- (No Intro)
  		{"name": "bgm_255.win32.scd", "kind": "title"}] # Dearly Beloved (Kingdom Hearts HD 1.5 + 2.5 ReMiX Launcher Version)
 }
-
 
 musicPaths = {
     "KH2": "",
@@ -596,26 +637,30 @@ class RandomBGM():
         for category in songlist:
             musicList[category] = songlist[category]["songs"]
             musicPaths[category] = os.path.join(musicPaths["CUSTOM"], category) + "\\"
+            #print(musicList[category])
         
-        BGMList = {"battle": [], "field": [], "title":[], "cutscene": []}
+        BGMList = {"battle": [], "field": [], "title":[], "cutscene": [], "boss": []}
         for game in options["games"]:
             for song in musicList[game]:
                 if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
                     continue
                 kind = "battle" #default
                 category = song.get("kind") #current song
-                #sort bgm as field first if splitFB is true. (only populate the field list if we are separating feild/battle)
-                if "Randomize Field and Battle Music Separately" in options["options"] and category != "battle":
-                    kind = "field"
-                #give "unknown" and "cutscene" bgm a random kind. (again we only want to populate field list if we are separating feild/battle)
-                if "Randomize Field and Battle Music Separately" in options["options"] and (category == "unknown" or category == "cutscene"):
-                    kind = random.choice(["field", "battle"])
+                #sort bgm as field first. (only populate the field list if we are separating field/battle)
+                if "Randomize Field & Battle Music Separately" in options["options"]:
+                    if category == "field" or category == "title":
+                        kind = "field"
+                    if category == "unknown" or category == "cutscene":
+                        kind = random.choice(["field", "battle"])
                 #separate dearly beloved bgms
                 if "Randomize Dearly Beloved Separately" in options["options"] and category == "title":
                     kind = "title"
                 #separate cutscene bgms
                 if "Randomize Cutscene Music Separately" in options["options"] and category == "cutscene":
                     kind = "cutscene"
+                #separate boss bgms
+                if "Randomize Special Battle Music Separately" in options["options"] and category == "boss":
+                    kind = "boss"
                 song["game"] = game
                 BGMList[kind].append(song)
         #print (BGMList["title"]),
@@ -627,41 +672,48 @@ class RandomBGM():
                 "source": [{"name": "{newPath}{newBGM}".format(newPath = musicPaths[new_song["game"]], newBGM = new_song["name"]), "type":"internal"}]
             }
             
-        #get lists and shuffle them
+        #setup the lists
         shuffledBattle = BGMList["battle"][:]
         shuffledField = BGMList["field"][:]
         shuffledTitle = BGMList["title"][:]
         shuffledScene = BGMList["cutscene"][:]
-        random.shuffle(shuffledBattle)
-        random.shuffle(shuffledField)
-        random.shuffle(shuffledTitle)
-        random.shuffle(shuffledScene)
+        shuffledBoss = BGMList["boss"][:]
         numBattle = 0
         numField = 0
         numTitle = 0
         numScene = 0
+        numBoss = 0
         BGMAssets = []
-	
-        #dumb fix for now. 
-        #just grab random tracks from the field and title lists if scene list is empty.
-        if len(shuffledScene) == 0:
+        
+        #dumb fix for now to prevent errors
+        if "Randomize Special Battle Music Separately" in options["options"] and len(shuffledBoss) == 0:
+            shuffledBoss = shuffledBattle
+        if "Randomize Cutscene Music Separately" in options["options"] and len(shuffledScene) == 0:
             shuffledScene = shuffledField + shuffledTitle
-            random.shuffle(shuffledScene)
-        #same as above but for title tracks
-        if len(shuffledTitle) == 0:
+        if "Randomize Dearly Beloved Separately" in options["options"] and len(shuffledTitle) == 0:
             shuffledTitle = shuffledField + shuffledScene
-            random.shuffle(shuffledTitle)
-	
+
+        #shuffle
+        random.shuffle(shuffledBattle)
+        random.shuffle(shuffledField)
+        random.shuffle(shuffledTitle)
+        random.shuffle(shuffledScene)
+        random.shuffle(shuffledBoss)
+        
+        #randomize
         for i in range(len(musicList["KH2"])):
             original_song = musicList["KH2"][i]
             kind = original_song.get("kind")
-            if "Randomize Cutscene Music Separately" in options["options"] and kind == "cutscene":
+            if "Randomize Special Battle Music Separately" in options["options"] and kind == "boss":
+                new_song = shuffledBoss[numBoss % len(shuffledBoss)]
+                numBoss += 1
+            elif "Randomize Cutscene Music Separately" in options["options"] and kind == "cutscene":
                 new_song = shuffledScene[numScene % len(shuffledScene)]
                 numScene += 1
             elif "Randomize Dearly Beloved Separately" in options["options"] and kind == "title":
                 new_song = shuffledTitle[numTitle % len(shuffledTitle)]
                 numTitle += 1
-            elif "Randomize Field and Battle Music Separately" in options["options"] and (kind == "field" or kind == "title" or kind == "cutscene"):
+            elif "Randomize Field & Battle Music Separately" in options["options"] and (kind == "field" or kind == "title" or kind == "cutscene"):
                 new_song = shuffledField[numField % len(shuffledField)]
                 numField += 1
             else:
@@ -673,17 +725,14 @@ class RandomBGM():
     def getOptions():
         return [
             "DMCA-SAFE",
-            "Randomize Field and Battle Music Separately",
+            "Randomize Field & Battle Music Separately",
+            "Randomize Special Battle Music Separately",
             "Randomize Dearly Beloved Separately",
             "Randomize Cutscene Music Separately"
         ]
 
     def getGames():
         available_games = []
-
-        if "KHGAMES_PATH" not in os.environ:
-            print("testing123")
-            return available_games
 
         for game in musicPaths:
             if game == "CUSTOM":
