@@ -33,6 +33,12 @@ class Hints:
                             hintsText['world'][location.LocationTypes[0]] = []
                         hintsText['world'][location.LocationTypes[0]].append(item.Name)
 
+        report_master = [None]*14
+        for location,item in locationItems:
+            if item.ItemType is itemType.REPORT:
+                reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
+                report_master[reportNumber] = location.LocationTypes
+
         if hintsType == "JSmartee":
             proof_of_connection_index = None
             proof_of_peace_index = None
@@ -53,7 +59,7 @@ class Hints:
                     worldChecks[h] = []
                     
             for location,item in locationItems:
-                if location.LocationTypes[0] == locationType.WeaponSlot or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
+                if location.LocationTypes[0] in [locationType.WeaponSlot, locationType.Free, locationType.Critical, locationType.Puzzle]:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     worldChecks[location.LocationTypes[0]].append(item)
@@ -74,7 +80,7 @@ class Hints:
                             if item.ItemType is itemType.PROOF:
                                 proof_of_nonexistence_index = worldsToHint.index(location.LocationTypes[0])
             for location,item in locationItems:
-                if location.LocationTypes[0] == locationType.WeaponSlot or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
+                if location.LocationTypes[0] in [locationType.Free, locationType.Critical, locationType.Puzzle]:
                     if item.ItemType is itemType.REPORT:
                         reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                         freeReports.append(reportNumber)
@@ -397,7 +403,15 @@ class Hints:
                 for world in worldChecks:
                     if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
                         hintsText["Reports"][reportNumber]["Location"] = world
-            
+        
+        if hintsType in ["Points","JSmartee"]:
+            for reportNumber in range(1,14):
+                if hintsText["Reports"][reportNumber]["Location"] not in report_master[reportNumber]:
+                    if hintsText["Reports"][reportNumber]["Location"]=="" and (locationType.Critical in report_master[reportNumber] or locationType.Free in report_master[reportNumber]):
+                        #this is fine, continue
+                        continue
+                    raise RuntimeError(f"Report {reportNumber} has location written as {hintsText['Reports'][reportNumber]['Location']} but the actual location is {report_master[reportNumber]}")
+
         return hintsText
 
     def writeHints(hintsText,seedName,outZip):

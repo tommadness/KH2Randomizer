@@ -384,14 +384,29 @@ class KH2RandomizerApp(QMainWindow):
             message.exec()
             return
 
+        # clear hash icons when loading a seed from clipboard
+        for i in range(7):
+            self.hashIcons[i].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
+
         self.seedName.setText(shared_seed.seed_name)
         self.spoiler_log.setCheckState(Qt.Checked if shared_seed.spoiler_log else Qt.Unchecked)
         self.settings.apply_settings_string(shared_seed.settings_string)
         for widget in self.widgets:
             widget.update_widgets()
-        message = QMessageBox(text="Received seed from clipboard")
-        message.setWindowTitle("KH2 Seed Generator")
-        message.exec()
+
+        post_shared_seed = SharedSeed.from_share_string(local_generator_version=LOCAL_UI_VERSION,share_string = self.createSharedString())
+
+        if post_shared_seed.seed_name != shared_seed.seed_name or post_shared_seed.spoiler_log != shared_seed.spoiler_log or post_shared_seed.settings_string != shared_seed.settings_string:
+            print(shared_seed.settings_string)
+            print(post_shared_seed.settings_string)
+            message = QMessageBox(text="There was an error getting the correct settings from the clipboard, try restarting the generator and trying again. If that fails, ask for the zip from the sharer.")
+            message.setWindowTitle("KH2 Seed Generator")
+            message.exec()
+        else:
+            message = QMessageBox(text="Received seed from clipboard")
+            message.setWindowTitle("KH2 Seed Generator")
+            message.exec()
+        
 
     def firstTimeSetup(self):
         print("First Time Setup")

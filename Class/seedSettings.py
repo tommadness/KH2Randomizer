@@ -160,7 +160,7 @@ class MultiSelect(Setting):
         for selected in value:
             index = self.choice_keys.index(selected)
             selected_indexes += _available_chars[index]
-        return selected_indexes
+        return "".join(sorted(selected_indexes))
 
     def parse_settings_string(self, settings_string: str):
         selected_values = []

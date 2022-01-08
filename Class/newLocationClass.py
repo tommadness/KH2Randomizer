@@ -12,3 +12,6 @@ class KH2Location:
 
     def __eq__(self, obj):
         return self.LocationId==obj.LocationId and self.LocationCategory==obj.LocationCategory and self.LocationTypes==obj.LocationTypes
+
+    def __str__(self):
+        return f"{self.LocationTypes} - {self.Description}"
