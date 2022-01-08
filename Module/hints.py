@@ -15,12 +15,13 @@ class Hints:
 
 
 
-    def generateHints(locationItems, hintsType, excludeList, preventSelfHinting, allowProofHinting, pointHintValues):
+    def generateHints(locationItems, hintsType, excludeList, preventSelfHinting, allowProofHinting, pointHintValues, tracker_includes):
         locationItems = Hints.convertItemAssignmentToTuple(locationItems)
         if hintsType=="Disabled":
             return None
         hintsText = {}
         hintsText['hintsType'] = hintsType
+        hintsText['settings'] = tracker_includes
         if hintsType == "Shananas":
             importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON]
             hintsText['world'] = {}

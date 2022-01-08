@@ -14,7 +14,7 @@ def generateSeed(settings: RandomizerSettings,data):
         try:
             randomizer = Randomizer(settings)
             seedValidation.validateSeed(settings,randomizer)
-            hints = Hints.generateHints(randomizer.assignedItems,settings.hintsType,settings.disabledLocations,settings.prevent_self_hinting,settings.allow_proof_hinting,settings.point_hint_values)
+            hints = Hints.generateHints(randomizer.assignedItems,settings.hintsType,settings.disabledLocations,settings.prevent_self_hinting,settings.allow_proof_hinting,settings.point_hint_values, settings.tracker_includes)
             zipper = SeedZip(settings,randomizer,hints,data)
             return zipper.outputZip, zipper.spoiler_log
         except RandomizerExceptions as e:

@@ -204,7 +204,9 @@ _all_settings = [
         ui_label='Statsanity',
         shared=True,
         default=False,
-        randomizable=True
+        randomizable=True,
+        tooltip=textwrap.dedent('''Takes HP, MP, Drive, Accessory Slot, Armor Slot, and Item Slot upgrades from the normal bonus 
+popup locations and lets them appear in chests. Those bonus locations can now have other items in them.'''),
     ),
 
     FloatSpinner(
@@ -417,7 +419,7 @@ _all_settings = [
         ui_label='Library of Assemblage',
         shared=True,
         default=False,
-        tooltip='Start with all the hints'
+        tooltip='Start with all the Ansem Reports, which act as hints for JSmartee and Point hints'
     ),
 
     MultiSelect(
@@ -801,7 +803,7 @@ _all_settings = [
         ui_label='Enable Promise Charm',
         shared=True,
         default=False,
-        tooltip="If enabled, the promise charm will be added to the item pool, which can allow skipping TWTNW.",
+        tooltip="If enabled, the promise charm will be added to the item pool, which can allow skipping TWTNW by talking to the computer in the GoA when you have all 3 proofs",
         randomizable=True
     ),
 
@@ -819,7 +821,12 @@ _all_settings = [
         },
         shared=True,
         default='Normal',
-        randomizable=["Easy","Normal","Hard","Very Hard"]
+        randomizable=["Easy","Normal","Hard","Very Hard"],
+        tooltip=textwrap.dedent('''
+            Bias the placement of items based on how difficult/easy you would like the seed to be. 
+            Items have 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias each item gets when placing those items. 
+            Super Easy and Easy will bias Rare and Mythic items early, while the Hard settings will bias those later.
+        '''),
     ),
     Toggle(
         name=settingkey.REVERSE_RANDO,

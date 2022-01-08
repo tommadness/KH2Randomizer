@@ -111,6 +111,22 @@ class RandomizerSettings():
 
         self.antiform = False
 
+        self.tracker_includes = []
+        if self.promiseCharm:
+            self.tracker_includes.append("PromiseCharm")
+        if level_setting=="Level":
+            self.tracker_includes.append(locationType.Level.value)
+        if locationType.STT.value in self.enabledLocations:
+            self.tracker_includes.append(locationType.STT.value)
+        if locationType.HUNDREDAW.value in self.enabledLocations:
+            self.tracker_includes.append(locationType.HUNDREDAW.value)
+        if locationType.Atlantica.value in self.enabledLocations:
+            self.tracker_includes.append(locationType.Atlantica.value)
+        if locationType.CoR.value in self.enabledLocations:
+            self.tracker_includes.append(locationType.CoR.value)
+        if locationType.OCCups.value in self.enabledLocations:
+            self.tracker_includes.append(locationType.OCCups.value)
+
         self.validateSettings()
 
     def validateSettings(self):

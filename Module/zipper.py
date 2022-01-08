@@ -3,6 +3,7 @@ import json
 import yaml
 import zipfile
 from itertools import accumulate
+from Class.exceptions import BossEnemyException
 
 from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
@@ -80,28 +81,31 @@ class SeedZip():
             enemySpoilers = None
             enemySpoilersJSON = {}
             if _shouldRunKHBR():
-                if platform == "PC":
-                    settings.enemy_options["memory_expansion"] = True
-                else:
-                    settings.enemy_options["memory_expansion"] = False
-                
-                from khbr.randomizer import Randomizer as khbr
-                enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
-                lines = enemySpoilers.split("\n")
+                try:
+                    if platform == "PC":
+                        settings.enemy_options["memory_expansion"] = True
+                    else:
+                        settings.enemy_options["memory_expansion"] = False
+                    
+                    from khbr.randomizer import Randomizer as khbr
+                    enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
+                    lines = enemySpoilers.split("\n")
 
-                current_key = ""
-                for line in lines:
-                    if '\t' in line:
-                        modded_line = line.replace('\t','')
-                        enemies = modded_line.split(" became ")
-                        # this is adding to the current list
-                        new_entry = {}
-                        new_entry["original"] = enemies[0]
-                        new_entry["new"] = enemies[1]
-                        enemySpoilersJSON[current_key].append(new_entry)
-                    elif line!="":
-                        current_key = line
-                        enemySpoilersJSON[current_key] = []
+                    current_key = ""
+                    for line in lines:
+                        if '\t' in line:
+                            modded_line = line.replace('\t','')
+                            enemies = modded_line.split(" became ")
+                            # this is adding to the current list
+                            new_entry = {}
+                            new_entry["original"] = enemies[0]
+                            new_entry["new"] = enemies[1]
+                            enemySpoilersJSON[current_key].append(new_entry)
+                        elif line!="":
+                            current_key = line
+                            enemySpoilersJSON[current_key] = []
+                except Exception as e:
+                    raise BossEnemyException(f"Boss/enemy module had an unexpected error {e}. Try different a different seed or different settings.")
 
             if settings.spoiler_log:
                 mod["title"] += " w/ Spoiler"

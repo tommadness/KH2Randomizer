@@ -15,4 +15,7 @@ class ValidationException(Exception):
 class CantAssignItemException(Exception):
     pass
 
+class BossEnemyException(Exception):
+    pass
+
 RandomizerExceptions = (GeneratorException,HintException,SettingsException,ValidationException)

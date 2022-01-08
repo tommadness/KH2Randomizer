@@ -228,7 +228,10 @@ class Randomizer():
 
             if item.ItemType is itemType.PROOF and self.yeet_the_bear:
                 # do manual assignment of this item to starry hill
-                starry_hill_cure = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==285][0]
+                starry_hill_loc_list = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==285]
+                if len(starry_hill_loc_list) == 0:
+                    raise GeneratorException("Yeet the Bear setting is set, when 100 acre wood is turned off.")
+                starry_hill_cure = starry_hill_loc_list[0]
                 if self.assignItem(starry_hill_cure,item):
                     validLocations.remove(starry_hill_cure)
                 continue
