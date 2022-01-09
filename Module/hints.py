@@ -35,9 +35,11 @@ class Hints:
                         hintsText['world'][location.LocationTypes[0]].append(item.Name)
 
         report_master = [None]*14
+        found_reports = False
         for location,item in locationItems:
             if item.ItemType is itemType.REPORT:
                 reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
+                found_reports = True
                 report_master[reportNumber] = location.LocationTypes
 
         if hintsType == "JSmartee":
@@ -405,7 +407,7 @@ class Hints:
                     if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
                         hintsText["Reports"][reportNumber]["Location"] = world
         
-        if hintsType in ["Points","JSmartee"]:
+        if hintsType in ["Points","JSmartee"] and found_reports:
             for reportNumber in range(1,14):
                 if hintsText["Reports"][reportNumber]["Location"] not in report_master[reportNumber]:
                     if hintsText["Reports"][reportNumber]["Location"]=="" and (locationType.Critical in report_master[reportNumber] or locationType.Free in report_master[reportNumber]):
