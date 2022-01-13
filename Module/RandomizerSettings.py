@@ -95,7 +95,8 @@ class RandomizerSettings():
         self.random_seed = seed_name
         self.spoiler_log = spoiler_log
         self.ui_version = ui_version
-        random.seed(self.random_seed + str(spoiler_log) + ui_version + str(ui_settings.settings_json()))
+        seed_string_from_all_inputs = self.random_seed + str(self.spoiler_log) + self.ui_version + str(ui_settings.settings_string())
+        random.seed(seed_string_from_all_inputs)
         self.seedHashIcons = generateHashIcons()
 
         self.statSanity = ui_settings.get(settingkey.STATSANITY)

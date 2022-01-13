@@ -176,9 +176,9 @@ class KH2RandomizerApp(QMainWindow):
         for i in range(7):
             self.hashIcons.append(QLabel())
             self.hashIcons[-1].blockSignals(True)
-            #self.hashIcons[-1].setIconSize(QSize(50,50))
-            self.hashIcons[-1].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
             submit_layout.addWidget(self.hashIcons[-1])
+            
+        self.clear_hash_icons()
 
         submit_layout.addSpacing(16)
 
@@ -256,14 +256,20 @@ class KH2RandomizerApp(QMainWindow):
                 _ = RandoRandoSettings(self.settings)
             rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
             # update the seed hash display
-            for index, icon in enumerate(rando_settings.seedHashIcons):
-                self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
+            self.update_ui_hash_icons(rando_settings)
 
             return rando_settings
         except RandomizerExceptions as e:
             self.handleFailure(e)
             return None
 
+    def update_ui_hash_icons(self, rando_settings):
+        for index, icon in enumerate(rando_settings.seedHashIcons):
+            self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
+
+    def clear_hash_icons(self):
+        for i in range(7):
+            self.hashIcons[i].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
 
     def makeSeed(self,platform):
         self.fixSeedName()
@@ -385,8 +391,7 @@ class KH2RandomizerApp(QMainWindow):
             return
 
         # clear hash icons when loading a seed from clipboard
-        for i in range(7):
-            self.hashIcons[i].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
+        self.clear_hash_icons()
 
         self.seedName.setText(shared_seed.seed_name)
         self.spoiler_log.setCheckState(Qt.Checked if shared_seed.spoiler_log else Qt.Unchecked)
