@@ -16,6 +16,7 @@ class RandomizerSettings():
     def __init__(self, seed_name: str, spoiler_log: bool, ui_version: str, ui_settings: SeedSettings, full_ui_settings):
 
         self.full_ui_settings = full_ui_settings
+        self.crit_mode = ui_settings.get(settingkey.CRITICAL_BONUS_REWARDS)
 
         include_list = []
         include_list_keys = [

@@ -188,7 +188,8 @@ _all_settings = [
         },
         shared=True,
         default='ExcludeFrom50',
-        randomizable=True
+        randomizable=True,
+        tooltip="Maximum Level for Randomized Rewards that aren't `junk`"
     ),
 
     Toggle(
@@ -196,7 +197,8 @@ _all_settings = [
         ui_label='Form Level Rewards',
         shared=True,
         default=True,
-        randomizable=True
+        randomizable=True,
+        tooltip="Enable non-junk items onto form levels"
     ),
 
     Toggle(
@@ -395,7 +397,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Critical Bonuses',
         shared=True,
         default=True,
-        randomizable=True
+        randomizable=True,
+        tooltip="Critical Mode Only! When enabled, non-junk items can be in the 7 starting items on critical mode."
     ),
 
     Toggle(

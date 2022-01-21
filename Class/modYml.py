@@ -190,10 +190,15 @@ class modYml:
             }
         ]
 
-    def getSysYAML(seedHashIcons):
+    def getSysYAML(seedHashIcons, crit_mode = False):
         seedHashString = " ".join(["{:icon " + icon + "}" for icon in seedHashIcons])
         sys = [{"id": 17198, "en":seedHashString}]
         sys.append({"id": 19482, "en": "Important Checks Found"})
+        if crit_mode:
+            sys.append({"id": 17201, "en": "{:width 75}{:color #FF000080}Beginner (WARNING: Crit Bonuses Enabled)"})
+            sys.append({"id": 17202, "en": "{:width 75}{:color #FF000080}Standard (WARNING: Crit Bonuses Enabled)"})
+            sys.append({"id": 17203, "en": "{:width 75}{:color #FF000080}Proud (WARNING: Crit Bonuses Enabled)"})
+
         return sys
 
     def getPuzzleMod():
