@@ -195,9 +195,12 @@ class modYml:
         sys = [{"id": 17198, "en":seedHashString}]
         sys.append({"id": 19482, "en": "Important Checks Found"})
         if crit_mode:
-            sys.append({"id": 17201, "en": "{:width 75}{:color #FF000080}Beginner (WARNING: Crit Bonuses Enabled)"})
-            sys.append({"id": 17202, "en": "{:width 75}{:color #FF000080}Standard (WARNING: Crit Bonuses Enabled)"})
-            sys.append({"id": 17203, "en": "{:width 75}{:color #FF000080}Proud (WARNING: Crit Bonuses Enabled)"})
+            sys.append({"id": 17201, "en": "{:color #FF000080}Beginner (WARNING)"})
+            sys.append({"id": 17202, "en": "{:color #FF000080}Standard (WARNING)"})
+            sys.append({"id": 17203, "en": "{:color #FF000080}Proud (WARNING)"})
+            sys.append({"id": 17204, "en": "An easier mode for beginners. \n {:color #FF000080} Crit bonuses are turned on,\n The seven random starting items will be unobtainable."})
+            sys.append({"id": 17205, "en": "A balanced mode that's not too hard \n but not too easy. Best for those \n challenging this game for the first time.\n {:color #FF000080} Crit bonuses are turned on,\n The seven random starting items will be unobtainable."})
+            sys.append({"id": 17206, "en": "A difficult mode with stronger enemies.\n Best for those seeking a challenge.\n {:color #FF000080} Crit bonuses are turned on,\n The seven random starting items will be unobtainable."})
 
         return sys
 
