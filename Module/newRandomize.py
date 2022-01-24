@@ -136,13 +136,17 @@ class Randomizer():
             else:
                 raise GeneratorException("We had a problem assigning stats to levels")
 
+        def addLevel1Stat(dummy):
+            return
+
+        adder_function = addLevel1Stat if settings.level_one else addStat
 
         for index,l in enumerate(levelLocations):
             if index!=0:
                 stat_choices = random.sample(levelStats,k=2)
-                addStat(stat_choices[0])
+                adder_function(stat_choices[0])
                 if l.Description in settings.excludedLevels:
-                    addStat(stat_choices[1])
+                    adder_function(stat_choices[1])
             exp+=(settings.sora_exp[index+1]-settings.sora_exp[index])
             self.levelStats.append(LevelStats(l,exp,strength,magic,defense,ap))
 
@@ -184,7 +188,7 @@ class Randomizer():
 
     def assignSoraItems(self, settings: RandomizerSettings):
         allItems = [i for i in Items.getItemList() if i.Id not in settings.startingItems]
-        allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList())
+        allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + (Items.getLevelAbilityList() if not settings.level_one else []) )
         # if there abilities in the starting inventory, remove them from the pool
         removeAbilities = []
         for startItem in settings.startingItems:
