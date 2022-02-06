@@ -13,6 +13,7 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.REPORT_DEPTH)
         self.add_option(settingkey.PREVENT_SELF_HINTING)
         self.add_option(settingkey.ALLOW_PROOF_HINTING)
+        self.add_option(settingkey.ALLOW_REPORT_HINTING)
         self.end_column()
 
         self.start_column()
@@ -33,6 +34,7 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.REPORT_DEPTH, visible=hint_system in ['JSmartee', 'Points'])
         self.set_option_visibility(settingkey.PREVENT_SELF_HINTING, visible=hint_system in ['JSmartee', 'Points'])
         self.set_option_visibility(settingkey.ALLOW_PROOF_HINTING, visible=hint_system == 'Points')
+        self.set_option_visibility(settingkey.ALLOW_REPORT_HINTING, visible=hint_system == 'Points')
         self.set_option_visibility(settingkey.POINTS_PROOF, visible=hint_system == 'Points')
         self.set_option_visibility(settingkey.POINTS_FORM, visible=hint_system == 'Points')
         self.set_option_visibility(settingkey.POINTS_MAGIC, visible=hint_system == 'Points')
