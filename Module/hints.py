@@ -15,7 +15,7 @@ class Hints:
 
 
 
-    def generateHints(locationItems, hintsType, excludeList, preventSelfHinting, allowProofHinting, pointHintValues, tracker_includes):
+    def generateHints(locationItems, hintsType, excludeList, preventSelfHinting, allowProofHinting, allowReportHinting, pointHintValues, tracker_includes):
         locationItems = Hints.convertItemAssignmentToTuple(locationItems)
         if hintsType=="Disabled":
             return None
@@ -283,12 +283,11 @@ class Hints:
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     worldChecks[location.LocationTypes[0]].append(item)
                     worldChecksEdit[location.LocationTypes[0]].append(item)
-
-                if item.ItemType is itemType.REPORT:
-                    reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
+                if item.ItemType is itemType.REPORT and preventSelfHinting:
                     #report can't hint itself
-                    if preventSelfHinting:
-                        reportRestrictions[reportNumber-1].append(location.LocationTypes[0])
+                    reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
+                    reportRestrictions[reportNumber-1].append(location.LocationTypes[0])
+
             attempts = 0
             while len(reportsList) > 0:
                 attempts+=1
@@ -310,7 +309,7 @@ class Hints:
                 if len(worlds) == 0:
                     #print("ran out of worlds! resetting worldlist...")
                     #print("-----------------------------------------------------------------------------")
-                    worldChecksEdit = worldChecks
+                    #worldChecksEdit = worldChecks #commented out because i think this lead to duplicate item hints
                     tempExcludeList.clear()
                     continue
 
@@ -352,38 +351,47 @@ class Hints:
                     
                 #try to hint other reports
                 if "Report" in randomItem.Name:
-                    #prevent reports from hinting themselves
-                    if reportNumber == int(randomItem.Name.replace("Secret Ansem's Report ","")):
-                        #print("Self hinting report! rerolling...")
-                        #print("-----------------------------------------------------------------------------")
-                        tempWorldR = randomWorld
-                        tempItemR = randomItem.Name
-                        reportsList.append(reportNumber)
-                        continue
-                
-                    #if we tried to roll for this 3 times already then stop trying and remove the report from being hinted
-                    if reportRepetition > 2:
-                        #print("Report repetition threshold reached! removing item from world and rerolling...")
+                    #print("Report found! Is Report Hinting On?")
+                    if allowReportHinting == True:
+                        #prevent reports from hinting themselves (redundant?)
+                        #print("Yes! Attempting to Hint Report...")
+                        if reportNumber == int(randomItem.Name.replace("Secret Ansem's Report ","")):
+                            #print("Self hinting report! rerolling...")
+                            #print("-----------------------------------------------------------------------------")
+                            tempWorldR = randomWorld
+                            tempItemR = randomItem.Name
+                            reportsList.append(reportNumber)
+                            continue
+                    
+                        #if we tried to roll for this 3 times already then stop trying and remove the report from being hinted
+                        if reportRepetition > 2:
+                            #print("Report repetition threshold reached! removing item from world and rerolling...")
+                            #print("-----------------------------------------------------------------------------")
+                            worldChecksEdit[randomWorld].remove(randomItem)
+                            tempWorldR = None
+                            tempItemR = None
+                            reportRepetition = 0
+                            reportsList.append(reportNumber)
+                            continue
+                            
+                        random_number = random.randint(1, 3)
+                        #print("Random number = " + str(random_number))
+                        #print("Report found! does " + str(random_number) + " = 1?")
+                        
+                        if random_number == 1:
+                            #print("Yes! hinting report...")
+                            pass
+                        else:
+                            #print("No. rerolling...")
+                            #print("-----------------------------------------------------------------------------")
+                            tempWorldR = randomWorld
+                            tempItemR = randomItem.Name
+                            reportsList.append(reportNumber)
+                            continue
+                    else:
+                        #print("No. removing item and rerolling...")
                         #print("-----------------------------------------------------------------------------")
                         worldChecksEdit[randomWorld].remove(randomItem)
-                        tempWorldR = None
-                        tempItemR = None
-                        reportRepetition = 0
-                        reportsList.append(reportNumber)
-                        continue
-                        
-                    random_number = random.randint(1, 3)
-                    #print("Random number = " + str(random_number))
-                    #print("Report found! does " + str(random_number) + " = 1?")
-                    
-                    if random_number == 1:
-                        #print("Yes! hinting report...")
-                        pass
-                    else:
-                        #print("No. rerolling...")
-                        #print("-----------------------------------------------------------------------------")
-                        tempWorldR = randomWorld
-                        tempItemR = randomItem.Name
                         reportsList.append(reportNumber)
                         continue
 
