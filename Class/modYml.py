@@ -210,10 +210,17 @@ class modYml:
                             "name": "menu/fm/jiminy.bar"
                         }
                     ],
-                    "method": "copy",
+                    "method": "binarc",
                     "source": [
                         {
-                            "name" : "modified_jiminy.bar"
+                            "name": "puzz",
+                            "type": "jimidata",
+                            "method": "copy",
+                            "source": [
+                                {
+                                    "name": "modified_puzzle.bin"
+                                }
+                            ]
                         }
                     ]
                 }
