@@ -188,7 +188,15 @@ _all_settings = [
         },
         shared=True,
         default='ExcludeFrom50',
-        randomizable=True
+        randomizable=True,
+        tooltip="Maximum Level for Randomized Rewards that aren't `junk`"
+    ),
+    Toggle(
+        name=settingkey.LEVEL_ONE,
+        ui_label='Level 1 Mode',
+        shared=True,
+        default=False,
+        tooltip='Give no stats or items on level ups, removes abilities that would be on levels in vanilla from the item pool.'
     ),
 
     Toggle(
@@ -196,7 +204,8 @@ _all_settings = [
         ui_label='Form Level Rewards',
         shared=True,
         default=True,
-        randomizable=True
+        randomizable=True,
+        tooltip="Enable non-junk items onto form levels"
     ),
 
     Toggle(
@@ -395,7 +404,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Critical Bonuses',
         shared=True,
         default=True,
-        randomizable=True
+        randomizable=True,
+        tooltip="Critical Mode Only! When enabled, non-junk items can be in the 7 starting items on critical mode."
     ),
 
     Toggle(
@@ -430,6 +440,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             '404': 'No Experience',
             '158': 'Aerial Recovery',
             '82': 'Guard',
+            '393': 'Finishing Plus',
             '537': 'Hades Cup Trophy',
             '369': 'Membership Card',
             '593': 'Proof of Connection',
@@ -635,9 +646,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     MultiSelect(
         name=settingkey.KEYBLADE_SUPPORT_ABILITIES,
         ui_label='Support Keyblade-Eligible Abilities',
-        choices={str(item.Id): item.Name for item in Items.getSupportAbilityList()},
+        choices={str(item.Id): item.Name for item in Items.getSupportAbilityList() + Items.getLevelAbilityList()},
         shared=True,
-        default=list(set([str(item.Id) for item in Items.getSupportAbilityList()])),
+        default=list(set([str(item.Id) for item in Items.getSupportAbilityList() + Items.getLevelAbilityList()])),
         tooltip='Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.'
     ),
 

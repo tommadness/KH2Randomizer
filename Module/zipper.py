@@ -42,7 +42,7 @@ class SeedZip():
 
     def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data):
         mod = modYml.getDefaultMod()
-        sys = modYml.getSysYAML(settings.seedHashIcons)
+        sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
 
         data = io.BytesIO()
         with zipfile.ZipFile(data,"w") as outZip:

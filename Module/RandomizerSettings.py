@@ -16,6 +16,7 @@ class RandomizerSettings():
     def __init__(self, seed_name: str, spoiler_log: bool, ui_version: str, ui_settings: SeedSettings, full_ui_settings):
 
         self.full_ui_settings = full_ui_settings
+        self.crit_mode = ui_settings.get(settingkey.CRITICAL_BONUS_REWARDS)
 
         include_list = []
         include_list_keys = [
@@ -36,8 +37,10 @@ class RandomizerSettings():
         self.disabledLocations = [l for l in locationType if l not in include_list and l not in [locationType.Mush13,locationType.WeaponSlot,locationType.Level]]
        
         level_setting = ui_settings.get(settingkey.SORA_LEVELS)
+        self.level_one = False 
         if level_setting=="Level":
             self.setLevelChecks(1)
+            self.level_one = ui_settings.get(settingkey.LEVEL_ONE)
         elif level_setting=="ExcludeFrom50":
             self.setLevelChecks(50)
         elif level_setting=="ExcludeFrom99":
@@ -95,7 +98,8 @@ class RandomizerSettings():
         self.random_seed = seed_name
         self.spoiler_log = spoiler_log
         self.ui_version = ui_version
-        random.seed(self.random_seed + str(spoiler_log) + ui_version + str(ui_settings.settings_json()))
+        seed_string_from_all_inputs = self.random_seed + str(self.spoiler_log) + self.ui_version + str(ui_settings.settings_string())
+        random.seed(seed_string_from_all_inputs)
         self.seedHashIcons = generateHashIcons()
 
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
@@ -114,7 +118,7 @@ class RandomizerSettings():
         self.tracker_includes = []
         if self.promiseCharm:
             self.tracker_includes.append("PromiseCharm")
-        if level_setting=="Level":
+        if self.level_one:
             self.tracker_includes.append(locationType.Level.value)
         if locationType.STT.value in self.enabledLocations:
             self.tracker_includes.append(locationType.STT.value)

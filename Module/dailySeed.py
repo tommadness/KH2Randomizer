@@ -90,7 +90,7 @@ def turnOffWorldsLocal(worlds: list):
 def actionKeybladesLocal(settings: SeedSettings):
     settings.set(
         settingkey.KEYBLADE_SUPPORT_ABILITIES,
-        list(set([str(item.Id) for item in Items.getSupportAbilityList()]))
+        list(set([str(item.Id) for item in Items.getSupportAbilityList() + Items.getLevelAbilityList()]))
     )
     settings.set(
         settingkey.KEYBLADE_ACTION_ABILITIES,

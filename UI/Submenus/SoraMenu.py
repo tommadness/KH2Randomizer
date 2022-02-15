@@ -10,6 +10,7 @@ class SoraMenu(KH2Submenu):
 
         self.start_column()
         self.add_option(settingkey.SORA_LEVELS)
+        self.add_option(settingkey.LEVEL_ONE)
         self.add_option(settingkey.FORM_LEVEL_REWARDS)
         self.add_option(settingkey.STATSANITY)
         self.end_column()
@@ -37,3 +38,9 @@ class SoraMenu(KH2Submenu):
         self.end_column()
 
         self.finalizeMenu()
+
+        settings.observe(settingkey.SORA_LEVELS, self._level_changed)
+
+    def _level_changed(self):
+        level_setting = self.settings.get(settingkey.SORA_LEVELS)
+        self.set_option_visibility(settingkey.LEVEL_ONE, visible=level_setting == 'Level')
