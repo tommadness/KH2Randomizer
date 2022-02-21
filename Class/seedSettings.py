@@ -191,6 +191,7 @@ _all_settings = [
         randomizable=True,
         tooltip="Maximum Level for Randomized Rewards that aren't `junk`"
     ),
+
     Toggle(
         name=settingkey.LEVEL_ONE,
         ui_label='Level 1 Mode',
@@ -442,6 +443,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             '82': 'Guard',
             '393': 'Finishing Plus',
             '537': 'Hades Cup Trophy',
+            '370': 'Olympus Stone',
             '369': 'Membership Card',
             '593': 'Proof of Connection',
             '594': 'Proof of Nonexistence',
@@ -617,10 +619,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Reports can Hint Proofs',
         shared=True,
         default=False,
-        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports",
+        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports.",
         randomizable=True
     ),
 
+    Toggle(
+        name=settingkey.ALLOW_REPORT_HINTING,
+        ui_label='Reports can Hint other Reports',
+        shared=True,
+        default=True,
+        tooltip="Points Mode only: If enabled, reports can hint other reports.",
+        randomizable=True
+    ),
+    
     IntSpinner(
         name=settingkey.KEYBLADE_MIN_STAT,
         ui_label="Keyblade Min Stat",
