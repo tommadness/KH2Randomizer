@@ -144,11 +144,11 @@ class SeedZip():
         if locationType.Puzzle not in settings.disabledLocations:
             mod["assets"] += [modYml.getPuzzleMod()]
             assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
-            with open(resource_path("static/jiminy.bar"), "rb") as puzzleBar:
+            with open(resource_path("static/puzzle.bin"), "rb") as puzzleBar:
                 binaryContent = bytearray(puzzleBar.read())
                 for puzz in assignedPuzzles:
-                    byte0 = 24420+puzz.location.LocationId*16
-                    byte1 = 24420+puzz.location.LocationId*16+1
+                    byte0 = 20+puzz.location.LocationId*16
+                    byte1 = 20+puzz.location.LocationId*16+1
                     item = puzz.item.Id
                         
                     # for byte1, find the most significant bits from the item Id
@@ -157,7 +157,7 @@ class SeedZip():
                     itemByte0 = item & 0x00FF
                     binaryContent[byte0] = itemByte0
                     binaryContent[byte1] = itemByte1
-                outZip.writestr("modified_jiminy.bar",binaryContent)
+                outZip.writestr("modified_puzzle.bin",binaryContent)
 
     def assignStartingItems(self, settings, randomizer):
         def padItems(itemList):
