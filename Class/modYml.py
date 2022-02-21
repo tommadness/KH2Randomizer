@@ -203,6 +203,12 @@ class modYml:
             sys.append({"id": 17206, "en": "A difficult mode with stronger enemies.\n Best for those seeking a challenge.\n {:color #FF000080} Crit bonuses are turned on,\n The seven random starting items will be unobtainable."})
 
         return sys
+    
+    def getASDataMod():
+        return [{"name": "ard/hb32.ard","multi": [{"name": "ard/us/hb32.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb32evt.script"}]}] },
+                {"name": "ard/hb33.ard","multi": [{"name": "ard/us/hb33.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb33evt.script"}]}] },
+                {"name": "ard/hb34.ard","multi": [{"name": "ard/us/hb34.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb34evt.script"}]}] },
+                {"name": "ard/hb38.ard","multi": [{"name": "ard/us/hb38.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb38evt.script"}]}] }]
 
     def getPuzzleMod():
         return {

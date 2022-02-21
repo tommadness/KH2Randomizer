@@ -813,6 +813,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
 
     Toggle(
+        name=settingkey.AS_DATA_SPLIT,
+        ui_label='Split AS/Data Rewards',
+        shared=True,
+        default=False,
+        tooltip="When enabled, Absent Silhouette rewards will NOT give the reward from their Data Org versions. You must beat the Data Org version to get its reward"
+    ),
+
+    Toggle(
         name=settingkey.RETRY_DFX,
         ui_label='Retry Data Final Xemnas',
         shared=True,

@@ -49,6 +49,7 @@ class SeedZip():
             yaml.emitter.Emitter.process_tag = noop
 
             self.createPuzzleAssets(settings, randomizer, mod, outZip)
+            self.createASDataAssets(settings, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -139,6 +140,14 @@ class SeedZip():
             outZip.close()
         data.seek(0)
         self.outputZip = data
+
+    def createASDataAssets(self,settings,mod,outZip):
+        if settings.as_data_split:
+            mod["assets"] += modYml.getASDataMod()
+            outZip.write(resource_path("static/as_data_split/hb32evt.script"), "asdata/hb32evt.script")
+            outZip.write(resource_path("static/as_data_split/hb33evt.script"), "asdata/hb33evt.script")
+            outZip.write(resource_path("static/as_data_split/hb34evt.script"), "asdata/hb34evt.script")
+            outZip.write(resource_path("static/as_data_split/hb38evt.script"), "asdata/hb38evt.script")
 
     def createPuzzleAssets(self, settings, randomizer, mod, outZip):
         if locationType.Puzzle not in settings.disabledLocations:

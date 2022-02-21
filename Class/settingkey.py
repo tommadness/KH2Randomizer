@@ -1,6 +1,7 @@
 ABILITY_POOL = 'ability_pool'
 ALLOW_PROOF_HINTING = 'allow_proof_hinting'
 ALLOW_REPORT_HINTING = 'allow_report_hinting'
+AS_DATA_SPLIT = "as_data_reward_split"
 BETTER_JUNK = 'better_junk'
 BGM_GAMES = 'bgm_games'
 BGM_OPTIONS = 'bgm_options'

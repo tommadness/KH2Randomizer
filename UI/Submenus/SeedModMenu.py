@@ -16,6 +16,7 @@ class SeedModMenu(KH2Submenu):
         self.end_column()
 
         self.start_column()
+        self.add_option(settingkey.AS_DATA_SPLIT)
         self.add_option(settingkey.CUPS_GIVE_XP)
         self.add_option(settingkey.RETRY_DFX)
         self.end_column()

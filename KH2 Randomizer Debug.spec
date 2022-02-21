@@ -32,7 +32,7 @@ a = Analysis(
         'UI/*.*',
         'static/spoilerlog.html',
         'static/seed-hash-icons/*.*',
-        'static/jiminy.bar',
+        'static/puzzle.bin',
         'static/KHMenu.otf',
         'Module/icon.png',
         'extracted_data/**/*.*'
