@@ -335,6 +335,7 @@ class Locations:
                                         KH2Location(587, "Lingering Will Proof of Connection", locationCategory.POPUP,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),
                                         KH2Location(591, "Lingering Will Manifest Illusion", locationCategory.POPUP,[locationType.DC, locationType.LW], InvalidChecks=[itemType.PROOF_OF_CONNECTION]),]))
         self.data_nodes.append("DC-13")
+        self.data_nodes.append("DC-14")
         self.first_boss_nodes.append("DC-11")
         self.second_boss_nodes.append("DC-11")
 
@@ -888,6 +889,7 @@ class Locations:
             self.add_edge("HB-15","HB-20",RequirementEdge(battle=True))
             self.first_boss_nodes.append("HB-4")
             self.second_boss_nodes.append("HB-15")
+            self.data_nodes.append("HB-18")
         else:
             self.add_edge("Starting","HB-2",RequirementEdge())
             self.add_edge("HB-2","HB-6",RequirementEdge())
@@ -1118,8 +1120,8 @@ class Locations:
 
         if not self.reverse_rando:
             self.add_edge("Starting","TT-1",RequirementEdge())
-            self.add_edge("TT-1","TT-2",RequirementEdge())
-            self.add_edge("TT-2","TT-3",RequirementEdge())
+            self.add_edge("TT-1","TT-3",RequirementEdge())
+            self.add_edge("TT-3","TT-2",RequirementEdge())
             self.add_edge("TT-3","TT-4",RequirementEdge(battle=True))
             self.add_edge("TT-4","TT-5",RequirementEdge())
             self.add_edge("TT-5","TT-6",RequirementEdge())
