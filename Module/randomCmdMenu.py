@@ -104,8 +104,3 @@ class RandomCmdMenu():
 
         
         return cmdMenuAssets
-
-
-
-
-
