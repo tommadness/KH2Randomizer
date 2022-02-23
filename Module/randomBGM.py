@@ -650,8 +650,8 @@ class RandomBGM():
             for song in musicList[game]:
                 if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
                     continue
-				if song.get("missing", False):
-					continue
+                if song.get("missing", False):
+                    continue
                 kind = "battle" #default
                 category = song.get("kind") #current song
                 #sort bgm as field first. (only populate the field list if we are separating field/battle)
@@ -758,4 +758,3 @@ class RandomBGM():
             available_games += [d for d in os.listdir(custom_path) if not d.startswith("_")]
 
         return available_games
-
