@@ -135,7 +135,13 @@ musicList = {
         {"name": "bgm\\music098.win32.scd", "kind": "cutscene"}, # Hesitation
         {"name": "bgm\\music099.win32.scd", "kind": "cutscene"}, # Missing You
         {"name": "bgm\\music132.win32.scd", "kind": "cutscene", "dmca": True}, # Beauty and the Beast (short no loop)
-        {"name": "bgm\\music146.win32.scd", "kind": "cutscene"}], # Roxas' Theme
+        {"name": "bgm\\music146.win32.scd", "kind": "cutscene"}, # Roxas' Theme
+	#GoA-ROM additions/changes (we want these randomized but not used as randomizations)
+	{"name": "bgm\\music130.win32.scd", "kind": "field", "missing": True}, # Neverland Sky
+	{"name": "bgm\\music140.win32.scd", "kind": "field", "dmca": True, "missing": True}, # Under the Sea (KH I)
+    	{"name": "bgm\\music147.win32.scd", "kind": "battle", "dmca": True, "missing": True}, # An Adventure in Atlantica
+	{"name": "bgm\\music150.win32.scd", "kind": "boss", "missing": True}, # Squiming Evil
+	{"name": "bgm\\music156.win32.scd", "kind": "boss", "missing": True}], # Guardando nel Buio
     "KH1": [
         #some music in kh1 is found in .dat folders and others in .bgm folders and somtimes both.
         #the ones in both .dat and .bgm folders are duplicates so you can ignore one of those.
@@ -644,6 +650,8 @@ class RandomBGM():
             for song in musicList[game]:
                 if "DMCA-SAFE" in options["options"] and song.get("dmca", False):
                     continue
+				if song.get("missing", False):
+					continue
                 kind = "battle" #default
                 category = song.get("kind") #current song
                 #sort bgm as field first. (only populate the field list if we are separating field/battle)
