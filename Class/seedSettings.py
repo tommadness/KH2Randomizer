@@ -794,6 +794,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='No more synthesis materials in the junk item pool'
     ),
+    MultiSelect(
+        name=settingkey.JUNK_ITEMS,
+        ui_label='Junk Items',
+        choices={str(item.Id): item.Name for item in Items.getJunkList(False)},
+        shared=True,
+        default=list(set([str(item.Id) for item in Items.getJunkList(False)])),
+        tooltip='Once all of the required items are placed, items from this list are used to fill the rest. This item pool is also used for worlds that are disabled'
+    ),
 
     Toggle(
         name=settingkey.START_NO_AP,

@@ -1,6 +1,5 @@
 from Class import settingkey
-import Class.seedSettings
-from Class.seedSettings import MultiSelect, SeedSettings
+from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
 from PySide6.QtWidgets import (QPushButton,QHBoxLayout,QWidget)
 

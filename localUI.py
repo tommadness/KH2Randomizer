@@ -160,8 +160,8 @@ class KH2RandomizerApp(QMainWindow):
             HintsMenu(self.settings),
             KeybladeMenu(self.settings),
             RewardLocationsMenu(self.settings),
-            SeedModMenu(self.settings),
             ItemPlacementMenu(self.settings),
+            SeedModMenu(self.settings),
             BossEnemyMenu(self.settings),
             CosmeticsMenu(self.settings),
         ]

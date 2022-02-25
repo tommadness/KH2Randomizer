@@ -266,7 +266,12 @@ class Randomizer():
 
     def assignJunkLocations(self, settings, invalidLocations):
         """ assign the rest of the locations with "junk" """
-        junkItems = Items.getJunkList(settings.betterJunk)
+        allJunkItems = Items.getJunkList(False)
+        junkItems = []
+        for j in allJunkItems:
+            if j.Id in settings.junk_pool:
+                junkItems.append(j)
+
         for loc in invalidLocations:
             if loc.LocationCategory is not locationCategory.LEVEL or loc.Description not in settings.excludedLevels:
                 junk_item = random.choice(junkItems)

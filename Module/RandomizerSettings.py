@@ -7,7 +7,7 @@ from List.configDict import expCurve, locationType, itemType, locationDepth
 from itertools import chain
 import math,random
 from Class import seedSettings, settingkey
-from Class.seedSettings import SeedSettings
+from Class.seedSettings import SeedSettings, Setting
 
 class RandomizerSettings():
     excludeFrom50 = list(chain([1,3,5,6,8,11,13,16,18,19,21,22,24,26,27,29,31,33,35,37,38,40,42,43,45,47,49],range(51,100)))
@@ -51,7 +51,14 @@ class RandomizerSettings():
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.reverse_rando = ui_settings.get(settingkey.REVERSE_RANDO)
         self.level_stat_pool = SeedModifier.glassCannon if ui_settings.get(settingkey.GLASS_CANNON) else SeedModifier.regularStats
-        self.betterJunk = ui_settings.get(settingkey.BETTER_JUNK)
+        # self.betterJunk = ui_settings.get(settingkey.BETTER_JUNK)
+        self.junk_pool = [
+            int(item_id) for item_id in ui_settings.get(settingkey.JUNK_ITEMS)
+        ]
+
+        if len(self.junk_pool) == 0:
+            raise SettingsException("Need at least one junk item in the pool")
+
         self.no_ap = ui_settings.get(settingkey.START_NO_AP)
 
         ui_ability_pool = ui_settings.get(settingkey.ABILITY_POOL)
