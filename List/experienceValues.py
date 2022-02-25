@@ -139,22 +139,56 @@ def vanillaExp():
     ]
     return soraExp
 
-def middayExp():
-    exp_offset = 300
-    indices = [x for x in range(10+1,51+1)]
-    indices[0:11] = [11.0+1.2*x for x in range(1,12)]
-    new_diffs = [0] + [40]*9 + [math.floor(math.fabs(18.2075*x*x + (-357.3897)*x + 1504.6365)) for x in indices] + [800*x - 9800 for x in range(51,99)]
-    new_diffs = [x+exp_offset if index <= 50 else x-2*exp_offset for index,x in enumerate(new_diffs)]
-    exp_values = list(accumulate(new_diffs))
-    exp_values.append(exp_values[-1])
-    return exp_values
 
-def duskExp():
-    exp_offset = 600
-    indices = [x for x in range(10+1,51+1)]
-    indices[0:11] = [11.0+1.2*x for x in range(1,12)]
-    new_diffs = [0] + [40]*9 + [math.floor(math.fabs(18.2075*x*x + (-357.3897)*x + 1504.6365)) for x in indices] + [800*x - 9800 for x in range(51,99)]
-    new_diffs = [x+exp_offset if index <= 50 else x-10*exp_offset for index,x in enumerate(new_diffs)]
-    exp_values = list(accumulate(new_diffs))
-    exp_values.append(exp_values[-1])
-    return exp_values
+def createDiffs(experiences):
+    diffs = []
+    for i in range(len(experiences)-1):
+        diffs.append(experiences[i+1]-experiences[i])
+    return diffs
+
+
+def getBaseExpProgression():
+    vanilla = vanillaExp()[:-1]
+    diffs = createDiffs(vanilla)
+    diffs2 = createDiffs(diffs)
+    diffs3 = createDiffs(diffs2)
+    return diffs3
+
+def create_new_values(second_deriv=20, first_deriv=40, early_offset=0, mid_offset=0, late_offset=0):
+
+    diffs3 = getBaseExpProgression()
+    for i in range(25):
+        diffs3[i]+=early_offset
+
+    for i in range(25,48):
+        diffs3[i]+=mid_offset
+
+    diffs3[48]+=late_offset
+
+    diffs2 = [second_deriv]
+    for d in diffs3:
+        diffs2.append(diffs2[-1]+d)
+    diffs = [first_deriv]
+    for d in diffs2:
+        diffs.append(diffs[-1]+d)
+    completed = [0]
+    for d in diffs:
+        completed.append(completed[-1]+d)
+    completed.append(completed[-1])
+
+    for i in range(len(completed)-1):
+        if completed[i+1]<completed[i]:
+            print("Something went wrong")
+    return completed
+
+def middayExp(adjusted):
+    if adjusted:
+        return create_new_values(20,40,2,-25,400)
+    else:
+        return create_new_values(20,40,2,2,-800)
+
+def duskExp(adjusted):
+    if adjusted:
+        return create_new_values(20,40,3,-50,1200)
+    else:
+        return create_new_values(20,40,3,3,-1100)

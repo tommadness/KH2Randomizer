@@ -211,7 +211,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.STATSANITY,
-        ui_label='Statsanity',
+        ui_label='Bonus Rewards as Items (Statsanity)',
         shared=True,
         default=False,
         randomizable=True,
