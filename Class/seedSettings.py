@@ -1,8 +1,8 @@
 import math
 import random
-import string
 import textwrap
 
+from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
@@ -11,9 +11,6 @@ from List.ItemList import Items
 from List.configDict import expCurve, locationType, locationDepth
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
-
-# Characters safe to use in settings strings
-_available_chars = string.digits + string.ascii_uppercase + string.ascii_lowercase
 
 
 class Setting:
@@ -69,10 +66,10 @@ class IntSpinner(Setting):
 
     def settings_string(self, value) -> str:
         index = self.selectable_values.index(value)
-        return _available_chars[index]
+        return str(index)
 
     def parse_settings_string(self, settings_string: str):
-        index = _available_chars.index(settings_string)
+        index = int(settings_string)
         return self.selectable_values[index]
 
 
@@ -104,10 +101,10 @@ class FloatSpinner(Setting):
 
     def settings_string(self, value) -> str:
         index = self.selectable_values.index(value)
-        return _available_chars[index]
+        return str(index)
 
     def parse_settings_string(self, settings_string: str):
-        index = _available_chars.index(settings_string)
+        index = int(settings_string)
         return self.selectable_values[index]
 
 
@@ -130,10 +127,10 @@ class SingleSelect(Setting):
 
     def settings_string(self, value) -> str:
         index = self.choice_keys.index(value)
-        return _available_chars[index]
+        return str(index)
 
     def parse_settings_string(self, settings_string: str):
-        index = _available_chars.index(settings_string)
+        index = int(settings_string)
         return self.choice_keys[index]
 
 
@@ -156,17 +153,27 @@ class MultiSelect(Setting):
         self.choice_icons = choice_icons
 
     def settings_string(self, value) -> str:
-        selected_indexes = ''
-        for selected in value:
-            index = self.choice_keys.index(selected)
-            selected_indexes += _available_chars[index]
-        return "".join(sorted(selected_indexes))
+        choice_keys = self.choice_keys
+
+        bit_array = BitArray(len(choice_keys))
+        for index, choice_key in enumerate(choice_keys):
+            if choice_key in value:
+                bit_array[index] = True
+            else:
+                bit_array[index] = False
+
+        return str(bit_array.uint)
 
     def parse_settings_string(self, settings_string: str):
+        choice_keys = self.choice_keys
+
+        bit_array = BitArray(uint=int(settings_string), length=len(choice_keys))
+
         selected_values = []
-        for character in settings_string:
-            index = _available_chars.index(character)
-            selected_values.append(self.choice_keys[index])
+        for index, choice_key in enumerate(choice_keys):
+            if bit_array[index]:
+                selected_values.append(choice_key)
+
         return selected_values
 
 _drive_exp_curve_tooltip_text = textwrap.dedent('''
@@ -191,6 +198,7 @@ _all_settings = [
         randomizable=True,
         tooltip="Maximum Level for Randomized Rewards that aren't `junk`"
     ),
+
     Toggle(
         name=settingkey.LEVEL_ONE,
         ui_label='Level 1 Mode',
@@ -442,6 +450,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             '82': 'Guard',
             '393': 'Finishing Plus',
             '537': 'Hades Cup Trophy',
+            '370': 'Olympus Stone',
             '369': 'Membership Card',
             '593': 'Proof of Connection',
             '594': 'Proof of Nonexistence',
@@ -617,10 +626,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Reports can Hint Proofs',
         shared=True,
         default=False,
-        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports",
+        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports.",
         randomizable=True
     ),
 
+    Toggle(
+        name=settingkey.ALLOW_REPORT_HINTING,
+        ui_label='Reports can Hint other Reports',
+        shared=True,
+        default=True,
+        tooltip="Points Mode only: If enabled, reports can hint other reports.",
+        randomizable=True
+    ),
+    
     IntSpinner(
         name=settingkey.KEYBLADE_MIN_STAT,
         ui_label="Keyblade Min Stat",
@@ -861,7 +879,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     SingleSelect(
         name=settingkey.COMMAND_MENU,
-        ui_label='Command Menu (PS2 Only)',
+        ui_label='Command Menu',
         choices=RandomCmdMenu.getOptions(),
         shared=False,
         default='vanilla'

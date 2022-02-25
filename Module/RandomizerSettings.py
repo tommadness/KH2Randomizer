@@ -71,6 +71,7 @@ class RandomizerSettings():
         self.proofDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.PROOF_DEPTH)][0]
         self.prevent_self_hinting = ui_settings.get(settingkey.PREVENT_SELF_HINTING)
         self.allow_proof_hinting = ui_settings.get(settingkey.ALLOW_PROOF_HINTING)
+        self.allow_report_hinting = ui_settings.get(settingkey.ALLOW_REPORT_HINTING)
         self.keyblade_support_abilities = [
             int(ability_id) for ability_id in ui_settings.get(settingkey.KEYBLADE_SUPPORT_ABILITIES)
         ]
