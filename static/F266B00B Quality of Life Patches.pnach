@@ -1,5 +1,3 @@
-// as
-
 //Shorter Day 5
 patch=1,EE,E0100B02,extended,0032BAE0
 patch=1,EE,E00F0032,extended,0032BAE2
@@ -81,6 +79,14 @@ patch=1,EE,E0030048,extended,0032BAE8
 patch=1,EE,1032BAE0,extended,00001712
 patch=1,EE,2032BAE4,extended,00540054
 patch=1,EE,1032BAE8,extended,00000054
+
+
+//Antiform Dummy Crash Prevention
+patch=1,EE,E0040384,extended,01CD46A8
+patch=1,EE,21CD4518,extended,0000006A
+patch=1,EE,21CD46A8,extended,0000006A
+patch=1,EE,21CD4C9C,extended,0000006A
+patch=1,EE,21CD4E2C,extended,0000006A
 
 
 //Remove High Jump LV1
