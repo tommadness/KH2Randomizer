@@ -887,7 +887,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     SingleSelect(
         name=settingkey.COMMAND_MENU,
-        ui_label='Command Menu (PS2 Only)',
+        ui_label='Command Menu',
         choices=RandomCmdMenu.getOptions(),
         shared=False,
         default='vanilla'
