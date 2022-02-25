@@ -93,6 +93,14 @@ if ReadShort(Now+0) == 0x1D12 then
 	end
 end
 
+--Antiform Crash Prevention
+if ReadInt(Sys3+0x93A8) == 0x384 then
+	WriteInt(Sys3+0x9218,0x06A)
+	WriteInt(Sys3+0x93A8,0x06A)
+	WriteInt(Sys3+0x999C,0x06A)
+	WriteInt(Sys3+0x9B2C,0x06A)
+end
+
 --Remove Growth Abilities
 WriteByte(Btl0+0x344A5,0x00000000)
 WriteByte(Btl0+0x344AD,0x00000000)
