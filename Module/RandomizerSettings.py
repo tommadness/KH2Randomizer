@@ -167,6 +167,15 @@ class RandomizerSettings():
 
 
     def setSoraExp(self,rate,curve):
+        # with open("exp_values.csv","w") as output_file:
+        #     vanilla = vanillaExp()
+        #     middayExp99 = middayExp(False)
+        #     duskExp99 = duskExp(False)
+        #     middayExp50 = middayExp(True)
+        #     duskExp50 = duskExp(True)
+        #     for i in range(100):
+        #         output_file.write(f"{vanilla[i]},{middayExp99[i]},{duskExp99[i]},{middayExp50[i]},{duskExp50[i]}\n")
+
         adjust_exp_curves = self.level_checks == 50
         if curve == expCurve.DAWN.name:
             exp_list = vanillaExp()
