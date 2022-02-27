@@ -423,6 +423,9 @@ class KH2RandomizerApp(QMainWindow):
             out_data = {}
             out_data["game_extract_folder"] = selected_directory
             music_config.write(json.dumps(out_data))
+        message = QMessageBox(text="Restart the generator to add the music options to the menu.")
+        message.setWindowTitle("KH2 Seed Generator")
+        message.exec()
 
         
 
