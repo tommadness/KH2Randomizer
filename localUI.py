@@ -46,7 +46,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '2.0.0-beta.1.24'
+LOCAL_UI_VERSION = '2.0.0'
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -208,6 +208,7 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addMenu(self.presetMenu)
 
         menu_bar.addAction("Load Daily Seed", self.loadDailySeed)
+        menu_bar.addAction("Find Extracted PC KH Data",self.extractedFilesGetter)
         menu_bar.addAction("About", self.showAbout)
 
     def closeEvent(self, e):
@@ -411,6 +412,18 @@ class KH2RandomizerApp(QMainWindow):
             message = QMessageBox(text="Received seed from clipboard")
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
+
+    def extractedFilesGetter(self):
+        saveFileWidget = QFileDialog()
+        selected_directory = saveFileWidget.getExistingDirectory()
+        
+        configPath = Path("music-rando-config.json")
+
+        with open(str(configPath.absolute()),'w') as music_config:
+            out_data = {}
+            out_data["game_extract_folder"] = selected_directory
+            music_config.write(json.dumps(out_data))
+
         
 
     def firstTimeSetup(self):

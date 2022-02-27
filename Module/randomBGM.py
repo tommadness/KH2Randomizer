@@ -1,3 +1,4 @@
+from pathlib import Path
 import random, os, json
 
 musicList = {
@@ -741,19 +742,23 @@ class RandomBGM():
 
     def getGames():
         available_games = []
-
-        if "KHGAMES_PATH" not in os.environ:
-            print("testing123")
+        configPath = Path("music-rando-config.json")
+        if not configPath.is_file():
             return available_games
+
+        with open(str(configPath.absolute()),'r') as music_config:
+            data_string = music_config.read()
+            data = json.loads(data_string)
+            kh_extract_folder = data["game_extract_folder"]
 	
         for game in musicPaths:
             if game == "CUSTOM":
                 continue
-            path = os.path.join(os.environ.get("KHGAMES_PATH"), "kh2", musicPaths[game])
+            path = os.path.join(kh_extract_folder, "kh2", musicPaths[game])
             if os.path.isdir(path):
                 available_games.append(game)
 
-        custom_path = os.path.join(os.environ.get("KHGAMES_PATH"), "custom")
+        custom_path = os.path.join(kh_extract_folder, "custom")
         if os.path.isdir(custom_path):
             available_games += [d for d in os.listdir(custom_path) if not d.startswith("_")]
 
