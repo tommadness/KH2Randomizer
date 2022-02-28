@@ -1013,10 +1013,14 @@ class SeedSettings:
         return filtered_settings
 
     def apply_settings_json(self, settings_json, include_private: bool = False):
-        filtered_keys = self._filtered_settings(include_private).keys()
-        for key, value in settings_json.items():
-            if key in filtered_keys:
-                self.set(key, value)
+        for key, setting in self._filtered_settings(include_private).items():
+            # If there's a setting in the JSON for the key, use its value; otherwise, use the default.
+            # This should in theory allow the generator to be (mostly) backward-compatible with older shared presets,
+            # at least when it's a simple case like a new setting added.
+            if key in settings_json:
+                self.set(key, settings_json[key])
+            else:
+                self.set(key, setting.default)
 
 
 def getRandoRandoTooltip():
