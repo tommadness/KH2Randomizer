@@ -886,11 +886,12 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Ability Pool',
         choices={
             'default': 'Default Abilities',
-            'randomize': 'Randomize Ability Pool'
+            'randomize': 'Randomize Ability Pool',
+            'randomize support': 'Randomize Support Ability Pool'
         },
         shared=True,
         default='default',
-        tooltip='If "Randomize Ability Pool", picks Sora\'s action/support abilities at random (guaranteed to have 1 SC & 1 OM)'
+        tooltip='If "Randomize Ability Pool", picks Sora\'s action/support abilities at random (guaranteed to have 1 SC & 1 OM). \nRandomized Support Ability Pool will leave action abilities alone, but will randomize the support abilities (still guaranteed to have SC/OM)'
     ),
 
     SingleSelect(

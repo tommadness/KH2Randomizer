@@ -63,6 +63,24 @@ class SeedModifier():
         randomabilitypool.append(abilitydict["Once More"])
         return randomabilitypool
 
+    def randomSupportAbilityPool(action, support):
+        abilitylist = support
+        abilitydict = {i.Name: i for i in abilitylist}
+        possibleabilities = list(set([i.Name for i in abilitylist if i.Name not in ["Second Chance", "Once More"]]))
+        possibleabilities.sort()
+        randomabilitypool = []
+        for _ in range(len(abilitylist)-2):
+            choice = random.choice(possibleabilities)
+            randomabilitypool.append(abilitydict[choice])
+            # Limit only 1 of each action ability in the pool, to make it more interesting
+            if choice in [i.Name for i in action]:
+                possibleabilities.remove(choice)
+
+        # Make sure there is one OM and one SC so the tracker behaves
+        randomabilitypool.append(abilitydict["Second Chance"])
+        randomabilitypool.append(abilitydict["Once More"])
+        return randomabilitypool + action
+
     def defaultAbilityPool(action, support):
         return action+support
 

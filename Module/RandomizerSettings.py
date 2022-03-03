@@ -66,6 +66,8 @@ class RandomizerSettings():
             self.abilityListModifier = SeedModifier.defaultAbilityPool
         elif ui_ability_pool == "randomize":
             self.abilityListModifier = SeedModifier.randomAbilityPool
+        elif ui_ability_pool == "randomize support":
+            self.abilityListModifier = SeedModifier.randomSupportAbilityPool
         else:
             raise SettingsException("Invalid ability pool option")
 

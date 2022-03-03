@@ -416,6 +416,9 @@ class KH2RandomizerApp(QMainWindow):
     def extractedFilesGetter(self):
         saveFileWidget = QFileDialog()
         selected_directory = saveFileWidget.getExistingDirectory()
+
+        if selected_directory is None or selected_directory == "":
+            return
         
         configPath = Path("music-rando-config.json")
 
