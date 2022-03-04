@@ -25,6 +25,7 @@ having tools you weren't otherwise meant to have in certain parts of the game.
 
 * Sora starts the game with a Drive Gauge of 5 rather than 3 so that all Drive Forms can be used as soon as they are
   obtained
+* Finding a Munny Pouch gives you 5,000 munny
 * The Promise Charm item, if enabled, opens a path to the final boss fights if the Promise Charm as well as all 3 Proofs
   are obtained. This path also contains several Bulky Vendor enemies that can be used to level grind quickly.
 
@@ -68,6 +69,12 @@ having tools you weren't otherwise meant to have in certain parts of the game.
       those fights are a great place to earn levels for Wisdom Form)
 * The Proof of Peace unlocks the two rewards given by Mushroom XIII. Simply talk to the Mushrooms after obtaining the
   Proof of Peace to obtain the rewards.
+* A loading zone is added in an out-of-bounds area of the Cavern of Remembrance to prevent Sora from falling
+  infinitely (effectively softlocking the game).
+    * This area of the cavern is used in a technique called "CoR skip" where players clip out-of-bounds in order to
+      bypass difficult fights in this area
+    * Instead of falling forever, once Sora hits this added loading zone, the game warps Sora back to the entrance to
+      the room
 
 ### Disney Castle
 
@@ -84,7 +91,8 @@ having tools you weren't otherwise meant to have in certain parts of the game.
 
 ### Simulated Twilight Town (STT)
 
-* Choose the Mail Delivery job and immediately quit after the timer counts down to progress the story on Day 2
+* Choose any of the jobs and quit right after the starting timer to progress the story on Day 2
+    * It is not required to actually complete a job, nor is it required to go talk to Hayner to progress the story
 * The Seven Wonders minigames on Day 5 are removed
 * Limit Form can be used as Roxas if it has been obtained (Roxas turns into Limit Form Sora)
     * In most areas of STT, reverting from Limit Form will leave you with a full Drive Gauge
