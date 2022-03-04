@@ -10,8 +10,12 @@ title: Home
 # Game/Randomizer Information
 
 * [Overview](overview/index.md)
+* [Seed Generator Options / Frequently Asked Questions](seed-generator/index.md)
 * [Hint Systems](hints/index.md)
 * [Superboss Locations](superboss-locations/index.md) (Absent Silhouettes, Data Organization XIII, Lingering Will)
+* [Randomized Music](music/index.md)
+* [Daily Seeds](daily-seeds/index.md)
+* [Troubleshooting](troubleshooting/index.md)
 
 # Setup Guides
 

@@ -8,6 +8,8 @@
 * [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest/download/KhTracker.exe)
 * [LiveSplit Load Remover for Randomizer](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/releases/latest/download/KH2FM.Load.Remover.PC.and.EMU.asl)
   ([instructions](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/blob/main/README.md))
+* [.NET Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime) (required for some of the randomizer tools)
+  * Choose the `x64` version under "Run desktop apps"
 
 ### PC Epic Games Store Version ([setup guide](https://docs.google.com/document/d/1KIVS6RjnCtbpO3DYWy1HdXxkw_8s9opE8dsPaoDTpYU/edit?usp=sharing))
 
