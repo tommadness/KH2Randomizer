@@ -74,7 +74,8 @@ necessarily matter. So the term "junk" in this context includes things like Poti
 ### Share Seed
 
 **Save Seed to Clipboard** - Copies information about the currently configured seed to the clipboard so that you can
-send the same seed to other players
+send the same seed to other players. This is the recommended way to share seeds (sharing the seed `.zip` file itself is
+not guaranteed to work, especially if custom cosmetics are used).
 
 **Load Seed from Clipboard** - Loads a seed configuration from the clipboard into the generator
 
@@ -208,7 +209,7 @@ playing Reverse Rando
 
 **Ability Pool** - Controls the presence and amount of abilities in the randomized pool
 
-* Default Abilities -
+* Default Abilities - uses the default set of action and support abilities
 * Randomize Ability Pool - picks Sora's action/support abilities at random (guaranteed to have one Second Chance and one
   Once More ability)
 * Randomize Support Ability Pool - leaves Sora's action abilities alone, but will randomize the support abilities (still

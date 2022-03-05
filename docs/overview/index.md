@@ -26,8 +26,26 @@ having tools you weren't otherwise meant to have in certain parts of the game.
 * Sora starts the game with a Drive Gauge of 5 rather than 3 so that all Drive Forms can be used as soon as they are
   obtained
 * Finding a Munny Pouch gives you 5,000 munny
+* Final Form is an obtainable item (though Final Form can still be obtained in its normal fashion)
 * The Promise Charm item, if enabled, opens a path to the final boss fights if the Promise Charm as well as all 3 Proofs
   are obtained. This path also contains several Bulky Vendor enemies that can be used to level grind quickly.
+
+### Save Warping
+
+Because there is no world map from which to choose a spawn point, the player is placed at an appropriate save point
+when (re-)entering a world based on story progression. This can be exploited in a few places in randomizer to save some
+time by leaving a world and re-entering to be "warped" to the next location. The warps that can save time include but
+are not limited to:
+
+* After the "fight" with Beast, leaving Beast's Castle and re-entering places you in Belle's room
+* After triggering the Rumbling Rose cutscene, leaving Beast's Castle and re-entering places you in the Parlor
+* After entering the Courtyard, leaving Disney Castle and re-entering places you in the Library
+* After triggering the cutscene by entering the Nothing's Call room, leaving The World That Never Was and re-entering
+  places you at Twilight's View
+    * This particular save warp does bypass two treasure chests, so is usually only utilized if a player is
+      in [Go Mode](../glossary/index.md#go-mode) and is trying to get to the end of the game as quickly as possible
+* After Auron gets on the boat to the Underdrome with Pain and Panic, leaving Olympus Coliseum and re-entering places
+  you at Cave Of the Dead - Inner Chamber
 
 ### The World That Never Was
 
@@ -84,6 +102,8 @@ having tools you weren't otherwise meant to have in certain parts of the game.
 
 * The initial Light Cycle race is removed
 * Master Control Program has reduced health
+* After defeating Master Control Program, the Solar Sailer Heartless fight is skipped, allowing you to travel back and
+  forth without needing to fight again each time
 
 ### 100 Acre Wood
 
@@ -158,8 +178,8 @@ Some of these issues exist in the base game, while others are specific to the ra
 
 ### Halloween Town
 
-* Using the finisher of Dance Call to kill The Experiment causes the game to crash. Avoid using Dance Call to finish
-  this fight.
+* Using the finisher of Dance Call to kill The Experiment causes the game to crash. It's often recommended to outright
+  avoid using Dance Call to finish this fight.
 
 ### Twilight Town
 
