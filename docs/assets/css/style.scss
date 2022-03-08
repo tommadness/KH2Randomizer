@@ -1,0 +1,76 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+@font-face {
+	font-family: khmenu;
+	src: url("../font/KHMenu.otf");
+}
+
+@font-face {
+	font-family: khgummi;
+	src: url("../font/KHGummi.otf");
+}
+
+@font-face {
+	font-family: khtitle;
+	src: url("../font/KHTitle.otf");
+}
+
+body {
+    background-color: #31363b;
+    color: #FFFFFF;
+}
+
+h1 {
+    > a {
+        color: #FFFFFF;
+    	font-family: khtitle;
+    	text-decoration: none;
+    }
+
+    > a:hover {
+    	text-decoration: none;
+    }
+}
+
+a {
+    color: #4dd0e1;
+    font-family: khmenu;
+}
+
+.page-header {
+    background-image: linear-gradient(0deg, #000040, #000020);
+}
+
+.main-content {
+    h1,
+    h2 {
+        color:#FFE500;
+        font-family: khgummi;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        color:#FFE500;
+        font-family: khmenu;
+    }
+
+    code {
+        background-color: #111111;
+        color: #DDDDDD;
+    }
+
+    code,
+    pre {
+        background-color: #111111;
+        color: #DDDDDD;
+
+        > code {
+            color: #DDDDDD;
+        }
+    }
+}

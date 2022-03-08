@@ -15,7 +15,9 @@ title: Home
 * [Superboss Locations](superboss-locations/index.md) (Absent Silhouettes, Data Organization XIII, Lingering Will)
 * [Randomized Music](music/index.md)
 * [Daily Seeds](daily-seeds/index.md)
+* [Contributing](contributing/index.md)
 * [Troubleshooting](troubleshooting/index.md)
+* [Glossary](glossary/index.md)
 
 # Setup Guides
 
@@ -30,4 +32,3 @@ title: Home
   by CrunchieVT
 * [Damage Floors and Caps charts](https://docs.google.com/document/d/e/2PACX-1vQ8yNy11UJvLyGyCbpsKuXFvwyLZki-a3DSt6jEJeQQSneOuZM9M_k7oJoaxVDJxrramLYdQL3PAR6p/pub)
   by VGMaster
-* [LiveSplit Load Remover for Randomizer](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/releases)
