@@ -621,6 +621,14 @@ class RandomBGM():
                 if song_name in config.get("songs"):
                     song_record["kind"] = config["songs"].get(song_name)
             return song_record
+            
+        def _getpath():
+            configPath = Path("music-rando-config.json")
+            with open(str(configPath.absolute()),'r') as music_config:
+                data_string = music_config.read()
+                data = json.loads(data_string)
+                kh_extract_folder = data["game_extract_folder"]
+            return kh_extract_folder
 
         songlist = {}
 
@@ -628,7 +636,8 @@ class RandomBGM():
             if category not in musicList: # it's custom
                 if category not in songlist:
                     songlist[category] = {"default_category": "unknown", "songs": []}
-                dirname = os.path.join(os.environ.get("KHGAMES_PATH"), "custom", category)
+                kh_extract_folder = _getpath()
+                dirname = os.path.join(kh_extract_folder, "custom", category)
                 for path, subdirs, files in os.walk(dirname):
                     if os.path.basename(path).startswith("_"):
                         continue
