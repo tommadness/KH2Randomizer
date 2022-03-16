@@ -445,6 +445,7 @@ Created by Thundrio, Tommadness, and ZakTheRobot<br><br>
 
 Thank you to all contributors, testers, and advocates.<br><br>
 
+<a href="https://tommadness.github.io/KH2Randomizer" style="color: #4dd0e1">Website</a><br>
 <a href="https://github.com/tommadness/KH2Randomizer" style="color: #4dd0e1">Github Link</a><br>
 <a href="https://discord.gg/KH2FMRando" style="color: #4dd0e1">KH2 Randomizer Discord</a><br><br>
 
