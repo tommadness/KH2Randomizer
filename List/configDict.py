@@ -118,6 +118,7 @@ class itemType(str, Enum):
     SUMMON = "Summon"
     REPORT = "Report"
     KEYITEM = "KeyItem"
+    STORYUNLOCK= "Story Unlock"
     MUNNY_POUCH = "Munny Pouch"
     MEMBERSHIPCARD = "Membership Card"
     TROPHY = "OC Trophy"

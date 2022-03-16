@@ -127,6 +127,8 @@ class RandomizerSettings():
 
         self.antiform = False
 
+        self.world_unlocks = False
+
         self.tracker_includes = []
         if self.promiseCharm:
             self.tracker_includes.append("PromiseCharm")

@@ -4,6 +4,7 @@ from altgraph.Graph import Graph
 # from altgraph.Dot import Dot
 
 from Module.RandomizerSettings import RandomizerSettings
+from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class LocationNode:
     def __init__(self,in_loc=None):
@@ -27,6 +28,7 @@ class Locations:
     def __init__(self, settings: RandomizerSettings):
         self.location_graph = Graph()
         self.reverse_rando = settings.reverse_rando
+        self.nightmare = settings.itemPlacementDifficulty=="Nightmare"
         self.first_boss_nodes = []
         self.second_boss_nodes = []
         self.data_nodes = []
@@ -94,12 +96,12 @@ class Locations:
         self.add_node("Puzzle-6",LocationNode([KH2Location(5, "Sunset (Grand Ribbon)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
 
         #TODO put these in their proper location in the graph
-        self.add_edge("Starting","Puzzle-1",RequirementEdge())
-        self.add_edge("Starting","Puzzle-2",RequirementEdge())
-        self.add_edge("Starting","Puzzle-3",RequirementEdge())
-        self.add_edge("Starting","Puzzle-4",RequirementEdge())
-        self.add_edge("Starting","Puzzle-5",RequirementEdge())
-        self.add_edge("Starting","Puzzle-6",RequirementEdge())
+        self.add_edge("Starting","Puzzle-1",RequirementEdge(req=ItemPlacementHelpers.need_growths))
+        self.add_edge("Starting","Puzzle-2",RequirementEdge(req=ItemPlacementHelpers.need_growths))
+        self.add_edge("Starting","Puzzle-3",RequirementEdge(req=ItemPlacementHelpers.need_growths))
+        self.add_edge("Starting","Puzzle-4",RequirementEdge(req=ItemPlacementHelpers.need_growths))
+        self.add_edge("Starting","Puzzle-5",RequirementEdge(req=lambda inv : ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.need_5_pages(inv)))
+        self.add_edge("Starting","Puzzle-6",RequirementEdge(req=ItemPlacementHelpers.need_growths))
     
     def makeFormGraph(self):
         for i in range(1,8):
@@ -110,12 +112,15 @@ class Locations:
             self.add_node(f"Final-{i}",LocationNode([KH2Location(i,f"Final Level {i}", locationCategory.FINALLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []))]))
             self.add_node(f"Summon-{i}",LocationNode([KH2Location(i,f"Summon Level {i}", locationCategory.SUMMONLEVEL,[locationType.SummonLevel])]))
 
+
+            form_helper = ItemPlacementHelpers.make_form_lambda_nightmare if self.nightmare else ItemPlacementHelpers.make_form_lambda
+
             if i != 1:
-                self.add_edge(f"Valor-{i-1}",f"Valor-{i}",RequirementEdge())
-                self.add_edge(f"Wisdom-{i-1}",f"Wisdom-{i}",RequirementEdge())
-                self.add_edge(f"Limit-{i-1}",f"Limit-{i}",RequirementEdge())
-                self.add_edge(f"Master-{i-1}",f"Master-{i}",RequirementEdge())
-                self.add_edge(f"Final-{i-1}",f"Final-{i}",RequirementEdge())
+                self.add_edge(f"Valor-{i-1}",f"Valor-{i}",RequirementEdge(req=form_helper("Valor",i)))
+                self.add_edge(f"Wisdom-{i-1}",f"Wisdom-{i}",RequirementEdge(req=form_helper("Wisdom",i)))
+                self.add_edge(f"Limit-{i-1}",f"Limit-{i}",RequirementEdge(req=form_helper("Limit",i)))
+                self.add_edge(f"Master-{i-1}",f"Master-{i}",RequirementEdge(req=form_helper("Master",i)))
+                self.add_edge(f"Final-{i-1}",f"Final-{i}",RequirementEdge(req=form_helper("Final",i)))
                 self.add_edge(f"Summon-{i-1}",f"Summon-{i}",RequirementEdge())
             else:
                 self.add_edge("Starting",f"Valor-{i}",RequirementEdge())
@@ -205,7 +210,7 @@ class Locations:
             self.add_edge("LoD-7","LoD-8",RequirementEdge(battle=True))
             self.add_edge("LoD-8","LoD-9",RequirementEdge())
             self.add_edge("LoD-9","LoD-10",RequirementEdge(battle=True))
-            self.add_edge("LoD-10","LoD-11",RequirementEdge(battle=True))
+            self.add_edge("LoD-10","LoD-11",RequirementEdge(battle=True,req=ItemPlacementHelpers.mulan_check))
             self.add_edge("LoD-11","LoD-12",RequirementEdge(battle=True))
             self.add_edge("LoD-12","LoD-13",RequirementEdge(battle=True))
             self.first_boss_nodes.append("LoD-10")
@@ -280,7 +285,7 @@ class Locations:
             self.add_edge("AG-8","AG-9",RequirementEdge(battle=True))
             self.add_edge("AG-9","AG-10",RequirementEdge())
             self.add_edge("AG-10","AG-11",RequirementEdge(battle=True))
-            self.add_edge("AG-11","AG-12",RequirementEdge(battle=True))
+            self.add_edge("AG-11","AG-12",RequirementEdge(battle=True,req=lambda inv : ItemPlacementHelpers.need_fire_blizzard_thunder(inv) and ItemPlacementHelpers.aladdin_check(inv)))
             self.add_edge("AG-12","AG-13",RequirementEdge(battle=True))
             self.add_edge("AG-13","AG-14",RequirementEdge(battle=True))
             self.add_edge("AG-14","AG-15",RequirementEdge())
@@ -290,7 +295,7 @@ class Locations:
             self.add_edge("Starting","AG-2",RequirementEdge())
             self.add_edge("AG-2","AG-3",RequirementEdge())
             self.add_edge("AG-3","AG-4",RequirementEdge())
-            self.add_edge("AG-4","AG-12",RequirementEdge(battle=True))
+            self.add_edge("AG-4","AG-12",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_fire_blizzard_thunder))
             self.add_edge("AG-12","AG-13",RequirementEdge(battle=True))
             self.add_edge("AG-13","AG-14",RequirementEdge(battle=True))
             self.add_edge("AG-14","AG-1",RequirementEdge())
@@ -353,7 +358,7 @@ class Locations:
             self.add_edge("DC-10","DC-11",RequirementEdge())
             self.add_edge("DC-11","DC-12",RequirementEdge(battle=True))
             self.add_edge("DC-12","DC-13",RequirementEdge())
-            self.add_edge("DC-11","DC-14",RequirementEdge(battle=True))
+            self.add_edge("DC-11","DC-14",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_proof_connection))
         else:
             self.add_edge("Starting","DC-5",RequirementEdge())
             self.add_edge("DC-5","DC-6",RequirementEdge())
@@ -368,7 +373,7 @@ class Locations:
             self.add_edge("DC-3","DC-4",RequirementEdge())
             self.add_edge("DC-4","DC-11",RequirementEdge())
             self.add_edge("DC-11","DC-13",RequirementEdge(battle=True))
-            self.add_edge("DC-11","DC-14",RequirementEdge(battle=True))
+            self.add_edge("DC-11","DC-14",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_proof_connection))
 
 
     def makeHundredAcreGraph(self):
@@ -399,18 +404,18 @@ class Locations:
 
         if not self.reverse_rando:
             self.add_edge("Starting","100-1",RequirementEdge())
-            self.add_edge("100-1","100-2",RequirementEdge())
-            self.add_edge("100-2","100-3",RequirementEdge())
-            self.add_edge("100-3","100-4",RequirementEdge())
-            self.add_edge("100-4","100-5",RequirementEdge())
-            self.add_edge("100-5","100-6",RequirementEdge())
+            self.add_edge("100-1","100-2",RequirementEdge(req=ItemPlacementHelpers.need_1_page))
+            self.add_edge("100-2","100-3",RequirementEdge(req=ItemPlacementHelpers.need_2_pages))
+            self.add_edge("100-3","100-4",RequirementEdge(req=ItemPlacementHelpers.need_3_pages))
+            self.add_edge("100-4","100-5",RequirementEdge(req=ItemPlacementHelpers.need_4_pages))
+            self.add_edge("100-5","100-6",RequirementEdge(req=ItemPlacementHelpers.need_5_pages))
         else:
             self.add_edge("Starting","100-6",RequirementEdge())
-            self.add_edge("100-6","100-5",RequirementEdge())
-            self.add_edge("100-5","100-4",RequirementEdge())
-            self.add_edge("100-4","100-3",RequirementEdge())
-            self.add_edge("100-3","100-2",RequirementEdge())
-            self.add_edge("100-2","100-1",RequirementEdge())
+            self.add_edge("100-6","100-5",RequirementEdge(req=ItemPlacementHelpers.need_1_page))
+            self.add_edge("100-5","100-4",RequirementEdge(req=ItemPlacementHelpers.need_2_pages))
+            self.add_edge("100-4","100-3",RequirementEdge(req=ItemPlacementHelpers.need_3_pages))
+            self.add_edge("100-3","100-2",RequirementEdge(req=ItemPlacementHelpers.need_4_pages))
+            self.add_edge("100-2","100-1",RequirementEdge(req=ItemPlacementHelpers.need_5_pages))
 
 
     def makeOCGraph(self):
@@ -442,8 +447,8 @@ class Locations:
                                         KH2Location(142, "The Lock AP Boost", locationCategory.CHEST,[locationType.OC]),]))
         self.add_node("OC-12",LocationNode([KH2Location(6, "Pete (OC)", locationCategory.ITEMBONUS,[locationType.OC]),]))
         self.add_node("OC-13",LocationNode([KH2Location(7, "Hydra", locationCategory.HYBRIDBONUS,[locationType.OC]),
-                                        KH2Location(260, "Hero´s Crest", locationCategory.POPUP,[locationType.OC]),]))
-        self.add_node("OC-14",LocationNode([KH2Location(295, "Auron´s Statue", locationCategory.POPUP,[locationType.OC]),]))
+                                        KH2Location(260, "Hero's Crest", locationCategory.POPUP,[locationType.OC]),]))
+        self.add_node("OC-14",LocationNode([KH2Location(295, "Auron's Statue", locationCategory.POPUP,[locationType.OC]),]))
         self.add_node("OC-15",LocationNode([KH2Location(8, "Hades", locationCategory.HYBRIDBONUS,[locationType.OC]),
                                         KH2Location(272, "Guardian Soul", locationCategory.POPUP,[locationType.OC]),]))
         self.add_node("OC-16",LocationNode([KH2Location(513, "Protect Belt (Pain and Panic Cup)", locationCategory.POPUP,[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY]),
@@ -475,14 +480,14 @@ class Locations:
             self.add_edge("OC-10","OC-11",RequirementEdge())
             self.add_edge("OC-11","OC-12",RequirementEdge(battle=True))
             self.add_edge("OC-12","OC-13",RequirementEdge(battle=True))
-            self.add_edge("OC-13","OC-14",RequirementEdge(battle=True))
+            self.add_edge("OC-13","OC-14",RequirementEdge(battle=True,req=ItemPlacementHelpers.auron_check))
             self.add_edge("OC-14","OC-15",RequirementEdge(battle=True))
 
             self.add_edge("OC-15","OC-16",RequirementEdge(battle=True))
             self.add_edge("OC-15","OC-17",RequirementEdge(battle=True))
             self.add_edge("OC-15","OC-18",RequirementEdge(battle=True))
             self.add_edge("OC-15","OC-19",RequirementEdge(battle=True))
-            self.add_edge("OC-15","OC-20",RequirementEdge(battle=True))
+            self.add_edge("OC-15","OC-20",RequirementEdge(battle=True,req=lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)))
             self.add_edge("OC-15","OC-21",RequirementEdge(battle=True))
             self.add_edge("OC-21","OC-22",RequirementEdge())
             self.first_boss_nodes.append("OC-13")
@@ -508,7 +513,7 @@ class Locations:
             self.add_edge("OC-13","OC-17",RequirementEdge(battle=True))
             self.add_edge("OC-13","OC-18",RequirementEdge(battle=True))
             self.add_edge("OC-13","OC-19",RequirementEdge(battle=True))
-            self.add_edge("OC-13","OC-20",RequirementEdge(battle=True))
+            self.add_edge("OC-13","OC-20",RequirementEdge(battle=True,req=lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)))
             self.add_edge("OC-13","OC-22",RequirementEdge(battle=True))
             self.first_boss_nodes.append("OC-15")
             self.second_boss_nodes.append("OC-13")
@@ -561,7 +566,7 @@ class Locations:
             self.add_edge("BC-9","BC-10",RequirementEdge(battle=True))
             self.add_edge("BC-10","BC-11",RequirementEdge())
             self.add_edge("BC-11","BC-12",RequirementEdge(battle=True))
-            self.add_edge("BC-12","BC-13",RequirementEdge(battle=True))
+            self.add_edge("BC-12","BC-13",RequirementEdge(battle=True,req=ItemPlacementHelpers.beast_check))
             self.add_edge("BC-13","BC-14",RequirementEdge(battle=True))
             self.add_edge("BC-14","BC-15",RequirementEdge(battle=True))
             self.first_boss_nodes.append("BC-12")
@@ -620,7 +625,7 @@ class Locations:
             self.add_edge("SP-4","SP-5",RequirementEdge())
             self.add_edge("SP-5","SP-6",RequirementEdge(battle=True))
             self.add_edge("SP-6","SP-7",RequirementEdge())
-            self.add_edge("SP-7","SP-8",RequirementEdge(battle=True))
+            self.add_edge("SP-7","SP-8",RequirementEdge(battle=True,req=ItemPlacementHelpers.tron_check))
             self.add_edge("SP-8","SP-9",RequirementEdge())
             self.add_edge("SP-9","SP-10",RequirementEdge(battle=True))
             self.add_edge("SP-10","SP-11",RequirementEdge(battle=True))
@@ -682,7 +687,7 @@ class Locations:
             self.add_edge("HT-5","HT-6",RequirementEdge())
             self.add_edge("HT-6","HT-7",RequirementEdge(battle=True))
             self.add_edge("HT-7","HT-8",RequirementEdge(battle=True))
-            self.add_edge("HT-8","HT-9",RequirementEdge(battle=True))
+            self.add_edge("HT-8","HT-9",RequirementEdge(battle=True,req=ItemPlacementHelpers.jack_ht_check))
             self.add_edge("HT-9","HT-10",RequirementEdge(battle=True))
             self.add_edge("HT-10","HT-11",RequirementEdge())
             self.add_edge("HT-11","HT-12",RequirementEdge(battle=True))
@@ -755,7 +760,7 @@ class Locations:
             self.add_edge("PR-6","PR-7",RequirementEdge())
             self.add_edge("PR-7","PR-8",RequirementEdge())
             self.add_edge("PR-8","PR-9",RequirementEdge(battle=True))
-            self.add_edge("PR-9","PR-10",RequirementEdge(battle=True))
+            self.add_edge("PR-9","PR-10",RequirementEdge(battle=True,req=ItemPlacementHelpers.jack_pr_check))
             self.add_edge("PR-10","PR-11",RequirementEdge())
             self.add_edge("PR-11","PR-12",RequirementEdge())
             self.add_edge("PR-12","PR-13",RequirementEdge())
@@ -861,13 +866,13 @@ class Locations:
             self.add_edge("HB-2","HB-3",RequirementEdge())
             self.add_edge("HB-3","HB-4",RequirementEdge(battle=True))
             self.add_edge("HB-4","HB-5",RequirementEdge())
-            self.add_edge("HB-5","HB-6",RequirementEdge())
+            self.add_edge("HB-5","HB-6",RequirementEdge(req=ItemPlacementHelpers.riku_check))
             self.add_edge("HB-6","HB-7",RequirementEdge())
             self.add_edge("HB-7","HB-8",RequirementEdge())
             self.add_edge("HB-7","HB-9",RequirementEdge())
             self.add_edge("HB-8","HB-10",RequirementEdge())
 
-            self.add_edge("HB-8","CoR-1",RequirementEdge())
+            self.add_edge("HB-8","CoR-1",RequirementEdge(req=ItemPlacementHelpers.need_growths))
             self.add_edge("CoR-1","CoR-2",RequirementEdge())
             self.add_edge("CoR-2","CoR-3",RequirementEdge(battle=True))
             self.add_edge("CoR-3","CoR-4",RequirementEdge())
@@ -885,8 +890,8 @@ class Locations:
             self.add_edge("HB-15","HB-16",RequirementEdge())
             self.add_edge("HB-15","HB-17",RequirementEdge())
             self.add_edge("HB-15","HB-18",RequirementEdge(battle=True))
-            self.add_edge("HB-15","HB-19",RequirementEdge())
-            self.add_edge("HB-15","HB-20",RequirementEdge(battle=True))
+            self.add_edge("HB-15","HB-19",RequirementEdge(req=ItemPlacementHelpers.need_proof_peace))
+            self.add_edge("HB-15","HB-20",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_forms))
             self.first_boss_nodes.append("HB-4")
             self.second_boss_nodes.append("HB-15")
             self.data_nodes.append("HB-18")
@@ -904,7 +909,7 @@ class Locations:
             self.add_edge("HB-14","HB-15",RequirementEdge(battle=True))
             self.add_edge("HB-15","HB-16",RequirementEdge())
             self.add_edge("HB-15","HB-17",RequirementEdge())
-            self.add_edge("HB-15","CoR-1",RequirementEdge())
+            self.add_edge("HB-15","CoR-1",RequirementEdge(req=ItemPlacementHelpers.need_growths))
             self.add_edge("CoR-1","CoR-2",RequirementEdge())
             self.add_edge("CoR-2","CoR-3",RequirementEdge(battle=True))
             self.add_edge("CoR-3","CoR-4",RequirementEdge())
@@ -913,13 +918,13 @@ class Locations:
             self.add_edge("CoR-6","CoR-7",RequirementEdge())
             self.add_edge("CoR-7","CoR-8",RequirementEdge())
             self.add_edge("CoR-8","CoR-9",RequirementEdge(battle=True))
-            self.add_edge("CoR-9","HB-19",RequirementEdge())
+            self.add_edge("CoR-9","HB-19",RequirementEdge(req=ItemPlacementHelpers.need_proof_peace))
             self.add_edge("CoR-9","HB-18",RequirementEdge())
             self.add_edge("HB-18","HB-1",RequirementEdge())
             self.add_edge("HB-1","HB-3",RequirementEdge())
             self.add_edge("HB-3","HB-4",RequirementEdge(battle=True))
             self.add_edge("HB-4","HB-5",RequirementEdge())
-            self.add_edge("HB-5","HB-20",RequirementEdge(battle=True))
+            self.add_edge("HB-5","HB-20",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_forms))
             self.first_boss_nodes.append("HB-15")
             self.second_boss_nodes.append("HB-4")
 
@@ -970,7 +975,7 @@ class Locations:
             self.add_edge("PL-7","PL-8",RequirementEdge())
             self.add_edge("PL-8","PL-9",RequirementEdge(battle=True))
             self.add_edge("PL-9","PL-10",RequirementEdge(battle=True))
-            self.add_edge("PL-10","PL-11",RequirementEdge(battle=True))
+            self.add_edge("PL-10","PL-11",RequirementEdge(battle=True,req=ItemPlacementHelpers.simba_check))
             self.add_edge("PL-11","PL-12",RequirementEdge(battle=True))
             self.add_edge("PL-12","PL-13",RequirementEdge(battle=True))
             self.first_boss_nodes.append("PL-10")
@@ -1129,9 +1134,9 @@ class Locations:
             self.add_edge("TT-7","TT-8",RequirementEdge(battle=True))
             self.add_edge("TT-8","TT-9",RequirementEdge())
             self.add_edge("TT-9","TT-10",RequirementEdge())
-            self.add_edge("TT-10","TT-11",RequirementEdge(battle=True))
+            self.add_edge("TT-10","TT-11",RequirementEdge(battle=True,req=ItemPlacementHelpers.tt2_check))
             self.add_edge("TT-11","TT-12",RequirementEdge())
-            self.add_edge("TT-12","TT-13",RequirementEdge())
+            self.add_edge("TT-12","TT-13",RequirementEdge(req=ItemPlacementHelpers.tt3_check))
             self.add_edge("TT-13","TT-14",RequirementEdge())
             self.add_edge("TT-14","TT-15",RequirementEdge())
             self.add_edge("TT-12","TT-16",RequirementEdge(battle=True))
@@ -1260,12 +1265,12 @@ class Locations:
 
         if not self.reverse_rando:
             self.add_edge("Starting","ATL-1",RequirementEdge())
-            self.add_edge("ATL-1","ATL-2",RequirementEdge())
-            self.add_edge("ATL-2","ATL-3",RequirementEdge())
+            self.add_edge("ATL-1","ATL-2",RequirementEdge(req=ItemPlacementHelpers.need_2_magnet))
+            self.add_edge("ATL-2","ATL-3",RequirementEdge(req=lambda inv : ItemPlacementHelpers.need_2_magnet(inv) and ItemPlacementHelpers.need_3_thunders(inv)))
         else:
             self.add_edge("Starting","ATL-3",RequirementEdge())
-            self.add_edge("ATL-3","ATL-2",RequirementEdge())
-            self.add_edge("ATL-2","ATL-1",RequirementEdge())
+            self.add_edge("ATL-3","ATL-2",RequirementEdge(req=ItemPlacementHelpers.need_1_magnet))
+            self.add_edge("ATL-2","ATL-1",RequirementEdge(req=lambda inv : ItemPlacementHelpers.need_2_magnet(inv) and ItemPlacementHelpers.need_3_thunders(inv)))
 
 
     @staticmethod
@@ -1298,6 +1303,11 @@ class Locations:
                 KH2Location(143,"Ultima Weapon (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(149,"Winner's Proof (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 ]
+
+                
+    @staticmethod
+    def getAntiformDummySlot():
+        return KH2Location(85,"Antiform Dummy (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])
 
     @staticmethod
     def getStruggleWeapons():
