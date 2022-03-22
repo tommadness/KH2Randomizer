@@ -23,6 +23,8 @@ title: Home
 
 * [PC Epic Games Store version](https://docs.google.com/document/d/1KIVS6RjnCtbpO3DYWy1HdXxkw_8s9opE8dsPaoDTpYU/edit?usp=sharing)
   by Kamperemu
+* [PC Epic Games Setup Reference](https://docs.google.com/document/d/1wMhWjm-w4ycp40tiMAX_F1HfgwHNnNRanVabqw5Vd3k/edit?usp=sharing)
+  by AliosGaming
 * [PCSX2 Emulator version](https://docs.google.com/document/d/1LtNWjiYHxXmlUVZZ_6rDkqDIPDhPN1OnXKI7eRL_mXI/edit?usp=sharing)
   by gameaddict
 
