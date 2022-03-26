@@ -15,7 +15,6 @@
 ### PC Epic Games Store Version ([setup guide](https://docs.google.com/document/d/1KIVS6RjnCtbpO3DYWy1HdXxkw_8s9opE8dsPaoDTpYU/edit?usp=sharing))
 
 * [Garden of Assemblage ROM Lua Script](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition/releases/latest/download/F266B00B.GoA.ROM.lua)
-* [Garden of Assemblage ROM kh2pcpatch](https://github.com/o0DemonBoy0o/GoA-ROM-Edition/raw/main/GoA-ROM-PC.kh2pcpatch)
 * [LuaBackend Hook](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip)
 * [Mods Manager Bridge](https://github.com/thundrio-kh/khpc-modsmanager-bridge/releases/latest/download/build_from_mm.zip)
   (also known as `build_from_mm`)
