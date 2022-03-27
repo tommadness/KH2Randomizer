@@ -132,7 +132,7 @@ class SingleSelect(Setting):
     def parse_settings_string(self, settings_string: str):
         index = int(settings_string)
         return self.choice_keys[index]
-
+        
 
 class MultiSelect(Setting):
 
@@ -484,7 +484,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.POINTS_PROOF,
         ui_label="Proof Point Value",
-        minimum=1,
+        minimum=0,
         maximum=20,
         step=1,
         shared=True,
@@ -495,7 +495,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.POINTS_FORM,
         ui_label="Forms Point Value",
-        minimum=1,
+        minimum=0,
         maximum=20,
         step=1,
         shared=True,
@@ -506,7 +506,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.POINTS_MAGIC,
         ui_label="Magic Point Value",
-        minimum=1,
+        minimum=0,
         maximum=20,
         step=1,
         shared=True,
@@ -517,7 +517,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.POINTS_SUMMON,
         ui_label="Summon Point Value",
-        minimum=1,
+        minimum=0,
         maximum=20,
         step=1,
         shared=True,
@@ -528,7 +528,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.POINTS_ABILITY,
         ui_label="Ability Point Value",
-        minimum=1,
+        minimum=0,
         maximum=20,
         step=1,
         shared=True,
@@ -539,23 +539,58 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.POINTS_PAGE,
         ui_label="Page Point Value",
-        minimum=1,
+        minimum=0,
         maximum=20,
         step=1,
         shared=True,
         default=2,
         randomizable=True
     ),
+    
     IntSpinner(
         name=settingkey.POINTS_REPORT,
         ui_label="Report Point Value",
-        minimum=1,
+        minimum=0,
         maximum=20,
         step=1,
         shared=True,
         default=2,
         randomizable=True
     ),
+
+    IntSpinner(
+        name=settingkey.POINTS_BONUS,
+        ui_label="Bonus Level Value",
+        minimum=-10,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=10,
+        randomizable=True
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_COMPLETE,
+        ui_label="World Completion Value",
+        minimum=-10,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=10,
+        randomizable=True
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_FORMLV,
+        ui_label="Form level Value",
+        minimum=-10,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=3,
+        randomizable=True
+    ),
+
 
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
@@ -917,7 +952,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=False,
         default=[]
     ),
-
 ]
 
 
