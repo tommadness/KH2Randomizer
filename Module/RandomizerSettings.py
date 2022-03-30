@@ -123,7 +123,10 @@ class RandomizerSettings():
                                     "summon":ui_settings.get(settingkey.POINTS_SUMMON), 
                                     "ability":ui_settings.get(settingkey.POINTS_ABILITY), 
                                     "page":ui_settings.get(settingkey.POINTS_PAGE), 
-                                    "report":ui_settings.get(settingkey.POINTS_REPORT)}
+                                    "report":ui_settings.get(settingkey.POINTS_REPORT),
+                                    "bonus":ui_settings.get(settingkey.POINTS_BONUS), 
+                                    "complete":ui_settings.get(settingkey.POINTS_COMPLETE), 
+                                    "formlv":ui_settings.get(settingkey.POINTS_FORMLV)}
 
         self.antiform = False
 
@@ -132,8 +135,9 @@ class RandomizerSettings():
         self.tracker_includes = []
         if self.promiseCharm:
             self.tracker_includes.append("PromiseCharm")
-        if self.level_one:
-            self.tracker_includes.append(locationType.Level.value)
+        self.tracker_includes.append(level_setting)
+        #if self.level_one:
+        #    self.tracker_includes.append(locationType.Level.value)
         if locationType.STT.value in self.enabledLocations:
             self.tracker_includes.append(locationType.STT.value)
         if locationType.HUNDREDAW.value in self.enabledLocations:
