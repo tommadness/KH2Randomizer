@@ -96,6 +96,7 @@ class Locations:
         self.add_node("Puzzle-6",LocationNode([KH2Location(5, "Sunset (Grand Ribbon)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
 
         #TODO put these in their proper location in the graph
+        #TODO add the proper requirements for story unlock items
         self.add_edge("Starting","Puzzle-1",RequirementEdge(req=ItemPlacementHelpers.need_growths))
         self.add_edge("Starting","Puzzle-2",RequirementEdge(req=ItemPlacementHelpers.need_growths))
         self.add_edge("Starting","Puzzle-3",RequirementEdge(req=ItemPlacementHelpers.need_growths))
