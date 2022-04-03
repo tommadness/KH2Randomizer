@@ -18,8 +18,6 @@ class LocationInformedSeedValidator:
     def validateSeed(self, settings: RandomizerSettings, randomizer: Randomizer):
         startingInventory = settings.startingItems
         inventory = []
-        if not settings.world_unlocks:
-            inventory += [i.Id for i in Items.getStoryKeyItems()]
         inventory += startingInventory
 
         graph = randomizer.master_locations.location_graph

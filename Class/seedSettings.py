@@ -560,7 +560,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_BONUS,
-        ui_label="Bonus Level Value",
+        ui_label="Bonus Level Points",
         minimum=-10,
         maximum=20,
         step=1,
@@ -571,7 +571,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_COMPLETE,
-        ui_label="World Completion Value",
+        ui_label="World Completion Points",
         minimum=-10,
         maximum=20,
         step=1,
@@ -582,7 +582,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_FORMLV,
-        ui_label="Form level Value",
+        ui_label="Form level Points",
         minimum=-10,
         maximum=20,
         step=1,
@@ -846,6 +846,38 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip='Sora/Donald/Goofy start the game with 0 AP'
     ),
 
+    
+    IntSpinner(
+        name=settingkey.SORA_AP,
+        ui_label="Sora Starting AP",
+        minimum=0,
+        maximum=150,
+        step=25,
+        shared=True,
+        default=50,
+        randomizable=True
+    ),
+    IntSpinner(
+        name=settingkey.DONALD_AP,
+        ui_label="Donald Starting AP",
+        minimum=5,
+        maximum=55,
+        step=5,
+        shared=True,
+        default=55,
+        randomizable=True
+    ),
+    IntSpinner(
+        name=settingkey.GOOFY_AP,
+        ui_label="Goofy Starting AP",
+        minimum=4,
+        maximum=54,
+        step=5,
+        shared=True,
+        default=54,
+        randomizable=True
+    ),
+
     Toggle(
         name=settingkey.REMOVE_DAMAGE_CAP,
         ui_label='Remove Damage Cap',
@@ -1082,7 +1114,7 @@ class RandoRandoSettings:
             if isinstance(r,Toggle):
                 self.setting_choices[r.name] = [True,False]
             if isinstance(r,IntSpinner):
-                self.setting_choices[r.name] = [c for c in r.selectable_values]
+                self.setting_choices[r.name] = [c for c in r.selectable_values if c != 0]
             if isinstance(r,FloatSpinner):
                 # get set value from settings, and then allow all values larger than that
                 self.setting_choices[r.name] = [c for c in r.selectable_values if c >= real_settings_object.get(r.name)]

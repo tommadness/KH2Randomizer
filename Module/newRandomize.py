@@ -155,7 +155,7 @@ class Randomizer():
         soraMax = settings.keyblade_max_stat
         keybladeLocations =  Locations.WeaponList()
 
-        if settings.antiform:
+        if settings.pureblood_enabled:
             keybladeLocations.append(Locations.getAntiformDummySlot())
 
         for key in keybladeLocations:
@@ -214,11 +214,8 @@ class Randomizer():
         else:
             self.assignStatBonuses(allLocations)
         
-        if settings.antiform:
+        if settings.pureblood_enabled:
             allItems.append(Items.getAntiformDummy())
-
-        if settings.world_unlocks:
-            allItems+=Items.getStoryKeyItems()
 
         invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or loc.Description in settings.excludedLevels)]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
@@ -261,6 +258,8 @@ class Randomizer():
             count=0
             while True:
                 count+=1
+                if len(weights)==0:
+                    raise CantAssignItemException(f"Ran out of locations to assign items to.")
                 randomLocation = random.choices(validLocations,weights)[0]
                 if item.ItemType not in randomLocation.InvalidChecks:
                     if self.assignItem(randomLocation,item):
@@ -315,7 +314,7 @@ class Randomizer():
     def assignKeybladeAbilities(self, settings: RandomizerSettings, allAbilities, allItems):
         """Assign abilities to keyblades. """
         keybladeLocations = Locations.WeaponList()
-        if settings.antiform:
+        if settings.pureblood_enabled:
             keybladeLocations.append(Locations.getAntiformDummySlot())
         eligible_ids = set(settings.keyblade_support_abilities + settings.keyblade_action_abilities)
 
