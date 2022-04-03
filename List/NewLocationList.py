@@ -1277,8 +1277,8 @@ class Locations:
     @staticmethod
     def WeaponList():
         return [KH2Location(116,"FAKE (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
-                KH2Location(83,"Detection Saber (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
-                KH2Location(84,"Edge of Ultima (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
+                KH2Location(83,"Alpha Weapon (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
+                KH2Location(84,"Omega Weapon (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(80,"Kingdom Key (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(81,"Oathkeeper (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(82,"Oblivion (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
@@ -1308,7 +1308,7 @@ class Locations:
                 
     @staticmethod
     def getAntiformDummySlot():
-        return KH2Location(85,"Antiform Dummy (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])
+        return KH2Location(85,"Pureblood (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])
 
     @staticmethod
     def getStruggleWeapons():

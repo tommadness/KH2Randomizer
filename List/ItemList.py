@@ -308,7 +308,7 @@ class Items:
     
     @staticmethod
     def getAntiformDummy():
-        return KH2Item(71, "Antiform Dummy", itemType.KEYBLADE)
+        return KH2Item(71, "Pureblood", itemType.KEYBLADE)
 
     @staticmethod
     def getStoryKeyItems():
