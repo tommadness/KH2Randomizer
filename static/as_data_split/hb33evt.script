@@ -4,7 +4,7 @@ Bgm 63 63
 AreaSettings 0 -1
 	SetUnk05 0x2
 	SetEvent "730" Type 3
-	SetJump Type 1 World HB Area 26 Entrance 32 LocalSet 0 FadeType 1
+	SetJump Type 1 World TR Area 8 Entrance 50 LocalSet 0 FadeType 1
 	SetInventory 547
 	SetPartyMenu 0
 
@@ -14,6 +14,6 @@ Bgm 63 63
 AreaSettings 0 -1
 	SetUnk05 0x2
 	SetEvent "724" Type 3
-	SetJump Type 1 World HB Area 26 Entrance 25 LocalSet 0 FadeType 1
+	SetJump Type 1 World AL Area 15 Entrance 21 LocalSet 0 FadeType 1
 	SetInventory 545
 	SetPartyMenu 0
