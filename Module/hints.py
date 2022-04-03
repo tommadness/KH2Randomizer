@@ -1,4 +1,5 @@
 from Class.exceptions import HintException
+from List.ItemList import Items
 from List.configDict import itemType, locationType
 import base64, json, random
 from itertools import permutations
@@ -50,8 +51,7 @@ class Hints:
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))
             hintsText['Reports'] = {}
-            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"]
-            
+            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More", itemType.STORYUNLOCK]
             hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
 
             freeReports = []
@@ -103,7 +103,13 @@ class Hints:
                             reportRestrictions[reportNumber-1].append(worldsToHint[proof_of_peace_index])
 
             if len(worldChecks.keys()) < 13:
-                raise HintException("Too few worlds. Add more worlds or change hint system.")
+
+                while len(worldChecks.keys()) < 13:
+                    new_choice = random.choice(hintableWorlds)
+                    if new_choice not in worldChecks:
+                        worldChecks[new_choice] = []
+
+                # raise HintException("Too few worlds. Add more worlds or change hint system.")
 
             numProofWorlds = len(worldsToHint)
 
@@ -111,7 +117,32 @@ class Hints:
             pages_need_hints = (locationType.HUNDREDAW in worldsToHint)
             mag_thun_need_hints = (locationType.Atlantica in worldsToHint)
 
-            # following the priority of Proofs > Forms > Pages > Thunders > Magnets > Proof Reports
+            # following the priority of Proofs > Story Unlocks > Forms > Pages > Thunders > Magnets > Proof Reports
+            
+            # story_unlock_ids = {locationType.OC : [54],
+            #                     locationType.LoD : [55],
+            #                     locationType.BC : [59],
+            #                     locationType.HT : [60],
+            #                     locationType.PL : [61],
+            #                     locationType.PR : [62],
+            #                     locationType.Agrabah : [72],
+            #                     locationType.HB : [73],
+            #                     locationType.SP : [74],
+            #                     locationType.TT : [375, 376]
+            #                     }
+            # story_unlocks_for_proofs = []
+            # for world in worldsToHint:
+            #     if world in story_unlock_ids:
+            #         story_unlocks_for_proofs+=story_unlock_ids[world]
+            # for unlock in story_unlocks_for_proofs:
+            #     # find the unlock item
+            #     for world in worldChecks:
+            #         items_in_world = worldChecks[world]
+            #         for item in items_in_world:
+            #             if item.Id==unlock:
+            #                 if not world in worldsToHint:
+            #                     worldsToHint.append(world)
+
             if forms_need_hints:
                 for world in worldChecks:
                     if not world in worldsToHint and any(item.ItemType == itemType.FORM for item in worldChecks[world]):

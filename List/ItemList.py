@@ -212,17 +212,12 @@ class Items:
 
             KH2Item(363, "Crystal Orb", itemType.KEYITEM),
             KH2Item(364, "Seifer's Trophy", itemType.KEYITEM),
-            #KH2Item(365, "Tournament Poster", itemType.KEYITEM),
-            #KH2Item(366, "Poster", itemType.KEYITEM),
-            #KH2Item(367, "Letter", itemType.KEYITEM),
             KH2Item(368, "Namine's Sketches", itemType.KEYITEM),
             KH2Item(370, "Olympus Stone", itemType.KEYITEM, itemRarity.UNCOMMON),
             KH2Item(371, "Auron's Statue", itemType.KEYITEM),
             KH2Item(372, "Cursed Medallion", itemType.KEYITEM),
             KH2Item(373, "Presents", itemType.KEYITEM),
             KH2Item(374, "Decoy Presents", itemType.KEYITEM),
-            KH2Item(375, "Ice Cream", itemType.KEYITEM),
-            KH2Item(376, "Picture", itemType.KEYITEM),
             KH2Item(538, '"The Struggle" Trophy', itemType.KEYITEM),
 
             KH2Item(382, "Mega-Recipe", itemType.RECIPE),
@@ -295,7 +290,7 @@ class Items:
             KH2Item(517, "Solar Sailer Simulation Map", itemType.MAP),
             KH2Item(256, "Dark City Map", itemType.MAP),
             KH2Item(536, "Castle That Never Was Map", itemType.MAP),
-        ] + list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50))
+        ] + list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50)) + Items.getStoryKeyItems()
 
     @staticmethod
     def getStatItems():
@@ -313,7 +308,26 @@ class Items:
     
     @staticmethod
     def getAntiformDummy():
-        return KH2Item(71, "Antiform Dummy", itemType.KEYBLADE)
+        return KH2Item(71, "Pureblood", itemType.KEYBLADE)
+
+    @staticmethod
+    def getStoryKeyItems():
+        story_unlock_rarity = itemRarity.COMMON
+        return [
+            KH2Item(54, "Battlefields of War (Auron)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(55, "Sword of the Ancestor (Mulan)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(59, "Beast's Claw (Beast)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(60, "Bone Fist (Jack Skellington)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(61, "Proud Fang (Simba)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(62, "Skill and Crossbones (Jack Sparrow)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(72, "Scimitar (Aladdin)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(73, "Way of the Dawn (Riku)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(74, "Identity Disk (Tron)", itemType.STORYUNLOCK, story_unlock_rarity),
+            # KH2Item(365, "Tournament Poster", itemType.STORYUNLOCK, story_unlock_rarity),
+            # KH2Item(366, "Poster", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(375, "Ice Cream", itemType.STORYUNLOCK,story_unlock_rarity),
+            KH2Item(376, "Picture", itemType.STORYUNLOCK,story_unlock_rarity),
+        ]
 
     @staticmethod
     def getSupportAbilityList():
@@ -330,12 +344,14 @@ class Items:
             KH2Item(163,"Air Combo Plus",itemType.SUPPORT_ABILITY),
             KH2Item(390,"Combo Boost",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
             KH2Item(391,"Air Combo Boost",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
+            KH2Item(391,"Air Combo Boost",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
             KH2Item(392,"Reaction Boost",itemType.SUPPORT_ABILITY),
             KH2Item(392,"Reaction Boost",itemType.SUPPORT_ABILITY),
             KH2Item(393,"Finishing Plus",itemType.SUPPORT_ABILITY,itemRarity.RARE),
             KH2Item(393,"Finishing Plus",itemType.SUPPORT_ABILITY,itemRarity.RARE),
             KH2Item(394,"Negative Combo",itemType.SUPPORT_ABILITY,itemRarity.RARE),
             KH2Item(395,"Berserk Charge",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
+            KH2Item(396,"Damage Drive",itemType.SUPPORT_ABILITY),
             KH2Item(397,"Drive Boost",itemType.SUPPORT_ABILITY),
             KH2Item(398,"Form Boost",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
             KH2Item(398,"Form Boost",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
@@ -358,7 +374,6 @@ class Items:
             KH2Item(412,"MP Rage",itemType.SUPPORT_ABILITY),
             KH2Item(413,"MP Haste",itemType.SUPPORT_ABILITY),
             KH2Item(413,"MP Haste",itemType.SUPPORT_ABILITY),
-            KH2Item(421,"MP Hastera",itemType.SUPPORT_ABILITY),
             KH2Item(421,"MP Hastera",itemType.SUPPORT_ABILITY),
             KH2Item(422,"MP Hastega",itemType.SUPPORT_ABILITY),
             KH2Item(414,"Defender",itemType.SUPPORT_ABILITY),
@@ -459,7 +474,8 @@ class Items:
                             140:497,
                             142:499,
                             143:500,
-                            149:544}
+                            149:544,
+                            85:71}
         return location_to_item[location_id]
 
     @staticmethod

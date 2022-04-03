@@ -59,7 +59,10 @@ class RandomizerSettings():
         if len(self.junk_pool) == 0:
             raise SettingsException("Need at least one junk item in the pool")
 
-        self.no_ap = ui_settings.get(settingkey.START_NO_AP)
+        # self.no_ap = ui_settings.get(settingkey.START_NO_AP)
+        self.sora_ap = ui_settings.get(settingkey.SORA_AP)
+        self.donald_ap = ui_settings.get(settingkey.DONALD_AP)
+        self.goofy_ap = ui_settings.get(settingkey.GOOFY_AP)
 
         ui_ability_pool = ui_settings.get(settingkey.ABILITY_POOL)
         if ui_ability_pool == "default":
@@ -128,7 +131,9 @@ class RandomizerSettings():
                                     "complete":ui_settings.get(settingkey.POINTS_COMPLETE), 
                                     "formlv":ui_settings.get(settingkey.POINTS_FORMLV)}
 
-        self.antiform = False
+        self.pureblood_enabled = True
+
+        self.world_unlocks = False
 
         self.tracker_includes = []
         if self.promiseCharm:

@@ -24,6 +24,9 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_ABILITY)
         self.add_option(settingkey.POINTS_PAGE)
         self.add_option(settingkey.POINTS_REPORT)
+        self.end_column()
+
+        self.start_column()
         self.add_option(settingkey.POINTS_BONUS)
         self.add_option(settingkey.POINTS_COMPLETE)
         self.add_option(settingkey.POINTS_FORMLV)

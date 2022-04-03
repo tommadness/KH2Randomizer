@@ -3,17 +3,17 @@ from Class.exceptions import RandomizerExceptions
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
 from Module.newRandomize import Randomizer
-from Module.seedEvaluation import SeedValidator
+from Module.seedEvaluation import LocationInformedSeedValidator
 from Module.zipper import SeedZip
 import string,random
 
 def generateSeed(settings: RandomizerSettings,data):
-    seedValidation = SeedValidator(settings)
+    newSeedValidation = LocationInformedSeedValidator()
     last_error = None
     for attempt in range(50):
         try:
             randomizer = Randomizer(settings)
-            seedValidation.validateSeed(settings,randomizer)
+            newSeedValidation.validateSeed(settings,randomizer)
             hints = Hints.generateHints(randomizer.assignedItems,settings.hintsType,settings.disabledLocations,settings.prevent_self_hinting,settings.allow_proof_hinting,settings.allow_report_hinting,settings.point_hint_values, settings.tracker_includes)
             zipper = SeedZip(settings,randomizer,hints,data)
             return zipper.outputZip, zipper.spoiler_log

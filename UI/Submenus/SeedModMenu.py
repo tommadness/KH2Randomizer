@@ -11,11 +11,6 @@ class SeedModMenu(KH2Submenu):
         super().__init__(title='Seed Modifiers', settings=settings, in_layout='horizontal')
 
         self.start_column()
-        self.add_option(settingkey.GLASS_CANNON)
-        self.add_option(settingkey.START_NO_AP)
-        self.end_column()
-
-        self.start_column()
         # self.add_option(settingkey.BETTER_JUNK)
         self.add_option(settingkey.JUNK_ITEMS)
 
