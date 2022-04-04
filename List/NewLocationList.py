@@ -1276,7 +1276,7 @@ class Locations:
 
     @staticmethod
     def WeaponList():
-        return [KH2Location(116,"FAKE (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
+        return [KH2Location(116,"Kingdom Key D (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(83,"Alpha Weapon (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(84,"Omega Weapon (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(80,"Kingdom Key (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),

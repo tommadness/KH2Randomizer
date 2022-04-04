@@ -321,7 +321,7 @@ class Items:
             KH2Item(61, "Proud Fang (Simba)", itemType.STORYUNLOCK, story_unlock_rarity),
             KH2Item(62, "Skill and Crossbones (Jack Sparrow)", itemType.STORYUNLOCK, story_unlock_rarity),
             KH2Item(72, "Scimitar (Aladdin)", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(73, "Way of the Dawn (Riku)", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(73, "Way to the Dawn (Riku)", itemType.STORYUNLOCK, story_unlock_rarity),
             KH2Item(74, "Identity Disk (Tron)", itemType.STORYUNLOCK, story_unlock_rarity),
             # KH2Item(365, "Tournament Poster", itemType.STORYUNLOCK, story_unlock_rarity),
             # KH2Item(366, "Poster", itemType.STORYUNLOCK, story_unlock_rarity),

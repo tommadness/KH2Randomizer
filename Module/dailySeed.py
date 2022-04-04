@@ -272,7 +272,7 @@ dailyModifiers = [
                 ),
     DailyModifier(name="No Starting AP",
                 initMod=None,
-                description="Sora/Donald/Goofy start the game with 0 AP",
+                description="Sora starts the game with 0 AP",
                 categories= {"abilities"},
                 modifier=lambda s: s["seedModifiers"].append("Start with No AP"),
                 local_modifier=lambda settings: settings.set(settingkey.SORA_AP, 0)
