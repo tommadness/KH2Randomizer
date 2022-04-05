@@ -1303,12 +1303,7 @@ class Locations:
                 KH2Location(142,"Fenrir (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(143,"Ultima Weapon (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
                 KH2Location(149,"Winner's Proof (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot]),
-                ]
-
-                
-    @staticmethod
-    def getAntiformDummySlot():
-        return KH2Location(85,"Pureblood (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])
+                KH2Location(85,"Pureblood (Slot)",locationCategory.WEAPONSLOT,[locationType.WeaponSlot])]
 
     @staticmethod
     def getStruggleWeapons():

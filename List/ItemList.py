@@ -114,6 +114,7 @@ class Items:
             KH2Item(499,"Fenrir",itemType.KEYBLADE),
             KH2Item(500,"Ultima Weapon",itemType.KEYBLADE),
             KH2Item(544,"Winner's Proof",itemType.KEYBLADE),
+            KH2Item(71, "Pureblood", itemType.KEYBLADE),
 
             KH2Item(546, "Centurion+", itemType.STAFF, itemRarity.UNCOMMON), #StatEntry = 151
             KH2Item(150, "Meteor Staff", itemType.STAFF, itemRarity.UNCOMMON), #StatEntry = 89
@@ -305,10 +306,6 @@ class Items:
     @staticmethod
     def getPromiseCharm():
         return KH2Item(524, "PromiseCharm",itemType.PROMISE_CHARM, itemRarity.MYTHIC)
-    
-    @staticmethod
-    def getAntiformDummy():
-        return KH2Item(71, "Pureblood", itemType.KEYBLADE)
 
     @staticmethod
     def getStoryKeyItems():

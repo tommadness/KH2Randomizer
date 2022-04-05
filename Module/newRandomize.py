@@ -155,9 +155,6 @@ class Randomizer():
         soraMax = settings.keyblade_max_stat
         keybladeLocations =  Locations.WeaponList()
 
-        if settings.pureblood_enabled:
-            keybladeLocations.append(Locations.getAntiformDummySlot())
-
         for key in keybladeLocations:
             self.weaponStats.append(WeaponStats(key,random.randint(soraMin,soraMax),random.randint(soraMin,soraMax)))
             
@@ -213,9 +210,6 @@ class Randomizer():
             allItems+=Items.getStatItems()
         else:
             self.assignStatBonuses(allLocations)
-        
-        if settings.pureblood_enabled:
-            allItems.append(Items.getAntiformDummy())
 
         invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or loc.Description in settings.excludedLevels)]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
@@ -314,8 +308,6 @@ class Randomizer():
     def assignKeybladeAbilities(self, settings: RandomizerSettings, allAbilities, allItems):
         """Assign abilities to keyblades. """
         keybladeLocations = Locations.WeaponList()
-        if settings.pureblood_enabled:
-            keybladeLocations.append(Locations.getAntiformDummySlot())
         eligible_ids = set(settings.keyblade_support_abilities + settings.keyblade_action_abilities)
 
         #remove auto abilities from keyblades

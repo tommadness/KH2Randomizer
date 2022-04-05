@@ -131,8 +131,6 @@ class RandomizerSettings():
                                     "complete":ui_settings.get(settingkey.POINTS_COMPLETE), 
                                     "formlv":ui_settings.get(settingkey.POINTS_FORMLV)}
 
-        self.pureblood_enabled = True
-
         self.world_unlocks = False
 
         self.tracker_includes = []
