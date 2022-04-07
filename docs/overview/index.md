@@ -26,7 +26,9 @@ having tools you weren't otherwise meant to have in certain parts of the game.
 * Sora starts the game with a Drive Gauge of 5 rather than 3 so that all Drive Forms can be used as soon as they are
   obtained
 * Finding a Munny Pouch gives you 5,000 munny
-* Final Form is an obtainable item (though Final Form can still be obtained in its normal fashion)
+* Final Form is an obtainable item, though Final Form can still be obtained in its normal fashion
+    * Randomizer removes the restriction that usually requires the player to progress past Roxas in The World That Never
+      Was before Final Form can be unlocked
 * The Promise Charm item, if enabled, opens a path to the final boss fights if the Promise Charm as well as all 3 Proofs
   are obtained. This path also contains several Bulky Vendor enemies that can be used to level grind quickly.
 

@@ -90,6 +90,9 @@ Assemblage Lua script. There should only be _one_ of the following scripts in yo
 `GoA RAM.lua`, `F266B00B GoA ROM.lua`, `F266B00B GoA Reverse.lua`. It's fine to have other Lua scripts such as soft
 reset, auto-save, quality of life, etc., but only one GoA script should be there at any given time.
 
+You can also try to use the Rando Setup Checker to help verify that you have the correct setup. See
+[Downloads](../downloads/index.md) for a link.
+
 ## Troubleshooting GoA (PCSX2)
 
 * Verify that you have "Enable Cheats" checked in the PCSX2 System menu
@@ -105,3 +108,6 @@ reset, auto-save, quality of life, etc., but only one GoA script should be there
 * Verify that you have only one Garden of Assemblage `.pnach` file. There should only be _one_ of the following files in
   your folder: `F266B00B (Garden of Assemblage Randomizer Build).pnach`,
   `F266B00B (Garden of Assemblage Practice Build).pnach`
+
+You can also try to use the Rando Setup Checker to help verify that you have the correct setup. See
+[Downloads](../downloads/index.md) for a link.
