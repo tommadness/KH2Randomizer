@@ -3,7 +3,7 @@
 * [General / FAQ](#general--faq)
 * [Options](#options)
     * [Menus](#menus)
-    * [Sora](#sora)
+    * [Levels/EXP/Stats](#levelsexpstats)
     * [Starting Items](#starting-items)
     * [Hints](#hints)
     * [Keyblades](#keyblades)
@@ -122,7 +122,7 @@ If enabled, several seed settings will be chosen at random.
 * Worlds/Bosses/Misc Locations will only be turned _off_ randomly, so anything that is set to off before generating a
   seed will stay off (i.e. if Datas are off, they will stay off)
 
-## Sora
+## Levels/EXP/Stats
 
 **Sora Levels** - Controls the maximum level that can contain a non-"junk" randomized reward
 
@@ -130,11 +130,19 @@ If enabled, several seed settings will be chosen at random.
 * Level 50 - All level-up rewards past level 50 are guaranteed to be junk
 * Level 99 - All level-up rewards can be non-junk
 
+**Glass Cannon** - Prevents Defense increases from appearing in the level-up randomized rewards pool
+
 **Form Level Rewards** - If enabled, Drive Form level-ups can contain non-"junk" randomized rewards
 
 **Bonus Rewards as Items (Statsanity)** - If enabled, takes HP, MP, Drive, Accessory Slot, Armor Slot, and Item Slot
 upgrades from the normal bonus popup locations and lets them appear in chests or other randomized locations. Those bonus
 popup locations can now have other randomized rewards.
+
+**Sora Starting AP** - Sora begins the game with this much AP
+
+**Donald Starting AP** - Donald begins the game with this much AP
+
+**Goofy Starting AP** - Goofy begins the game with this much AP
 
 **Experience Multipliers** - Adjust the amount of experience needed to reach each level
 
@@ -216,10 +224,6 @@ playing Reverse Rando
   guaranteed to have one Second Chance and one Once More)
 
 ## Seed Modifiers
-
-**Glass Cannon** - Prevents Defense increases from appearing in the level-up randomized rewards pool
-
-**Start with No AP** - Sora/Donald/Goofy all start the game with 0 AP
 
 **Junk Items** - Once all of the required items are placed, items from this list are used to fill the remaining
 locations. This item pool is also used for worlds/locations that are disabled.
