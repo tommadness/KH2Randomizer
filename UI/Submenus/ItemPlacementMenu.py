@@ -10,6 +10,7 @@ class ItemPlacementMenu(KH2Submenu):
 
         self.start_column()
         self.add_option(settingkey.ENABLE_PROMISE_CHARM)
+        self.add_option(settingkey.PUREBLOOD)
         self.add_option(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.add_option(settingkey.PROOF_DEPTH)
         self.add_option(settingkey.YEET_THE_BEAR)

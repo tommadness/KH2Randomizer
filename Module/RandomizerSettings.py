@@ -75,6 +75,7 @@ class RandomizerSettings():
             raise SettingsException("Invalid ability pool option")
 
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
+        self.pureblood = ui_settings.get(settingkey.PUREBLOOD)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
         if self.hintsType in ["JSmartee","Points"]:
             self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]

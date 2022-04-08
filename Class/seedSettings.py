@@ -877,6 +877,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=54,
         randomizable=True
     ),
+    Toggle(
+        name=settingkey.PUREBLOOD,
+        ui_label='Enable Pureblood',
+        shared=True,
+        default=True,
+        tooltip='Add the Pureblood Keyblade into the item pool (may be disabled for older versions of GoA)'
+    ),
 
     Toggle(
         name=settingkey.REMOVE_DAMAGE_CAP,

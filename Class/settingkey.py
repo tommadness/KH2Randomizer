@@ -45,6 +45,7 @@ POINTS_BONUS = "points_bonus"
 POINTS_COMPLETE = "points_complete"
 POINTS_FORMLV = "points_formlv"
 PROOF_DEPTH = 'proof_depth'
+PUREBLOOD = "pureblood"
 REVERSE_RANDO = 'reverse_rando'
 SCHMOVEMENT = 'schmovement'
 SORA_AP = "sora_ap"

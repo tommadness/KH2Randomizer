@@ -156,6 +156,8 @@ class Randomizer():
         keybladeLocations =  Locations.WeaponList()
 
         for key in keybladeLocations:
+            if key.LocationId=="85" and not settings.pureblood:
+                continue
             self.weaponStats.append(WeaponStats(key,random.randint(soraMin,soraMax),random.randint(soraMin,soraMax)))
             
         struggleWeapons = self.master_locations.getStruggleWeapons()
@@ -189,6 +191,9 @@ class Randomizer():
 
     def assignSoraItems(self, settings: RandomizerSettings):
         allItems = [i for i in Items.getItemList() if i.Id not in settings.startingItems]
+        if not settings.pureblood:
+            allItems = [i for i in allItems if i.Id!=71]
+
         allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + (Items.getLevelAbilityList() if not settings.level_one else []) )
         # if there abilities in the starting inventory, remove them from the pool
         removeAbilities = []
@@ -323,6 +328,8 @@ class Randomizer():
 
         #assign all the abilities for keyblades
         for keyblade in keybladeLocations:
+            if keyblade.LocationId=="85" and not settings.pureblood:
+                continue
             if keybladeAbilities:
                 if settings.itemPlacementDifficulty == "Nightmare" and keyblade.LocationId not in [116,83,84,80]:
                     abilityWeights = [nightmareRarityWeights[abil.Rarity] for abil in keybladeAbilities]
