@@ -109,6 +109,21 @@ class SeedModifier():
                     ]
         return []
 
+    def world_unlocks(enabled):
+        if enabled:
+            return [54,
+                    55,
+                    59,
+                    60,
+                    61,
+                    62,
+                    72,
+                    73,
+                    74,
+                    375,
+                    376]
+        return []
+
     def schmovement(enabled):
         if enabled:
             return [

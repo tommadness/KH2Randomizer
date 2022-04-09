@@ -14,7 +14,7 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.add_option(settingkey.PROOF_DEPTH)
         self.add_option(settingkey.YEET_THE_BEAR)
-        self.add_option(settingkey.REVERSE_RANDO)
+        self.add_option(settingkey.SOFTLOCK_CHECKING)
         self.add_option(settingkey.ABILITY_POOL)
         self.end_column()
 

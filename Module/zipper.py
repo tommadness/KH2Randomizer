@@ -7,6 +7,7 @@ from Class.exceptions import BossEnemyException
 
 from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
+from List.ItemList import Items
 from List.configDict import itemType, locationCategory, locationType
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
@@ -61,7 +62,7 @@ class SeedZip():
             outZip.writestr("jm.yml", yaml.dump(modYml.getJMYAML(), line_break="\r\n"))
 
             if hints is not None:
-                Hints.writeHints(hints, settings.random_seed, outZip)
+                Hints.writeHints(hints, "HintFile", outZip)
 
             cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
             platform = cosmetics_data["platform"]
@@ -173,23 +174,11 @@ class SeedZip():
             while(len(itemList)<32):
                 itemList.append(0)
 
+        masterItemList = Items.getItemList()
+        reports = [i.Id for i in masterItemList if i.ItemType==itemType.REPORT]
+        story_unlocks = [i.Id for i in masterItemList if i.ItemType==itemType.STORYUNLOCK]
 
-        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] + settings.startingItems
-        padItems(soraStartingItems)
-        self.formattedPlrp.append({
-            "Character": 1, # Sora Starting Items (Crit)
-            "Id": 7, # crit difficulty
-            "Hp": 20,
-            "Mp": 100,
-            "Ap": settings.sora_ap,
-            "ArmorSlotMax": 1,
-            "AccessorySlotMax": 1,
-            "ItemSlotMax": 3,
-            "Items": soraStartingItems[:7],
-            "Padding": [0] * 52
-        })
-
-        donaldStartingItems = [1+0x8000,3+0x8000]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedDonaldItems,[locationType.Free])]
+        donaldStartingItems = [1+0x8000,3+0x8000]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedDonaldItems,[locationType.Free])] + [i for i in settings.startingItems if i in reports]
         padItems(donaldStartingItems)
         self.formattedPlrp.append({
             "Character": 2, # Donald Starting Items
@@ -204,7 +193,7 @@ class SeedZip():
             "Padding": [0] * 52
         })
 
-        goofyStartingItems = [1+0x8000,1+0x8000,1+0x8000,]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedGoofyItems,[locationType.Free])]
+        goofyStartingItems = [1+0x8000,1+0x8000,1+0x8000,]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedGoofyItems,[locationType.Free])] + [i for i in settings.startingItems if i in story_unlocks]
         padItems(goofyStartingItems)
         self.formattedPlrp.append({
             "Character": 3, # Goofy Starting Items
@@ -218,6 +207,24 @@ class SeedZip():
             "Items": goofyStartingItems,
             "Padding": [0] * 52
         })
+
+        all_party_handled_items = reports+story_unlocks
+
+        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] +  [i for i in settings.startingItems if i not in all_party_handled_items]
+        padItems(soraStartingItems)
+        self.formattedPlrp.append({
+            "Character": 1, # Sora Starting Items (Crit)
+            "Id": 7, # crit difficulty
+            "Hp": 20,
+            "Mp": 100,
+            "Ap": settings.sora_ap,
+            "ArmorSlotMax": 1,
+            "AccessorySlotMax": 1,
+            "ItemSlotMax": 3,
+            "Items": soraStartingItems[:7],
+            "Padding": [0] * 52
+        })
+
         lionSoraItems = [32930, 32930, 32931, 32931, 33288, 33289, 33290, 33294]
         padItems(lionSoraItems)
         self.formattedPlrp.append({

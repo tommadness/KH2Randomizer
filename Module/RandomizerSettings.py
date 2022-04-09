@@ -47,9 +47,10 @@ class RandomizerSettings():
             self.setLevelChecks(99)
         else:
             raise SettingsException("Invalid Level choice")
-        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT)) + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE))
+        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT)) + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(not ui_settings.get(settingkey.STORY_UNLOCKS))
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
-        self.reverse_rando = ui_settings.get(settingkey.REVERSE_RANDO)
+        self.regular_rando = ui_settings.get(settingkey.SOFTLOCK_CHECKING) in ["default","both"]
+        self.reverse_rando = ui_settings.get(settingkey.SOFTLOCK_CHECKING) in ["reverse","both"]
         self.level_stat_pool = SeedModifier.glassCannon if ui_settings.get(settingkey.GLASS_CANNON) else SeedModifier.regularStats
         # self.betterJunk = ui_settings.get(settingkey.BETTER_JUNK)
         self.junk_pool = [
@@ -101,7 +102,7 @@ class RandomizerSettings():
         self.setFinalExp(ui_settings.get(settingkey.FINAL_EXP_MULTIPLIER),ui_settings.get(settingkey.FINAL_EXP_CURVE))
         self.setSummonExp(ui_settings.get(settingkey.SUMMON_EXP_MULTIPLIER),ui_settings.get(settingkey.SUMMON_EXP_CURVE))
 
-        self.as_data_split =  ui_settings.get(settingkey.AS_DATA_SPLIT)
+        self.as_data_split =  ui_settings.get(settingkey.AS_DATA_SPLIT) or self.reverse_rando
 
         self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
                               'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
@@ -115,6 +116,7 @@ class RandomizerSettings():
         self.spoiler_log = spoiler_log
         self.ui_version = ui_version
         seed_string_from_all_inputs = self.random_seed + str(self.spoiler_log) + self.ui_version + str(ui_settings.settings_string())
+        self.full_rando_seed = seed_string_from_all_inputs
         random.seed(seed_string_from_all_inputs)
         self.seedHashIcons = generateHashIcons()
 
@@ -131,8 +133,6 @@ class RandomizerSettings():
                                     "bonus":ui_settings.get(settingkey.POINTS_BONUS), 
                                     "complete":ui_settings.get(settingkey.POINTS_COMPLETE), 
                                     "formlv":ui_settings.get(settingkey.POINTS_FORMLV)}
-
-        self.world_unlocks = False
 
         self.tracker_includes = []
         if self.promiseCharm:

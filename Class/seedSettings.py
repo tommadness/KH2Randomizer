@@ -926,6 +926,15 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=True
     ),
 
+    Toggle(
+        name=settingkey.STORY_UNLOCKS,
+        ui_label='Enable Visit Locking Items',
+        shared=True,
+        default=False,
+        tooltip="If enabled, will put the visit locking items into the item pool, and you will need to find them to reach second visits for most worlds. Seeds will still allow for full completion.",
+        randomizable=True
+    ),
+
     SingleSelect(
         name=settingkey.ITEM_PLACEMENT_DIFFICULTY,
         ui_label='Item Placement Difficulty',
@@ -947,12 +956,17 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             Super Easy and Easy will bias Rare and Mythic items early, while the Hard settings will bias those later.
         '''),
     ),
-    Toggle(
-        name=settingkey.REVERSE_RANDO,
-        ui_label='Reverse Rando',
+    SingleSelect(
+        name=settingkey.SOFTLOCK_CHECKING,
+        ui_label='Softlock Prevention',
+        choices={
+            'default': 'Regular Rando',
+            'reverse': 'Reverse Rando',
+            'both': 'Satisfies regular and reverse rando'
+        },
         shared=True,
-        default=False,
-        tooltip='Use when generating a Reverse Rando seed to ensure softlock prevention'
+        default="default",
+        tooltip='What type of rando are you playing? Regular is default, reverse rando with visits reversed, or co-op with both regular and reverse'
     ),
 
     SingleSelect(

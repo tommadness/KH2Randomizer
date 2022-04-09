@@ -74,9 +74,11 @@ class FormExp():
 
 class Randomizer():
     def __init__(self, settings: RandomizerSettings):
-        random.seed(settings.random_seed)
-        self.master_locations = Locations(settings)
-        self.location_weights = LocationWeights(settings,self.master_locations)
+        random.seed(settings.full_rando_seed)
+        self.regular_locations = Locations(settings,False)
+        self.reverse_locations = Locations(settings,True)
+        self.master_locations = self.regular_locations if settings.regular_rando else self.reverse_locations
+        self.location_weights = LocationWeights(settings,self.regular_locations,self.reverse_locations)
         self.report_depths = ItemDepths(settings.reportDepth,self.master_locations)
         self.proof_depths = ItemDepths(settings.proofDepth,self.master_locations)
         self.yeet_the_bear = settings.yeetTheBear

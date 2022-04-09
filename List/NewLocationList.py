@@ -25,9 +25,9 @@ class RequirementEdge:
 
 class Locations:
 
-    def __init__(self, settings: RandomizerSettings):
+    def __init__(self, settings: RandomizerSettings, secondary_graph = False):
         self.location_graph = Graph()
-        self.reverse_rando = settings.reverse_rando
+        self.reverse_rando = secondary_graph
         self.nightmare = settings.itemPlacementDifficulty=="Nightmare"
         self.first_boss_nodes = []
         self.second_boss_nodes = []
@@ -64,7 +64,6 @@ class Locations:
 
     def makeLocationGraph(self,excludeLevels):
         self.makeStartingGraph()
-        self.makePuzzleGraph()
         self.makeLoDGraph()
         self.makeAGGraph()
         self.makeDCGraph()
@@ -82,6 +81,7 @@ class Locations:
         self.makeATLGraph()
         self.makeFormGraph()
         self.makeLevelGraph(excludeLevels)
+        self.makePuzzleGraph()
 
         # dot = Dot(self.location_graph)
         # dot.save_img(file_name='graph',file_type="gif")

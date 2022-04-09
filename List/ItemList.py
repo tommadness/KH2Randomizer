@@ -309,7 +309,7 @@ class Items:
 
     @staticmethod
     def getStoryKeyItems():
-        story_unlock_rarity = itemRarity.COMMON
+        story_unlock_rarity = itemRarity.RARE
         return [
             KH2Item(54, "Battlefields of War (Auron)", itemType.STORYUNLOCK, story_unlock_rarity),
             KH2Item(55, "Sword of the Ancestor (Mulan)", itemType.STORYUNLOCK, story_unlock_rarity),

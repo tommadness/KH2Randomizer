@@ -42,8 +42,8 @@ class WeightDistributions():
 
 
 class LocationWeights():
-    def __init__(self,settings:RandomizerSettings,locations : Locations):
-        location_graph = locations.location_graph
+    def __init__(self,settings:RandomizerSettings,locations : Locations, reverse_locations : Locations):
+        location_graph = locations.location_graph if settings.regular_rando else reverse_locations.location_graph
         hops = location_graph.get_hops("Starting")
         self.location_depths = {}
         self.location_type_maxes = {}
