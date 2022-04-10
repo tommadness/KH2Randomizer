@@ -434,10 +434,10 @@ class Items:
             KH2Item(268, "Counterguard", itemType.ACTION_ABILITY),
             KH2Item(385, "Auto Valor", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
             KH2Item(386, "Auto Wisdom", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
+            KH2Item(568, "Auto Limit", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
             KH2Item(387, "Auto Master", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
             KH2Item(388, "Auto Final", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
             KH2Item(389, "Auto Summon", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
-            KH2Item(568, "Auto Limit", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
             KH2Item(198, "Trinity Limit", itemType.ACTION_ABILITY,itemRarity.RARE),
         ]
 
