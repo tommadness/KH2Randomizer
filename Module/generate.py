@@ -20,6 +20,7 @@ def generateSeed(settings: RandomizerSettings,data):
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
             settings.random_seed = (''.join(random.choice(characters) for i in range(30)))
+            settings.create_full_seed_string()
             last_error = e
             continue
     raise last_error

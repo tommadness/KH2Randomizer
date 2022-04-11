@@ -51,7 +51,7 @@ class Hints:
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))
             hintsText['Reports'] = {}
-            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] #+ [itemType.STORYUNLOCK]
+            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] + [itemType.STORYUNLOCK]
             hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
 
             freeReports = []
@@ -70,17 +70,17 @@ class Hints:
                         if not location.LocationTypes[0] in worldsToHint:
                             if item.ItemType is itemType.PROOF_OF_CONNECTION:
                                 proof_of_connection_index = len(worldsToHint)
-                            if item.ItemType is itemType.PROOF_OF_PEACE:
+                            elif item.ItemType is itemType.PROOF_OF_PEACE:
                                 proof_of_peace_index = len(worldsToHint)
-                            if item.ItemType is itemType.PROOF:
+                            elif item.ItemType is itemType.PROOF:
                                 proof_of_nonexistence_index = len(worldsToHint)
                             worldsToHint.append(location.LocationTypes[0])
                         else:
                             if item.ItemType is itemType.PROOF_OF_CONNECTION:
                                 proof_of_connection_index = worldsToHint.index(location.LocationTypes[0])
-                            if item.ItemType is itemType.PROOF_OF_PEACE:
+                            elif item.ItemType is itemType.PROOF_OF_PEACE:
                                 proof_of_peace_index = worldsToHint.index(location.LocationTypes[0])
-                            if item.ItemType is itemType.PROOF:
+                            elif item.ItemType is itemType.PROOF:
                                 proof_of_nonexistence_index = worldsToHint.index(location.LocationTypes[0])
             for location,item in locationItems:
                 if location.LocationTypes[0] in [locationType.Free, locationType.Critical, locationType.Puzzle]:
@@ -119,29 +119,29 @@ class Hints:
 
             # following the priority of Proofs > Story Unlocks > Forms > Pages > Thunders > Magnets > Proof Reports
             
-            # story_unlock_ids = {locationType.OC : [54],
-            #                     locationType.LoD : [55],
-            #                     locationType.BC : [59],
-            #                     locationType.HT : [60],
-            #                     locationType.PL : [61],
-            #                     locationType.PR : [62],
-            #                     locationType.Agrabah : [72],
-            #                     locationType.HB : [73],
-            #                     locationType.SP : [74],
-            #                     locationType.TT : [375, 376]
-            #                     }
-            # story_unlocks_for_proofs = []
-            # for world in hintableWorlds:
-            #     if world in story_unlock_ids:
-            #         story_unlocks_for_proofs+=story_unlock_ids[world]
-            # for unlock in story_unlocks_for_proofs:
-            #     # find the unlock item
-            #     for world in worldChecks:
-            #         items_in_world = worldChecks[world]
-            #         for item in items_in_world:
-            #             if item.Id==unlock:
-            #                 if not world in worldsToHint:
-            #                     worldsToHint.append(world)
+            story_unlock_ids = {locationType.OC : [54],
+                                locationType.LoD : [55],
+                                locationType.BC : [59],
+                                locationType.HT : [60],
+                                locationType.PL : [61],
+                                locationType.PR : [62],
+                                locationType.Agrabah : [72],
+                                locationType.HB : [73],
+                                locationType.SP : [74],
+                                locationType.TT : [375, 376]
+                                }
+            story_unlocks_for_proofs = []
+            for world in hintableWorlds:
+                if world in story_unlock_ids:
+                    story_unlocks_for_proofs+=story_unlock_ids[world]
+            for unlock in story_unlocks_for_proofs:
+                # find the unlock item
+                for world in worldChecks:
+                    items_in_world = worldChecks[world]
+                    for item in items_in_world:
+                        if item.Id==unlock:
+                            if not world in worldsToHint:
+                                worldsToHint.append(world)
 
             if forms_need_hints:
                 for world in worldChecks:

@@ -16,6 +16,7 @@ class RandomizerSettings():
     def __init__(self, seed_name: str, spoiler_log: bool, ui_version: str, ui_settings: SeedSettings, full_ui_settings):
 
         self.full_ui_settings = full_ui_settings
+        self.ui_settings = ui_settings
         self.crit_mode = ui_settings.get(settingkey.CRITICAL_BONUS_REWARDS)
 
         include_list = []
@@ -115,9 +116,7 @@ class RandomizerSettings():
         self.random_seed = seed_name
         self.spoiler_log = spoiler_log
         self.ui_version = ui_version
-        seed_string_from_all_inputs = self.random_seed + str(self.spoiler_log) + self.ui_version + str(ui_settings.settings_string())
-        self.full_rando_seed = seed_string_from_all_inputs
-        random.seed(seed_string_from_all_inputs)
+        self.create_full_seed_string()
         self.seedHashIcons = generateHashIcons()
 
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
@@ -152,6 +151,11 @@ class RandomizerSettings():
             self.tracker_includes.append(locationType.OCCups.value)
 
         self.validateSettings()
+
+    def create_full_seed_string(self):
+        seed_string_from_all_inputs = self.random_seed + str(self.spoiler_log) + self.ui_version + str(self.ui_settings.settings_string())
+        self.full_rando_seed = seed_string_from_all_inputs
+        random.seed(seed_string_from_all_inputs)
 
     def validateSettings(self):
         if self.reportDepth == self.proofDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
