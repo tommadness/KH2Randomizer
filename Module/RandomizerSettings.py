@@ -103,7 +103,10 @@ class RandomizerSettings():
         self.setFinalExp(ui_settings.get(settingkey.FINAL_EXP_MULTIPLIER),ui_settings.get(settingkey.FINAL_EXP_CURVE))
         self.setSummonExp(ui_settings.get(settingkey.SUMMON_EXP_MULTIPLIER),ui_settings.get(settingkey.SUMMON_EXP_CURVE))
 
-        self.as_data_split =  ui_settings.get(settingkey.AS_DATA_SPLIT) or self.reverse_rando
+        self.as_data_split = ui_settings.get(settingkey.AS_DATA_SPLIT)
+
+        if self.reverse_rando and not self.as_data_split:
+            raise SettingsException("Can't run reverse rando without the as/data split code")
 
         self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
                               'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
