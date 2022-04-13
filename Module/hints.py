@@ -126,9 +126,9 @@ class Hints:
                                 locationType.PL : [61],
                                 locationType.PR : [62],
                                 locationType.Agrabah : [72],
-                                locationType.HB : [73],
+                                locationType.HB : [375],
                                 locationType.SP : [74],
-                                locationType.TT : [375, 376]
+                                locationType.TT : [366, 376]
                                 }
             story_unlocks_for_proofs = []
             for world in hintableWorlds:
