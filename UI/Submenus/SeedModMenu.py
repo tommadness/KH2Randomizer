@@ -35,7 +35,18 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.REMOVE_DAMAGE_CAP)
         self.end_column()
 
+        settings.observe(settingkey.SOFTLOCK_CHECKING, self.reverse_rando_checking)
+        
         self.finalizeMenu()
+
+    def reverse_rando_checking(self):
+        softlock_check = self.settings.get(settingkey.SOFTLOCK_CHECKING)
+        _,widget = self.widgets_and_settings_by_name[settingkey.AS_DATA_SPLIT]
+        if softlock_check in ["reverse","both"]:
+            widget.setChecked(True)
+            widget.setEnabled(False)
+        else:
+            widget.setEnabled(True)
 
     def toggle_all_items(self):
         setting,widget = self.widgets_and_settings_by_name[settingkey.JUNK_ITEMS]

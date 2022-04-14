@@ -48,6 +48,8 @@ class RandomizerSettings():
             self.setLevelChecks(99)
         else:
             raise SettingsException("Invalid Level choice")
+
+        self.split_levels = ui_settings.get(settingkey.SPLIT_LEVELS)
         self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT)) + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(not ui_settings.get(settingkey.STORY_UNLOCKS))
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.regular_rando = ui_settings.get(settingkey.SOFTLOCK_CHECKING) in ["default","both"]

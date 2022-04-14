@@ -53,6 +53,7 @@ SORA_AP = "sora_ap"
 SORA_EXP_MULTIPLIER = 'sora_exp_multiplier'
 SORA_EXP_CURVE = 'sora_exp_curve'
 SORA_LEVELS = 'sora_levels'
+SPLIT_LEVELS = 'split_levels'
 START_NO_AP = 'start_no_ap'
 STARTING_INVENTORY = 'starting_inventory'
 STATSANITY = 'statsanity'

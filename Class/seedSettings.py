@@ -208,6 +208,14 @@ _all_settings = [
     ),
 
     Toggle(
+        name=settingkey.SPLIT_LEVELS,
+        ui_label='Dream Weapon Matters',
+        shared=True,
+        default=False,
+        tooltip='Makes the dream weapon choice at the beginning of the game change when you get items/abillities on levels (either with the same offsets as the vanilla game, or the adjusted values for max level 50)'
+    ),
+
+    Toggle(
         name=settingkey.FORM_LEVEL_REWARDS,
         ui_label='Form Level Rewards',
         shared=True,

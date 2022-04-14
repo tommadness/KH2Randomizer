@@ -10,6 +10,7 @@ class SoraMenu(KH2Submenu):
 
         self.start_column()
         self.add_option(settingkey.SORA_LEVELS)
+        self.add_option(settingkey.SPLIT_LEVELS)
         self.add_option(settingkey.LEVEL_ONE)
         self.add_option(settingkey.FORM_LEVEL_REWARDS)
         self.add_option(settingkey.STATSANITY)

@@ -8,6 +8,7 @@ from Class.exceptions import BossEnemyException
 from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
 from List.ItemList import Items
+from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
@@ -32,7 +33,7 @@ class SeedZip():
         self.spoiler_log = None
 
         self.assignTreasures(randomizer)
-        self.assignLevels(randomizer)
+        self.assignLevels(settings,randomizer)
         self.assignSoraBonuses(randomizer)
         self.assignDonaldBonuses(randomizer)
         self.assignGoofyBonuses(randomizer)
@@ -419,21 +420,40 @@ class SeedZip():
 
 
 
-    def assignLevels(self, randomizer):
+    def assignLevels(self, settings: RandomizerSettings, randomizer):
         levels = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.LEVEL])
+
+        # get the triple of items for each level
+        items_for_sword_level = {}
+        offsets = DreamWeaponOffsets()
+        for sword_level in range(1,100):
+            sword_item = 0
+            shield_item = 0
+            staff_item = 0
+            shield_level = offsets.get_shield_level(settings.level_checks,sword_level) if settings.split_levels else sword_level
+            staff_level = offsets.get_staff_level(settings.level_checks,sword_level) if settings.split_levels else sword_level
+            for lvup in levels:
+                if lvup.location.LocationId == sword_level:
+                    sword_item = lvup.item.Id
+                if lvup.location.LocationId == shield_level:
+                    shield_item = lvup.item.Id
+                if lvup.location.LocationId == staff_level:
+                    staff_item = lvup.item.Id
+            items_for_sword_level[sword_level] = (sword_item,shield_item,staff_item)
+
 
         for lvup in levels:
             levelStats = [lv for lv in randomizer.levelStats if lv.location==lvup.location][0]
-            item_id = lvup.item.Id
+            item_id = items_for_sword_level[lvup.location.LocationId]
             self.formattedLvup["Sora"][lvup.location.LocationId] = {
                 "Exp": levelStats.experience,
                 "Strength": levelStats.strength,
                 "Magic": levelStats.magic,
                 "Defense": levelStats.defense,
                 "Ap": levelStats.ap,
-                "SwordAbility": item_id,
-                "ShieldAbility": item_id,
-                "StaffAbility": item_id,
+                "SwordAbility": item_id[0],
+                "ShieldAbility": item_id[1],
+                "StaffAbility": item_id[2],
                 "Padding": 0,
                 "Character": "Sora",
                 "Level": lvup.location.LocationId

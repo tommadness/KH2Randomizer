@@ -1,7 +1,9 @@
 from math import ceil,floor,fmod
 from Class.itemClass import KH2Item, itemRarity
 from Class.newLocationClass import KH2Location
+from List.LvupStats import DreamWeaponOffsets
 from List.NewLocationList import Locations
+from List.configDict import locationCategory
 from Module.RandomizerSettings import RandomizerSettings
 
 
@@ -44,6 +46,10 @@ class WeightDistributions():
 class LocationWeights():
     def __init__(self,settings:RandomizerSettings,locations : Locations, reverse_locations : Locations):
         location_graph = locations.location_graph if settings.regular_rando else reverse_locations.location_graph
+        self.split_levels = settings.split_levels
+        self.level_offsets = DreamWeaponOffsets()
+        self.max_level = settings.level_checks
+        self.level_depths = {}
         hops = location_graph.get_hops("Starting")
         self.location_depths = {}
         self.location_type_maxes = {}
@@ -65,8 +71,17 @@ class LocationWeights():
                 else:
                     scaled_depth = hop[1]
                 self.location_depths[loc] = scaled_depth
+                if loc.LocationCategory is locationCategory.LEVEL:
+                    self.level_depths[loc.LocationId] = scaled_depth
         
         self.weights = WeightDistributions(max_hops).getRarityWeighting(settings.itemPlacementDifficulty)
 
     def getWeight(self,item: KH2Item, loc: KH2Location):
-        return self.weights[item.Rarity][self.location_depths[loc]]
+        if loc.LocationCategory is not locationCategory.LEVEL or not self.split_levels:
+            return self.weights[item.Rarity][self.location_depths[loc]]
+        else:
+            assert self.location_depths[loc] == self.level_depths[loc.LocationId]
+            sword_depth = self.level_depths[loc.LocationId]
+            shield_depth = self.level_depths[self.level_offsets.get_shield_level(self.max_level,loc.LocationId)]
+            staff_depth = self.level_depths[self.level_offsets.get_staff_level(self.max_level,loc.LocationId)]
+            return self.weights[item.Rarity][(sword_depth+shield_depth+staff_depth)//3]

@@ -19,6 +19,7 @@ from pathlib import Path
 
 import pyperclip as pc
 import pytz
+# from PIL import Image
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QThread, Signal
 from PySide6.QtGui import QIcon, QPixmap
@@ -265,12 +266,19 @@ class KH2RandomizerApp(QMainWindow):
             return None
 
     def update_ui_hash_icons(self, rando_settings):
+        # self.icons = []
         for index, icon in enumerate(rando_settings.seedHashIcons):
             self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
+            # self.icons.append(icon)
 
     def clear_hash_icons(self):
         for i in range(7):
             self.hashIcons[i].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
+
+    # def make_stitched_hash_picture(self):
+    #     stitched_image = Image.new('RGB',(48*len(self.icons),48))
+    #     for index, icon in enumerate(self.icons):
+    #         stitched_image.paste(im=Image.open(str(self.hashIconPath.absolute())+"/"+icon+".png"),box=(48*index,0))
 
     def makeSeed(self,platform):
         self.fixSeedName()
