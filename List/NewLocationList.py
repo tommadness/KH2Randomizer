@@ -1,4 +1,5 @@
 from Class.newLocationClass import KH2Location
+from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationType, locationCategory
 from altgraph.Graph import Graph
 # from altgraph.Dot import Dot
@@ -32,7 +33,7 @@ class Locations:
         self.first_boss_nodes = []
         self.second_boss_nodes = []
         self.data_nodes = []
-        self.makeLocationGraph(settings.excludedLevels)
+        self.makeLocationGraph(settings.excludedLevels,settings.split_levels,settings.level_checks)
 
     """A set of methods to get all the location information for Sora, Donald, and Goofy. Limited logic about item placement here"""
     def getAllSoraLocations(self):
@@ -62,7 +63,7 @@ class Locations:
     def add_edge(self,node1,node2,requirement):
         self.location_graph.add_edge(node1,node2,requirement)
 
-    def makeLocationGraph(self,excludeLevels):
+    def makeLocationGraph(self,excludeLevels,split_levels,max_level):
         self.makeStartingGraph()
         self.makeLoDGraph()
         self.makeAGGraph()
@@ -80,7 +81,7 @@ class Locations:
         self.makeTWTNWGraph()
         self.makeATLGraph()
         self.makeFormGraph()
-        self.makeLevelGraph(excludeLevels)
+        self.makeLevelGraph(excludeLevels,split_levels,max_level)
         self.makePuzzleGraph()
 
         # dot = Dot(self.location_graph)
@@ -134,13 +135,20 @@ class Locations:
 
 
 
-    def makeLevelGraph(self,excludeLevels):
+    def makeLevelGraph(self,excludeLevels,split_levels,max_level):
         node_index = 0
         current_location_list = []
         double_level_reward = False
         for i in range(1,100):
-            current_location_list.append(KH2Location(i, f"Level {i}", locationCategory.LEVEL,[locationType.Level]))
-            if f"Level {i}" not in excludeLevels:
+            level_description =  f"Level {i}"
+            if split_levels:
+                level_offsets = DreamWeaponOffsets()
+                shield = level_offsets.get_shield_level(max_level,i)
+                staff = level_offsets.get_staff_level(max_level,i)
+                if shield and staff:
+                    level_description = f"Level Sw: {i} Sh: {shield} St: {staff}"
+            current_location_list.append(KH2Location(i, level_description, locationCategory.LEVEL,[locationType.Level]))
+            if i not in excludeLevels:
                 if double_level_reward:
                     self.add_node(f"LevelGroup-{node_index}",LocationNode(current_location_list))
                     current_location_list = []

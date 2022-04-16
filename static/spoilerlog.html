@@ -10,6 +10,7 @@
         level_data = LEVEL_STATS_JSON
         form_exp_data = FORM_EXP_JSON
         depth_data = DEPTH_VALUES_JSON
+        reverse_depth_data = DEPTH_REVERSE_VALUES_JSON
         settings_data = SETTINGS_JSON
         boss_enemy_data = BOSS_ENEMY_JSON
 
@@ -157,6 +158,10 @@
             <table class="styled-table" id="weightTable">
             </table>
         </div>
+        <div class="table-wrapper">
+            <table class="styled-table" id="reverseweightTable">
+            </table>
+        </div>
     </div>
     <button class="accordion">Sora Item Placement</button>
     <div class="panel">
@@ -221,17 +226,24 @@ if ("ENEMIES" in boss_enemy_data)
 document.getElementById("seed_header").innerText = "Seed name: " + seed_name;
 document.getElementById("settings-string").innerText = "Seed settings: " + settings_data;
 
-function populateWeightTable()
+function populateWeightTable(in_depth_data,which_table)
 {
-    weight_table = document.getElementById("weightTable");
+    weight_table = document.getElementById(which_table);
     var weight_header = document.createElement("tr");
-    weight_header.innerHTML+="<th></th><th colspan=\""+String(depth_data["Common"].length)+"\">Location Weights</th>";
+    if(which_table=="weightTable")
+    {
+        weight_header.innerHTML+="<th></th><th colspan=\""+String(in_depth_data["Common"].length)+"\">Location Weights</th>";
+    }
+    else
+    {
+        weight_header.innerHTML+="<th></th><th colspan=\""+String(in_depth_data["Common"].length)+"\">Reverse Location Weights</th>";
+    }
     weight_table.appendChild(weight_header);
 
     var data_row = document.createElement("tr");
     data_row.className = "custom-class"
     data_row.innerHTML+="<th>Item Type</th>";
-    for(var i=0;i<depth_data["Common"].length;i++)
+    for(var i=0;i<in_depth_data["Common"].length;i++)
     { 
         data_row.innerHTML+="<th>"+String(i)+"</th>";
     }
@@ -240,38 +252,39 @@ function populateWeightTable()
     var data_row = document.createElement("tr");
     data_row.className = "custom-class"
     data_row.innerHTML+="<td>Common</td>";
-    for(var i=0;i<depth_data["Common"].length;i++)
+    for(var i=0;i<in_depth_data["Common"].length;i++)
     { 
-        data_row.innerHTML+="<td>"+String(depth_data["Common"][i])+"</td>";
+        data_row.innerHTML+="<td>"+String(in_depth_data["Common"][i])+"</td>";
     }
     weight_table.appendChild(data_row);
     var data_row = document.createElement("tr");
     data_row.className = "custom-class"
     data_row.innerHTML+="<td>Uncommon</td>";
-    for(var i=0;i<depth_data["Uncommon"].length;i++)
+    for(var i=0;i<in_depth_data["Uncommon"].length;i++)
     { 
-        data_row.innerHTML+="<td>"+String(depth_data["Uncommon"][i])+"</td>";
+        data_row.innerHTML+="<td>"+String(in_depth_data["Uncommon"][i])+"</td>";
     }
     weight_table.appendChild(data_row);
     var data_row = document.createElement("tr");
     data_row.className = "custom-class"
     data_row.innerHTML+="<td>Rare</td>";
-    for(var i=0;i<depth_data["Rare"].length;i++)
+    for(var i=0;i<in_depth_data["Rare"].length;i++)
     { 
-        data_row.innerHTML+="<td>"+String(depth_data["Rare"][i])+"</td>";
+        data_row.innerHTML+="<td>"+String(in_depth_data["Rare"][i])+"</td>";
     }
     weight_table.appendChild(data_row);
     var data_row = document.createElement("tr");
     data_row.className = "custom-class"
     data_row.innerHTML+="<td>Mythic</td>";
-    for(var i=0;i<depth_data["Mythic"].length;i++)
+    for(var i=0;i<in_depth_data["Mythic"].length;i++)
     { 
-        data_row.innerHTML+="<td>"+String(depth_data["Mythic"][i])+"</td>";
+        data_row.innerHTML+="<td>"+String(in_depth_data["Mythic"][i])+"</td>";
     }
     weight_table.appendChild(data_row);
 }
 
-populateWeightTable();
+populateWeightTable(depth_data,"weightTable");
+populateWeightTable(reverse_depth_data,"reverseweightTable");
 
 var formExpTable = document.getElementById("formExpTable");
 var form_header = document.createElement("tr");

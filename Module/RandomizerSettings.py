@@ -182,7 +182,7 @@ class RandomizerSettings():
             levels_to_exclude = range(1,100)
         else:
             raise SettingsException(f"Incorrect level choice {maxLevel}")
-        self.excludedLevels = [f"Level {i}" for i in range(1,100) if i in levels_to_exclude]
+        self.excludedLevels = levels_to_exclude
 
 
     def setSoraExp(self,rate,curve):

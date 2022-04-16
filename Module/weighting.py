@@ -45,11 +45,21 @@ class WeightDistributions():
 
 class LocationWeights():
     def __init__(self,settings:RandomizerSettings,locations : Locations, reverse_locations : Locations):
-        location_graph = locations.location_graph if settings.regular_rando else reverse_locations.location_graph
+        self.regular_rando = settings.regular_rando
+        self.reverse_rando = settings.reverse_rando
+        
+        location_graph = locations.location_graph
+        reverse_location_graph = reverse_locations.location_graph
+
+
         self.split_levels = settings.split_levels
         self.level_offsets = DreamWeaponOffsets()
         self.max_level = settings.level_checks
         self.level_depths = {}
+
+
+        # Regular
+        # -------------------------------
         hops = location_graph.get_hops("Starting")
         self.location_depths = {}
         self.location_type_maxes = {}
@@ -76,9 +86,60 @@ class LocationWeights():
         
         self.weights = WeightDistributions(max_hops).getRarityWeighting(settings.itemPlacementDifficulty)
 
+        # Reverse
+        # -------------------------------
+        hops = reverse_location_graph.get_hops("Starting")
+        self.reverse_location_depths = {}
+        self.reverse_location_type_maxes = {}
+        max_hops = 0
+        for hop in hops:
+            max_hops = max(max_hops,hop[1])
+        for hop in hops:
+            for loc in reverse_location_graph.node_data(hop[0]).locations:
+                if loc.LocationTypes[0] not in self.reverse_location_type_maxes:
+                    self.reverse_location_type_maxes[loc.LocationTypes[0]] = hop[1]
+                else:
+                    self.reverse_location_type_maxes[loc.LocationTypes[0]] = max(hop[1],self.reverse_location_type_maxes[loc.LocationTypes[0]])
+
+
+        for hop in hops:
+            for loc in reverse_location_graph.node_data(hop[0]).locations:
+                if self.reverse_location_type_maxes[loc.LocationTypes[0]] != 0:
+                    scaled_depth = floor((hop[1]*1.0/self.reverse_location_type_maxes[loc.LocationTypes[0]])*max_hops)
+                else:
+                    scaled_depth = hop[1]
+                self.reverse_location_depths[loc] = scaled_depth
+        
+        self.reverse_weights = WeightDistributions(max_hops).getRarityWeighting(settings.itemPlacementDifficulty)
+
+
+    def getWeight(self,rarity: itemRarity, depth: int):
+        return self.weights[rarity][depth]
+
+    def getDepth(self,loc: KH2Location):
+        if loc.LocationCategory is not locationCategory.LEVEL or not self.split_levels:
+            if self.regular_rando and self.reverse_rando:
+                return (self.location_depths[loc], self.reverse_location_depths[loc])
+            elif self.regular_rando:
+                return self.location_depths[loc]
+            else:
+                return self.location_depths[loc]
+        else:
+            assert self.location_depths[loc] == self.level_depths[loc.LocationId]
+            sword_depth = self.level_depths[loc.LocationId]
+            shield_depth = self.level_depths[self.level_offsets.get_shield_level(self.max_level,loc.LocationId)]
+            staff_depth = self.level_depths[self.level_offsets.get_staff_level(self.max_level,loc.LocationId)]
+            return (sword_depth+shield_depth+staff_depth)//3
+
+
     def getWeight(self,item: KH2Item, loc: KH2Location):
         if loc.LocationCategory is not locationCategory.LEVEL or not self.split_levels:
-            return self.weights[item.Rarity][self.location_depths[loc]]
+            if self.regular_rando and self.reverse_rando:
+                return (self.weights[item.Rarity][self.location_depths[loc]] + self.reverse_weights[item.Rarity][self.reverse_location_depths[loc]])//2
+            elif self.regular_rando:
+                return self.reverse_weights[item.Rarity][self.reverse_location_depths[loc]]
+            else:
+                return self.weights[item.Rarity][self.location_depths[loc]]
         else:
             assert self.location_depths[loc] == self.level_depths[loc.LocationId]
             sword_depth = self.level_depths[loc.LocationId]

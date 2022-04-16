@@ -8,7 +8,7 @@ def itemSpoilerDictionary(locationItems, weights: LocationWeights = None):
     for assignment in locationItems:
         location = assignment.location
         if weights and location in weights.location_depths:
-            added_string = f" <{weights.location_depths[location]}>"
+            added_string = f" <{weights.getDepth(location)}>"
         else:
             added_string = ""
         item = assignment.item
@@ -25,5 +25,8 @@ def levelStatsDictionary(level_stats):
     outDict = {}
     for lvl in level_stats:
         desc = lvl.location.Description
+        split_desc=desc.split(' ')
+        if len(split_desc) > 2:
+            desc = split_desc[0] + " " +split_desc[2]
         outDict[desc] = {"experience":lvl.experience,"strength":lvl.strength, "magic": lvl.magic, "defense": lvl.defense, "ap":lvl.ap }
     return outDict

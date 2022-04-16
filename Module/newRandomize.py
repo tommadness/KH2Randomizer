@@ -147,7 +147,7 @@ class Randomizer():
             if index!=0:
                 stat_choices = random.sample(levelStats,k=2)
                 adder_function(stat_choices[0])
-                if l.Description in settings.excludedLevels:
+                if l.LocationId in settings.excludedLevels:
                     adder_function(stat_choices[1])
             exp+=(settings.sora_exp[index+1]-settings.sora_exp[index])
             self.levelStats.append(LevelStats(l,exp,strength,magic,defense,ap))
@@ -218,7 +218,7 @@ class Randomizer():
         else:
             self.assignStatBonuses(allLocations)
 
-        invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or loc.Description in settings.excludedLevels)]
+        invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
 
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):
@@ -280,7 +280,7 @@ class Randomizer():
                 junkItems.append(j)
 
         for loc in invalidLocations:
-            if loc.LocationCategory is not locationCategory.LEVEL or loc.Description not in settings.excludedLevels:
+            if loc.LocationCategory is not locationCategory.LEVEL or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId not in settings.excludedLevels):
                 junk_item = random.choice(junkItems)
                 #assign another junk item if that location needs another item
                 if not self.assignItem(loc,junk_item):

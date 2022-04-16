@@ -122,6 +122,7 @@ class SeedZip():
                                                                                             "Master": {"multiplier": settings.master_exp_multiplier, "values": list(accumulate(settings.master_exp))},
                                                                                             "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
                                                        .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
+                                                       .replace("DEPTH_REVERSE_VALUES_JSON",json.dumps(randomizer.location_weights.reverse_weights)) \
                                                        .replace("SETTINGS_JSON",json.dumps(settings.full_ui_settings)) \
                                                        .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
