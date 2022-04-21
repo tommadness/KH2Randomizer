@@ -86,6 +86,14 @@ class RandomizerSettings():
         else:
             self.reportDepth = locationDepth.Anywhere
         self.proofDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.PROOF_DEPTH)][0]
+
+        if ui_settings.get(settingkey.SOFTLOCK_CHECKING) == "both":
+            if self.proofDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:
+                raise SettingsException(f"Setting proof depth to {self.proofDepth} will contradict either regular or reverse rando. Please use another setting")
+            if self.reportDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:
+                raise SettingsException(f"Setting report depth to {self.reportDepth} will contradict either regular or reverse rando. Please use another setting")
+
+
         self.prevent_self_hinting = ui_settings.get(settingkey.PREVENT_SELF_HINTING)
         self.allow_proof_hinting = ui_settings.get(settingkey.ALLOW_PROOF_HINTING)
         self.allow_report_hinting = ui_settings.get(settingkey.ALLOW_REPORT_HINTING)

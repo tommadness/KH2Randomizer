@@ -22,6 +22,52 @@ from Module.spoilerLog import itemSpoilerDictionary, levelStatsDictionary
 def noop(self, *args, **kw):
     pass
 
+
+def number_to_bytes(item):
+    # for byte1, find the most significant bits from the item Id
+    itemByte1 = item>>8
+    # for byte0, isolate the least significant bits from the item Id
+    itemByte0 = item & 0x00FF
+    return itemByte0,itemByte1
+
+class SynthLocation():
+    def __init__(self, loc, item):
+        self.location = loc
+        self.item = item
+        self.requirements = [(0,0)]*6
+
+    def getStartingLocation(self):
+        # header bytes + offset to the specific recipe + skip over the recipe bytes
+        return 16+self.location*32+2
+
+    def getBytes(self):
+        bytes = []
+        bytes = [1,0] # unlock condition/rank
+        item_byte0,item_byte1 = number_to_bytes(self.item)
+        # add the item for this recipe
+        bytes.append(item_byte0)
+        bytes.append(item_byte1)
+        # add the item as the upgraded version
+        bytes.append(item_byte0)
+        bytes.append(item_byte1)
+
+        for req in self.requirements:
+            item_byte0,item_byte1 = number_to_bytes(req[0])
+            # add the item as an ingredient
+            bytes.append(item_byte0)
+            bytes.append(item_byte1)
+            item_byte0,item_byte1 = number_to_bytes(req[1])
+            # add the amount of that ingredient
+            bytes.append(item_byte0)
+            bytes.append(item_byte1)
+        print(bytes)
+        return bytes
+
+    def addReq(self,req_number,req_item,req_amount):
+        self.requirements[req_number] = (req_item,req_amount)
+
+
+
 class SeedZip():
     def __init__(self,settings: RandomizerSettings, randomizer: Randomizer, hints, cosmetics_data):
         self.formattedTrsr = {}
@@ -51,6 +97,7 @@ class SeedZip():
             yaml.emitter.Emitter.process_tag = noop
 
             self.createPuzzleAssets(settings, randomizer, mod, outZip)
+            # self.createSynthAssets(settings, randomizer, mod, outZip)
             self.createASDataAssets(settings, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
@@ -122,7 +169,6 @@ class SeedZip():
                                                                                             "Master": {"multiplier": settings.master_exp_multiplier, "values": list(accumulate(settings.master_exp))},
                                                                                             "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
                                                        .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
-                                                       .replace("DEPTH_REVERSE_VALUES_JSON",json.dumps(randomizer.location_weights.reverse_weights)) \
                                                        .replace("SETTINGS_JSON",json.dumps(settings.full_ui_settings)) \
                                                        .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
@@ -163,13 +209,55 @@ class SeedZip():
                     byte1 = 20+puzz.location.LocationId*16+1
                     item = puzz.item.Id
                         
-                    # for byte1, find the most significant bits from the item Id
-                    itemByte1 = item>>8
-                    # for byte0, isolate the least significant bits from the item Id
-                    itemByte0 = item & 0x00FF
+                    itemByte0, itemByte1 = number_to_bytes(item)
                     binaryContent[byte0] = itemByte0
                     binaryContent[byte1] = itemByte1
                 outZip.writestr("modified_puzzle.bin",binaryContent)
+
+    def createSynthAssets(self, settings, randomizer, mod, outZip):
+        synth_items = [ SynthLocation(8,21),
+                        SynthLocation(9,22),
+                        SynthLocation(10,23),
+                        SynthLocation(11,24),
+                        SynthLocation(16,87),
+                        SynthLocation(17,88),
+                        SynthLocation(5,593),
+                        SynthLocation(12,594),
+                        SynthLocation(13,595),
+                        SynthLocation(18,524)]
+
+        requirements_list = [(317,3),
+                             (378,3),
+                             (325,3),
+                             (580,3),
+                             (338,3),
+                             (349,3),
+                             (0,0),
+                             (0,0),
+                             (0,0),
+                             (0,0)]
+        for iter in range(0,len(requirements_list)):
+            synth_items[iter].addReq(0,requirements_list[iter][0],requirements_list[iter][1])
+
+
+
+        # if locationType.Puzzle not in settings.disabledLocations:
+        mod["assets"] += [modYml.getSynthMod()]
+        # assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
+        with open(resource_path("static/synthesis.bin"), "rb") as synthbar:
+            binaryContent = bytearray(synthbar.read())
+            print(binaryContent)
+            for synth_loc in synth_items:
+
+                starting_byte = synth_loc.getStartingLocation()
+                data = synth_loc.getBytes()
+
+                for iter,item in enumerate(data):
+                    binaryContent[starting_byte+iter] = 0xFF & item
+        
+            print(binaryContent)
+
+            outZip.writestr("modified_synth.bin",binaryContent)
 
     def assignStartingItems(self, settings, randomizer):
         def padItems(itemList):
@@ -431,8 +519,8 @@ class SeedZip():
             sword_item = 0
             shield_item = 0
             staff_item = 0
-            shield_level = offsets.get_shield_level(settings.level_checks,sword_level) if settings.split_levels else sword_level
-            staff_level = offsets.get_staff_level(settings.level_checks,sword_level) if settings.split_levels else sword_level
+            shield_level = offsets.get_item_lookup_for_shield(settings.level_checks,sword_level) if settings.split_levels else sword_level
+            staff_level = offsets.get_item_lookup_for_staff(settings.level_checks,sword_level) if settings.split_levels else sword_level
             for lvup in levels:
                 if lvup.location.LocationId == sword_level:
                     sword_item = lvup.item.Id

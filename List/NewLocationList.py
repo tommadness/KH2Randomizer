@@ -83,10 +83,14 @@ class Locations:
         self.makeFormGraph()
         self.makeLevelGraph(excludeLevels,split_levels,max_level)
         self.makePuzzleGraph()
+        # self.makeSynthGraph()
 
         # dot = Dot(self.location_graph)
         # dot.style(rankdir="LR")
         # dot.save_img(file_name='graph',file_type="gif")
+
+    # def makeSynthGraph(self):
+    #     self.add_node("")
 
 
     def makePuzzleGraph(self):
@@ -139,10 +143,10 @@ class Locations:
         node_index = 0
         current_location_list = []
         double_level_reward = False
+        level_offsets = DreamWeaponOffsets()
         for i in range(1,100):
             level_description =  f"Level {i}"
             if split_levels:
-                level_offsets = DreamWeaponOffsets()
                 shield = level_offsets.get_shield_level(max_level,i)
                 staff = level_offsets.get_staff_level(max_level,i)
                 if shield and staff:
@@ -1010,7 +1014,7 @@ class Locations:
     def makeSTTGraph(self):
         self.add_node("Twilight Town Map Popup",LocationNode([KH2Location(319, "Twilight Town Map", locationCategory.POPUP,[locationType.STT]),]))
         self.add_node("Munny Pouch Popup",LocationNode([KH2Location(288, "Munny Pouch (Olette)", locationCategory.POPUP,[locationType.STT]),]))
-        self.add_node("Roxas Stations",LocationNode([KH2Location(54, "Station Dusks", locationCategory.ITEMBONUS,[locationType.STT]),
+        self.add_node("Roxas Station",LocationNode([KH2Location(54, "Station Dusks", locationCategory.ITEMBONUS,[locationType.STT]),
                                         KH2Location(315, "Station of Serenity Potion", locationCategory.CHEST,[locationType.STT]),
                                         KH2Location(472, "Station of Calling Potion", locationCategory.CHEST,[locationType.STT]),]))
         self.add_node("Twilight Thorn",LocationNode([KH2Location(33, "Twilight Thorn", locationCategory.ITEMBONUS,[locationType.STT]),]))
@@ -1042,8 +1046,8 @@ class Locations:
         if not self.reverse_rando:
             self.add_edge("Starting","Twilight Town Map Popup",RequirementEdge())
             self.add_edge("Twilight Town Map Popup","Munny Pouch Popup",RequirementEdge())
-            self.add_edge("Munny Pouch Popup","Roxas Stations",RequirementEdge())
-            self.add_edge("Roxas Stations","Twilight Thorn",RequirementEdge(battle=True))
+            self.add_edge("Munny Pouch Popup","Roxas Station",RequirementEdge())
+            self.add_edge("Roxas Station","Twilight Thorn",RequirementEdge(battle=True))
             self.add_edge("Twilight Thorn","Axel 1",RequirementEdge(battle=True))
             self.add_edge("Axel 1","Struggle Champion",RequirementEdge(battle=True))
             self.add_edge("Struggle Champion","STT Central Station",RequirementEdge())
@@ -1068,8 +1072,8 @@ class Locations:
             self.add_edge("STT Mansion Basement","STT Sunset Terrace",RequirementEdge())
             self.add_edge("STT Sunset Terrace","Axel 1",RequirementEdge(battle=True))
             self.add_edge("Axel 1","Struggle Champion",RequirementEdge(battle=True))
-            self.add_edge("Struggle Champion","Roxas Stations",RequirementEdge())
-            self.add_edge("Roxas Stations","Twilight Thorn",RequirementEdge(battle=True))
+            self.add_edge("Struggle Champion","Roxas Station",RequirementEdge())
+            self.add_edge("Roxas Station","Twilight Thorn",RequirementEdge(battle=True))
             self.add_edge("Twilight Thorn","Twilight Town Map Popup",RequirementEdge(battle=True))
             self.add_edge("Twilight Town Map Popup","Munny Pouch Popup",RequirementEdge())
             self.add_edge("Munny Pouch Popup","Data Roxas",RequirementEdge(battle=True))
@@ -1268,19 +1272,19 @@ class Locations:
 
 
     def makeATLGraph(self):
-        self.add_node("Atlantia Tutorial",LocationNode([KH2Location(367, "Undersea Kingdom Map", locationCategory.POPUP,[locationType.Atlantica]),]))
+        self.add_node("Atlantica Tutorial",LocationNode([KH2Location(367, "Undersea Kingdom Map", locationCategory.POPUP,[locationType.Atlantica]),]))
         self.add_node("Ursula",LocationNode([KH2Location(287, "Mysterious Abyss", locationCategory.POPUP,[locationType.Atlantica]),]))
         self.add_node("New Day is Dawning",LocationNode([KH2Location(279, "Musical Blizzard Element", locationCategory.POPUP,[locationType.Atlantica]),
                                         KH2Location(538, "Musical Orichalcum+", locationCategory.POPUP,[locationType.Atlantica]),]))
 
         if not self.reverse_rando:
-            self.add_edge("Starting","Atlantia Tutorial",RequirementEdge())
-            self.add_edge("Atlantia Tutorial","Ursula",RequirementEdge(req=ItemPlacementHelpers.need_2_magnet))
+            self.add_edge("Starting","Atlantica Tutorial",RequirementEdge())
+            self.add_edge("Atlantica Tutorial","Ursula",RequirementEdge(req=ItemPlacementHelpers.need_2_magnet))
             self.add_edge("Ursula","New Day is Dawning",RequirementEdge(req=lambda inv : ItemPlacementHelpers.need_2_magnet(inv) and ItemPlacementHelpers.need_3_thunders(inv)))
         else:
             self.add_edge("Starting","New Day is Dawning",RequirementEdge())
             self.add_edge("New Day is Dawning","Ursula",RequirementEdge(req=ItemPlacementHelpers.need_1_magnet))
-            self.add_edge("Ursula","Atlantia Tutorial",RequirementEdge(req=lambda inv : ItemPlacementHelpers.need_2_magnet(inv) and ItemPlacementHelpers.need_3_thunders(inv)))
+            self.add_edge("Ursula","Atlantica Tutorial",RequirementEdge(req=lambda inv : ItemPlacementHelpers.need_2_magnet(inv) and ItemPlacementHelpers.need_3_thunders(inv)))
 
 
     @staticmethod

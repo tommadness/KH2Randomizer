@@ -238,3 +238,31 @@ class modYml:
                         }
                     ]
                 }
+    def getSynthMod():
+        return {
+                    "name": "menu/jp/mixdata.bar",
+                    "multi": [
+                        {
+                            "name": "menu/us/mixdata.bar"
+                        },
+                        {
+                            "name": "menu/uk/mixdata.bar"
+                        },
+                        {
+                            "name": "menu/fm/mixdata.bar"
+                        }
+                    ],
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "reci",
+                            "type": "synthesis",
+                            "method": "copy",
+                            "source": [
+                                {
+                                    "name": "modified_synth.bin"
+                                }
+                            ]
+                        }
+                    ]
+                }

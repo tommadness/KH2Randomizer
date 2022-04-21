@@ -10,7 +10,6 @@
         level_data = LEVEL_STATS_JSON
         form_exp_data = FORM_EXP_JSON
         depth_data = DEPTH_VALUES_JSON
-        reverse_depth_data = DEPTH_REVERSE_VALUES_JSON
         settings_data = SETTINGS_JSON
         boss_enemy_data = BOSS_ENEMY_JSON
 
@@ -158,10 +157,6 @@
             <table class="styled-table" id="weightTable">
             </table>
         </div>
-        <div class="table-wrapper">
-            <table class="styled-table" id="reverseweightTable">
-            </table>
-        </div>
     </div>
     <button class="accordion">Sora Item Placement</button>
     <div class="panel">
@@ -230,14 +225,7 @@ function populateWeightTable(in_depth_data,which_table)
 {
     weight_table = document.getElementById(which_table);
     var weight_header = document.createElement("tr");
-    if(which_table=="weightTable")
-    {
-        weight_header.innerHTML+="<th></th><th colspan=\""+String(in_depth_data["Common"].length)+"\">Location Weights</th>";
-    }
-    else
-    {
-        weight_header.innerHTML+="<th></th><th colspan=\""+String(in_depth_data["Common"].length)+"\">Reverse Location Weights</th>";
-    }
+    weight_header.innerHTML+="<th></th><th colspan=\""+String(in_depth_data["Common"].length)+"\">Location Weights</th>";
     weight_table.appendChild(weight_header);
 
     var data_row = document.createElement("tr");
@@ -284,7 +272,6 @@ function populateWeightTable(in_depth_data,which_table)
 }
 
 populateWeightTable(depth_data,"weightTable");
-populateWeightTable(reverse_depth_data,"reverseweightTable");
 
 var formExpTable = document.getElementById("formExpTable");
 var form_header = document.createElement("tr");

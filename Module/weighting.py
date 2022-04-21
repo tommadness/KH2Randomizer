@@ -63,9 +63,9 @@ class LocationWeights():
         hops = location_graph.get_hops("Starting")
         self.location_depths = {}
         self.location_type_maxes = {}
-        max_hops = 0
-        for hop in hops:
-            max_hops = max(max_hops,hop[1])
+        max_hops = 17 # hard coding max hops to unify depths between reverse and regular rando
+        # for hop in hops:
+        #     max_hops = max(max_hops,hop[1])
         for hop in hops:
             for loc in location_graph.node_data(hop[0]).locations:
                 if loc.LocationTypes[0] not in self.location_type_maxes:
@@ -91,9 +91,9 @@ class LocationWeights():
         hops = reverse_location_graph.get_hops("Starting")
         self.reverse_location_depths = {}
         self.reverse_location_type_maxes = {}
-        max_hops = 0
-        for hop in hops:
-            max_hops = max(max_hops,hop[1])
+        # max_hops = 0
+        # for hop in hops:
+        #     max_hops = max(max_hops,hop[1])
         for hop in hops:
             for loc in reverse_location_graph.node_data(hop[0]).locations:
                 if loc.LocationTypes[0] not in self.reverse_location_type_maxes:
@@ -137,9 +137,9 @@ class LocationWeights():
             if self.regular_rando and self.reverse_rando:
                 return (self.weights[item.Rarity][self.location_depths[loc]] + self.reverse_weights[item.Rarity][self.reverse_location_depths[loc]])//2
             elif self.regular_rando:
-                return self.reverse_weights[item.Rarity][self.reverse_location_depths[loc]]
+                return self.weights[item.Rarity][self.reverse_location_depths[loc]]
             else:
-                return self.weights[item.Rarity][self.location_depths[loc]]
+                return self.reverse_weights[item.Rarity][self.location_depths[loc]]
         else:
             assert self.location_depths[loc] == self.level_depths[loc.LocationId]
             sword_depth = self.level_depths[loc.LocationId]

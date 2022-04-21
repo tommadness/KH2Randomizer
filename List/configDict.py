@@ -41,6 +41,7 @@ class locationType(str, Enum):
     Puzzle = "Puzzle"
     WeaponSlot = "Slot"
     TTR = "Transport to Remembrance"
+    SYNTH = "Synthesis"
 
 class locationCategory(str,Enum):
     CHEST = "Chest"

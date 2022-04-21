@@ -79,6 +79,38 @@ class DreamWeaponOffsets:
                 self.sword_to_shield_99[i] = i
                 self.sword_to_staff_99[i] = i
 
+
+    def get_item_lookup_for_shield(self,max_level,shield_level):
+        if max_level==50:
+            looking_table = self.sword_to_shield_50
+        elif max_level==99:
+            looking_table = self.sword_to_shield_99
+        else:
+            raise ValueError(f"Tried accessing a level progression with max level {max_level}")
+
+        for key,it in looking_table.items():
+            if it == shield_level:
+                return key
+
+        return None
+
+    def get_item_lookup_for_staff(self,max_level,staff_level):
+        if max_level==50:
+            looking_table = self.sword_to_staff_50
+        elif max_level==99:
+            looking_table = self.sword_to_staff_99
+        else:
+            raise ValueError(f"Tried accessing a level progression with max level {max_level}")
+
+        for key,it in looking_table.items():
+            if it == staff_level:
+                return key
+
+        return None
+
+
+        
+
     def get_shield_level(self,max_level,sword_level):
         if max_level==50:
             return self.sword_to_shield_50[sword_level]

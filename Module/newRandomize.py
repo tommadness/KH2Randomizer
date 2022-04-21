@@ -207,7 +207,7 @@ class Randomizer():
         for i in removeAbilities:
             allAbilities.remove(i)
 
-        if settings.promiseCharm:
+        if settings.promiseCharm and Items.getPromiseCharm().Id not in settings.startingItems:
             allItems+=[Items.getPromiseCharm()]
         allLocations = self.master_locations.getAllSoraLocations()
 
