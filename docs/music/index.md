@@ -34,13 +34,36 @@ from being included.
 
 A config.txt can have two types of lines (others are ignored).
 
-`category=(unknown|battle|field|cutscene)`
+`category=(unknown|battle|field|boss|title|cutscene)`
 
 This is the type of music that will be applied to all the .scd files in this folder (not subfolders).
 
-`<songname.scd>=(unknown|battle|field|cutscene)`
+`<songname.scd>=(unknown|battle|field|boss|title|cutscene)`
 
 In addition, you can add lines to override specific songs to a specific type of music.
+
+### Categories
+
+Custom Music doesn't require using categories, but by adding them you can use the separation options 
+(such as `Randomize Field & Battle Music Separately`) to make sure tracks only get randomized to specific areas in the game.
+
+A breif description of each category are as follows:
+
+- `field`
+Music to be used for world field themes.
+- `battle`
+Music to be used for world battle themes.
+- `boss`
+Music to be used for boss fight and non world specific battle music (Ex. Tension Rising, Vim & Vigor, ect.).
+This category is teated as `battle` when not using `Randomize Special Battle Music Separately`.
+- `title`
+Music to be used for the Title and Battle Report Dearly Beloved themes.
+This category is teated as `field` when not using `Randomize Dearly Beloved Separately`.
+- `cutscene`
+Music to be used for cutscens.
+This category is teated as `field` when not using `Randomize Cutscene Music Separately`.
+- `unknown`
+Music that can be chosen for any of the above.
 
 ### Example
 
