@@ -43,6 +43,7 @@ a = Analysis(
         'static/puzzle.bin',
         'static/KHMenu.otf',
         'static/as_data_split/*.*',
+        'static/better_stt/*.*',
         'static/*.bar',
         'static/*.script',
         'static/*.bin',
