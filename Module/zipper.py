@@ -5,14 +5,14 @@ import zipfile
 from itertools import accumulate
 from Class.exceptions import BossEnemyException
 
-from Class.itemClass import ItemEncoder
+from Class.itemClass import ItemEncoder, itemRarity
 from Class.modYml import modYml
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
-from Module.newRandomize import Randomizer
+from Module.newRandomize import Randomizer, SynthesisRecipe
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.resources import resource_path
@@ -31,10 +31,14 @@ def number_to_bytes(item):
     return itemByte0,itemByte1
 
 class SynthLocation():
-    def __init__(self, loc, item):
+    def __init__(self, loc, item, in_recipe: SynthesisRecipe):
         self.location = loc
         self.item = item
         self.requirements = [(0,0)]*6
+        self.recipe = in_recipe
+        self.unlock_rank = in_recipe.unlock_rank
+        for i in range(len(self.recipe.requirements)):
+            self.addReq(i,self.recipe.requirements[i].item_id,self.recipe.requirements[i].amount)
 
     def getStartingLocation(self):
         # header bytes + offset to the specific recipe + skip over the recipe bytes
@@ -42,7 +46,7 @@ class SynthLocation():
 
     def getBytes(self):
         bytes = []
-        bytes = [1,0] # unlock condition/rank
+        bytes = [self.unlock_rank,0] # unlock condition/rank
         item_byte0,item_byte1 = number_to_bytes(self.item)
         # add the item for this recipe
         bytes.append(item_byte0)
@@ -97,8 +101,10 @@ class SeedZip():
             yaml.emitter.Emitter.process_tag = noop
 
             self.createPuzzleAssets(settings, randomizer, mod, outZip)
-            # self.createSynthAssets(settings, randomizer, mod, outZip)
+            self.createSynthAssets(settings, randomizer, mod, outZip)
             self.createASDataAssets(settings, mod, outZip)
+            self.createRetryAssets(settings, mod, outZip)
+            self.createSkipCarpetAssets(settings, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -124,8 +130,6 @@ class SeedZip():
                 if settings.enemy_options.get("remove_damage_cap", False):
                     return True
                 if settings.enemy_options.get("cups_give_xp", False):
-                    return True
-                if settings.enemy_options.get("retry_data_final_xemnas", False):
                     return True
 
             enemySpoilers = None
@@ -197,6 +201,19 @@ class SeedZip():
             outZip.write(resource_path("static/as_data_split/hb33evt.script"), "asdata/hb33evt.script")
             outZip.write(resource_path("static/as_data_split/hb34evt.script"), "asdata/hb34evt.script")
             outZip.write(resource_path("static/as_data_split/hb38evt.script"), "asdata/hb38evt.script")
+    
+    def createRetryAssets(self,settings,mod,outZip):
+        for fight in settings.retries:
+            mod["assets"] += [modYml.getRetryMod(fight)]
+            asset_name = modYml.getRetryMod(fight)["source"][0]["source"][0]["name"]
+            outZip.write(resource_path("static/"+asset_name),asset_name)
+
+
+    def createSkipCarpetAssets(self,settings,mod,outZip):
+        if settings.skip_carpet_escape:
+            mod["assets"] += [modYml.getSkipCarpetEscapeMod()]
+            outZip.write(resource_path("static/skip_carpet_escape.script"), "skip_carpet_escape.script")
+
 
     def createPuzzleAssets(self, settings, randomizer, mod, outZip):
         if locationType.Puzzle not in settings.disabledLocations:
@@ -215,38 +232,20 @@ class SeedZip():
                 outZip.writestr("modified_puzzle.bin",binaryContent)
 
     def createSynthAssets(self, settings, randomizer, mod, outZip):
-        synth_items = [ SynthLocation(8,21),
-                        SynthLocation(9,22),
-                        SynthLocation(10,23),
-                        SynthLocation(11,24),
-                        SynthLocation(16,87),
-                        SynthLocation(17,88),
-                        SynthLocation(5,593),
-                        SynthLocation(12,594),
-                        SynthLocation(13,595),
-                        SynthLocation(18,524)]
+        if locationType.SYNTH in settings.disabledLocations:
+            return
+        
+        assignedSynth = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.SYNTH])
 
-        requirements_list = [(317,3),
-                             (378,3),
-                             (325,3),
-                             (580,3),
-                             (338,3),
-                             (349,3),
-                             (0,0),
-                             (0,0),
-                             (0,0),
-                             (0,0)]
-        for iter in range(0,len(requirements_list)):
-            synth_items[iter].addReq(0,requirements_list[iter][0],requirements_list[iter][1])
-
-
+        synth_items = []
+        for assignment in assignedSynth:
+            synth_items.append(SynthLocation(assignment.location.LocationId,assignment.item.Id,[r for r in randomizer.synthesis_recipes if r.location==assignment.location][0]))
 
         # if locationType.Puzzle not in settings.disabledLocations:
         mod["assets"] += [modYml.getSynthMod()]
         # assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
         with open(resource_path("static/synthesis.bin"), "rb") as synthbar:
             binaryContent = bytearray(synthbar.read())
-            print(binaryContent)
             for synth_loc in synth_items:
 
                 starting_byte = synth_loc.getStartingLocation()
@@ -255,9 +254,18 @@ class SeedZip():
                 for iter,item in enumerate(data):
                     binaryContent[starting_byte+iter] = 0xFF & item
         
-            print(binaryContent)
-
             outZip.writestr("modified_synth.bin",binaryContent)
+
+        with open(resource_path("static/synthesis_reqs.bin"), "rb") as synthbar:
+            binaryContent = bytearray(synthbar.read())
+            free_dev1 = number_to_bytes(3)
+            free_dev2 = number_to_bytes(6)
+            binaryContent[36] = free_dev1[0]
+            binaryContent[37] = free_dev1[1]
+            binaryContent[72] = free_dev2[0]
+            binaryContent[73] = free_dev2[1]
+
+            outZip.writestr("modified_synth_reqs.bin",binaryContent)
 
     def assignStartingItems(self, settings, randomizer):
         def padItems(itemList):
@@ -552,7 +560,7 @@ class SeedZip():
 
     def assignTreasures(self, randomizer):
         treasures = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.POPUP,locationCategory.CHEST])
-        treasures = [trsr for trsr in treasures if locationType.Puzzle not in trsr.location.LocationTypes and locationType.Critical not in trsr.location.LocationTypes]
+        treasures = [trsr for trsr in treasures if locationType.Puzzle not in trsr.location.LocationTypes and locationType.Critical not in trsr.location.LocationTypes and locationType.SYNTH not in trsr.location.LocationTypes]
 
         for trsr in treasures:
             self.formattedTrsr[trsr.location.LocationId] = {"ItemId":trsr.item.Id}

@@ -809,7 +809,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.OCCups,
             locationType.OCParadoxCup,
             locationType.Puzzle,
-            locationType.TTR
+            locationType.TTR,
+            locationType.SYNTH
         ]},
         shared=True,
         default=[],
@@ -817,7 +818,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.OCCups.name: 'icons/misc/cups.png',
             locationType.OCParadoxCup.name: 'icons/misc/paradox_cup.png',
             locationType.Puzzle.name: 'icons/misc/puzzle.png',
-            locationType.TTR.name: 'icons/misc/transport.png'
+            locationType.TTR.name: 'icons/misc/transport.png',
+            locationType.SYNTH.name: 'icons/misc/moogle.png'
         },
         randomizable=True
     ),
@@ -923,6 +925,20 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip='If you die to Data Final Xemnas, continue will put you right back into the fight, instead of having to fight Data Xemnas I again (warning will be a softlock if you are unable to beat Final Xemnas)'
+    ),
+    Toggle(
+        name=settingkey.RETRY_DARK_THORN,
+        ui_label='Retry Dark Thorn',
+        shared=True,
+        default=False,
+        tooltip='If you die to Dark Thorn, continue will put you right back into the fight, instead of having to fight Shadow Sneak again (warning will be a softlock if you are unable to beat Dark Thorn)'
+    ),
+    Toggle(
+        name=settingkey.SKIP_CARPET_ESCAPE,
+        ui_label='Skip Carpet Escape',
+        shared=True,
+        default=False,
+        tooltip='After reaching Ruined Chamber, the carpet escape sequence will be skipped.'
     ),
 
     Toggle(

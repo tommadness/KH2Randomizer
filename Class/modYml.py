@@ -1,4 +1,7 @@
 class modYml:
+    retryDarkThorn = "retryDarkThorn"
+    retryDataXemnas = "retryDataXemnas"
+
     def getDefaultMod():
         return {
             "title": "Randomizer Seed",
@@ -281,6 +284,90 @@ class modYml:
                                     "name": "modified_synth.bin"
                                 }
                             ]
+                        },
+                        {
+                            "name": "cond",
+                            "type": "synthesis",
+                            "method": "copy",
+                            "source": [
+                                {
+                                    "name": "modified_synth_reqs.bin"
+                                }
+                            ]
                         }
                     ]
                 }
+    def getSkipCarpetEscapeMod():
+        return {
+                "name": "ard/al15.ard",
+                "multi": [
+                    {
+                        "name": "ard/us/al15.ard"
+                    },
+                    {
+                        "name": "ard/fr/al15.ard"
+                    },
+                    {
+                        "name": "ard/gr/al15.ard"
+                    },
+                    {
+                        "name": "ard/it/al15.ard"
+                    },
+                    {
+                        "name": "ard/sp/al15.ard"
+                    }
+                ],
+                "method": "binarc",
+                "source": [
+                    {
+                        "name": "evt",
+                        "type": "areadatascript",
+                        "method": "areadatascript",
+                        "source": [
+                            {
+                                "name": "skip_carpet_escape.script"
+                            }
+                        ]
+                    }
+                ]
+            }
+
+
+    def getRetryMod(mod_choice):
+        mod_names = {}
+        mod_names[modYml.retryDarkThorn] = ("BB05_MS104B.bar","BB05","retry_dark_thorn.bar")
+        mod_names[modYml.retryDataXemnas] = ("EH20_MS113_RE.bar","EH20","retry_data_xemnas.bar")
+        return {
+                    "name": "menu/jp/"+mod_names[mod_choice][0],
+                    "multi": [
+                        {
+                            "name": "menu/us/"+mod_names[mod_choice][0]
+                        },
+                        {
+                            "name": "menu/fr/"+mod_names[mod_choice][0]
+                        },
+                        {
+                            "name": "menu/gr/"+mod_names[mod_choice][0]
+                        },
+                        {
+                            "name": "menu/it/"+mod_names[mod_choice][0]
+                        },
+                        {
+                            "name": "menu/sp/"+mod_names[mod_choice][0]
+                        }
+                    ],
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": mod_names[mod_choice][1],
+                            "type": "list",
+                            "method": "copy",
+                            "source": [
+                                {
+                                    "name": mod_names[mod_choice][2]
+                                }
+                            ]
+                        }
+                    ]
+                }
+

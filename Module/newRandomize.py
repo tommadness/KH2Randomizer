@@ -72,6 +72,23 @@ class FormExp():
     def __eq__(self, obj: KH2Location):
         return self.location==obj
 
+@dataclass
+class SynthRequirement():
+    item_id: int
+    amount: int
+
+@dataclass
+class SynthesisRecipe():
+    location: KH2Location
+    requirements = list[SynthRequirement]
+    unlock_rank: int
+
+    def __eq__(self, obj):
+        return self.location==obj.location
+
+    def __eq__(self, obj: KH2Location):
+        return self.location==obj
+
 class Randomizer():
     def __init__(self, settings: RandomizerSettings):
         random.seed(settings.full_rando_seed)
@@ -88,6 +105,7 @@ class Randomizer():
         self.weaponStats = []
         self.levelStats = []
         self.formLevelExp = []
+        self.synthesis_recipes = []
         self.assignSoraItems(settings)
         self.assignPartyItems()
         self.assignWeaponStats(settings)
@@ -407,6 +425,8 @@ class Randomizer():
         if item.ItemType in loc.InvalidChecks:
             raise GeneratorException(f"Trying to assign {item} to {loc} even though it's invalid.")
 
+        assignment_result = None
+
         if loc in assignedItems:
             assigned = [a for a in assignedItems if a==loc][0]
             if assigned.item is None:
@@ -415,7 +435,24 @@ class Randomizer():
                 raise GeneratorException(f"Assigning a second item to a location that can't have a second item {assigned}")
 
             assigned.item2 = item
-            return True
+            assignment_result = True
         else:
             assignedItems.append(ItemAssignment(loc,item))
-            return not doubleItem
+            assignment_result =  not doubleItem
+
+
+        if locationType.SYNTH in loc.LocationTypes:
+            # assign a recipe to this item
+            recipe = SynthesisRecipe(loc, 1 if loc.LocationId < 15 else 2)
+            # pick a number of synth items
+            num_reqs = random.randint(1,3)
+            synth_reqs_list = Items.getSynthRequirementsList()
+            picked_items = random.choices(synth_reqs_list,k=num_reqs)
+            reqs_list = []
+            for i in range(num_reqs):
+                item = picked_items[i]
+                reqs_list.append(SynthRequirement(item_id=item.Id,amount=random.randint(1,3)))
+            recipe.requirements = reqs_list
+            self.synthesis_recipes.append(recipe)
+
+        return assignment_result

@@ -30,7 +30,7 @@ class Hints:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
                 if item.ItemType in importantChecks or item.Name == "Second Chance" or item.Name == "Once More":
-                    if location.LocationTypes[0] != locationType.Puzzle:
+                    if location.LocationTypes[0] != locationType.Puzzle and location.LocationTypes[0] != locationType.SYNTH:
                         if not location.LocationTypes[0] in hintsText['world']:
                             hintsText['world'][location.LocationTypes[0]] = []
                         hintsText['world'][location.LocationTypes[0]].append(item.Name)
@@ -309,7 +309,7 @@ class Hints:
                     worldChecksEdit[h] = []
                     
             for location,item in locationItems:
-                if location.LocationTypes[0] == locationType.WeaponSlot or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle:
+                if location.LocationTypes[0] == locationType.WeaponSlot or location.LocationTypes[0] == locationType.Free or location.LocationTypes[0] == locationType.Critical or location.LocationTypes[0] == locationType.Puzzle or location.LocationTypes[0] == locationType.SYNTH:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     worldChecks[location.LocationTypes[0]].append(item)

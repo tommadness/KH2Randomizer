@@ -32,6 +32,8 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.AS_DATA_SPLIT)
         self.add_option(settingkey.CUPS_GIVE_XP)
         self.add_option(settingkey.RETRY_DFX)
+        self.add_option(settingkey.RETRY_DARK_THORN)
+        self.add_option(settingkey.SKIP_CARPET_ESCAPE)
         self.add_option(settingkey.REMOVE_DAMAGE_CAP)
         self.end_column()
 
