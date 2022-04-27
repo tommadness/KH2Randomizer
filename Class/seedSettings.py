@@ -940,6 +940,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='After reaching Ruined Chamber, the carpet escape sequence will be skipped.'
     ),
+    Toggle(
+        name=settingkey.BETTER_STT,
+        ui_label='Better STT',
+        shared=True,
+        default=False,
+        tooltip='Enables the use of magic, movement abilities, and trinity limit in STT.'
+    ),
 
     Toggle(
         name=settingkey.ENABLE_PROMISE_CHARM,

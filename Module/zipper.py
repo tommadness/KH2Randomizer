@@ -161,6 +161,8 @@ class SeedZip():
                 except Exception as e:
                     raise BossEnemyException(f"Boss/enemy module had an unexpected error {e}. Try different a different seed or different settings.")
 
+            self.createBetterSTTAssets(settings, mod, outZip)
+            
             if settings.spoiler_log:
                 mod["title"] += " w/ Spoiler"
                 with open(resource_path("static/spoilerlog.html")) as spoiler_site:
@@ -201,6 +203,19 @@ class SeedZip():
             outZip.write(resource_path("static/as_data_split/hb33evt.script"), "asdata/hb33evt.script")
             outZip.write(resource_path("static/as_data_split/hb34evt.script"), "asdata/hb34evt.script")
             outZip.write(resource_path("static/as_data_split/hb38evt.script"), "asdata/hb38evt.script")
+
+    def createBetterSTTAssets(self,settings,mod,outZip):
+        boss_enabled = not settings.enemy_options.get("boss", False) in [False, "Disabled"]
+        if settings.better_stt:
+            mod["assets"] += modYml.getBetterSTTMod(boss_enabled)
+            outZip.write(resource_path("static/better_stt/cmd.list"), "better_stt/cmd.list")
+            outZip.write(resource_path("static/better_stt/trinity_zz.bar"), "better_stt/trinity_zz.bar")
+            outZip.write(resource_path("static/better_stt/B_EX100.mset"), "better_stt/B_EX100.mset")
+            outZip.write(resource_path("static/better_stt/F_TT010.mset"), "better_stt/F_TT010.mset")
+            outZip.write(resource_path("static/better_stt/P_EX110.mset"), "better_stt/P_EX110.mset")
+            outZip.write(resource_path("static/better_stt/W_EX010_RX.mset"), "better_stt/W_EX010_RX.mset")
+            if boss_enabled:
+                outZip.write(resource_path("static/better_stt/B_EX100_SR.mset"), "better_stt/B_EX100_SR.mset")
     
     def createRetryAssets(self,settings,mod,outZip):
         for fight in settings.retries:

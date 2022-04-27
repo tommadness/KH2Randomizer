@@ -371,3 +371,12 @@ class modYml:
                     ]
                 }
 
+    def getBetterSTTMod(boss_enemy_enabled):
+        return [{"name": "limit/fm/trinity_zz.bar","method": "copy","source": [{"name": "better_stt/trinity_zz.bar"}]},
+                {"name": "obj/B_EX100.mset","method": "copy","source": [{"name": "better_stt/B_EX100.mset"}]},
+                {"name": "obj/F_TT010.mset","method": "copy","source": [{"name": "better_stt/F_TT010.mset"}]},
+                {"name": "obj/P_EX110.mset","method": "copy","source": [{"name": "better_stt/P_EX110.mset"}]},
+                {"name": "obj/W_EX010_RX.mset","method": "copy","source": [{"name": "better_stt/W_EX010_RX.mset"}]},
+                {"name": "03system.bin", "method": "copy", "source":[{"method":"copy", "name":"cmd", "type":"list", "source":[{"name":"better_stt/cmd.list"}]}]}] + \
+                ([{"name": "obj/B_EX100_SR.mset","method": "copy","source": [{"name": "better_stt/B_EX100_SR.mset"}]},] if boss_enemy_enabled else [])
+

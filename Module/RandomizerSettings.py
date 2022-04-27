@@ -137,6 +137,7 @@ class RandomizerSettings():
 
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
+        self.better_stt = ui_settings.get(settingkey.BETTER_STT)
 
         self.point_hint_values = {"proof":ui_settings.get(settingkey.POINTS_PROOF),
                                     "form":ui_settings.get(settingkey.POINTS_FORM),
@@ -153,18 +154,24 @@ class RandomizerSettings():
         if self.promiseCharm:
             self.tracker_includes.append("PromiseCharm")
         self.tracker_includes.append(level_setting)
-        #if self.level_one:
-        #    self.tracker_includes.append(locationType.Level.value)
-        if locationType.STT.value in self.enabledLocations:
-            self.tracker_includes.append(locationType.STT.value)
-        if locationType.HUNDREDAW.value in self.enabledLocations:
-            self.tracker_includes.append(locationType.HUNDREDAW.value)
-        if locationType.Atlantica.value in self.enabledLocations:
-            self.tracker_includes.append(locationType.Atlantica.value)
-        if locationType.CoR.value in self.enabledLocations:
-            self.tracker_includes.append(locationType.CoR.value)
-        if locationType.OCCups.value in self.enabledLocations:
-            self.tracker_includes.append(locationType.OCCups.value)
+        if self.better_stt:
+            self.tracker_includes.append("better_stt")
+
+        # making tracker includes use all worlds and 
+        for l in locationType:
+            if l.value in self.enabledLocations:
+                self.tracker_includes.append(l.value)
+
+        # if locationType.STT.value in self.enabledLocations:
+        #     self.tracker_includes.append(locationType.STT.value)
+        # if locationType.HUNDREDAW.value in self.enabledLocations:
+        #     self.tracker_includes.append(locationType.HUNDREDAW.value)
+        # if locationType.Atlantica.value in self.enabledLocations:
+        #     self.tracker_includes.append(locationType.Atlantica.value)
+        # if locationType.CoR.value in self.enabledLocations:
+        #     self.tracker_includes.append(locationType.CoR.value)
+        # if locationType.OCCups.value in self.enabledLocations:
+        #     self.tracker_includes.append(locationType.OCCups.value)
 
         self.validateSettings()
 
