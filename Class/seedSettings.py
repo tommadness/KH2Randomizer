@@ -554,6 +554,17 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=2,
         randomizable=True
     ),
+
+    IntSpinner(
+        name=settingkey.POINTS_VISIT,
+        ui_label="Visit Unlock Point Value",
+        minimum=0,
+        maximum=20,
+        step=1,
+        shared=True,
+        default=2,
+        randomizable=True
+    ),
     
     IntSpinner(
         name=settingkey.POINTS_REPORT,
@@ -931,7 +942,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Retry Dark Thorn',
         shared=True,
         default=False,
-        tooltip='If you die to Dark Thorn, continue will put you right back into the fight, instead of having to fight Shadow Sneak again (warning will be a softlock if you are unable to beat Dark Thorn)'
+        tooltip='If you die to Dark Thorn, continue will put you right back into the fight, instead of having to fight Shadow Stalker again (warning will be a softlock if you are unable to beat Dark Thorn)'
     ),
     Toggle(
         name=settingkey.SKIP_CARPET_ESCAPE,
@@ -972,7 +983,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         choices={
             'Super Easy': 'Super Easy',
             'Easy': 'Easy',
+            'Slightly Easy': 'Slightly Easy',
             'Normal': 'Normal',
+            'Slightly Hard': 'Slightly Hard',
             'Hard': 'Hard',
             'Very Hard': 'Very Hard',
             'Insane': 'Insane',
@@ -980,7 +993,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default='Normal',
-        randomizable=["Easy","Normal","Hard","Very Hard"],
+        randomizable=["Easy","Slightly Easy","Normal","Slightly Hard","Hard","Very Hard"],
         tooltip=textwrap.dedent('''
             Bias the placement of items based on how difficult/easy you would like the seed to be. 
             Items have 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias each item gets when placing those items. 

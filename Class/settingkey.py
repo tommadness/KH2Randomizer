@@ -46,6 +46,7 @@ POINTS_REPORT = "points_report"
 POINTS_BONUS = "points_bonus"
 POINTS_COMPLETE = "points_complete"
 POINTS_FORMLV = "points_formlv"
+POINTS_VISIT = "POINTS_VISIT"
 PROOF_DEPTH = 'proof_depth'
 PUREBLOOD = "pureblood"
 REVERSE_RANDO = 'reverse_rando'

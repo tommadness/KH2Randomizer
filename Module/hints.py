@@ -24,7 +24,7 @@ class Hints:
         hintsText['hintsType'] = hintsType
         hintsText['settings'] = tracker_includes
         if hintsType == "Shananas":
-            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON]
+            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON] + [itemType.STORYUNLOCK]
             hintsText['world'] = {}
             for location,item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
@@ -62,7 +62,7 @@ class Hints:
                     worldChecks[h] = []
                     
             for location,item in locationItems:
-                if location.LocationTypes[0] in [locationType.WeaponSlot, locationType.Free, locationType.Critical, locationType.Puzzle]:
+                if location.LocationTypes[0] in [locationType.WeaponSlot, locationType.Free, locationType.Critical, locationType.Puzzle, locationType.SYNTH]:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     worldChecks[location.LocationTypes[0]].append(item)
@@ -83,7 +83,7 @@ class Hints:
                             elif item.ItemType is itemType.PROOF:
                                 proof_of_nonexistence_index = worldsToHint.index(location.LocationTypes[0])
             for location,item in locationItems:
-                if location.LocationTypes[0] in [locationType.Free, locationType.Critical, locationType.Puzzle]:
+                if location.LocationTypes[0] in [locationType.Free, locationType.Critical, locationType.Puzzle, locationType.SYNTH]:
                     if item.ItemType is itemType.REPORT:
                         reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                         freeReports.append(reportNumber)
@@ -288,7 +288,7 @@ class Hints:
             tempWorldR = None
             tempItemR = None
             tempExcludeList = []
-            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"]
+            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] + [itemType.STORYUNLOCK]
             hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
             
             worldChecks = {}
@@ -298,7 +298,7 @@ class Hints:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
-                    if location.LocationTypes[0] != locationType.Puzzle:
+                    if location.LocationTypes[0] != locationType.Puzzle and location.LocationTypes[0] != locationType.SYNTH:
                         if not location.LocationTypes[0] in hintsText['world']:
                             hintsText['world'][location.LocationTypes[0]] = []
                         hintsText['world'][location.LocationTypes[0]].append(item.Name)

@@ -146,6 +146,7 @@ class RandomizerSettings():
                                     "ability":ui_settings.get(settingkey.POINTS_ABILITY), 
                                     "page":ui_settings.get(settingkey.POINTS_PAGE), 
                                     "report":ui_settings.get(settingkey.POINTS_REPORT),
+                                    "visit":ui_settings.get(settingkey.POINTS_VISIT),
                                     "bonus":ui_settings.get(settingkey.POINTS_BONUS), 
                                     "complete":ui_settings.get(settingkey.POINTS_COMPLETE), 
                                     "formlv":ui_settings.get(settingkey.POINTS_FORMLV)}
@@ -156,6 +157,10 @@ class RandomizerSettings():
         self.tracker_includes.append(level_setting)
         if self.better_stt:
             self.tracker_includes.append("better_stt")
+        if ui_settings.get(settingkey.STORY_UNLOCKS):
+            self.tracker_includes.append("visit_locking")
+        if ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE):
+            self.tracker_includes.append("library")
 
         # making tracker includes use all worlds and 
         for l in locationType:

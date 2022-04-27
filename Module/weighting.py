@@ -14,6 +14,18 @@ class WeightDistributions():
         for rarity in itemRarity:
             self.weighting_function["Normal"][rarity] = [1]*(max_depth+1)
 
+        self.weighting_function["Slightly Hard"] = {}
+        self.weighting_function["Slightly Hard"][itemRarity.COMMON] = [1]*(max_depth+1)
+        self.weighting_function["Slightly Hard"][itemRarity.UNCOMMON] = [1]*(max_depth+1)
+        self.weighting_function["Slightly Hard"][itemRarity.RARE] = [1]*floor((max_depth+1)/2) + [2]*ceil((max_depth+1)/2)
+        self.weighting_function["Slightly Hard"][itemRarity.MYTHIC] = [1]*floor((max_depth+1)/2) + [2]*ceil((max_depth+1)/2)
+        self.weighting_function["Slightly Easy"] = {}
+        self.weighting_function["Slightly Easy"][itemRarity.COMMON] = [1]*(max_depth+1)
+        self.weighting_function["Slightly Easy"][itemRarity.UNCOMMON] = [1]*(max_depth+1)
+        self.weighting_function["Slightly Easy"][itemRarity.RARE] = [2]*floor((max_depth+1)/2) + [1]*ceil((max_depth+1)/2)
+        self.weighting_function["Slightly Easy"][itemRarity.MYTHIC] = [2]*floor((max_depth+1)/2) + [1]*ceil((max_depth+1)/2)
+        
+
         for diff_index,difficulty in enumerate(["Super Easy","Easy"]):
             diff_index_modded = (1-diff_index)-0.25
             self.weighting_function[difficulty] = {}
