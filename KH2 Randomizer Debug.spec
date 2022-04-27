@@ -34,6 +34,10 @@ a = Analysis(
         'static/seed-hash-icons/*.*',
         'static/puzzle.bin',
         'static/KHMenu.otf',
+        'static/as_data_split/*.*',
+        'static/*.bar',
+        'static/*.script',
+        'static/*.bin',
         'Module/icon.png',
         'extracted_data/**/*.*'
     ])+[(khbrpath+'/KH2/data/*','khbr/KH2/data'), (khbrpath+'/KH2/data/ai_mods/*','khbr/KH2/data/ai_mods')],
