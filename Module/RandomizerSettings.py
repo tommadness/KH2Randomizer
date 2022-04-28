@@ -138,6 +138,8 @@ class RandomizerSettings():
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.better_stt = ui_settings.get(settingkey.BETTER_STT)
+        self.remove_maps = ui_settings.get(settingkey.REMOVE_MAPS)
+        self.remove_recipes = ui_settings.get(settingkey.REMOVE_RECIPES)
 
         self.point_hint_values = {"proof":ui_settings.get(settingkey.POINTS_PROOF),
                                     "form":ui_settings.get(settingkey.POINTS_FORM),

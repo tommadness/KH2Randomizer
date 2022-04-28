@@ -977,6 +977,24 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=True
     ),
 
+    Toggle(
+        name=settingkey.REMOVE_MAPS,
+        ui_label='Remove Maps from Item Pool',
+        shared=True,
+        default=False,
+        tooltip="Removes maps from the required item pool, freeing up more slots for the other 'junk' items",
+        randomizable=True
+    ),
+
+    Toggle(
+        name=settingkey.REMOVE_RECIPES,
+        ui_label='Remove Recipes from Item Pool',
+        shared=True,
+        default=False,
+        tooltip="Removes recipes from the required item pool, freeing up more slots for the other 'junk' items",
+        randomizable=True
+    ),
+
     SingleSelect(
         name=settingkey.ITEM_PLACEMENT_DIFFICULTY,
         ui_label='Item Placement Difficulty',

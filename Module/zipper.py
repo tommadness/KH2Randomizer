@@ -64,7 +64,6 @@ class SynthLocation():
             # add the amount of that ingredient
             bytes.append(item_byte0)
             bytes.append(item_byte1)
-        print(bytes)
         return bytes
 
     def addReq(self,req_number,req_item,req_amount):

@@ -214,6 +214,11 @@ class Randomizer():
         if not settings.pureblood:
             allItems = [i for i in allItems if i.Id!=71]
 
+        if settings.remove_maps:
+            allItems = [i for i in allItems if i.ItemType != itemType.MAP]
+        if settings.remove_recipes:
+            allItems = [i for i in allItems if i.ItemType != itemType.RECIPE]
+
         allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + (Items.getLevelAbilityList() if not settings.level_one else []) )
         # if there abilities in the starting inventory, remove them from the pool
         removeAbilities = []
