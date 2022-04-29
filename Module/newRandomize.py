@@ -241,7 +241,13 @@ class Randomizer():
         else:
             self.assignStatBonuses(allLocations)
 
-        invalidLocations = [loc for loc in allLocations if (any(item in loc.LocationTypes for item in settings.disabledLocations) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
+        def invalid_checker(loc):
+            result = any(item in loc.LocationTypes for item in settings.disabledLocations)
+            if any(item in [locationType.OCCups,locationType.OCParadoxCup,locationType.CoR,locationType.TTR] for item in loc.LocationTypes):
+                result = all(item in settings.disabledLocations for item in loc.LocationTypes)
+            return result
+
+        invalidLocations = [loc for loc in allLocations if ( invalid_checker(loc) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
 
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):

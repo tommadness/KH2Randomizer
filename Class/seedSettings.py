@@ -445,7 +445,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Library of Assemblage',
         shared=True,
         default=False,
-        tooltip='Start with all the Ansem Reports, which act as hints for JSmartee and Point hints'
+        tooltip='Start with all the Ansem Reports, which act as hints for JSmartee, Point, and Path hints'
     ),
 
     MultiSelect(
@@ -476,7 +476,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'Disabled': 'Disabled',
             'Shananas': 'Shananas',
             'JSmartee': 'JSmartee',
-            'Points': 'Points'
+            'Points': 'Points',
+            'Path': 'Path'
         },
         shared=True,
         default='JSmartee',
@@ -485,8 +486,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             JSmartee - Secret Ansem Reports provide information for how many "important checks" are in a world
             Shananas - Each world informs you once the world has no more "important checks"
             Points - Each "important check" is assigned a point value, and you are told the number of points in each world. Secret Ansem Reports tell you where items are.
+            Path - Reports will tell you if a world contains `breadcrumbs` left by a world that has a proof. `Breadcrumbs` being vanilla important checks from a world. 
         '''),
-        randomizable=["Shananas","JSmartee","Points"]
+        randomizable=["Shananas","JSmartee","Points","Path"]
     ),
 
     IntSpinner(
@@ -751,7 +753,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.PR,
             locationType.SP,
             locationType.TWTNW,
-            locationType.CoR,
             locationType.Atlantica
         ]},
         shared=True,
@@ -763,7 +764,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.PL.name,
             locationType.HT.name,
             locationType.SP.name,
-            locationType.CoR.name,
             locationType.TT.name,
             locationType.BC.name,
             locationType.Agrabah.name,
@@ -780,7 +780,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.PL.name: "icons/worlds/pride_lands.png",
             locationType.HT.name: "icons/worlds/halloween_town.png",
             locationType.SP.name: "icons/worlds/space_paranoids.png",
-            locationType.CoR.name: "icons/worlds/cavern_of_remembrance.png",
             locationType.TT.name: "icons/worlds/twilight_town.png",
             locationType.BC.name: "icons/worlds/beast's_castle.png",
             locationType.Agrabah.name: "icons/worlds/agrabah.png",
@@ -820,15 +819,18 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.OCCups,
             locationType.OCParadoxCup,
             locationType.Puzzle,
+            locationType.CoR,
             locationType.TTR,
             locationType.SYNTH
         ]},
         shared=True,
-        default=[],
+        default=[
+            locationType.CoR.name,],
         choice_icons={
             locationType.OCCups.name: 'icons/misc/cups.png',
             locationType.OCParadoxCup.name: 'icons/misc/paradox_cup.png',
             locationType.Puzzle.name: 'icons/misc/puzzle.png',
+            locationType.CoR.name: "icons/worlds/cavern_of_remembrance.png",
             locationType.TTR.name: 'icons/misc/transport.png',
             locationType.SYNTH.name: 'icons/misc/moogle.png'
         },

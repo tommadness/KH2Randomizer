@@ -2,7 +2,7 @@ from Class.exceptions import HintException
 from List.ItemList import Items
 from List.configDict import itemType, locationType
 import base64, json, random
-from itertools import permutations
+from itertools import permutations,chain
 
 
 class Hints:
@@ -33,8 +33,8 @@ class Hints:
                     if location.LocationTypes[0] != locationType.Puzzle and location.LocationTypes[0] != locationType.SYNTH:
                         if not location.LocationTypes[0] in hintsText['world']:
                             hintsText['world'][location.LocationTypes[0]] = []
-                        hintsText['world'][location.LocationTypes[0]].append(item.Name)
-
+                        hintsText['world'][location.LocationTypes[0]].append(item.Name)      
+        
         report_master = [None]*14
         found_reports = False
         for location,item in locationItems:
@@ -42,6 +42,125 @@ class Hints:
                 reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                 found_reports = True
                 report_master[reportNumber] = location.LocationTypes
+    
+        if hintsType == "Path":
+            hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
+            importantChecks = [itemType.REPORT, itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON] + [itemType.STORYUNLOCK]
+            world_to_vanilla_ICs = {}
+            world_to_vanilla_ICs[locationType.Level] = [415,416]
+            world_to_vanilla_ICs[locationType.FormLevel] = world_to_vanilla_ICs[locationType.Level]
+            world_to_vanilla_ICs[locationType.Atlantica] = [22]
+            world_to_vanilla_ICs[locationType.TWTNW] = [87]
+            world_to_vanilla_ICs[locationType.PR] = [87,160,62]
+            world_to_vanilla_ICs[locationType.DC] = [32,88,27]
+            world_to_vanilla_ICs[locationType.HUNDREDAW] = [24]
+            world_to_vanilla_ICs[locationType.Agrabah] = [159,21,32,72]
+            world_to_vanilla_ICs[locationType.BC] = [24,88,59]
+            world_to_vanilla_ICs[locationType.TT] = [26,563,366]
+            world_to_vanilla_ICs[locationType.SP] = [88,74]
+            world_to_vanilla_ICs[locationType.HT] = [87,60]
+            world_to_vanilla_ICs[locationType.PL] = [32,21,23,61]
+            world_to_vanilla_ICs[locationType.LoD] = [23,32,55]
+            world_to_vanilla_ICs[locationType.OC] = [23,54]
+            world_to_vanilla_ICs[locationType.HB] = [21,22,383,25,31,24,32,375,376]
+            world_to_vanilla_ICs[locationType.STT] = world_to_vanilla_ICs[locationType.TT]
+
+            ICs_to_hintable_worlds = {}
+
+            # where did each world drop their breadcrumbs
+            # vanilla world to randomized world
+            breadcrumb_map = {}
+
+            for key,item_list in world_to_vanilla_ICs.items():
+                if key not in breadcrumb_map:
+                    breadcrumb_map[key] = set()
+                for i in item_list:
+                    if i not in ICs_to_hintable_worlds:
+                        ICs_to_hintable_worlds[i] = []
+                    ICs_to_hintable_worlds[i].append(key)
+            
+            hintsText['world'] = {}
+            hintsText['Reports'] = {}
+            proof_of_connection_world = None
+            proof_of_peace_world = None
+            proof_of_nonexistence_world = None
+
+            for x in hintableWorlds:
+                hintsText['world'][x] = []
+
+
+
+            for location,item in locationItems:
+                if location.LocationTypes[0] == locationType.WeaponSlot:
+                    continue
+                if item.ItemType in importantChecks or item.Name == "Second Chance" or item.Name == "Once More":
+                    if location.LocationTypes[0] != locationType.Puzzle and location.LocationTypes[0] != locationType.SYNTH:
+                        if not location.LocationTypes[0] in hintsText['world']:
+                            hintsText['world'][location.LocationTypes[0]] = []
+                        hintsText['world'][location.LocationTypes[0]].append(item.Name)                        
+                        if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]:
+                            if item.ItemType is itemType.PROOF_OF_CONNECTION:
+                                proof_of_connection_world = location.LocationTypes[0]
+                            elif item.ItemType is itemType.PROOF_OF_PEACE:
+                                proof_of_peace_world = location.LocationTypes[0]
+                            elif item.ItemType is itemType.PROOF:
+                                proof_of_nonexistence_world = location.LocationTypes[0]
+                        elif item.Id!=29 and item.ItemType != itemType.REPORT: # no vanilla final form location and ignore reports
+                            # this item could have come from any world from this list
+                            for w in ICs_to_hintable_worlds[item.Id]:
+                                if location.LocationTypes[0] in hintableWorlds:
+                                    breadcrumb_map[w].add(location.LocationTypes[0])
+            
+
+            hintable_world_list = list(set(chain(breadcrumb_map[proof_of_connection_world] if proof_of_connection_world else [],breadcrumb_map[proof_of_peace_world] if proof_of_peace_world else [],breadcrumb_map[proof_of_nonexistence_world] if proof_of_nonexistence_world else [])))
+            barren_world_list = [x for x in hintableWorlds if x not in hintable_world_list]
+
+            hintable_world_list.sort(reverse=True,key=lambda x : len(hintsText['world'][x]))
+            barren_world_list.sort(reverse=True,key=lambda x : len(hintsText['world'][x]))
+
+
+            report_texts = []
+
+            def create_hint_text(world):
+                num_items = len(hintsText['world'][world])
+                if num_items == 0:
+                    return f"{world} has nothing, sorry."
+
+                points_to_connection = proof_of_connection_world and world in breadcrumb_map[proof_of_connection_world]
+                points_to_peace = proof_of_peace_world and world in breadcrumb_map[proof_of_peace_world]
+                points_to_nonexistence = proof_of_nonexistence_world and world in breadcrumb_map[proof_of_nonexistence_world]
+                if not points_to_connection and not points_to_nonexistence and not points_to_peace:
+                    return f"{world} has no path to the light."
+                if points_to_connection and points_to_nonexistence and points_to_peace:
+                    return f"{world} has a path to all lights."
+                if points_to_connection and points_to_peace:
+                    return f"{world} is on the path to Connection and Peace."
+                if points_to_connection and points_to_nonexistence:
+                    return f"{world} is on the path to Connection and Nonexistence."
+                if points_to_nonexistence and points_to_peace:
+                    return f"{world} is on the path to Nonexistence and Peace."
+                if points_to_nonexistence:
+                    return f"{world} is on the path to Nonexistence."
+                if points_to_peace:
+                    return f"{world} is on the path to Peace."
+                if points_to_connection:
+                    return f"{world} is on the path to Connection."
+
+            
+            for x in hintable_world_list:
+                report_texts.append(create_hint_text(x))
+            for x in barren_world_list:
+                report_texts.append(create_hint_text(x))
+
+            report_texts = report_texts[0:13]
+            random.shuffle(report_texts)
+
+            for x in range(1,14):
+                report_location = report_master[x][0]
+                hintsText["Reports"][x] = {
+                            "Text": report_texts[x-1],
+                            "Location": report_location
+                        }
 
         if hintsType == "JSmartee":
             proof_of_connection_index = None

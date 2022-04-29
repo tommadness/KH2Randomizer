@@ -505,7 +505,7 @@ class Locations:
                                         KH2Location(541, "Skillful Ring (Titan Cup)", locationCategory.POPUP,[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY]),]))
         self.add_node("Goddess of Fate Cup",LocationNode([KH2Location(516, "Fatal Crest (Goddess of Fate Cup)", locationCategory.POPUP,[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY]),
                                         KH2Location(517, "Orichalcum+ (Goddess of Fate Cup)", locationCategory.POPUP,[locationType.OC, locationType.OCCups], InvalidChecks=[itemType.TROPHY]),]))
-        self.add_node("Paradox Cups",LocationNode([KH2Location(518, "Hades Cup Trophy (Paradox Cups)", locationCategory.POPUP,[locationType.OC, locationType.OCCups, locationType.OCParadoxCup], InvalidChecks=[itemType.TROPHY, itemType.FORM, itemType.SUMMON]),]))
+        self.add_node("Paradox Cups",LocationNode([KH2Location(518, "Hades Cup Trophy (Paradox Cups)", locationCategory.POPUP,[locationType.OC, locationType.OCParadoxCup], InvalidChecks=[itemType.TROPHY, itemType.FORM, itemType.SUMMON]),]))
         self.add_node("AS Zexion",LocationNode([KH2Location(66, "Zexion Bonus", locationCategory.STATBONUS,[locationType.OC, locationType.AS]),
                                         KH2Location(546, "Zexion (AS) Book of Shadows", locationCategory.POPUP,[locationType.OC, locationType.AS]),]))
         self.add_node("Data Zexion",LocationNode([KH2Location(551, "Zexion (Data) Lost Illusion", locationCategory.POPUP,[locationType.OC, locationType.DataOrg]),]))

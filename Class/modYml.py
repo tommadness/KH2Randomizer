@@ -299,22 +299,22 @@ class modYml:
                 }
     def getSkipCarpetEscapeMod():
         return {
-                "name": "ard/al15.ard",
+                "name": "ard/al11.ard",
                 "multi": [
                     {
-                        "name": "ard/us/al15.ard"
+                        "name": "ard/us/al11.ard"
                     },
                     {
-                        "name": "ard/fr/al15.ard"
+                        "name": "ard/fr/al11.ard"
                     },
                     {
-                        "name": "ard/gr/al15.ard"
+                        "name": "ard/gr/al11.ard"
                     },
                     {
-                        "name": "ard/it/al15.ard"
+                        "name": "ard/it/al11.ard"
                     },
                     {
-                        "name": "ard/sp/al15.ard"
+                        "name": "ard/sp/al11.ard"
                     }
                 ],
                 "method": "binarc",
@@ -372,11 +372,11 @@ class modYml:
                 }
 
     def getBetterSTTMod(boss_enemy_enabled):
-        return [{"name": "limit/fm/trinity_zz.bar","method": "copy","source": [{"name": "better_stt/trinity_zz.bar"}]},
+        return [{"name": "limit/fm/trinity_zz.bar","multi":[{"name":"limit/us/trinity_zz.bar"},{"name":"limit/fr/trinity_zz.bar"},{"name":"limit/gr/trinity_zz.bar"},{"name":"limit/it/trinity_zz.bar"},{"name":"limit/sp/trinity_zz.bar"}],"method": "copy","source": [{"name": "better_stt/trinity_zz.bar"}]},
                 {"name": "obj/B_EX100.mset","method": "copy","source": [{"name": "better_stt/B_EX100.mset"}]},
                 {"name": "obj/F_TT010.mset","method": "copy","source": [{"name": "better_stt/F_TT010.mset"}]},
                 {"name": "obj/P_EX110.mset","method": "copy","source": [{"name": "better_stt/P_EX110.mset"}]},
                 {"name": "obj/W_EX010_RX.mset","method": "copy","source": [{"name": "better_stt/W_EX010_RX.mset"}]},
-                {"name": "03system.bin", "method": "copy", "source":[{"method":"copy", "name":"cmd", "type":"list", "source":[{"name":"better_stt/cmd.list"}]}]}] + \
+                {"name": "03system.bin", "method": "binarc", "source":[{"method":"copy", "name":"cmd", "type":"list", "source":[{"name":"better_stt/cmd.list"}]}]}] + \
                 ([{"name": "obj/B_EX100_SR.mset","method": "copy","source": [{"name": "better_stt/B_EX100_SR.mset"}]},] if boss_enemy_enabled else [])
 
