@@ -27,10 +27,6 @@ class SeedModMenu(KH2Submenu):
 
         select_all_junk.clicked.connect(lambda: self.toggle_all_items())
         select_better_junk.clicked.connect(lambda: self.toggle_better_junk())
-        self.start_column()
-        self.add_option(settingkey.REMOVE_MAPS)
-        self.add_option(settingkey.REMOVE_RECIPES)
-        self.end_column()
 
         self.start_column()
         self.add_option(settingkey.AS_DATA_SPLIT)

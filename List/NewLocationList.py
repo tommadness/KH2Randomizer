@@ -29,7 +29,7 @@ class Locations:
     def __init__(self, settings: RandomizerSettings, secondary_graph = False):
         self.location_graph = Graph()
         self.reverse_rando = secondary_graph
-        self.nightmare = settings.itemPlacementDifficulty=="Nightmare"
+        self.nightmare = settings.nightmare
         self.first_boss_nodes = []
         self.second_boss_nodes = []
         self.data_nodes = []
@@ -901,7 +901,7 @@ class Locations:
                                         KH2Location(577, "CoR Engine Chamber Manifest Illusion", locationCategory.CHEST,[locationType.HB, locationType.CoR]),]))
         self.add_node("CoR Mineshaft Post Fight 2",LocationNode([KH2Location(582, "CoR Mineshaft Upper Level Magic Boost", locationCategory.CHEST,[locationType.HB, locationType.CoR]),]))
         self.add_node("CoR Mineshaft Last Chest",LocationNode([KH2Location(579, "CoR Mineshaft Upper Level AP Boost", locationCategory.CHEST,[locationType.HB, locationType.CoR]),]))
-        self.add_node("Transport to Remembrance",LocationNode([KH2Location(72, "Transport to Remembrance", locationCategory.STATBONUS,[locationType.HB, locationType.CoR, locationType.TTR]),]))
+        self.add_node("Transport to Remembrance",LocationNode([KH2Location(72, "Transport to Remembrance", locationCategory.STATBONUS,[locationType.HB, locationType.TTR]),]))
 
 
         self.data_nodes.append("Data Demyx")

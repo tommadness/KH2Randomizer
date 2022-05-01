@@ -1020,6 +1020,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             Super Easy and Easy will bias Rare and Mythic items early, while the Hard settings will bias those later.
         '''),
     ),
+    Toggle(
+        name=settingkey.NIGHTMARE_LOGIC,
+        ui_label='Enable Advanced Nightmare Logic',
+        shared=True,
+        default=False,
+        tooltip="Enables weighting for keyblades with good abilities, and puts auto forms `in-logic` meaning they may be required",
+        randomizable=True
+    ),
     SingleSelect(
         name=settingkey.SOFTLOCK_CHECKING,
         ui_label='Softlock Prevention',

@@ -243,8 +243,9 @@ class Randomizer():
 
         def invalid_checker(loc):
             result = any(item in loc.LocationTypes for item in settings.disabledLocations)
-            if any(item in [locationType.OCCups,locationType.OCParadoxCup,locationType.CoR,locationType.TTR] for item in loc.LocationTypes):
-                result = all(item in settings.disabledLocations for item in loc.LocationTypes)
+            check_list = [locationType.OCCups,locationType.OCParadoxCup,locationType.CoR,locationType.TTR]
+            if any(item in check_list for item in loc.LocationTypes):
+                result = not any(item in settings.enabledLocations and item in check_list for item in loc.LocationTypes)
             return result
 
         invalidLocations = [loc for loc in allLocations if ( invalid_checker(loc) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
@@ -347,7 +348,7 @@ class Randomizer():
         eligible_ids = set(settings.keyblade_support_abilities + settings.keyblade_action_abilities)
 
         #remove auto abilities from keyblades
-        if settings.itemPlacementDifficulty == "Nightmare":
+        if settings.nightmare:
             eligible_ids.discard(385)
             eligible_ids.discard(386)
             eligible_ids.discard(387)
@@ -362,7 +363,7 @@ class Randomizer():
             if keyblade.LocationId=="85" and not settings.pureblood:
                 continue
             if keybladeAbilities:
-                if settings.itemPlacementDifficulty == "Nightmare" and keyblade.LocationId not in [116,83,84,80]:
+                if settings.nightmare and keyblade.LocationId not in [116,83,84,80]:
                     abilityWeights = [nightmareRarityWeights[abil.Rarity] for abil in keybladeAbilities]
                 else:
                     abilityWeights = [1 for abil in keybladeAbilities]
@@ -371,7 +372,7 @@ class Randomizer():
                 allAbilities.remove(randomAbility)
                 keybladeAbilities.remove(randomAbility)
 
-                if settings.itemPlacementDifficulty == "Nightmare" and randomAbility.Rarity in [itemRarity.RARE,itemRarity.MYTHIC]:
+                if settings.nightmare and randomAbility.Rarity in [itemRarity.RARE,itemRarity.MYTHIC]:
                     # change the rarity of the keyblade item to the rarity of the ability
                     keyItemId = Items.locationToKeybladeItem(keyblade.LocationId)
                     if keyItemId:
