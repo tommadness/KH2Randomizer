@@ -13,6 +13,8 @@
     * Choose the Windows `x64` version under ".NET Desktop Runtime"
 * [Rando Setup Checker](https://github.com/KH2FM-Mods-equations19/rando-setup-checker/releases/latest/download/Rando.Setup.Checker.zip)
   ([instructions](https://github.com/KH2FM-Mods-equations19/rando-setup-checker/blob/main/README.md#instructions))
+* [KH2 Door Randomizer](https://github.com/MainMemory/KH2DoorRando/releases/latest)
+    * PCSX2-EX is needed for Lua Support
 
 ### PC Epic Games Store Version ([setup guide](https://docs.google.com/document/d/1KIVS6RjnCtbpO3DYWy1HdXxkw_8s9opE8dsPaoDTpYU/edit?usp=sharing))
 
