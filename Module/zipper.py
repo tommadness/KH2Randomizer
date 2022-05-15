@@ -258,7 +258,10 @@ class SeedZip():
     def createBetterSTTAssets(self,settings,mod,outZip):
         boss_enabled = not settings.enemy_options.get("boss", False) in [False, "Disabled"]
         if settings.better_stt:
-            mod["assets"] += modYml.getBetterSTTMod(boss_enabled)
+            mod["assets"] += modYml.getBetterSTTMod(boss_enabled)[0]
+            for x in mod["assets"]:
+                if x["name"]=="03system.bin":
+                    x["source"]+=modYml.getBetterSTTMod(boss_enabled)[1]
             outZip.write(resource_path("static/better_stt/cmd.list"), "better_stt/cmd.list")
             outZip.write(resource_path("static/better_stt/trinity_zz.bar"), "better_stt/trinity_zz.bar")
             outZip.write(resource_path("static/better_stt/B_EX100.mset"), "better_stt/B_EX100.mset")
