@@ -168,7 +168,8 @@ class RandomizerSettings():
         # making tracker includes use all worlds and 
         for l in locationType:
             if l.value in self.enabledLocations:
-                self.tracker_includes.append(l.value)
+                if l.value!="Level": # don't duplicate the level info
+                    self.tracker_includes.append(l.value)
 
         # if locationType.STT.value in self.enabledLocations:
         #     self.tracker_includes.append(locationType.STT.value)

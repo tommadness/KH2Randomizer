@@ -291,6 +291,8 @@ class Randomizer():
                 count+=1
                 if len(weights)==0:
                     raise CantAssignItemException(f"Ran out of locations to assign items to.")
+                if sum(weights) == 0 and restricted_reports:
+                    raise CantAssignItemException(f"Somehow, can't assign an item. If using report depth option that restricts to specific bosses, make sure all worlds with doors in GoA are enabled.")
                 randomLocation = random.choices(validLocations,weights)[0]
                 if item.ItemType not in randomLocation.InvalidChecks:
                     if self.assignItem(randomLocation,item):

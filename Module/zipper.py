@@ -30,6 +30,50 @@ def number_to_bytes(item):
     itemByte0 = item & 0x00FF
     return itemByte0,itemByte1
 
+# def bytes_to_number(byte0, byte1=0):
+#     return int(byte0)+int(byte1<<8)
+
+# id_to_enemy_name = {}
+
+# id_to_enemy_name[1] = "Soldier"
+# id_to_enemy_name[2] = "Shadow"
+# id_to_enemy_name[3] = "Large Body"
+# id_to_enemy_name[4] = "Armored Knight"
+# id_to_enemy_name[5] = "Surveillance Robot"
+# id_to_enemy_name[6] = "Dusk"
+# id_to_enemy_name[7] = "Trick Ghost"
+# id_to_enemy_name[8] = "Rabid Dog"
+# id_to_enemy_name[9] = "Hook Bat"
+# id_to_enemy_name[10] = "Minute Bomb"
+# id_to_enemy_name[11] = "Assault Rider"
+# id_to_enemy_name[12] = "Hammer Frame"
+# id_to_enemy_name[13] = "Aeroplane"
+# id_to_enemy_name[14] = "STT Creepers"
+# id_to_enemy_name[15] = "Samurai"
+
+# class DropRates():
+#     def __init__(self,bytes):
+#         self.id = bytes_to_number(bytes[0],bytes[1])
+#         self.small_hp = bytes_to_number(bytes[2])
+#         self.big_hp = bytes_to_number(bytes[3])
+#         self.big_munny = bytes_to_number(bytes[4])
+#         self.medium_munny = bytes_to_number(bytes[5])
+#         self.small_munny = bytes_to_number(bytes[6])
+#         self.small_mp = bytes_to_number(bytes[7])
+#         self.big_mp = bytes_to_number(bytes[8])
+#         self.small_drive = bytes_to_number(bytes[9])
+#         self.big_drive = bytes_to_number(bytes[10])
+#         self.item1 = bytes_to_number(bytes[12],bytes[13])
+#         self.item1_chance = bytes_to_number(bytes[14],bytes[15])
+#         self.item2 = bytes_to_number(bytes[16],bytes[17])
+#         self.item2_chance = bytes_to_number(bytes[18],bytes[19])
+#         self.item3 = bytes_to_number(bytes[20],bytes[21])
+#         self.item3_chance = bytes_to_number(bytes[22],bytes[23])
+
+#     def __str__(self):
+#         return f"{self.id} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
+
+
 class SynthLocation():
     def __init__(self, loc, item, in_recipe: SynthesisRecipe):
         self.location = loc
@@ -92,6 +136,14 @@ class SeedZip():
         self.createZip(settings, randomizer, hints, cosmetics_data)
 
     def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data):
+
+        # with open(resource_path("static/drops.bin"), "rb") as dropsbar:
+        #     binaryContent = bytearray(dropsbar.read())
+        #     for i in range(0,184):
+        #         start_index = 8+24*i
+        #         rates = DropRates(binaryContent[start_index:start_index+24])
+        #         print(rates)
+
         mod = modYml.getDefaultMod()
         sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
 

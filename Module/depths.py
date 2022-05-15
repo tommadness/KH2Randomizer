@@ -1,6 +1,6 @@
 
 from Class.newLocationClass import KH2Location
-from List.configDict import locationCategory, locationDepth
+from List.configDict import locationCategory, locationDepth, locationType
 from List.NewLocationList import Locations
 
 class ItemDepths():
@@ -70,7 +70,8 @@ class ItemDepths():
         elif location_depth is locationDepth.DataFight:
             for node in data_nodes:
                 node_locations = location_graph.node_data(node).locations
-                self.depth_classification[node_locations[0]] = True
+                if locationType.DataOrg in node_locations[0].LocationTypes:
+                    self.depth_classification[node_locations[0]] = True
 
     def isValid(self, loc: KH2Location):
         return self.depth_classification[loc]
