@@ -208,8 +208,8 @@ class Items:
             KH2Item(535,"Munny Pouch",itemType.MUNNY_POUCH, itemRarity.RARE),
             KH2Item(362, "Munny Pouch",itemType.MUNNY_POUCH, itemRarity.RARE),
 
-            KH2Item(369, "Membership Card", itemType.MEMBERSHIPCARD, itemRarity.UNCOMMON),
             KH2Item(537, "Hades Cup Trophy", itemType.TROPHY, itemRarity.UNCOMMON),
+            KH2Item(462, "Unknown Disk", itemType.MEMBERSHIPCARD, itemRarity.UNCOMMON), # DUMMY 15
 
             KH2Item(363, "Crystal Orb", itemType.KEYITEM),
             KH2Item(364, "Seifer's Trophy", itemType.KEYITEM),
@@ -321,7 +321,7 @@ class Items:
             # KH2Item(73, "Way to the Dawn (Riku)", itemType.STORYUNLOCK, story_unlock_rarity),
             KH2Item(74, "Identity Disk (Tron)", itemType.STORYUNLOCK, story_unlock_rarity),
             # KH2Item(365, "Tournament Poster", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(366, "Poster", itemType.STORYUNLOCK, story_unlock_rarity),
+            KH2Item(369, "Membership Card", itemType.MEMBERSHIPCARD, itemRarity.UNCOMMON),
             KH2Item(375, "Ice Cream", itemType.STORYUNLOCK,story_unlock_rarity),
             KH2Item(376, "Picture", itemType.STORYUNLOCK,story_unlock_rarity),
         ]

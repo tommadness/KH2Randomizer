@@ -58,13 +58,13 @@ class Hints:
             world_to_vanilla_ICs[locationType.HUNDREDAW] = [24]
             world_to_vanilla_ICs[locationType.Agrabah] = [159,21,32,72]
             world_to_vanilla_ICs[locationType.BC] = [24,88,59]
-            world_to_vanilla_ICs[locationType.TT] = [26,563,366]
+            world_to_vanilla_ICs[locationType.TT] = [26,563]
             world_to_vanilla_ICs[locationType.SP] = [88,74]
             world_to_vanilla_ICs[locationType.HT] = [87,60]
             world_to_vanilla_ICs[locationType.PL] = [32,21,23,61]
             world_to_vanilla_ICs[locationType.LoD] = [23,32,55]
             world_to_vanilla_ICs[locationType.OC] = [23,54]
-            world_to_vanilla_ICs[locationType.HB] = [21,22,383,25,31,24,32,375,376]
+            world_to_vanilla_ICs[locationType.HB] = [21,22,383,25,31,24,32,375,376,369]
             world_to_vanilla_ICs[locationType.STT] = world_to_vanilla_ICs[locationType.TT]
 
             ICs_to_hintable_worlds = {}
@@ -259,9 +259,9 @@ class Hints:
                                 locationType.PL : [61],
                                 locationType.PR : [62],
                                 locationType.Agrabah : [72],
-                                locationType.HB : [375],
+                                locationType.HB : [369],
                                 locationType.SP : [74],
-                                locationType.TT : [366, 376]
+                                locationType.TT : [375, 376]
                                 }
             story_unlocks_for_proofs = []
             for world in hintableWorlds:

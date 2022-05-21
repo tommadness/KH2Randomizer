@@ -162,10 +162,10 @@ class ItemPlacementHelpers():
         return 74 in inventory
     @staticmethod
     def tt2_check(inventory):
-        return 366 in inventory # Poster
-    @staticmethod
-    def tt3_check(inventory):
         return 376 in inventory # Picture
     @staticmethod
-    def hb_check(inventory):
+    def tt3_check(inventory):
         return 375 in inventory # Ice Cream
+    @staticmethod
+    def hb_check(inventory):
+        return 369 in inventory # Membership Card

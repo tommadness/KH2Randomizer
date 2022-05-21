@@ -459,7 +459,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             '393': 'Finishing Plus',
             '537': 'Hades Cup Trophy',
             '370': 'Olympus Stone',
-            '369': 'Membership Card',
+            '462': 'Unknown Disk',
             '593': 'Proof of Connection',
             '594': 'Proof of Nonexistence',
             '595': 'Proof of Peace',
