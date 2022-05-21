@@ -1185,7 +1185,7 @@ class Locations:
             self.add_edge("Limit Form","Underground Concourse",RequirementEdge(req=ItemPlacementHelpers.tt3_check))
             self.add_edge("Underground Concourse","Tunnelway",RequirementEdge())
             self.add_edge("Tunnelway","TT Sunset Terrace",RequirementEdge())
-            self.add_edge("Limit Form","TT Mansion Bonus",RequirementEdge(battle=True))
+            self.add_edge("Limit Form","TT Mansion Bonus",RequirementEdge(battle=True,req=ItemPlacementHelpers.tt3_check))
             self.add_edge("TT Mansion Bonus","TT Mansion Foyer",RequirementEdge())
             self.add_edge("TT Mansion Foyer","TT Mansion Dining Room",RequirementEdge())
             self.add_edge("TT Mansion Foyer","TT Mansion Library",RequirementEdge())

@@ -260,6 +260,15 @@ class Randomizer():
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
 
+        # leaving this code here for future bug testing. Puts a specific item in a specific location
+        # for item in allItems:
+        #     if item.Id == 376:
+        #         data_axel = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==561][0]
+        #         if self.assignItem(data_axel,item):
+        #             validLocations.remove(data_axel)
+        #         allItems.remove(item)
+        #         break
+
         #assign valid items to all valid locations remaining
         for item in allItems:
             if len(validLocations) == 0:
