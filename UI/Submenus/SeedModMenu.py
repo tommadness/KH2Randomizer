@@ -31,7 +31,7 @@ class SeedModMenu(KH2Submenu):
         self.start_column()
         self.add_option(settingkey.AS_DATA_SPLIT)
         self.add_option(settingkey.CUPS_GIVE_XP)
-        self.add_option(settingkey.BETTER_STT)
+        self.add_option(settingkey.ROXAS_ABILITIES_ENABLED)
         self.add_option(settingkey.RETRY_DFX)
         self.add_option(settingkey.RETRY_DARK_THORN)
         self.add_option(settingkey.SKIP_CARPET_ESCAPE)

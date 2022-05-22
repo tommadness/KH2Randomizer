@@ -953,12 +953,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='After reaching Ruined Chamber, the carpet escape sequence will be skipped.'
     ),
+
     Toggle(
-        name=settingkey.BETTER_STT,
-        ui_label='Better STT',
+        name=settingkey.ROXAS_ABILITIES_ENABLED,
+        ui_label='Roxas Magic/Movement/Trinity',
         shared=True,
         default=False,
-        tooltip='Enables the use of magic, movement abilities, and trinity limit in STT.'
+        tooltip='Allows Roxas to use magic, Sora\'s movement abilities, and Trinity Limit in Simulated Twilight Town.'
     ),
 
     Toggle(
