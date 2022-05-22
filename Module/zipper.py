@@ -257,7 +257,7 @@ class SeedZip():
 
     def createBetterSTTAssets(self,settings,mod,outZip):
         boss_enabled = not settings.enemy_options.get("boss", False) in [False, "Disabled"]
-        if settings.better_stt:
+        if settings.roxas_abilities_enabled:
             mod["assets"] += modYml.getBetterSTTMod(boss_enabled)[0]
             for x in mod["assets"]:
                 if x["name"]=="03system.bin":

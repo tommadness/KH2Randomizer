@@ -138,7 +138,7 @@ class RandomizerSettings():
 
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
-        self.better_stt = ui_settings.get(settingkey.BETTER_STT)
+        self.roxas_abilities_enabled = ui_settings.get(settingkey.ROXAS_ABILITIES_ENABLED)
         self.remove_maps = ui_settings.get(settingkey.REMOVE_MAPS)
         self.remove_recipes = ui_settings.get(settingkey.REMOVE_RECIPES)
 
@@ -158,7 +158,7 @@ class RandomizerSettings():
         if self.promiseCharm:
             self.tracker_includes.append("PromiseCharm")
         self.tracker_includes.append(level_setting)
-        if self.better_stt:
+        if self.roxas_abilities_enabled:
             self.tracker_includes.append("better_stt")
         if ui_settings.get(settingkey.STORY_UNLOCKS):
             self.tracker_includes.append("visit_locking")
