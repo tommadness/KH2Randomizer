@@ -998,6 +998,15 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=True
     ),
 
+    Toggle(
+        name=settingkey.REMOVE_POPUPS,
+        ui_label='Remove Non-Superboss Popups',
+        shared=True,
+        default=False,
+        tooltip="Removes story popup rewards from eligble location pool for non-junk items. Used for door-rando primarily",
+        randomizable=False
+    ),
+
     SingleSelect(
         name=settingkey.ITEM_PLACEMENT_DIFFICULTY,
         ui_label='Item Placement Difficulty',

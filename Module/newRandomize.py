@@ -247,8 +247,16 @@ class Randomizer():
             if any(item in check_list for item in loc.LocationTypes):
                 result = not any(item in settings.enabledLocations and item in check_list for item in loc.LocationTypes)
             return result
+        
+        def remove_popupchecker(loc):
+            if not settings.remove_popups:
+                return False
+            result = False
+            if loc.LocationCategory in [locationCategory.POPUP, locationCategory.DOUBLEBONUS, locationCategory.HYBRIDBONUS, locationCategory.ITEMBONUS, locationCategory.STATBONUS] and not any(item in loc.LocationTypes for item in [locationType.AS,locationType.DataOrg,locationType.LW,locationType.Sephi]):
+                result = True
+            return result
 
-        invalidLocations = [loc for loc in allLocations if ( invalid_checker(loc) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
+        invalidLocations = [loc for loc in allLocations if ( invalid_checker(loc) or remove_popupchecker(loc) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
 
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):

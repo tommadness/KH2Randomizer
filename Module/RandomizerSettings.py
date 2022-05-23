@@ -141,6 +141,7 @@ class RandomizerSettings():
         self.roxas_abilities_enabled = ui_settings.get(settingkey.ROXAS_ABILITIES_ENABLED)
         self.remove_maps = ui_settings.get(settingkey.REMOVE_MAPS)
         self.remove_recipes = ui_settings.get(settingkey.REMOVE_RECIPES)
+        self.remove_popups = ui_settings.get(settingkey.REMOVE_POPUPS)
 
         self.point_hint_values = {"proof":ui_settings.get(settingkey.POINTS_PROOF),
                                     "form":ui_settings.get(settingkey.POINTS_FORM),
@@ -170,17 +171,6 @@ class RandomizerSettings():
             if l.value in self.enabledLocations:
                 if l.value!="Level": # don't duplicate the level info
                     self.tracker_includes.append(l.value)
-
-        # if locationType.STT.value in self.enabledLocations:
-        #     self.tracker_includes.append(locationType.STT.value)
-        # if locationType.HUNDREDAW.value in self.enabledLocations:
-        #     self.tracker_includes.append(locationType.HUNDREDAW.value)
-        # if locationType.Atlantica.value in self.enabledLocations:
-        #     self.tracker_includes.append(locationType.Atlantica.value)
-        # if locationType.CoR.value in self.enabledLocations:
-        #     self.tracker_includes.append(locationType.CoR.value)
-        # if locationType.OCCups.value in self.enabledLocations:
-        #     self.tracker_includes.append(locationType.OCCups.value)
 
         self.validateSettings()
 

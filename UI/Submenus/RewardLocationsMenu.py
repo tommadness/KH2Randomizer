@@ -15,6 +15,7 @@ class RewardLocationsMenu(KH2Submenu):
         self.add_multiselect_buttons(settingkey.SUPERBOSSES_WITH_REWARDS, columns=1, group_title="Superbosses")
         self.end_column()
         self.start_column()
+        self.add_option(settingkey.REMOVE_POPUPS)
         self.add_multiselect_buttons(settingkey.MISC_LOCATIONS_WITH_REWARDS, columns=1, group_title='Misc Locations')
         self.end_column()
 
