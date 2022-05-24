@@ -335,25 +335,25 @@ class modYml:
 
     def getRetryMod(mod_choice):
         mod_names = {}
-        mod_names[modYml.retryDarkThorn] = ("BB05_MS104B.bar","BB05","retry_dark_thorn.bar")
-        mod_names[modYml.retryDataXemnas] = ("EH20_MS113_RE.bar","EH20","retry_data_xemnas.bar")
+        mod_names[modYml.retryDarkThorn] = ("BB05_MS104B.bin","BB05","retry_dark_thorn.bin")
+        mod_names[modYml.retryDataXemnas] = ("EH20_MS113_RE.bin","EH20","retry_data_xemnas.bin")
         return {
-                    "name": "menu/jp/"+mod_names[mod_choice][0],
+                    "name": "msn/jp/"+mod_names[mod_choice][0],
                     "multi": [
                         {
-                            "name": "menu/us/"+mod_names[mod_choice][0]
+                            "name": "msn/us/"+mod_names[mod_choice][0]
                         },
                         {
-                            "name": "menu/fr/"+mod_names[mod_choice][0]
+                            "name": "msn/fr/"+mod_names[mod_choice][0]
                         },
                         {
-                            "name": "menu/gr/"+mod_names[mod_choice][0]
+                            "name": "msn/gr/"+mod_names[mod_choice][0]
                         },
                         {
-                            "name": "menu/it/"+mod_names[mod_choice][0]
+                            "name": "msn/it/"+mod_names[mod_choice][0]
                         },
                         {
-                            "name": "menu/sp/"+mod_names[mod_choice][0]
+                            "name": "msn/sp/"+mod_names[mod_choice][0]
                         }
                     ],
                     "method": "binarc",
