@@ -99,6 +99,8 @@ class Randomizer():
         self.report_depths = ItemDepths(settings.reportDepth,self.master_locations)
         self.proof_depths = ItemDepths(settings.proofDepth,self.master_locations)
         self.yeet_the_bear = settings.yeetTheBear
+        self.num_valid_locations = None
+        self.num_available_items = None
         self.assignedItems = []
         self.assignedDonaldItems = []
         self.assignedGoofyItems = []
@@ -258,6 +260,9 @@ class Randomizer():
 
         invalidLocations = [loc for loc in allLocations if ( invalid_checker(loc) or remove_popupchecker(loc) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
+
+        self.num_valid_locations = len(validLocations) + (len([loc for loc in validLocations if loc.LocationCategory in [locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS]]) if settings.statSanity else 0)
+        self.num_available_items = len(allAbilities)+len(allItems)
 
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):
             raise GeneratorException(f"Separating valid {len(validLocations)} and invalid {len(invalidLocations)} locations removed locations from existence (total {len(allLocations)} )")

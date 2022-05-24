@@ -1003,7 +1003,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Remove Non-Superboss Popups',
         shared=True,
         default=False,
-        tooltip="Removes story popup rewards from eligble location pool for non-junk items. Used for door-rando primarily",
+        tooltip="Removes story popup and bonus rewards from eligble location pool for non-junk items. Used for door-rando primarily",
         randomizable=False
     ),
 

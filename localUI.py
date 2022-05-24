@@ -1,6 +1,7 @@
 import os
 import sys
-from Class.exceptions import RandomizerExceptions
+from Class.exceptions import CantAssignItemException, RandomizerExceptions
+from List.configDict import locationType
 
 
 from Module.resources import resource_path
@@ -26,7 +27,7 @@ from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
-    QFileDialog, QMessageBox, QProgressDialog
+    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy
 )
 
 from qt_material import apply_stylesheet
@@ -34,7 +35,7 @@ from Class import settingkey
 from Class.seedSettings import RandoRandoSettings, SeedSettings, getRandoRandoTooltip
 from Module.dailySeed import getDailyModifiers
 from Module.generate import generateSeed
-from Module.newRandomize import RandomizerSettings
+from Module.newRandomize import Randomizer, RandomizerSettings
 from Module.seedshare import SharedSeed, ShareStringException
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
@@ -118,6 +119,7 @@ class KH2RandomizerApp(QMainWindow):
         self.setup = None
         pagelayout = QVBoxLayout()
         seed_layout = QHBoxLayout()
+        progress_layout = QHBoxLayout()
         submit_layout = QHBoxLayout()
         self.tabs = QTabWidget()
 
@@ -134,7 +136,8 @@ class KH2RandomizerApp(QMainWindow):
                     self.preset_json[preset_name] = settings_json
 
         pagelayout.addLayout(seed_layout)
-        pagelayout.addWidget(self.tabs)
+        pagelayout.addWidget(self.tabs)        
+        pagelayout.addLayout(progress_layout)
         pagelayout.addLayout(submit_layout)
 
         seed_layout.addWidget(QLabel("Seed"))
@@ -170,6 +173,14 @@ class KH2RandomizerApp(QMainWindow):
         for i in range(len(self.widgets)):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())
 
+        
+        self.progress_label = QLabel("Progress Placeholder")
+        self.progress_label.setAlignment(Qt.AlignCenter)
+        self.progress_label.setFixedWidth(360)
+        self.progress_bar = QProgressBar()
+        progress_layout.addWidget(self.progress_label)
+        progress_layout.addWidget(self.progress_bar)
+
         submit_layout.addWidget(QLabel("Seed Hash"))
 
         self.hashIconPath = Path(resource_path("static/seed-hash-icons"))
@@ -194,6 +205,11 @@ class KH2RandomizerApp(QMainWindow):
         widget = QWidget()
         widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
+
+        self.recalculate = False
+        settings_keys = self.settings._filtered_settings(True).keys()
+        for key in settings_keys:
+            self.settings.observe(key,self.get_num_enabled_locations)
 
     def _configure_menu_bar(self):
         menu_bar = self.menuBar()
@@ -220,6 +236,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def loadDailySeed(self):
         self.seedName.setText(self.dailySeedName)
+        self.recalculate = False
         self.settings.apply_settings_json(self.preset_json['BaseDailySeed'])
 
         # use the modifications to change the preset
@@ -230,6 +247,8 @@ class KH2RandomizerApp(QMainWindow):
 
         for widget in self.widgets:
             widget.update_widgets()
+        self.recalculate = True
+        self.get_num_enabled_locations()
 
         self.fixSeedName()
 
@@ -279,6 +298,20 @@ class KH2RandomizerApp(QMainWindow):
     #     stitched_image = Image.new('RGB',(48*len(self.icons),48))
     #     for index, icon in enumerate(self.icons):
     #         stitched_image.paste(im=Image.open(str(self.hashIconPath.absolute())+"/"+icon+".png"),box=(48*index,0))
+
+    def get_num_enabled_locations(self):
+        if self.recalculate:
+            try:
+                rando_settings = self.make_rando_settings()
+                dummy_rando = Randomizer(rando_settings)
+                text = f"Items: {dummy_rando.num_available_items} / Locations: {dummy_rando.num_valid_locations}"
+                self.progress_bar.setRange(0,dummy_rando.num_valid_locations)
+                if dummy_rando.num_valid_locations < dummy_rando.num_available_items:
+                    self.progress_bar.setValue(dummy_rando.num_valid_locations)
+                    text = "Too many "+text
+                self.progress_label.setText(text)
+            except CantAssignItemException as e:
+                pass
 
     def makeSeed(self,platform):
         self.fixSeedName()
@@ -356,9 +389,12 @@ class KH2RandomizerApp(QMainWindow):
 
     def usePreset(self, preset_name: str):
         settings_json = self.preset_json[preset_name]
+        self.recalculate = False
         self.settings.apply_settings_json(settings_json)
         for widget in self.widgets:
             widget.update_widgets()
+        self.recalculate = True
+        self.get_num_enabled_locations()
 
     def shareSeed(self):
         output_text = self.createSharedString()
@@ -404,9 +440,12 @@ class KH2RandomizerApp(QMainWindow):
 
         self.seedName.setText(shared_seed.seed_name)
         self.spoiler_log.setCheckState(Qt.Checked if shared_seed.spoiler_log else Qt.Unchecked)
+        self.recalculate = False
         self.settings.apply_settings_string(shared_seed.settings_string)
         for widget in self.widgets:
             widget.update_widgets()
+        self.recalculate = True
+        self.get_num_enabled_locations()
 
         post_shared_seed = SharedSeed.from_share_string(local_generator_version=LOCAL_UI_VERSION,share_string = self.createSharedString())
 
@@ -484,6 +523,8 @@ if __name__=="__main__":
     with open(resource_path('UI/stylesheet.css')) as file:
         app.setStyleSheet(stylesheet + file.read().format(**os.environ))
 
+    window.recalculate = True
+    window.get_num_enabled_locations()
     window.show()
     #commenting out first time setup for 2.999 version
     # configPath = Path("rando-config.yml")

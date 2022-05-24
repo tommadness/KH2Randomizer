@@ -118,8 +118,8 @@ class SeedModifier():
                     61,
                     62,
                     72,
-                    366,
                     74,
+                    369,
                     375,
                     376]
         return []
