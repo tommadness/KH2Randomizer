@@ -303,15 +303,17 @@ class KH2RandomizerApp(QMainWindow):
         if self.recalculate:
             try:
                 rando_settings = self.make_rando_settings()
-                dummy_rando = Randomizer(rando_settings)
-                text = f"Items: {dummy_rando.num_available_items} / Locations: {dummy_rando.num_valid_locations}"
-                self.progress_bar.setRange(0,dummy_rando.num_valid_locations)
-                if dummy_rando.num_valid_locations < dummy_rando.num_available_items:
-                    self.progress_bar.setValue(dummy_rando.num_valid_locations)
-                    text = "Too many "+text
-                self.progress_label.setText(text)
+                dummy_rando = Randomizer(rando_settings,True)
             except CantAssignItemException as e:
                 pass
+            text = f"Items: {dummy_rando.num_available_items} / Locations: {dummy_rando.num_valid_locations}"
+            self.progress_bar.setRange(0,dummy_rando.num_valid_locations)
+            if dummy_rando.num_valid_locations < dummy_rando.num_available_items:
+                self.progress_bar.setValue(dummy_rando.num_valid_locations)
+                text = "Too many "+text
+            else:
+                self.progress_bar.setValue(dummy_rando.num_available_items)
+            self.progress_label.setText(text)
 
     def makeSeed(self,platform):
         self.fixSeedName()

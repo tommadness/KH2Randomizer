@@ -90,8 +90,9 @@ class SynthesisRecipe():
         return self.location==obj
 
 class Randomizer():
-    def __init__(self, settings: RandomizerSettings):
+    def __init__(self, settings: RandomizerSettings, progress_bar_vis = False):
         random.seed(settings.full_rando_seed)
+        self.progress_bar_vis = progress_bar_vis
         self.regular_locations = Locations(settings,False)
         self.reverse_locations = Locations(settings,True)
         self.master_locations = self.regular_locations if settings.regular_rando else self.reverse_locations
@@ -263,6 +264,9 @@ class Randomizer():
 
         self.num_valid_locations = len(validLocations) + (len([loc for loc in validLocations if loc.LocationCategory in [locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS]]) if settings.statSanity else 0)
         self.num_available_items = len(allAbilities)+len(allItems)
+
+        if self.progress_bar_vis:
+            return
 
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):
             raise GeneratorException(f"Separating valid {len(validLocations)} and invalid {len(invalidLocations)} locations removed locations from existence (total {len(allLocations)} )")
