@@ -84,7 +84,7 @@ class RandomizerSettings():
         self.tt1_jailbreak = ui_settings.get(settingkey.TT1_JAILBREAK)
         self.pureblood = ui_settings.get(settingkey.PUREBLOOD)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
-        if self.hintsType in ["JSmartee","Points"]:
+        if self.hintsType in ["JSmartee","Points","Path"]:
             self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
         else:
             self.reportDepth = locationDepth.Anywhere
@@ -163,7 +163,7 @@ class RandomizerSettings():
         self.tracker_includes.append(level_setting)
         if self.roxas_abilities_enabled:
             self.tracker_includes.append("better_stt")
-        if ui_settings.get(settingkey.STORY_UNLOCKS):
+        if not ui_settings.get(settingkey.STORY_UNLOCKS):
             self.tracker_includes.append("visit_locking")
         if ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE):
             self.tracker_includes.append("library")

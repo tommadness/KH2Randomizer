@@ -980,10 +980,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     Toggle(
         name=settingkey.STORY_UNLOCKS,
-        ui_label='Visit Locking Items',
+        ui_label='Start with World Key Items',
         shared=True,
         default=True,
-        tooltip="Gives the player all the visit locking items at the start, making all worlds open.",
+        tooltip="Gives the player all the visit locking items at the start, making all worlds open from the start.",
         randomizable=True
     ),
 

@@ -43,7 +43,10 @@ class Hints:
             if item.ItemType is itemType.REPORT:
                 reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                 found_reports = True
-                report_master[reportNumber] = location.LocationTypes
+                if locationType.Critical in location.LocationTypes:
+                    report_master[reportNumber] = [""]
+                else:
+                    report_master[reportNumber] = location.LocationTypes
     
         if hintsType == "Path":
             hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
@@ -127,28 +130,38 @@ class Hints:
 
             def create_hint_text(world):
                 num_items = len(hintsText['world'][world])
-                if num_items == 0:
-                    return f"{world} has nothing, sorry."
+                hint_text = ""
+                world_text = world if world != "Level" else "Sora's Heart"
 
                 points_to_connection = proof_of_connection_world and world in breadcrumb_map[proof_of_connection_world]
                 points_to_peace = proof_of_peace_world and world in breadcrumb_map[proof_of_peace_world]
                 points_to_nonexistence = proof_of_nonexistence_world and world in breadcrumb_map[proof_of_nonexistence_world]
+
+                proof_list = [] + (["Connection"] if points_to_connection else []) + (["Peace"] if points_to_peace else []) + (["Nonexistence"] if points_to_nonexistence else [])
+                if len(proof_list)==0:
+                    proof_list = ["none"]
+
+                if num_items == 0:
+                    hint_text = f"{world_text} has nothing, sorry."
+
                 if not points_to_connection and not points_to_nonexistence and not points_to_peace:
-                    return f"{world} has no path to the light."
+                    hint_text = f"{world_text} has no path to the light."
                 if points_to_connection and points_to_nonexistence and points_to_peace:
-                    return f"{world} has a path to all lights."
+                    hint_text = f"{world_text} has a path to all lights."
                 if points_to_connection and points_to_peace:
-                    return f"{world} is on the path to Connection and Peace."
+                    hint_text = f"{world_text} is on the path to Connection and Peace."
                 if points_to_connection and points_to_nonexistence:
-                    return f"{world} is on the path to Connection and Nonexistence."
+                    hint_text = f"{world_text} is on the path to Connection and Nonexistence."
                 if points_to_nonexistence and points_to_peace:
-                    return f"{world} is on the path to Nonexistence and Peace."
+                    hint_text = f"{world_text} is on the path to Nonexistence and Peace."
                 if points_to_nonexistence:
-                    return f"{world} is on the path to Nonexistence."
+                    hint_text = f"{world_text} is on the path to Nonexistence."
                 if points_to_peace:
-                    return f"{world} is on the path to Peace."
+                    hint_text = f"{world_text} is on the path to Peace."
                 if points_to_connection:
-                    return f"{world} is on the path to Connection."
+                    hint_text = f"{world_text} is on the path to Connection."
+
+                return hint_text,world,proof_list
 
             
             for x in hintable_world_list:
@@ -166,7 +179,9 @@ class Hints:
             for x in range(1,14):
                 report_location = report_master[x][0]
                 hintsText["Reports"][x] = {
-                            "Text": report_texts[x-1],
+                            "Text": report_texts[x-1][0],
+                            "HintedWorld": report_texts[x-1][1],
+                            "ProofPath": report_texts[x-1][2],
                             "Location": report_location
                         }
 
