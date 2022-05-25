@@ -1,5 +1,6 @@
 
 from Class.exceptions import SettingsException
+from List.ItemList import Items
 from Module.modifier import SeedModifier
 from List.experienceValues import duskExp, duskFormExp, middayFormExp, vanillaExp, middayExp, vanillaFormExp
 from List.hashTextEntries import generateHashIcons
@@ -50,7 +51,7 @@ class RandomizerSettings():
             raise SettingsException("Invalid Level choice")
 
         self.split_levels = ui_settings.get(settingkey.SPLIT_LEVELS)
-        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT)) + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(not ui_settings.get(settingkey.STORY_UNLOCKS))
+        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT)) + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(ui_settings.get(settingkey.STORY_UNLOCKS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.nightmare = ui_settings.get(settingkey.NIGHTMARE_LOGIC)
         self.regular_rando = ui_settings.get(settingkey.SOFTLOCK_CHECKING) in ["default","both"]
@@ -80,6 +81,7 @@ class RandomizerSettings():
             raise SettingsException("Invalid ability pool option")
 
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
+        self.tt1_jailbreak = ui_settings.get(settingkey.TT1_JAILBREAK)
         self.pureblood = ui_settings.get(settingkey.PUREBLOOD)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
         if self.hintsType in ["JSmartee","Points"]:

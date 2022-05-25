@@ -335,8 +335,8 @@ class modYml:
 
     def getRetryMod(mod_choice):
         mod_names = {}
-        mod_names[modYml.retryDarkThorn] = ("BB05_MS104B.bin","BB05","retry_dark_thorn.bin")
-        mod_names[modYml.retryDataXemnas] = ("EH20_MS113_RE.bin","EH20","retry_data_xemnas.bin")
+        mod_names[modYml.retryDarkThorn] = ("BB05_MS104B.bar","BB05","retry_dark_thorn.bin")
+        mod_names[modYml.retryDataXemnas] = ("EH20_MS113_RE.bar","EH20","retry_data_xemnas.bin")
         return {
                     "name": "msn/jp/"+mod_names[mod_choice][0],
                     "multi": [
@@ -376,6 +376,7 @@ class modYml:
                 {"name": "obj/B_EX100.mset","method": "copy","source": [{"name": "better_stt/B_EX100.mset"}]},
                 {"name": "obj/F_TT010.mset","method": "copy","source": [{"name": "better_stt/F_TT010.mset"}]},
                 {"name": "obj/P_EX110.mset","method": "copy","source": [{"name": "better_stt/P_EX110.mset"}]},
+                {"name": "00objentry.bin","method": "listpatch","type": "List","source": [{"name": "better_stt/ObjList_Better_STT.yml", "type": "objentry"}]},
                 {"name": "obj/W_EX010_RX.mset","method": "copy","source": [{"name": "better_stt/W_EX010_RX.mset"}]},] + \
                 ([{"name": "obj/B_EX100_SR.mset","method": "copy","source": [{"name": "better_stt/B_EX100_SR.mset"}]},] if boss_enemy_enabled else []),[{"method":"copy", "name":"cmd", "type":"list", "source":[{"name":"better_stt/cmd.list"}]}]
 

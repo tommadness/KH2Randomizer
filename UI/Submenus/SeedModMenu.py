@@ -34,6 +34,7 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.ROXAS_ABILITIES_ENABLED)
         self.add_option(settingkey.RETRY_DFX)
         self.add_option(settingkey.RETRY_DARK_THORN)
+        self.add_option(settingkey.TT1_JAILBREAK)
         self.add_option(settingkey.SKIP_CARPET_ESCAPE)
         self.add_option(settingkey.REMOVE_DAMAGE_CAP)
         self.end_column()

@@ -307,6 +307,11 @@ class Items:
     def getPromiseCharm():
         return KH2Item(524, "PromiseCharm",itemType.PROMISE_CHARM, itemRarity.MYTHIC)
 
+
+    @staticmethod
+    def getTT1Jailbreak():
+        return KH2Item(366, "Poster", itemType.KEYITEM)
+
     @staticmethod
     def getStoryKeyItems():
         story_unlock_rarity = itemRarity.UNCOMMON

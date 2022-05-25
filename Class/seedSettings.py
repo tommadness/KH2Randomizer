@@ -953,6 +953,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='After reaching Ruined Chamber, the carpet escape sequence will be skipped.'
     ),
+    Toggle(
+        name=settingkey.TT1_JAILBREAK,
+        ui_label='TT1 Exit Enabled',
+        shared=True,
+        default=False,
+        tooltip='Allows the use of save points to leave TT1 anytime.'
+    ),
 
     Toggle(
         name=settingkey.ROXAS_ABILITIES_ENABLED,
@@ -973,10 +980,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     Toggle(
         name=settingkey.STORY_UNLOCKS,
-        ui_label='Enable Visit Locking Items',
+        ui_label='Visit Locking Items',
         shared=True,
-        default=False,
-        tooltip="If enabled, will put the visit locking items into the item pool, and you will need to find them to reach second visits for most worlds. Seeds will still allow for full completion.",
+        default=True,
+        tooltip="Gives the player all the visit locking items at the start, making all worlds open.",
         randomizable=True
     ),
 
