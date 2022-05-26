@@ -268,6 +268,7 @@ class SeedZip():
             outZip.write(resource_path("static/better_stt/F_TT010.mset"), "better_stt/F_TT010.mset")
             outZip.write(resource_path("static/better_stt/P_EX110.mset"), "better_stt/P_EX110.mset")
             outZip.write(resource_path("static/better_stt/W_EX010_RX.mset"), "better_stt/W_EX010_RX.mset")
+            outZip.write(resource_path("static/better_stt/ObjList_Better_STT.yml"), "better_stt/ObjList_Better_STT.yml")
             if boss_enabled:
                 outZip.write(resource_path("static/better_stt/B_EX100_SR.mset"), "better_stt/B_EX100_SR.mset")
     

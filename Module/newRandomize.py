@@ -278,12 +278,14 @@ class Randomizer():
         restricted_proofs = self.proof_depths.very_restricted_locations
 
         # leaving this code here for future bug testing. Puts a specific item in a specific location
+        # placed_item = False
         # for item in allItems:
-        #     if item.Id == 376:
-        #         data_axel = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==561][0]
-        #         if self.assignItem(data_axel,item):
-        #             validLocations.remove(data_axel)
+        #     if not placed_item and item.Id == 23:
+        #         location_to_place = [loc for loc in validLocations if loc.LocationCategory is locationCategory.CHEST and loc.LocationId==463][0]
+        #         if self.assignItem(location_to_place,item):
+        #             validLocations.remove(location_to_place)
         #         allItems.remove(item)
+        #         placed_item = True
         #         break
 
         #assign valid items to all valid locations remaining

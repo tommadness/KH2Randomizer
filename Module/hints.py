@@ -53,7 +53,7 @@ class Hints:
             importantChecks = [itemType.REPORT, itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON] + [itemType.STORYUNLOCK]
             world_to_vanilla_ICs = {}
             world_to_vanilla_ICs[locationType.Level] = [415,416]
-            world_to_vanilla_ICs[locationType.FormLevel] = world_to_vanilla_ICs[locationType.Level]
+            world_to_vanilla_ICs[locationType.FormLevel] = [26,27,29,31,563]
             world_to_vanilla_ICs[locationType.Atlantica] = [22]
             world_to_vanilla_ICs[locationType.TWTNW] = [87]
             world_to_vanilla_ICs[locationType.PR] = [87,160,62]
@@ -69,6 +69,7 @@ class Hints:
             world_to_vanilla_ICs[locationType.OC] = [23,54]
             world_to_vanilla_ICs[locationType.HB] = [21,22,383,25,31,24,32,375,376,369]
             world_to_vanilla_ICs[locationType.STT] = world_to_vanilla_ICs[locationType.TT]
+            world_to_vanilla_ICs["Creations"] = []
 
             ICs_to_hintable_worlds = {}
 
@@ -143,22 +144,21 @@ class Hints:
 
                 if num_items == 0:
                     hint_text = f"{world_text} has nothing, sorry."
-
-                if not points_to_connection and not points_to_nonexistence and not points_to_peace:
+                elif not points_to_connection and not points_to_nonexistence and not points_to_peace:
                     hint_text = f"{world_text} has no path to the light."
-                if points_to_connection and points_to_nonexistence and points_to_peace:
+                elif points_to_connection and points_to_nonexistence and points_to_peace:
                     hint_text = f"{world_text} has a path to all lights."
-                if points_to_connection and points_to_peace:
+                elif points_to_connection and points_to_peace:
                     hint_text = f"{world_text} is on the path to Connection and Peace."
-                if points_to_connection and points_to_nonexistence:
+                elif points_to_connection and points_to_nonexistence:
                     hint_text = f"{world_text} is on the path to Connection and Nonexistence."
-                if points_to_nonexistence and points_to_peace:
+                elif points_to_nonexistence and points_to_peace:
                     hint_text = f"{world_text} is on the path to Nonexistence and Peace."
-                if points_to_nonexistence:
+                elif points_to_nonexistence:
                     hint_text = f"{world_text} is on the path to Nonexistence."
-                if points_to_peace:
+                elif points_to_peace:
                     hint_text = f"{world_text} is on the path to Peace."
-                if points_to_connection:
+                elif points_to_connection:
                     hint_text = f"{world_text} is on the path to Connection."
 
                 return hint_text,world,proof_list
