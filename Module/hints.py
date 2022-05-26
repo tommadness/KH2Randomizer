@@ -113,7 +113,7 @@ class Hints:
                             proof_of_peace_world = world_of_location
                         elif item.ItemType is itemType.PROOF:
                             proof_of_nonexistence_world = world_of_location
-                    elif item.Id!=29 and item.ItemType != itemType.REPORT: # no vanilla final form location and ignore reports
+                    elif item.ItemType != itemType.REPORT and item.ItemType != itemType.PROMISE_CHARM: # no vanilla final form location and ignore reports
                         # this item could have come from any world from this list
                         for w in ICs_to_hintable_worlds[item.Id]:
                             if world_of_location in hintableWorlds:
