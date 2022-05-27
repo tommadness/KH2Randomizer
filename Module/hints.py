@@ -132,7 +132,13 @@ class Hints:
             def create_hint_text(world):
                 num_items = len(hintsText['world'][world])
                 hint_text = ""
-                world_text = world if world != "Level" else "Sora's Heart"
+                world_text = world 
+                if world == locationType.Level:
+                    world_text = "Sora's Heart"
+                if world == locationType.TWTNW:
+                    world_text = "TWTNW"
+                if world == locationType.DC:
+                    world_text = "Disney Castle"
 
                 points_to_connection = proof_of_connection_world and world in breadcrumb_map[proof_of_connection_world]
                 points_to_peace = proof_of_peace_world and world in breadcrumb_map[proof_of_peace_world]

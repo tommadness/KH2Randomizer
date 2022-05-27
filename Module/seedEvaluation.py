@@ -35,18 +35,37 @@ class LocationInformedSeedValidator:
                 location_requirements.append((loc,[]))
 
 
-            def dfs_search(node_name,reqs):
-                out_edges = graph.out_edges(node_name)
-                for e in out_edges:
+            # updated function to allow for multiple incoming connections to enforce multiple constraints
+            def get_all_parent_edge_reqs(n,reqs = None):
+                if reqs is None:
+                    reqs = []
+                all_edges = graph.inc_edges(n)
+                for e in all_edges:
                     data = graph.edge_data(e)
-                    _,target = graph.edge_by_id(e)
-                    req_for_target = data.requirement
-                    new_reqs = reqs + [req_for_target]
-                    for loc in graph.node_data(target).locations:
-                        location_requirements.append((loc,new_reqs))
-                    dfs_search(target,new_reqs)
+                    source,_ = graph.edge_by_id(e)
+                    reqs += [data.requirement]
+                    get_all_parent_edge_reqs(source,reqs)
+                return reqs
 
-            dfs_search("Starting",[])
+            for node in graph.node_list():
+                reqs = get_all_parent_edge_reqs(node)
+                for loc in graph.node_data(node).locations:
+                    location_requirements.append((loc,reqs))
+
+
+
+            # def dfs_search(node_name,reqs):
+            #     out_edges = graph.out_edges(node_name)
+            #     for e in out_edges:
+            #         data = graph.edge_data(e)
+            #         _,target = graph.edge_by_id(e)
+            #         req_for_target = data.requirement
+            #         new_reqs = reqs + [req_for_target]
+            #         for loc in graph.node_data(target).locations:
+            #             location_requirements.append((loc,new_reqs))
+            #         dfs_search(target,new_reqs)
+
+            # dfs_search("Starting",[])
 
             changed = True
             depth = 0

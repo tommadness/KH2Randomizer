@@ -133,14 +133,58 @@ class Locations:
         self.add_node("Daylight Puzzle",LocationNode([KH2Location(4, "Daylight (Executive's Ring)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.TORN_PAGE, itemType.REPORT]),]))
         self.add_node("Sunset Puzzle",LocationNode([KH2Location(5, "Sunset (Grand Ribbon)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
 
-        #TODO put these in their proper location in the graph
-        #TODO add the proper requirements for story unlock items
-        self.add_edge("Starting","Awakening Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
-        self.add_edge("Starting","Heart Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
-        self.add_edge("Starting","Duality Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
-        self.add_edge("Starting","Frontier Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
-        self.add_edge("Starting","Daylight Puzzle",RequirementEdge(req=lambda inv : ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.need_5_pages(inv)))
-        self.add_edge("Starting","Sunset Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
+        
+        if not self.reverse_rando:
+            self.add_edge("Starting","Awakening Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
+            self.add_edge("Starting","Heart Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
+            self.add_edge("Starting","Duality Puzzle",RequirementEdge(req=lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.hb_check(inv)))
+            self.add_edge("Starting","Frontier Puzzle",RequirementEdge(req=lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.tt2_check(inv) and ItemPlacementHelpers.hb_check(inv)))
+            def daylight_checker(inv):
+                return ItemPlacementHelpers.need_growths(inv) and \
+                        ItemPlacementHelpers.need_5_pages(inv) and \
+                        ItemPlacementHelpers.hb_check(inv) and \
+                        ItemPlacementHelpers.mulan_check(inv) and \
+                        ItemPlacementHelpers.tt3_check(inv) and \
+                        ItemPlacementHelpers.jack_pr_check(inv) and \
+                        ItemPlacementHelpers.aladdin_check(inv) and \
+                        ItemPlacementHelpers.jack_ht_check(inv)
+            def sunset_checker(inv):
+                return ItemPlacementHelpers.need_growths(inv) and \
+                        ItemPlacementHelpers.hb_check(inv) and \
+                        ItemPlacementHelpers.tt3_check(inv) and \
+                        ItemPlacementHelpers.tron_check(inv) and \
+                        ItemPlacementHelpers.jack_pr_check(inv) and \
+                        ItemPlacementHelpers.aladdin_check(inv) and \
+                        ItemPlacementHelpers.jack_ht_check(inv) and \
+                        ItemPlacementHelpers.beast_check(inv)
+            self.add_edge("Starting","Daylight Puzzle",RequirementEdge(req=daylight_checker))
+            self.add_edge("Starting","Sunset Puzzle",RequirementEdge(req=sunset_checker))
+        else:
+            def awakening_checker(inv):
+                return ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.beast_check(inv) and ItemPlacementHelpers.tt3_check(inv)
+            def heart_checker(inv):
+                return ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.auron_check(inv) and ItemPlacementHelpers.jack_pr_check(inv)
+            def duality_checker(inv):
+                return ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.jack_pr_check(inv) and ItemPlacementHelpers.auron_check(inv)
+            def frontier_checker(inv):
+                return ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.jack_pr_check(inv) and ItemPlacementHelpers.aladdin_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
+            def daylight_checker(inv):
+                return ItemPlacementHelpers.need_growths(inv) and \
+                        ItemPlacementHelpers.need_5_pages(inv) and \
+                        ItemPlacementHelpers.simba_check(inv) and \
+                        ItemPlacementHelpers.aladdin_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv) and \
+                        ItemPlacementHelpers.hb_check(inv)
+            def sunset_checker(inv):
+                return ItemPlacementHelpers.need_growths(inv) and \
+                        ItemPlacementHelpers.hb_check(inv) and \
+                        ItemPlacementHelpers.tt3_check(inv) and \
+                        ItemPlacementHelpers.aladdin_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
+            self.add_edge("Starting","Awakening Puzzle",RequirementEdge(req=awakening_checker))
+            self.add_edge("Starting","Heart Puzzle",RequirementEdge(req=heart_checker))
+            self.add_edge("Starting","Duality Puzzle",RequirementEdge(req=duality_checker))
+            self.add_edge("Starting","Frontier Puzzle",RequirementEdge(req=frontier_checker))
+            self.add_edge("Starting","Daylight Puzzle",RequirementEdge(req=daylight_checker))
+            self.add_edge("Starting","Sunset Puzzle",RequirementEdge(req=sunset_checker))
     
     def makeFormGraph(self):
         for i in range(1,8):
