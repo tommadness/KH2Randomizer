@@ -13,17 +13,17 @@ class Tests(unittest.TestCase):
 
     def test_version_mismatch(self):
         with self.assertRaises(IncompatibleShareStringVersionException):
-            SharedSeed.from_share_string(local_generator_version='1.1', share_string='1.0$test_seed$1$0-0-0')
+            SharedSeed.from_share_string(local_generator_version='1.1', share_string='1.0$0$test_seed$1$0-0-0')
 
     def test_valid_format_spoiler_on(self):
-        shared_seed = SharedSeed.from_share_string(local_generator_version='1.0', share_string='1.0$test_seed$1$0-0-0')
+        shared_seed = SharedSeed.from_share_string(local_generator_version='1.0', share_string='1.0$0$test_seed$1$0-0-0')
         self.assertEqual('1.0', shared_seed.generator_version)
         self.assertEqual('test_seed', shared_seed.seed_name)
         self.assertTrue(shared_seed.spoiler_log)
         self.assertEqual('0-0-0', shared_seed.settings_string)
 
     def test_valid_format_spoiler_off(self):
-        shared_seed = SharedSeed.from_share_string(local_generator_version='1.1', share_string='1.1$test_seed$0$0-0-0')
+        shared_seed = SharedSeed.from_share_string(local_generator_version='1.1', share_string='1.1$0$test_seed$0$0-0-0')
         self.assertEqual('1.1', shared_seed.generator_version)
         self.assertEqual('test_seed', shared_seed.seed_name)
         self.assertFalse(shared_seed.spoiler_log)

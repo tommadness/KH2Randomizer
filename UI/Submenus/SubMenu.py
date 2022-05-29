@@ -185,6 +185,26 @@ class KH2Submenu(QWidget):
     def getName(self):
         return self.title
 
+    def disable_widgets(self):
+        for name in self.widgets_and_settings_by_name:
+            (setting, widget) = self.widgets_and_settings_by_name[name]
+            if isinstance(setting, Toggle):
+                widget.setDisabled(True)
+            elif isinstance(setting, IntSpinner):
+                widget.setDisabled(True)
+            elif isinstance(setting, FloatSpinner):
+                widget.setDisabled(True)
+            elif isinstance(setting, SingleSelect):
+                widget.setDisabled(True)
+            elif isinstance(setting, MultiSelect):
+                if isinstance(widget, QListWidget):
+                    widget.setDisabled(True)
+                    # for index, key in enumerate(setting.choice_keys):
+                    #     widget.item(index).setFlags(Qt)
+                elif isinstance(widget, list):
+                    for index, key in enumerate(setting.choice_keys):
+                        widget[index].setDisabled(True)
+
     def update_widgets(self):
         for name in self.widgets_and_settings_by_name:
             (setting, widget) = self.widgets_and_settings_by_name[name]

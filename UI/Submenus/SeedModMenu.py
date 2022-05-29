@@ -9,6 +9,7 @@ class SeedModMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
         super().__init__(title='Seed Modifiers', settings=settings, in_layout='horizontal')
+        self.disable_signal = False
 
         self.start_column()
         # self.add_option(settingkey.BETTER_JUNK)
@@ -46,11 +47,16 @@ class SeedModMenu(KH2Submenu):
     def reverse_rando_checking(self):
         softlock_check = self.settings.get(settingkey.SOFTLOCK_CHECKING)
         _,widget = self.widgets_and_settings_by_name[settingkey.AS_DATA_SPLIT]
-        if softlock_check in ["reverse","both"]:
-            widget.setChecked(True)
-            widget.setEnabled(False)
-        else:
-            widget.setEnabled(True)
+        if not self.disable_signal:
+            if softlock_check in ["reverse","both"]:
+                widget.setChecked(True)
+                widget.setEnabled(False)
+            else:
+                widget.setEnabled(True)
+
+    def disable_widgets(self):
+        self.disable_signal = True
+        super().disable_widgets()
 
     def toggle_all_items(self):
         setting,widget = self.widgets_and_settings_by_name[settingkey.JUNK_ITEMS]

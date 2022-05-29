@@ -5,7 +5,7 @@ import itertools
 
 class Items:
     @staticmethod
-    def getItemList():
+    def getItemList(story_unlocking_rarity = itemRarity.UNCOMMON):
         return [
             KH2Item(593, "Proof of Connection", itemType.PROOF_OF_CONNECTION, itemRarity.MYTHIC),
             KH2Item(594, "Proof of Nonexistence", itemType.PROOF, itemRarity.MYTHIC),
@@ -291,7 +291,7 @@ class Items:
             KH2Item(517, "Solar Sailer Simulation Map", itemType.MAP),
             KH2Item(256, "Dark City Map", itemType.MAP),
             KH2Item(536, "Castle That Never Was Map", itemType.MAP),
-        ] + list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50)) + Items.getStoryKeyItems()
+        ] + list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50)) + Items.getStoryKeyItems(story_unlocking_rarity)
 
     @staticmethod
     def getStatItems():
@@ -313,8 +313,8 @@ class Items:
         return KH2Item(366, "Poster", itemType.KEYITEM)
 
     @staticmethod
-    def getStoryKeyItems():
-        story_unlock_rarity = itemRarity.UNCOMMON
+    def getStoryKeyItems(story_unlock_rarity):
+        # story_unlock_rarity = itemRarity.UNCOMMON
         return [
             KH2Item(54, "Battlefields of War (Auron)", itemType.STORYUNLOCK, story_unlock_rarity),
             KH2Item(55, "Sword of the Ancestor (Mulan)", itemType.STORYUNLOCK, story_unlock_rarity),

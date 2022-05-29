@@ -172,6 +172,7 @@ class SeedZip():
             cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
             platform = cosmetics_data["platform"]
             randomBGMOptions = cosmetics_data["randomBGM"]
+            tourney_gen = cosmetics_data["tourney"]
 
             def _shouldRunKHBR():
                 if not settings.enemy_options.get("boss", False) in [False, "Disabled"]:
@@ -214,8 +215,9 @@ class SeedZip():
 
             self.createBetterSTTAssets(settings, mod, outZip)
             
-            if settings.spoiler_log:
-                mod["title"] += " w/ Spoiler"
+            if settings.spoiler_log or tourney_gen:
+                if not tourney_gen:
+                    mod["title"] += " w/ Spoiler"
                 with open(resource_path("static/spoilerlog.html")) as spoiler_site:
                     html_template = spoiler_site.read().replace("SEED_NAME_STRING",settings.random_seed) \
                                                        .replace("LEVEL_STATS_JSON",json.dumps(levelStatsDictionary(randomizer.levelStats))) \
@@ -231,7 +233,8 @@ class SeedZip():
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
                                                        .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON))
-                    outZip.writestr("spoilerlog.html",html_template)
+                    if not tourney_gen:
+                        outZip.writestr("spoilerlog.html",html_template)
                     self.spoiler_log = html_template
                     outZip.write(resource_path("static/KHMenu.otf"), "KHMenu.otf")
                 if enemySpoilers:

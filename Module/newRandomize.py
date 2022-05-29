@@ -213,7 +213,7 @@ class Randomizer():
                 goofyLocations.remove(randomLocation)
 
     def assignSoraItems(self, settings: RandomizerSettings):
-        allItems = [i for i in Items.getItemList() if i.Id not in settings.startingItems]
+        allItems = [i for i in Items.getItemList(settings.story_unlock_rarity) if i.Id not in settings.startingItems]
         if not settings.pureblood:
             allItems = [i for i in allItems if i.Id!=71]
 
@@ -287,6 +287,16 @@ class Randomizer():
         #         allItems.remove(item)
         #         placed_item = True
         #         break
+
+        # def item_sorter(item1):
+        #     rank_map = {}
+        #     rank_map[itemRarity.COMMON] = 1
+        #     rank_map[itemRarity.UNCOMMON] = 2
+        #     rank_map[itemRarity.RARE] = 3
+        #     rank_map[itemRarity.MYTHIC] = 4
+        #     return rank_map[item1.Rarity]
+
+        # allItems.sort(reverse=True,key=item_sorter)
 
         #assign valid items to all valid locations remaining
         for item in allItems:

@@ -7,7 +7,7 @@ from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
 from Class.exceptions import SettingsException
-from List.ItemList import Items
+from List.ItemList import Items,itemRarity
 from List.configDict import expCurve, locationType, locationDepth
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
@@ -1012,6 +1012,23 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip="Removes story popup and bonus rewards from eligble location pool for non-junk items. Used for door-rando primarily",
         randomizable=False
+    ),
+    SingleSelect(
+        name=settingkey.STORY_UNLOCK_CATEGORY,
+        ui_label='Key Item Category',
+        choices={
+            itemRarity.COMMON : itemRarity.COMMON,
+            itemRarity.UNCOMMON : itemRarity.UNCOMMON,
+            itemRarity.RARE : itemRarity.RARE,
+            itemRarity.MYTHIC : itemRarity.MYTHIC,
+        },
+        shared=True,
+        default=itemRarity.UNCOMMON,
+        randomizable=False,
+        tooltip=textwrap.dedent('''
+            Change visit locking items to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias each item gets when randomizing. 
+            Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items.
+        '''),
     ),
 
     SingleSelect(
