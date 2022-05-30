@@ -84,6 +84,7 @@
         "462"
     ],
     "statsanity": false,
+    "story_unlocks": true,
     "summon_exp_curve": "DAWN",
     "summon_exp_multiplier": 2.0,
     "superbosses_with_rewards": [

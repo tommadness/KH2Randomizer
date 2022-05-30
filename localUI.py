@@ -198,13 +198,20 @@ class KH2RandomizerApp(QMainWindow):
 
         submit_layout.addSpacing(16)
 
-        submitButton = QPushButton("Generate Seed (PCSX2)")
-        submitButton.clicked.connect(lambda : self.makeSeed("PCSX2"))
-        submit_layout.addWidget(submitButton, stretch=1)
+        self.emu_button = QPushButton("Generate Seed (PCSX2)")
+        self.emu_button.clicked.connect(lambda : self.makeSeed("PCSX2"))
+        submit_layout.addWidget(self.emu_button, stretch=1)
+        self.emu_button.setVisible(False)
 
-        submitButton = QPushButton("Generate Seed (PC)")
-        submitButton.clicked.connect(lambda : self.makeSeed("PC"))
-        submit_layout.addWidget(submitButton, stretch=1)
+        self.pc_button = QPushButton("Generate Seed (PC)")
+        self.pc_button.clicked.connect(lambda : self.makeSeed("PC"))
+        submit_layout.addWidget(self.pc_button, stretch=1)
+        self.pc_button.setVisible(False)
+
+
+        self.both_button = QPushButton("Generate Seed (PC/PCSX2)")
+        self.both_button.clicked.connect(lambda : self.makeSeed("Both"))
+        submit_layout.addWidget(self.both_button, stretch=1)
 
         widget = QWidget()
         widget.setLayout(pagelayout)
@@ -313,6 +320,17 @@ class KH2RandomizerApp(QMainWindow):
             try:
                 rando_settings = self.make_rando_settings()
                 dummy_rando = Randomizer(rando_settings,True)
+                split_pc_emu = False
+                split_pc_emu = split_pc_emu or self.settings.get(settingkey.COMMAND_MENU) != "vanilla"
+                split_pc_emu = split_pc_emu or len(self.settings.get(settingkey.BGM_OPTIONS)) != 0
+                split_pc_emu = split_pc_emu or len(self.settings.get(settingkey.BGM_GAMES)) != 0
+                split_pc_emu = split_pc_emu or self.settings.get(settingkey.CUPS_GIVE_XP)
+                split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
+                split_pc_emu = split_pc_emu or rando_settings.enemy_options["boss"] != "Disabled"
+                split_pc_emu = split_pc_emu or rando_settings.enemy_options["enemy"] != "Disabled"
+                self.emu_button.setVisible(split_pc_emu)
+                self.pc_button.setVisible(split_pc_emu)
+                self.both_button.setVisible(not split_pc_emu)
             except CantAssignItemException as e:
                 pass
             text = f"Items: {dummy_rando.num_available_items} / Locations: {dummy_rando.num_valid_locations}"

@@ -17,6 +17,11 @@ class Hints:
 
 
     def generateHints(locationItems, hintsType, excludeList, preventSelfHinting, allowProofHinting, allowReportHinting, pointHintValues, tracker_includes):
+        if locationType.HB in excludeList and (locationType.TTR not in excludeList or locationType.CoR not in excludeList):
+            excludeList.remove(locationType.HB)
+        if locationType.OC in excludeList and (locationType.OCCups not in excludeList or locationType.OCCups not in excludeList):
+            excludeList.remove(locationType.OC)
+
         locationItems = Hints.convertItemAssignmentToTuple(locationItems)
         if hintsType=="Disabled":
             return None
