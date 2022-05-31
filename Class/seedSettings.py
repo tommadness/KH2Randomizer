@@ -902,7 +902,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.PUREBLOOD,
-        ui_label='Enable Pureblood',
+        ui_label='Pureblood Keyblade',
         shared=True,
         default=True,
         tooltip='Add the Pureblood Keyblade into the item pool (may be disabled for older versions of GoA)'
@@ -918,7 +918,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     Toggle(
         name=settingkey.CUPS_GIVE_XP,
-        ui_label='Cups Give XP',
+        ui_label='Cups Give Experience',
         shared=True,
         default=False,
         tooltip='Defeating enemies while in an OC Cup will give you XP and Form XP'
@@ -948,14 +948,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.SKIP_CARPET_ESCAPE,
-        ui_label='Skip Carpet Escape',
+        ui_label='Skip Magic Carpet Escape',
         shared=True,
         default=False,
         tooltip='After reaching Ruined Chamber, the carpet escape sequence will be skipped.'
     ),
     Toggle(
         name=settingkey.TT1_JAILBREAK,
-        ui_label='TT1 Exit Enabled',
+        ui_label='Early Twilight Town 1 Exit',
         shared=True,
         default=False,
         tooltip='Allows the use of save points to leave TT1 anytime.'
@@ -971,7 +971,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     Toggle(
         name=settingkey.ENABLE_PROMISE_CHARM,
-        ui_label='Enable Promise Charm',
+        ui_label='Promise Charm',
         shared=True,
         default=False,
         tooltip="If enabled, the promise charm will be added to the item pool, which can allow skipping TWTNW by talking to the computer in the GoA when you have all 3 proofs",
@@ -980,7 +980,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     Toggle(
         name=settingkey.STORY_UNLOCKS,
-        ui_label='Start with World Key Items',
+        ui_label='World Key Items',
         shared=True,
         default=True,
         tooltip="Gives the player all the visit locking items at the start, making all worlds open from the start.",
@@ -988,20 +988,20 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
 
     Toggle(
-        name=settingkey.REMOVE_MAPS,
-        ui_label='Remove Maps from Item Pool',
+        name=settingkey.MAPS_IN_ITEM_POOL,
+        ui_label='Maps',
         shared=True,
-        default=False,
-        tooltip="Removes maps from the required item pool, freeing up more slots for the other 'junk' items",
+        default=True,
+        tooltip="If enabled, maps are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
         randomizable=True
     ),
 
     Toggle(
-        name=settingkey.REMOVE_RECIPES,
-        ui_label='Remove Recipes from Item Pool',
+        name=settingkey.RECIPES_IN_ITEM_POOL,
+        ui_label='Synthesis Recipes',
         shared=True,
-        default=False,
-        tooltip="Removes recipes from the required item pool, freeing up more slots for the other 'junk' items",
+        default=True,
+        tooltip="If enabled, recipes are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
         randomizable=True
     ),
 
@@ -1056,7 +1056,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.NIGHTMARE_LOGIC,
-        ui_label='Enable Advanced Nightmare Logic',
+        ui_label='Advanced Nightmare Logic',
         shared=True,
         default=False,
         tooltip="Enables weighting for keyblades with good abilities, and puts auto forms `in-logic` meaning they may be required",
@@ -1068,7 +1068,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         choices={
             'default': 'Regular Rando',
             'reverse': 'Reverse Rando',
-            'both': 'Satisfies regular and reverse rando'
+            'both': 'Satisfy Regular & Reverse'
         },
         shared=True,
         default="default",
