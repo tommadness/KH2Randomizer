@@ -142,8 +142,8 @@ class RandomizerSettings():
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.roxas_abilities_enabled = ui_settings.get(settingkey.ROXAS_ABILITIES_ENABLED)
-        self.remove_maps = ui_settings.get(settingkey.REMOVE_MAPS)
-        self.remove_recipes = ui_settings.get(settingkey.REMOVE_RECIPES)
+        self.include_maps = ui_settings.get(settingkey.MAPS_IN_ITEM_POOL)
+        self.include_recipes = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
         self.remove_popups = ui_settings.get(settingkey.REMOVE_POPUPS)
 
         self.point_hint_values = {"proof":ui_settings.get(settingkey.POINTS_PROOF),

@@ -75,6 +75,8 @@ class Hints:
             world_to_vanilla_ICs[locationType.HB] = [21,22,383,25,31,24,32,375,376,369]
             world_to_vanilla_ICs[locationType.STT] = world_to_vanilla_ICs[locationType.TT]
             world_to_vanilla_ICs["Creations"] = []
+            world_to_vanilla_ICs[locationType.Critical] = []
+            world_to_vanilla_ICs[locationType.Free] = []
 
             ICs_to_hintable_worlds = {}
 
