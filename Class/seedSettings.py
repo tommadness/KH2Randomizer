@@ -955,7 +955,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.PR_MAP_SKIP,
-        ui_label='Port Royal Map Removed',
+        ui_label='Remove Port Royal Map Select',
         shared=True,
         default=False,
         tooltip='Changes Port Royal map screen with text options, useful for avoiding crashes in PC.'
