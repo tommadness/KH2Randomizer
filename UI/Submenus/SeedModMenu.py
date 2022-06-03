@@ -14,6 +14,7 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.ROXAS_ABILITIES_ENABLED)
         self.add_option(settingkey.TT1_JAILBREAK)
         self.add_option(settingkey.SKIP_CARPET_ESCAPE)
+        self.add_option(settingkey.PR_MAP_SKIP)
         self.end_column()
 
         self.start_column()

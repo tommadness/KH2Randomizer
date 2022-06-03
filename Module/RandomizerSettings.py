@@ -142,6 +142,7 @@ class RandomizerSettings():
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.roxas_abilities_enabled = ui_settings.get(settingkey.ROXAS_ABILITIES_ENABLED)
+        self.pr_map_skip = ui_settings.get(settingkey.PR_MAP_SKIP)
         self.include_maps = ui_settings.get(settingkey.MAPS_IN_ITEM_POOL)
         self.include_recipes = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
         self.remove_popups = ui_settings.get(settingkey.REMOVE_POPUPS)

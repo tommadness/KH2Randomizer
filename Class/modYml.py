@@ -332,6 +332,34 @@ class modYml:
                 ]
             }
 
+    def getMapSkipMod():
+        return [{
+                "name": "msg/us/ca.bar",
+                "method": "binarc",
+                "source": [
+                    {
+                        "name": "ca",
+                        "type": "list",
+                        "method": "kh2msg",
+                        "source": [
+                            {
+                                "name": "map_skip/ca.yml",
+                                "language": "en"
+                            }
+                        ]
+                    }
+                ]
+               },{
+                "name": "libretto-ca.bar",
+                "method": "copy",
+                "source": [
+                    {
+                        "name": "map_skip/libretto-ca.bar",
+                    }
+                ]
+               },]
+
+
 
     def getRetryMod(mod_choice):
         mod_names = {}

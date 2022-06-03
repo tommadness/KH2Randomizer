@@ -48,7 +48,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '2.0.3-prerelease'
+LOCAL_UI_VERSION = '2.1.0-prerelease'
 
 class Logger(object):
     def __init__(self, orig_stream):

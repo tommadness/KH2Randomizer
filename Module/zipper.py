@@ -267,6 +267,7 @@ class SeedZip():
             self.createASDataAssets(settings, mod, outZip)
             self.createRetryAssets(settings, mod, outZip)
             self.createSkipCarpetAssets(settings, mod, outZip)
+            self.createMapSkipAssets(settings, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -344,6 +345,7 @@ class SeedZip():
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
                                                        .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON))
+                    html_template = html_template.replace("PromiseCharm","Promise Charm")
                     if not tourney_gen:
                         outZip.writestr("spoilerlog.html",html_template)
                     self.spoiler_log = html_template
@@ -397,6 +399,12 @@ class SeedZip():
         if settings.skip_carpet_escape:
             mod["assets"] += [modYml.getSkipCarpetEscapeMod()]
             outZip.write(resource_path("static/skip_carpet_escape.script"), "skip_carpet_escape.script")
+
+    def createMapSkipAssets(self,settings,mod,outZip):
+        if settings.pr_map_skip:
+            mod["assets"] += modYml.getMapSkipMod()
+            outZip.write(resource_path("static/map_skip/ca.yml"), "map_skip/ca.yml")
+            outZip.write(resource_path("static/map_skip/libretto-ca.bar"), "map_skip/libretto-ca.bar")
 
 
     def createPuzzleAssets(self, settings, randomizer, mod, outZip):

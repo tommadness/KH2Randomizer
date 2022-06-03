@@ -954,6 +954,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip='After reaching Ruined Chamber, the carpet escape sequence will be skipped.'
     ),
     Toggle(
+        name=settingkey.PR_MAP_SKIP,
+        ui_label='Port Royal Map Removed',
+        shared=True,
+        default=False,
+        tooltip='Changes Port Royal map screen with text options, useful for avoiding crashes in PC.'
+    ),
+
+    Toggle(
         name=settingkey.TT1_JAILBREAK,
         ui_label='Early Twilight Town 1 Exit',
         shared=True,

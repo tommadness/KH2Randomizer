@@ -182,12 +182,28 @@ class Hints:
             for x in barren_world_list:
                 report_texts.append(create_hint_text(x))
 
-            report_texts = report_texts[0:13]
-            random.shuffle(report_texts)
 
             if not found_reports:
                 for reportNumber in range(1,14):
                     report_master[reportNumber] = [""]
+
+            valid_reports = False
+            for iter in range(1,10):
+                report_texts = report_texts[0:13]
+                random.shuffle(report_texts)
+                valid_reports = True
+                for x in range(1,14):
+                    report_location = report_master[x][0]
+                    report_hint_world = report_texts[x-1][1]
+                    if report_hint_world==report_location:
+                        valid_reports = False
+                        break
+                if valid_reports:
+                    break
+            if not valid_reports:
+                raise HintException("Failed to assign path hints due to self hinting")
+
+
 
             for x in range(1,14):
                 report_location = report_master[x][0]
