@@ -907,6 +907,20 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=True,
         tooltip='Add the Pureblood Keyblade into the item pool (may be disabled for older versions of GoA)'
     ),
+    Toggle(
+        name=settingkey.ANTIFORM,
+        ui_label='Antiform',
+        shared=True,
+        default=False,
+        tooltip='Add Antiform as an obtainable form.'
+    ),
+    Toggle(
+        name=settingkey.FIFTY_AP_BOOSTS,
+        ui_label='50 AP Boosts',
+        shared=True,
+        default=True,
+        tooltip='Adds guaranteed 50 AP boosts into the item pool'
+    ),
 
     Toggle(
         name=settingkey.REMOVE_DAMAGE_CAP,
@@ -1035,7 +1049,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=False,
         tooltip=textwrap.dedent('''
             Change visit locking items to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias each item gets when randomizing. 
-            Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items.
+            Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items in the harder item placement difficulties.
         '''),
     ),
 

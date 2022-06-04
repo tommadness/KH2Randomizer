@@ -65,6 +65,7 @@ class Items:
             KH2Item(29, "Final Form", itemType.FORM, itemRarity.MYTHIC),
             KH2Item(31, "Master Form", itemType.FORM, itemRarity.MYTHIC),
             KH2Item(563, "Limit Form", itemType.FORM, itemRarity.MYTHIC),
+            KH2Item(30, "Anti-Form", itemType.KEYITEM, itemRarity.RARE),
 
             KH2Item(32, "Torn Pages",itemType.TORN_PAGE, itemRarity.MYTHIC),
             KH2Item(32, "Torn Pages",itemType.TORN_PAGE, itemRarity.MYTHIC),
@@ -291,7 +292,7 @@ class Items:
             KH2Item(517, "Solar Sailer Simulation Map", itemType.MAP),
             KH2Item(256, "Dark City Map", itemType.MAP),
             KH2Item(536, "Castle That Never Was Map", itemType.MAP),
-        ] + list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50)) + Items.getStoryKeyItems(story_unlocking_rarity)
+        ] + Items.getStoryKeyItems(story_unlocking_rarity)
 
     @staticmethod
     def getStatItems():

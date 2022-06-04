@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import itertools
 
 from Class.exceptions import GeneratorException,CantAssignItemException
 from Class.newLocationClass import KH2Location
@@ -216,6 +217,11 @@ class Randomizer():
         allItems = [i for i in Items.getItemList(settings.story_unlock_rarity) if i.Id not in settings.startingItems]
         if not settings.pureblood:
             allItems = [i for i in allItems if i.Id!=71]
+        if not settings.antiform:
+            allItems = [i for i in allItems if i.Id!=30]
+
+        if settings.fifty_ap:
+            allItems += list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50))
 
         if not settings.include_maps:
             allItems = [i for i in allItems if i.ItemType != itemType.MAP]

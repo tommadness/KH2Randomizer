@@ -84,6 +84,8 @@ class RandomizerSettings():
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
         self.tt1_jailbreak = ui_settings.get(settingkey.TT1_JAILBREAK)
         self.pureblood = ui_settings.get(settingkey.PUREBLOOD)
+        self.antiform = ui_settings.get(settingkey.ANTIFORM)
+        self.fifty_ap = ui_settings.get(settingkey.FIFTY_AP_BOOSTS)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
         if self.hintsType in ["JSmartee","Points","Path"]:
             self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
