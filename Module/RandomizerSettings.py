@@ -87,10 +87,10 @@ class RandomizerSettings():
         self.antiform = ui_settings.get(settingkey.ANTIFORM)
         self.fifty_ap = ui_settings.get(settingkey.FIFTY_AP_BOOSTS)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
-        if self.hintsType in ["JSmartee","Points","Path"]:
-            self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
-        else:
-            self.reportDepth = locationDepth.Anywhere
+        # if self.hintsType in ["JSmartee","Points","Path"]:
+        self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
+        # else:
+        #     self.reportDepth = locationDepth.Anywhere
         self.proofDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.PROOF_DEPTH)][0]
 
         if ui_settings.get(settingkey.SOFTLOCK_CHECKING) == "both":
