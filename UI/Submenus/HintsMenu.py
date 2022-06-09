@@ -14,6 +14,8 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.PREVENT_SELF_HINTING)
         self.add_option(settingkey.ALLOW_PROOF_HINTING)
         self.add_option(settingkey.ALLOW_REPORT_HINTING)
+        self.add_option(settingkey.REVEAL_COMPLETE)
+        self.add_option(settingkey.REVEAL_REPORTMODE)
         self.end_column()
 
         self.start_column()
@@ -25,7 +27,9 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_PAGE)
         self.add_option(settingkey.POINTS_VISIT)
         self.add_option(settingkey.POINTS_REPORT)
-        self.end_column()
+        self.add_option(settingkey.REVEAL_TYPES)
+        self.end_column(stretch_at_end=False)
+
 
         self.start_column()
         self.add_option(settingkey.POINTS_BONUS)
@@ -53,3 +57,6 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.POINTS_BONUS, visible=hint_system == 'Points')
         self.set_option_visibility(settingkey.POINTS_COMPLETE, visible=hint_system == 'Points')
         self.set_option_visibility(settingkey.POINTS_FORMLV, visible=hint_system == 'Points')
+        self.set_option_visibility(settingkey.REVEAL_TYPES, visible=hint_system == 'Spoiler')
+        self.set_option_visibility(settingkey.REVEAL_COMPLETE, visible=hint_system == 'Spoiler')
+        self.set_option_visibility(settingkey.REVEAL_REPORTMODE, visible=hint_system == 'Spoiler')
