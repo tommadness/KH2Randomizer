@@ -14,8 +14,6 @@ class Hints:
                 locationItems.append((assignment.location,assignment.item2))
         return locationItems
 
-
-
     def generateHints(locationItems, hintsType, excludeList, preventSelfHinting, allowProofHinting, allowReportHinting, pointHintValues, spoilerHintValues, tracker_includes):
         if locationType.HB in excludeList and (locationType.TTR not in excludeList or locationType.CoR not in excludeList):
             excludeList.remove(locationType.HB)
@@ -27,7 +25,7 @@ class Hints:
             return None
         hintsText = {}
         hintsText['hintsType'] = hintsType
-        hintsText['settings'] = tracker_includes + ["Olympus Stone", "Anti-Form", "Hades Cup Trophy", "Unknown Disk"]
+        hintsText['settings'] = tracker_includes #+ ["Olympus Stone", "Anti-Form", "Hades Cup Trophy", "Unknown Disk"]
         if hintsType == "Shananas":
             importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON] + [itemType.STORYUNLOCK]
             hintsText['world'] = {}
@@ -468,7 +466,7 @@ class Hints:
             tempWorldR = None
             tempItemR = None
             tempExcludeList = []
-            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] + [itemType.STORYUNLOCK, itemType.TROPHY, itemType.MEMBERSHIPCARD, "Olympus Stone", "Anti-Form"]
+            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] + [itemType.STORYUNLOCK] #, itemType.TROPHY, itemType.MEMBERSHIPCARD, "Olympus Stone", "Anti-Form"]
             hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
             for location,item in locationItems:
@@ -649,7 +647,7 @@ class Hints:
             IC_Types["report"] = ["Secret Ansem's Report 1","Secret Ansem's Report 2","Secret Ansem's Report 3","Secret Ansem's Report 4","Secret Ansem's Report 5","Secret Ansem's Report 6","Secret Ansem's Report 7","Secret Ansem's Report 8","Secret Ansem's Report 9","Secret Ansem's Report 10","Secret Ansem's Report 11","Secret Ansem's Report 12","Secret Ansem's Report 13"]
             IC_Types["visit"] = ["Battlefields of War (Auron)","Sword of the Ancestor (Mulan)","Beast's Claw (Beast)","Bone Fist (Jack Skellington)","Proud Fang (Simba)","Skill and Crossbones (Jack Sparrow)","Scimitar (Aladdin)","Identity Disk (Tron)","Membership Card","Ice Cream","Picture"]
             worldItemTypes = {}
-            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] + [itemType.STORYUNLOCK, itemType.TROPHY, itemType.MEMBERSHIPCARD, "Olympus Stone", "Anti-Form"]
+            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] + [itemType.STORYUNLOCK] #, itemType.TROPHY, itemType.MEMBERSHIPCARD, "Olympus Stone", "Anti-Form"]
             hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
             for location,item in locationItems:
