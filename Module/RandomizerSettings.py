@@ -161,6 +161,17 @@ class RandomizerSettings():
                                     "complete":ui_settings.get(settingkey.POINTS_COMPLETE), 
                                     "formlv":ui_settings.get(settingkey.POINTS_FORMLV)}
 
+        self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
+        self.revealMode = ui_settings.get(settingkey.REVEAL_REPORTMODE)
+
+        self.spoiler_hint_values = [
+            item_type for item_type in ui_settings.get(settingkey.REVEAL_TYPES)
+        ]
+        if self.revealComplete:
+            self.spoiler_hint_values.append("complete")
+        if self.revealMode:
+            self.spoiler_hint_values.append("reportmode")
+
         self.tracker_includes = []
         if self.promiseCharm:
             self.tracker_includes.append("PromiseCharm")
