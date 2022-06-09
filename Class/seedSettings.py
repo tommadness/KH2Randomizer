@@ -477,7 +477,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'Shananas': 'Shananas',
             'JSmartee': 'JSmartee',
             'Points': 'Points',
-            'Path': 'Path'
+            'Path': 'Path',
+            'Spoiler': 'Spoiler'
         },
         shared=True,
         default='JSmartee',
@@ -486,9 +487,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             JSmartee - Secret Ansem Reports provide information for how many "important checks" are in a world
             Shananas - Each world informs you once the world has no more "important checks"
             Points - Each "important check" is assigned a point value, and you are told the number of points in each world. Secret Ansem Reports tell you where items are.
-            Path - Reports will tell you if a world contains `breadcrumbs` left by a world that has a proof. `Breadcrumbs` being vanilla important checks from a world. 
+            Path - Reports will tell you if a world contains `breadcrumbs` left by a world that has a proof. `Breadcrumbs` being vanilla important checks from a world.
+            Spoiler - Reveal "Important Check" locations in a world at the start of a seed.
         '''),
-        randomizable=["Shananas","JSmartee","Points","Path"]
+        randomizable=["Shananas","JSmartee","Points","Path","Spoiler"]
     ),
 
     IntSpinner(
@@ -692,6 +694,42 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=True,
         tooltip="Points Mode only: If enabled, reports can hint other reports.",
+        randomizable=True
+    ),
+
+    MultiSelect(
+        name=settingkey.REVEAL_TYPES,
+        ui_label='Important Check Types to Reveal',
+        choices={
+            'magic': 'Magic',
+            'form': 'Drive Forms',
+            'summon': 'Summon Charms',
+            'page': 'Torn Pages',
+            'ability': 'Second Chance/Once More',
+            'report': 'Ansem Reports',
+            'visit': 'World Key Items',
+            'proof': 'Proofs'
+            #'other': 'Extra',
+        },
+        shared=True,
+        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof"]#, "other"]
+    ),
+
+    Toggle(
+        name=settingkey.REVEAL_COMPLETE,
+        ui_label='Change World Value color when complete',
+        shared=True,
+        default=True,
+        tooltip="If enabled, World Values will turn blue when all Important Checks in a World are found.",
+        randomizable=True
+    ),
+
+    Toggle(
+        name=settingkey.REVEAL_REPORTMODE,
+        ui_label='Reports reveal worlds',
+        shared=True,
+        default=True,
+        tooltip="If enabled, Ansem Reports will be used to reveal Important Checks in a world.",
         randomizable=True
     ),
     
