@@ -368,7 +368,7 @@ class Randomizer():
     def augmentInvalidChecks(self, allLocations):
         """Add invalid check types to locations."""
         for loc in allLocations:
-            if loc.LocationCategory == locationCategory.POPUP:
+            if loc.LocationCategory in [locationCategory.POPUP, locationCategory.CREATION]:
                 loc.InvalidChecks+=[itemType.GROWTH_ABILITY,itemType.ACTION_ABILITY,itemType.SUPPORT_ABILITY,itemType.GAUGE]
             if locationType.STT in loc.LocationTypes and loc.LocationCategory != locationCategory.STATBONUS:
                 loc.InvalidChecks+=[itemType.GAUGE]

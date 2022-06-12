@@ -90,48 +90,48 @@ class Locations:
         # dot.save_img(file_name='graph',file_type="gif")
 
     def makeSynthGraph(self):
-        self.add_node("Synthesis Free Dev 1", LocationNode([KH2Location(0,"Synth Recipe 1",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(1,"Synth Recipe 2",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(2,"Synth Recipe 3",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(3,"Synth Recipe 4",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(4,"Synth Recipe 5",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(5,"Synth Recipe 6",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(6,"Synth Recipe 7",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(7,"Synth Recipe 8",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(8,"Synth Recipe 9",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(9,"Synth Recipe 10",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(10,"Synth Recipe 11",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(11,"Synth Recipe 12",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(12,"Synth Recipe 13",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(13,"Synth Recipe 14",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(14,"Synth Recipe 15",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT])]))
-        self.add_node("Synthesis Free Dev 2", LocationNode([KH2Location(15,"Synth Recipe 16",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(16,"Synth Recipe 17",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(17,"Synth Recipe 18",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(18,"Synth Recipe 19",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(19,"Synth Recipe 20",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(20,"Synth Recipe 21",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(21,"Synth Recipe 22",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(22,"Synth Recipe 23",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(23,"Synth Recipe 24",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(24,"Synth Recipe 25",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(25,"Synth Recipe 26",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(26,"Synth Recipe 27",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(27,"Synth Recipe 28",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(28,"Synth Recipe 29",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(29,"Synth Recipe 30",locationCategory.POPUP,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT])]))
+        self.add_node("Synthesis Free Dev 1", LocationNode([KH2Location(0,"Synth Recipe 1",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(1,"Synth Recipe 2",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(2,"Synth Recipe 3",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(3,"Synth Recipe 4",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(4,"Synth Recipe 5",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(5,"Synth Recipe 6",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(6,"Synth Recipe 7",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(7,"Synth Recipe 8",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(8,"Synth Recipe 9",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(9,"Synth Recipe 10",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(10,"Synth Recipe 11",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(11,"Synth Recipe 12",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(12,"Synth Recipe 13",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(13,"Synth Recipe 14",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(14,"Synth Recipe 15",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT])]))
+        self.add_node("Synthesis Free Dev 2", LocationNode([KH2Location(15,"Synth Recipe 16",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(16,"Synth Recipe 17",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(17,"Synth Recipe 18",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(18,"Synth Recipe 19",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(19,"Synth Recipe 20",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(20,"Synth Recipe 21",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(21,"Synth Recipe 22",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(22,"Synth Recipe 23",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(23,"Synth Recipe 24",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(24,"Synth Recipe 25",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(25,"Synth Recipe 26",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(26,"Synth Recipe 27",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(27,"Synth Recipe 28",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(28,"Synth Recipe 29",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            KH2Location(29,"Synth Recipe 30",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT])]))
         
         self.add_edge("Starting","Synthesis Free Dev 1",RequirementEdge())
         self.add_edge("Synthesis Free Dev 1","Synthesis Free Dev 2",RequirementEdge())
 
 
     def makePuzzleGraph(self):
-        self.add_node("Awakening Puzzle",LocationNode([KH2Location(0, "Awakening (AP Boost)",  locationCategory.POPUP, LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
-        self.add_node("Heart Puzzle",LocationNode([KH2Location(1, "Heart (Serenity Crystal)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
-        self.add_node("Duality Puzzle",LocationNode([KH2Location(2, "Duality (Rare Document)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
-        self.add_node("Frontier Puzzle",LocationNode([KH2Location(3, "Frontier (Manifest Illusion)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
-        self.add_node("Daylight Puzzle",LocationNode([KH2Location(4, "Daylight (Executive's Ring)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.TORN_PAGE, itemType.REPORT]),]))
-        self.add_node("Sunset Puzzle",LocationNode([KH2Location(5, "Sunset (Grand Ribbon)", locationCategory.POPUP,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
+        self.add_node("Awakening Puzzle",LocationNode([KH2Location(0, "Awakening (AP Boost)",  locationCategory.CREATION, LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
+        self.add_node("Heart Puzzle",LocationNode([KH2Location(1, "Heart (Serenity Crystal)", locationCategory.CREATION,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
+        self.add_node("Duality Puzzle",LocationNode([KH2Location(2, "Duality (Rare Document)", locationCategory.CREATION,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
+        self.add_node("Frontier Puzzle",LocationNode([KH2Location(3, "Frontier (Manifest Illusion)", locationCategory.CREATION,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
+        self.add_node("Daylight Puzzle",LocationNode([KH2Location(4, "Daylight (Executive's Ring)", locationCategory.CREATION,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.TORN_PAGE, itemType.REPORT]),]))
+        self.add_node("Sunset Puzzle",LocationNode([KH2Location(5, "Sunset (Grand Ribbon)", locationCategory.CREATION,  LocationTypes=[locationType.Puzzle],InvalidChecks=[itemType.REPORT]),]))
 
         
         if not self.reverse_rando:

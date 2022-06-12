@@ -46,6 +46,7 @@ class locationType(str, Enum):
 class locationCategory(str,Enum):
     CHEST = "Chest"
     POPUP = "Popup"
+    CREATION = "Creation"
     ITEMBONUS = "Item Bonus"
     STATBONUS = "Stat Bonus"
     HYBRIDBONUS = "Item and Stat Bonus"
