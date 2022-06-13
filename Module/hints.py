@@ -520,8 +520,8 @@ class Hints:
                 
                 #reset list
                 if len(worlds) == 0:
-                    print("ran out of worlds! resetting worldlist...")
-                    print("-----------------------------------------------------------------------------")
+                    #print("ran out of worlds! resetting worldlist...")
+                    #print("-----------------------------------------------------------------------------")
                     #worldChecksEdit = worldChecks #commented out because i think this lead to duplicate item hints
                     tempExcludeList.clear()
                     continue
@@ -531,17 +531,17 @@ class Hints:
                         reportNumber = reportsList.pop(0)
                         randomWorld = worlds[0]
                     else:
-                        print("Self hinting world! Rerolling...")
-                        print("-----------------------------------------------------------------------------")
+                        #print("Self hinting world! Rerolling...")
+                        #print("-----------------------------------------------------------------------------")
                         continue
                 else:
-                    print(worlds[0] + " has 0 checks! removing from list and rerolling...")
-                    print("-----------------------------------------------------------------------------")
+                    #print(worlds[0] + " has 0 checks! removing from list and rerolling...")
+                    #print("-----------------------------------------------------------------------------")
                     tempExcludeList.append(worlds[0])
                     continue
                     
                 randomItem = random.choice(worldChecksEdit[randomWorld])
-                print("Report " + str(reportNumber) + ": World = " + randomWorld +" | item = " + randomItem.Name)
+                #print("Report " + str(reportNumber) + ": World = " + randomWorld +" | item = " + randomItem.Name)
 
                 #compare current selected world and item to previously rerolled reports
                 #more of a jank failsafe really
@@ -550,27 +550,27 @@ class Hints:
 
                 #should we hint proofs?
                 if "Proof" in randomItem.Name:
-                    print("Proof found! Is Proof Hinting On?")
+                    #print("Proof found! Is Proof Hinting On?")
                     
                     if allowProofHinting == True:
-                        print("Yes! hinting Proof...")
+                        #print("Yes! hinting Proof...")
                         pass
                     else:
-                        print("No. removing item and rerolling...")
-                        print("-----------------------------------------------------------------------------")
+                        #print("No. removing item and rerolling...")
+                        #print("-----------------------------------------------------------------------------")
                         worldChecksEdit[randomWorld].remove(randomItem)
                         reportsList.append(reportNumber)
                         continue
                     
                 #try to hint other reports
                 if "Report" in randomItem.Name:
-                    print("Report found! Is Report Hinting On?")
+                    #print("Report found! Is Report Hinting On?")
                     if allowReportHinting == True:
                         #prevent reports from hinting themselves (redundant?)
-                        print("Yes! Attempting to Hint Report...")
+                        #print("Yes! Attempting to Hint Report...")
                         if reportNumber == int(randomItem.Name.replace("Secret Ansem's Report ","")):
-                            print("Self hinting report! rerolling...")
-                            print("-----------------------------------------------------------------------------")
+                            #print("Self hinting report! rerolling...")
+                            #print("-----------------------------------------------------------------------------")
                             tempWorldR = randomWorld
                             tempItemR = randomItem.Name
                             reportsList.append(reportNumber)
@@ -578,8 +578,8 @@ class Hints:
                     
                         #if we tried to roll for this 3 times already then stop trying and remove the report from being hinted
                         if reportRepetition > 2:
-                            print("Report repetition threshold reached! removing item from world and rerolling...")
-                            print("-----------------------------------------------------------------------------")
+                            #print("Report repetition threshold reached! removing item from world and rerolling...")
+                            #print("-----------------------------------------------------------------------------")
                             worldChecksEdit[randomWorld].remove(randomItem)
                             tempWorldR = None
                             tempItemR = None
@@ -588,22 +588,22 @@ class Hints:
                             continue
                             
                         random_number = random.randint(1, 3)
-                        print("Random number = " + str(random_number))
-                        print("Report found! does " + str(random_number) + " = 1?")
+                        #print("Random number = " + str(random_number))
+                        #print("Report found! does " + str(random_number) + " = 1?")
                         
                         if random_number == 1:
-                            print("Yes! hinting report...")
+                            #print("Yes! hinting report...")
                             pass
                         else:
-                            print("No. rerolling...")
-                            print("-----------------------------------------------------------------------------")
+                            #print("No. rerolling...")
+                            #print("-----------------------------------------------------------------------------")
                             tempWorldR = randomWorld
                             tempItemR = randomItem.Name
                             reportsList.append(reportNumber)
                             continue
                     else:
-                        print("No. removing item and rerolling...")
-                        print("-----------------------------------------------------------------------------")
+                        #print("No. removing item and rerolling...")
+                        #print("-----------------------------------------------------------------------------")
                         worldChecksEdit[randomWorld].remove(randomItem)
                         reportsList.append(reportNumber)
                         continue
@@ -615,9 +615,9 @@ class Hints:
                 }
                 
                 # remove hinted item from list
-                print("Removing " + randomItem.Name + " from hintable items")
-                print("Removing " + randomWorld + " hintable worlds")
-                print("-----------------------------------------------------------------------------")
+                #print("Removing " + randomItem.Name + " from hintable items")
+                #print("Removing " + randomWorld + " hintable worlds")
+                #print("-----------------------------------------------------------------------------")
                 worldChecksEdit[randomWorld].remove(randomItem)
                 tempExcludeList.append(randomWorld)
                 
@@ -647,7 +647,7 @@ class Hints:
             IC_Types["report"] = ["Secret Ansem's Report 1","Secret Ansem's Report 2","Secret Ansem's Report 3","Secret Ansem's Report 4","Secret Ansem's Report 5","Secret Ansem's Report 6","Secret Ansem's Report 7","Secret Ansem's Report 8","Secret Ansem's Report 9","Secret Ansem's Report 10","Secret Ansem's Report 11","Secret Ansem's Report 12","Secret Ansem's Report 13"]
             IC_Types["visit"] = ["Battlefields of War (Auron)","Sword of the Ancestor (Mulan)","Beast's Claw (Beast)","Bone Fist (Jack Skellington)","Proud Fang (Simba)","Skill and Crossbones (Jack Sparrow)","Scimitar (Aladdin)","Identity Disk (Tron)","Membership Card","Ice Cream","Picture"]
             worldItemTypes = {}
-            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] + [itemType.STORYUNLOCK] #, itemType.TROPHY, itemType.MEMBERSHIPCARD, "Olympus Stone", "Anti-Form"]
+            importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON, itemType.REPORT, "Second Chance", "Once More"] + [itemType.STORYUNLOCK] #+ [itemType.TROPHY, itemType.MEMBERSHIPCARD, "Olympus Stone", "Anti-Form"]
             hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
             for location,item in locationItems:
@@ -698,10 +698,10 @@ class Hints:
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     worldChecks[world_of_location].append(item)
                     worldChecksEdit[world_of_location].append(item)
-                #if item.ItemType is itemType.REPORT and preventSelfHinting:
-                #    #report can't hint itself
-                #    reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
-                #    reportRestrictions[reportNumber-1].append(world_of_location)
+                if item.ItemType is itemType.REPORT and preventSelfHinting:
+                    #report can't hint itself
+                    reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
+                    reportRestrictions[reportNumber-1].append(world_of_location)
 
             attempts = 0
             while len(reportsList) > 0:
