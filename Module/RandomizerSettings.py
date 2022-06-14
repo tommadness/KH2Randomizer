@@ -52,7 +52,10 @@ class RandomizerSettings():
 
         self.split_levels = ui_settings.get(settingkey.SPLIT_LEVELS)
         
-        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(ui_settings.get(settingkey.STORY_UNLOCKS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
+        self.random_growths = ui_settings.get(settingkey.STARTING_MOVEMENT)=="Random"
+        self.chosen_random_growths = []
+
+        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(ui_settings.get(settingkey.STORY_UNLOCKS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.nightmare = ui_settings.get(settingkey.NIGHTMARE_LOGIC)
         self.story_unlock_rarity = ui_settings.get(settingkey.STORY_UNLOCK_CATEGORY)

@@ -16,7 +16,7 @@ class StartingMenu(KH2Submenu):
 
         self.start_column()
         self.addHeader("Starting Inventory Options")
-        self.add_option(settingkey.SCHMOVEMENT)
+        self.add_option(settingkey.STARTING_MOVEMENT)
         self.add_option(settingkey.LIBRARY_OF_ASSEMBLAGE)
         self.add_option(settingkey.STORY_UNLOCKS)
         self.end_column()

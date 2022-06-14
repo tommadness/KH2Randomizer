@@ -441,10 +441,11 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     #),
 
     SingleSelect(
-        name=settingkey.SCHMOVEMENT,
+        name=settingkey.STARTING_MOVEMENT,
         ui_label="Growth Ability Starting Level",
         choices={
             'Disabled': 'Disabled',
+            'Random': '5 Random',
             'Level_1': 'Level 1',
             'Level_2': 'Level 2',
             'Level_3': 'Level 3',
@@ -453,12 +454,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default='Disabled',
         tooltip=textwrap.dedent('''
+            5 Random - Start with 5 individual growths at random.
             Level 1 - Start with level 1 of all growth abilities.
             Level 2 - Start with level 2 of all growth abilities.
             Level 3 - Start with level 3 of all growth abilities.
             Max - Start with max level of all growth abilities.
         '''),
-        randomizable=["Disabled","Level_1","Level_2","Level_3","Level_4"]
+        randomizable=["Disabled","Random","Level_1","Level_2","Level_3","Level_4"]
     ),
 
     Toggle(

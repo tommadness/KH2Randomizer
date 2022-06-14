@@ -61,6 +61,7 @@ RECIPES_IN_ITEM_POOL = 'recipes_in_item_pool'
 REVERSE_RANDO = 'reverse_rando'
 ROXAS_ABILITIES_ENABLED = 'roxas_abilities_enabled'
 SCHMOVEMENT = 'schmovement'
+STARTING_MOVEMENT = "starting_movement"
 SKIP_CARPET_ESCAPE = 'skip_carpet_escape'
 SOFTLOCK_CHECKING = 'softlock_checking'
 SORA_AP = "sora_ap"

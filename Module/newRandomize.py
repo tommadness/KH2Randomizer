@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import itertools
 
 from Class.exceptions import GeneratorException,CantAssignItemException
+from Module.modifier import SeedModifier
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item, itemRarity
 from List.configDict import locationCategory, itemType, locationType
@@ -215,6 +216,12 @@ class Randomizer():
                 goofyLocations.remove(randomLocation)
 
     def assignSoraItems(self, settings: RandomizerSettings):
+        if settings.random_growths:
+            for i in settings.chosen_random_growths:
+                settings.startingItems.remove(i)
+            settings.chosen_random_growths = SeedModifier.random_schmovement()
+            settings.startingItems+=settings.chosen_random_growths
+
         allItems = [i for i in Items.getItemList(settings.story_unlock_rarity) if i.Id not in settings.startingItems]
         if not settings.pureblood:
             allItems = [i for i in allItems if i.Id!=71]

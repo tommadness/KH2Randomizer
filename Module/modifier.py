@@ -139,58 +139,28 @@ class SeedModifier():
             return growth_all[1] + growth_all[2] + growth_all[3]
         if level_setting=="Level_4":
             return growth_all[1] + growth_all[2] + growth_all[3] + growth_all[4]
-        ##########
-        #commented out because of a strange bug... 
-        #the ability levels set after clicking Generate seed the first time
-        #are always different from the levels set from the 2nd time after.
-        #Example senario: generate once and get [2,1,2,0,0] as the level list. generate the seed 
-        #again without changing any settings and the level list changes to [4,0,0,0,1].
-        #if you continue the clicking generate seed then the level list stays as [4,0,0,0,1].
-        #i don't know why it is doing this.... why does random change after the first genration? 
-        ###########
-        #
-        #if level_setting=="Random":
-        #    random_growth = []
-        #    random_levels = []
-        #    current = 0
-        #    count = 5
-        #    #split a count into separate numbers that, in total, add up to count
-        #    while count > 0:
-        #        n = random.randint(0, count)
-        #        if n == 5:
-        #            n = 4
-        #        random_levels.append(n)
-        #        count -= n
-        #    #if the list length is less than 5 then add 0s to list until it is.
-        #    while len(random_levels) < 5:
-        #        random_levels.append(0)
-        #    print(' '.join(map(str, random_levels)))
-        #    #shuffle list to randomize which level each growth type gets
-        #    random.shuffle(random_levels)
-        #    #get all the abilities IDs needed for each growth and add them to a list
-        #    while current < 5:
-        #        if random_levels[current] == 0:
-        #            current += 1
-        #        elif random_levels[current] == 1:
-        #            random_growth.append(growth_all[1][current])
-        #            current += 1
-        #        elif random_levels[current] == 2:
-        #            random_growth.append(growth_all[1][current])
-        #            random_growth.append(growth_all[2][current])
-        #            current += 1
-        #        elif random_levels[current] == 3:
-        #            random_growth.append(growth_all[1][current])
-        #            random_growth.append(growth_all[2][current])
-        #            random_growth.append(growth_all[3][current])
-        #            current += 1
-        #        elif random_levels[current] == 4:
-        #            random_growth.append(growth_all[1][current])
-        #            random_growth.append(growth_all[2][current])
-        #            random_growth.append(growth_all[3][current])
-        #            random_growth.append(growth_all[4][current])
-        #            current += 1
-        #    return random_growth
         return []
+
+    def random_schmovement():
+        growth_all = {}
+        growth_all[0] =  [] # none
+        growth_all[1] =  [94,98,102,106,564] # level 1
+        growth_all[2] =  [95,99,103,107,565] # level 2
+        growth_all[3] =  [96,100,104,108,566] # level 3
+        growth_all[4] =  [97,101,105,109,567] # level max
+        random_growth = []
+        random_levels = [0,0,0,0,0]
+
+        iter = 0
+        while iter < 5:
+            picked = random.randint(0,4)
+            if random_levels[picked]!=4:
+                random_levels[picked]+=1
+                iter+=1
+        #get all the abilities IDs needed for each growth and add them to a list
+        for current in range(5):
+            [random_growth.append(growth_all[i][current]) for i in range(1,random_levels[current]+1)]
+        return random_growth
         
     #Old version
     #def schmovement(enabled):

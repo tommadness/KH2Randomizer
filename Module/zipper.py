@@ -1,3 +1,4 @@
+from doctest import master
 import io
 import json
 import yaml
@@ -467,6 +468,9 @@ class SeedZip():
         masterItemList = Items.getItemList()
         reports = [i.Id for i in masterItemList if i.ItemType==itemType.REPORT]
         story_unlocks = [i.Id for i in masterItemList if i.ItemType==itemType.STORYUNLOCK]
+        donald_goofy_handled_items = reports+story_unlocks
+        sora_abilities = [i.Id for i in masterItemList if i.ItemType==itemType.GROWTH_ABILITY or i.ItemType==itemType.ACTION_ABILITY or i.ItemType==itemType.SUPPORT_ABILITY]
+        riku_handled = [i.Id for i in masterItemList if i.Id not in donald_goofy_handled_items and i.Id not in sora_abilities]
 
         donaldStartingItems = [1+0x8000,3+0x8000]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedDonaldItems,[locationType.Free])] + [i for i in settings.startingItems if i in reports]
         padItems(donaldStartingItems)
@@ -498,9 +502,22 @@ class SeedZip():
             "Padding": [0] * 52
         })
 
-        all_party_handled_items = reports+story_unlocks
+        rikuStartingItems = [i+0x8000 for i in [1,1,1,1,3,3,438,436,187,208,411,422,414,415,416]] + [417,419] + [i for i in settings.startingItems if i in riku_handled]
+        padItems(rikuStartingItems)
+        self.formattedPlrp.append({
+            "Character": 13, # Riku Starting Items
+            "Id": 0,
+            "Hp": 20,
+            "Mp": 100,
+            "Ap": settings.goofy_ap-4,
+            "ArmorSlotMax": 2,
+            "AccessorySlotMax": 1,
+            "ItemSlotMax": 6,
+            "Items": rikuStartingItems,
+            "Padding": [0] * 52
+        })
 
-        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] +  [i for i in settings.startingItems if i not in all_party_handled_items]
+        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] +  [i for i in settings.startingItems if i in sora_abilities]
         padItems(soraStartingItems)
         self.formattedPlrp.append({
             "Character": 1, # Sora Starting Items (Crit)

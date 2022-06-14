@@ -520,8 +520,8 @@ class Hints:
                 
                 #reset list
                 if len(worlds) == 0:
-                    print("ran out of worlds! resetting worldlist...")
-                    print("-----------------------------------------------------------------------------")
+                    # print("ran out of worlds! resetting worldlist...")
+                    # print("-----------------------------------------------------------------------------")
                     #worldChecksEdit = worldChecks #commented out because i think this lead to duplicate item hints
                     tempExcludeList.clear()
                     continue
@@ -531,12 +531,12 @@ class Hints:
                         reportNumber = reportsList.pop(0)
                         randomWorld = worlds[0]
                     else:
-                        print("Self hinting world! Rerolling...")
-                        print("-----------------------------------------------------------------------------")
+                        # print("Self hinting world! Rerolling...")
+                        # print("-----------------------------------------------------------------------------")
                         continue
                 else:
-                    print(worlds[0] + " has 0 checks! removing from list and rerolling...")
-                    print("-----------------------------------------------------------------------------")
+                    # print(worlds[0] + " has 0 checks! removing from list and rerolling...")
+                    # print("-----------------------------------------------------------------------------")
                     tempExcludeList.append(worlds[0])
                     continue
                     
@@ -550,27 +550,27 @@ class Hints:
 
                 #should we hint proofs?
                 if "Proof" in randomItem.Name:
-                    print("Proof found! Is Proof Hinting On?")
+                    # print("Proof found! Is Proof Hinting On?")
                     
                     if allowProofHinting == True:
-                        print("Yes! hinting Proof...")
+                        # print("Yes! hinting Proof...")
                         pass
                     else:
-                        print("No. removing item and rerolling...")
-                        print("-----------------------------------------------------------------------------")
+                        # print("No. removing item and rerolling...")
+                        # print("-----------------------------------------------------------------------------")
                         worldChecksEdit[randomWorld].remove(randomItem)
                         reportsList.append(reportNumber)
                         continue
                     
                 #try to hint other reports
                 if "Report" in randomItem.Name:
-                    print("Report found! Is Report Hinting On?")
+                    # print("Report found! Is Report Hinting On?")
                     if allowReportHinting == True:
                         #prevent reports from hinting themselves (redundant?)
-                        print("Yes! Attempting to Hint Report...")
+                        # print("Yes! Attempting to Hint Report...")
                         if reportNumber == int(randomItem.Name.replace("Secret Ansem's Report ","")):
-                            print("Self hinting report! rerolling...")
-                            print("-----------------------------------------------------------------------------")
+                            # print("Self hinting report! rerolling...")
+                            # print("-----------------------------------------------------------------------------")
                             tempWorldR = randomWorld
                             tempItemR = randomItem.Name
                             reportsList.append(reportNumber)
@@ -578,8 +578,8 @@ class Hints:
                     
                         #if we tried to roll for this 3 times already then stop trying and remove the report from being hinted
                         if reportRepetition > 2:
-                            print("Report repetition threshold reached! removing item from world and rerolling...")
-                            print("-----------------------------------------------------------------------------")
+                            # print("Report repetition threshold reached! removing item from world and rerolling...")
+                            # print("-----------------------------------------------------------------------------")
                             worldChecksEdit[randomWorld].remove(randomItem)
                             tempWorldR = None
                             tempItemR = None
@@ -588,22 +588,22 @@ class Hints:
                             continue
                             
                         random_number = random.randint(1, 3)
-                        print("Random number = " + str(random_number))
-                        print("Report found! does " + str(random_number) + " = 1?")
+                        # print("Random number = " + str(random_number))
+                        # print("Report found! does " + str(random_number) + " = 1?")
                         
                         if random_number == 1:
-                            print("Yes! hinting report...")
+                            # print("Yes! hinting report...")
                             pass
                         else:
-                            print("No. rerolling...")
-                            print("-----------------------------------------------------------------------------")
+                            # print("No. rerolling...")
+                            # print("-----------------------------------------------------------------------------")
                             tempWorldR = randomWorld
                             tempItemR = randomItem.Name
                             reportsList.append(reportNumber)
                             continue
                     else:
-                        print("No. removing item and rerolling...")
-                        print("-----------------------------------------------------------------------------")
+                        # print("No. removing item and rerolling...")
+                        # print("-----------------------------------------------------------------------------")
                         worldChecksEdit[randomWorld].remove(randomItem)
                         reportsList.append(reportNumber)
                         continue
@@ -615,9 +615,9 @@ class Hints:
                 }
                 
                 # remove hinted item from list
-                print("Removing " + randomItem.Name + " from hintable items")
-                print("Removing " + randomWorld + " hintable worlds")
-                print("-----------------------------------------------------------------------------")
+                # print("Removing " + randomItem.Name + " from hintable items")
+                # print("Removing " + randomWorld + " hintable worlds")
+                # print("-----------------------------------------------------------------------------")
                 worldChecksEdit[randomWorld].remove(randomItem)
                 tempExcludeList.append(randomWorld)
                 
