@@ -15,7 +15,7 @@ class ItemDepths():
         # second visit - default to yes, disable datas
         # datas - default to no, set datas to yes
         # anywhere, set all to yes
-        if location_depth in [locationDepth.FirstBoss,locationDepth.FirstVisit,locationDepth.SecondBoss,locationDepth.DataFight]:
+        if location_depth in [locationDepth.FirstBoss,locationDepth.FirstVisit,locationDepth.SecondBoss,locationDepth.DataFight,locationDepth.SecondVisitOnly]:
             for l in locations.getAllSoraLocations():
                 self.depth_classification[l] = False
         else:
@@ -50,6 +50,28 @@ class ItemDepths():
                     parent_edge = location_graph.inc_edges(current_node)[0]
                     parent,_ = location_graph.edge_by_id(parent_edge)
                     current_node = parent
+        elif location_depth is locationDepth.SecondVisitOnly:
+            def get_children(in_node):
+                children = []
+                out_edges = location_graph.out_edges(in_node)
+                for out_edge_i in out_edges:
+                    _,child = location_graph.edge_by_id(out_edge_i)
+                    children.append(child)
+                return children
+            for node in first_boss_nodes:
+                current_node = node
+                # get all child nodes
+                child_nodes = get_children(current_node)
+                index = 0
+                while index < len(child_nodes):
+                    current_node = child_nodes[index]
+                    index+=1
+                    child_nodes+=get_children(current_node)
+                for child in child_nodes:
+                    node_locations = location_graph.node_data(child).locations
+                    for loc in node_locations:
+                        self.depth_classification[loc] = True
+
         elif location_depth is locationDepth.SecondBoss:
             for node in second_boss_nodes:
                 node_locations = location_graph.node_data(node).locations

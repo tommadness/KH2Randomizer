@@ -619,17 +619,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         choices={
             locationDepth.DataFight.name: 'Data Fights',
             locationDepth.FirstVisit.name: 'First Visit',
-            locationDepth.SecondVisit.name: 'First/Second Visit',
-            locationDepth.FirstBoss.name: 'First Boss',
-            locationDepth.SecondBoss.name: 'Second Boss',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
             locationDepth.Anywhere.name: "Anywhere"
         },
         shared=True,
         default=locationDepth.SecondVisit.name,
         tooltip=textwrap.dedent('''
-            Data Fights - Force the item onto datas
+            Data Fights - Force the item onto data fights only
             First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
-            First/Second Visit - Force the item to not be on a data (all other locations possible)
+            Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
+            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
@@ -642,23 +644,50 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         choices={
             locationDepth.DataFight.name: 'Data Fights',
             locationDepth.FirstVisit.name: 'First Visit',
-            locationDepth.SecondVisit.name: 'First/Second Visit',
-            locationDepth.FirstBoss.name: 'First Boss',
-            locationDepth.SecondBoss.name: 'Second Boss',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
             locationDepth.Anywhere.name: "Anywhere"
         },
         shared=True,
         default=locationDepth.Anywhere.name,
         tooltip=textwrap.dedent('''
-            Data Fights - Force the item onto datas
+            Data Fights - Force the item onto data fights only
             First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
-            First/Second Visit - Force the item to not be on a data (all other locations possible)
+            Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
+            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
         '''),
         randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),
+    SingleSelect(
+        name=settingkey.STORY_UNLOCK_DEPTH,
+        ui_label='Key Item Depth',
+        choices={
+            locationDepth.DataFight.name: 'Data Fights',
+            locationDepth.FirstVisit.name: 'First Visit',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
+            locationDepth.Anywhere.name: "Anywhere"
+        },
+        shared=True,
+        default=locationDepth.Anywhere.name,
+        tooltip=textwrap.dedent('''
+            Data Fights - Force the item onto data fights only
+            First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
+            Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
+            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
+            First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
+            Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
+            Anywhere - No restriction
+        '''),
+        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+    ),   
     Toggle(
         name=settingkey.YEET_THE_BEAR,
         ui_label='Yeet The Bear Required',

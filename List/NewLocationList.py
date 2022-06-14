@@ -95,34 +95,44 @@ class Locations:
                                                             KH2Location(2,"Synth Recipe 3",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(3,"Synth Recipe 4",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(4,"Synth Recipe 5",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(5,"Synth Recipe 6",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            ]))
+        self.add_node("Synthesis Free Dev 1 Part 2", LocationNode([KH2Location(5,"Synth Recipe 6",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(6,"Synth Recipe 7",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(7,"Synth Recipe 8",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(8,"Synth Recipe 9",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(9,"Synth Recipe 10",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(10,"Synth Recipe 11",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            ]))
+        self.add_node("Synthesis Free Dev 1 Part 3", LocationNode([KH2Location(10,"Synth Recipe 11",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(11,"Synth Recipe 12",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(12,"Synth Recipe 13",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(13,"Synth Recipe 14",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(14,"Synth Recipe 15",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT])]))
+                                                            KH2Location(14,"Synth Recipe 15",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT])
+                                                            ]))
         self.add_node("Synthesis Free Dev 2", LocationNode([KH2Location(15,"Synth Recipe 16",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(16,"Synth Recipe 17",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(17,"Synth Recipe 18",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(18,"Synth Recipe 19",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(19,"Synth Recipe 20",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(20,"Synth Recipe 21",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            ]))
+        self.add_node("Synthesis Free Dev 2 Part 2", LocationNode([KH2Location(20,"Synth Recipe 21",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(21,"Synth Recipe 22",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(22,"Synth Recipe 23",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(23,"Synth Recipe 24",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(24,"Synth Recipe 25",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(25,"Synth Recipe 26",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
+                                                            ]))
+        self.add_node("Synthesis Free Dev 2 Part 3", LocationNode([KH2Location(25,"Synth Recipe 26",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(26,"Synth Recipe 27",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(27,"Synth Recipe 28",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
                                                             KH2Location(28,"Synth Recipe 29",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]),
-                                                            KH2Location(29,"Synth Recipe 30",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT])]))
+                                                            KH2Location(29,"Synth Recipe 30",locationCategory.CREATION,LocationTypes=[locationType.SYNTH],InvalidChecks=[itemType.RECIPE,itemType.REPORT]
+                                                            )]))
         
         self.add_edge("Starting","Synthesis Free Dev 1",RequirementEdge())
-        self.add_edge("Synthesis Free Dev 1","Synthesis Free Dev 2",RequirementEdge())
+        self.add_edge("Synthesis Free Dev 1","Synthesis Free Dev 1 Part 2",RequirementEdge())
+        self.add_edge("Synthesis Free Dev 1 Part 2","Synthesis Free Dev 1 Part 3",RequirementEdge())
+        self.add_edge("Synthesis Free Dev 1 Part 3","Synthesis Free Dev 2",RequirementEdge())
+        self.add_edge("Synthesis Free Dev 2","Synthesis Free Dev 2 Part 2",RequirementEdge())
+        self.add_edge("Synthesis Free Dev 2 Part 2","Synthesis Free Dev 2 Part 3",RequirementEdge())
 
 
     def makePuzzleGraph(self):

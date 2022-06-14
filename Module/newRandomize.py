@@ -100,6 +100,7 @@ class Randomizer():
         self.location_weights = LocationWeights(settings,self.regular_locations,self.reverse_locations)
         self.report_depths = ItemDepths(settings.reportDepth,self.master_locations)
         self.proof_depths = ItemDepths(settings.proofDepth,self.master_locations)
+        self.story_depths = ItemDepths(settings.storyDepth,self.master_locations)
         self.yeet_the_bear = settings.yeetTheBear
         self.num_valid_locations = None
         self.num_available_items = None
@@ -282,6 +283,7 @@ class Randomizer():
 
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
+        restricted_story = self.report_depths.very_restricted_locations
 
         # leaving this code here for future bug testing. Puts a specific item in a specific location
         # placed_item = False
@@ -323,6 +325,8 @@ class Randomizer():
                 weights = [self.location_weights.getWeight(item,loc) if itemType.REPORT in loc.InvalidChecks else 0 for loc in validLocations]
             elif restricted_proofs:
                 weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations]
+            elif restricted_story:
+                weights = [self.location_weights.getWeight(item,loc) if itemType.STORYUNLOCK in loc.InvalidChecks else 0 for loc in validLocations]
             else:
                 weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
             # modify the weights for reports if the report depth is specific
@@ -330,6 +334,8 @@ class Randomizer():
                 weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
             elif restricted_proofs and item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
                 weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations ]
+            elif restricted_story and item.ItemType is itemType.STORYUNLOCK:
+                weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in validLocations ]
             count=0
             while True:
                 count+=1
@@ -382,6 +388,9 @@ class Randomizer():
                 loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
                 if self.yeet_the_bear and loc.LocationCategory is locationCategory.POPUP and loc.LocationId==285:
                     loc.InvalidChecks.remove(itemType.PROOF)
+
+            if not self.story_depths.isValid(loc):
+                loc.InvalidChecks+=[itemType.STORYUNLOCK]
 
             # if both reports and proofs are very restricted (only in 13 locations) add extra proof restrictions to allow reports to be assigned
             if self.report_depths.isValid(loc) and self.proof_depths.isValid(loc):
