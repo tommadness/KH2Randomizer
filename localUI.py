@@ -374,23 +374,33 @@ class KH2RandomizerApp(QMainWindow):
             self.genSeed(data,rando_settings)
 
     def downloadSeed(self):
+        last_seed_folder_txt = Path(AUTOSAVE_FOLDER) / 'last_seed_folder.txt'
+        output_file_name = 'randoseed.zip'
+        if last_seed_folder_txt.is_file():
+            last_seed_folder = Path(last_seed_folder_txt.read_text().strip())
+            if last_seed_folder.is_dir():
+                output_file_name = str(last_seed_folder / output_file_name)
+
         saveFileWidget = QFileDialog()
         saveFileWidget.setNameFilters(["Zip Seed File (*.zip)"])
-        outfile_name,_ = saveFileWidget.getSaveFileName(self,"Save seed zip","randoseed.zip","Zip Seed File (*.zip)")
+        outfile_name, _ = saveFileWidget.getSaveFileName(self, "Save seed zip", output_file_name, "Zip Seed File (*.zip)")
         spoiler_outfile = outfile_name
         if outfile_name!="":
             if not outfile_name.endswith(".zip"):
                 outfile_name+=".zip"
-            open(outfile_name, "wb").write(self.zip_file.getbuffer())
+            with open(outfile_name, "wb") as out_zip:
+                out_zip.write(self.zip_file.getbuffer())
+
+            last_seed_folder_txt.write_text(str(Path(outfile_name).parent))
+
             if self.tourney_generator:
                 if not spoiler_outfile.endswith(".html"):
                     spoiler_outfile+=".html"
-                open(spoiler_outfile, "w").write(self.spoiler_log_output)
-
+                with open(spoiler_outfile, "w") as out_html:
+                    out_html.write(self.spoiler_log_output)
 
         self.zip_file=None
         self.spoiler_log_output=None
-
 
     def handleResult(self,result):
         self.progress.close()
