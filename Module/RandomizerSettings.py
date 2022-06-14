@@ -51,7 +51,8 @@ class RandomizerSettings():
             raise SettingsException("Invalid Level choice")
 
         self.split_levels = ui_settings.get(settingkey.SPLIT_LEVELS)
-        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT)) + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(ui_settings.get(settingkey.STORY_UNLOCKS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
+        
+        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.SCHMOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(ui_settings.get(settingkey.STORY_UNLOCKS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.nightmare = ui_settings.get(settingkey.NIGHTMARE_LOGIC)
         self.story_unlock_rarity = ui_settings.get(settingkey.STORY_UNLOCK_CATEGORY)
@@ -163,6 +164,17 @@ class RandomizerSettings():
                                     "bonus":ui_settings.get(settingkey.POINTS_BONUS), 
                                     "complete":ui_settings.get(settingkey.POINTS_COMPLETE), 
                                     "formlv":ui_settings.get(settingkey.POINTS_FORMLV)}
+
+        self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
+        self.revealMode = ui_settings.get(settingkey.REVEAL_REPORTMODE)
+
+        self.spoiler_hint_values = [
+            item_type for item_type in ui_settings.get(settingkey.REVEAL_TYPES)
+        ]
+        if self.revealComplete:
+            self.spoiler_hint_values.append("complete")
+        if self.revealMode:
+            self.spoiler_hint_values.append("reportmode")
 
         self.tracker_includes = []
         if self.promiseCharm:
