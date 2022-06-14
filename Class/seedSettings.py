@@ -432,12 +432,33 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=True
     ),
 
-    Toggle(
+    #Toggle(
+    #    name=settingkey.SCHMOVEMENT,
+    #    ui_label='Schmovement',
+    #    shared=True,
+    #    default=False,
+    #    tooltip='Start with level 1 of all growth abilities'
+    #),
+
+    SingleSelect(
         name=settingkey.SCHMOVEMENT,
-        ui_label='Schmovement',
+        ui_label="Growth Ability Starting Level",
+        choices={
+            'Disabled': 'Disabled',
+            'Level_1': 'Level 1',
+            'Level_2': 'Level 2',
+            'Level_3': 'Level 3',
+            'Level_4': 'Max'
+        },
         shared=True,
-        default=False,
-        tooltip='Start with level 1 of all growth abilities'
+        default='Disabled',
+        tooltip=textwrap.dedent('''
+            Level 1 - Start with level 1 of all growth abilities.
+            Level 2 - Start with level 2 of all growth abilities.
+            Level 3 - Start with level 3 of all growth abilities.
+            Max - Start with max level of all growth abilities.
+        '''),
+        randomizable=["Disabled","Level_1","Level_2","Level_3","Level_4"]
     ),
 
     Toggle(
@@ -708,11 +729,11 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'ability': 'Second Chance/Once More',
             'report': 'Ansem Reports',
             'visit': 'World Key Items',
-            'proof': 'Proofs'
-            #'other': 'Extra',
+            'proof': 'Proofs',
+            'other': 'Extra'
         },
         shared=True,
-        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof"]#, "other"]
+        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof", "other"]
     ),
 
     Toggle(
