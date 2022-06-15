@@ -465,11 +465,12 @@ class SeedZip():
             while(len(itemList)<32):
                 itemList.append(0)
 
-        masterItemList = Items.getItemList()
+        masterItemList = Items.getItemList() + Items.getActionAbilityList() + Items.getSupportAbilityList() + [Items.getTT1Jailbreak()]
         reports = [i.Id for i in masterItemList if i.ItemType==itemType.REPORT]
         story_unlocks = [i.Id for i in masterItemList if i.ItemType==itemType.STORYUNLOCK]
         donald_goofy_handled_items = reports+story_unlocks
-        sora_abilities = [i.Id for i in masterItemList if i.ItemType==itemType.GROWTH_ABILITY or i.ItemType==itemType.ACTION_ABILITY or i.ItemType==itemType.SUPPORT_ABILITY]
+        sora_abilities = [i.Id for i in masterItemList if (i.ItemType==itemType.GROWTH_ABILITY or i.ItemType==itemType.ACTION_ABILITY or i.ItemType==itemType.SUPPORT_ABILITY)]
+
         riku_handled = [i.Id for i in masterItemList if i.Id not in donald_goofy_handled_items and i.Id not in sora_abilities]
 
         donaldStartingItems = [1+0x8000,3+0x8000]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedDonaldItems,[locationType.Free])] + [i for i in settings.startingItems if i in reports]
