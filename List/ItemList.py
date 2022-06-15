@@ -215,7 +215,7 @@ class Items:
             KH2Item(363, "Crystal Orb", itemType.KEYITEM),
             KH2Item(364, "Seifer's Trophy", itemType.KEYITEM),
             KH2Item(368, "Namine's Sketches", itemType.KEYITEM),
-            KH2Item(370, "Olympus Stone", itemType.KEYITEM, itemRarity.UNCOMMON),
+            KH2Item(370, "Olympus Stone", itemType.OCSTONE, itemRarity.UNCOMMON),
             KH2Item(371, "Auron's Statue", itemType.KEYITEM),
             KH2Item(372, "Cursed Medallion", itemType.KEYITEM),
             KH2Item(373, "Presents", itemType.KEYITEM),

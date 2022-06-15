@@ -10,6 +10,7 @@ class HintsMenu(KH2Submenu):
 
         self.start_column()
         self.add_option(settingkey.HINT_SYSTEM)
+        self.add_option(settingkey.EXTRA_ICS)
         self.add_option(settingkey.REPORT_DEPTH)
         self.add_option(settingkey.PREVENT_SELF_HINTING)
         self.add_option(settingkey.ALLOW_PROOF_HINTING)

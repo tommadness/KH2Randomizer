@@ -9,6 +9,7 @@ COMMAND_MENU = 'command_menu'
 CRITICAL_BONUS_REWARDS = 'critical_bonus_rewards'
 DONALD_AP = "donald_ap"
 ENABLE_PROMISE_CHARM = 'enable_promise_charm'
+EXTRA_ICS = 'extra_ics'
 FINAL_EXP_MULTIPLIER = 'final_exp_multiplier'
 FINAL_EXP_CURVE = 'final_exp_curve'
 FORM_LEVEL_REWARDS = 'form_level_rewards'

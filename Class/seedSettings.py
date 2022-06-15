@@ -1005,6 +1005,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip='Add Antiform as an obtainable form.'
     ),
     Toggle(
+        name=settingkey.EXTRA_ICS,
+        ui_label='Add Aux. Unlocks as Hintable',
+        shared=True,
+        default=False,
+        tooltip='Adds Olympus Stone, Unknown Disk, and Hades Cup Trophy as hintable items.' 
+    ),
+    Toggle(
         name=settingkey.FIFTY_AP_BOOSTS,
         ui_label='50 AP Boosts',
         shared=True,

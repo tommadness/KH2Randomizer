@@ -179,6 +179,8 @@ class RandomizerSettings():
         if self.revealMode:
             self.spoiler_hint_values.append("reportmode")
 
+        self.extra_ics = ui_settings.get(settingkey.EXTRA_ICS)
+
         self.tracker_includes = []
         if self.promiseCharm:
             self.tracker_includes.append("PromiseCharm")
@@ -189,6 +191,8 @@ class RandomizerSettings():
             self.tracker_includes.append("visit_locking")
         if ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE):
             self.tracker_includes.append("library")
+        if self.extra_ics:
+            self.tracker_includes.append("extra_ics")
 
         # making tracker includes use all worlds and 
         for l in locationType:
