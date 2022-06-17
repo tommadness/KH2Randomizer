@@ -290,7 +290,7 @@ class Randomizer():
 
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
-        restricted_story = self.report_depths.very_restricted_locations
+        restricted_story = self.story_depths.very_restricted_locations
 
         # leaving this code here for future bug testing. Puts a specific item in a specific location
         # placed_item = False

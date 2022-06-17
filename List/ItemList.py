@@ -11,6 +11,34 @@ class Items:
             KH2Item(594, "Proof of Nonexistence", itemType.PROOF, itemRarity.MYTHIC),
             KH2Item(595, "Proof of Peace", itemType.PROOF_OF_PEACE, itemRarity.MYTHIC),
 
+            KH2Item(54, "Battlefields of War (Auron)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(55, "Sword of the Ancestor (Mulan)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(59, "Beast's Claw (Beast)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(60, "Bone Fist (Jack Skellington)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(61, "Proud Fang (Simba)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(62, "Skill and Crossbones (Jack Sparrow)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(72, "Scimitar (Aladdin)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            # KH2Item(73, "Way to the Dawn (Riku)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(74, "Identity Disk (Tron)", itemType.STORYUNLOCK, story_unlocking_rarity),
+            # KH2Item(365, "Tournament Poster", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(369, "Membership Card", itemType.STORYUNLOCK, story_unlocking_rarity),
+            KH2Item(375, "Ice Cream", itemType.STORYUNLOCK,story_unlocking_rarity),
+            KH2Item(376, "Picture", itemType.STORYUNLOCK,story_unlocking_rarity),
+
+            KH2Item(226, "Secret Ansem's Report 1", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(227, "Secret Ansem's Report 2", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(228, "Secret Ansem's Report 3", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(229, "Secret Ansem's Report 4", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(230, "Secret Ansem's Report 5", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(231, "Secret Ansem's Report 6", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(232, "Secret Ansem's Report 7", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(233, "Secret Ansem's Report 8", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(234, "Secret Ansem's Report 9", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(235, "Secret Ansem's Report 10", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(236, "Secret Ansem's Report 11", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(237, "Secret Ansem's Report 12", itemType.REPORT, itemRarity.UNCOMMON),
+            KH2Item(238, "Secret Ansem's Report 13", itemType.REPORT, itemRarity.UNCOMMON),
+
             KH2Item(21, "Fire Element", itemType.FIRE, itemRarity.MYTHIC),
             KH2Item(21, "Fire Element", itemType.FIRE, itemRarity.MYTHIC),
             KH2Item(21, "Fire Element", itemType.FIRE, itemRarity.MYTHIC),
@@ -77,20 +105,6 @@ class Items:
             KH2Item(160, "Feather Charm (Peter Pan)", itemType.SUMMON, itemRarity.MYTHIC),
             KH2Item(25, "Ukulele Charm (Stitch)", itemType.SUMMON, itemRarity.MYTHIC),
             KH2Item(383, "Baseball Charm (Chicken Little)", itemType.SUMMON, itemRarity.MYTHIC),
-
-            KH2Item(226, "Secret Ansem's Report 1", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(227, "Secret Ansem's Report 2", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(228, "Secret Ansem's Report 3", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(229, "Secret Ansem's Report 4", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(230, "Secret Ansem's Report 5", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(231, "Secret Ansem's Report 6", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(232, "Secret Ansem's Report 7", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(233, "Secret Ansem's Report 8", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(234, "Secret Ansem's Report 9", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(235, "Secret Ansem's Report 10", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(236, "Secret Ansem's Report 11", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(237, "Secret Ansem's Report 12", itemType.REPORT, itemRarity.UNCOMMON),
-            KH2Item(238, "Secret Ansem's Report 13", itemType.REPORT, itemRarity.UNCOMMON),
 
             KH2Item(42,"Oathkeeper", itemType.KEYBLADE),
             KH2Item(43,"Oblivion",itemType.KEYBLADE),
@@ -292,7 +306,7 @@ class Items:
             KH2Item(517, "Solar Sailer Simulation Map", itemType.MAP),
             KH2Item(256, "Dark City Map", itemType.MAP),
             KH2Item(536, "Castle That Never Was Map", itemType.MAP),
-        ] + Items.getStoryKeyItems(story_unlocking_rarity)
+        ]
 
     @staticmethod
     def getStatItems():
@@ -312,25 +326,6 @@ class Items:
     @staticmethod
     def getTT1Jailbreak():
         return KH2Item(366, "Poster", itemType.KEYITEM)
-
-    @staticmethod
-    def getStoryKeyItems(story_unlock_rarity):
-        # story_unlock_rarity = itemRarity.UNCOMMON
-        return [
-            KH2Item(54, "Battlefields of War (Auron)", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(55, "Sword of the Ancestor (Mulan)", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(59, "Beast's Claw (Beast)", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(60, "Bone Fist (Jack Skellington)", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(61, "Proud Fang (Simba)", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(62, "Skill and Crossbones (Jack Sparrow)", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(72, "Scimitar (Aladdin)", itemType.STORYUNLOCK, story_unlock_rarity),
-            # KH2Item(73, "Way to the Dawn (Riku)", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(74, "Identity Disk (Tron)", itemType.STORYUNLOCK, story_unlock_rarity),
-            # KH2Item(365, "Tournament Poster", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(369, "Membership Card", itemType.STORYUNLOCK, story_unlock_rarity),
-            KH2Item(375, "Ice Cream", itemType.STORYUNLOCK,story_unlock_rarity),
-            KH2Item(376, "Picture", itemType.STORYUNLOCK,story_unlock_rarity),
-        ]
 
     @staticmethod
     def getSupportAbilityList():
