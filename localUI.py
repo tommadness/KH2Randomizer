@@ -48,7 +48,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '2.1.0-prerelease'
+LOCAL_UI_VERSION = '2.1.0'
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -331,6 +331,12 @@ class KH2RandomizerApp(QMainWindow):
                 self.emu_button.setVisible(split_pc_emu)
                 self.pc_button.setVisible(split_pc_emu)
                 self.both_button.setVisible(not split_pc_emu)
+
+                if rando_settings.enemy_options["enemy"] == "Wild":
+                    self.emu_button.setEnabled(False)
+                else:
+                    self.emu_button.setEnabled(True)
+
             except CantAssignItemException as e:
                 pass
             text = f"Items: {dummy_rando.num_available_items} / Locations: {dummy_rando.num_valid_locations}"

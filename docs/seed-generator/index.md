@@ -29,12 +29,18 @@ features:
     * Randomized command menus on both PC and PCSX2
     * Randomized music on PC (including custom music)
 
-* Boss/Enemy Randomizer improvements
+* Boss/Enemy Randomizer
     * Field enemies are now randomized
     * Certain bosses that were not reasonable to randomize can now be randomized
     * Boss/Enemy randomization on PC
 
-* Puzzle reward randomization option
+* Puzzle Reward Randomization option
+* Synthesis Item Randomization option
+
+* QoL options like giving 
+    * Optional Roxas animations for magic, Trinity Limit, and movement, allowing a larger range of combat options.
+    * Optional Port Royal Map Replacement to avoid the crashes on the PC version
+    * Optional Magic Carpet Skip in Agrabah's second visit, which skips the autoscroller
 
 Other differences include:
 
@@ -97,7 +103,7 @@ Loads the current day's [daily seed](../daily-seeds/index.md) into the generator
 Displays a folder chooser allowing you to configure the location of the extracted data from your Kingdom Hearts
 game/games.
 
-* This is currently only used for music randomization
+* This is currently only used for music randomization on PC only
 * The folder you should choose is the one that contains sub-folders for `kh2` (and maybe others)
 * Once the folder is chosen, restart the seed generator for your game/games to display in the music randomizer options
 
@@ -130,13 +136,14 @@ If enabled, several seed settings will be chosen at random.
 * Level 50 - All level-up rewards past level 50 are guaranteed to be junk
 * Level 99 - All level-up rewards can be non-junk
 
-**Glass Cannon** - Prevents Defense increases from appearing in the level-up randomized rewards pool
+**Dream Weapon Matters** - At the beginning of a seed, the dream weapon you choose will determine when you get items from 
+levels. When disabled, all weapons will give the same items on the same levels.
+
+**Level 1 Mode** - Only visible when Level 1 is chosen above. Provides no stats on level up and removes the vanilla level abilities from the item pool.
 
 **Form Level Rewards** - If enabled, Drive Form level-ups can contain non-"junk" randomized rewards
 
-**Bonus Rewards as Items (Statsanity)** - If enabled, takes HP, MP, Drive, Accessory Slot, Armor Slot, and Item Slot
-upgrades from the normal bonus popup locations and lets them appear in chests or other randomized locations. Those bonus
-popup locations can now have other randomized rewards.
+**Glass Cannon** - Prevents Defense increases from appearing in the level-up randomized rewards pool
 
 **Sora Starting AP** - Sora begins the game with this much AP
 
@@ -167,11 +174,21 @@ popup locations can now have other randomized rewards.
 **Garden of Assemblage** - If enabled, the 3 chests in the Garden of Assemblage can contain non-"junk" randomized
 rewards
 
-**Schmovement** - If enabled, the game begins with at least level 1 of all growth abilities already acquired (High Jump,
-Quick Run, Dodge Roll, Aerial Dodge, and Glide)
+**Growth Ability Starting Level** - Select how many growth abilities you want to start with.
+* None
+* 5 Random - Pick 5 individual growth abilities to add at the start. E.g. you could start with Lv1 High Jump, Lv1 Dodge Roll, and Lv3 Glide.
+* Level 1 - Same as the "Schmovement" setting previously. All growths start at level 1.
+* Level 2 - All growths start at level 2.
+* Level 3 - All growths start at level 3.
+* Max - All growths start at max level.
 
 **Library of Assemblage** - If enabled, the game begins with all 13 Secret Ansem Reports acquired. This can be useful in
 hint systems where Secret Ansem Reports give hints.
+
+**World Key Items** - If enabled, the game begins with all worlds unlocked. If disabled, you will need to search 
+the open worlds to find the items to unlock the second visits to different worlds. A table of what unlocks each world is below:
+
+![World Key Item Table](locks.png)
 
 **Starting Inventory** - Begin the game with each selected item/ability already acquired
 
@@ -194,26 +211,30 @@ keyblades. Any abilities not selected are guaranteed to not be attached to a key
 ## Reward Locations
 
 Controls which worlds/locations can contain non-"junk" randomized rewards. Anything not selected is guaranteed to
-contain only junk.
+contain only junk. Any `Misc Location` can be enabled independent of what world it normally is in, e.g. Olympus Cups 
+can be enabled without enabling Olympus Coliseum.
 
 ## Item Placement
 
-**Enable Promise Charm** - If enabled, the Promise Charm item will be added to the randomized item pool, which can allow
+### Include in Item Pool
+
+**Bonus Rewards as Items (Statsanity)** - If enabled, takes HP, MP, Drive, Accessory Slot, Armor Slot, and Item Slot
+upgrades from the normal bonus popup locations and lets them appear in chests or other randomized locations. Those bonus
+popup locations can now have other randomized rewards.
+
+**50 AP Boosts** - Adds guaranteed 50 AP Boosts into the item pool.
+
+**Promise Charm** - If enabled, the Promise Charm item will be added to the randomized item pool, which can allow
 skipping The World That Never Was by interacting with the computer in the Garden of Assemblage once you have all 3 Proof
 items as well as the Promise Charm
 
-**Item Placement Difficulty** - Configures the placement of items to be biased based on how easy/difficult you would
-like the seed to be. Items have 4 categories (Common, Uncommon, Rare, Mythic) that influence what bias each item gets
-when placing those items. Super Easy and Easy will bias Rare and Mythic items early, while placements harder than Normal
-will bias those items later.
+**Pureblood Keyblade** - Pureblood is a keyblade that mods over the existing `Antiform Dummy` item, and is added to the item
+pool with this option. Due to some reports of outdated installations crashing with this in the item pool, you can disable this option
+if you experience such issues. It is recommended however to make sure your installation is up-to-date. 
 
-**Proof Depth** - Configures where the three Proof items can be placed
+**Maps** - Adds maps to the item pool
 
-**Yeet The Bear Required** - If enabled, forces the Proof of Nonexistence onto the popup reward from 100 Acre Wood -
-Starry Hill, thus requiring The Hunny Pot minigame to be completed in order to obtain the Proof
-
-**Reverse Rando** - Enable when generating a Reverse Rando seed to ensure all important items are obtainable when
-playing Reverse Rando
+**Synthesis Recipes** - Adds synthesis recipes to the item pool. Recipes are NOT required when synthesis rewards are randomized.
 
 **Ability Pool** - Controls the presence and amount of abilities in the randomized pool
 
@@ -223,10 +244,49 @@ playing Reverse Rando
 * Randomize Support Ability Pool - leaves Sora's action abilities alone, but will randomize the support abilities (still
   guaranteed to have one Second Chance and one Once More)
 
-## Seed Modifiers
+### Junk Items
 
 **Junk Items** - Once all of the required items are placed, items from this list are used to fill the remaining
 locations. This item pool is also used for worlds/locations that are disabled.
+
+### Where Items Can Go
+
+**Softlock Prevention** - An option to change the softlock prevention method in use. Default option is `Regular Rando` which is correct for most cases,
+but if you play reverse rando or are doing a co-op with someone playing reverse rando, you can select other softlock preventions options for those
+cases.
+
+**Item Placement Difficulty** - Configures the placement of items to be biased based on how easy/difficult you would
+like the seed to be. Items have four categories (Common, Uncommon, Rare, Mythic) that influence what bias each item gets
+when placing those items. Super Easy and Easy will bias Rare and Mythic items early, while placements harder than Normal
+will bias those items later.
+
+**Advanced Nightmare Logic** - If enabled, auto forms (Auto Valor, Auto Wisdom, etc.) may be required to make progress in your seed. 
+And if item placement difficulty is used, keyblades with good abilities will be weighted as well.
+
+**Key Item Category** - Used in tandem with `Item Placement Difficulty`, the items used to unlock second visits of worlds can be changed 
+between the four item categories (Common, Uncommon, Rare, Mythic).
+
+**Key Item Depth** - Set a certain group of locations where you can find the visit locking key items. 
+
+**Yeet The Bear Required** - If enabled, forces the Proof of Nonexistence onto the popup reward from 100 Acre Wood -
+Starry Hill, thus requiring The Hunny Pot minigame to be completed in order to obtain the Proof.
+
+**Proof Depth** - Configures where the three Proof items can be placed.
+
+## Seed Modifiers
+
+### Quality of Life
+
+**Roxas Magic/Movement/Trinity** - If enabled, Roxas will be given all the animations of Sora, allowing for the use of all actions in 
+Simulated Twilight Town.
+
+**Early Twilight Town 1 Exit** - If enabled, save points in the first visit of Twilight Town will allow you to leave back to the Garden of Assemblage. 
+
+**Skip Magic Carpet Escape** - If enabled, the entire autoscrolling segment of Agrabah's second visit after exiting the Ruined Chamber will be skipped.
+
+**Remove Port Royal Map Select** - If enabled, the map for the boat travel in Port Royal will be replaced with text options. Useful to avoid crashes that are more likely on PC.
+
+### Other Modifiers
 
 **Split AS/Data Rewards** - Controls how rewards are given for Absent Silhouette fights
 
@@ -240,8 +300,11 @@ cup
 
 **Retry Data Final Xemnas** - If enabled, if you die to Data Final Xemnas, Continue will spawn you right back into the
 fight, instead of having to fight Data Xemnas I again
+* **Warning** - if you are unable to beat Data Final Xemnas, there is no way to exit, essentially causing a softlock, and you'll have to load a save.
 
-* **Warning** - if you are unable to beat Data Final Xemnas, there is no way to exit, essentially causing a softlock
+**Retry Dark Thorn** - If enabled, if you die to Dark Thorn (Beast Castle first visit boss), Continue will spawn you right back into 
+the fight, instead of having to fight Shadow Stalker again. Especially useful in Boss rando.
+* **Warning** - if you are unable to beat Dark Thorn, there is no way to exit, essentially causing a softlock, and you'll have to load a save.
 
 **Remove Damage Cap** - Removes the damage cap for every enemy/boss in the game
 

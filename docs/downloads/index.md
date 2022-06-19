@@ -22,7 +22,7 @@
 * [LuaBackend Hook](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip)
 * [Mods Manager Bridge](https://github.com/thundrio-kh/khpc-modsmanager-bridge/releases/latest/download/build_from_mm.zip)
   (also known as `build_from_mm`)
-* [Quality of Life Lua Script](https://raw.githubusercontent.com/tommadness/KH2Randomizer/2.0/static/OpenKHQualityOfLife.lua)
+* (Deprecated: On GoA mods released after June 20th, 2022, this is included in GoA.ROM.lua)[Quality of Life Lua Script](https://raw.githubusercontent.com/tommadness/KH2Randomizer/2.0/static/OpenKHQualityOfLife.lua)
 * [Auto-Save Lua Script](https://raw.githubusercontent.com/Denhonator/KHPCSpeedrunTools/main/2FMMods/scripts/2fmAutosave.lua)
     * Automatically saves your game when you enter a room (with some safeguards to prevent getting stuck in a room)
     * The auto-save does not itself appear in your save files list
