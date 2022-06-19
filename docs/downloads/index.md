@@ -20,6 +20,7 @@
 
 * [Garden of Assemblage ROM Lua Script](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition/releases/latest/download/F266B00B.GoA.ROM.lua)
 * [LuaBackend Hook](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip)
+    * See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional randomizer-specific setup instructions
 * [Mods Manager Bridge](https://github.com/thundrio-kh/khpc-modsmanager-bridge/releases/latest/download/build_from_mm.zip)
   (also known as `build_from_mm`)
 * (Deprecated: On GoA mods released after June 20th, 2022, this is included in GoA.ROM.lua)[Quality of Life Lua Script](https://raw.githubusercontent.com/tommadness/KH2Randomizer/2.0/static/OpenKHQualityOfLife.lua)
