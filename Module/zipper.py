@@ -266,7 +266,6 @@ class SeedZip():
             self.createPuzzleAssets(settings, randomizer, mod, outZip)
             self.createSynthAssets(settings, randomizer, mod, outZip)
             self.createASDataAssets(settings, mod, outZip)
-            self.createRetryAssets(settings, mod, outZip)
             self.createSkipCarpetAssets(settings, mod, outZip)
             self.createMapSkipAssets(settings, mod, outZip)
 
@@ -389,13 +388,6 @@ class SeedZip():
             if boss_enabled:
                 outZip.write(resource_path("static/better_stt/B_EX100_SR.mset"), "better_stt/B_EX100_SR.mset")
     
-    def createRetryAssets(self,settings,mod,outZip):
-        for fight in settings.retries:
-            mod["assets"] += [modYml.getRetryMod(fight)]
-            asset_name = modYml.getRetryMod(fight)["source"][0]["source"][0]["name"]
-            outZip.write(resource_path("static/"+asset_name),asset_name)
-
-
     def createSkipCarpetAssets(self,settings,mod,outZip):
         if settings.skip_carpet_escape:
             mod["assets"] += [modYml.getSkipCarpetEscapeMod()]

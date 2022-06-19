@@ -128,15 +128,15 @@ class RandomizerSettings():
 
         self.as_data_split = ui_settings.get(settingkey.AS_DATA_SPLIT)
 
-        self.retries = ([modYml.modYml.retryDataXemnas] if ui_settings.get(settingkey.RETRY_DFX) else []) + ([modYml.modYml.retryDarkThorn] if ui_settings.get(settingkey.RETRY_DARK_THORN) else [])
-
         self.skip_carpet_escape = ui_settings.get(settingkey.SKIP_CARPET_ESCAPE)
 
         if self.reverse_rando and not self.as_data_split:
             raise SettingsException("Can't run reverse rando without the as/data split code")
 
         self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
-                              'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP)}
+                              'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
+                              'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
+                              'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN)}
         for setting in seedSettings.boss_settings + seedSettings.enemy_settings:
             value = ui_settings.get(setting.name)
             if value is not None:
