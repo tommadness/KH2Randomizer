@@ -6,7 +6,7 @@
 * [OpenKH](https://github.com/Xeeynamo/OpenKh/releases)
     * Within the Assets section, download `openkh-build####.zip` where "####" is a number representing the build
 * [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest/download/KhTracker.exe)
-* [LiveSplit Load Remover for Randomizer](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/releases/latest/download/KH2FM.Load.Remover.PC.and.EMU.asl)
+* [LiveSplit Load Remover for Randomizer](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/releases)
   ([instructions](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/blob/main/README.md))
 * [.NET Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/5.0) (required for some of the randomizer
   tools)
