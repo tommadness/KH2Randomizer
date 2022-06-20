@@ -17,7 +17,7 @@
 - Early Twilight Town 1 Exit QoL Option: When enabled, you are no longer trapped in TT1 and can leave at any time. (thanks to Num)
 - Skip Magic Carpet Escape QoL Option: When enabled, the magic carpet auto-scroller in Agrabah 2 is skipped, taking you directly before Genie Jafar. (thanks to Num)
 - Remove Port Royal Map Select QoL Option: Replaces the map UI with a text UI, aimed at avoiding a crash more prevelant on the PC port. (thanks to Num)
-- Added a Retry Dark Thorn option. Mostly used for boss/enemy randomization. (thanks to Num)
+- Added a Retry Dark Thorn option. Mostly used for boss/enemy randomization.
 ### Boss/Enemy Updates (khbr 2.2.2)
 - Redesigned "Wild" enemies to now only put up to 5 different kinds of enemies in any one room (between all spawns in that room), which should make it mostly playable. This number will be reduced if necessary, and Wild is still only possible for PC. Due to the way the randomization is currently implemented, some enemies will be very likely to be vanilla (for example, the Bolt Towers in the first part of the Minnie Escort fight)
 - Increased the number of bosses available when Bosses are allowed to replace normal enemies, and increased the odds of a boss replacement occuring to about 1 in 80 enemies
