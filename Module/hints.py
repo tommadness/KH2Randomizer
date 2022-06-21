@@ -145,6 +145,7 @@ class Hints:
             
 
             hintable_world_list = list(set(chain(breadcrumb_map[proof_of_connection_world] if proof_of_connection_world else [],breadcrumb_map[proof_of_peace_world] if proof_of_peace_world else [],breadcrumb_map[proof_of_nonexistence_world] if proof_of_nonexistence_world else [])))
+            hintable_world_list.sort()
             barren_world_list = [x for x in hintableWorlds if x not in hintable_world_list]
 
             hintable_world_list.sort(reverse=True,key=lambda x : len(hintsText['world'][x]))
