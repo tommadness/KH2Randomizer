@@ -77,10 +77,8 @@ look similar (but not identical) to this screenshot:
 
 If that window does not appear, it's likely one of two causes.
 
-* The LuaBackend Hook is missing, is in the wrong location, or is an incorrect version. Verify that you have
-  the `DBGHELP.dll` placed in the KH game install directory (usually something
-  like `C:\Program Files\Epic Games\KH_1.5_2.5`).
-    * See [Downloads](../downloads/index.md) for a link to the latest version
+* The LuaBackend Hook is missing, is in the wrong location, or is an incorrect version
+    * See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional instructions
 
 * Lua scripts are missing or are in the wrong location. Verify that your Lua scripts are placed in the correct folder
   for KH2 scripts (usually something like `C:\Users\johndoe\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2`).
