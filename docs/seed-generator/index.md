@@ -188,9 +188,9 @@ hint systems where Secret Ansem Reports give hints.
 **World Key Items** - If enabled, the game begins with all worlds unlocked. If disabled, you will need to search 
 the open worlds to find the items to unlock the second visits to different worlds. A table of what unlocks each world is below:
 
-![World Key Item Table](locks.png)
-
 > Quick Tip: To make sure the game can update story flags when you collect a key item, you need to trigger a cutscene or enter The World that Never Was. That will update the game, and you can continue that world.
+
+![World Key Item Table](locks.png)
 
 **Starting Inventory** - Begin the game with each selected item/ability already acquired
 
