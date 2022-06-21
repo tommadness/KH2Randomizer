@@ -496,7 +496,7 @@ class KH2RandomizerApp(QMainWindow):
         try:
             shared_seed = SharedSeed.from_share_string(
                 local_generator_version=LOCAL_UI_VERSION,
-                share_string=pc.paste()
+                share_string=str(pc.paste()).strip()
             )
             self.tourney_generator = False
         except ShareStringException as exception:

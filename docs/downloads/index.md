@@ -18,12 +18,16 @@
 
 ### PC Epic Games Store Version ([setup guide](https://docs.google.com/document/d/1KIVS6RjnCtbpO3DYWy1HdXxkw_8s9opE8dsPaoDTpYU/edit?usp=sharing))
 
-* [Garden of Assemblage ROM Lua Script](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition/releases/latest/download/F266B00B.GoA.ROM.lua)
 * [LuaBackend Hook](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip)
-    * See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional randomizer-specific setup instructions
+    * See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional randomizer-specific setup
+      instructions
+* [Garden of Assemblage ROM Lua Script](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition/releases/latest/download/F266B00B.GoA.ROM.lua)
+    * If you've followed the LuaBackend Hook Setup guide on the previous bullet, this script will be automatically
+      managed for you
 * [Mods Manager Bridge](https://github.com/thundrio-kh/khpc-modsmanager-bridge/releases/latest/download/build_from_mm.zip)
   (also known as `build_from_mm`)
-* (Deprecated: On GoA mods released after June 20th, 2022, this is included in GoA.ROM.lua)[Quality of Life Lua Script](https://raw.githubusercontent.com/tommadness/KH2Randomizer/2.0/static/OpenKHQualityOfLife.lua)
+* (Deprecated: On GoA mods released after June 20th, 2022, this is included in
+  GoA.ROM.lua)[Quality of Life Lua Script](https://raw.githubusercontent.com/tommadness/KH2Randomizer/2.0/static/OpenKHQualityOfLife.lua)
 * [Auto-Save Lua Script](https://raw.githubusercontent.com/Denhonator/KHPCSpeedrunTools/main/2FMMods/scripts/2fmAutosave.lua)
     * Automatically saves your game when you enter a room (with some safeguards to prevent getting stuck in a room)
     * The auto-save does not itself appear in your save files list
