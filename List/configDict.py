@@ -70,7 +70,9 @@ def isStatBonusCheck(loc: locationCategory):
 class itemDifficulty(str,Enum):
     SUPEREASY = "Super Easy"
     EASY = "Easy"
+    SLIGHTLY_EASY = "Slightly Easy"
     NORMAL = "Normal"
+    SLIGHTLY_HARD = "Slightly Hard"
     HARD = "Hard"
     VERYHARD = "Very Hard"
     INSANE = "Insane"

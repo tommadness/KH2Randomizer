@@ -1,17 +1,35 @@
+import random
+import string
 from Class import settingkey
+from Class.exceptions import RandomizerExceptions
 from Class.itemClass import KH2Item, itemRarity
 from Class.newLocationClass import KH2Location
 from Class.seedSettings import SeedSettings
 from List.configDict import itemDifficulty, locationCategory
 from Module.newRandomize import RandomizerSettings,Randomizer
+from Module.seedEvaluation import LocationInformedSeedValidator
 
 def make_rando_seed(difficulty,seed_name):
     seed_settings = SeedSettings()
     seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY,difficulty)
     seed_settings.set(settingkey.SORA_LEVELS,"ExcludeFrom99")
-    seed_settings.set(settingkey.SUPERBOSSES_WITH_REWARDS,["AS","DataOrg","Sephi"])
+    seed_settings.set(settingkey.SUPERBOSSES_WITH_REWARDS,["AS","Sephi"])#"DataOrg",
+    seed_settings.set(settingkey.STORY_UNLOCK_CATEGORY,itemRarity.RARE)
+    seed_settings.set(settingkey.STORY_UNLOCKS,False)
     settings = RandomizerSettings(seed_name,True,"version",seed_settings, "")
-    randomizer = Randomizer(settings)
+    newSeedValidation = LocationInformedSeedValidator()
+    randomizer = None
+    while True:
+        try:
+            randomizer = Randomizer(settings)
+            newSeedValidation.validateSeed(settings,randomizer,False)
+            break
+        except RandomizerExceptions as e:
+            characters = string.ascii_letters + string.digits
+            settings.random_seed = (''.join(random.choice(characters) for i in range(30)))
+            settings.create_full_seed_string()
+            last_error = e
+            continue
 
     item_depths = {}
     item_depths[itemRarity.COMMON] = []
@@ -36,7 +54,7 @@ def make_rando_seed(difficulty,seed_name):
         
         
 if __name__ == '__main__':
-    for difficulty in itemDifficulty:
+    for difficulty in [itemDifficulty.HARD]:
         counts = {}
         counts[itemRarity.COMMON] = {}
         counts[itemRarity.UNCOMMON] = {}

@@ -335,6 +335,23 @@ class modYml:
     def getMapSkipMod():
         return [{
                 "name": "msg/us/ca.bar",
+                "multi": [
+                    {
+                        "name": "msg/jp/ca.bar"
+                    },
+                    {
+                        "name": "msg/fr/ca.bar"
+                    },
+                    {
+                        "name": "msg/gr/ca.bar"
+                    },
+                    {
+                        "name": "msg/it/ca.bar"
+                    },
+                    {
+                        "name": "msg/sp/ca.bar"
+                    }
+                ],
                 "method": "binarc",
                 "source": [
                     {

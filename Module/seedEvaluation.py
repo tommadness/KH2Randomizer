@@ -15,7 +15,7 @@ class LocationInformedSeedValidator:
             result = result and r(inventory)
         return result
 
-    def validateSeed(self, settings: RandomizerSettings, randomizer: Randomizer):
+    def validateSeed(self, settings: RandomizerSettings, randomizer: Randomizer, verbose=True):
         startingInventory = settings.startingItems
 
         location_graphs = []
@@ -72,7 +72,8 @@ class LocationInformedSeedValidator:
             while changed:
                 depth+=1
                 if len(location_requirements)==0:
-                    print(f"Logic Depth {depth}")
+                    if verbose:
+                        print(f"Logic Depth {depth}")
                     return True
                 changed = False
                 locations_to_remove = []
@@ -91,7 +92,8 @@ class LocationInformedSeedValidator:
                 for i in locations_to_remove:
                     location_requirements.remove(i)
             
-            print("Failed seed, trying again")
+            if verbose:
+                print("Failed seed, trying again")
             # for loc in location_requirements:
             #     print(loc[0].Description)
             #     for assignment in randomizer.assignedItems:
