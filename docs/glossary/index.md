@@ -21,7 +21,7 @@ Common short name referring to the 1,000 Heartless fight.
 ### 50/50
 
 Refers to a randomizer game with 50 important checks where the player ended up finding all 50 of them. Depending on the
-settings, this could also be 37/37, 38/38, or 51/51.
+settings, the numbers could be different.
 
 ## A
 
@@ -192,8 +192,8 @@ On the PC Epic Games Store version of the game, the game sometimes crashes when 
 (commonly known as "map crash"). It is recommended to save anytime you're about to talk to Jack on the ship to choose a
 destination.
 
-There is no known fix for this crash, but some players have luck avoiding the map crash by letting the map fully load on
-screen before moving to choose a destination, and doing so slowly.
+As of release 2.1, the randomizer seed generator has a "Remove Port Royal Map Select" option that, when enabled,
+replaces the map location selection screen with simple text options, hopefully preventing the crash altogether.
 
 ### Mod Manager Bridge
 
@@ -362,6 +362,9 @@ A common abbreviation for The World That Never Was.
 A term, borrowed from _Super Smash Bros._, commonly used to describe Roxas's movement when using the Quick Run ability.
 Since Roxas's character model was not programmed with an animation for Quick Run, he soft of hops along the ground and
 this has been dubbed "wavedashing".
+
+As of release 2.1, the randomizer seed generator has a "Roxas Magic/Movement/Trinity" option that ports Sora's movement
+animations to Roxas, therefore allowing Roxas to Quick Run properly.
 
 ## Y
 

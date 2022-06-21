@@ -120,6 +120,9 @@ are not limited to:
     * In most areas of STT, reverting from Limit Form will leave you with a full Drive Gauge
 * Roxas can use High Jump, Quick Run, Aerial Dodge, and Glide even though his model does not have animations for those
   abilities. Dodge Roll cannot be used (the randomizer un-equips Dodge Roll once you enter STT).
+    * As of release 2.1, the randomizer seed generator has a "Roxas Magic/Movement/Trinity" option that, when enabled,
+      ports Sora's movement animations to Roxas, therefore allowing Roxas to use all of the movement abilities properly,
+      as well as magic and Trinity Limit.
 
 # Win Conditions
 
@@ -199,8 +202,8 @@ Some of these issues exist in the base game, while others are specific to the ra
 * On the PC Epic Games Store version of the game, the game sometimes crashes when choosing a location on the map
   (commonly known as "map crash"). It is recommended to save anytime you're about to talk to Jack on the ship to choose
   a destination.
-    * Some players have luck avoiding the map crash by letting the map fully load on screen before moving to choose a
-      destination, and doing so slowly.
+    * As of release 2.1, the randomizer seed generator has a "Remove Port Royal Map Select" option that, when enabled,
+      replaces the map location selection screen with simple text options, hopefully preventing the crash altogether.
 
 ### Simulated Twilight Town (STT)
 
@@ -208,3 +211,6 @@ Some of these issues exist in the base game, while others are specific to the ra
   so this is semi-difficult to do accidentally)
 * Being in Limit Form when Twilight Thorn starts the Reaction command sequence will softlock the game, as Sora does not
   have animations for the Reaction commands in this fight
+
+Note that as of release 2.1, the randomizer seed generator has a "Roxas Magic/Movement/Trinity" option that, when
+enabled, ports Sora's animations to Roxas, eliminating these T-poses/softlocks.
