@@ -332,7 +332,7 @@ class KH2RandomizerApp(QMainWindow):
                 self.pc_button.setVisible(split_pc_emu)
                 self.both_button.setVisible(not split_pc_emu)
 
-                if rando_settings.enemy_options["enemy"] == "Wild":
+                if rando_settings.enemy_options["enemy"] == "Wild" or rando_settings.enemy_options["bosses_replace_enemies"]:
                     self.emu_button.setEnabled(False)
                 else:
                     self.emu_button.setEnabled(True)
