@@ -135,7 +135,7 @@ class LocationWeights():
             elif self.regular_rando:
                 return self.location_depths[loc]
             else:
-                return self.location_depths[loc]
+                return self.reverse_location_depths[loc]
         else:
             assert self.location_depths[loc] == self.level_depths[loc.LocationId]
             sword_depth = self.level_depths[loc.LocationId]
@@ -149,9 +149,9 @@ class LocationWeights():
             if self.regular_rando and self.reverse_rando:
                 return (self.weights[item.Rarity][self.location_depths[loc]] + self.reverse_weights[item.Rarity][self.reverse_location_depths[loc]])//2
             elif self.regular_rando:
-                return self.weights[item.Rarity][self.reverse_location_depths[loc]]
+                return self.weights[item.Rarity][self.location_depths[loc]]
             else:
-                return self.reverse_weights[item.Rarity][self.location_depths[loc]]
+                return self.reverse_weights[item.Rarity][self.reverse_location_depths[loc]]
         else:
             assert self.location_depths[loc] == self.level_depths[loc.LocationId]
             sword_depth = self.level_depths[loc.LocationId]
