@@ -199,6 +199,10 @@ Since the paths are determined by where the items are found in the vanilla game,
 
 ![Vanilla Checks](path/vanilla_with_story.png)
 
+Or alternatively, here's a table based on the items and what worlds they can point toward:
+
+![Vanilla Checks 2](path/vanilla_to_world.png)
+
 Feel free to save this onto your computer for reference.
 
 Notable Callouts:
