@@ -328,14 +328,19 @@ class KH2RandomizerApp(QMainWindow):
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["boss"] != "Disabled"
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["enemy"] != "Disabled"
+
+                
+                disable_emu = False
+                disable_emu = disable_emu or rando_settings.enemy_options["enemy"] == "Wild"
+                disable_emu = disable_emu or rando_settings.enemy_options["bosses_replace_enemies"]
+                disable_emu = disable_emu or len(self.settings.get(settingkey.BGM_OPTIONS)) != 0
+                disable_emu = disable_emu or len(self.settings.get(settingkey.BGM_GAMES)) != 0
+
+
                 self.emu_button.setVisible(split_pc_emu)
                 self.pc_button.setVisible(split_pc_emu)
                 self.both_button.setVisible(not split_pc_emu)
-
-                if rando_settings.enemy_options["enemy"] == "Wild" or rando_settings.enemy_options["bosses_replace_enemies"]:
-                    self.emu_button.setEnabled(False)
-                else:
-                    self.emu_button.setEnabled(True)
+                self.emu_button.setEnabled(not disable_emu)
 
             except CantAssignItemException as e:
                 pass

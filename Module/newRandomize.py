@@ -521,7 +521,7 @@ class Randomizer():
             # pick a number of synth items
             num_reqs = random.randint(1,3)
             synth_reqs_list = Items.getSynthRequirementsList()
-            picked_items = random.choices(synth_reqs_list,k=num_reqs)
+            picked_items = random.sample(synth_reqs_list,k=num_reqs)
             reqs_list = []
             for i in range(num_reqs):
                 item = picked_items[i]

@@ -463,7 +463,7 @@ class SeedZip():
             while(len(itemList)<32):
                 itemList.append(0)
 
-        masterItemList = Items.getItemList() + Items.getActionAbilityList() + Items.getSupportAbilityList() + [Items.getTT1Jailbreak()]
+        masterItemList = Items.getItemList() + Items.getActionAbilityList() + Items.getSupportAbilityList() + [Items.getTT1Jailbreak()] + [Items.getPromiseCharm()]
         reports = [i.Id for i in masterItemList if i.ItemType==itemType.REPORT]
         story_unlocks = [i.Id for i in masterItemList if i.ItemType==itemType.STORYUNLOCK]
         donald_goofy_handled_items = reports+story_unlocks
