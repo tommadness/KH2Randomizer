@@ -17,7 +17,7 @@ integration with KH2 Randomizer using OpenKH Mods Manager.
 * Open the `LuaBackend.toml` file in Notepad or another text editor. The top of the `kh2` section should look something
   like this when you start:
 
-```toml
+```
 [kh2]
 scripts = [{ path = "scripts/kh2/", relative = true }]
 ```
@@ -26,7 +26,7 @@ scripts = [{ path = "scripts/kh2/", relative = true }]
   additional location for scripts. For example, if you have OpenKH installed at `C:\kh2rando\openkh`, edit the `scripts`
   part of the `kh2` section to look like the following (the forward slashes rather than backslashes are important):
 
-```toml
+```
 [kh2]
 scripts = [
     { path = "scripts/kh2/", relative = true },

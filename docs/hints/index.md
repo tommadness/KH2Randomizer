@@ -1,37 +1,45 @@
 # Hint Systems
 
-The randomizer community has come up with three different hint systems.
+The randomizer community has come up with several hint systems.
 
 * [JSmartee](#jsmartee)
-  * [Hint logic](#hint-logic)
+    * [Hint logic](#hint-logic)
 * [Shananas](#shananas)
 * [Points](#points)
 * [Path Hints](#path-hints)
-  * [Original Locations Cheatsheet](#original-locations-cheatsheet)
+    * [Original Locations Cheatsheet](#original-locations-cheatsheet)
 * [Spoiler Hints](#spoiler-hints)
 
 ## How do I use hints?
 
 When choosing options for generating a seed, choose which hint system to use on the Hints tab. Once generated, your seed
 zip file can be loaded into the [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker) either by dragging the zip file
-onto the tracker window, or by choosing `Options > Hint Mode > Load OpenKH Seed` and browsing to the seed zip file.
+onto the tracker window, or by choosing `Options > Hint Mode > Load KH2Randomizer Zip Seed` and browsing to the seed zip
+file.
 
-## JSmartee
+## What is an Important Check?
 
-In the JSmartee hint system, there are 50 items in the game designated as Important Checks.
+The common hint systems typically designate a certain number of items in the game as _Important Checks_. The number can
+change depending on the hint system and settings being used, but typically the Important Checks are these:
 
-* 13 Secret Ansem Reports
-* 3 levels of each of the 6 Magic spells (18 total)
-* 5 Drive Forms
+* Magic Elements
+* Drive Forms
 * Once More
 * Second Chance
-* 5 Torn Pages
-* 4 Summons
-* 3 Proofs
+* Torn Pages
+* Summon Charms
+* Proofs
 
-If the Promise Charm is enabled for the seed, it is also considered an Important Check, bringing the total to 51.'
+Additionally:
 
-If the visit locking key items are in the item pool, the total becomes 62.
+* If using a hint system where Secret Ansem Reports reveal information, the 13 reports themselves are typically
+  considered Important Checks
+* If World Key Items are in the randomized item pool, they are typically considered Important Checks
+* If Promise Charm is in the randomized item pool, it is typically considered an Important Check
+* Other items such as Olympus Stone, Unknown Disk, and Hades Cup Trophy are considered Important Checks if
+  the `Add Aux. Unlocks as hintable` setting is enabled for the seed
+
+## JSmartee
 
 Once your seed is loaded into the tracker, each location will start with a question mark next to it.
 
@@ -53,9 +61,10 @@ _(Taken from the hint logic page linked above, but also included here for additi
 
 > Reports pointing to proofs will be hinted. As an example:
 >
-> There's a proof in Port Royal. Report 4 points to Port Royal. Report 4 is in Halloween Town. Halloween Town must be hinted by another report.
-> If the priority items above (proofs, forms, pages, and magic) are already taking up all 13 hints, they will be prioritized over these reports.
-> Note: If the reports are on drive forms or in 100 Acre Wood, there is no logic to hint forms or pages as of now.
+> There's a proof in Port Royal. Report 4 points to Port Royal. Report 4 is in Halloween Town. Halloween Town must be
+> hinted by another report. If the priority items above (proofs, forms, pages, and magic) are already taking up all 13
+> hints, they will be prioritized over these reports. Note: If the reports are on drive forms or in 100 Acre Wood, there
+> is no logic to hint forms or pages as of now.
 
 A "hinted hint" is represented in the tracker by the location's number turning blue.
 
@@ -77,20 +86,6 @@ likely it becomes that a location with a blue number has a proof.
 
 ## Shananas
 
-In the Shananas hint system, there are 37 items in the game designated as Important Checks.
-
-* 3 levels of each of the 6 Magic spells (18 total)
-* 5 Drive Forms
-* Once More
-* Second Chance
-* 5 Torn Pages
-* 4 Summons
-* 3 Proofs
-
-If the Promise Charm is enabled for the seed, it is also considered an Important Check, bringing the total to 38.
-
-If the visit locking key items are in the item pool, the total becomes 49.
-
 Once your seed is loaded into the tracker, each location will start with a zero indicating you have not obtained any
 Important Checks from any of the locations. Any location with a blue zero means there are no Important Checks there.
 
@@ -108,37 +103,27 @@ Important Check.
 
 ## Points
 
-In the Points hint system, there are 50 items in the game designated as Important Checks.
+Each Important Check is given a category, and each category is given a value for each item in it. Some common point
+values for each category are as follows, but the point values can be customized when generating a seed.
 
-* 13 Secret Ansem Reports
-* 3 levels of each of the 6 Magic spells (18 total)
-* 5 Drive Forms
-* Once More
-* Second Chance
-* 5 Torn Pages
-* 4 Summons
-* 3 Proofs
+| Important Checks            | Generator Default | Spring 2022 League |
+|-----------------------------|-------------------|--------------------|
+| Proofs and Promise Charm    | 12                | 5                  |
+| Drive Forms                 | 10                | 9                  |
+| Magic Elements              | 8                 | 7                  |
+| Summon Charms               | 6                 | 5                  |
+| Second Chance and Once More | 4                 | 5                  |
+| Torn Pages                  | 2                 | 5                  |
+| Ansem Reports               | 2                 | 3                  |
+| World Key Items             | 2                 | 2*                 |
 
-If the Promise Charm is enabled for the seed, it is also considered an Important Check, bringing the total to 51.
-
-If the visit locking key items are in the item pool, the total becomes 62.
-
-Each Important Check is given a category, and each category is given a value for each item in it. The default values for
-each category are as follows, but the point values can be customized when generating a seed.
-
-* Proofs and Promise Charm = 12 points each
-* Drive Forms = 10 points each
-* Magic Elements = 8 points each
-* Summon Charms = 6 points each
-* Second Chance and Once More = 4 points each
-* Torn Pages and Ansem Reports = 2 points each
-* World Key Items = 2 points each
+_(*The Spring 2022 league happened before World Key Items were introduced into the generator.)_
 
 Once your seed is loaded into the tracker, each location is given a Score based on how many of each of these it
 contains. You are able to see the Score for each location right from the start.
 
-* Ex. If Agrabah has a Score of 12 that may mean is has a Proof, a Drive Form and a Torn Page (or it could have any
-  other combination of Important Checks whose point values add up to 12)
+* Ex. (using the generator default point values) If Agrabah has a Score of 12 that may mean it has a Proof, a Drive Form
+  and a Torn Page (or it could have any other combination of Important Checks whose point values add up to 12)
 * Any location with a blue zero has no Important Checks (though there still may be useful items/tools there)
 
 ![Empty Tracker](points/points_tracker_empty.png)
@@ -167,35 +152,48 @@ in. Note: Even with this setting on, reports are not _guaranteed_ to hint all or
 
 ## Path Hints
 
-This hint system aims to leverage knowledge of where items are found in the original game to provide information about where proofs may reside. This system is loosely inspired by Path to Reward hints from Ocarina of Time Randomizer. 
+This hint system aims to leverage knowledge of where items are found in the original game to provide information about
+where proofs may reside. This system is loosely inspired by Path to Reward hints from Ocarina of Time Randomizer.
 
-As a baseline, the Shananas style tracking is in place, meaning that once you have collected all the hintable items in a world, that world's number will turn blue. As long as it's yellow, there is something else "important" there. Path hints make use of the reports in a way to point you toward proof locations.
+As a baseline, the Shananas style tracking is in place, meaning that once you have collected all the hintable items in a
+world, that world's number will turn blue. As long as it's yellow, there is something else "important" there. Path hints
+make use of the reports in a way to point you toward proof locations.
 
-When you collect a report, a hint text will appear, telling you about zero to three proofs, and references a world. As an example, consider this example hint:
+When you collect a report, a hint text will appear, telling you about zero to three proofs, and references a world. As
+an example, consider this example hint:
 
 ![Example Path Hint 1](path/single_proof_example.png)
 
-In this example, the report you found is telling you about Beast's Castle, and that the items you collect there will create "paths" toward the Proof of Peace. In this example, you find Fire and Thunder, and since Fire is originally found in Hollow Bastion, Agrabah, and Pride Lands, and Thunder is originally found in Pride Lands, Olympus Coliseum, and Land of Dragons, one of those five worlds could have the Proof of Peace. 
+In this example, the report you found is telling you about Beast's Castle, and that the items you collect there will
+create "paths" toward the Proof of Peace. In this example, you find Fire and Thunder, and since Fire is originally found
+in Hollow Bastion, Agrabah, and Pride Lands, and Thunder is originally found in Pride Lands, Olympus Coliseum, and Land
+of Dragons, one of those five worlds could have the Proof of Peace.
 
-In this example, if there are no more important checks in Beast's Castle, and the number on that world in the tracker turns blue, then you know 100% that the proof of peace must be in one of those five worlds. If there are items left to collect, you may not know all the information yet. 
+In this example, if there are no more important checks in Beast's Castle, and the number on that world in the tracker
+turns blue, then you know 100% that the proof of peace must be in one of those five worlds. If there are items left to
+collect, you may not know all the information yet.
 
 Something more interesting can occur with path hints, where you may get information about multiple proofs at once:
 
 ![Example Path Hint 2](path/all_proofs_example.png)
 
-In this example, Beast's Castle "is on the path to all lights" meaning all proofs are hinted by the items found in Beast's Castle. For this example, since Cure and Magnet are the only items found in Beast's Castle, all three proofs must be in the six worlds above. 
+In this example, Beast's Castle "is on the path to all lights" meaning all proofs are hinted by the items found in
+Beast's Castle. For this example, since Cure and Magnet are the only items found in Beast's Castle, all three proofs
+must be in the six worlds above.
 
 Another interesting hint you may receive involves when a world does not hint a proof:
 
 ![Example Path Hint 2](path/no_proofs_example.png)
 
-If a hint says that a world "has no path to the light", you know that any item you find in that world cannot point to a proof. 
+If a hint says that a world "has no path to the light", you know that any item you find in that world cannot point to a
+proof.
 
 As a guide, here is a cheat sheet for where the original locations of each item are considered:
 
 ### Original Locations Cheatsheet
 
-Since the paths are determined by where the items are found in the vanilla game, here's a cheatsheet with what the randomizer considers "original" locations.
+Since the paths are determined by where the items are found in the vanilla game, here's a cheatsheet with what the
+randomizer considers "original" locations.
 
 ![Vanilla Checks](path/vanilla_with_story.png)
 
@@ -206,22 +204,29 @@ Or alternatively, here's a table based on the items and what worlds they can poi
 Feel free to save this onto your computer for reference.
 
 Notable Callouts:
+
 * Simulated Twilight Town and Twilight Town share the same original items for purposes of the hints.
-* Drive Forms original items are the drive forms themselves, for purposes of the hints. 
-* The party member weapons used as keys for locking second visits are attributed to the world where that party member exists. 
-* Puzzles/Synthesis don't have any original items for the hints. 
-* The reports, proofs, Unknown Disk, Olympus Stone, and Hades Cup Trophy are not going to point to their original locations for purposes of the hints.
+* Drive Forms original items are the drive forms themselves, for purposes of the hints.
+* The party member weapons used as keys for locking second visits are attributed to the world where that party member
+  exists.
+* Puzzles/Synthesis don't have any original items for the hints.
+* The reports, proofs, Unknown Disk, Olympus Stone, and Hades Cup Trophy are not going to point to their original
+  locations for purposes of the hints.
 
 ## Spoiler Hints
 
-Spoiler Hints by default will reveal every Important Check each world has once the seed is loaded into the tracker by tracking a transparent version of the Item to each of the worlds.
+Spoiler Hints by default will reveal every Important Check each world has once the seed is loaded into the tracker by
+tracking a transparent version of the Item to each of the worlds.
 
 ![Spoiler Hint Example with Reports](spoiler/spoiler_1.png)
 
-If desired, you can limit what is revealed by using the "Important Check Types to Reveal" setting to enable or disable the different check types.
+If desired, you can limit what is revealed by using the "Important Check Types to Reveal" setting to enable or disable
+the different check types.
 
-If the "Reports reveal worlds" option is enabled then all worlds will be hidden at the start only to be revealed when a report is obtained.
+If the "Reports reveal worlds" option is enabled then all worlds will be hidden at the start only to be revealed when a
+report is obtained.
 
 ![Spoiler Hint Example with Reports](spoiler/spoiler_2.png)
 
-In this example Ansem Report 3 is obtained and displays the text "Space Paranoids has been revealed!", after which it displays all the Important Checks Space Paranoids has.
+In this example Ansem Report 3 is obtained and displays the text "Space Paranoids has been revealed!", after which it
+displays all the Important Checks Space Paranoids has.
