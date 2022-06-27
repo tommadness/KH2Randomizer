@@ -86,6 +86,7 @@ class RandomizerSettings():
             raise SettingsException("Invalid ability pool option")
 
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
+        self.auto_equip_abilities = ui_settings.get(settingkey.AUTO_EQUIP_START_ABILITIES)
         self.tt1_jailbreak = ui_settings.get(settingkey.TT1_JAILBREAK)
         self.pureblood = ui_settings.get(settingkey.PUREBLOOD)
         self.antiform = ui_settings.get(settingkey.ANTIFORM)

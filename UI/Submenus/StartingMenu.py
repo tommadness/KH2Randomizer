@@ -23,6 +23,7 @@ class StartingMenu(KH2Submenu):
 
         self.start_column()
         self.add_option(settingkey.STARTING_INVENTORY)
+        self.add_option(settingkey.AUTO_EQUIP_START_ABILITIES)
         self.end_column(stretch_at_end=False)
 
         self.finalizeMenu()

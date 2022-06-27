@@ -432,13 +432,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=True
     ),
 
-    #Toggle(
-    #    name=settingkey.SCHMOVEMENT,
-    #    ui_label='Schmovement',
-    #    shared=True,
-    #    default=False,
-    #    tooltip='Start with level 1 of all growth abilities'
-    #),
+    Toggle(
+       name=settingkey.AUTO_EQUIP_START_ABILITIES,
+       ui_label='Starting Abilities Equipped',
+       shared=True,
+       default=False,
+       tooltip='Start with abilities auto-equiped (except ones from critical bonuses)'
+    ),
 
     SingleSelect(
         name=settingkey.STARTING_MOVEMENT,

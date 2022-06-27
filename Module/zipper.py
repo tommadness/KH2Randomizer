@@ -520,7 +520,9 @@ class SeedZip():
             "Padding": [0] * 52
         })
 
-        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] +  [i for i in settings.startingItems if i in sora_abilities]
+        ability_equip = 0x8000 if settings.auto_equip_abilities else 0
+
+        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] +  [i+ability_equip for i in settings.startingItems if i in sora_abilities]
         padItems(soraStartingItems)
         self.formattedPlrp.append({
             "Character": 1, # Sora Starting Items (Crit)
