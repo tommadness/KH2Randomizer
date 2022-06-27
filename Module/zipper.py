@@ -256,6 +256,7 @@ class SeedZip():
         #         rates = DropRates(binaryContent[start_index:start_index+24])
         #         print(rates)
 
+
         mod = modYml.getDefaultMod()
         sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
 
@@ -263,8 +264,16 @@ class SeedZip():
         with zipfile.ZipFile(data,"w") as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
-            self.createPuzzleAssets(settings, randomizer, mod, outZip)
-            self.createSynthAssets(settings, randomizer, mod, outZip)
+            cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
+            platform = cosmetics_data["platform"]
+            randomBGMOptions = cosmetics_data["randomBGM"]
+            tourney_gen = cosmetics_data["tourney"]
+
+            
+            pc_seed_toggle = (platform=="PC")
+
+            self.createPuzzleAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
+            self.createSynthAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
             self.createASDataAssets(settings, mod, outZip)
             self.createSkipCarpetAssets(settings, mod, outZip)
             self.createMapSkipAssets(settings, mod, outZip)
@@ -280,11 +289,6 @@ class SeedZip():
 
             if hints is not None:
                 Hints.writeHints(hints, "HintFile", outZip)
-
-            cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
-            platform = cosmetics_data["platform"]
-            randomBGMOptions = cosmetics_data["randomBGM"]
-            tourney_gen = cosmetics_data["tourney"]
 
             def _shouldRunKHBR():
                 if not settings.enemy_options.get("boss", False) in [False, "Disabled"]:
@@ -406,9 +410,9 @@ class SeedZip():
             outZip.write(resource_path("static/map_skip/libretto-ca.bar"), "map_skip/libretto-ca.bar")
 
 
-    def createPuzzleAssets(self, settings, randomizer, mod, outZip):
+    def createPuzzleAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.Puzzle not in settings.disabledLocations:
-            mod["assets"] += [modYml.getPuzzleMod()]
+            mod["assets"] += [modYml.getPuzzleMod(pc_toggle)]
             assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
             with open(resource_path("static/puzzle.bin"), "rb") as puzzleBar:
                 binaryContent = bytearray(puzzleBar.read())
@@ -422,7 +426,7 @@ class SeedZip():
                     binaryContent[byte1] = itemByte1
                 outZip.writestr("modified_puzzle.bin",binaryContent)
 
-    def createSynthAssets(self, settings, randomizer, mod, outZip):
+    def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.SYNTH in settings.disabledLocations:
             return
         
@@ -433,7 +437,7 @@ class SeedZip():
             synth_items.append(SynthLocation(assignment.location.LocationId,assignment.item.Id,[r for r in randomizer.synthesis_recipes if r.location==assignment.location][0]))
 
         # if locationType.Puzzle not in settings.disabledLocations:
-        mod["assets"] += [modYml.getSynthMod()]
+        mod["assets"] += [modYml.getSynthMod(pc_toggle)]
         # assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
         with open(resource_path("static/synthesis.bin"), "rb") as synthbar:
             binaryContent = bytearray(synthbar.read())

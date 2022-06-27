@@ -231,20 +231,8 @@ class modYml:
                 {"name": "ard/hb34.ard","multi": [{"name": "ard/us/hb34.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb34evt.script"}]}] },
                 {"name": "ard/hb38.ard","multi": [{"name": "ard/us/hb38.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb38evt.script"}]}] }]
 
-    def getPuzzleMod():
-        return {
-                    "name": "menu/jp/jiminy.bar",
-                    "multi": [
-                        {
-                            "name": "menu/us/jiminy.bar"
-                        },
-                        {
-                            "name": "menu/uk/jiminy.bar"
-                        },
-                        {
-                            "name": "menu/fm/jiminy.bar"
-                        }
-                    ],
+    def getPuzzleMod(pc = False):
+        mod_dict = {
                     "method": "binarc",
                     "source": [
                         {
@@ -259,20 +247,35 @@ class modYml:
                         }
                     ]
                 }
-    def getSynthMod():
-        return {
-                    "name": "menu/jp/mixdata.bar",
-                    "multi": [
+
+        mod_dict["name"] = "menu/fm/jiminy.bar"
+
+        if pc:
+            mod_dict["multi"] = [
                         {
-                            "name": "menu/us/mixdata.bar"
+                            "name": "menu/us/jiminy.bar"
                         },
                         {
-                            "name": "menu/uk/mixdata.bar"
+                            "name": "menu/fr/jiminy.bar"
                         },
                         {
-                            "name": "menu/fm/mixdata.bar"
-                        }
-                    ],
+                            "name": "menu/gr/jiminy.bar"
+                        },
+                        {
+                            "name": "menu/it/jiminy.bar"
+                        },
+                        {
+                            "name": "menu/sp/jiminy.bar"
+                        },
+                        {
+                            "name": "menu/uk/jiminy.bar"
+                        },
+                    ]
+
+        return mod_dict
+
+    def getSynthMod(pc=False):
+        mod_dict = {
                     "method": "binarc",
                     "source": [
                         {
@@ -297,6 +300,29 @@ class modYml:
                         }
                     ]
                 }
+        mod_dict["name"] = "menu/fm/mixdata.bar"
+        if pc:
+            mod_dict["multi"] = [
+                        {
+                            "name": "menu/us/mixdata.bar"
+                        },
+                        {
+                            "name": "menu/fr/mixdata.bar"
+                        },
+                        {
+                            "name": "menu/gr/mixdata.bar"
+                        },
+                        {
+                            "name": "menu/it/mixdata.bar"
+                        },
+                        {
+                            "name": "menu/sp/mixdata.bar"
+                        },
+                        {
+                            "name": "menu/uk/mixdata.bar"
+                        },
+                    ]
+        return mod_dict
     def getSkipCarpetEscapeMod():
         return {
                 "name": "ard/al11.ard",

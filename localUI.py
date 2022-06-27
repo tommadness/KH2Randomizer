@@ -326,6 +326,8 @@ class KH2RandomizerApp(QMainWindow):
                 split_pc_emu = split_pc_emu or len(self.settings.get(settingkey.BGM_GAMES)) != 0
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.CUPS_GIVE_XP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
+                split_pc_emu = split_pc_emu or (locationType.Puzzle.name in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS))
+                split_pc_emu = split_pc_emu or (locationType.SYNTH.name in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS))
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["boss"] != "Disabled"
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["enemy"] != "Disabled"
 
