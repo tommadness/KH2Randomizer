@@ -31,8 +31,8 @@ def number_to_bytes(item):
     itemByte0 = item & 0x00FF
     return itemByte0,itemByte1
 
-# def bytes_to_number(byte0, byte1=0):
-#     return int(byte0)+int(byte1<<8)
+def bytes_to_number(byte0, byte1=0):
+    return int(byte0)+int(byte1<<8)
 
 # id_to_enemy_name = {}
 
@@ -161,6 +161,24 @@ def number_to_bytes(item):
 # id_to_enemy_name[135] = ""
 
 
+
+class SynthList():
+    def __init__(self,offset,bytes):
+        self.offset = offset
+        self.id = bytes_to_number(bytes[0],bytes[1])
+        self.reward = bytes_to_number(bytes[2],bytes[3])
+        self.reward_type = bytes_to_number(bytes[4])
+        self.material_type = bytes_to_number(bytes[5])
+        self.material_rank = bytes_to_number(bytes[6])
+        self.condition_type = bytes_to_number(bytes[7])
+        self.count_needed = bytes_to_number(bytes[8],bytes[9])
+        self.unlock_event_shop = bytes_to_number(bytes[10],bytes[11])
+
+    def __str__(self):
+        if self.reward_type == 1:
+            return f"{self.offset}: {self.reward} {self.condition_type} {self.count_needed}"
+        else:
+            return ""
 
 
 # class DropRates():
@@ -453,12 +471,26 @@ class SeedZip():
 
         with open(resource_path("static/synthesis_reqs.bin"), "rb") as synthbar:
             binaryContent = bytearray(synthbar.read())
+
+            # uncomment to see some data about the synth lists
+            # index=16
+            # while index+12<len(binaryContent):
+            #     print(SynthList(index,binaryContent[index:]))
+            #     index+=12
+
             free_dev1 = number_to_bytes(3)
             free_dev2 = number_to_bytes(6)
             binaryContent[36] = free_dev1[0]
             binaryContent[37] = free_dev1[1]
             binaryContent[72] = free_dev2[0]
             binaryContent[73] = free_dev2[1]
+
+            # uncomment to make all existing synth buyable conditions need 7 of that material
+            # new_required_items = number_to_bytes(7)
+            # start_index=376
+            # for i in range(0,24):
+            #     binaryContent[start_index+i*12+8] = new_required_items[0]
+            #     binaryContent[start_index+i*12+9] = new_required_items[1]
 
             outZip.writestr("modified_synth_reqs.bin",binaryContent)
 
