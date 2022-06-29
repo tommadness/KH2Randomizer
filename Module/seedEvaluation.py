@@ -2,6 +2,7 @@
 from Class.exceptions import ValidationException
 from List.ItemList import Items
 from Module.RandomizerSettings import RandomizerSettings
+from List.NewLocationList import get_all_parent_edge_reqs
 
 from Module.newRandomize import Randomizer
 
@@ -28,27 +29,9 @@ class LocationInformedSeedValidator:
             inventory = []
             inventory += startingInventory
 
-            # graph = randomizer.master_locations.location_graph
-
             location_requirements = []
-            for loc in graph.node_data("Starting").locations:
-                location_requirements.append((loc,[]))
-
-
-            # updated function to allow for multiple incoming connections to enforce multiple constraints
-            def get_all_parent_edge_reqs(n,reqs = None):
-                if reqs is None:
-                    reqs = []
-                all_edges = graph.inc_edges(n)
-                for e in all_edges:
-                    data = graph.edge_data(e)
-                    source,_ = graph.edge_by_id(e)
-                    reqs += [data.requirement]
-                    get_all_parent_edge_reqs(source,reqs)
-                return reqs
-
             for node in graph.node_list():
-                reqs = get_all_parent_edge_reqs(node)
+                reqs = get_all_parent_edge_reqs(node,graph)
                 for loc in graph.node_data(node).locations:
                     location_requirements.append((loc,reqs))
 
@@ -94,9 +77,13 @@ class LocationInformedSeedValidator:
             
             if verbose:
                 print("Failed seed, trying again")
-            # for loc in location_requirements:
-            #     print(loc[0].Description)
-            #     for assignment in randomizer.assignedItems:
-            #         if loc[0] == assignment.location:
-            #             print(f"---{assignment.item.Name}")
+            
+            print(inventory)
+            for loc in location_requirements:
+                print(loc[0].Description)
+                for assignment in randomizer.assignedItems:
+                    if assignment.item.Id == 23:
+                        print(f"+++{assignment.location}")
+                    if loc[0] == assignment.location:
+                        print(f"---{assignment.item.Name}")
             raise ValidationException(f"Completion checking failed to collect {len(location_requirements)} items")

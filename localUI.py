@@ -330,6 +330,7 @@ class KH2RandomizerApp(QMainWindow):
                 split_pc_emu = split_pc_emu or (locationType.SYNTH.name in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS))
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["boss"] != "Disabled"
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["enemy"] != "Disabled"
+                split_pc_emu = split_pc_emu or self.settings.get(settingkey.TT1_JAILBREAK)
 
                 
                 disable_emu = False
@@ -337,6 +338,7 @@ class KH2RandomizerApp(QMainWindow):
                 disable_emu = disable_emu or rando_settings.enemy_options["bosses_replace_enemies"]
                 disable_emu = disable_emu or len(self.settings.get(settingkey.BGM_OPTIONS)) != 0
                 disable_emu = disable_emu or len(self.settings.get(settingkey.BGM_GAMES)) != 0
+                disable_emu = disable_emu or self.settings.get(settingkey.TT1_JAILBREAK)
 
 
                 self.emu_button.setVisible(split_pc_emu)

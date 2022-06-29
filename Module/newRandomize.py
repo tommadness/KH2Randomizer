@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import itertools
+from multiprocessing.reduction import duplicate
 
 from Class.exceptions import GeneratorException,CantAssignItemException
 from Module.modifier import SeedModifier
@@ -311,7 +312,34 @@ class Randomizer():
         #     rank_map[itemRarity.MYTHIC] = 4
         #     return rank_map[item1.Rarity]
 
+        # random.shuffle(allItems)
         # allItems.sort(reverse=True,key=item_sorter)
+
+        inventory = []
+        inventory += settings.startingItems
+
+        regular_location_reqs = self.regular_locations.getAllSoraLocations(True)
+        reverse_location_reqs = self.reverse_locations.getAllSoraLocations(True)
+        all_reqs = {}
+
+        def evaluate(inventory,reqs_list):
+            result = True
+            for r in reqs_list:
+                result = result and r(inventory)
+            return result
+
+        for valid_loc in validLocations:
+            all_reqs[valid_loc] = []
+            if settings.regular_rando:
+                for l,r in regular_location_reqs:
+                    if l==valid_loc:
+                        all_reqs[valid_loc]+=r
+            if settings.reverse_rando:
+                for l,r in reverse_location_reqs:
+                    if l==valid_loc:
+                        all_reqs[valid_loc]+=r
+
+
 
         #assign valid items to all valid locations remaining
         for item in allItems:
@@ -324,25 +352,28 @@ class Randomizer():
                 if len(starry_hill_loc_list) == 0:
                     raise GeneratorException("Yeet the Bear setting is set, when 100 acre wood is turned off.")
                 starry_hill_cure = starry_hill_loc_list[0]
+                inventory.append(item.Id)
                 if self.assignItem(starry_hill_cure,item):
                     validLocations.remove(starry_hill_cure)
                 continue
 
             if restricted_reports:
-                weights = [self.location_weights.getWeight(item,loc) if itemType.REPORT in loc.InvalidChecks else 0 for loc in validLocations]
+                if item.ItemType is itemType.REPORT:
+                    weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
+                else:
+                    weights = [self.location_weights.getWeight(item,loc) if itemType.REPORT in loc.InvalidChecks else 0 for loc in validLocations]
             elif restricted_proofs:
-                weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations]
+                if item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
+                    weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations ]
+                else:
+                    weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations]
             elif restricted_story:
-                weights = [self.location_weights.getWeight(item,loc) if itemType.STORYUNLOCK in loc.InvalidChecks else 0 for loc in validLocations]
+                if item.ItemType is itemType.STORYUNLOCK:
+                    weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in validLocations ]
+                else:
+                    weights = [self.location_weights.getWeight(item,loc) if itemType.STORYUNLOCK in loc.InvalidChecks else 0 for loc in validLocations]
             else:
                 weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
-            # modify the weights for reports if the report depth is specific
-            if restricted_reports and item.ItemType is itemType.REPORT:
-                weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
-            elif restricted_proofs and item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
-                weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations ]
-            elif restricted_story and item.ItemType is itemType.STORYUNLOCK:
-                weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in validLocations ]
             count=0
             while True:
                 count+=1
@@ -351,10 +382,12 @@ class Randomizer():
                 if sum(weights) == 0 and restricted_reports:
                     raise CantAssignItemException(f"Somehow, can't assign an item. If using report depth option that restricts to specific bosses, make sure all worlds with doors in GoA are enabled.")
                 randomLocation = random.choices(validLocations,weights)[0]
-                if item.ItemType not in randomLocation.InvalidChecks:
-                    if self.assignItem(randomLocation,item):
-                        validLocations.remove(randomLocation)
-                    break
+                if evaluate(inventory,all_reqs[randomLocation]):
+                    if item.ItemType not in randomLocation.InvalidChecks:
+                        inventory.append(item.Id)
+                        if self.assignItem(randomLocation,item):
+                            validLocations.remove(randomLocation)
+                        break
                 if count==100:
                     raise CantAssignItemException(f"Trying to assign {item} and failed 100 times in {len([i for i in validLocations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(validLocations)}")
         invalidLocations+=validLocations

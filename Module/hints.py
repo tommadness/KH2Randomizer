@@ -80,7 +80,7 @@ class Hints:
             world_to_vanilla_ICs[locationType.TWTNW] = [87]
             world_to_vanilla_ICs[locationType.PR] = [87,160,62]
             world_to_vanilla_ICs[locationType.DC] = [32,88,27]
-            world_to_vanilla_ICs[locationType.HUNDREDAW] = [24]
+            world_to_vanilla_ICs[locationType.HUNDREDAW] = [24,32]
             world_to_vanilla_ICs[locationType.Agrabah] = [159,21,32,72]
             world_to_vanilla_ICs[locationType.BC] = [24,88,59]
             world_to_vanilla_ICs[locationType.TT] = [26,563]

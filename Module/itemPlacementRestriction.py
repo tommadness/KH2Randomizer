@@ -79,6 +79,10 @@ class ItemPlacementHelpers():
         count_pages = lambda inventory : inventory.count(32)
         return count_pages(inventory) == 5
 
+    @staticmethod
+    def need_proofs(inventory):
+        return (593 in inventory) and (594 in inventory) and (595 in inventory)
+
         
     @staticmethod
     def make_form_lambda(form_id,form_level):

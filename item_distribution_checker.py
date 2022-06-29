@@ -22,7 +22,7 @@ def make_rando_seed(difficulty,seed_name):
     while True:
         try:
             randomizer = Randomizer(settings)
-            newSeedValidation.validateSeed(settings,randomizer,False)
+            newSeedValidation.validateSeed(settings,randomizer)
             break
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
@@ -54,7 +54,7 @@ def make_rando_seed(difficulty,seed_name):
         
         
 if __name__ == '__main__':
-    for difficulty in [itemDifficulty.HARD]:
+    for difficulty in itemDifficulty:
         counts = {}
         counts[itemRarity.COMMON] = {}
         counts[itemRarity.UNCOMMON] = {}

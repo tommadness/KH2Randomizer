@@ -7,6 +7,18 @@ from altgraph.Graph import Graph
 from Module.RandomizerSettings import RandomizerSettings
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
+# updated function to allow for multiple incoming connections to enforce multiple constraints
+def get_all_parent_edge_reqs(n,g,reqs = None):
+    if reqs is None:
+        reqs = []
+    all_edges = g.inc_edges(n)
+    for e in all_edges:
+        data = g.edge_data(e)
+        source,_ = g.edge_by_id(e)
+        reqs += [data.requirement]
+        get_all_parent_edge_reqs(source,g,reqs)
+    return reqs
+
 class LocationNode:
     def __init__(self,in_loc=None):
         if in_loc is None:
@@ -36,8 +48,18 @@ class Locations:
         self.makeLocationGraph(settings.excludedLevels,settings.split_levels,settings.level_checks)
 
     """A set of methods to get all the location information for Sora, Donald, and Goofy. Limited logic about item placement here"""
-    def getAllSoraLocations(self):
-        return self.create_list_from_nodes(self.location_graph)
+    def getAllSoraLocations(self, requirements = False):
+        if not requirements:
+            return self.create_list_from_nodes(self.location_graph)
+
+        #each location is going to have the corresponding logic restrictions on it in a tuple.
+        location_requirements = []
+        for node in self.location_graph.node_list():
+            reqs = get_all_parent_edge_reqs(node,self.location_graph)
+            for loc in self.location_graph.node_data(node).locations:
+                location_requirements.append((loc,reqs))
+        return location_requirements
+
 
     @staticmethod
     def getAllDonaldLocations():
@@ -1331,7 +1353,7 @@ class Locations:
             self.add_edge("Saix","Pre-Xemnas 1 Popup",RequirementEdge())
             self.add_edge("Pre-Xemnas 1 Popup","Ruin and Creation's Passage",RequirementEdge())
             self.add_edge("Ruin and Creation's Passage","Xemnas 1",RequirementEdge(battle=True))
-            self.add_edge("Xemnas 1","Final Xemnas",RequirementEdge(battle=True))
+            self.add_edge("Xemnas 1","Final Xemnas",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_proofs))
             self.add_edge("Xemnas 1","Data Xemnas",RequirementEdge(battle=True))
             self.first_boss_nodes.append("Xemnas 1")
             self.second_boss_nodes.append("Xemnas 1")
@@ -1350,7 +1372,7 @@ class Locations:
             self.add_edge("Xigbar","Pre-Xemnas 1 Popup",RequirementEdge())
             self.add_edge("Pre-Xemnas 1 Popup","Ruin and Creation's Passage",RequirementEdge())
             self.add_edge("Ruin and Creation's Passage","Roxas",RequirementEdge(battle=True))
-            self.add_edge("Roxas","Final Xemnas",RequirementEdge(battle=True))
+            self.add_edge("Roxas","Final Xemnas",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_proofs))
             self.add_edge("Roxas","Data Xemnas",RequirementEdge(battle=True))
             self.first_boss_nodes.append("Roxas")
             self.second_boss_nodes.append("Roxas")
