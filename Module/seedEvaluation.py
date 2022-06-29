@@ -78,12 +78,10 @@ class LocationInformedSeedValidator:
             if verbose:
                 print("Failed seed, trying again")
             
-            print(inventory)
-            for loc in location_requirements:
-                print(loc[0].Description)
-                for assignment in randomizer.assignedItems:
-                    if assignment.item.Id == 23:
-                        print(f"+++{assignment.location}")
-                    if loc[0] == assignment.location:
-                        print(f"---{assignment.item.Name}")
+            # print(inventory)
+            # for loc in location_requirements:
+            #     print(loc[0].Description)
+            #     for assignment in randomizer.assignedItems:
+            #         if loc[0] == assignment.location:
+            #             print(f"---{assignment.item.Name}")
             raise ValidationException(f"Completion checking failed to collect {len(location_requirements)} items")

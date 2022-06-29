@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 import itertools
-from multiprocessing.reduction import duplicate
 
 from Class.exceptions import GeneratorException,CantAssignItemException
 from Module.modifier import SeedModifier
@@ -304,16 +303,30 @@ class Randomizer():
         #         placed_item = True
         #         break
 
-        # def item_sorter(item1):
-        #     rank_map = {}
-        #     rank_map[itemRarity.COMMON] = 1
-        #     rank_map[itemRarity.UNCOMMON] = 2
-        #     rank_map[itemRarity.RARE] = 3
-        #     rank_map[itemRarity.MYTHIC] = 4
-        #     return rank_map[item1.Rarity]
 
-        # random.shuffle(allItems)
-        # allItems.sort(reverse=True,key=item_sorter)
+        invalid_test = []
+
+        if restricted_reports:
+            invalid_test.append(itemType.REPORT)
+        if restricted_proofs:
+            invalid_test+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
+        if restricted_story:
+            invalid_test.append(itemType.STORYUNLOCK)
+
+        def item_sorter(item1):
+            rank_map = {}
+            rank_map[itemRarity.COMMON] = 1
+            rank_map[itemRarity.UNCOMMON] = 2
+            rank_map[itemRarity.RARE] = 3
+            rank_map[itemRarity.MYTHIC] = 4
+
+            if item1.ItemType in invalid_test:
+                return 5
+
+            return rank_map[item1.Rarity]
+
+        random.shuffle(allItems)
+        allItems.sort(reverse=True,key=item_sorter)
 
         inventory = []
         inventory += settings.startingItems
@@ -357,23 +370,18 @@ class Randomizer():
                     validLocations.remove(starry_hill_cure)
                 continue
 
-            if restricted_reports:
-                if item.ItemType is itemType.REPORT:
-                    weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
-                else:
-                    weights = [self.location_weights.getWeight(item,loc) if itemType.REPORT in loc.InvalidChecks else 0 for loc in validLocations]
-            elif restricted_proofs:
-                if item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
-                    weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations ]
-                else:
-                    weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations]
-            elif restricted_story:
-                if item.ItemType is itemType.STORYUNLOCK:
-                    weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in validLocations ]
-                else:
-                    weights = [self.location_weights.getWeight(item,loc) if itemType.STORYUNLOCK in loc.InvalidChecks else 0 for loc in validLocations]
+            if restricted_proofs or restricted_reports or restricted_story:
+                weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in invalid_test)) else 0 for loc in validLocations]
             else:
                 weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
+
+            if restricted_reports and item.ItemType is itemType.REPORT:
+                weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
+            if restricted_proofs and item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
+                weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations ]
+            if restricted_story and item.ItemType is itemType.STORYUNLOCK:
+                weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in validLocations ]
+
             count=0
             while True:
                 count+=1
@@ -382,7 +390,7 @@ class Randomizer():
                 if sum(weights) == 0 and restricted_reports:
                     raise CantAssignItemException(f"Somehow, can't assign an item. If using report depth option that restricts to specific bosses, make sure all worlds with doors in GoA are enabled.")
                 randomLocation = random.choices(validLocations,weights)[0]
-                if evaluate(inventory,all_reqs[randomLocation]):
+                if len(invalid_test)>0 or evaluate(inventory,all_reqs[randomLocation]):
                     if item.ItemType not in randomLocation.InvalidChecks:
                         inventory.append(item.Id)
                         if self.assignItem(randomLocation,item):
