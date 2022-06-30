@@ -55,7 +55,7 @@ class RandomizerSettings():
         self.random_growths = ui_settings.get(settingkey.STARTING_MOVEMENT)=="Random"
         self.chosen_random_growths = []
 
-        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + SeedModifier.world_unlocks(ui_settings.get(settingkey.STORY_UNLOCKS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
+        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [int(value) for value in ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.nightmare = ui_settings.get(settingkey.NIGHTMARE_LOGIC)
         self.story_unlock_rarity = ui_settings.get(settingkey.STORY_UNLOCK_CATEGORY)
@@ -188,7 +188,7 @@ class RandomizerSettings():
         self.tracker_includes.append(level_setting)
         if self.roxas_abilities_enabled:
             self.tracker_includes.append("better_stt")
-        if not ui_settings.get(settingkey.STORY_UNLOCKS):
+        if len(ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)) < 11:
             self.tracker_includes.append("visit_locking")
         if ui_settings.get(settingkey.LIBRARY_OF_ASSEMBLAGE):
             self.tracker_includes.append("library")

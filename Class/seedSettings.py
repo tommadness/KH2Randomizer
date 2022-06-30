@@ -1097,13 +1097,33 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=True
     ),
 
-    Toggle(
-        name=settingkey.STORY_UNLOCKS,
+    # Toggle(
+    #     name=settingkey.STORY_UNLOCKS,
+    #     ui_label='World Key Items',
+    #     shared=True,
+    #     default=True,
+    #     tooltip="Gives the player all the visit locking items at the start, making all worlds open from the start.",
+    #     randomizable=True
+    # ),
+
+    MultiSelect(
+        name=settingkey.STARTING_STORY_UNLOCKS,
         ui_label='World Key Items',
+        choices={
+            '74': 'Identity Disk',
+            '62': 'Skill and Crossbones',
+            '376': 'Picture',
+            '375': 'Ice Cream',
+            '54': 'Battlefields of War',
+            '60': 'Bone Fist',
+            '55': 'Sword of the Ancestor',
+            '59': "Beast's Claw",
+            '72': 'Scimitar',
+            '61': 'Proud Fang',
+            '369': 'Membership Card',
+        },
         shared=True,
-        default=True,
-        tooltip="Gives the player all the visit locking items at the start, making all worlds open from the start.",
-        randomizable=True
+        default=['74','62','376','375','54','60','55','59','72','61','369']
     ),
 
     Toggle(
