@@ -1123,7 +1123,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             '369': 'Membership Card',
         },
         shared=True,
-        default=['74','62','376','375','54','60','55','59','72','61','369']
+        default=['74','62','376','375','54','60','55','59','72','61','369'],
+        tooltip="Determines which world key items to start with. See kh2rando.com for more details",
     ),
 
     Toggle(
