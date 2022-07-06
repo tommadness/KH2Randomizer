@@ -326,7 +326,8 @@ class Randomizer():
             return rank_map[item1.Rarity]
 
         random.shuffle(allItems)
-        allItems.sort(reverse=True,key=item_sorter)
+        if len(invalid_test)>0:
+            allItems.sort(reverse=True,key=item_sorter)
 
         inventory = []
         inventory += settings.startingItems
