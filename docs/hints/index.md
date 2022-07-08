@@ -205,7 +205,8 @@ Feel free to save this onto your computer for reference.
 
 Notable Callouts:
 
-* Simulated Twilight Town and Twilight Town share the same original items for purposes of the hints.
+* Simulated Twilight Town and Twilight Town share the same original items for purposes of the hints, except for the 
+  picture and ice cream items that unlock
 * Drive Forms original items are the drive forms themselves, for purposes of the hints.
 * The party member weapons used as keys for locking second visits are attributed to the world where that party member
   exists.
