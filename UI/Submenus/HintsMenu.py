@@ -1,6 +1,7 @@
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
+from PySide6.QtCore import Qt
 
 
 class HintsMenu(KH2Submenu):
@@ -40,6 +41,7 @@ class HintsMenu(KH2Submenu):
         self.finalizeMenu()
 
         settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
+        settings.observe(settingkey.REVEAL_REPORTMODE, self._reveal_report_mode_changed)
 
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)
@@ -61,3 +63,16 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.REVEAL_TYPES, visible=hint_system == 'Spoiler')
         self.set_option_visibility(settingkey.REVEAL_COMPLETE, visible=hint_system == 'Spoiler')
         self.set_option_visibility(settingkey.REVEAL_REPORTMODE, visible=hint_system == 'Spoiler')
+
+    def _reveal_report_mode_changed(self):
+        report_mode_enabled = self.settings.get(settingkey.REVEAL_REPORTMODE)
+        setting, widget = self.widgets_and_settings_by_name[settingkey.REVEAL_TYPES]
+        for selected in setting.choice_keys:
+            if selected == "report":
+                index = setting.choice_keys.index(selected)
+                if not report_mode_enabled:
+                    widget.item(index).setSelected(False)
+                    widget.item(index).setFlags(Qt.NoItemFlags)
+                else:
+                    widget.item(index).setSelected(True)
+                    widget.item(index).setFlags(Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)

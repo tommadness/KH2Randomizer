@@ -761,7 +761,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'report': 'Ansem Reports',
             'visit': 'World Key Items',
             'proof': 'Proofs',
-            'other': 'Extra'
+            'other': 'Aux. Unlocks'
         },
         shared=True,
         default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof", "other"]
