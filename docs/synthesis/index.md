@@ -45,4 +45,4 @@ All of these categories of shards, stones, gems, and crystals can make up a reci
 | **Bright**    | Creeper Plant, Hook Bat, Minute Bomb, Rabid Dog, Soldier   | Aeroplane, Cannon Gun, Driller Mole, Luna Bandit, Silver Rock, Tornado Step, Wight Knight | Aerial Knocker, Magnum Loader, Surveillance Robot | Air Pirate, Crescendo, Neoshadow, Strafer |
 | **Energy**    | Bolt Tower, Gargoyle Knight, Gargoyle Warrior, Nightwalker | Hammer Frame, Lance Soldier, Trick Ghost                                                  | Emerald Blues, Fortune Teller                     | Bookmaster, Shaman                        |
 
-For a more detailed breakdown of how to farm materials and where, check [this detailed syntesis guide by Bulcon](https://docs.google.com/spreadsheets/d/1_P3UQELqnInDmaqMNOqkjlfjQKMWVZg_HfGbmT8EYP4/edit?usp=sharing)
+For a more detailed breakdown of how to farm materials and where, check [this detailed synthesis guide by Bulcon](https://docs.google.com/spreadsheets/d/1_P3UQELqnInDmaqMNOqkjlfjQKMWVZg_HfGbmT8EYP4/edit?usp=sharing)
