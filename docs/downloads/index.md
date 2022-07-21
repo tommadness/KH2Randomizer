@@ -39,6 +39,11 @@
     * Can also be installed via OpenKH Mods Manager using `KH2FM-Mods-equations19/auto-save` if you've followed the
       LuaBackend Hook Setup guide above
 
+
+### PCSX2-EX Emulator Version ([setup guide](https://docs.google.com/document/d/1Wjn-yG6dX1OOyXHZ3wmz0Bx4CowmKoOtNSPGci47pzY/edit?usp=drivesdk))
+
+* Reference the setup guide for most up to date downloads.
+
 ### PCSX2 Emulator Version ([setup guide](https://docs.google.com/document/d/1LtNWjiYHxXmlUVZZ_6rDkqDIPDhPN1OnXKI7eRL_mXI/edit?usp=sharing))
 
 * [Garden of Assemblage Mod pnach File](https://docs.google.com/document/d/1GYjEnrM_TIk7qyO75clPLYD-_nP5wTR7K6SE-Wn-QCg/edit#heading=h.4vivvlkpxl0s)
