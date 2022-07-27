@@ -1014,7 +1014,7 @@ class Locations:
             self.add_edge("1000 Heartless","Sephiroth",RequirementEdge(battle=True))
             self.add_edge("1000 Heartless","Mushroom 13",RequirementEdge(req=ItemPlacementHelpers.need_proof_peace))
             self.add_edge("1000 Heartless","Data Demyx",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_forms))
-            self.first_boss_nodes.append("Bailey")
+            self.first_boss_nodes.append("Baseball Charm Popup")
             self.second_boss_nodes.append("1000 Heartless")
             self.data_nodes.append("Sephiroth")
         else:

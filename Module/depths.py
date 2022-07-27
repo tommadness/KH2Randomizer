@@ -68,9 +68,10 @@ class ItemDepths():
                     index+=1
                     child_nodes+=get_children(current_node)
                 for child in child_nodes:
-                    node_locations = location_graph.node_data(child).locations
-                    for loc in node_locations:
-                        self.depth_classification[loc] = True
+                    if child not in data_nodes:
+                        node_locations = location_graph.node_data(child).locations
+                        for loc in node_locations:
+                            self.depth_classification[loc] = True
 
         elif location_depth is locationDepth.SecondBoss:
             for node in second_boss_nodes:

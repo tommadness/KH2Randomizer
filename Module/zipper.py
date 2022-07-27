@@ -34,57 +34,57 @@ def number_to_bytes(item):
 def bytes_to_number(byte0, byte1=0):
     return int(byte0)+int(byte1<<8)
 
-# id_to_enemy_name = {}
+id_to_enemy_name = {}
 
-# id_to_enemy_name[1] = "Soldier"
-# id_to_enemy_name[2] = "Shadow"
-# id_to_enemy_name[3] = "Large Body"
-# id_to_enemy_name[4] = "Armored Knight"
-# id_to_enemy_name[5] = "Surveillance Robot"
-# id_to_enemy_name[6] = "Dusk"
-# id_to_enemy_name[7] = "Trick Ghost"
-# id_to_enemy_name[8] = "Rabid Dog"
-# id_to_enemy_name[9] = "Hook Bat"
-# id_to_enemy_name[10] = "Minute Bomb"
-# id_to_enemy_name[11] = "Assault Rider"
-# id_to_enemy_name[12] = "Hammer Frame"
-# id_to_enemy_name[13] = "Aeroplane"
+id_to_enemy_name[1] = "Soldier"
+id_to_enemy_name[2] = "Shadow"
+id_to_enemy_name[3] = "Large Body"
+id_to_enemy_name[4] = "Armored Knight"
+id_to_enemy_name[5] = "Surveillance Robot"
+id_to_enemy_name[6] = "Dusk"
+id_to_enemy_name[7] = "Trick Ghost"
+id_to_enemy_name[8] = "Rabid Dog"
+id_to_enemy_name[9] = "Hook Bat"
+id_to_enemy_name[10] = "Minute Bomb"
+id_to_enemy_name[11] = "Assault Rider"
+id_to_enemy_name[12] = "Hammer Frame"
+id_to_enemy_name[13] = "Aeroplane"
 # id_to_enemy_name[14] = ""
-# id_to_enemy_name[15] = "Samurai"
+id_to_enemy_name[15] = "Samurai"
 # id_to_enemy_name[16] = ""
-# id_to_enemy_name[17] = "Rapid Thruster"
-# id_to_enemy_name[18] = "Bolt Tower"
+id_to_enemy_name[17] = "Rapid Thruster"
+id_to_enemy_name[18] = "Bolt Tower"
 # id_to_enemy_name[19] = ""
-# id_to_enemy_name[22] = "Dragoon"
-# id_to_enemy_name[23] = "Assassin"
-# id_to_enemy_name[24] = "Sniper"
-# id_to_enemy_name[25] = "Dancer"
-# id_to_enemy_name[26] = "Berserker"
-# id_to_enemy_name[27] = "Gambler"
-# id_to_enemy_name[28] = "Sorcerer"
-# id_to_enemy_name[29] = "Creeper"
-# id_to_enemy_name[30] = "Nightwalker"
-# id_to_enemy_name[32] = "Fortuneteller"
-# id_to_enemy_name[33] = "Luna Bandit" #silver rock
-# id_to_enemy_name[34] = "Hot Rod"
-# id_to_enemy_name[35] = "Cannon Gun" # tornado step
-# id_to_enemy_name[36] = "Living Bone"
-# id_to_enemy_name[37] = "Devastator"
-# id_to_enemy_name[38] = "Lance Soldier"
-# id_to_enemy_name[39] = "Driller Mole"
-# id_to_enemy_name[40] = "Shaman"
-# id_to_enemy_name[41] = "Neoshadow"
-# id_to_enemy_name[42] = "Magnum Loader"
-# id_to_enemy_name[43] = "Morning Star"
-# id_to_enemy_name[44] = "Tornado Step" #Cannon Gun
-# id_to_enemy_name[45] = "Gargoyle Knight"
-# id_to_enemy_name[46] = "Gargoyle Warrior"
-# id_to_enemy_name[47] = "Silver Rock" #Luna Bandit
-# id_to_enemy_name[48] = "Wight Knight"
-# id_to_enemy_name[49] = "Emerald Blues"
-# id_to_enemy_name[50] = "Crimson Jazz"
-# id_to_enemy_name[51] = "Crescendo"
-# id_to_enemy_name[52] = "Creeper Plant"
+id_to_enemy_name[22] = "Dragoon"
+id_to_enemy_name[23] = "Assassin"
+id_to_enemy_name[24] = "Sniper"
+id_to_enemy_name[25] = "Dancer"
+id_to_enemy_name[26] = "Berserker"
+id_to_enemy_name[27] = "Gambler"
+id_to_enemy_name[28] = "Sorcerer"
+id_to_enemy_name[29] = "Creeper"
+id_to_enemy_name[30] = "Nightwalker"
+id_to_enemy_name[32] = "Fortuneteller"
+id_to_enemy_name[33] = "Luna Bandit" #silver rock
+id_to_enemy_name[34] = "Hot Rod"
+id_to_enemy_name[35] = "Cannon Gun" # tornado step
+id_to_enemy_name[36] = "Living Bone"
+id_to_enemy_name[37] = "Devastator"
+id_to_enemy_name[38] = "Lance Soldier"
+id_to_enemy_name[39] = "Driller Mole"
+id_to_enemy_name[40] = "Shaman"
+id_to_enemy_name[41] = "Neoshadow"
+id_to_enemy_name[42] = "Magnum Loader"
+id_to_enemy_name[43] = "Morning Star"
+id_to_enemy_name[44] = "Tornado Step" #Cannon Gun
+id_to_enemy_name[45] = "Gargoyle Knight"
+id_to_enemy_name[46] = "Gargoyle Warrior"
+id_to_enemy_name[47] = "Silver Rock" #Luna Bandit
+id_to_enemy_name[48] = "Wight Knight"
+id_to_enemy_name[49] = "Emerald Blues"
+id_to_enemy_name[50] = "Crimson Jazz"
+id_to_enemy_name[51] = "Crescendo"
+id_to_enemy_name[52] = "Creeper Plant"
 # id_to_enemy_name[53] = ""
 # id_to_enemy_name[54] = ""
 # id_to_enemy_name[55] = ""
@@ -92,15 +92,15 @@ def bytes_to_number(byte0, byte1=0):
 # id_to_enemy_name[60] = ""
 # id_to_enemy_name[61] = ""
 # id_to_enemy_name[62] = ""
-# id_to_enemy_name[63] = "Air Pirate"
-# id_to_enemy_name[64] = "Fat Bandit"
-# id_to_enemy_name[65] = "Fiery Globe"
-# id_to_enemy_name[66] = "Icy Cube"
-# id_to_enemy_name[69] = "Aerial Knocker"
+id_to_enemy_name[63] = "Air Pirate"
+id_to_enemy_name[64] = "Fat Bandit"
+id_to_enemy_name[65] = "Fiery Globe"
+id_to_enemy_name[66] = "Icy Cube"
+id_to_enemy_name[69] = "Aerial Knocker"
 # id_to_enemy_name[70] = ""
 # id_to_enemy_name[71] = ""
 # id_to_enemy_name[72] = "" # Dusk Roxas Prologue
-# id_to_enemy_name[73] = "Strafer"
+id_to_enemy_name[73] = "Strafer"
 # id_to_enemy_name[74] = ""
 # id_to_enemy_name[75] = ""
 # id_to_enemy_name[76] = ""
@@ -109,21 +109,21 @@ def bytes_to_number(byte0, byte1=0):
 # id_to_enemy_name[79] = ""
 # id_to_enemy_name[80] = ""
 # id_to_enemy_name[81] = ""
-# id_to_enemy_name[82] = "Illuminator"
+id_to_enemy_name[82] = "Illuminator"
 # id_to_enemy_name[83] = ""
 # id_to_enemy_name[84] = ""
 # id_to_enemy_name[85] = ""
 # id_to_enemy_name[86] = ""
-# id_to_enemy_name[87] = "Undead Pirate A"
-# id_to_enemy_name[88] = "Undead Pirate B"
-# id_to_enemy_name[89] = "Undead Pirate C"
+id_to_enemy_name[87] = "Undead Pirate A"
+id_to_enemy_name[88] = "Undead Pirate B"
+id_to_enemy_name[89] = "Undead Pirate C"
 # id_to_enemy_name[90] = ""
 # id_to_enemy_name[91] = ""
 # id_to_enemy_name[92] = ""
 # id_to_enemy_name[93] = ""
 # id_to_enemy_name[94] = ""
 # id_to_enemy_name[95] = ""
-# id_to_enemy_name[96] = "Bookmaster"
+id_to_enemy_name[96] = "Bookmaster"
 # id_to_enemy_name[97] = "Quickplay (Aladdin)"
 # id_to_enemy_name[98] = "Quickplay (Sora)"
 # id_to_enemy_name[99] = "Speedster End"
@@ -137,7 +137,7 @@ def bytes_to_number(byte0, byte1=0):
 # id_to_enemy_name[108] = ""
 # id_to_enemy_name[109] = ""
 # id_to_enemy_name[111] = ""
-# id_to_enemy_name[112] = "Graveyard/Toy Soldier"
+id_to_enemy_name[112] = "Graveyard/Toy Soldier"
 # id_to_enemy_name[114] = ""
 # id_to_enemy_name[115] = "Lance Soldier?"
 # id_to_enemy_name[116] = ""
@@ -149,7 +149,7 @@ def bytes_to_number(byte0, byte1=0):
 # id_to_enemy_name[122] = ""
 # id_to_enemy_name[123] = "Creeper Plant RC"
 # id_to_enemy_name[125] = "Crescendo RC"
-# id_to_enemy_name[126] = "Gambler RC"
+id_to_enemy_name[126] = "Gambler RC"
 # id_to_enemy_name[127] = ""
 # id_to_enemy_name[128] = ""
 # id_to_enemy_name[129] = ""
@@ -160,6 +160,16 @@ def bytes_to_number(byte0, byte1=0):
 # id_to_enemy_name[134] = ""
 # id_to_enemy_name[135] = ""
 
+id_to_enemy_name[138] = "Bulky Vendor (Stage 1/4)"
+id_to_enemy_name[139] = "Bulky Vendor (Stage 2/4)"
+id_to_enemy_name[140] = "Bulky Vendor (Stage 3/4)"
+id_to_enemy_name[141] = "Bulky Vendor (Stage 4/4)"
+
+
+# id_to_enemy_name[181] = "Mad Bumper"
+# id_to_enemy_name[182] = "Reckless"
+
+id_to_enemy_name[184] = "Drive Orb"
 
 
 class SynthList():
@@ -201,7 +211,13 @@ class SynthList():
 #         self.item3_chance = bytes_to_number(bytes[22],bytes[23])
 
 #     def __str__(self):
-#         return f"{self.id} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
+#         if self.item1_chance and self.id not in id_to_enemy_name:
+#             return f"{self.id} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
+#         elif self.id in id_to_enemy_name:
+#             return f"{self.id} {id_to_enemy_name[self.id]}"
+#         else:
+#             return ""
+
 
 
 class SynthLocation():
@@ -335,6 +351,16 @@ class SeedZip():
                     
                     from khbr.randomizer import Randomizer as khbr
                     enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
+
+                    if pc_seed_toggle:
+                        # TODO: Remove this modification when khbr is changed to handle multi-languages
+                        for asset in mod["assets"]:
+                            if "msn/jp" in asset["name"] and ".bar" in asset["name"]:
+                                asset["multi"] = []
+                                for region in ["us","fr","gr","it","sp","uk"]:
+                                    asset["multi"].append({'name':asset["name"].replace("jp",region)})                  
+
+
                     lines = enemySpoilers.split("\n")
 
                     current_key = ""
