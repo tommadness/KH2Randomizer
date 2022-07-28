@@ -38,6 +38,7 @@ from Module.generate import generateSeed
 from Module.newRandomize import Randomizer, RandomizerSettings
 from Module.seedshare import SharedSeed, ShareStringException
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
+from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CosmeticsMenu import CosmeticsMenu
 from UI.Submenus.HintsMenu import HintsMenu
@@ -232,11 +233,14 @@ class KH2RandomizerApp(QMainWindow):
         self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
         self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
         self.presetMenu.addMenu(self.presetsMenu)
+        self.config_menu = QMenu('Configure')
+        self.config_menu.addAction('LuaBackend Hook Setup', self.show_luabackend_configuration)
+        self.config_menu.addAction('Find Extracted PC KH Data', self.extractedFilesGetter)
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
+        menu_bar.addMenu(self.config_menu)
 
         menu_bar.addAction("Load Daily Seed", self.loadDailySeed)
-        menu_bar.addAction("Find Extracted PC KH Data",self.extractedFilesGetter)
         menu_bar.addAction("About", self.showAbout)
 
     def closeEvent(self, e):
@@ -564,7 +568,10 @@ class KH2RandomizerApp(QMainWindow):
         message.setWindowTitle("KH2 Seed Generator")
         message.exec()
 
-        
+    @staticmethod
+    def show_luabackend_configuration():
+        dialog = LuaBackendSetupDialog()
+        dialog.exec()
 
     def firstTimeSetup(self):
         print("First Time Setup")
