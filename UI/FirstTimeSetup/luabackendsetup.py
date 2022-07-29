@@ -16,6 +16,9 @@ LUA_DLL_NAME = 'lua54.dll'
 BACKEND_CONFIG_FILE_NAME = 'LuaBackend.toml'
 MOD_MANAGER_EXE_FILE_NAME = 'OpenKh.Tools.ModsManager.exe'
 MOD_MANAGER_CONFIG_FILE_NAME = 'mods-manager.yml'
+# Note - we choose to target a specific known version so that we know exactly what files we'll find and their format
+#      - there's definite tradeoff here since we could get out of date, but this way is at least under our control
+BACKEND_DOWNLOAD_URI = 'https://github.com/Sirius902/LuaBackend/releases/download/v1.7.0-hook/DBGHELP.zip'
 
 
 class LuaBackendSetupDialog(QDialog):
@@ -37,18 +40,25 @@ class LuaBackendSetupDialog(QDialog):
         row = 0
 
         help_text = textwrap.dedent('''
-        KH2 Randomizer (the PC version) relies on Lua scripting, either via LuaBackend Hook or LuaFrontend. This screen
+        <span>
+        KH2 Randomizer (the PC version) relies on Lua scripting, either via
+        <a href="https://github.com/Sirius902/LuaBackend" style="color: #4dd0e1">LuaBackend Hook</a> or
+        <a href="https://github.com/TopazTK/LuaFrontend" style="color: #4dd0e1">LuaFrontend</a>. This screen
         helps you get set up with the LuaBackend Hook option. This includes applying extra configuration to allow Lua
         scripts to be packaged in mods, making many common Lua scripts easily installable, updatable, and easy to turn
         on and off.
-        
+        </span>
+        <br><br>
+        <span>
         To proceed, choose the location of your OpenKH tools, choose which mode you use to mod the game, and
         choose Check Configuration. This will check the status of the various files needed for LuaBackend Hook.
         From there, you can choose to download/install the appropriate files, or if you already have the files
         installed, you can choose Apply Configuration to apply the necessary configuration only.
+        </span>
         ''').strip()
         help_text_label = QLabel(help_text)
-        help_text_label.setProperty('cssClass', 'caption')
+        help_text_label.setOpenExternalLinks(True)
+        help_text_label.setWordWrap(True)
         grid.addWidget(help_text_label, row, 0, 1, 3)
 
         row = row + 1
@@ -84,9 +94,6 @@ class LuaBackendSetupDialog(QDialog):
         validate.setEnabled(False)
         validate.clicked.connect(self._validate_clicked)
         grid.addWidget(validate, row, 0, 1, 3)
-
-        row = row + 1
-        grid.addItem(QSpacerItem(0, 32), row, 0, 1, 3)
 
         row = row + 1
         hook_dll_status = QLabel('')
@@ -179,13 +186,21 @@ class LuaBackendSetupDialog(QDialog):
 
         pc_release_path = self._path_or_none(raw_yaml['pcReleaseLocation'])
         if pc_release_path is None:
-            message = QMessageBox(text='OpenKH Mods Manager has not been configured for the PC game version.')
+            text = textwrap.dedent('''
+            OpenKH Mods Manager has not been configured for the PC game version.
+            Either your OpenKH tools are out of date or you may need to re-run the setup wizard in Mods Manager.
+            ''').strip()
+            message = QMessageBox(text=text)
             message.setWindowTitle(DIALOG_TITLE)
             message.exec()
             return
 
         if not pc_release_path.is_dir():
-            message = QMessageBox(text='OpenKH Mods Manager is configured to an invalid PC game version location.')
+            text = textwrap.dedent('''
+            OpenKH Mods Manager has been configured for the PC game version, but the PC game location is missing.
+            You may need to re-run the setup wizard in Mods Manager.
+            ''').strip()
+            message = QMessageBox(text=text)
             message.setWindowTitle(DIALOG_TITLE)
             message.exec()
             return
@@ -230,43 +245,52 @@ class LuaBackendSetupDialog(QDialog):
             self.lua_dll_status.setText('Not found')
 
     def _install_clicked(self):
-        url = 'https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip'
-        target_zip_path = Path('DBGHELP-tmp.zip')
-        request.urlretrieve(url, target_zip_path)
+        try:
+            target_zip_path = Path('DBGHELP-tmp.zip')
+            request.urlretrieve(BACKEND_DOWNLOAD_URI, target_zip_path)
 
-        with ZipFile(target_zip_path) as zip_file:
-            if HOOK_DLL_NAME_MAIN not in zip_file.namelist():
-                message = QMessageBox(text='Downloaded LuaBackend Hook zip file is malformed.')
-                message.setWindowTitle(DIALOG_TITLE)
-                message.exec()
-                return
+            with ZipFile(target_zip_path) as zip_file:
+                if HOOK_DLL_NAME_MAIN not in zip_file.namelist():
+                    message = QMessageBox(text='Downloaded LuaBackend Hook zip file is malformed.')
+                    message.setWindowTitle(DIALOG_TITLE)
+                    message.exec()
+                    return
 
-            pc_release_path = self.pc_release_path
-            target_hook_dll_name = self._target_hook_dll_name()
-            target_hook_zip_info = zip_file.getinfo(HOOK_DLL_NAME_MAIN)
-            target_hook_zip_info.filename = target_hook_dll_name
-            zip_file.extract(target_hook_zip_info, pc_release_path)
+                pc_release_path = self.pc_release_path
+                target_hook_dll_name = self._target_hook_dll_name()
+                target_hook_zip_info = zip_file.getinfo(HOOK_DLL_NAME_MAIN)
+                target_hook_zip_info.filename = target_hook_dll_name
+                zip_file.extract(target_hook_zip_info, pc_release_path)
 
-            zip_file.extract(LUA_DLL_NAME, pc_release_path)
+                zip_file.extract(LUA_DLL_NAME, pc_release_path)
 
-            if self.config_file_path is None:
-                zip_file.extract(BACKEND_CONFIG_FILE_NAME, pc_release_path)
-                self.config_file_path = pc_release_path / BACKEND_CONFIG_FILE_NAME
-            if not self.config_file_configured:
-                self._do_apply_configuration()
+                if self.config_file_path is None:
+                    zip_file.extract(BACKEND_CONFIG_FILE_NAME, pc_release_path)
+                    self.config_file_path = pc_release_path / BACKEND_CONFIG_FILE_NAME
+                if not self.config_file_configured:
+                    self._do_apply_configuration()
 
-        self._validate_clicked()
+            self._validate_clicked()
 
-        message = QMessageBox(text='Downloaded, installed, and configured successfully.')
-        message.setWindowTitle(DIALOG_TITLE)
-        message.exec()
+            message = QMessageBox(text='Downloaded, installed, and configured successfully.')
+            message.setWindowTitle(DIALOG_TITLE)
+            message.exec()
+        except Exception as error:
+            message = QMessageBox(text=str(repr(error)))
+            message.setWindowTitle(DIALOG_TITLE)
+            message.exec()
 
     def _apply_configuration_clicked(self):
-        self._do_apply_configuration()
+        try:
+            self._do_apply_configuration()
 
-        message = QMessageBox(text='Configuration applied successfully.')
-        message.setWindowTitle(DIALOG_TITLE)
-        message.exec()
+            message = QMessageBox(text='Configuration applied successfully.')
+            message.setWindowTitle(DIALOG_TITLE)
+            message.exec()
+        except Exception as error:
+            message = QMessageBox(text=str(repr(error)))
+            message.setWindowTitle(DIALOG_TITLE)
+            message.exec()
 
     def _do_apply_configuration(self):
         with open(self.config_file_path) as config_file:
