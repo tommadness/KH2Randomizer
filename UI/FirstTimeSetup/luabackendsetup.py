@@ -7,7 +7,7 @@ from zipfile import ZipFile
 import tomlkit
 import yaml
 from PySide6.QtWidgets import (QDialog, QLineEdit, QGridLayout, QPushButton, QFileDialog, QLabel, QVBoxLayout,
-                               QComboBox, QHBoxLayout, QMessageBox)
+                               QComboBox, QHBoxLayout, QMessageBox, QSpacerItem)
 
 DIALOG_TITLE = 'LuaBackend Hook Setup'
 HOOK_DLL_NAME_MAIN = 'DBGHELP.dll'
@@ -37,18 +37,22 @@ class LuaBackendSetupDialog(QDialog):
         row = 0
 
         help_text = textwrap.dedent('''
-        KH2 Randomizer relies on Lua scripting, either via LuaBackend Hook or LuaFrontend. This screen helps
-        you get set up with LuaBackend Hook. This includes applying a configuration to allow Lua scripts to
-        be packaged in mods, making Lua scripts easily installable, updatable, and easy to turn on and off.
+        KH2 Randomizer (the PC version) relies on Lua scripting, either via LuaBackend Hook or LuaFrontend. This screen
+        helps you get set up with the LuaBackend Hook option. This includes applying extra configuration to allow Lua
+        scripts to be packaged in mods, making many common Lua scripts easily installable, updatable, and easy to turn
+        on and off.
         
-        To use, fill in the location of your OpenKH tools, choose which mode you use to mod the game, and
-        choose Check Configuration. This will report the status of the various files needed for LuaBackend Hook.
+        To proceed, choose the location of your OpenKH tools, choose which mode you use to mod the game, and
+        choose Check Configuration. This will check the status of the various files needed for LuaBackend Hook.
         From there, you can choose to download/install the appropriate files, or if you already have the files
         installed, you can choose Apply Configuration to apply the necessary configuration only.
         ''').strip()
         help_text_label = QLabel(help_text)
         help_text_label.setProperty('cssClass', 'caption')
         grid.addWidget(help_text_label, row, 0, 1, 3)
+
+        row = row + 1
+        grid.addItem(QSpacerItem(0, 32), row, 0, 1, 3)
 
         row = row + 1
         openkh_path_field = QLineEdit()
@@ -68,10 +72,7 @@ class LuaBackendSetupDialog(QDialog):
         This affects the name of LuaBackend Hook's DLL file.
         ''').strip()
         mode_field.setToolTip(mode_tooltip)
-        mode_field.addItems([
-            'OpenKH Mods Manager (Patch / Fast Patch)',
-            'OpenKH Mods Manager (Panacea / Mod Loader)']
-        )
+        mode_field.addItems(['Patch / Fast Patch', 'Panacea / Mod Loader'])
         mode_field.currentIndexChanged.connect(self._mod_mode_changed)
         self.mode_field = mode_field
         grid.addWidget(QLabel('Mod mode'), row, 0)
@@ -83,6 +84,9 @@ class LuaBackendSetupDialog(QDialog):
         validate.setEnabled(False)
         validate.clicked.connect(self._validate_clicked)
         grid.addWidget(validate, row, 0, 1, 3)
+
+        row = row + 1
+        grid.addItem(QSpacerItem(0, 32), row, 0, 1, 3)
 
         row = row + 1
         hook_dll_status = QLabel('')

@@ -234,7 +234,7 @@ class KH2RandomizerApp(QMainWindow):
         self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
         self.presetMenu.addMenu(self.presetsMenu)
         self.config_menu = QMenu('Configure')
-        self.config_menu.addAction('LuaBackend Hook Setup', self.show_luabackend_configuration)
+        self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
         self.config_menu.addAction('Find Extracted PC KH Data', self.extractedFilesGetter)
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
