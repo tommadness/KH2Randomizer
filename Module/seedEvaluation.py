@@ -35,21 +35,6 @@ class LocationInformedSeedValidator:
                 for loc in graph.node_data(node).locations:
                     location_requirements.append((loc,reqs))
 
-
-
-            # def dfs_search(node_name,reqs):
-            #     out_edges = graph.out_edges(node_name)
-            #     for e in out_edges:
-            #         data = graph.edge_data(e)
-            #         _,target = graph.edge_by_id(e)
-            #         req_for_target = data.requirement
-            #         new_reqs = reqs + [req_for_target]
-            #         for loc in graph.node_data(target).locations:
-            #             location_requirements.append((loc,new_reqs))
-            #         dfs_search(target,new_reqs)
-
-            # dfs_search("Starting",[])
-
             changed = True
             depth = 0
             while changed:
