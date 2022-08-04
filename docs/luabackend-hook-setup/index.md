@@ -3,6 +3,10 @@
 These instructions guide you through installing LuaBackend Hook and performing the necessary configuration for
 integration with KH2 Randomizer using OpenKH Mods Manager.
 
+_NOTE: The zip seed generator has a `LuaBackend Hook Setup (PC Only)` option in the `Config` menu that can automate this
+installation and configuration, meaning you can skip the instructions below altogether. The instructions are kept here
+in case the automated installation doesn't work on some players' setups._
+
 ## Installation
 
 * Download the [DBGHELP.zip](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip) file
