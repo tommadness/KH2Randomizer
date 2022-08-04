@@ -71,7 +71,7 @@ class LuaBackendSetupDialog(QDialog):
         self.openkh_path_field = openkh_path_field
         openkh_path_button = QPushButton('Browse')
         openkh_path_button.clicked.connect(self._choose_openkh_path)
-        grid.addWidget(QLabel('OpenKH tools location'), row, 0)
+        grid.addWidget(QLabel('OpenKH location'), row, 0)
         grid.addWidget(openkh_path_field, row, 1)
         grid.addWidget(openkh_path_button, row, 2)
 

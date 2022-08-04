@@ -28,6 +28,7 @@ title: Home
   by AliosGaming
 * [PCSX2 Emulator version](https://docs.google.com/document/d/1LtNWjiYHxXmlUVZZ_6rDkqDIPDhPN1OnXKI7eRL_mXI/edit?usp=sharing)
   by gameaddict
+* [Migrating from Mods Manager Bridge (PC version)](setup/mods-manager-bridge-migration/index.md)
 
 # Other Guides/Tools
 
