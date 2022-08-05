@@ -22,7 +22,9 @@
 5. If you want to bypass the epic games launcher, and kh games launch window, check the **"Bypass the launcher"** check box
 
 *You will need to input your epic games user id, which can be found using the link below the text box*
+
 6. Keep the extraction folder location as default, and click on the **"extract game data"** button. You will need to wait a few minutes for the process to complete.
+
 ### *You have successfully installed the mod manager*
 
 ## Garden of Assemblage Mod:
@@ -33,6 +35,7 @@
 	- Type **"KH2FM-Mods-Num/GoA-ROM-Edition"** into the text box and click on **"install"** in the bottom right
 
 *Note: You can find more mods made by the community in the rando discord, checkout the **"Mods and Scripts"** Section*
+
 3. To enable the mod, be sure to click the checkbox next to the newly added mod in the list
 	- image here
 4. Then click **"Game"** and **"build", then **"build only"
