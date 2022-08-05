@@ -9,9 +9,9 @@ title: Home
 
 # Installation Guides
 
-* [PC New Installation Guide](setup/Panacea-ModLoader/index.md)
+* [PC New Setup Guide](setup/Panacea-ModLoader/index.md)
 * [Migrating from Mods Manager Bridge (PC version)](setup/mods-manager-bridge-migration/index.md)
-* [Emulator New Installation Guide](setup/Emulator/index.md)
+* [Emulator New Setup Guide](setup/Emulator/index.md)
 
 # Game/Randomizer Information
 
