@@ -48,6 +48,7 @@
 5. Click on **"Check configuration"**
 
 *The status messages below should say **"Not Found"***
+
 6. Now click on the **"Download/Install/Configure"** button in the bottom left
 
 *This will download and install the luabackend hooks required for the Panacea Mod Loader to work, these files go directly into your game installation folder*
