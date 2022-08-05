@@ -14,7 +14,7 @@
 ## How to Setup The Mod Manager:
 1. Run the **"OpenKh.Tools.ModsManager"** in the OpenKH folder 
 	- The Setup Wizard will open automatically, click **"Next"** to start.
-2. Change game edition to **"PC Release Via Epic Games Store"
+2. Change game edition to **"PC Release Via Epic Games Store"**
 	- image here
 3. Then click the folder icon and navigate to your installation (Default C:\Program Files\Epic Games\KH_1.5_2.5)
 	- gif here
@@ -33,7 +33,7 @@
 	- Type **"KH2FM-Mods-Num/GoA-ROM-Edition"** into the text box and click on **"install"** in the bottom right
 3. To enable the mod, be sure to click the checkbox next to the newly added mod in the list
 	- image here
-4. Then click **"Game"** and **"build"**, then **"build only"
+4. Then click **"Game"** and **"build"**, then **"build only"**
 	- gif here
 
 *Note: Every time you add a new mod to the list you will need to **"Build"** again, or it wont show up in game*
@@ -42,12 +42,12 @@
 1. Open the seed generator program
 2. In the top left click on the **"Configure"** tab, then click on **"Luabackend Hook Setup (PC Only)
 	- image here
-3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"
+3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"**
 	- gif here
-4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"
-5. Click on **"Check configuration"
+4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"**
+5. Click on **"Check configuration"**
 
-*The status messages below should say **"Not Found"*
+*The status messages below should say **"Not Found"***
 6. Now click on the **"Download/Install/Configure"** button in the bottom left
 
 *This will download and install the luabackend hooks required for the Panacea Mod Loader to work, these files go directly into your game installation folder*
@@ -58,9 +58,9 @@
 *If you choose settings that may not act the same between the PCSX2 and PC version, the button will separate between PC and PCSX2, be sure to click the right one if it does so.*
 
 2. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
-3. Once saved, open up the mod manager and click on **"Mods"**, then **"install a new mod**
+3. Once saved, open up the mod manager and click on **"Mods"**, then **"install a new mod"**
 	- image here
-4. This time click on **"select and install mod archive"**, navigate to your new seed zip file and click **"open"
+4. This time click on **"select and install mod archive"**, navigate to your new seed zip file and click **"open"**
 	- gif here
 
 ### *Note: It is very important that the seed is always ABOVE the GoA ROM mod in the list. The Randomizer will not work otherwise*
