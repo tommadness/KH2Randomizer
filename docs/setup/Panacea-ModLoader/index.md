@@ -31,9 +31,6 @@
 2. In the **"add a new mod from github"** section, type in the account name and mod name.
 	- gif here
 	- Type **"KH2FM-Mods-Num/GoA-ROM-Edition"** into the text box and click on **"install"** in the bottom right
-
-*Note: You can find more mods made by the community in the rando discord, checkout the **"Mods and Scripts"** Section*
-
 3. To enable the mod, be sure to click the checkbox next to the newly added mod in the list
 	- image here
 4. Then click **"Game"** and **"build", then **"build only"
