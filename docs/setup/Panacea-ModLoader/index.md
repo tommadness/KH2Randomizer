@@ -1,6 +1,6 @@
 # PC New Setup Guide
 
-* *Heads up! It's recommended to run the game once before installing the randomizer, so that the game can make some systems files for itself. Otherwise the game may not boot up correctly after the randomzier is installed.*
+* *Heads up! It's recommended to run the game once before installing the randomizer, so that the game can make some systems files for itself. Otherwise it may not boot up correctly after the randomzier is installed.*
 
 ## Resources Needed:
 * [OpenKH](https://github.com/OpenKH/OpenKh/releases/download/release-412/openkh-build1892.zip)
