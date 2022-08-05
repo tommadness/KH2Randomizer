@@ -25,8 +25,6 @@
 
 6. Keep the extraction folder location as default, and click on the **"extract game data"** button. You will need to wait a few minutes for the process to complete.
 
-### *You have successfully installed the mod manager*
-
 ## Garden of Assemblage Mod:
 1. Click **"Mods"** in the top left
 	- image here
@@ -43,8 +41,6 @@
 
 *Note: Every time you add a new mod to the list you will need to **"Build"** again, or it wont show up in game*
 
-### *You have now successfully installed the Garden of Assemblage Mod*
-
 ## Lua Backend Installation:
 1. Open the seed generator program
 2. In the top left click on the **"Configure"** tab, then click on **"Luabackend Hook Setup (PC Only)
@@ -59,8 +55,6 @@
 
 *This will download and install the luabackend hooks required for the Panacea Mod Loader to work, these files go directly into your game installation folder*
 
-### *The Backend Hook has been installed into your game folder now, you can close this window*
-
 ## Installing a new seed to play:
 1. Choose your seed settings in the generator window and then click on **"Generate Seed"** in the bottom right.
 
@@ -71,8 +65,6 @@
 	- image here
 4. This time click on **"select and install mod archive", navigate to your new seed zip file and click **"open"
 	- gif here
-
-*This will add the seed to your mods list*
 
 ### *Note: It is very important that the seed is always ABOVE the GoA ROM mod in the list. The Randomizer will not work otherwise*
 
