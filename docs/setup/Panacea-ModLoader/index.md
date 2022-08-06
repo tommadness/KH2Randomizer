@@ -21,7 +21,7 @@
 2. Change game edition to **"PC Release Via Epic Games Store"**
 3. Then click the folder icon and navigate to your installation (Default C:\Program Files\Epic Games\KH_1.5_2.5)
 
-![Setup Wizard-Game Edition](../images/mods-manager/wizard/game-edition-pc.png)
+![Setup Wizard-Game Edition](../images/Panacea-ModLoader/Game%20Edition%20Window.png)
 
 4. Click the **"Install OpenKH Panacea"** Button. This will install the mod loader to your game installation folder
 
