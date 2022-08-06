@@ -13,40 +13,57 @@
 3. Extract OpenKH to this folder
 4. Extract Seed Generator to this Folder
 
+![Rando Folder](../images/Panacea-ModLoader/KH2%20Rando%20Folder.png)
 
 ## How to Setup The Mod Manager:
 1. Run the **"OpenKh.Tools.ModsManager.exe"** in the OpenKH folder 
 	- The Setup Wizard will open automatically, click **"Next"** to start.
 2. Change game edition to **"PC Release Via Epic Games Store"**
-	- image here
 3. Then click the folder icon and navigate to your installation (Default C:\Program Files\Epic Games\KH_1.5_2.5)
-	- gif here
+
+![Setup Wizard-Game Edition](../images/mods-manager/wizard/game-edition-pc.png)
+
 4. Click the **"Install OpenKH Panacea"** Button. This will install the mod loader to your game installation folder
-5. If you want to bypass the epic games launcher, and kh games launch window, check the **"Bypass the launcher"** check box
+
+![Panacea Wizard Window](../images/mods-manager/wizard/panacea-not-installed.png)
+
+5. If you want to bypass the epic games launcher, and KH games launch window, check the **"Bypass the launcher"** check box
 
 *You will need to input your epic games user id, which can be found using the link below the text box*
 
+![Bypass Launcher](../images/Panacea-ModLoader/Bypass%20Launcher.png)
+
 6. Keep the extraction folder location as default, and click on the **"extract game data"** button. You will need to wait a few minutes for the process to complete.
+
+![Extraction Window](../images/Panacea-ModLoader/Extraction%20Window.png)
 
 ## Garden of Assemblage Mod:
 1. Click **"Mods"** in the top left
-	- image here
+
+![Install New Mod](../images/Panacea-ModLoader/Install%20New%20Mod.png)
+
 2. In the **"add a new mod from github"** section, type in the account name and mod name.
-	- gif here
 	- Type **"KH2FM-Mods-Num/GoA-ROM-Edition"** into the text box and click on **"install"** in the bottom right
+
+![Install GoA ROM](../images/Panacea-ModLoader/Install%20GoA%20ROM.png)
+
 3. To enable the mod, be sure to click the checkbox next to the newly added mod in the list
-	- image here
+
+![Enable GoA ROM](../images/Panacea-ModLoader/Enable_GoA_ROM.png)
+
 4. Then click **"Game"** and **"build"**, then **"build only"**
-	- gif here
+
+![Build Only](../images/Panacea-ModLoader/Build%20Only.png)
 
 *Note: Every time you add a new mod to the list you will need to **"Build"** again, or it wont show up in game*
 
 ## Lua Backend Installation:
-1. Open the seed generator program
+1. Open the seed Generator Program `KH2 Randomizer.exe`
 2. In the top left click on the **"Configure"** tab, then click on **"Luabackend Hook Setup (PC Only)
-	- image here
+
+![Backend Hook Setup 1](../images/Panacea-ModLoader/Backend%20Hook%20Setup%201.png)
+
 3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"**
-	- gif here
 4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"**
 5. Click on **"Check configuration"**
 
@@ -54,7 +71,7 @@
 
 6. Now click on the **"Download/Install/Configure"** button in the bottom left
 
-*This will download and install the luabackend hooks required for the Panacea Mod Loader to work, these files go directly into your game installation folder*
+![Backend Hook Setup 2](../images/Panacea-ModLoader/LuaBackend%20Hook%20Setup%202.gif)
 
 ## Installing a new seed to play:
 1. Choose your seed settings in the generator window and then click on **"Generate Seed"** in the bottom right.
@@ -63,14 +80,14 @@
 
 2. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
 3. Once saved, open up the mod manager and click on **"Mods"**, then **"install a new mod"**
-	- image here
 4. This time click on **"select and install mod archive"**, navigate to your new seed zip file and click **"open"**
-	- gif here
+5. Be sure to click on the check box next to the seed, then click on **"build"** and **"build only"** to enable the mod in game
+
+![Install New Seed](../images/Panacea-ModLoader/Install%20New%20Seed.gif)
 
 ### *Note: It is very important that the seed is always ABOVE the GoA ROM mod in the list. The Randomizer will not work otherwise*
 
-5. Be sure to click on the check box next to the seed, then click on **"build"** and **"build only"** to enable the mod in game
-	- gif here
+
 
 # *You are now ready to play a KH2 Rando Seed! Run the game from the epic games launcher and have fun!*
 
