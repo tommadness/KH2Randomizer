@@ -28,8 +28,7 @@
 ![Panacea Wizard Window](../images/mods-manager/wizard/panacea-not-installed.png)
 
 5. If you want to bypass the epic games launcher, and KH games launch window, check the **"Bypass the launcher"** check box
-
-*You will need to input your epic games user id, which can be found using the link below the text box*
+	* *You will need to input your epic games user id, which can be found using the link below the text box*
 
 ![Bypass Launcher](../images/Panacea-ModLoader/Bypass%20Launcher.png)
 
@@ -55,7 +54,7 @@
 
 ![Build Only](../images/Panacea-ModLoader/Build%20Only.png)
 
-*Note: Every time you add a new mod to the list you will need to **"Build"** again, or it wont show up in game*
+* *Note: Every time you add a new mod to the list you will need to **"Build"** again, or it wont show up in game*
 
 ## Lua Backend Installation:
 1. Open the seed Generator Program `KH2 Randomizer.exe`
@@ -66,8 +65,7 @@
 3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"**
 4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"**
 5. Click on **"Check configuration"**
-
-*The status messages below should say **"Not Found"***
+	* *The status messages below should say **"Not Found"***
 
 6. Now click on the **"Download/Install/Configure"** button in the bottom left
 
