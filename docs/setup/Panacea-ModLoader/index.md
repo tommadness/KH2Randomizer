@@ -5,14 +5,17 @@
 ## Resources Needed:
 * [OpenKH](https://github.com/OpenKH/OpenKh/releases/download/release-412/openkh-build1892.zip)
 * [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
+* [.NET6 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer)
 
-## Extract your files
-1. Create a KH2 Rando Folder (Recommended *not* to be in your games installation folder)
-2. Extract OpenKH to this folder
-3. Extract Seed Generator to this Folder
+## Installing OpenKh and Seed Generator
+1. Install .NET6 Runtime by running `windowsdesktop-runtime-6.0.7-win-x64.exe`
+2. Create a KH2 Rando Folder On Your Computer (Recommended *not* to be in your games installation folder)
+3. Extract OpenKH to this folder
+4. Extract Seed Generator to this Folder
+
 
 ## How to Setup The Mod Manager:
-1. Run the **"OpenKh.Tools.ModsManager"** in the OpenKH folder 
+1. Run the **"OpenKh.Tools.ModsManager.exe"** in the OpenKH folder 
 	- The Setup Wizard will open automatically, click **"Next"** to start.
 2. Change game edition to **"PC Release Via Epic Games Store"**
 	- image here
