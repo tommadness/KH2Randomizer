@@ -25,7 +25,7 @@
 
 4. Click the **"Install OpenKH Panacea"** Button. This will install the mod loader to your game installation folder
 
-![Panacea Wizard Window](../images/mods-manager/wizard/panacea-not-installed.png)
+![Panacea Wizard Window](../images/Panacea-ModLoader/Panacea%20Install%20Window.png)
 
 5. If you want to bypass the epic games launcher, and KH games launch window, check the **"Bypass the launcher"** check box
 	* *You will need to input your epic games user id, which can be found using the link below the text box*
