@@ -358,7 +358,7 @@ class SeedZip():
                             if "msn/jp" in asset["name"] and ".bar" in asset["name"]:
                                 asset["multi"] = []
                                 for region in ["us","fr","gr","it","sp","uk"]:
-                                    asset["multi"].append({'name':asset["name"].replace("jp",region)})                  
+                                    asset["multi"].append({'name':asset["name"].replace("jp",region)})
 
 
                     lines = enemySpoilers.split("\n")

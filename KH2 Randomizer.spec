@@ -49,7 +49,6 @@ a = Analysis(
         'static/*.script',
         'static/*.bin',
         'Module/icon.png',
-        'extracted_data/**/*.*'
        ])+[(khbrpath+'/KH2/data/*','khbr/KH2/data'), (khbrpath+'/KH2/data/ai_mods/*','khbr/KH2/data/ai_mods')],
     hiddenimports=[],
     hookspath=[],
@@ -93,4 +92,10 @@ if os.path.exists(presetPath):
   shutil.rmtree(presetPath)
 
 shutil.copytree('presets', presetPath)
+
+dataPath = '{0}/extracted_data'.format(DISTPATH)
+if os.path.exists(dataPath):
+  shutil.rmtree(dataPath)
+
+shutil.copytree('extracted_data', dataPath)
 shutil.make_archive('Kingdom Hearts II Final Mix Randomizer', 'zip', DISTPATH)

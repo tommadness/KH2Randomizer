@@ -85,4 +85,9 @@ presetPath = '{0}/presets'.format(DISTPATH)
 if os.path.exists(presetPath):
   shutil.rmtree(presetPath)
 
+dataPath = '{0}/extracted_data'.format(DISTPATH)
+if os.path.exists(dataPath):
+  shutil.rmtree(dataPath)
+
+shutil.copytree('extracted_data', dataPath)
 shutil.copytree('presets', presetPath)
