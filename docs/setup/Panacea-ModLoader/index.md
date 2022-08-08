@@ -27,8 +27,8 @@
 
 ![Panacea Wizard Window](../images/Panacea-ModLoader/Panacea%20Install%20Window.png)
 
-5. If you want Mod Manager to bypass the epic games launcher check the **"Bypass the launcher"** check box. YOU HAVE TO RUN KH2 THROUGH THE MOD MANAGER USING THE "**RUN"** COMMAND IF YOU CHOOSE THIS OPTION. YOU CANNOT RUN KH2 THROUGH THE REGULAR LAUNCHER WHILE THIS OPTION IS ENABLED.
-	* *You will need to input your epic games user id, which can be found using the link below the text box*
+5. If you want Mod Manager to bypass the Epic Games launcher check the **"Bypass the launcher"** check box. YOU HAVE TO RUN KH2 THROUGH THE MOD MANAGER USING THE "**RUN"** COMMAND IF YOU CHOOSE THIS OPTION. YOU CANNOT RUN KH2 THROUGH THE REGULAR LAUNCHER WHILE THIS OPTION IS ENABLED.
+	* *You will need to input your Epic Games user id, which can be found using the link below the text box*
 
 ![Bypass Launcher](../images/Panacea-ModLoader/Bypass%20Launcher.png)
 
