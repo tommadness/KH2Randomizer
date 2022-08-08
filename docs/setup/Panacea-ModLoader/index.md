@@ -27,7 +27,7 @@
 
 ![Panacea Wizard Window](../images/Panacea-ModLoader/Panacea%20Install%20Window.png)
 
-5. If you want to bypass the epic games launcher, and KH games launch window, check the **"Bypass the launcher"** check box
+5. If you want Mod Manager to bypass the epic games launcher check the **"Bypass the launcher"** check box. YOU HAVE TO RUN KH2 THROUGH THE MOD MANAGER USING THE "**RUN"** COMMAND IF YOU CHOOSE THIS OPTION. YOU CANNOT RUN KH2 THROUGH THE REGULAR LAUNCHER WHILE THIS OPTION IS ENABLED.
 	* *You will need to input your epic games user id, which can be found using the link below the text box*
 
 ![Bypass Launcher](../images/Panacea-ModLoader/Bypass%20Launcher.png)
@@ -88,5 +88,3 @@
 
 
 # *You are now ready to play a KH2 Rando Seed! Run the game from the epic games launcher and have fun!*
-
-*Note:* (If you chose the **"Bypass Launcher"** option during the wizard setup you will need to choose the **"Run"** option under the **"Game"** tab in Mod Manager. You can also choose the **"Build and Run Option"** to enable your new mods and start the game at the same time.
