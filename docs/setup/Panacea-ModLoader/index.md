@@ -19,7 +19,7 @@
 1. Run the **"OpenKh.Tools.ModsManager.exe"** in the OpenKH folder 
 	- The Setup Wizard will open automatically, click **"Next"** to start.
 2. Change game edition to **"PC Release Via Epic Games Store"**
-3. Then click the folder icon and navigate to your installation (Default C:\Program Files\Epic Games\KH_1.5_2.5)
+3. Then click the folder icon and navigate to your KH1.5_2.5 installation folder (The default is "C:\Program Files\Epic Games\KH_1.5_2.5" but this may differ from your own)
 
 ![Setup Wizard-Game Edition](../images/Panacea-ModLoader/Game%20Edition%20Window.png)
 
@@ -67,7 +67,7 @@
 5. Click on **"Check configuration"**
 	* *The status messages below should say **"Not Found"***
 
-6. Now click on the **"Download/Install/Configure"** button in the bottom left
+6. Now click on the **"Download/Install/Configure"** button in the bottom left. You can now close this window.
 
 ![Backend Hook Setup 2](../images/Panacea-ModLoader/LuaBackend%20Hook%20Setup%202.gif)
 
@@ -79,11 +79,11 @@
 2. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
 3. Once saved, open up the mod manager and click on **"Mods"**, then **"install a new mod"**
 4. This time click on **"select and install mod archive"**, navigate to your new seed zip file and click **"open"**
-5. Be sure to click on the check box next to the seed, then click on **"build"** and **"build only"** to enable the mod in game
+5. Be sure to click on the check box next to the seed, then click on **"build"** and **"build only"** to enable the mod in game. Note the 4 buttons to the right of the mod list. The First button lets you move a mod up the list, the second moves them down the list. The Green '+' icon is a shortcut to install a new mod, while the Red "-" icon is a shortcut to deleting a mod.
 
 ![Install New Seed](../images/Panacea-ModLoader/Install%20New%20Seed.gif)
 
-### *Note: It is very important that the seed is always ABOVE the GoA ROM mod in the list. The Randomizer will not work otherwise*
+### *Note: It is very important that the seed is always ABOVE the GoA ROM mod in the list. The Randomizer will not work otherwise.*
 
 *Editors note: I heavily recommend you install these two mods to help provide a better experience when playing rando -*
 
