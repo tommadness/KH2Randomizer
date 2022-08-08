@@ -85,6 +85,9 @@
 
 ### *Note: It is very important that the seed is always ABOVE the GoA ROM mod in the list. The Randomizer will not work otherwise*
 
+Editors note: I heavily recommend you install these two mods to help provide a better experience when playing rando:
+	* **KH2FM-Mods-equations19/auto-save** - This mod auto saves the game for you as you enter rooms. Be sure to make at least 1 regular save in game, then if you ever crash or your game closes unexpectedly, just hold the **SELECT** button while loading a save, and the auto-save will be loaded instead.
+	* **KH2FM-Mods-equations19/soft-reset** - Hold **L1+L2+R1+R2+Start** at the same time to immediately reset the game to the start screen. Very useful if you accidentally softlock in boss/enemy rando, or just to restart the game faster!
 
 
 # *You are now ready to play a KH2 Rando Seed! Run the game from the epic games launcher and have fun!*
