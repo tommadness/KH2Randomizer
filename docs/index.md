@@ -26,7 +26,7 @@ title: Home
   by Kamperemu
 * [PC Epic Games Setup Reference](https://docs.google.com/document/d/1wMhWjm-w4ycp40tiMAX_F1HfgwHNnNRanVabqw5Vd3k/edit?usp=sharing)
   by AliosGaming
-* [PCSX2-EX Emulator version](https://docs.google.com/document/d/1EU7hWc_39AYxLXOfq6fHRJhQE4jzTgf3/edit?usp=sharing&ouid=115979136171300818955&rtpof=true&sd=true)
+* [PCSX2-EX Emulator version](./setup/pcsx2-ex-setup/pcsx2-ex-setup.md)
   by gameaddict
 * [Migrating from Mods Manager Bridge (PC version)](setup/mods-manager-bridge-migration/index.md)
 
