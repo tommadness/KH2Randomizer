@@ -1,14 +1,17 @@
 
+import copy
 from typing import List
 from Class.exceptions import RandomizerExceptions
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
+from Module.multiworld import MultiWorld, MultiWorldConfig
 from Module.newRandomize import Randomizer
 from Module.seedEvaluation import LocationInformedSeedValidator
 from Module.zipper import SeedZip
 import string,random
 
 def generateSeed(settings: RandomizerSettings,data):
+
     newSeedValidation = LocationInformedSeedValidator()
     last_error = None
     for attempt in range(50):
@@ -27,7 +30,7 @@ def generateSeed(settings: RandomizerSettings,data):
     raise last_error
 
 
-def generateMultiWorldSeed(settingsSet: List[RandomizerSettings]):
+def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], data):
     newSeedValidation = LocationInformedSeedValidator()
     randomizers = []
     last_error = None
@@ -35,9 +38,10 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings]):
     for player_settings in settingsSet:
         for attempt in range(50):
             try:
+                last_error = None
                 randomizer = Randomizer(player_settings)
                 newSeedValidation.validateSeed(player_settings,randomizer)
-                randomizers.append((player_settings,randomizer))
+                randomizers.append(randomizer)
                 break
             except RandomizerExceptions as e:
                 characters = string.ascii_letters + string.digits
@@ -45,9 +49,14 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings]):
                 player_settings.create_full_seed_string()
                 last_error = e
                 continue
-        return last_error
-    
+        if last_error is not None:
+            return last_error
 
     # each individual randomization is done and valid, now we can mix the item pools
+
+    m = MultiWorld(randomizers,MultiWorldConfig(settingsSet[0]))
+
+
+    return 1,2
         
 

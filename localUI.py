@@ -34,8 +34,9 @@ from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.seedSettings import RandoRandoSettings, SeedSettings, getRandoRandoTooltip
 from Module.dailySeed import getDailyModifiers
-from Module.generate import generateSeed
-from Module.newRandomize import Randomizer, RandomizerSettings
+from Module.generate import generateMultiWorldSeed, generateSeed
+from Module.RandomizerSettings import RandomizerSettings
+from Module.newRandomize import Randomizer
 from Module.seedshare import SharedSeed, ShareStringException
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
@@ -87,6 +88,24 @@ class GenSeedThread(QThread):
             self.finished.emit((zip_file,spoiler_log))
         except Exception as e:
             self.failed.emit(e)
+
+
+class MultiGenSeedThread(QThread):
+    finished = Signal(object)
+    failed = Signal(Exception)
+
+    def provideData(self,data,rando_settings):
+        self.data=data
+        self.rando_settings = rando_settings
+        self.zip_file = None
+
+    def run(self):
+        try:
+            zip_file,spoiler_log = generateMultiWorldSeed(self.rando_settings, self.data)
+            self.finished.emit((zip_file,spoiler_log))
+        except Exception as e:
+            self.failed.emit(e)
+
 
 
 class KH2RandomizerApp(QMainWindow):
@@ -394,6 +413,12 @@ class KH2RandomizerApp(QMainWindow):
         if rando_settings is not None:
             self.genSeed(data,rando_settings)
 
+        # rando_settings = self.make_rando_settings()
+        # self.seedName.setText("")
+        # rando_settings2 = self.make_rando_settings()
+        # if rando_settings is not None:
+        #     self.genMultiSeed(data,[rando_settings,rando_settings2])
+
     def downloadSeed(self):
         last_seed_folder_txt = Path(AUTOSAVE_FOLDER) / 'last_seed_folder.txt'
         output_file_name = 'randoseed.zip'
@@ -451,6 +476,21 @@ class KH2RandomizerApp(QMainWindow):
         self.progress.show()
 
         self.thread = GenSeedThread()
+        self.thread.provideData(data,rando_settings)
+        self.thread.finished.connect(self.handleResult)
+        self.thread.failed.connect(self.handleFailure)
+        self.thread.start()
+
+    def genMultiSeed(self,data,rando_settings):
+        self.thread = QThread()
+        displayedSeedName = rando_settings[0].random_seed
+        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","",0,0,None)
+        self.progress.setWindowTitle("Making your Seed, please wait...")
+        self.progress.setCancelButton(None)
+        self.progress.setModal(True)
+        self.progress.show()
+
+        self.thread = MultiGenSeedThread()
         self.thread.provideData(data,rando_settings)
         self.thread.finished.connect(self.handleResult)
         self.thread.failed.connect(self.handleFailure)

@@ -443,6 +443,10 @@ class Items:
     def getNullItem():
         return KH2Item(0,"", itemType.SYNTH)
 
+    @staticmethod
+    def sharedMultiItem():
+        return KH2Item(461,"Shared MultiWorld Item", itemType.MULTIWORLD) # Dummy 14
+
 
     @staticmethod
     def locationToKeybladeItem(location_id):

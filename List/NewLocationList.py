@@ -784,8 +784,8 @@ class Locations:
                                         KH2Location(56, "Candy Cane Lane Mythril Gem", locationCategory.CHEST,[locationType.HT]),
                                         KH2Location(216, "Candy Cane Lane Lightning Stone", locationCategory.CHEST,[locationType.HT]),
                                         KH2Location(217, "Candy Cane Lane Mythril Stone", locationCategory.CHEST,[locationType.HT]),]))
-        self.add_node("Santa's House",LocationNode([KH2Location(57, "Santa's House Christmas Town Map", locationCategory.CHEST,[locationType.HT]),
-                                        KH2Location(58, "Santa's House AP Boost", locationCategory.CHEST,[locationType.HT]),]))
+        self.add_node("Santa's House",LocationNode([KH2Location(57, "Santa's House Christmas Town Map", locationCategory.CHEST,[locationType.HT], InvalidChecks=[itemType.GAUGE]),
+                                        KH2Location(58, "Santa's House AP Boost", locationCategory.CHEST,[locationType.HT], InvalidChecks=[itemType.GAUGE]),]))
         self.add_node("Prison Keeper",LocationNode([KH2Location(18, "Prison Keeper", locationCategory.HYBRIDBONUS,[locationType.HT]),]))
         self.add_node("Oogie Boogie",LocationNode([KH2Location(19, "Oogie Boogie", locationCategory.STATBONUS,[locationType.HT]),
                                         KH2Location(301, "Oogie Boogie Magnet Element", locationCategory.POPUP,[locationType.HT]),]))
