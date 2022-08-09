@@ -62,7 +62,12 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 * Choose `Finish` to close the setup wizard and save your settings.
 
-### 4. Use Mods Manager to configure mods
+### 4. Configure LuaBackend Hook for Mods Manager integration (optional but recommended)
+
+If you haven't already done so, performing this step allows mods to bundle their own Lua scripts. See
+[LuaBackend Hook Setup](../../luabackend-hook-setup/index.md) for more information, as well as instructions.
+
+### 5. Use Mods Manager to configure mods
 
 * Use Mods Manager to add/remove/check/uncheck mods as usual. (You may have fewer or more mods than shown here.)
 
@@ -78,12 +83,12 @@ You absolutely want to make sure you start from a fresh set of game files. There
 * A console window will come up while patching and will disappear once finished. After the patching has finished, start
   your game normally and your chosen mods should be applied.
 
-### 5. Patching a new Randomizer Seed
+### 6. Patching a new Randomizer Seed
 
 * Works essentially the same as it did before. Remove the previous randomizer seed from Mods Manager, add the new seed,
   and then Build and Patch again.
 
-### 6. Restoring original files (if desired)
+### 7. Restoring original files (if desired)
 
 * The first time you patch within Mods Manager, backups of your original game packages will be made, so the first patch
   will take longer than subsequent patches. Choose `Game -> Restore` if you ever want to restore your game files to
