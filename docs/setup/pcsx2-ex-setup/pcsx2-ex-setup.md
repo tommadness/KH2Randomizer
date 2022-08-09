@@ -50,7 +50,7 @@ Download and extract the OpenKH archive (downloading the latest version) into a 
 
 Opening the OpenKH Mods Manager, you will be greeted with the first time set up. To save everyone the trouble of reading text, I have converted this process into a GIF!
 
-![OpenKH Mods Manager Setup in GIF](./mods-manager-setup.gif)
+![OpenKH Mods Manager Setup in GIF](./mods-manager-setup2.gif)
 
 But if you have difficulty following this GIF, here’s the steps in condensed format:
 1.	Click `Next`.
