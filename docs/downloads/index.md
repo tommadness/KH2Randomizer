@@ -40,6 +40,6 @@
       LuaBackend Hook Setup guide above
 
 
-### PCSX2-EX Emulator Version ([setup guide](https://docs.google.com/document/d/1EU7hWc_39AYxLXOfq6fHRJhQE4jzTgf3/edit))
+### PCSX2-EX Emulator Version ([setup guide](../setup/pcsx2-ex-setup/pcsx2-ex-setup.md))
 
 * Check the Setup Guide for most up-to-date downloads specific to emulator.
