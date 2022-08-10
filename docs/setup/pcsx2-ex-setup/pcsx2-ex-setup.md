@@ -9,9 +9,9 @@ This guide will help you set up Randomizer Mod for the PCSX2-EX (PS2 Emulator) v
 To set up Rando, Extract, Download and/or Install the following:
 - OpenKH
     - OpenKH Pre-requisite: .NET Desktop Runtime 6
-- A copy of KINGDOM HEARTS II FINAL MIX+, ripped in an ISO format.
+- A copy of KINGDOM HEARTS II FINAL MIX+, ripped in an ISO format. (will not be provided here for legal reasons)
 - [PCSX2-EX](https://cdn.discordapp.com/attachments/712837252279173153/974389136540713030/PCSX2-EX.v3.10.0.7z) (edit the downloaded archive: remove the “, attachment” bit on the extension file)
-    - PCSX2-EX Pre-requisite: PCSX2 BIOS files
+    - PCSX2-EX Pre-requisite: PCSX2 BIOS files (will not be provided here for legal reasons)
 - KINGDOM HEARTS II FINAL MIX Randomizer Seed Generator
 - [Special PNACH](https://discord.com/channels/712837252279173150/811885954754412545/893022782533816350) to mitigate gameplay-related problems caused by setting the game to the English region (X to attack/confirm, O to jump/cancel). Disregard this if you want to play with JP controls (X to jump/cancel, O to attack/confirm)
 
@@ -72,7 +72,9 @@ Once you have downloaded `KH2FM-Mods-Num/GOA-ROM-Edition`, click on the mod, go 
 
 ![Scripts folder](./scripts.png)
 
-Also, delete the `mod.yml` file (or rename it to something different like `mod_pc.yml`), then rename the `mod_ps2.yml` file to `mod.yml`. What we essentially did was change the mod from being configured for the Epic Games Store version of KINGDOM HEARTS II FINAL MIX, to the PCSX2 version of the game.
+**DO THIS STEP IF YOU SET YOUR GAME REGION TO ENGLISH**
+
+Delete the `mod.yml` file (or rename it to something different like `mod_pc.yml`), then rename the `mod_ps2.yml` file to `mod.yml`. What we essentially did was change the mod from being configured for the Epic Games Store version of KINGDOM HEARTS II FINAL MIX, to the PCSX2 version of the game.
 
 ![Renaming the .yml files](./yml-rename.png)
 
@@ -80,7 +82,7 @@ Before (left) and After (right)
 
 ---
 
-## PART 3: THIS IS WHAT MAKES THINGS GO RANDO ##
+## Step 3: Seed Generator Setup ##
 
 All this time, we have only been setting up the Garden of Assemblage mod in its entirety, but now… we get to the actual Randomizer portion of the setup. 
 
@@ -102,7 +104,7 @@ From here, you should have three mods installed: the Language pack of your choic
 
 ![Almost there...](./three-mods.png)
 
-From here, click on `Run` in the menu, then select `Build and Run`. Alternatively, just press `F5` on your keyboard. This will build up the mods, open PCSX2-EX automatically with KINGDOM HEARTS II FINAL MIX booting up, and injecting the mods loaded in OpenKH Mods Manager into the game in real time.
+From here, click on `Run` in the menu, then select `Build and Run` (Keyboard shortcut: `F5`). This will build up the mods, open PCSX2-EX automatically with KINGDOM HEARTS II FINAL MIX booting up, and injecting the mods loaded in OpenKH Mods Manager into the game in real time.
 
 ![Run > Build and Run](./build-and-run.png)
 
@@ -116,7 +118,7 @@ All that’s left now is to start the game and play KINGDOM HEARTS II FINAL MIX�
 
 Should there be an update to any of the mods that you have installed, please update them. OpenKH Mods Manager will notify you if a mod has an update.
 
-Specific to `KH2FM-Mods-Num/GOA-ROM-Edition`, you need to re-do the steps involving the .lua and the .yml file every time the mod has an update to avoid complications.
+Specific to `KH2FM-Mods-Num/GOA-ROM-Edition`, you need to re-do the steps involving the .lua and the .yml file (last two procedures of Step 2) every time the mod has an update to avoid complications.
 
 ---
 
