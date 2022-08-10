@@ -1,3 +1,4 @@
+import os
 import textwrap
 from pathlib import Path
 from typing import Optional
@@ -82,7 +83,7 @@ class LuaBackendSetupDialog(QDialog):
         This affects the name of LuaBackend Hook's DLL file.
         ''').strip()
         mode_field.setToolTip(mode_tooltip)
-        mode_field.addItems(['Patch / Fast Patch', 'Panacea / Mod Loader'])
+        mode_field.addItems(['Panacea (Mod Loader)', 'Patch / Fast Patch'])
         mode_field.currentIndexChanged.connect(self._mod_mode_changed)
         self.mode_field = mode_field
         grid.addWidget(QLabel('Mod mode'), row, 0)
@@ -270,6 +271,8 @@ class LuaBackendSetupDialog(QDialog):
                 if not self.config_file_configured:
                     self._do_apply_configuration()
 
+            os.remove(target_zip_path)
+
             self._validate_clicked()
 
             message = QMessageBox(text='Downloaded, installed, and configured successfully.')
@@ -308,9 +311,9 @@ class LuaBackendSetupDialog(QDialog):
     def _target_hook_dll_name(self):
         mode_index = self.mode_field.currentIndex()
         if mode_index == 1:
-            return HOOK_DLL_NAME_PANACEA
-        else:
             return HOOK_DLL_NAME_MAIN
+        else:
+            return HOOK_DLL_NAME_PANACEA
 
     def _has_matching_script_path(self, raw_toml: dict) -> bool:
         existing_script_list: list = raw_toml['kh2']['scripts']
