@@ -68,7 +68,7 @@
 3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"**
 4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"**
 5. Click on **"Check configuration"**
-	* *The status messages below should say **"Not Found"***
+	* *The status messages below should say "Not Found"*
 
 6. Now click on the **"Download/Install/Configure"** button in the bottom left. You can now close this window.
 
