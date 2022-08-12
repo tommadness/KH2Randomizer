@@ -1,6 +1,9 @@
 # PC New Setup Guide
 
-* *Heads up! It's recommended to run the game once before installing the randomizer, so that the game can make some systems files for itself. Otherwise it may not boot up correctly after the randomzier is installed.*
+## Heads up!
+* * Feel free to go to [discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated help channel where you can find people to help you, if you're facing any difficulties. (P.S. Please be polite) *
+* * You must run the game once before you start the guide. Otherwise it may not boot up correctly after the randomzier is installed. *
+* * VERIFY GAME FILES for Kingdom Hearts 1.5 + 2.5 remix v1.0.0.8_WW (pirated copies are not supported, it is strongly recommended you buy and install the game directly from the Epic Game Store). *
 
 ## Resources Needed:
 * [OpenKH](https://github.com/OpenKH/OpenKh/releases/download/release-412/openkh-build1892.zip)
