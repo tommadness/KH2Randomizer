@@ -61,14 +61,14 @@
 
 ## Lua Backend Installation:
 1. Open the seed Generator Program `KH2 Randomizer.exe`
-2. In the top left click on the **"Configure"** tab, then click on **"Luabackend Hook Setup (PC Only)
+2. In the top left click on the **"Configure"** tab, then click on **"Luabackend Hook Setup (PC Only)**
 
 ![Backend Hook Setup 1](../images/Panacea-ModLoader/Backend%20Hook%20Setup%201.png)
 
 3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"**
 4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"**
 5. Click on **"Check configuration"**
-	* *The status messages below should say **"Not Found"**
+	* *The status messages below should say **"Not Found"***
 
 6. Now click on the **"Download/Install/Configure"** button in the bottom left. You can now close this window.
 
