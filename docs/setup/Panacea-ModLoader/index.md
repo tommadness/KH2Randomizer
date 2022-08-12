@@ -35,7 +35,7 @@
 
 ![Bypass Launcher](../images/Panacea-ModLoader/Bypass%20Launcher.png)
 
-6. Keep the extraction folder location as default, and click on the **"extract game data"** button. You will need to wait a few minutes for the process to complete.
+6. Keep the extraction folder location as defaulted by the wizard, and click on the **"extract game data"** button. You will need to wait a few minutes for the process to complete.
 
 ![Extraction Window](../images/Panacea-ModLoader/Extraction%20Window.png)
 
