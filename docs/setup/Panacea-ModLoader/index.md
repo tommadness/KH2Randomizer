@@ -44,8 +44,8 @@
 
 ![Install New Mod](../images/Panacea-ModLoader/Install%20New%20Mod.png)
 
-2. In the **"add a new mod from github"** section, type in the account name and mod name.
-	- Type **"KH2FM-Mods-Num/GoA-ROM-Edition"** into the text box and click on **"install"** in the bottom right
+2. In the **"Add a new mod from Github"** section, type in the account name and mod name.
+	- Type **"KH2FM-Mods-Num/GoA-ROM-Edition"** into the text box and click on **"Install"** in the bottom right
 
 ![Install GoA ROM](../images/Panacea-ModLoader/Install%20GoA%20ROM.png)
 
@@ -53,7 +53,7 @@
 
 ![Enable GoA ROM](../images/Panacea-ModLoader/Enable_GoA_ROM.png)
 
-4. Then click **"Game"** and **"build"**, then **"build only"**
+4. Then click **"Game"** and **"Build"**, then **"Build Only"**
 
 ![Build Only](../images/Panacea-ModLoader/Build%20Only.png)
 
