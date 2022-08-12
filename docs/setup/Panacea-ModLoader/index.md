@@ -68,7 +68,7 @@
 3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"**
 4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"**
 5. Click on **"Check configuration"**
-	* *The status messages below should say **"Not Found"***
+	* *The status messages below should say **"Not Found"**
 
 6. Now click on the **"Download/Install/Configure"** button in the bottom left. You can now close this window.
 
@@ -80,9 +80,9 @@
 *If you choose settings that may not act the same between the PCSX2 and PC version, the button will separate between PC and PCSX2, be sure to click the right one if it does so.*
 
 2. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
-3. Once saved, open up the mod manager and click on **"Mods"**, then **"install a new mod"**
-4. This time click on **"select and install mod archive"**, navigate to your new seed zip file and click **"open"**
-5. Be sure to click on the check box next to the seed, then click on **"build"** and **"build only"** to enable the mod in game. Note the 4 buttons to the right of the mod list. The First button lets you move a mod up the list, the second moves them down the list. The Green '+' icon is a shortcut to install a new mod, while the Red "-" icon is a shortcut to deleting a mod.
+3. Once saved, open up the mod manager and click on **"Mods"**, then **"Install a New Mod"**
+4. This time click on **"Select and Install Mod Archive"**, navigate to your new seed zip file and click **"Open"**
+5. Be sure to click on the check box next to the seed, then click on **"Build"** and **"Build Only"** to enable the mod in game. Note the 4 buttons to the right of the mod list. The First button lets you move a mod up the list, the second moves them down the list. The Green '+' icon is a shortcut to install a new mod, while the Red "-" icon is a shortcut to deleting a mod.
 
 ![Install New Seed](../images/Panacea-ModLoader/Install%20New%20Seed.gif)
 
