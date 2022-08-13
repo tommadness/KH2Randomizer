@@ -7,12 +7,12 @@ This guide will help you set up Randomizer Mod for the PCSX2-EX (PS2 Emulator) v
 ## Step 0: Prep work ##
 
 To set up Rando, Extract, Download and/or Install the following:
-- OpenKH
-    - OpenKH Pre-requisite: .NET Desktop Runtime 6
+- [OpenKH](https://github.com/OpenKH/OpenKh/releases)
+    - OpenKH Pre-requisite: [.NET Desktop Runtime 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime)
 - A copy of KINGDOM HEARTS II FINAL MIX+, ripped in an ISO format. (will not be provided here for legal reasons)
 - [PCSX2-EX](https://cdn.discordapp.com/attachments/712837252279173153/974389136540713030/PCSX2-EX.v3.10.0.7z) (edit the downloaded archive: remove the “, attachment” bit on the extension file)
     - PCSX2-EX Pre-requisite: PCSX2 BIOS files (will not be provided here for legal reasons)
-- KINGDOM HEARTS II FINAL MIX Randomizer Seed Generator
+- [KINGDOM HEARTS II FINAL MIX Randomizer Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
 - [Special PNACH](https://discord.com/channels/712837252279173150/811885954754412545/893022782533816350) to mitigate gameplay-related problems caused by setting the game to the English region (X to attack/confirm, O to jump/cancel). Disregard this if you want to play with JP controls (X to jump/cancel, O to attack/confirm)
 
 All of these can be found on the Downloads section of the KINGDOM HEARTS II FINAL MIX Randomizer website.
@@ -38,7 +38,7 @@ TL;DR, its:
 1.	Set up PCSX2-EX just like you would set up PCSX2.
 2.	`Enable Cheats` and `Enable LuaEngine` 
 3.	Close PCSX2-EX.
-4. [Optional] Copy the English Region specific .pnach fix
+4. [Required if playing in English region] Copy the English Region specific .pnach fix
 
 ---
 
@@ -90,7 +90,7 @@ Open the KH2FM Randomizer Seed Generator executable file (for this guide, its `C
 
 ![Seed Generator Window](./randomizer.png)
 
-On the Seed Generator Window, it’s time to create a seed. There are way too many things to tweak around in making a seed that I might’ve made a novel if I enumerated it all here one-by-one. To check what each setting does, hover your mouse on that area and read the tooltip that shows up.
+On the Seed Generator Window, it’s time to create a seed. There are way too many things to tweak around in making a seed that I might’ve made a novel if I enumerated it all here one-by-one, so [here's](https://tommadness.github.io/KH2Randomizer/seed-generator/) the round-up of all the seed generator's features. Otherwise, to check what each setting does, hover your mouse on that area and read the tooltip that shows up.
 
 Once you have created your flavor of a rando seed, its time to make the seed. Click on `Generate Seed (PCSX2/PC)` (or `Generate Seed (PCSX2)` if you have enabled a setting that splits the Generate Seed button for PC and PCSX2) and save the zip file that it generates on the folder of your choice (for this guide, I have saved it to `C:\KH2FMRando-PS2`).
 
