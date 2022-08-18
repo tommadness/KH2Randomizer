@@ -1087,6 +1087,20 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Allows Roxas to use magic, Sora\'s movement abilities, and Trinity Limit in Simulated Twilight Town.'
     ),
+    Toggle(
+        name=settingkey.BLOCK_COR_SKIP,
+        ui_label='Block Skipping CoR',
+        shared=True,
+        default=False,
+        tooltip='Disables skipping into the Cavern of Remembrance, requiring completion of the fights to progress.'
+    ),
+    Toggle(
+        name=settingkey.BLOCK_SHAN_YU_SKIP,
+        ui_label='Block Skipping Shan Yu',
+        shared=True,
+        default=False,
+        tooltip='Disables skipping into the throne room of Land of Dragons, requiring beating Shan-Yu to progress.'
+    ),
 
     Toggle(
         name=settingkey.ENABLE_PROMISE_CHARM,

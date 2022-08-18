@@ -1,0 +1,13 @@
+Program 0x02
+MapVisibility 0x00000063 0x00000000
+Spawn "m_00"
+Spawn "m_10"
+Spawn "m_11"
+Spawn "m_13"
+Spawn "m_14"
+Spawn "m_15"
+Spawn "m_16"
+Spawn "m_17"
+Spawn "m_22"
+Spawn "m_50"
+Spawn "m_70"

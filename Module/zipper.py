@@ -191,32 +191,68 @@ class SynthList():
             return ""
 
 
-# class DropRates():
-#     def __init__(self,bytes):
-#         self.id = bytes_to_number(bytes[0],bytes[1])
-#         self.small_hp = bytes_to_number(bytes[2])
-#         self.big_hp = bytes_to_number(bytes[3])
-#         self.big_munny = bytes_to_number(bytes[4])
-#         self.medium_munny = bytes_to_number(bytes[5])
-#         self.small_munny = bytes_to_number(bytes[6])
-#         self.small_mp = bytes_to_number(bytes[7])
-#         self.big_mp = bytes_to_number(bytes[8])
-#         self.small_drive = bytes_to_number(bytes[9])
-#         self.big_drive = bytes_to_number(bytes[10])
-#         self.item1 = bytes_to_number(bytes[12],bytes[13])
-#         self.item1_chance = bytes_to_number(bytes[14],bytes[15])
-#         self.item2 = bytes_to_number(bytes[16],bytes[17])
-#         self.item2_chance = bytes_to_number(bytes[18],bytes[19])
-#         self.item3 = bytes_to_number(bytes[20],bytes[21])
-#         self.item3_chance = bytes_to_number(bytes[22],bytes[23])
+class DropRates():
+    def __init__(self,offset,bytes):
+        self.offset = offset
+        self.id = bytes_to_number(bytes[0],bytes[1])
+        self.small_hp = bytes_to_number(bytes[2])
+        self.big_hp = bytes_to_number(bytes[3])
+        self.big_munny = bytes_to_number(bytes[4])
+        self.medium_munny = bytes_to_number(bytes[5])
+        self.small_munny = bytes_to_number(bytes[6])
+        self.small_mp = bytes_to_number(bytes[7])
+        self.big_mp = bytes_to_number(bytes[8])
+        self.small_drive = bytes_to_number(bytes[9])
+        self.big_drive = bytes_to_number(bytes[10])
+        self.item1 = bytes_to_number(bytes[12],bytes[13])
+        self.item1_chance = bytes_to_number(bytes[14],bytes[15])
+        self.item2 = bytes_to_number(bytes[16],bytes[17])
+        self.item2_chance = bytes_to_number(bytes[18],bytes[19])
+        self.item3 = bytes_to_number(bytes[20],bytes[21])
+        self.item3_chance = bytes_to_number(bytes[22],bytes[23])
 
-#     def __str__(self):
-#         if self.item1_chance and self.id not in id_to_enemy_name:
-#             return f"{self.id} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
-#         elif self.id in id_to_enemy_name:
-#             return f"{self.id} {id_to_enemy_name[self.id]}"
-#         else:
-#             return ""
+    def write(self,binary_data):
+        id_bytes = number_to_bytes(self.id)
+        binary_data[self.offset] = id_bytes[0]
+        binary_data[self.offset+1] = id_bytes[1]
+        binary_data[self.offset+2] = number_to_bytes(self.small_hp)[0]
+        binary_data[self.offset+3] = number_to_bytes(self.big_hp)[0]
+        binary_data[self.offset+4] = number_to_bytes(self.big_munny)[0]
+        binary_data[self.offset+5] = number_to_bytes(self.medium_munny)[0]
+        binary_data[self.offset+6] = number_to_bytes(self.small_munny)[0]
+        binary_data[self.offset+7] = number_to_bytes(self.small_mp)[0]
+        binary_data[self.offset+8] = number_to_bytes(self.big_mp)[0]
+        binary_data[self.offset+9] = number_to_bytes(self.small_drive)[0]
+        binary_data[self.offset+10] = number_to_bytes(self.big_drive)[0]
+        
+        item1_bytes = number_to_bytes(self.item1)
+        binary_data[self.offset+12] = item1_bytes[0]
+        binary_data[self.offset+13] = item1_bytes[1]
+        item1_chances_bytes = number_to_bytes(self.item1_chance)
+        binary_data[self.offset+14] = item1_chances_bytes[0]
+        binary_data[self.offset+15] = item1_chances_bytes[1]
+        
+        item2_bytes = number_to_bytes(self.item2)
+        binary_data[self.offset+16] = item2_bytes[0]
+        binary_data[self.offset+17] = item2_bytes[1]
+        item2_chances_bytes = number_to_bytes(self.item2_chance)
+        binary_data[self.offset+18] = item2_chances_bytes[0]
+        binary_data[self.offset+19] = item2_chances_bytes[1]
+        
+        item3_bytes = number_to_bytes(self.item3)
+        binary_data[self.offset+20] = item3_bytes[0]
+        binary_data[self.offset+21] = item3_bytes[1]
+        item3_chances_bytes = number_to_bytes(self.item3_chance)
+        binary_data[self.offset+22] = item3_chances_bytes[0]
+        binary_data[self.offset+23] = item3_chances_bytes[1]
+
+    def __str__(self):
+        if self.item1_chance and self.id not in id_to_enemy_name:
+            return f"{self.id} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
+        elif self.id in id_to_enemy_name:
+            return f"{self.id} {id_to_enemy_name[self.id]}"
+        else:
+            return ""
 
 
 
@@ -283,14 +319,6 @@ class SeedZip():
 
     def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data):
 
-        # with open(resource_path("static/drops.bin"), "rb") as dropsbar:
-        #     binaryContent = bytearray(dropsbar.read())
-        #     for i in range(0,184):
-        #         start_index = 8+24*i
-        #         rates = DropRates(binaryContent[start_index:start_index+24])
-        #         print(rates)
-
-
         mod = modYml.getDefaultMod()
         sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
 
@@ -311,6 +339,8 @@ class SeedZip():
             self.createASDataAssets(settings, mod, outZip)
             self.createSkipCarpetAssets(settings, mod, outZip)
             self.createMapSkipAssets(settings, mod, outZip)
+            self.createBlockingSkipAssets(settings, mod, outZip)
+            self.createDropRateAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -447,6 +477,14 @@ class SeedZip():
             mod["assets"] += [modYml.getSkipCarpetEscapeMod()]
             outZip.write(resource_path("static/skip_carpet_escape.script"), "skip_carpet_escape.script")
 
+    def createBlockingSkipAssets(self,settings,mod,outZip):
+        if settings.block_cor_skip:
+            mod["assets"] += [modYml.getBlockCorSkipMod()]
+            outZip.write(resource_path("static/disable_cor_skip.script"), "disable_cor_skip.script")
+        if settings.block_shan_yu_skip:
+            mod["assets"] += [modYml.getBlockShanYuSkipMod()]
+            outZip.write(resource_path("static/disable_shan_yu_skip.script"), "disable_shan_yu_skip.script")
+
     def createMapSkipAssets(self,settings,mod,outZip):
         if settings.pr_map_skip:
             mod["assets"] += modYml.getMapSkipMod()
@@ -469,6 +507,34 @@ class SeedZip():
                     binaryContent[byte0] = itemByte0
                     binaryContent[byte1] = itemByte1
                 outZip.writestr("modified_puzzle.bin",binaryContent)
+
+                
+    def createDropRateAssets(self, settings, randomizer, mod, outZip):
+        if True:
+            mod["assets"] += [modYml.getDropMod()]
+            all_drops = {}
+            with open(resource_path("static/drops.bin"), "rb") as dropsbar:
+                binaryContent = bytearray(dropsbar.read())
+                for i in range(0,184):
+                    start_index = 8+24*i
+                    rate = DropRates(start_index,binaryContent[start_index:start_index+24])
+                    all_drops[rate.id] = rate
+                    # print(all_drops[rate.id])
+
+            # make changes
+
+            # 2,184
+            all_drops[2].big_munny = 50
+            all_drops[184].item1_chance = 100
+            all_drops[14].big_mp = 100
+
+
+            # write changes
+            with open(resource_path("static/drops.bin"), "rb") as dropsbar:
+                binaryContent = bytearray(dropsbar.read())
+                for drop in all_drops:
+                    all_drops[drop].write(binaryContent)
+                outZip.writestr("modified_drops.bin",binaryContent)
 
     def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.SYNTH in settings.disabledLocations:
