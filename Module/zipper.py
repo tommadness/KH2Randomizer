@@ -1,4 +1,5 @@
 from doctest import master
+import enum
 import io
 import json
 import yaml
@@ -49,12 +50,12 @@ id_to_enemy_name[10] = "Minute Bomb"
 id_to_enemy_name[11] = "Assault Rider"
 id_to_enemy_name[12] = "Hammer Frame"
 id_to_enemy_name[13] = "Aeroplane"
-# id_to_enemy_name[14] = ""
+id_to_enemy_name[14] = "OC Torches"
 id_to_enemy_name[15] = "Samurai"
-# id_to_enemy_name[16] = ""
+id_to_enemy_name[16] = "OC Bubbles"
 id_to_enemy_name[17] = "Rapid Thruster"
 id_to_enemy_name[18] = "Bolt Tower"
-# id_to_enemy_name[19] = ""
+# id_to_enemy_name[19] = "" # mp only drops
 id_to_enemy_name[22] = "Dragoon"
 id_to_enemy_name[23] = "Assassin"
 id_to_enemy_name[24] = "Sniper"
@@ -85,13 +86,12 @@ id_to_enemy_name[49] = "Emerald Blues"
 id_to_enemy_name[50] = "Crimson Jazz"
 id_to_enemy_name[51] = "Crescendo"
 id_to_enemy_name[52] = "Creeper Plant"
-# id_to_enemy_name[53] = ""
-# id_to_enemy_name[54] = ""
-# id_to_enemy_name[55] = ""
-# id_to_enemy_name[56] = ""
-# id_to_enemy_name[60] = ""
-# id_to_enemy_name[61] = ""
-# id_to_enemy_name[62] = ""
+# id_to_enemy_name[53] = "" # mp only drops
+id_to_enemy_name[54] = "Thresholder"
+id_to_enemy_name[56] = "Possessor"
+id_to_enemy_name[60] = "Lock"
+id_to_enemy_name[61] = "Shock"
+id_to_enemy_name[62] = "Barrel"
 id_to_enemy_name[63] = "Air Pirate"
 id_to_enemy_name[64] = "Fat Bandit"
 id_to_enemy_name[65] = "Fiery Globe"
@@ -247,8 +247,9 @@ class DropRates():
         binary_data[self.offset+23] = item3_chances_bytes[1]
 
     def __str__(self):
-        if self.item1_chance and self.id not in id_to_enemy_name:
-            return f"{self.id} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
+        if True: #self.item1_chance and self.id not in id_to_enemy_name:
+            dummy = ""
+            return f"{self.id} {(id_to_enemy_name[self.id] if self.id in id_to_enemy_name else dummy)} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
         elif self.id in id_to_enemy_name:
             return f"{self.id} {id_to_enemy_name[self.id]}"
         else:
@@ -306,6 +307,7 @@ class SeedZip():
         self.formattedItem = {"Stats":[]}
         self.formattedPlrp = []
         self.spoiler_log = None
+        self.enemy_log = None
 
         self.assignTreasures(randomizer)
         self.assignLevels(settings,randomizer)
@@ -340,7 +342,7 @@ class SeedZip():
             self.createSkipCarpetAssets(settings, mod, outZip)
             self.createMapSkipAssets(settings, mod, outZip)
             self.createBlockingSkipAssets(settings, mod, outZip)
-            self.createDropRateAssets(settings, randomizer, mod, outZip)
+            # self.createDropRateAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -433,8 +435,9 @@ class SeedZip():
                     if not tourney_gen:
                         outZip.writestr("spoilerlog.html",html_template)
                     self.spoiler_log = html_template
+                    self.enemy_log = enemySpoilers
                     outZip.write(resource_path("static/KHMenu.otf"), "KHMenu.otf")
-                if enemySpoilers:
+                if enemySpoilers and not tourney_gen:
                     outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
 
@@ -511,22 +514,33 @@ class SeedZip():
                 
     def createDropRateAssets(self, settings, randomizer, mod, outZip):
         if True:
-            mod["assets"] += [modYml.getDropMod()]
+            for x in mod["assets"]:
+                if x["name"]=="00battle.bin":
+                    x["source"].append(modYml.getDropMod())
             all_drops = {}
+            testing = []
             with open(resource_path("static/drops.bin"), "rb") as dropsbar:
                 binaryContent = bytearray(dropsbar.read())
                 for i in range(0,184):
                     start_index = 8+24*i
                     rate = DropRates(start_index,binaryContent[start_index:start_index+24])
                     all_drops[rate.id] = rate
+
+                    if rate.id not in id_to_enemy_name and len(testing) < 4:
+                        testing.append(rate.id)
                     # print(all_drops[rate.id])
 
             # make changes
 
-            # 2,184
-            all_drops[2].big_munny = 50
-            all_drops[184].item1_chance = 100
-            all_drops[14].big_mp = 100
+            text = ["munny","drive","mp","hp"]
+            for i,t in enumerate(testing):
+                print(all_drops[t])
+            
+
+            all_drops[testing[0]].big_munny = 100
+            all_drops[testing[1]].big_drive = 100
+            all_drops[testing[2]].big_mp = 100
+            all_drops[testing[3]].big_hp = 100
 
 
             # write changes

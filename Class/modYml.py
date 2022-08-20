@@ -275,25 +275,16 @@ class modYml:
         return mod_dict
 
     def getDropMod():
-        mod_dict = {
-                    "method": "binarc",
+        return  {
+                    "name": "przt",
+                    "type": "list",
+                    "method": "copy",
                     "source": [
                         {
-                            "name": "przt",
-                            "type": "list",
-                            "method": "copy",
-                            "source": [
-                                {
-                                    "name": "modified_drops.bin"
-                                }
-                            ]
+                            "name": "modified_drops.bin"
                         }
                     ]
                 }
-
-        mod_dict["name"] = "00battle.bin"
-
-        return mod_dict
 
     def getSynthMod(pc=False):
         mod_dict = {

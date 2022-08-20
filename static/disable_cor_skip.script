@@ -1,13 +1,9 @@
-Program 0x02
-MapVisibility 0x00000063 0x00000000
-Spawn "m_00"
-Spawn "m_10"
-Spawn "m_11"
-Spawn "m_13"
-Spawn "m_14"
-Spawn "m_15"
-Spawn "m_16"
-Spawn "m_17"
-Spawn "m_22"
-Spawn "m_50"
-Spawn "m_70"
+Program 0x01
+AreaSettings 7 -1
+	SetProgressFlag 0x10A5
+	SetJump Type 1 World HB Area 24 Entrance 21 LocalSet 0 FadeType 1
+	SetPartyMenu 0
+	
+AreaSettings 1 304
+	SetJump Type 1 World HB Area 24 Entrance 0 LocalSet 0 FadeType -1
+	SetPartyMenu 0

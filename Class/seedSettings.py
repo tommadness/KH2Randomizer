@@ -228,7 +228,7 @@ _all_settings = [
         name=settingkey.STATSANITY,
         ui_label='Bonus Rewards as Items (Statsanity)',
         shared=True,
-        default=False,
+        default=True,
         randomizable=True,
         tooltip=textwrap.dedent('''Takes HP, MP, Drive, Accessory Slot, Armor Slot, and Item Slot upgrades from the normal bonus 
 popup locations and lets them appear in chests. Those bonus locations can now have other items in them.'''),
@@ -241,7 +241,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=1.5,
+        default=2.0,
         randomizable=True
     ),
 
@@ -274,7 +274,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=3.0,
+        default=4.0,
         randomizable=True
     ),
 
@@ -296,7 +296,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=3.0,
+        default=3.5,
         randomizable=True
     ),
 
@@ -340,7 +340,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             expCurve.DUSK.name: "Dusk"
         },
         shared=True,
-        default=expCurve.DAWN.name,
+        default=expCurve.MIDDAY.name,
         tooltip=_drive_exp_curve_tooltip_text,
         randomizable=True
     ),
@@ -368,7 +368,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             expCurve.DUSK.name: "Dusk"
         },
         shared=True,
-        default=expCurve.DAWN.name,
+        default=expCurve.MIDDAY.name,
         tooltip=_drive_exp_curve_tooltip_text,
         randomizable=True
     ),
@@ -382,7 +382,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             expCurve.DUSK.name: "Dusk"
         },
         shared=True,
-        default=expCurve.DAWN.name,
+        default=expCurve.MIDDAY.name,
         tooltip=_drive_exp_curve_tooltip_text,
         randomizable=True
     ),
@@ -452,7 +452,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'Level_4': 'Max'
         },
         shared=True,
-        default='Disabled',
+        default='Level_1',
         tooltip=textwrap.dedent('''
             5 Random - Start with 5 individual growths at random.
             Level 1 - Start with level 1 of all growth abilities.
@@ -504,7 +504,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'Spoiler': 'Spoiler'
         },
         shared=True,
-        default='JSmartee',
+        default='Shananas',
         tooltip=textwrap.dedent('''
             Disabled - Use no hint system
             JSmartee - Secret Ansem Reports provide information for how many "important checks" are in a world
@@ -523,7 +523,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=100,
         step=1,
         shared=True,
-        default=12,
+        default=5,
         randomizable=True
     ),
 
@@ -534,7 +534,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=100,
         step=1,
         shared=True,
-        default=10,
+        default=9,
         randomizable=True
     ),
 
@@ -545,7 +545,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=100,
         step=1,
         shared=True,
-        default=8,
+        default=7,
         randomizable=True
     ),
 
@@ -556,7 +556,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=100,
         step=1,
         shared=True,
-        default=6,
+        default=5,
         randomizable=True
     ),
 
@@ -567,7 +567,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=100,
         step=1,
         shared=True,
-        default=4,
+        default=5,
         randomizable=True
     ),
 
@@ -578,7 +578,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=100,
         step=1,
         shared=True,
-        default=2,
+        default=5,
         randomizable=True
     ),
 
@@ -589,7 +589,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=100,
         step=1,
         shared=True,
-        default=2,
+        default=5,
         randomizable=True
     ),
     
@@ -600,7 +600,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=100,
         step=1,
         shared=True,
-        default=2,
+        default=3,
         randomizable=True
     ),
 
@@ -1068,7 +1068,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.PR_MAP_SKIP,
         ui_label='Remove Port Royal Map Select',
         shared=True,
-        default=False,
+        default=True,
         tooltip='Changes Port Royal map screen with text options, useful for avoiding crashes in PC.'
     ),
 
