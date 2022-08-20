@@ -116,6 +116,8 @@ class DreamWeaponOffsets:
             return self.sword_to_shield_50[sword_level]
         elif max_level==99:
             return self.sword_to_shield_99[sword_level]
+        elif max_level==1:
+            return sword_level
         else:
             raise ValueError(f"Tried accessing a level progression with max level {max_level}")
 
@@ -124,6 +126,8 @@ class DreamWeaponOffsets:
             return self.sword_to_staff_50[sword_level]
         elif max_level==99:
             return self.sword_to_staff_99[sword_level]
+        elif max_level==1:
+            return sword_level
         else:
             raise ValueError(f"Tried accessing a level progression with max level {max_level}")
 
