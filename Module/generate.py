@@ -20,7 +20,7 @@ def generateSeed(settings: RandomizerSettings,data):
             newSeedValidation.validateSeed(settings,randomizer)
             hints = Hints.generateHints(randomizer.assignedItems,settings)
             zipper = SeedZip(settings,randomizer,hints,data)
-            return zipper.outputZip, zipper.spoiler_log
+            return zipper.outputZip, zipper.spoiler_log, zipper.enemy_log
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
             settings.random_seed = (''.join(random.choice(characters) for i in range(30)))
@@ -50,7 +50,7 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], data):
                 last_error = e
                 continue
         if last_error is not None:
-            return last_error
+            raise last_error
 
     # each individual randomization is done and valid, now we can mix the item pools
 

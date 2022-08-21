@@ -62,7 +62,6 @@ class RandomizerSettings():
         self.regular_rando = ui_settings.get(settingkey.SOFTLOCK_CHECKING) in ["default","both"]
         self.reverse_rando = ui_settings.get(settingkey.SOFTLOCK_CHECKING) in ["reverse","both"]
         self.level_stat_pool = SeedModifier.glassCannon if ui_settings.get(settingkey.GLASS_CANNON) else SeedModifier.regularStats
-        # self.betterJunk = ui_settings.get(settingkey.BETTER_JUNK)
         self.junk_pool = [
             int(item_id) for item_id in ui_settings.get(settingkey.JUNK_ITEMS)
         ]
@@ -152,6 +151,8 @@ class RandomizerSettings():
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.roxas_abilities_enabled = ui_settings.get(settingkey.ROXAS_ABILITIES_ENABLED)
+        self.block_cor_skip = ui_settings.get(settingkey.BLOCK_COR_SKIP)
+        self.block_shan_yu_skip = ui_settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
         self.pr_map_skip = ui_settings.get(settingkey.PR_MAP_SKIP)
         self.include_maps = ui_settings.get(settingkey.MAPS_IN_ITEM_POOL)
         self.include_recipes = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
@@ -183,6 +184,8 @@ class RandomizerSettings():
         self.extra_ics = ui_settings.get(settingkey.EXTRA_ICS)
 
         self.tracker_includes = []
+        if self.level_one:
+            self.tracker_includes.append("Level1Mode")
         if self.promiseCharm:
             self.tracker_includes.append("PromiseCharm")
         self.tracker_includes.append(level_setting)
