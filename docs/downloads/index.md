@@ -3,8 +3,9 @@
 ### All Randomizer Game Versions
 
 * [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
-* [OpenKH](https://github.com/Xeeynamo/OpenKh/releases)
-    * Within the Assets section, download `openkh-build####.zip` where "####" is a number representing the build
+* ~~[OpenKH](https://github.com/Xeeynamo/OpenKh/releases)~~
+    * ~~Within the Assets section, download `openkh-build####.zip` where "####" is a number representing the build~~
+* [Mod Manager Direct Download](https://cdn.discordapp.com/attachments/803658031749267517/1006967855633399838/openkh-modmanager.zip)
 * [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest/download/KhTracker.exe)
 * [LiveSplit Load Remover for Randomizer](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/releases)
   ([instructions](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/blob/main/README.md))
