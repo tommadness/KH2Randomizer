@@ -24,6 +24,7 @@ You absolutely want to make sure you start from a fresh set of game files. There
 * Determine where you have the OpenKH tools installed on your PC. This is the folder that contains the Mods Manager
   program that you have already been using to add/remove mods.
 * Download the latest version of the OpenKH tools (linked on the [Downloads](../../downloads/index.md) page).
+  * Or click [HERE](https://cdn.discordapp.com/attachments/803658031749267517/1006967855633399838/openkh-modmanager.zip) for direct download
 * Copy all files from the OpenKH tools zip file to your OpenKH tools location. When prompted to replace existing files,
   do so.
     * Alternatively, you could choose to copy all the files from the OpenKH tools zip file somewhere else to start fresh
