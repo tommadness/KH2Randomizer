@@ -131,4 +131,5 @@ class itemType(str, Enum):
     GAUGE = "Gauge Up"
     SLOT = "Slot Up"
     SYNTH = "SYNTH"
+    MULTIWORLD = "MultiWorld"
     

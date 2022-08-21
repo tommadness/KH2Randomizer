@@ -72,7 +72,12 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 * Choose `Finish` to close the setup wizard and save your settings.
 
-### 5. Use Mods Manager to configure mods
+### 5. Configure LuaBackend Hook for Mods Manager integration (optional but recommended)
+
+If you haven't already done so, performing this step allows mods to bundle their own Lua scripts. See
+[LuaBackend Hook Setup](../../luabackend-hook-setup/index.md) for more information, as well as instructions.
+
+### 6. Use Mods Manager to configure mods
 
 * Use Mods Manager to add/remove/check/uncheck mods as usual. (You may have fewer or more mods than shown here.)
 
@@ -85,13 +90,13 @@ You absolutely want to make sure you start from a fresh set of game files. There
 * A console window will come up while preparing mods and will disappear once finished. After this has finished, start
   your game normally and your chosen mods should be applied.
 
-### 6. Preparing a new Randomizer Seed
+### 7. Preparing a new Randomizer Seed
 
 * Works essentially the same as it did before, but without the additional patching step. Remove the previous randomizer
   seed from Mods Manager, add the new seed, and then Build Only again. The next time you start the game, the new seed
   will get loaded.
 
-### 7. Removing Panacea (if desired)
+### 8. Removing Panacea (if desired)
 
 * Once Panacea is installed, it will run every time you start the game and will attempt to load any mods that are built.
   To remove Panacea, you can run the setup wizard again and there is an option to `Remove OpenKH Panacea`.

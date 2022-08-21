@@ -274,6 +274,18 @@ class modYml:
 
         return mod_dict
 
+    def getDropMod():
+        return  {
+                    "name": "przt",
+                    "type": "list",
+                    "method": "copy",
+                    "source": [
+                        {
+                            "name": "modified_drops.bin"
+                        }
+                    ]
+                }
+
     def getSynthMod(pc=False):
         mod_dict = {
                     "method": "binarc",
@@ -357,6 +369,78 @@ class modYml:
                     }
                 ]
             }
+
+
+    def getBlockCorSkipMod():
+        return {
+                "name": "ard/hb24.ard",
+                "multi": [
+                    {
+                        "name": "ard/us/hb24.ard"
+                    },
+                    {
+                        "name": "ard/fr/hb24.ard"
+                    },
+                    {
+                        "name": "ard/gr/hb24.ard"
+                    },
+                    {
+                        "name": "ard/it/hb24.ard"
+                    },
+                    {
+                        "name": "ard/sp/hb24.ard"
+                    }
+                ],
+                "method": "binarc",
+                "source": [
+                    {
+                        "name": "evt",
+                        "type": "areadatascript",
+                        "method": "areadatascript",
+                        "source": [
+                            {
+                                "name": "disable_cor_skip.script"
+                            }
+                        ]
+                    }
+                ]
+            }
+
+    def getBlockShanYuSkipMod():
+        return {
+                "name": "ard/mu09.ard",
+                "multi": [
+                    {
+                        "name": "ard/us/mu09.ard"
+                    },
+                    {
+                        "name": "ard/fr/mu09.ard"
+                    },
+                    {
+                        "name": "ard/gr/mu09.ard"
+                    },
+                    {
+                        "name": "ard/it/mu09.ard"
+                    },
+                    {
+                        "name": "ard/sp/mu09.ard"
+                    }
+                ],
+                "method": "binarc",
+                "source": [
+                    {
+                        "name": "evt",
+                        "type": "areadatascript",
+                        "method": "areadatascript",
+                        "source": [
+                            {
+                                "name": "disable_shan_yu_skip.script"
+                            }
+                        ]
+                    }
+                ]
+            }
+
 
     def getMapSkipMod():
         return [{

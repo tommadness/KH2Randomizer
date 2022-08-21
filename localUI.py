@@ -8,7 +8,7 @@ from Module.resources import resource_path
 
 # Keep the setting of the environment variable as close to the top as possible.
 # This needs to happen before anything Boss/Enemy Rando gets loaded for the sake of the distributed binary.
-os.environ["USE_KH2_GITPATH"] = resource_path("extracted_data")
+os.environ["USE_KH2_GITPATH"] = "extracted_data"
 
 
 import datetime
@@ -34,8 +34,9 @@ from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.seedSettings import RandoRandoSettings, SeedSettings, getRandoRandoTooltip
 from Module.dailySeed import getDailyModifiers
-from Module.generate import generateSeed
-from Module.newRandomize import Randomizer, RandomizerSettings
+from Module.generate import generateMultiWorldSeed, generateSeed
+from Module.RandomizerSettings import RandomizerSettings
+from Module.newRandomize import Randomizer
 from Module.seedshare import SharedSeed, ShareStringException
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
@@ -49,7 +50,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '2.1.5-beta'
+LOCAL_UI_VERSION = '2.1.5'
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -83,10 +84,28 @@ class GenSeedThread(QThread):
 
     def run(self):
         try:
-            zip_file,spoiler_log = generateSeed(self.rando_settings, self.data)
+            zip_file,spoiler_log,enemy_log = generateSeed(self.rando_settings, self.data)
+            self.finished.emit((zip_file,spoiler_log,enemy_log))
+        except Exception as e:
+            self.failed.emit(e)
+
+
+class MultiGenSeedThread(QThread):
+    finished = Signal(object)
+    failed = Signal(Exception)
+
+    def provideData(self,data,rando_settings):
+        self.data=data
+        self.rando_settings = rando_settings
+        self.zip_file = None
+
+    def run(self):
+        try:
+            zip_file,spoiler_log = generateMultiWorldSeed(self.rando_settings, self.data)
             self.finished.emit((zip_file,spoiler_log))
         except Exception as e:
             self.failed.emit(e)
+
 
 
 class KH2RandomizerApp(QMainWindow):
@@ -98,7 +117,6 @@ class KH2RandomizerApp(QMainWindow):
         self.mods = getDailyModifiers(self.startTime)
         self.progress = None
         self.spoiler_log_output = "<html>No spoiler log generated</html>"
-        self.tourney_generator = False
 
         self.settings = SeedSettings()
 
@@ -113,9 +131,6 @@ class KH2RandomizerApp(QMainWindow):
                 except Exception:
                     print('Unable to apply last settings - will use defaults')
                     pass
-        tourney_generator_config = Path("tourney_gen.txt")
-        if os.path.exists(tourney_generator_config):
-            self.tourney_generator = True
 
         random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator ({0})".format(LOCAL_UI_VERSION))
@@ -157,6 +172,11 @@ class KH2RandomizerApp(QMainWindow):
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         self.spoiler_log.setCheckState(Qt.Checked)
         seed_layout.addWidget(self.spoiler_log)
+
+        self.tourney_gen_toggle = QCheckBox("Tourney Mode")
+        self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
+        self.tourney_gen_toggle.setToolTip("Allows tourney organizer to make seeds with spoilers, and share seed strings that disable changing settings, but allow cosmetics.")
+        seed_layout.addWidget(self.tourney_gen_toggle)
         
         self.rando_rando = QCheckBox("Rando Settings (Experimental)")
         self.rando_rando.setToolTip(getRandoRandoTooltip())
@@ -274,11 +294,11 @@ class KH2RandomizerApp(QMainWindow):
     def fixSeedName(self):
         new_string = re.sub(r'[^a-zA-Z0-9]', '', self.seedName.text())
         self.seedName.setText(new_string)
-        if self.tourney_generator:
+        if self.tourney_gen_toggle.isChecked():
             self.spoiler_log.setChecked(False)
 
     def make_rando_settings(self):
-        if self.tourney_generator:
+        if self.tourney_gen_toggle.isChecked():
             makeSpoilerLog = False
         else:
             makeSpoilerLog = self.spoiler_log.isChecked()
@@ -330,6 +350,10 @@ class KH2RandomizerApp(QMainWindow):
                 split_pc_emu = split_pc_emu or len(self.settings.get(settingkey.BGM_GAMES)) != 0
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.CUPS_GIVE_XP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
+                split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DARK_THORN)
+                split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DFX)
+                # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_COR_SKIP)
+                # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
                 split_pc_emu = split_pc_emu or (locationType.Puzzle.name in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS))
                 split_pc_emu = split_pc_emu or (locationType.SYNTH.name in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS))
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["boss"] != "Disabled"
@@ -363,7 +387,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def makeSeed(self,platform):
         self.fixSeedName()
-        if self.tourney_generator:
+        if self.tourney_gen_toggle.isChecked():
             message = QMessageBox(text="Tourney Mode in Use. Spoiler will be generated outside the zip, and cosmetics disabled.")
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
@@ -392,6 +416,12 @@ class KH2RandomizerApp(QMainWindow):
         if rando_settings is not None:
             self.genSeed(data,rando_settings)
 
+        # rando_settings = self.make_rando_settings()
+        # self.seedName.setText("")
+        # rando_settings2 = self.make_rando_settings()
+        # if rando_settings is not None:
+        #     self.genMultiSeed(data,[rando_settings,rando_settings2])
+
     def downloadSeed(self):
         last_seed_folder_txt = Path(AUTOSAVE_FOLDER) / 'last_seed_folder.txt'
         output_file_name = 'randoseed.zip'
@@ -404,28 +434,37 @@ class KH2RandomizerApp(QMainWindow):
         saveFileWidget.setNameFilters(["Zip Seed File (*.zip)"])
         outfile_name, _ = saveFileWidget.getSaveFileName(self, "Save seed zip", output_file_name, "Zip Seed File (*.zip)")
         spoiler_outfile = outfile_name
+        enemy_outfile = outfile_name
         if outfile_name!="":
-            if not outfile_name.endswith(".zip"):
-                outfile_name+=".zip"
-            with open(outfile_name, "wb") as out_zip:
-                out_zip.write(self.zip_file.getbuffer())
+            if not self.tourney_gen_toggle.isChecked():
+                if not outfile_name.endswith(".zip"):
+                    outfile_name+=".zip"
+                with open(outfile_name, "wb") as out_zip:
+                    out_zip.write(self.zip_file.getbuffer())
 
             last_seed_folder_txt.write_text(str(Path(outfile_name).parent))
 
-            if self.tourney_generator:
+            if self.tourney_gen_toggle.isChecked():
                 if not spoiler_outfile.endswith(".html"):
                     spoiler_outfile+=".html"
                 with open(spoiler_outfile, "w") as out_html:
                     out_html.write(self.spoiler_log_output)
+                if not enemy_outfile.endswith(".txt"):
+                    enemy_outfile+=".txt"
+                if self.enemy_log_output:
+                    with open(enemy_outfile, "w") as out_enemy:
+                        out_enemy.write(self.enemy_log_output)
 
         self.zip_file=None
         self.spoiler_log_output=None
+        self.enemy_log_output=None
 
     def handleResult(self,result):
         self.progress.close()
         self.progress = None
         self.zip_file = result[0]
         self.spoiler_log_output = result[1] if result[1] else "<html>No spoiler log generated</html>"
+        self.enemy_log_output = result[2]
         self.downloadSeed()
 
     def handleFailure(self, failure: Exception):
@@ -449,6 +488,21 @@ class KH2RandomizerApp(QMainWindow):
         self.progress.show()
 
         self.thread = GenSeedThread()
+        self.thread.provideData(data,rando_settings)
+        self.thread.finished.connect(self.handleResult)
+        self.thread.failed.connect(self.handleFailure)
+        self.thread.start()
+
+    def genMultiSeed(self,data,rando_settings):
+        self.thread = QThread()
+        displayedSeedName = rando_settings[0].random_seed
+        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","",0,0,None)
+        self.progress.setWindowTitle("Making your Seed, please wait...")
+        self.progress.setCancelButton(None)
+        self.progress.setModal(True)
+        self.progress.show()
+
+        self.thread = MultiGenSeedThread()
         self.thread.provideData(data,rando_settings)
         self.thread.finished.connect(self.handleResult)
         self.thread.failed.connect(self.handleFailure)
@@ -500,7 +554,7 @@ class KH2RandomizerApp(QMainWindow):
             seed_name=current_seed,
             spoiler_log=self.spoiler_log.isChecked(),
             settings_string=self.settings.settings_string(),
-            tourney_gen=self.tourney_generator
+            tourney_gen=self.tourney_gen_toggle.isChecked()
         )
         output_text = shared_seed.to_share_string()
         return output_text
@@ -511,7 +565,7 @@ class KH2RandomizerApp(QMainWindow):
                 local_generator_version=LOCAL_UI_VERSION,
                 share_string=str(pc.paste()).strip()
             )
-            self.tourney_generator = False
+            self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
         except ShareStringException as exception:
             message = QMessageBox(text=exception.message)
             message.setWindowTitle("KH2 Seed Generator")
@@ -525,6 +579,7 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setDisabled(True)
             self.seedName.setHidden(True)
             self.spoiler_log.setDisabled(True)
+            self.tourney_gen_toggle.setDisabled(True)
             self.rando_rando.setDisabled(True)
             for w in self.widgets:
                 if not isinstance(w,CosmeticsMenu):
