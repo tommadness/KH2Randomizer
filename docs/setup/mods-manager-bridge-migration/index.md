@@ -4,7 +4,7 @@ With a recent release of the OpenKH tools, Mods Manager Bridge (also known as `b
 should no longer be needed for most KH2 Randomizer players. There are two newer options that should largely eliminate
 the need for Mods Manager Bridge.
 
-### Using OpenKH Panacea to load mods
+### Using OpenKH Panacea to load mods in real time
 
 This option installs a "mod loader" next to the game files that instructs the game to load mods that you have
 configured, without ever touching the actual game files themselves. See
