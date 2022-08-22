@@ -19,6 +19,8 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 ![Restore](../images/mods-manager-bridge/restore.png)
 
+* Go to your game installation folder and delete the **DBGHELP.dll, Luabackend.toml, and Lua54.dll files** before continuing as well.
+
 ### 2. Install the latest version of the OpenKH tools
 
 * Determine where you have the OpenKH tools installed on your PC. This is the folder that contains the Mods Manager
