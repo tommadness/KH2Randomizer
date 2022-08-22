@@ -127,3 +127,7 @@ with bundled scripts.
 ![Remove Panacea](../images/mods-manager/wizard/panacea-installed.png)
 
 * If you still want to use LuaBackend Hook, rename `LuaBackend.dll` back to `DBGHELP.dll` after Panacea is gone.
+
+### What happens to my old KH2PCPATCH files?
+
+The new update to the mod manager allows it to load in kh2pcpatch files as if they were regular mods. Just add your kh2pcpatch files the same way you would add a zip seed and the mod manager will handle everything for you.
