@@ -95,3 +95,7 @@ If you haven't already done so, performing this step allows mods to bundle their
   their original state from these backups.
 
 ![Restore](../images/mods-manager/restore.png)
+
+### What happens to my old KH2PCPATCH files?
+
+The new update to the mod manager allows it to load in kh2pcpatch files as if they were regular mods. Just add your kh2pcpatch files the same way you would add a zip seed and the mod manager will handle everything for you.
