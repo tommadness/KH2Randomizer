@@ -6,7 +6,7 @@
 * VERIFY GAME FILES through the Epic Games Launcher for Kingdom Hearts 1.5 + 2.5 remix v1.0.0.8_WW (pirated copies are not supported, it is strongly recommended you buy and install the game directly from the Epic Game Store).
 
 ## Resources Needed:
-* [OpenKH Mod Manager](https://cdn.discordapp.com/attachments/803658031749267517/1006967855633399838/openkh-modmanager.zip)
+* [OpenKH Mod Manager](https://github.com/shananas/OpenKh/releases/download/release-372-KH2Rando/openkh-modmanager.zip)
 * [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
 * [.NET6 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer)
 
