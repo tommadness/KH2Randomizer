@@ -53,10 +53,14 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], data):
             raise last_error
 
     # each individual randomization is done and valid, now we can mix the item pools
-
     m = MultiWorld(randomizers,MultiWorldConfig(settingsSet[0]))
 
+    seed_outputs = []
+    for settings,randomizer in zip(settingsSet,randomizers):
+        hints = Hints.generateHints(randomizer.assignedItems,settings)
+        zipper = SeedZip(settings,randomizer,hints,data,m.multi_output)
+        seed_outputs.append((zipper.outputZip, zipper.spoiler_log, zipper.enemy_log))
 
-    return 1,2
+    return seed_outputs
         
 

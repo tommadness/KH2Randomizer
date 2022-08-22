@@ -50,7 +50,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '2.1.5'
+LOCAL_UI_VERSION = '2.1.5-mw'
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -101,8 +101,8 @@ class MultiGenSeedThread(QThread):
 
     def run(self):
         try:
-            zip_file,spoiler_log = generateMultiWorldSeed(self.rando_settings, self.data)
-            self.finished.emit((zip_file,spoiler_log))
+            all_output = generateMultiWorldSeed(self.rando_settings, self.data)
+            self.finished.emit(all_output)
         except Exception as e:
             self.failed.emit(e)
 
@@ -467,6 +467,16 @@ class KH2RandomizerApp(QMainWindow):
         self.enemy_log_output = result[2]
         self.downloadSeed()
 
+        
+    def handleMultiResult(self,result):
+        self.progress.close()
+        self.progress = None
+        for res0,res1,res2 in result:
+            self.zip_file = res0
+            self.spoiler_log_output = res1 if res1 else "<html>No spoiler log generated</html>"
+            self.enemy_log_output = res2
+            self.downloadSeed()
+
     def handleFailure(self, failure: Exception):
         if self.progress is not None:
             self.progress.close()
@@ -504,7 +514,7 @@ class KH2RandomizerApp(QMainWindow):
 
         self.thread = MultiGenSeedThread()
         self.thread.provideData(data,rando_settings)
-        self.thread.finished.connect(self.handleResult)
+        self.thread.finished.connect(self.handleMultiResult)
         self.thread.failed.connect(self.handleFailure)
         self.thread.start()
 

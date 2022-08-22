@@ -14,6 +14,7 @@ from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
+from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
@@ -86,7 +87,7 @@ id_to_enemy_name[49] = "Emerald Blues"
 id_to_enemy_name[50] = "Crimson Jazz"
 id_to_enemy_name[51] = "Crescendo"
 id_to_enemy_name[52] = "Creeper Plant"
-# id_to_enemy_name[53] = "" # mp only drops
+id_to_enemy_name[53] = "Cerberus RC"
 id_to_enemy_name[54] = "Thresholder"
 id_to_enemy_name[56] = "Possessor"
 id_to_enemy_name[60] = "Lock"
@@ -97,9 +98,9 @@ id_to_enemy_name[64] = "Fat Bandit"
 id_to_enemy_name[65] = "Fiery Globe"
 id_to_enemy_name[66] = "Icy Cube"
 id_to_enemy_name[69] = "Aerial Knocker"
-# id_to_enemy_name[70] = ""
-# id_to_enemy_name[71] = ""
-# id_to_enemy_name[72] = "" # Dusk Roxas Prologue
+id_to_enemy_name[70] = "Small Urn"
+id_to_enemy_name[71] = "Big Urn"
+# id_to_enemy_name[72] = "" 
 id_to_enemy_name[73] = "Strafer"
 # id_to_enemy_name[74] = ""
 # id_to_enemy_name[75] = ""
@@ -117,59 +118,112 @@ id_to_enemy_name[82] = "Illuminator"
 id_to_enemy_name[87] = "Undead Pirate A"
 id_to_enemy_name[88] = "Undead Pirate B"
 id_to_enemy_name[89] = "Undead Pirate C"
-# id_to_enemy_name[90] = ""
-# id_to_enemy_name[91] = ""
-# id_to_enemy_name[92] = ""
-# id_to_enemy_name[93] = ""
+id_to_enemy_name[90] = "West Wing Armor"
+id_to_enemy_name[91] = "LoD Firework"
+id_to_enemy_name[92] = "LoD Rocket"
+id_to_enemy_name[93] = "LoD Crate"
 # id_to_enemy_name[94] = ""
 # id_to_enemy_name[95] = ""
 id_to_enemy_name[96] = "Bookmaster"
-# id_to_enemy_name[97] = "Quickplay (Aladdin)"
-# id_to_enemy_name[98] = "Quickplay (Sora)"
-# id_to_enemy_name[99] = "Speedster End"
-# id_to_enemy_name[100] = "Speedster Start"
+id_to_enemy_name[97] = "Quickplay (Aladdin)"
+id_to_enemy_name[98] = "Quickplay (Sora)"
+id_to_enemy_name[99] = "Speedster End"
+id_to_enemy_name[100] = "Speedster Start"
 # id_to_enemy_name[102] = ""
-# id_to_enemy_name[103] = ""
+id_to_enemy_name[103] = "Abu Ice Crystal"
 # id_to_enemy_name[104] = ""
 # id_to_enemy_name[105] = ""
 # id_to_enemy_name[106] = ""
-# id_to_enemy_name[107] = ""
-# id_to_enemy_name[108] = ""
+id_to_enemy_name[107] = "Water Clone"
+id_to_enemy_name[108] = "Aladdin Dash"
 # id_to_enemy_name[109] = ""
 # id_to_enemy_name[111] = ""
 id_to_enemy_name[112] = "Graveyard/Toy Soldier"
 # id_to_enemy_name[114] = ""
-# id_to_enemy_name[115] = "Lance Soldier?"
-# id_to_enemy_name[116] = ""
+id_to_enemy_name[115] = "Lance Soldier Idle Hit"
+id_to_enemy_name[116] = "Lance Soldier RC Start"
 # id_to_enemy_name[117] = ""
-# id_to_enemy_name[118] = "Lance Soldier RC"
-# id_to_enemy_name[119] = ""
-# id_to_enemy_name[120] = "STT Dusk"
-# id_to_enemy_name[121] = "Creeper Day 6"
+id_to_enemy_name[118] = "Lance Soldier RC End"
+id_to_enemy_name[119] = "Dusk (Station)"
+id_to_enemy_name[120] = "Dusk (STT)"
+id_to_enemy_name[121] = "Creeper (STT)"
 # id_to_enemy_name[122] = ""
-# id_to_enemy_name[123] = "Creeper Plant RC"
-# id_to_enemy_name[125] = "Crescendo RC"
+id_to_enemy_name[123] = "Creeper Plant RC"
+id_to_enemy_name[125] = "Crescendo RC"
 id_to_enemy_name[126] = "Gambler RC"
 # id_to_enemy_name[127] = ""
 # id_to_enemy_name[128] = ""
 # id_to_enemy_name[129] = ""
-# id_to_enemy_name[130] = "Assassin Day 6"
+id_to_enemy_name[130] = "Assassin (STT)"
 # id_to_enemy_name[131] = ""
 # id_to_enemy_name[132] = ""
-# id_to_enemy_name[133] = ""
-# id_to_enemy_name[134] = ""
+id_to_enemy_name[133] = "Luxord Minigame"
+id_to_enemy_name[134] = "Card"
 # id_to_enemy_name[135] = ""
-
+# id_to_enemy_name[136] = ""
+# id_to_enemy_name[137] = ""
 id_to_enemy_name[138] = "Bulky Vendor (Stage 1/4)"
 id_to_enemy_name[139] = "Bulky Vendor (Stage 2/4)"
 id_to_enemy_name[140] = "Bulky Vendor (Stage 3/4)"
 id_to_enemy_name[141] = "Bulky Vendor (Stage 4/4)"
+# id_to_enemy_name[142] = ""
+# id_to_enemy_name[143] = ""
+# id_to_enemy_name[144] = ""
+id_to_enemy_name[145] = "Dusk (STT Day 1)"
+# id_to_enemy_name[146] = ""
+id_to_enemy_name[147] = "BC Box"
+# id_to_enemy_name[148] = ""
+id_to_enemy_name[149] = "Junk Breaking"
+id_to_enemy_name[150] = "BEES"
+# id_to_enemy_name[151] = ""
+id_to_enemy_name[152] = "HT Hazards"
+id_to_enemy_name[154] = "Junk Hitting Junk"
+id_to_enemy_name[155] = "PR Net Hitting"
+id_to_enemy_name[156] = "Odd Mushroom 1"
+id_to_enemy_name[157] = "Odd Mushroom 2"
+id_to_enemy_name[158] = "Odd Mushroom 3"
+id_to_enemy_name[159] = "Odd Mushroom 4"
+id_to_enemy_name[160] = "Odd Mushroom 5"
+id_to_enemy_name[161] = "Even Mushroom 1"
+id_to_enemy_name[162] = "Even Mushroom 2"
+id_to_enemy_name[163] = "Even Mushroom 3"
+id_to_enemy_name[164] = "Even Mushroom 4"
+id_to_enemy_name[165] = "Even Mushroom 5"
+id_to_enemy_name[166] = "Mushroom Prize 1"
+id_to_enemy_name[167] = "Mushroom Prize 2"
+id_to_enemy_name[168] = "Mushroom Prize 3"
+id_to_enemy_name[169] = "Mushroom Prize 4"
+id_to_enemy_name[170] = "Mushroom Prize 5"
 
+id_to_enemy_name[171] = "Befuddler"
+id_to_enemy_name[172] = "Camo Cannon"
+id_to_enemy_name[173] = "Aerial Viking"
+id_to_enemy_name[174] = "Aerial Champ"
+id_to_enemy_name[175] = "Necromancer"
+id_to_enemy_name[176] = "Magic Phantom"
+id_to_enemy_name[177] = "Spring Metal"
+id_to_enemy_name[178] = "Runemaster"
+id_to_enemy_name[179] = "Iron Hammer"
+id_to_enemy_name[180] = "Lance Warrior"
+id_to_enemy_name[181] = "Mad Bumper"
+id_to_enemy_name[182] = "Reckless"
 
-# id_to_enemy_name[181] = "Mad Bumper"
-# id_to_enemy_name[182] = "Reckless"
-
-id_to_enemy_name[184] = "Drive Orb"
+id_to_enemy_name[183] = "Wisdom/Master Drive Orb"
+id_to_enemy_name[184] = "Valor Drive Orb" # maybe final orb?
+id_to_enemy_name[185] = "Valves"
+# id_to_enemy_name[186] = ""
+# id_to_enemy_name[187] = ""
+id_to_enemy_name[188] = "Zexion Soothe/Herb/Heal/Mend"
+id_to_enemy_name[189] = "Zexion Spirit"
+id_to_enemy_name[190] = "Zexion Stamina"
+id_to_enemy_name[191] = "Zexion Riches/Wealth"
+id_to_enemy_name[192] = "Zexion Jackpot/Bounty"
+id_to_enemy_name[193] = "Zexion Treasure/Lucky"
+id_to_enemy_name[194] = "Zexion Bonus"
+# id_to_enemy_name[195] = ""
+# id_to_enemy_name[196] = ""
+# id_to_enemy_name[197] = ""
+# id_to_enemy_name[198] = ""
 
 
 class SynthList():
@@ -299,7 +353,7 @@ class SynthLocation():
 
 
 class SeedZip():
-    def __init__(self,settings: RandomizerSettings, randomizer: Randomizer, hints, cosmetics_data):
+    def __init__(self,settings: RandomizerSettings, randomizer: Randomizer, hints, cosmetics_data, multiworld : MultiWorldOutput = None):
         self.formattedTrsr = {}
         self.formattedLvup = {"Sora":{}}
         self.formattedBons = {}
@@ -317,9 +371,9 @@ class SeedZip():
         self.assignFormLevels(randomizer)
         self.assignWeaponStats(randomizer)
         self.assignStartingItems(settings, randomizer)
-        self.createZip(settings, randomizer, hints, cosmetics_data)
+        self.createZip(settings, randomizer, hints, cosmetics_data, multiworld)
 
-    def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data):
+    def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data, multiworld):
 
         mod = modYml.getDefaultMod()
         sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
@@ -333,6 +387,9 @@ class SeedZip():
             randomBGMOptions = cosmetics_data["randomBGM"]
             tourney_gen = cosmetics_data["tourney"]
 
+            if multiworld:
+                outZip.writestr("multiworld.multi", json.dumps(multiworld()))
+
             
             pc_seed_toggle = (platform=="PC")
 
@@ -342,7 +399,7 @@ class SeedZip():
             self.createSkipCarpetAssets(settings, mod, outZip)
             self.createMapSkipAssets(settings, mod, outZip)
             self.createBlockingSkipAssets(settings, mod, outZip)
-            # self.createDropRateAssets(settings, randomizer, mod, outZip)
+            self.createDropRateAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -526,22 +583,31 @@ class SeedZip():
                     rate = DropRates(start_index,binaryContent[start_index:start_index+24])
                     all_drops[rate.id] = rate
 
-                    if rate.id not in id_to_enemy_name and len(testing) < 4:
+                    if rate.id not in id_to_enemy_name:
                         testing.append(rate.id)
-                    # print(all_drops[rate.id])
 
             # make changes
+            print(len(testing))
 
             text = ["munny","drive","mp","hp"]
-            for i,t in enumerate(testing):
-                print(all_drops[t])
+            # for i,t in enumerate(testing):
+            #     print(f"{all_drops[t]} {text[i]}")
+
+            output_text = ""
             
-
-            all_drops[testing[0]].big_munny = 100
-            all_drops[testing[1]].big_drive = 100
-            all_drops[testing[2]].big_mp = 100
-            all_drops[testing[3]].big_hp = 100
-
+            for t in testing:
+                if t%4==2:
+                    all_drops[t].big_munny = 100
+                    output_text+=f"{t}-munny\n"
+                elif t%4==3:
+                    all_drops[t].big_drive = 100
+                    output_text+=f"{t}-drive\n"
+                elif t%4==0:
+                    all_drops[t].big_mp = 100
+                    output_text+=f"{t}-mp\n"
+                elif t%4==1:
+                    all_drops[t].big_hp = 100
+                    output_text+=f"{t}-hp\n"
 
             # write changes
             with open(resource_path("static/drops.bin"), "rb") as dropsbar:
@@ -549,6 +615,7 @@ class SeedZip():
                 for drop in all_drops:
                     all_drops[drop].write(binaryContent)
                 outZip.writestr("modified_drops.bin",binaryContent)
+                outZip.writestr("drops.txt",output_text)
 
     def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.SYNTH in settings.disabledLocations:

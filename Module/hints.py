@@ -164,6 +164,8 @@ class Hints:
                     world_text = "TWTNW"
                 if world == locationType.DC:
                     world_text = "Disney Castle"
+                if world == locationType.HUNDREDAW:
+                    world_text = "100 Acre"
 
                 points_to_connection = proof_of_connection_world and world in breadcrumb_map[proof_of_connection_world]
                 points_to_peace = proof_of_peace_world and world in breadcrumb_map[proof_of_peace_world]
