@@ -19,12 +19,14 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 ![Restore](../images/mods-manager-bridge/restore.png)
 
+* Go to your game installation folder and delete the **DBGHELP.dll, Luabackend.toml, and Lua54.dll files** before continuing as well.
+
 ### 2. Install the latest version of the OpenKH tools
 
 * Determine where you have the OpenKH tools installed on your PC. This is the folder that contains the Mods Manager
   program that you have already been using to add/remove mods.
 * Download the latest version of the OpenKH tools (linked on the [Downloads](../../downloads/index.md) page).
-  * Or click [HERE](https://cdn.discordapp.com/attachments/803658031749267517/1006967855633399838/openkh-modmanager.zip) for direct download
+  * Or click [HERE](https://github.com/shananas/OpenKh/releases/download/release-372-KH2Rando/openkh-modmanager.zip) for direct download
 * Copy all files from the OpenKH tools zip file to your OpenKH tools location. When prompted to replace existing files,
   do so.
     * Alternatively, you could choose to copy all the files from the OpenKH tools zip file somewhere else to start fresh
@@ -127,3 +129,7 @@ with bundled scripts.
 ![Remove Panacea](../images/mods-manager/wizard/panacea-installed.png)
 
 * If you still want to use LuaBackend Hook, rename `LuaBackend.dll` back to `DBGHELP.dll` after Panacea is gone.
+
+### What happens to my old KH2PCPATCH files?
+
+The new update to the mod manager allows it to load in kh2pcpatch files as if they were regular mods. Just add your kh2pcpatch files the same way you would add a zip seed and the mod manager will handle everything for you.
