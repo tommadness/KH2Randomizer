@@ -113,8 +113,8 @@ id_to_enemy_name[73] = "Strafer"
 id_to_enemy_name[82] = "Illuminator"
 # id_to_enemy_name[83] = ""
 # id_to_enemy_name[84] = ""
-# id_to_enemy_name[85] = ""
-# id_to_enemy_name[86] = ""
+id_to_enemy_name[85] = "Shadow Stalker Chandelier"
+id_to_enemy_name[86] = "Shadow Stalker Pillar"
 id_to_enemy_name[87] = "Undead Pirate A"
 id_to_enemy_name[88] = "Undead Pirate B"
 id_to_enemy_name[89] = "Undead Pirate C"
@@ -153,7 +153,7 @@ id_to_enemy_name[125] = "Crescendo RC"
 id_to_enemy_name[126] = "Gambler RC"
 # id_to_enemy_name[127] = ""
 # id_to_enemy_name[128] = ""
-# id_to_enemy_name[129] = ""
+id_to_enemy_name[129] = "Meg"
 id_to_enemy_name[130] = "Assassin (STT)"
 # id_to_enemy_name[131] = ""
 # id_to_enemy_name[132] = ""
@@ -168,7 +168,7 @@ id_to_enemy_name[140] = "Bulky Vendor (Stage 3/4)"
 id_to_enemy_name[141] = "Bulky Vendor (Stage 4/4)"
 # id_to_enemy_name[142] = ""
 # id_to_enemy_name[143] = ""
-# id_to_enemy_name[144] = ""
+id_to_enemy_name[144] = "Hydra Head"
 id_to_enemy_name[145] = "Dusk (STT Day 1)"
 # id_to_enemy_name[146] = ""
 id_to_enemy_name[147] = "BC Box"
@@ -208,8 +208,8 @@ id_to_enemy_name[180] = "Lance Warrior"
 id_to_enemy_name[181] = "Mad Bumper"
 id_to_enemy_name[182] = "Reckless"
 
-id_to_enemy_name[183] = "Wisdom/Master Drive Orb"
-id_to_enemy_name[184] = "Valor Drive Orb" # maybe final orb?
+id_to_enemy_name[183] = "Cor Drive Orb"
+# id_to_enemy_name[184] = ""
 id_to_enemy_name[185] = "Valves"
 # id_to_enemy_name[186] = ""
 # id_to_enemy_name[187] = ""
@@ -399,7 +399,7 @@ class SeedZip():
             self.createSkipCarpetAssets(settings, mod, outZip)
             self.createMapSkipAssets(settings, mod, outZip)
             self.createBlockingSkipAssets(settings, mod, outZip)
-            self.createDropRateAssets(settings, randomizer, mod, outZip)
+            # self.createDropRateAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -589,25 +589,27 @@ class SeedZip():
             # make changes
             print(len(testing))
 
-            text = ["munny","drive","mp","hp"]
-            # for i,t in enumerate(testing):
-            #     print(f"{all_drops[t]} {text[i]}")
-
-            output_text = ""
+            # this is the very secret thing
+            all_drops[19].item1 = 593
+            all_drops[19].item1_chance = 100
+            all_drops[19].item2 = 594
+            all_drops[19].item2_chance = 100
+            all_drops[19].item3 = 595
+            all_drops[19].item3_chance = 100
             
+
+            all_drops[183].item3 = 361#ori
+            all_drops[183].item3_chance = 100
+            all_drops[184].item3 = 585#illusion
+            all_drops[183].item3_chance = 100
+
             for t in testing:
-                if t%4==2:
+                if t < 100:
                     all_drops[t].big_munny = 100
-                    output_text+=f"{t}-munny\n"
-                elif t%4==3:
+                elif t < 150:
                     all_drops[t].big_drive = 100
-                    output_text+=f"{t}-drive\n"
-                elif t%4==0:
+                else:
                     all_drops[t].big_mp = 100
-                    output_text+=f"{t}-mp\n"
-                elif t%4==1:
-                    all_drops[t].big_hp = 100
-                    output_text+=f"{t}-hp\n"
 
             # write changes
             with open(resource_path("static/drops.bin"), "rb") as dropsbar:
@@ -615,7 +617,6 @@ class SeedZip():
                 for drop in all_drops:
                     all_drops[drop].write(binaryContent)
                 outZip.writestr("modified_drops.bin",binaryContent)
-                outZip.writestr("drops.txt",output_text)
 
     def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.SYNTH in settings.disabledLocations:
