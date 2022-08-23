@@ -12,12 +12,10 @@
 * [.NET Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.8-windows-x64-installer) (required for some of the randomizer
   tools)
     * Unless you know your machine needs otherwise, use the `Download x64` version under "Run desktop apps"
-* [Rando Setup Checker](https://github.com/KH2FM-Mods-equations19/rando-setup-checker/releases/latest/download/Rando.Setup.Checker.zip)
-  ([instructions](https://github.com/KH2FM-Mods-equations19/rando-setup-checker/blob/main/README.md#instructions))
 * [KH2 Door Randomizer](https://github.com/MainMemory/KH2DoorRando/releases/latest)
     * PCSX2-EX is needed for Lua Support if not using PC version
 
-### PC Epic Games Store Version ([setup guide](https://docs.google.com/document/d/1KIVS6RjnCtbpO3DYWy1HdXxkw_8s9opE8dsPaoDTpYU/edit?usp=sharing))
+### PC Epic Games Store Version
 
 * [LuaBackend Hook](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip)
     * See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional randomizer-specific setup
@@ -29,8 +27,9 @@
     * Installed via OpenKH Mods Manager by typing `KH2FM-Mods-Num/GoA-ROM-Edition` into the "Add a new mod from GitHub"
       text box and clicking Install
 * ~~[Mods Manager Bridge](https://github.com/thundrio-kh/khpc-modsmanager-bridge/releases/latest/download/build_from_mm.zip)~~
+  _(Depreciated: Patching merged into the Mod Manager after August 21st, 2022)_
 * ~~[Quality of Life Lua Script](https://raw.githubusercontent.com/tommadness/KH2Randomizer/2.0/static/OpenKHQualityOfLife.lua)~~
-  _(Deprecated: On GoA mods released after June 20th, 2022, this is included in GoA.ROM.lua)_
+  _(Depreciated: On GoA mods released after June 20th, 2022, this is included in GoA.ROM.lua)_
 * [Auto-Save Lua Script](https://raw.githubusercontent.com/Denhonator/KHPCSpeedrunTools/main/2FMMods/scripts/2fmAutosave.lua)
     * Automatically saves your game when you enter a room (with some safeguards to prevent getting stuck in a room)
     * The auto-save does not itself appear in your save files list
