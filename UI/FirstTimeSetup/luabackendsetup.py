@@ -265,11 +265,13 @@ class LuaBackendSetupDialog(QDialog):
 
                 zip_file.extract(LUA_DLL_NAME, pc_release_path)
 
-                if self.config_file_path is None:
-                    zip_file.extract(BACKEND_CONFIG_FILE_NAME, pc_release_path)
-                    self.config_file_path = pc_release_path / BACKEND_CONFIG_FILE_NAME
-                if not self.config_file_configured:
-                    self._do_apply_configuration()
+                # If the user is choosing to download and install, just overwrite their config file.
+                # Trying to be too cute caused a lot of headache because users were likely on an older format of the
+                # config file, and we downloaded a new version of everything else.
+                # If they already had a custom configuration set up, they'll just have to redo it.
+                zip_file.extract(BACKEND_CONFIG_FILE_NAME, pc_release_path)
+                self.config_file_path = pc_release_path / BACKEND_CONFIG_FILE_NAME
+                self._do_apply_configuration()
 
             os.remove(target_zip_path)
 
