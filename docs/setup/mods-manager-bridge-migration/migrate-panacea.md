@@ -67,7 +67,9 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 ### 4. Configure LuaBackend Hook for Mods Manager integration
 
-Version 2.1.5 of the seed generator adds a screen to help you configure LuaBackend Hook automatically.
+Download the latest version of the Seed Generator [HERE](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
+
+Version 2.1.5 and above of the seed generator adds a screen to help you configure LuaBackend Hook automatically.
 
 * Open the seed generator and choose `Configure -> LuaBackend Hook Setup (PC Only)`.
 
