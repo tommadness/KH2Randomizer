@@ -763,7 +763,7 @@ class RandomBGM():
         for game in musicPaths:
             if game == "CUSTOM":
                 continue
-            path = os.path.join(kh_extract_folder, "kh2", musicPaths[game])
+            path = os.path.join(kh_extract_folder, "data", musicPaths[game])
             if os.path.isdir(path):
                 available_games.append(game)
 

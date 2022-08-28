@@ -100,7 +100,7 @@ id_to_enemy_name[66] = "Icy Cube"
 id_to_enemy_name[69] = "Aerial Knocker"
 id_to_enemy_name[70] = "Small Urn"
 id_to_enemy_name[71] = "Big Urn"
-# id_to_enemy_name[72] = "" 
+# id_to_enemy_name[72] = "" 100% potion
 id_to_enemy_name[73] = "Strafer"
 # id_to_enemy_name[74] = ""
 # id_to_enemy_name[75] = ""
@@ -136,13 +136,13 @@ id_to_enemy_name[103] = "Abu Ice Crystal"
 # id_to_enemy_name[106] = ""
 id_to_enemy_name[107] = "Water Clone"
 id_to_enemy_name[108] = "Aladdin Dash"
-# id_to_enemy_name[109] = ""
-# id_to_enemy_name[111] = ""
+id_to_enemy_name[109] = "Pan Attack"
+id_to_enemy_name[111] = "Stitch Ukulele"
 id_to_enemy_name[112] = "Graveyard/Toy Soldier"
 # id_to_enemy_name[114] = ""
 id_to_enemy_name[115] = "Lance Soldier Idle Hit"
 id_to_enemy_name[116] = "Lance Soldier RC Start"
-# id_to_enemy_name[117] = ""
+id_to_enemy_name[117] = "Lance Solder Idle Hit (Double)"
 id_to_enemy_name[118] = "Lance Soldier RC End"
 id_to_enemy_name[119] = "Dusk (Station)"
 id_to_enemy_name[120] = "Dusk (STT)"
@@ -166,7 +166,7 @@ id_to_enemy_name[138] = "Bulky Vendor (Stage 1/4)"
 id_to_enemy_name[139] = "Bulky Vendor (Stage 2/4)"
 id_to_enemy_name[140] = "Bulky Vendor (Stage 3/4)"
 id_to_enemy_name[141] = "Bulky Vendor (Stage 4/4)"
-# id_to_enemy_name[142] = ""
+id_to_enemy_name[142] = "Bulky Vendor Dying"
 # id_to_enemy_name[143] = ""
 id_to_enemy_name[144] = "Hydra Head"
 id_to_enemy_name[145] = "Dusk (STT Day 1)"
@@ -208,8 +208,8 @@ id_to_enemy_name[180] = "Lance Warrior"
 id_to_enemy_name[181] = "Mad Bumper"
 id_to_enemy_name[182] = "Reckless"
 
-id_to_enemy_name[183] = "Cor Drive Orb"
-# id_to_enemy_name[184] = ""
+id_to_enemy_name[183] = "CoR Drive Orb Hit"
+id_to_enemy_name[184] = "CoR Drive Orb Final Hit"
 id_to_enemy_name[185] = "Valves"
 # id_to_enemy_name[186] = ""
 # id_to_enemy_name[187] = ""
@@ -220,8 +220,8 @@ id_to_enemy_name[191] = "Zexion Riches/Wealth"
 id_to_enemy_name[192] = "Zexion Jackpot/Bounty"
 id_to_enemy_name[193] = "Zexion Treasure/Lucky"
 id_to_enemy_name[194] = "Zexion Bonus"
-# id_to_enemy_name[195] = ""
-# id_to_enemy_name[196] = ""
+id_to_enemy_name[195] = "Seal Magic Break"
+id_to_enemy_name[196] = "Seal Attack Break"
 # id_to_enemy_name[197] = ""
 # id_to_enemy_name[198] = ""
 
@@ -590,26 +590,33 @@ class SeedZip():
             print(len(testing))
 
             # this is the very secret thing
-            all_drops[19].item1 = 593
-            all_drops[19].item1_chance = 100
-            all_drops[19].item2 = 594
-            all_drops[19].item2_chance = 100
-            all_drops[19].item3 = 595
-            all_drops[19].item3_chance = 100
+            all_drops[72].item1 = 593
+            all_drops[72].item1_chance = 100
+            all_drops[72].item2 = 594
+            all_drops[72].item2_chance = 100
+            all_drops[72].item3 = 595
+            all_drops[72].item3_chance = 100
             
+            all_drops[117].small_hp = 100
 
-            all_drops[183].item3 = 361#ori
-            all_drops[183].item3_chance = 100
-            all_drops[184].item3 = 585#illusion
-            all_drops[183].item3_chance = 100
 
-            for t in testing:
-                if t < 100:
+            first_barrier = len(testing)//4
+            second_barrier = len(testing)//2
+            third_barrier = (len(testing)*3)//4
+
+            for i,t in enumerate(testing):
+                if i < first_barrier:
+                    print(f"{t} munny")
                     all_drops[t].big_munny = 100
-                elif t < 150:
+                elif i < second_barrier:
+                    print(f"{t} mp")
+                    all_drops[t].big_mp = 100
+                elif i < third_barrier:
+                    print(f"{t} drive")
                     all_drops[t].big_drive = 100
                 else:
-                    all_drops[t].big_mp = 100
+                    print(f"{t} hp")
+                    all_drops[t].big_hp = 100
 
             # write changes
             with open(resource_path("static/drops.bin"), "rb") as dropsbar:

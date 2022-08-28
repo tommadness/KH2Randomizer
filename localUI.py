@@ -50,7 +50,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '2.1.5-mw'
+LOCAL_UI_VERSION = '2.1.5'
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -255,7 +255,7 @@ class KH2RandomizerApp(QMainWindow):
         self.presetMenu.addMenu(self.presetsMenu)
         self.config_menu = QMenu('Configure')
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
-        self.config_menu.addAction('Find Extracted PC KH Data', self.extractedFilesGetter)
+        self.config_menu.addAction('Find OpenKH Folder (For Extracted KH2)', self.extractedFilesGetter)
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
         menu_bar.addMenu(self.config_menu)

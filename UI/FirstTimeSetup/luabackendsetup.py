@@ -182,7 +182,7 @@ class LuaBackendSetupDialog(QDialog):
             message.exec()
             return
 
-        with open(mods_manager_yml_file) as file:
+        with open(mods_manager_yml_file,encoding='utf-8') as file:
             raw_yaml = yaml.safe_load(file)
 
         pc_release_path = self._path_or_none(raw_yaml['pcReleaseLocation'])
@@ -223,7 +223,7 @@ class LuaBackendSetupDialog(QDialog):
         if config_file_found:
             self.config_file_path = config_file_path
 
-            with open(config_file_path) as config_file:
+            with open(config_file_path,encoding='utf-8') as config_file:
                 raw_toml = tomlkit.load(config_file)
 
             self.config_file_configured = self._has_matching_script_path(raw_toml)
@@ -298,14 +298,14 @@ class LuaBackendSetupDialog(QDialog):
             message.exec()
 
     def _do_apply_configuration(self):
-        with open(self.config_file_path) as config_file:
+        with open(self.config_file_path,encoding='utf-8') as config_file:
             raw_toml = tomlkit.load(config_file)
 
         target_path = self._mod_scripts_path()
 
         existing_script_list = raw_toml['kh2']['scripts']
         existing_script_list.append({'path': str(target_path), 'relative': False})
-        with open(self.config_file_path, mode='w') as config_file:
+        with open(self.config_file_path, mode='w',encoding='utf-8') as config_file:
             tomlkit.dump(raw_toml, config_file)
 
         self._validate_clicked()
