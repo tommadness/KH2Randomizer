@@ -174,6 +174,7 @@ class RandomizerSettings():
                                     "boss_datas":ui_settings.get(settingkey.POINTS_BOSS_DATA),
                                     "boss_sephi":ui_settings.get(settingkey.POINTS_BOSS_SEPHIROTH),
                                     "boss_terra":ui_settings.get(settingkey.POINTS_BOSS_TERRA),
+                                    "boss_final":ui_settings.get(settingkey.POINTS_BOSS_FINAL),
                                     "boss_other":ui_settings.get(settingkey.POINTS_BOSS_NORMAL),
                                     "deaths":ui_settings.get(settingkey.POINTS_DEATH)}
 
