@@ -62,6 +62,7 @@ POINTS_BOSS_AS = "points_boss_as"
 POINTS_BOSS_DATA = "points_boss_data"
 POINTS_BOSS_SEPHIROTH = "points_boss_sephiroth"
 POINTS_BOSS_TERRA = "points_boss_terra"
+POINTS_BOSS_FINAL = "points_boss_final"
 POINTS_DEATH = 'points_death'
 REVEAL_TYPES = "reveal_types"
 REVEAL_COMPLETE = "reveal_complete"

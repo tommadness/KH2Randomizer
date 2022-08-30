@@ -713,6 +713,17 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=50,
         randomizable=True
     ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_FINAL,
+        ui_label="Final Xemnas Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=100,
+        randomizable=True
+    ),
 
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
