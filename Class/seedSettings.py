@@ -520,7 +520,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_PROOF,
         ui_label="Proof Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=5,
@@ -531,7 +531,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_FORM,
         ui_label="Forms Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=9,
@@ -542,7 +542,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_MAGIC,
         ui_label="Magic Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=7,
@@ -553,7 +553,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_SUMMON,
         ui_label="Summon Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=5,
@@ -562,9 +562,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_ABILITY,
-        ui_label="Ability Point Value",
+        ui_label="SC & OM Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=5,
@@ -575,7 +575,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_PAGE,
         ui_label="Page Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=5,
@@ -586,7 +586,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_VISIT,
         ui_label="Visit Unlock Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=5,
@@ -597,10 +597,21 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_REPORT,
         ui_label="Report Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=3,
+        randomizable=True
+    ),
+    
+    IntSpinner(
+        name=settingkey.POINTS_AUX,
+        ui_label="Aux Unlocks Point Value",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=1,
         randomizable=True
     ),
 
@@ -608,7 +619,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_BONUS,
         ui_label="Bonus Level Points",
         minimum=-10,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=10,
@@ -619,7 +630,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_COMPLETE,
         ui_label="World Completion Points",
         minimum=-10,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=10,
@@ -630,13 +641,89 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_FORMLV,
         ui_label="Form level Points",
         minimum=-10,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=3,
         randomizable=True
     ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_DEATH,
+        ui_label="Death Penalty Points",
+        minimum=-1000,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=-10,
+        randomizable=True
+    ),
 
+    IntSpinner(
+        name=settingkey.POINTS_BOSS_NORMAL,
+        ui_label="Normal Boss Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=10,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_AS,
+        ui_label="Absent Silhouette Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=20,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_DATA,
+        ui_label="Data Boss Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=30,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_SEPHIROTH,
+        ui_label="Sephiroth Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=40,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_TERRA,
+        ui_label="Lingering Will Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=50,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_FINAL,
+        ui_label="Final Xemnas Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=100,
+        randomizable=True
+    ),
 
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
@@ -747,6 +834,15 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=True,
         tooltip="Points Mode only: If enabled, reports can hint other reports.",
         randomizable=True
+    ),
+    
+    Toggle(
+        name=settingkey.SCORE_MODE,
+        ui_label='Hi-Score Mode',
+        shared=True,
+        default=False,
+        tooltip="If enabled gain points for collecting Important Checks, completing worlds, beating bosses, ect.",
+        randomizable=False
     ),
 
     MultiSelect(
