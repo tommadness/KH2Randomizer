@@ -562,7 +562,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_ABILITY,
-        ui_label="Ability Point Value",
+        ui_label="SC & OM Point Value",
         minimum=0,
         maximum=1000,
         step=1,
