@@ -168,7 +168,14 @@ class RandomizerSettings():
                                     "visit":ui_settings.get(settingkey.POINTS_VISIT),
                                     "bonus":ui_settings.get(settingkey.POINTS_BONUS), 
                                     "complete":ui_settings.get(settingkey.POINTS_COMPLETE), 
-                                    "formlv":ui_settings.get(settingkey.POINTS_FORMLV)}
+                                    "formlv":ui_settings.get(settingkey.POINTS_FORMLV),
+                                    "other":ui_settings.get(settingkey.POINTS_AUX),
+                                    "boss_as":ui_settings.get(settingkey.POINTS_BOSS_AS),
+                                    "boss_datas":ui_settings.get(settingkey.POINTS_BOSS_DATA),
+                                    "boss_sephi":ui_settings.get(settingkey.POINTS_BOSS_SEPHIROTH),
+                                    "boss_terra":ui_settings.get(settingkey.POINTS_BOSS_TERRA),
+                                    "boss_other":ui_settings.get(settingkey.POINTS_BOSS_NORMAL),
+                                    "deaths":ui_settings.get(settingkey.POINTS_DEATH)}
 
         self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode = ui_settings.get(settingkey.REVEAL_REPORTMODE)
@@ -182,6 +189,7 @@ class RandomizerSettings():
             self.spoiler_hint_values.append("reportmode")
 
         self.extra_ics = ui_settings.get(settingkey.EXTRA_ICS)
+        self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)
 
         self.tracker_includes = []
         if self.level_one:
@@ -197,6 +205,8 @@ class RandomizerSettings():
             self.tracker_includes.append("library")
         if self.extra_ics:
             self.tracker_includes.append("extra_ics")
+        if self.hiscore_mode:
+            self.tracker_includes.append("ScoreMode")
 
         # making tracker includes use all worlds and 
         for l in locationType:
