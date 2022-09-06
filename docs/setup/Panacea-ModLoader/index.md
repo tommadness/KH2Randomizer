@@ -2,7 +2,7 @@
 
 ## Heads up!
 * Feel free to go to the [discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated help channel where you can find people to help you, if you're facing any difficulties. (P.S. Please be polite)
-* You must run the game once before you start the guide. Otherwise it may not boot up correctly after the randomzier is installed.
+* You must run the game once before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
 * VERIFY GAME FILES through the Epic Games Launcher for Kingdom Hearts 1.5 + 2.5 remix v1.0.0.8_WW (pirated copies are not supported, it is strongly recommended you buy and install the game directly from the Epic Game Store).
 
 ## Resources Needed:
