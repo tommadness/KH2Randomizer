@@ -186,8 +186,8 @@ class RandomizerSettings():
         ]
         if self.revealComplete:
             self.spoiler_hint_values.append("complete")
-        if self.revealMode:
-            self.spoiler_hint_values.append("reportmode")
+        if self.revealMode != 'Disabled':
+            self.spoiler_hint_values.append(self.revealMode)
 
         self.extra_ics = ui_settings.get(settingkey.EXTRA_ICS)
         self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)
