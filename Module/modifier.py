@@ -59,8 +59,9 @@ class SeedModifier():
                 possibleabilities.remove(choice)
 
         # Make sure there is one OM and one SC so the tracker behaves
-        randomabilitypool.append(abilitydict["Second Chance"])
-        randomabilitypool.append(abilitydict["Once More"])
+        if "Second Chance" in abilitydict:
+            randomabilitypool.append(abilitydict["Second Chance"])
+            randomabilitypool.append(abilitydict["Once More"])
         return randomabilitypool
 
     def randomSupportAbilityPool(action, support):
@@ -77,8 +78,9 @@ class SeedModifier():
                 possibleabilities.remove(choice)
 
         # Make sure there is one OM and one SC so the tracker behaves
-        randomabilitypool.append(abilitydict["Second Chance"])
-        randomabilitypool.append(abilitydict["Once More"])
+        if "Second Chance" in abilitydict:
+            randomabilitypool.append(abilitydict["Second Chance"])
+            randomabilitypool.append(abilitydict["Once More"])
         return randomabilitypool + action
 
     def defaultAbilityPool(action, support):

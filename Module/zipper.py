@@ -129,7 +129,7 @@ id_to_enemy_name[97] = "Quickplay (Aladdin)"
 id_to_enemy_name[98] = "Quickplay (Sora)"
 id_to_enemy_name[99] = "Speedster End"
 id_to_enemy_name[100] = "Speedster Start"
-# id_to_enemy_name[102] = ""
+id_to_enemy_name[102] = "Hyabusa"
 id_to_enemy_name[103] = "Abu Ice Crystal"
 # id_to_enemy_name[104] = ""
 # id_to_enemy_name[105] = ""
@@ -211,7 +211,7 @@ id_to_enemy_name[182] = "Reckless"
 id_to_enemy_name[183] = "CoR Drive Orb Hit"
 id_to_enemy_name[184] = "CoR Drive Orb Final Hit"
 id_to_enemy_name[185] = "Valves"
-# id_to_enemy_name[186] = ""
+id_to_enemy_name[186] = "Vexen Anti-Sora"
 # id_to_enemy_name[187] = ""
 id_to_enemy_name[188] = "Zexion Soothe/Herb/Heal/Mend"
 id_to_enemy_name[189] = "Zexion Spirit"
@@ -222,8 +222,8 @@ id_to_enemy_name[193] = "Zexion Treasure/Lucky"
 id_to_enemy_name[194] = "Zexion Bonus"
 id_to_enemy_name[195] = "Seal Magic Break"
 id_to_enemy_name[196] = "Seal Attack Break"
-# id_to_enemy_name[197] = ""
-# id_to_enemy_name[198] = ""
+id_to_enemy_name[197] = "Seal Magic Break Final Hit"
+id_to_enemy_name[198] = "Seal Attack Break Final Hit"
 
 
 class SynthList():
@@ -448,6 +448,10 @@ class SeedZip():
                                 asset["multi"] = []
                                 for region in ["us","fr","gr","it","sp","uk"]:
                                     asset["multi"].append({'name':asset["name"].replace("jp",region)})
+                            elif "ard/us" in asset["name"]:
+                                asset["multi"] = []
+                                for region in ["jp","fr","gr","it","sp","uk"]:
+                                    asset["multi"].append({'name':asset["name"].replace("us",region)})
 
 
                     lines = enemySpoilers.split("\n")
