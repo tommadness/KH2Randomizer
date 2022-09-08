@@ -871,14 +871,23 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="If enabled, World Values will turn blue when all Important Checks in a World are found.",
         randomizable=True
     ),
-
-    Toggle(
+    
+    SingleSelect(
         name=settingkey.REVEAL_REPORTMODE,
-        ui_label='Reports reveal worlds',
+        ui_label='Report Reveal Mode',
+        choices={
+            'Disabled': 'Disabled',
+            'reportmode': 'Worlds',
+            'bossreports': 'Randomized Bosses'
+        },
         shared=True,
-        default=True,
-        tooltip="If enabled, Ansem Reports will be used to reveal Important Checks in a world.",
-        randomizable=True
+        default='reportmode',
+        tooltip=textwrap.dedent('''
+            Disabled - All worlds will be revealed at the start
+            Worlds - Ansem Reports will be used to reveal Important Checks in a world.
+            Randomized Bosses - Ansem Reports will be used to reveal what a boss has randomized into (Requires Boss randomizer).
+        '''),
+        randomizable=["Disabled","reportmode","bossreports"]
     ),
     
     IntSpinner(

@@ -14,11 +14,11 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.EXTRA_ICS)
         self.add_option(settingkey.SCORE_MODE)
         self.add_option(settingkey.REPORT_DEPTH)
+        self.add_option(settingkey.REVEAL_REPORTMODE)
         self.add_option(settingkey.PREVENT_SELF_HINTING)
         self.add_option(settingkey.ALLOW_PROOF_HINTING)
         self.add_option(settingkey.ALLOW_REPORT_HINTING)
         self.add_option(settingkey.REVEAL_COMPLETE)
-        self.add_option(settingkey.REVEAL_REPORTMODE)
         self.add_option(settingkey.REVEAL_TYPES)
         self.end_column()
 
@@ -89,7 +89,7 @@ class HintsMenu(KH2Submenu):
         for selected in setting.choice_keys:
             if selected == "report":
                 index = setting.choice_keys.index(selected)
-                if not report_mode_enabled:
+                if report_mode_enabled == 'Disabled':
                     widget.item(index).setSelected(False)
                     widget.item(index).setFlags(Qt.NoItemFlags)
                 else:
