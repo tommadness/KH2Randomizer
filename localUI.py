@@ -491,9 +491,9 @@ class KH2RandomizerApp(QMainWindow):
     def genSeed(self,data,rando_settings):
         self.thread = QThread()
         displayedSeedName = rando_settings.random_seed
-        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","",0,0,None)
+        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","Cancel",0,0,None)
         self.progress.setWindowTitle("Making your Seed, please wait...")
-        self.progress.setCancelButton(None)
+        # self.progress.setCancelButton(None)
         self.progress.setModal(True)
         self.progress.show()
 
@@ -501,14 +501,16 @@ class KH2RandomizerApp(QMainWindow):
         self.thread.provideData(data,rando_settings)
         self.thread.finished.connect(self.handleResult)
         self.thread.failed.connect(self.handleFailure)
+        
+        self.progress.canceled.connect(lambda : self.thread.terminate())
         self.thread.start()
 
     def genMultiSeed(self,data,rando_settings):
         self.thread = QThread()
         displayedSeedName = rando_settings[0].random_seed
-        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","",0,0,None)
+        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","Cancel",0,0,None)
         self.progress.setWindowTitle("Making your Seed, please wait...")
-        self.progress.setCancelButton(None)
+        # self.progress.setCancelButton(None)
         self.progress.setModal(True)
         self.progress.show()
 
@@ -516,6 +518,7 @@ class KH2RandomizerApp(QMainWindow):
         self.thread.provideData(data,rando_settings)
         self.thread.finished.connect(self.handleMultiResult)
         self.thread.failed.connect(self.handleFailure)
+        self.progress.canceled.connect(lambda : self.thread.terminate())
         self.thread.start()
 
     def savePreset(self):
