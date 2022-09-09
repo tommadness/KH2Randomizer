@@ -7,30 +7,29 @@ This guide will help you set up Randomizer Mod for the PCSX2-EX (PS2 Emulator) v
 ## Step 0: Prep work ##
 
 To set up Rando, Extract, Download and/or Install the following:
+
 - [Custom Build of OpenKH Mod Manager](https://github.com/shananas/OpenKh/releases/download/release-372-KH2Rando/openkh-modmanager.zip)
     - OpenKH Pre-requisite: [.NET Desktop Runtime 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime)
 - A copy of KINGDOM HEARTS II FINAL MIX+, ripped in an ISO format. (will not be provided here for legal reasons)
 - [PCSX2-EX](https://cdn.discordapp.com/attachments/712837252279173153/974389136540713030/PCSX2-EX.v3.10.0.7z) (edit the downloaded archive: remove the “, attachment” bit on the extension file)
     - PCSX2-EX Pre-requisite: PCSX2 BIOS files (will not be provided here for legal reasons)
-- [KINGDOM HEARTS II FINAL MIX Randomizer Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
-- [Special PNACH](https://discord.com/channels/712837252279173150/811885954754412545/893022782533816350) to mitigate gameplay-related problems caused by setting the game to the English region (X to attack/confirm, O to jump/cancel). Disregard this if you want to play with JP controls (X to jump/cancel, O to attack/confirm)
+- [KINGDOM HEARTS II FINAL MIX Randomizer Seed Generator](https://github.com/tommadness/KH2Randomizer/releases)
+- [Special PNACH](https://cdn.discordapp.com/attachments/811885954754412545/893022782412193812/F266B00B_OpenKH_fixes.pnach) to mitigate gameplay-related problems caused by setting the game to the English region (X to attack/confirm, O to jump/cancel). Disregard this if you want to play with JP controls (X to jump/cancel, O to attack/confirm)
 
-All of these can be found on the Downloads section of the KINGDOM HEARTS II FINAL MIX Randomizer website.
-
-I prefer to have them saved in a single folder (for this guide, I’ll be placing them in `C:\KH2FMRando-PS2` folder in my computer for simplicity reasons).
+I prefer to have them saved in a single folder (for this guide, I’ll be placing them in the `C:\KH2FMRando-PS2` folder on my computer for simplicity reasons).
 
 ---
 
 ## Step 1: PCSX2-EX Setup ##
-PCSX2-EX looks and works similarly to vanilla PCSX2, except from some changes like having a LUA engine for LUA-based mods, among others. With that in mind, PCSX2-EX’s setup is pretty much like vanilla PCSX2’s setup as well, so it should be simple enough that I won’t include it on this guide. Use this time to set up your controllers, graphics settings, memory cards, etc.
+PCSX2-EX looks and works similarly to vanilla PCSX2, with the added support of LUA Engine and LUA-based mods. With that in mind, PCSX2-EX’s settings and menus should look familiar if you have ever used the original before. Use this time to set up your controllers, graphics settings, memory cards, etc.
 
-Although, for the Randomizer to work, Cheats and LuaEngine are required to be enabled, so don’t forget to enable that. It’s under `System > Enable LuaEngine` and `System > Enable Cheats` under the main PCSX2-EX Window.
+Although, for the Randomizer to work, the **Cheats and LuaEngine seettings must be enabled**, so don’t forget to turn them on. They're under `System > Enable LuaEngine` and `System > Enable Cheats` under the main PCSX2-EX Window.
 
 ![Enable LuaEngine](./enable-luaengine.png) ![Enable Cheats](./enable-cheats.png)
 
 Afterwards, close up PCSX2-EX, this is the last time that we’ll be opening it manually, as the rest of the setup process will make it so that PCSX2-EX will open automatically.
 
-If you will be playing on the English region (X to attack/confirm, O to jump/cancel), copy the `.pnach` file that you downloaded earlier to the cheats folder that was automatically created by the PCSX2-EX setup, located at `Documents/PCSX2`. If you will be playing on the Japanese region (X to jump/cancel, O to attack/confirm), you can skip this step.
+If you will be playing on the **English region** (X to attack/confirm, O to jump/cancel), copy the `F266B00B_OpenKH_fixes.pnach` file that you downloaded earlier to the cheats folder that was automatically created during the PCSX2-EX installation, located at `Documents/PCSX2`. If you will be playing with the Japanese region (X to jump/cancel, O to attack/confirm), you can skip this step.
 
 ![Copy .pnach file to Cheats folder](./copy-to-cheats-folder.png)
 
@@ -44,7 +43,7 @@ TL;DR, its:
 
 ## Step 2: OpenKH Mods Manager Setup ##
 
-Download and extract the OpenKH archive (downloading the latest version) into a place you would be most comfortable with. (for this guide, its going to be `C:\KH2FMRando-PS2\OpenKH`) and look for the `OpenKH.Tools.ModsManager.exe` file. We will be configuring and running the Randomizer via the Mods Manager, so it would be wise to make a shortcut of this in your Desktop so that you won’t have to dive in the folder every time you want to play the Randomizer.
+Download and extract the latest OpenKH release into a place you would be most comfortable with. (For this guide, its going to be `C:\KH2FMRando-PS2\OpenKH`) and look for the `OpenKH.Tools.ModsManager.exe` file. We will be configuring and running the Randomizer via the Mods Manager, so it would be wise to make a shortcut of this on your Desktop so that you won’t have to dive in the folder every time you want to play the Randomizer.
 
 ![Send a shortcut to the Desktop!](./diagram1.png)
 
@@ -60,7 +59,7 @@ But if you have difficulty following this GIF, here’s the steps in condensed f
 5.	Select the region. If you're playing with English controls, select `English (text US, menu US, voice US)`; or `Use game default region` if you're playing with JP controls. Click `Next`.
 6.	Click `Finish`.
 
-From here on out, we’re now going to get the OpenKH mods needed for this mod. Click on the green + icon on the middle of the screen, and in the Add a new mod from Github text space, type on `Rikysonic/languagepack-en`, then click Install. This will translate our KINGDOM HEARTS II FINAL MIX ISO file from Japanese to English in real time. If you are playing in a different language, replace this mod with the appropriate language mod.
+From here on out, we’re now going to get the OpenKH mods needed for this the rando. Click on the green + icon on the middle of the screen, and in the **Add a new mod from Github** text space, type on `Rikysonic/languagepack-en`, then click Install. This will translate our KINGDOM HEARTS II FINAL MIX ISO file from Japanese to English in real time. If you are playing in a different language, replace this mod with the appropriate language mod.
 
 <img src="./diagram2.png" width="600">
 
@@ -96,7 +95,8 @@ From here, you should have three mods installed: the Language pack of your choic
 
 ![Almost there...](./three-mods.png)
 
-From here, click on `Game -> Build...` in the menu, then select `Build and Run [OpenKH/PCSX2/PC]` (Keyboard shortcut: `F5`). This will build up the mods, open PCSX2-EX automatically with KINGDOM HEARTS II FINAL MIX booting up, and injecting the mods loaded in OpenKH Mods Manager into the game in real time.
+=======
+From here, click on `Run` in the menu, then select `Build and Run` (Keyboard shortcut: `F5`). This will build the mods, automatically open PCSX2-EX with KINGDOM HEARTS II FINAL MIX, and will inject the mods loaded in OpenKH Mods Manager into the game in real time.
 
 ![Run > Build and Run](./build-and-run.png)
 

@@ -89,7 +89,8 @@ class ItemDepths():
         elif location_depth is locationDepth.SecondVisit:
             for node in data_nodes:
                 node_locations = location_graph.node_data(node).locations
-                self.depth_classification[node_locations[0]] = False
+                for n_l in node_locations:
+                    self.depth_classification[n_l] = False
         elif location_depth is locationDepth.DataFight:
             for node in data_nodes:
                 node_locations = location_graph.node_data(node).locations

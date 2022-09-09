@@ -37,7 +37,8 @@ class Hints:
             return None
         hintsText = {}
         hintsText['hintsType'] = hintsType
-        hintsText['settings'] = tracker_includes 
+        hintsText['settings'] = tracker_includes
+        hintsText['checkValue'] = pointHintValues
 
         importantChecks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON,itemType.STORYUNLOCK,"Second Chance", "Once More"]
 
@@ -164,6 +165,8 @@ class Hints:
                     world_text = "TWTNW"
                 if world == locationType.DC:
                     world_text = "Disney Castle"
+                if world == locationType.HUNDREDAW:
+                    world_text = "100 Acre"
 
                 points_to_connection = proof_of_connection_world and world in breadcrumb_map[proof_of_connection_world]
                 points_to_peace = proof_of_peace_world and world in breadcrumb_map[proof_of_peace_world]
@@ -477,7 +480,7 @@ class Hints:
                 raise HintException("Two reports hint the same location. This is an error, try a new seedname.")
 
         if hintsType == "Points":
-            hintsText['checkValue'] = pointHintValues
+            #hintsText['checkValue'] = pointHintValues
             hintsText['world'] = {}
             hintsText['Reports'] = {}
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]

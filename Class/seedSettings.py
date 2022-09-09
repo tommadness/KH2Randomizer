@@ -228,7 +228,7 @@ _all_settings = [
         name=settingkey.STATSANITY,
         ui_label='Bonus Rewards as Items (Statsanity)',
         shared=True,
-        default=False,
+        default=True,
         randomizable=True,
         tooltip=textwrap.dedent('''Takes HP, MP, Drive, Accessory Slot, Armor Slot, and Item Slot upgrades from the normal bonus 
 popup locations and lets them appear in chests. Those bonus locations can now have other items in them.'''),
@@ -241,7 +241,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=1.5,
+        default=2.0,
         randomizable=True
     ),
 
@@ -274,7 +274,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=3.0,
+        default=4.0,
         randomizable=True
     ),
 
@@ -296,7 +296,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=10.0,
         step=0.5,
         shared=True,
-        default=3.0,
+        default=3.5,
         randomizable=True
     ),
 
@@ -340,7 +340,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             expCurve.DUSK.name: "Dusk"
         },
         shared=True,
-        default=expCurve.DAWN.name,
+        default=expCurve.MIDDAY.name,
         tooltip=_drive_exp_curve_tooltip_text,
         randomizable=True
     ),
@@ -368,7 +368,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             expCurve.DUSK.name: "Dusk"
         },
         shared=True,
-        default=expCurve.DAWN.name,
+        default=expCurve.MIDDAY.name,
         tooltip=_drive_exp_curve_tooltip_text,
         randomizable=True
     ),
@@ -382,7 +382,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             expCurve.DUSK.name: "Dusk"
         },
         shared=True,
-        default=expCurve.DAWN.name,
+        default=expCurve.MIDDAY.name,
         tooltip=_drive_exp_curve_tooltip_text,
         randomizable=True
     ),
@@ -452,7 +452,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'Level_4': 'Max'
         },
         shared=True,
-        default='Disabled',
+        default='Level_1',
         tooltip=textwrap.dedent('''
             5 Random - Start with 5 individual growths at random.
             Level 1 - Start with level 1 of all growth abilities.
@@ -504,7 +504,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'Spoiler': 'Spoiler'
         },
         shared=True,
-        default='JSmartee',
+        default='Shananas',
         tooltip=textwrap.dedent('''
             Disabled - Use no hint system
             JSmartee - Secret Ansem Reports provide information for how many "important checks" are in a world
@@ -520,10 +520,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_PROOF,
         ui_label="Proof Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
-        default=12,
+        default=5,
         randomizable=True
     ),
 
@@ -531,10 +531,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_FORM,
         ui_label="Forms Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
-        default=10,
+        default=9,
         randomizable=True
     ),
 
@@ -542,10 +542,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_MAGIC,
         ui_label="Magic Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
-        default=8,
+        default=7,
         randomizable=True
     ),
 
@@ -553,21 +553,21 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_SUMMON,
         ui_label="Summon Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
-        default=6,
+        default=5,
         randomizable=True
     ),
 
     IntSpinner(
         name=settingkey.POINTS_ABILITY,
-        ui_label="Ability Point Value",
+        ui_label="SC & OM Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
-        default=4,
+        default=5,
         randomizable=True
     ),
 
@@ -575,10 +575,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_PAGE,
         ui_label="Page Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
-        default=2,
+        default=5,
         randomizable=True
     ),
 
@@ -586,10 +586,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_VISIT,
         ui_label="Visit Unlock Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
-        default=2,
+        default=5,
         randomizable=True
     ),
     
@@ -597,10 +597,21 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_REPORT,
         ui_label="Report Point Value",
         minimum=0,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
-        default=2,
+        default=3,
+        randomizable=True
+    ),
+    
+    IntSpinner(
+        name=settingkey.POINTS_AUX,
+        ui_label="Aux Unlocks Point Value",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=1,
         randomizable=True
     ),
 
@@ -608,7 +619,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_BONUS,
         ui_label="Bonus Level Points",
         minimum=-10,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=10,
@@ -619,7 +630,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_COMPLETE,
         ui_label="World Completion Points",
         minimum=-10,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=10,
@@ -630,13 +641,89 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.POINTS_FORMLV,
         ui_label="Form level Points",
         minimum=-10,
-        maximum=100,
+        maximum=1000,
         step=1,
         shared=True,
         default=3,
         randomizable=True
     ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_DEATH,
+        ui_label="Death Penalty Points",
+        minimum=-1000,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=-10,
+        randomizable=True
+    ),
 
+    IntSpinner(
+        name=settingkey.POINTS_BOSS_NORMAL,
+        ui_label="Normal Boss Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=10,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_AS,
+        ui_label="Absent Silhouette Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=20,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_DATA,
+        ui_label="Data Boss Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=30,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_SEPHIROTH,
+        ui_label="Sephiroth Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=40,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_TERRA,
+        ui_label="Lingering Will Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=50,
+        randomizable=True
+    ),
+    
+        IntSpinner(
+        name=settingkey.POINTS_BOSS_FINAL,
+        ui_label="Final Xemnas Defeated Points",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=100,
+        randomizable=True
+    ),
 
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
@@ -748,6 +835,15 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="Points Mode only: If enabled, reports can hint other reports.",
         randomizable=True
     ),
+    
+    Toggle(
+        name=settingkey.SCORE_MODE,
+        ui_label='Hi-Score Mode',
+        shared=True,
+        default=False,
+        tooltip="If enabled gain points for collecting Important Checks, completing worlds, beating bosses, ect.",
+        randomizable=False
+    ),
 
     MultiSelect(
         name=settingkey.REVEAL_TYPES,
@@ -775,14 +871,23 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="If enabled, World Values will turn blue when all Important Checks in a World are found.",
         randomizable=True
     ),
-
-    Toggle(
+    
+    SingleSelect(
         name=settingkey.REVEAL_REPORTMODE,
-        ui_label='Reports reveal worlds',
+        ui_label='Report Reveal Mode',
+        choices={
+            'Disabled': 'Disabled',
+            'reportmode': 'Worlds',
+            'bossreports': 'Randomized Bosses'
+        },
         shared=True,
-        default=True,
-        tooltip="If enabled, Ansem Reports will be used to reveal Important Checks in a world.",
-        randomizable=True
+        default='reportmode',
+        tooltip=textwrap.dedent('''
+            Disabled - All worlds will be revealed at the start
+            Worlds - Ansem Reports will be used to reveal Important Checks in a world.
+            Randomized Bosses - Ansem Reports will be used to reveal what a boss has randomized into (Requires Boss randomizer).
+        '''),
+        randomizable=["Disabled","reportmode","bossreports"]
     ),
     
     IntSpinner(
@@ -1068,7 +1173,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.PR_MAP_SKIP,
         ui_label='Remove Port Royal Map Select',
         shared=True,
-        default=False,
+        default=True,
         tooltip='Changes Port Royal map screen with text options, useful for avoiding crashes in PC.'
     ),
 
@@ -1086,6 +1191,20 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip='Allows Roxas to use magic, Sora\'s movement abilities, and Trinity Limit in Simulated Twilight Town.'
+    ),
+    Toggle(
+        name=settingkey.BLOCK_COR_SKIP,
+        ui_label='Block Skipping CoR',
+        shared=True,
+        default=False,
+        tooltip='Disables skipping into the Cavern of Remembrance, requiring completion of the fights to progress.'
+    ),
+    Toggle(
+        name=settingkey.BLOCK_SHAN_YU_SKIP,
+        ui_label='Block Skipping Shan Yu',
+        shared=True,
+        default=False,
+        tooltip='Disables skipping into the throne room of Land of Dragons, requiring beating Shan-Yu to progress.'
     ),
 
     Toggle(

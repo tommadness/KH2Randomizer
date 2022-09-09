@@ -1,3 +1,4 @@
+import os
 import textwrap
 from pathlib import Path
 from typing import Optional
@@ -82,7 +83,7 @@ class LuaBackendSetupDialog(QDialog):
         This affects the name of LuaBackend Hook's DLL file.
         ''').strip()
         mode_field.setToolTip(mode_tooltip)
-        mode_field.addItems(['Patch / Fast Patch', 'Panacea / Mod Loader'])
+        mode_field.addItems(['Panacea (Mod Loader)', 'Patch / Fast Patch'])
         mode_field.currentIndexChanged.connect(self._mod_mode_changed)
         self.mode_field = mode_field
         grid.addWidget(QLabel('Mod mode'), row, 0)
@@ -181,7 +182,7 @@ class LuaBackendSetupDialog(QDialog):
             message.exec()
             return
 
-        with open(mods_manager_yml_file) as file:
+        with open(mods_manager_yml_file,encoding='utf-8') as file:
             raw_yaml = yaml.safe_load(file)
 
         pc_release_path = self._path_or_none(raw_yaml['pcReleaseLocation'])
@@ -222,7 +223,7 @@ class LuaBackendSetupDialog(QDialog):
         if config_file_found:
             self.config_file_path = config_file_path
 
-            with open(config_file_path) as config_file:
+            with open(config_file_path,encoding='utf-8') as config_file:
                 raw_toml = tomlkit.load(config_file)
 
             self.config_file_configured = self._has_matching_script_path(raw_toml)
@@ -264,11 +265,15 @@ class LuaBackendSetupDialog(QDialog):
 
                 zip_file.extract(LUA_DLL_NAME, pc_release_path)
 
-                if self.config_file_path is None:
-                    zip_file.extract(BACKEND_CONFIG_FILE_NAME, pc_release_path)
-                    self.config_file_path = pc_release_path / BACKEND_CONFIG_FILE_NAME
-                if not self.config_file_configured:
-                    self._do_apply_configuration()
+                # If the user is choosing to download and install, just overwrite their config file.
+                # Trying to be too cute caused a lot of headache because users were likely on an older format of the
+                # config file, and we downloaded a new version of everything else.
+                # If they already had a custom configuration set up, they'll just have to redo it.
+                zip_file.extract(BACKEND_CONFIG_FILE_NAME, pc_release_path)
+                self.config_file_path = pc_release_path / BACKEND_CONFIG_FILE_NAME
+                self._do_apply_configuration()
+
+            os.remove(target_zip_path)
 
             self._validate_clicked()
 
@@ -293,14 +298,14 @@ class LuaBackendSetupDialog(QDialog):
             message.exec()
 
     def _do_apply_configuration(self):
-        with open(self.config_file_path) as config_file:
+        with open(self.config_file_path,encoding='utf-8') as config_file:
             raw_toml = tomlkit.load(config_file)
 
         target_path = self._mod_scripts_path()
 
         existing_script_list = raw_toml['kh2']['scripts']
         existing_script_list.append({'path': str(target_path), 'relative': False})
-        with open(self.config_file_path, mode='w') as config_file:
+        with open(self.config_file_path, mode='w',encoding='utf-8') as config_file:
             tomlkit.dump(raw_toml, config_file)
 
         self._validate_clicked()
@@ -308,9 +313,9 @@ class LuaBackendSetupDialog(QDialog):
     def _target_hook_dll_name(self):
         mode_index = self.mode_field.currentIndex()
         if mode_index == 1:
-            return HOOK_DLL_NAME_PANACEA
-        else:
             return HOOK_DLL_NAME_MAIN
+        else:
+            return HOOK_DLL_NAME_PANACEA
 
     def _has_matching_script_path(self, raw_toml: dict) -> bool:
         existing_script_list: list = raw_toml['kh2']['scripts']

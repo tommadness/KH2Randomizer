@@ -1,4 +1,6 @@
+import base64
 from doctest import master
+import enum
 import io
 import json
 import yaml
@@ -13,6 +15,7 @@ from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
+from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
@@ -49,12 +52,12 @@ id_to_enemy_name[10] = "Minute Bomb"
 id_to_enemy_name[11] = "Assault Rider"
 id_to_enemy_name[12] = "Hammer Frame"
 id_to_enemy_name[13] = "Aeroplane"
-# id_to_enemy_name[14] = ""
+id_to_enemy_name[14] = "OC Torches"
 id_to_enemy_name[15] = "Samurai"
-# id_to_enemy_name[16] = ""
+id_to_enemy_name[16] = "OC Bubbles"
 id_to_enemy_name[17] = "Rapid Thruster"
 id_to_enemy_name[18] = "Bolt Tower"
-# id_to_enemy_name[19] = ""
+# id_to_enemy_name[19] = "" # mp only drops
 id_to_enemy_name[22] = "Dragoon"
 id_to_enemy_name[23] = "Assassin"
 id_to_enemy_name[24] = "Sniper"
@@ -85,21 +88,20 @@ id_to_enemy_name[49] = "Emerald Blues"
 id_to_enemy_name[50] = "Crimson Jazz"
 id_to_enemy_name[51] = "Crescendo"
 id_to_enemy_name[52] = "Creeper Plant"
-# id_to_enemy_name[53] = ""
-# id_to_enemy_name[54] = ""
-# id_to_enemy_name[55] = ""
-# id_to_enemy_name[56] = ""
-# id_to_enemy_name[60] = ""
-# id_to_enemy_name[61] = ""
-# id_to_enemy_name[62] = ""
+id_to_enemy_name[53] = "Cerberus RC"
+id_to_enemy_name[54] = "Thresholder"
+id_to_enemy_name[56] = "Possessor"
+id_to_enemy_name[60] = "Lock"
+id_to_enemy_name[61] = "Shock"
+id_to_enemy_name[62] = "Barrel"
 id_to_enemy_name[63] = "Air Pirate"
 id_to_enemy_name[64] = "Fat Bandit"
 id_to_enemy_name[65] = "Fiery Globe"
 id_to_enemy_name[66] = "Icy Cube"
 id_to_enemy_name[69] = "Aerial Knocker"
-# id_to_enemy_name[70] = ""
-# id_to_enemy_name[71] = ""
-# id_to_enemy_name[72] = "" # Dusk Roxas Prologue
+id_to_enemy_name[70] = "Small Urn"
+id_to_enemy_name[71] = "Big Urn"
+# id_to_enemy_name[72] = "" 100% potion
 id_to_enemy_name[73] = "Strafer"
 # id_to_enemy_name[74] = ""
 # id_to_enemy_name[75] = ""
@@ -112,64 +114,117 @@ id_to_enemy_name[73] = "Strafer"
 id_to_enemy_name[82] = "Illuminator"
 # id_to_enemy_name[83] = ""
 # id_to_enemy_name[84] = ""
-# id_to_enemy_name[85] = ""
-# id_to_enemy_name[86] = ""
+id_to_enemy_name[85] = "Shadow Stalker Chandelier"
+id_to_enemy_name[86] = "Shadow Stalker Pillar"
 id_to_enemy_name[87] = "Undead Pirate A"
 id_to_enemy_name[88] = "Undead Pirate B"
 id_to_enemy_name[89] = "Undead Pirate C"
-# id_to_enemy_name[90] = ""
-# id_to_enemy_name[91] = ""
-# id_to_enemy_name[92] = ""
-# id_to_enemy_name[93] = ""
+id_to_enemy_name[90] = "West Wing Armor"
+id_to_enemy_name[91] = "LoD Firework"
+id_to_enemy_name[92] = "LoD Rocket"
+id_to_enemy_name[93] = "LoD Crate"
 # id_to_enemy_name[94] = ""
 # id_to_enemy_name[95] = ""
 id_to_enemy_name[96] = "Bookmaster"
-# id_to_enemy_name[97] = "Quickplay (Aladdin)"
-# id_to_enemy_name[98] = "Quickplay (Sora)"
-# id_to_enemy_name[99] = "Speedster End"
-# id_to_enemy_name[100] = "Speedster Start"
-# id_to_enemy_name[102] = ""
-# id_to_enemy_name[103] = ""
+id_to_enemy_name[97] = "Quickplay (Aladdin)"
+id_to_enemy_name[98] = "Quickplay (Sora)"
+id_to_enemy_name[99] = "Speedster End"
+id_to_enemy_name[100] = "Speedster Start"
+id_to_enemy_name[102] = "Hyabusa"
+id_to_enemy_name[103] = "Abu Ice Crystal"
 # id_to_enemy_name[104] = ""
 # id_to_enemy_name[105] = ""
 # id_to_enemy_name[106] = ""
-# id_to_enemy_name[107] = ""
-# id_to_enemy_name[108] = ""
-# id_to_enemy_name[109] = ""
-# id_to_enemy_name[111] = ""
+id_to_enemy_name[107] = "Water Clone"
+id_to_enemy_name[108] = "Aladdin Dash"
+id_to_enemy_name[109] = "Pan Attack"
+id_to_enemy_name[111] = "Stitch Ukulele"
 id_to_enemy_name[112] = "Graveyard/Toy Soldier"
 # id_to_enemy_name[114] = ""
-# id_to_enemy_name[115] = "Lance Soldier?"
-# id_to_enemy_name[116] = ""
-# id_to_enemy_name[117] = ""
-# id_to_enemy_name[118] = "Lance Soldier RC"
-# id_to_enemy_name[119] = ""
-# id_to_enemy_name[120] = "STT Dusk"
-# id_to_enemy_name[121] = "Creeper Day 6"
+id_to_enemy_name[115] = "Lance Soldier Idle Hit"
+id_to_enemy_name[116] = "Lance Soldier RC Start"
+id_to_enemy_name[117] = "Lance Solder Idle Hit (Double)"
+id_to_enemy_name[118] = "Lance Soldier RC End"
+id_to_enemy_name[119] = "Dusk (Station)"
+id_to_enemy_name[120] = "Dusk (STT)"
+id_to_enemy_name[121] = "Creeper (STT)"
 # id_to_enemy_name[122] = ""
-# id_to_enemy_name[123] = "Creeper Plant RC"
-# id_to_enemy_name[125] = "Crescendo RC"
+id_to_enemy_name[123] = "Creeper Plant RC"
+id_to_enemy_name[125] = "Crescendo RC"
 id_to_enemy_name[126] = "Gambler RC"
 # id_to_enemy_name[127] = ""
 # id_to_enemy_name[128] = ""
-# id_to_enemy_name[129] = ""
-# id_to_enemy_name[130] = "Assassin Day 6"
+id_to_enemy_name[129] = "Meg"
+id_to_enemy_name[130] = "Assassin (STT)"
 # id_to_enemy_name[131] = ""
 # id_to_enemy_name[132] = ""
-# id_to_enemy_name[133] = ""
-# id_to_enemy_name[134] = ""
+id_to_enemy_name[133] = "Luxord Minigame"
+id_to_enemy_name[134] = "Card"
 # id_to_enemy_name[135] = ""
-
+# id_to_enemy_name[136] = ""
+# id_to_enemy_name[137] = ""
 id_to_enemy_name[138] = "Bulky Vendor (Stage 1/4)"
 id_to_enemy_name[139] = "Bulky Vendor (Stage 2/4)"
 id_to_enemy_name[140] = "Bulky Vendor (Stage 3/4)"
 id_to_enemy_name[141] = "Bulky Vendor (Stage 4/4)"
+id_to_enemy_name[142] = "Bulky Vendor Dying"
+# id_to_enemy_name[143] = ""
+id_to_enemy_name[144] = "Hydra Head"
+id_to_enemy_name[145] = "Dusk (STT Day 1)"
+# id_to_enemy_name[146] = ""
+id_to_enemy_name[147] = "BC Box"
+# id_to_enemy_name[148] = ""
+id_to_enemy_name[149] = "Junk Breaking"
+id_to_enemy_name[150] = "BEES"
+# id_to_enemy_name[151] = ""
+id_to_enemy_name[152] = "HT Hazards"
+id_to_enemy_name[154] = "Junk Hitting Junk"
+id_to_enemy_name[155] = "PR Net Hitting"
+id_to_enemy_name[156] = "Odd Mushroom 1"
+id_to_enemy_name[157] = "Odd Mushroom 2"
+id_to_enemy_name[158] = "Odd Mushroom 3"
+id_to_enemy_name[159] = "Odd Mushroom 4"
+id_to_enemy_name[160] = "Odd Mushroom 5"
+id_to_enemy_name[161] = "Even Mushroom 1"
+id_to_enemy_name[162] = "Even Mushroom 2"
+id_to_enemy_name[163] = "Even Mushroom 3"
+id_to_enemy_name[164] = "Even Mushroom 4"
+id_to_enemy_name[165] = "Even Mushroom 5"
+id_to_enemy_name[166] = "Mushroom Prize 1"
+id_to_enemy_name[167] = "Mushroom Prize 2"
+id_to_enemy_name[168] = "Mushroom Prize 3"
+id_to_enemy_name[169] = "Mushroom Prize 4"
+id_to_enemy_name[170] = "Mushroom Prize 5"
 
+id_to_enemy_name[171] = "Befuddler"
+id_to_enemy_name[172] = "Camo Cannon"
+id_to_enemy_name[173] = "Aerial Viking"
+id_to_enemy_name[174] = "Aerial Champ"
+id_to_enemy_name[175] = "Necromancer"
+id_to_enemy_name[176] = "Magic Phantom"
+id_to_enemy_name[177] = "Spring Metal"
+id_to_enemy_name[178] = "Runemaster"
+id_to_enemy_name[179] = "Iron Hammer"
+id_to_enemy_name[180] = "Lance Warrior"
+id_to_enemy_name[181] = "Mad Bumper"
+id_to_enemy_name[182] = "Reckless"
 
-# id_to_enemy_name[181] = "Mad Bumper"
-# id_to_enemy_name[182] = "Reckless"
-
-id_to_enemy_name[184] = "Drive Orb"
+id_to_enemy_name[183] = "CoR Drive Orb Hit"
+id_to_enemy_name[184] = "CoR Drive Orb Final Hit"
+id_to_enemy_name[185] = "Valves"
+id_to_enemy_name[186] = "Vexen Anti-Sora"
+# id_to_enemy_name[187] = ""
+id_to_enemy_name[188] = "Zexion Soothe/Herb/Heal/Mend"
+id_to_enemy_name[189] = "Zexion Spirit"
+id_to_enemy_name[190] = "Zexion Stamina"
+id_to_enemy_name[191] = "Zexion Riches/Wealth"
+id_to_enemy_name[192] = "Zexion Jackpot/Bounty"
+id_to_enemy_name[193] = "Zexion Treasure/Lucky"
+id_to_enemy_name[194] = "Zexion Bonus"
+id_to_enemy_name[195] = "Seal Magic Break"
+id_to_enemy_name[196] = "Seal Attack Break"
+id_to_enemy_name[197] = "Seal Magic Break Final Hit"
+id_to_enemy_name[198] = "Seal Attack Break Final Hit"
 
 
 class SynthList():
@@ -191,32 +246,69 @@ class SynthList():
             return ""
 
 
-# class DropRates():
-#     def __init__(self,bytes):
-#         self.id = bytes_to_number(bytes[0],bytes[1])
-#         self.small_hp = bytes_to_number(bytes[2])
-#         self.big_hp = bytes_to_number(bytes[3])
-#         self.big_munny = bytes_to_number(bytes[4])
-#         self.medium_munny = bytes_to_number(bytes[5])
-#         self.small_munny = bytes_to_number(bytes[6])
-#         self.small_mp = bytes_to_number(bytes[7])
-#         self.big_mp = bytes_to_number(bytes[8])
-#         self.small_drive = bytes_to_number(bytes[9])
-#         self.big_drive = bytes_to_number(bytes[10])
-#         self.item1 = bytes_to_number(bytes[12],bytes[13])
-#         self.item1_chance = bytes_to_number(bytes[14],bytes[15])
-#         self.item2 = bytes_to_number(bytes[16],bytes[17])
-#         self.item2_chance = bytes_to_number(bytes[18],bytes[19])
-#         self.item3 = bytes_to_number(bytes[20],bytes[21])
-#         self.item3_chance = bytes_to_number(bytes[22],bytes[23])
+class DropRates():
+    def __init__(self,offset,bytes):
+        self.offset = offset
+        self.id = bytes_to_number(bytes[0],bytes[1])
+        self.small_hp = bytes_to_number(bytes[2])
+        self.big_hp = bytes_to_number(bytes[3])
+        self.big_munny = bytes_to_number(bytes[4])
+        self.medium_munny = bytes_to_number(bytes[5])
+        self.small_munny = bytes_to_number(bytes[6])
+        self.small_mp = bytes_to_number(bytes[7])
+        self.big_mp = bytes_to_number(bytes[8])
+        self.small_drive = bytes_to_number(bytes[9])
+        self.big_drive = bytes_to_number(bytes[10])
+        self.item1 = bytes_to_number(bytes[12],bytes[13])
+        self.item1_chance = bytes_to_number(bytes[14],bytes[15])
+        self.item2 = bytes_to_number(bytes[16],bytes[17])
+        self.item2_chance = bytes_to_number(bytes[18],bytes[19])
+        self.item3 = bytes_to_number(bytes[20],bytes[21])
+        self.item3_chance = bytes_to_number(bytes[22],bytes[23])
 
-#     def __str__(self):
-#         if self.item1_chance and self.id not in id_to_enemy_name:
-#             return f"{self.id} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
-#         elif self.id in id_to_enemy_name:
-#             return f"{self.id} {id_to_enemy_name[self.id]}"
-#         else:
-#             return ""
+    def write(self,binary_data):
+        id_bytes = number_to_bytes(self.id)
+        binary_data[self.offset] = id_bytes[0]
+        binary_data[self.offset+1] = id_bytes[1]
+        binary_data[self.offset+2] = number_to_bytes(self.small_hp)[0]
+        binary_data[self.offset+3] = number_to_bytes(self.big_hp)[0]
+        binary_data[self.offset+4] = number_to_bytes(self.big_munny)[0]
+        binary_data[self.offset+5] = number_to_bytes(self.medium_munny)[0]
+        binary_data[self.offset+6] = number_to_bytes(self.small_munny)[0]
+        binary_data[self.offset+7] = number_to_bytes(self.small_mp)[0]
+        binary_data[self.offset+8] = number_to_bytes(self.big_mp)[0]
+        binary_data[self.offset+9] = number_to_bytes(self.small_drive)[0]
+        binary_data[self.offset+10] = number_to_bytes(self.big_drive)[0]
+        
+        item1_bytes = number_to_bytes(self.item1)
+        binary_data[self.offset+12] = item1_bytes[0]
+        binary_data[self.offset+13] = item1_bytes[1]
+        item1_chances_bytes = number_to_bytes(self.item1_chance)
+        binary_data[self.offset+14] = item1_chances_bytes[0]
+        binary_data[self.offset+15] = item1_chances_bytes[1]
+        
+        item2_bytes = number_to_bytes(self.item2)
+        binary_data[self.offset+16] = item2_bytes[0]
+        binary_data[self.offset+17] = item2_bytes[1]
+        item2_chances_bytes = number_to_bytes(self.item2_chance)
+        binary_data[self.offset+18] = item2_chances_bytes[0]
+        binary_data[self.offset+19] = item2_chances_bytes[1]
+        
+        item3_bytes = number_to_bytes(self.item3)
+        binary_data[self.offset+20] = item3_bytes[0]
+        binary_data[self.offset+21] = item3_bytes[1]
+        item3_chances_bytes = number_to_bytes(self.item3_chance)
+        binary_data[self.offset+22] = item3_chances_bytes[0]
+        binary_data[self.offset+23] = item3_chances_bytes[1]
+
+    def __str__(self):
+        if True: #self.item1_chance and self.id not in id_to_enemy_name:
+            dummy = ""
+            return f"{self.id} {(id_to_enemy_name[self.id] if self.id in id_to_enemy_name else dummy)} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
+        elif self.id in id_to_enemy_name:
+            return f"{self.id} {id_to_enemy_name[self.id]}"
+        else:
+            return ""
 
 
 
@@ -262,7 +354,7 @@ class SynthLocation():
 
 
 class SeedZip():
-    def __init__(self,settings: RandomizerSettings, randomizer: Randomizer, hints, cosmetics_data):
+    def __init__(self,settings: RandomizerSettings, randomizer: Randomizer, hints, cosmetics_data, multiworld : MultiWorldOutput = None):
         self.formattedTrsr = {}
         self.formattedLvup = {"Sora":{}}
         self.formattedBons = {}
@@ -270,6 +362,7 @@ class SeedZip():
         self.formattedItem = {"Stats":[]}
         self.formattedPlrp = []
         self.spoiler_log = None
+        self.enemy_log = None
 
         self.assignTreasures(randomizer)
         self.assignLevels(settings,randomizer)
@@ -279,17 +372,9 @@ class SeedZip():
         self.assignFormLevels(randomizer)
         self.assignWeaponStats(randomizer)
         self.assignStartingItems(settings, randomizer)
-        self.createZip(settings, randomizer, hints, cosmetics_data)
+        self.createZip(settings, randomizer, hints, cosmetics_data, multiworld)
 
-    def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data):
-
-        # with open(resource_path("static/drops.bin"), "rb") as dropsbar:
-        #     binaryContent = bytearray(dropsbar.read())
-        #     for i in range(0,184):
-        #         start_index = 8+24*i
-        #         rates = DropRates(binaryContent[start_index:start_index+24])
-        #         print(rates)
-
+    def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data, multiworld):
 
         mod = modYml.getDefaultMod()
         sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
@@ -303,6 +388,9 @@ class SeedZip():
             randomBGMOptions = cosmetics_data["randomBGM"]
             tourney_gen = cosmetics_data["tourney"]
 
+            if multiworld:
+                outZip.writestr("multiworld.multi", json.dumps(multiworld()))
+
             
             pc_seed_toggle = (platform=="PC")
 
@@ -311,6 +399,8 @@ class SeedZip():
             self.createASDataAssets(settings, mod, outZip)
             self.createSkipCarpetAssets(settings, mod, outZip)
             self.createMapSkipAssets(settings, mod, outZip)
+            self.createBlockingSkipAssets(settings, mod, outZip)
+            # self.createDropRateAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -359,6 +449,10 @@ class SeedZip():
                                 asset["multi"] = []
                                 for region in ["us","fr","gr","it","sp","uk"]:
                                     asset["multi"].append({'name':asset["name"].replace("jp",region)})
+                            elif "ard/us" in asset["name"]:
+                                asset["multi"] = []
+                                for region in ["jp","fr","gr","it","sp","uk"]:
+                                    asset["multi"].append({'name':asset["name"].replace("us",region)})
 
 
                     lines = enemySpoilers.split("\n")
@@ -376,8 +470,10 @@ class SeedZip():
                         elif line!="":
                             current_key = line
                             enemySpoilersJSON[current_key] = []
+                    outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
                 except Exception as e:
                     raise BossEnemyException(f"Boss/enemy module had an unexpected error {e}. Try different a different seed or different settings.")
+
 
             self.createBetterSTTAssets(settings, mod, outZip)
             
@@ -403,8 +499,9 @@ class SeedZip():
                     if not tourney_gen:
                         outZip.writestr("spoilerlog.html",html_template)
                     self.spoiler_log = html_template
+                    self.enemy_log = enemySpoilers
                     outZip.write(resource_path("static/KHMenu.otf"), "KHMenu.otf")
-                if enemySpoilers:
+                if enemySpoilers and not tourney_gen:
                     outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
 
@@ -447,6 +544,14 @@ class SeedZip():
             mod["assets"] += [modYml.getSkipCarpetEscapeMod()]
             outZip.write(resource_path("static/skip_carpet_escape.script"), "skip_carpet_escape.script")
 
+    def createBlockingSkipAssets(self,settings,mod,outZip):
+        if settings.block_cor_skip:
+            mod["assets"] += [modYml.getBlockCorSkipMod()]
+            outZip.write(resource_path("static/disable_cor_skip.script"), "disable_cor_skip.script")
+        if settings.block_shan_yu_skip:
+            mod["assets"] += [modYml.getBlockShanYuSkipMod()]
+            outZip.write(resource_path("static/disable_shan_yu_skip.script"), "disable_shan_yu_skip.script")
+
     def createMapSkipAssets(self,settings,mod,outZip):
         if settings.pr_map_skip:
             mod["assets"] += modYml.getMapSkipMod()
@@ -469,6 +574,63 @@ class SeedZip():
                     binaryContent[byte0] = itemByte0
                     binaryContent[byte1] = itemByte1
                 outZip.writestr("modified_puzzle.bin",binaryContent)
+
+                
+    def createDropRateAssets(self, settings, randomizer, mod, outZip):
+        if True:
+            for x in mod["assets"]:
+                if x["name"]=="00battle.bin":
+                    x["source"].append(modYml.getDropMod())
+            all_drops = {}
+            testing = []
+            with open(resource_path("static/drops.bin"), "rb") as dropsbar:
+                binaryContent = bytearray(dropsbar.read())
+                for i in range(0,184):
+                    start_index = 8+24*i
+                    rate = DropRates(start_index,binaryContent[start_index:start_index+24])
+                    all_drops[rate.id] = rate
+
+                    if rate.id not in id_to_enemy_name:
+                        testing.append(rate.id)
+
+            # make changes
+            print(len(testing))
+
+            # this is the very secret thing
+            all_drops[72].item1 = 593
+            all_drops[72].item1_chance = 100
+            all_drops[72].item2 = 594
+            all_drops[72].item2_chance = 100
+            all_drops[72].item3 = 595
+            all_drops[72].item3_chance = 100
+            
+            all_drops[117].small_hp = 100
+
+
+            first_barrier = len(testing)//4
+            second_barrier = len(testing)//2
+            third_barrier = (len(testing)*3)//4
+
+            for i,t in enumerate(testing):
+                if i < first_barrier:
+                    print(f"{t} munny")
+                    all_drops[t].big_munny = 100
+                elif i < second_barrier:
+                    print(f"{t} mp")
+                    all_drops[t].big_mp = 100
+                elif i < third_barrier:
+                    print(f"{t} drive")
+                    all_drops[t].big_drive = 100
+                else:
+                    print(f"{t} hp")
+                    all_drops[t].big_hp = 100
+
+            # write changes
+            with open(resource_path("static/drops.bin"), "rb") as dropsbar:
+                binaryContent = bytearray(dropsbar.read())
+                for drop in all_drops:
+                    all_drops[drop].write(binaryContent)
+                outZip.writestr("modified_drops.bin",binaryContent)
 
     def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.SYNTH in settings.disabledLocations:

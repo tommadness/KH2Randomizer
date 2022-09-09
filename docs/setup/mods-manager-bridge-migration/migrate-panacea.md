@@ -19,26 +19,20 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 ![Restore](../images/mods-manager-bridge/restore.png)
 
-### 2. Prepare LuaBackend Hook
+* Go to your game installation folder and delete the **DBGHELP.dll, Luabackend.toml, and Lua54.dll files** before continuing as well.
 
-* (Many randomizer players use LuaBackend Hook, but if you use LuaFrontend rather than LuaBackend Hook, this step is not
-  needed.)
-* In order to get both Panacea and LuaBackend Hook working together, rename your existing `DBGHELP.dll` file
-  to `LuaBackend.dll` before proceeding any further.
-
-![Renamed file](luabackend-renamed.png)
-
-### 3. Install the latest version of the OpenKH tools
+### 2. Install the latest version of the OpenKH tools
 
 * Determine where you have the OpenKH tools installed on your PC. This is the folder that contains the Mods Manager
   program that you have already been using to add/remove mods.
 * Download the latest version of the OpenKH tools (linked on the [Downloads](../../downloads/index.md) page).
+  * Or click [HERE](https://github.com/shananas/OpenKh/releases/download/release-372-KH2Rando/openkh-modmanager.zip) for direct download
 * Copy all files from the OpenKH tools zip file to your OpenKH tools location. When prompted to replace existing files,
   do so.
     * Alternatively, you could choose to copy all the files from the OpenKH tools zip file somewhere else to start fresh
       without affecting your existing OpenKH tools version.
 
-### 4. Run the Mods Manager setup wizard
+### 3. Run the Mods Manager setup wizard
 
 * Open Mods Manager. If you are starting fresh, the setup wizard will display. If not, choose `Settings -> Run wizard`.
 
@@ -71,6 +65,45 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 * Choose `Finish` to close the setup wizard and save your settings.
 
+### 4. Configure LuaBackend Hook for Mods Manager integration
+
+Download the latest version of the Seed Generator [HERE](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
+
+Version 2.1.5 and above of the seed generator adds a screen to help you configure LuaBackend Hook automatically.
+
+* Open the seed generator and choose `Configure -> LuaBackend Hook Setup (PC Only)`.
+
+![LuaBackend Hook Setup](../images/seed-generator/configure-luabackend-hook-setup.png)
+
+* On the LuaBackend Hook Setup screen, browse to the location where your OpenKH tools (such as Mods Manager) are
+  located, and choose your intended Mod mode. This choice affects the name of the LuaBackend Hook DLL file.
+  * Choose `Panacea (Mod Loader)` if you intend to use OpenKH Panacea to load mods without patching game files. Panacea
+    uses `DBGHELP.dll` to hook into the game, and it knows to look for LuaBackend Hook's file with the name
+    `LuaBackend.dll`.
+  * Choose `Patch / Fast Patch` if you intend to patch your game files. In this configuration, LuaBackend Hook is named
+    `DBGHELP.dll` itself.
+* Choose `Check Configuration`.
+
+![Check Configuration](../images/seed-generator/luabackendhook-setup-panacea.png)
+
+* If you already have LuaBackend Hook installed, the files will all be found, but `Configuration File Status` may report
+  that LuaBackend Hook is not yet configured for Mods Manager integration. If this is the case, you can just choose
+  `Apply Configuration` to apply the necessary configuration.
+* If any of the files are missing, or if you just want a fresh copy, choose `Download/Install/Configure` which will
+  download, install, and configure a compatible version of LuaBackend Hook.
+
+After you've configured LuaBackend Hook for Mods Manager integration, you can now take advantage of several common mods
+with bundled scripts.
+
+* Remove GoA ROM, auto save, and soft reset Lua scripts (if they exist) from your
+  `Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2` folder. We'll manage these scripts via Mods Manager now. If
+  you have other Lua scripts in this folder, you can still manage those manually. We just don't want duplicates.
+* Make sure GoA ROM Edition is up-to-date in Mods Manager. GoA ROM bundles its Lua script in recent versions.
+* Install `KH2FM-Mods-equations19/auto-save` and `KH2FM-Mods-equations19/soft-reset` in Mods Manager. The order for
+  these two mods doesn't matter.
+
+![Mods with scripts](../images/mods-manager/example-mods-lua-scripts.png)
+
 ### 5. Use Mods Manager to configure mods
 
 * Use Mods Manager to add/remove/check/uncheck mods as usual. (You may have fewer or more mods than shown here.)
@@ -98,3 +131,7 @@ You absolutely want to make sure you start from a fresh set of game files. There
 ![Remove Panacea](../images/mods-manager/wizard/panacea-installed.png)
 
 * If you still want to use LuaBackend Hook, rename `LuaBackend.dll` back to `DBGHELP.dll` after Panacea is gone.
+
+### What happens to my old KH2PCPATCH files?
+
+The new update to the mod manager allows it to load in kh2pcpatch files as if they were regular mods. Just add your kh2pcpatch files the same way you would add a zip seed and the mod manager will handle everything for you.
