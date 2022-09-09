@@ -378,3 +378,7 @@ longer randomized separately if this option is enabled.
 **Music** - controls randomized music (PC version only)
 
 * See the main [Randomized Music](../music/index.md) page for instructions.
+
+**External Randomization Executables** - allows external randomization files to be executed every time a seed is
+generated. This can be used to integrate with external mods that have their own `Randomize.exe` file (or similar) that
+must be run in order to randomize their contents.

@@ -1,8 +1,8 @@
 import os
+import subprocess
 import sys
 from Class.exceptions import CantAssignItemException, RandomizerExceptions
 from List.configDict import locationType
-
 
 from Module.resources import resource_path
 
@@ -33,6 +33,7 @@ from PySide6.QtWidgets import (
 from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.seedSettings import RandoRandoSettings, SeedSettings, getRandoRandoTooltip
+from Module.cosmetics import CustomCosmetics
 from Module.dailySeed import getDailyModifiers
 from Module.generate import generateMultiWorldSeed, generateSeed
 from Module.RandomizerSettings import RandomizerSettings
@@ -84,7 +85,14 @@ class GenSeedThread(QThread):
 
     def run(self):
         try:
-            zip_file,spoiler_log,enemy_log = generateSeed(self.rando_settings, self.data)
+            zip_file, spoiler_log, enemy_log = generateSeed(self.rando_settings, self.data)
+
+            custom_executables = self.data.get('customCosmeticsExecutables', [])
+            for custom_executable in custom_executables:
+                custom_file_path = Path(custom_executable)
+                if custom_file_path.is_file():
+                    subprocess.call(custom_file_path)
+
             self.finished.emit((zip_file,spoiler_log,enemy_log))
         except Exception as e:
             self.failed.emit(e)
@@ -119,6 +127,7 @@ class KH2RandomizerApp(QMainWindow):
         self.spoiler_log_output = "<html>No spoiler log generated</html>"
 
         self.settings = SeedSettings()
+        self.custom_cosmetics = CustomCosmetics()
 
         if not os.path.exists(AUTOSAVE_FOLDER):
             os.makedirs(AUTOSAVE_FOLDER)
@@ -192,7 +201,7 @@ class KH2RandomizerApp(QMainWindow):
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
             BossEnemyMenu(self.settings),
-            CosmeticsMenu(self.settings),
+            CosmeticsMenu(self.settings, self.custom_cosmetics),
         ]
 
         for i in range(len(self.widgets)):
@@ -267,6 +276,9 @@ class KH2RandomizerApp(QMainWindow):
         settings_json = self.settings.settings_json(include_private=True)
         with open(os.path.join(AUTOSAVE_FOLDER, 'auto-save.json'), 'w') as presetData:
             presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
+
+        self.custom_cosmetics.write_file()
+
         e.accept()
 
     def loadDailySeed(self):
@@ -399,6 +411,7 @@ class KH2RandomizerApp(QMainWindow):
                     "options": [],
                     "games": []
                 },
+                'customCosmeticsExecutables': [],
                 'tourney': True
             }
         else:
@@ -409,6 +422,7 @@ class KH2RandomizerApp(QMainWindow):
                     "options": self.settings.get(settingkey.BGM_OPTIONS),
                     "games": self.settings.get(settingkey.BGM_GAMES)
                 },
+                'customCosmeticsExecutables': [custom_file for custom_file in self.custom_cosmetics.external_executables],
                 'tourney': False
             }
 
