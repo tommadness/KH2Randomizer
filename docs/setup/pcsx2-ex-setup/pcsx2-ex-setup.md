@@ -72,14 +72,6 @@ Once you have downloaded `KH2FM-Mods-Num/GOA-ROM-Edition`, click on the mod, go 
 
 ![Scripts folder](./scripts.png)
 
-**DO THIS STEP IF YOU SET YOUR GAME REGION TO ENGLISH**
-
-Delete the `mod.yml` file (or rename it to something different like `mod_pc.yml`), then rename the `mod_ps2.yml` file to `mod.yml`. What we essentially did was change the mod from being configured for the Epic Games Store version of KINGDOM HEARTS II FINAL MIX, to the PCSX2 version of the game.
-
-![Renaming the .yml files](./yml-rename.png)
-
-Before (left) and After (right)
-
 ---
 
 ## Step 3: Seed Generator Setup ##
