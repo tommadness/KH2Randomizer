@@ -3,7 +3,7 @@
 ## Heads up!
 * Feel free to go to the [discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated help channel where you can find people to help you, if you're facing any difficulties. (P.S. Please be polite)
 * **You must run the game once** before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
-* **VERIFY GAME FILES** through the Epic Games Launcher for Kingdom Hearts 1.5 + 2.5 remix v1.0.0.8_WW, they need to be clean/unpatched files for the extraction process to work.
+* **VERIFY GAME FILES** through the Epic Games Launcher for Kingdom Hearts 1.5 + 2.5 Remix (v1.0.0.8_WW), they need to be clean/unpatched files for the extraction process to work.
 * Unofficial copies of the game are not supported, it is strongly recommended you buy and install the game directly from the Epic Game Store.
 
 ## Resources Needed:
@@ -93,6 +93,15 @@
 
 * **KH2FM-Mods-equations19/auto-save** - This mod auto saves the game for you as you enter rooms. Be sure to make at least 1 regular save in game, then if you ever crash or your game closes unexpectedly, just hold the **SELECT** button while loading a save, and the auto-save will be loaded instead.
 * **KH2FM-Mods-equations19/soft-reset** - Hold **L1+L2+R1+R2+Start** at the same time to immediately reset the game to the start screen. Very useful if you accidentally softlock in boss/enemy rando, or just to restart the game faster!
+*  **[KH2 Rando Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/tag/v1.6.8)** - Not an OpenKH mod but instead a full fledged automated tracker program for the Important Checks in game. Checkout [Hint Systems](https://kh2rando.com/hints) for info about different ways to play Rando!
 
 
 # *You are now ready to play a KH2 Rando Seed! Run the game from the epic games launcher and have fun!*
+
+__Technical And Stability Notes__
+1. Recommended to set fps limit to **60fps**.
+2. Recommended to run game in windows/borderless windowed mode. Fullscreen is stable but the game can crash if you alt-tab out.
+3. Overlays that hook onto the game process (Steam, RivaTuner, Nvidia Overlay, etc) and recording programs (Obs, Streamlabs, Xsplit) seem to decrease stability when playing rando. It's recommended to disable them, or in the case of recording programs use window/desktop capture, in order to minimize your chances of a crash.
+4. GoA ROM and the Seed Generator will always be compatible with one another. Any other mods beyond that should be compatible as long as they don't overlap on changes. Mods at the top of the list will overwrite mods below them if there's any overlapping files. Feel free to ask in the [Community Discord](https://discord.gg/vKhdwNAmzE) if you aren't sure.
+5. Consistent crashes are rare but possible, try installing a new seed if you can't load into a specific room, and please report your issue in our Discord server.
+6. Boss/Enemy Rando is amazing but still a work in progress. Please report any bugs/softlocks/out-of-bounds glitches you encounter to the coresponding Google Form listed in the #bug-reports channels of our Discord. 
