@@ -60,7 +60,7 @@ class Hints:
                         hintsText['world'][world_of_location] = []
                     hintsText['world'][world_of_location].append(item.Name)
         
-        report_master = [None]*14
+        report_master = [locationType.Free]*14
         found_reports = False
         for location,item in locationItems:
             if item.ItemType is itemType.REPORT:

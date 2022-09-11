@@ -19,7 +19,7 @@ class StartingMenu(KH2Submenu):
         self.start_column()
         self.addHeader("Starting Inventory Options")
         self.add_option(settingkey.STARTING_MOVEMENT)
-        self.add_option(settingkey.LIBRARY_OF_ASSEMBLAGE)
+        self.add_option(settingkey.STARTING_REPORTS)
         self.add_option(settingkey.STARTING_STORY_UNLOCKS)
         starting_locks_layout = QHBoxLayout()
         story_lock_widget = QWidget()

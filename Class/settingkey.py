@@ -84,6 +84,7 @@ SORA_LEVELS = 'sora_levels'
 SPLIT_LEVELS = 'split_levels'
 START_NO_AP = 'start_no_ap'
 STARTING_INVENTORY = 'starting_inventory'
+STARTING_REPORTS = "starting_reports"
 STATSANITY = 'statsanity'
 STORY_UNLOCKS = 'story_unlocks'
 STARTING_STORY_UNLOCKS = 'starting_story_unlocks'

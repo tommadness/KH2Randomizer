@@ -463,6 +463,18 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=["Disabled","Random","Level_1","Level_2","Level_3","Level_4"]
     ),
 
+    IntSpinner(
+        name=settingkey.STARTING_REPORTS,
+        ui_label="Starting Reports/Hints",
+        minimum=0,
+        maximum=13,
+        step=1,
+        shared=True,
+        default=0,
+        randomizable=True
+    ),
+    
+
     Toggle(
         name=settingkey.LIBRARY_OF_ASSEMBLAGE,
         ui_label='Library of Assemblage',

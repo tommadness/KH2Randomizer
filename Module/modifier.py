@@ -92,9 +92,8 @@ class SeedModifier():
     def regularStats():
         return [{"Stat":"Str","Value": 2},{"Stat":"Mag", "Value": 2},{"Stat":"Def", "Value": 1},{"Stat": "Ap", "Value": 2}]
 
-    def library(enabled):
-        if enabled:
-            return [
+    def library(number_reports):
+        reports = [
                         226,
                         227,
                         228,
@@ -109,7 +108,7 @@ class SeedModifier():
                         237,
                         238
                     ]
-        return []
+        return reports[0:number_reports]
 
     def world_unlocks(enabled):
         if enabled:
