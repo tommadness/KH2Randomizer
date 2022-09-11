@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import itertools
 
-from Class.exceptions import GeneratorException,CantAssignItemException
+from Class.exceptions import GeneratorException,CantAssignItemException, SettingsException
 from Module.modifier import SeedModifier
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item, itemRarity
@@ -93,6 +93,8 @@ class SynthesisRecipe():
 
 class Randomizer():
     def __init__(self, settings: RandomizerSettings, progress_bar_vis = False):
+        if settings is None:
+            raise SettingsException("Invalid settings passed to randomize. Change settings and try again")
         random.seed(settings.full_rando_seed)
         self.progress_bar_vis = progress_bar_vis
         self.regular_locations = Locations(settings,False)

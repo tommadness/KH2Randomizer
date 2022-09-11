@@ -700,7 +700,10 @@ if __name__=="__main__":
         app.setStyleSheet(stylesheet + file.read().format(**os.environ))
 
     window.recalculate = True
-    window.get_num_enabled_locations()
+    try:
+        window.get_num_enabled_locations()
+    except RandomizerExceptions as e:
+        pass
     window.show()
     #commenting out first time setup for 2.999 version
     # configPath = Path("rando-config.yml")

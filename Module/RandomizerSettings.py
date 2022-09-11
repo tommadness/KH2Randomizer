@@ -179,7 +179,7 @@ class RandomizerSettings():
                                     "deaths":ui_settings.get(settingkey.POINTS_DEATH)}
 
         self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
-        self.revealMode = ui_settings.get(settingkey.REVEAL_REPORTMODE)
+        self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)
 
         self.spoiler_hint_values = [
             item_type for item_type in ui_settings.get(settingkey.REVEAL_TYPES)
@@ -188,6 +188,8 @@ class RandomizerSettings():
             self.spoiler_hint_values.append("complete")
         if self.revealMode != 'Disabled':
             self.spoiler_hint_values.append(self.revealMode)
+            if self.revealMode == "bossreports" and ui_settings.get("boss")=="Disabled":
+                raise SettingsException("Can't use report hint bosses option without boss randomization.")
 
         self.extra_ics = ui_settings.get(settingkey.EXTRA_ICS)
         self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)

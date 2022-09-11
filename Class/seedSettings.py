@@ -873,7 +873,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     
     SingleSelect(
-        name=settingkey.REVEAL_REPORTMODE,
+        name=settingkey.REPORTS_REVEAL,
         ui_label='Report Reveal Mode',
         choices={
             'Disabled': 'Disabled',
