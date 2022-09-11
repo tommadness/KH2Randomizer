@@ -476,6 +476,7 @@ class SeedZip():
 
 
             self.createBetterSTTAssets(settings, mod, outZip)
+            self.addCmdListModifications(settings, mod, outZip)
             
             if settings.spoiler_log or tourney_gen:
                 if not tourney_gen:
@@ -514,6 +515,28 @@ class SeedZip():
         data.seek(0)
         self.outputZip = data
 
+    def addCmdListModifications(self,settings,mod,outZip):
+        if not settings.roxas_abilities_enabled:
+            return
+        with open(resource_path("static/better_stt/cmd.list"), "rb") as cmdlist:
+            binaryContent = bytearray(cmdlist.read())
+
+            if not settings.roxas_abilities_enabled:
+                # better stt 0x93, vanilla 0xB7
+                binaryContent[0x3345] = 0xB7
+                binaryContent[0x3375] = 0xB7
+                binaryContent[0x33A5] = 0xB7
+            if False:
+                # disable final form 0x0A, vanilla 0x5
+                print(hex(binaryContent[0x234]))
+                print(hex(binaryContent[0x6234]))
+            outZip.writestr(binaryContent, "better_stt/cmd.list")
+
+        for x in mod["assets"]:
+            if x["name"]=="03system.bin":
+                x["source"]+=modYml.getCmdListMod()
+
+
     def createASDataAssets(self,settings,mod,outZip):
         if settings.as_data_split:
             mod["assets"] += modYml.getASDataMod()
@@ -525,11 +548,7 @@ class SeedZip():
     def createBetterSTTAssets(self,settings,mod,outZip):
         boss_enabled = not settings.enemy_options.get("boss", False) in [False, "Disabled"]
         if settings.roxas_abilities_enabled:
-            mod["assets"] += modYml.getBetterSTTMod(boss_enabled)[0]
-            for x in mod["assets"]:
-                if x["name"]=="03system.bin":
-                    x["source"]+=modYml.getBetterSTTMod(boss_enabled)[1]
-            outZip.write(resource_path("static/better_stt/cmd.list"), "better_stt/cmd.list")
+            mod["assets"] += modYml.getBetterSTTMod(boss_enabled)
             outZip.write(resource_path("static/better_stt/trinity_zz.bar"), "better_stt/trinity_zz.bar")
             outZip.write(resource_path("static/better_stt/B_EX100.mset"), "better_stt/B_EX100.mset")
             outZip.write(resource_path("static/better_stt/F_TT010.mset"), "better_stt/F_TT010.mset")

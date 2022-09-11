@@ -90,7 +90,7 @@ class SeedModifier():
         return [{"Stat":"Str","Value": 2},{"Stat":"Mag", "Value": 2},{"Stat": "Ap", "Value": 2}]
     
     def regularStats():
-        return [{"Stat":"Str","Value": 2},{"Stat":"Mag", "Value": 2},{"Stat":"Def", "Value": 1},{"Stat": "Ap", "Value": 2}]
+        return [{"Stat":"Mag", "Value": 2},{"Stat":"Str","Value": 2},{"Stat":"Def", "Value": 1},{"Stat": "Ap", "Value": 2}]
 
     def library(number_reports):
         reports = [
@@ -162,15 +162,3 @@ class SeedModifier():
         for current in range(5):
             [random_growth.append(growth_all[i][current]) for i in range(1,random_levels[current]+1)]
         return random_growth
-        
-    #Old version
-    #def schmovement(enabled):
-    #    if enabled:
-    #        return [
-    #            94,
-    #            98,
-    #            102,
-    #            106,
-    #            564
-    #        ]
-    #    return []
