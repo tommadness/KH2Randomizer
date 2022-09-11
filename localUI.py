@@ -91,7 +91,8 @@ class GenSeedThread(QThread):
             for custom_executable in custom_executables:
                 custom_file_path = Path(custom_executable)
                 if custom_file_path.is_file():
-                    subprocess.call(custom_file_path)
+                    custom_cwd = custom_file_path.parent
+                    subprocess.call(custom_file_path,cwd=custom_cwd)
 
             self.finished.emit((zip_file,spoiler_log,enemy_log))
         except Exception as e:

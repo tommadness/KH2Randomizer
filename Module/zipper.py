@@ -530,7 +530,7 @@ class SeedZip():
                 # disable final form 0x0A, vanilla 0x5
                 print(hex(binaryContent[0x234]))
                 print(hex(binaryContent[0x6234]))
-            outZip.writestr(binaryContent, "better_stt/cmd.list")
+            outZip.writestr("better_stt/cmd.list",binaryContent)
 
         for x in mod["assets"]:
             if x["name"]=="03system.bin":
