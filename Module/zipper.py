@@ -470,7 +470,8 @@ class SeedZip():
                         elif line!="":
                             current_key = line
                             enemySpoilersJSON[current_key] = []
-                    outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
+                    if enemySpoilersJSON:
+                        outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
                 except Exception as e:
                     raise BossEnemyException(f"Boss/enemy module had an unexpected error {e}. Try different a different seed or different settings.")
 
