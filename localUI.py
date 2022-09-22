@@ -33,7 +33,7 @@ from PySide6.QtWidgets import (
 from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.seedSettings import RandoRandoSettings, SeedSettings, getRandoRandoTooltip
-from Module.cosmetics import CustomCosmetics
+from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import getDailyModifiers
 from Module.generate import generateMultiWorldSeed, generateSeed
 from Module.RandomizerSettings import RandomizerSettings
@@ -265,7 +265,7 @@ class KH2RandomizerApp(QMainWindow):
         self.presetMenu.addMenu(self.presetsMenu)
         self.config_menu = QMenu('Configure')
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
-        self.config_menu.addAction('Find OpenKH Folder (For Extracted KH2)', self.extractedFilesGetter)
+        self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
         menu_bar.addMenu(self.config_menu)
@@ -359,8 +359,6 @@ class KH2RandomizerApp(QMainWindow):
                 dummy_rando = Randomizer(rando_settings,True)
                 split_pc_emu = False
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.COMMAND_MENU) != "vanilla"
-                split_pc_emu = split_pc_emu or len(self.settings.get(settingkey.BGM_OPTIONS)) != 0
-                split_pc_emu = split_pc_emu or len(self.settings.get(settingkey.BGM_GAMES)) != 0
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.CUPS_GIVE_XP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DARK_THORN)
@@ -377,8 +375,6 @@ class KH2RandomizerApp(QMainWindow):
                 disable_emu = False
                 disable_emu = disable_emu or rando_settings.enemy_options["enemy"] == "Wild"
                 disable_emu = disable_emu or rando_settings.enemy_options["bosses_replace_enemies"]
-                disable_emu = disable_emu or len(self.settings.get(settingkey.BGM_OPTIONS)) != 0
-                disable_emu = disable_emu or len(self.settings.get(settingkey.BGM_GAMES)) != 0
                 # disable_emu = disable_emu or self.settings.get(settingkey.TT1_JAILBREAK)
 
 
@@ -408,10 +404,6 @@ class KH2RandomizerApp(QMainWindow):
             data = {
                 'platform': platform,
                 'cmdMenuChoice': "vanilla",
-                'randomBGM': {
-                    "options": [],
-                    "games": []
-                },
                 'customCosmeticsExecutables': [],
                 'tourney': True
             }
@@ -419,10 +411,6 @@ class KH2RandomizerApp(QMainWindow):
             data = {
                 'platform': platform,
                 'cmdMenuChoice': self.settings.get(settingkey.COMMAND_MENU),
-                'randomBGM': {
-                    "options": self.settings.get(settingkey.BGM_OPTIONS),
-                    "games": self.settings.get(settingkey.BGM_GAMES)
-                },
                 'customCosmeticsExecutables': [custom_file for custom_file in self.custom_cosmetics.external_executables],
                 'tourney': False
             }
@@ -634,22 +622,25 @@ class KH2RandomizerApp(QMainWindow):
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
 
-    def extractedFilesGetter(self):
-        saveFileWidget = QFileDialog()
-        selected_directory = saveFileWidget.getExistingDirectory()
+    @staticmethod
+    def openkh_folder_getter():
+        save_file_widget = QFileDialog()
+        selected_directory = save_file_widget.getExistingDirectory()
 
         if selected_directory is None or selected_directory == "":
             return
-        
-        configPath = Path("music-rando-config.json")
 
-        with open(str(configPath.absolute()),'w') as music_config:
-            out_data = {}
-            out_data["game_extract_folder"] = selected_directory
-            music_config.write(json.dumps(out_data))
-        message = QMessageBox(text="Restart the generator to add the music options to the menu.")
-        message.setWindowTitle("KH2 Seed Generator")
-        message.exec()
+        selected_path = Path(selected_directory)
+        if not (selected_path / 'OpenKh.Tools.ModsManager.exe').is_file():
+            message = QMessageBox(text='Not a valid OpenKH folder')
+            message.setWindowTitle('KH2 Seed Generator')
+            message.exec()
+        else:
+            CosmeticsMod.write_openkh_path(selected_directory)
+
+            message = QMessageBox(text="Restart the seed generator to apply changes.")
+            message.setWindowTitle("KH2 Seed Generator")
+            message.exec()
 
     @staticmethod
     def show_luabackend_configuration():

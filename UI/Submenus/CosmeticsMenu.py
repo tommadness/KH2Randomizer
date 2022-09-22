@@ -1,10 +1,10 @@
 import textwrap
 
-from PySide6.QtWidgets import QListWidget, QHBoxLayout, QPushButton, QFileDialog
+from PySide6.QtWidgets import QListWidget, QHBoxLayout, QPushButton, QFileDialog, QLabel, QMessageBox
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
-from Module.cosmetics import CustomCosmetics
+from Module.cosmetics import CustomCosmetics, CosmeticsMod
 from UI.Submenus.SubMenu import KH2Submenu
 
 
@@ -19,11 +19,35 @@ class CosmeticsMenu(KH2Submenu):
         self.addHeader('Visuals')
         self.add_option(settingkey.COMMAND_MENU)
         self.end_column()
+
         self.start_column()
-        self.addHeader('Music')
-        self.add_option(settingkey.BGM_OPTIONS)
-        self.add_option(settingkey.BGM_GAMES)
-        self.end_column(stretch_at_end=False)
+        self.addHeader('Music (PC Only)')
+
+        openkh_path = CosmeticsMod.read_openkh_path()
+        if openkh_path is None:
+            label = QLabel('OpenKH folder not configured. Use\nthe option in the Configure menu.')
+            self.pending_column.addWidget(label)
+        else:
+            cosmetics_mod_path = CosmeticsMod.cosmetics_mod_path(openkh_path, create_if_missing=False)
+            if cosmetics_mod_path is None:
+                self.pending_column.addWidget(QLabel('Cosmetics mod not set up yet.'))
+                button = QPushButton('Set up now')
+                button.clicked.connect(self._set_up_mod)
+                self.pending_column.addWidget(button)
+            else:
+                self.add_option(settingkey.MUSIC_RANDO_ENABLED_PC)
+                self.add_option(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES)
+
+                music_summary = CosmeticsMod.get_music_summary()
+                if len(music_summary) == 0:
+                    self.pending_column.addWidget(QLabel('(No Music Found)'))
+                else:
+                    label_text = 'Found Music\n'
+                    for category, count in music_summary.items():
+                        label_text += '{} : {}\n'.format(category, count)
+                    self.pending_column.addWidget(QLabel(label_text))
+
+        self.end_column()
 
         self.start_column()
         self.addHeader('External Randomization Executables')
@@ -69,3 +93,16 @@ class CosmeticsMenu(KH2Submenu):
         if index >= 0:
             self.custom_cosmetics.remove_at_index(index)
             self._reload_custom_list()
+
+    def _set_up_mod(self):
+        CosmeticsMod.bootstrap_mod()
+
+        text = textwrap.dedent("""
+Added "KH2 Randomizer Cosmetics" mod to OpenKH Mods Manager.
+Turn on this mod in Mods Manager to enable randomized cosmetics.
+
+Please restart to the seed generator to apply changes.
+        """).strip()
+        message = QMessageBox(text=text)
+        message.setWindowTitle("KH2 Seed Generator")
+        message.exec()

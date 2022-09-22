@@ -3,6 +3,7 @@ import copy
 from typing import List
 from Class.exceptions import RandomizerExceptions
 from Module.RandomizerSettings import RandomizerSettings
+from Module.cosmetics import CosmeticsMod
 from Module.hints import Hints
 from Module.multiworld import MultiWorld, MultiWorldConfig
 from Module.newRandomize import Randomizer
@@ -19,6 +20,7 @@ def generateSeed(settings: RandomizerSettings,data):
             randomizer = Randomizer(settings)
             newSeedValidation.validateSeed(settings,randomizer)
             hints = Hints.generateHints(randomizer.assignedItems,settings)
+            CosmeticsMod.randomize_cosmetics(settings)
             zipper = SeedZip(settings,randomizer,hints,data)
             return zipper.outputZip, zipper.spoiler_log, zipper.enemy_log
         except RandomizerExceptions as e:
