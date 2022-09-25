@@ -30,6 +30,7 @@ class SeedModMenu(KH2Submenu):
         self.addHeader('Even More Other Modifiers')
         self.add_option(settingkey.BLOCK_COR_SKIP)
         self.add_option(settingkey.BLOCK_SHAN_YU_SKIP)
+        self.add_option(settingkey.DISABLE_FINAL_FORM)
         self.end_column()
 
         settings.observe(settingkey.SOFTLOCK_CHECKING, self.reverse_rando_checking)

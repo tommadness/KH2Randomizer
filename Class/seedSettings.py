@@ -1205,6 +1205,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip='Allows Roxas to use magic, Sora\'s movement abilities, and Trinity Limit in Simulated Twilight Town.'
     ),
     Toggle(
+        name=settingkey.DISABLE_FINAL_FORM,
+        ui_label='Disable Final Form',
+        shared=True,
+        default=False,
+        tooltip='Disabled going into Final Form in any way. Final form can still be found to let other forms level up and for Final Genie. All items from Final form are replaced with junk.'
+    ),
+    Toggle(
         name=settingkey.BLOCK_COR_SKIP,
         ui_label='Block Skipping CoR',
         shared=True,

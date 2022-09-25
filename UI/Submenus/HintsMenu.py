@@ -82,6 +82,9 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.REVEAL_TYPES, visible=hint_system == 'Spoiler')
         self.set_option_visibility(settingkey.REVEAL_COMPLETE, visible=hint_system == 'Spoiler')
         self.set_option_visibility(settingkey.REPORTS_REVEAL, visible=hint_system == 'Spoiler')
+        if hint_system != "Spoiler":
+            setting, widget = self.widgets_and_settings_by_name[settingkey.REPORTS_REVEAL]
+            widget.setCurrentIndex(0)
 
     def _reveal_report_mode_changed(self):
         report_mode_enabled = self.settings.get(settingkey.REPORTS_REVEAL)
