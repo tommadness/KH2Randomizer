@@ -5,7 +5,7 @@ from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QPushButton, QSpinBox, QWidget, QVBoxLayout
+    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView
 )
 
 import Class.seedSettings
@@ -198,9 +198,8 @@ class KH2Submenu(QWidget):
                 widget.setDisabled(True)
             elif isinstance(setting, MultiSelect):
                 if isinstance(widget, QListWidget):
-                    widget.setDisabled(True)
-                    # for index, key in enumerate(setting.choice_keys):
-                    #     widget.item(index).setFlags(Qt)
+                    # widget.setDisabled(True)                    
+                    widget.setSelectionMode(QAbstractItemView.NoSelection)
                 elif isinstance(widget, list):
                     for index, key in enumerate(setting.choice_keys):
                         widget[index].setDisabled(True)
