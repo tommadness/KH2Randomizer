@@ -128,7 +128,7 @@ with bundled scripts.
   will take longer than subsequent patches. Choose `Game -> Restore` if you ever want to restore your game files to
   their original state from these backups.
 
-![Restore](../images/mods-manager/restore.png)
+![Restore](../images/Panacea-ModLoader/Panacea%20Patching%20Migration%20Restore.png)
 
 ### What happens to my old KH2PCPATCH files?
 
