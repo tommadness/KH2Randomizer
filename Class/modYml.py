@@ -405,6 +405,7 @@ class modYml:
                     }
                 ]
             }
+            
 
     def getBlockShanYuSkipMod():
         return {
@@ -435,6 +436,41 @@ class modYml:
                         "source": [
                             {
                                 "name": "disable_shan_yu_skip.script"
+                            }
+                        ]
+                    }
+                ]
+            }
+
+    def getAtlanticaTutorialSkipMod():
+        return {
+                "name": "ard/lm02.ard",
+                "multi": [
+                    {
+                        "name": "ard/us/lm02.ard"
+                    },
+                    {
+                        "name": "ard/fr/lm02.ard"
+                    },
+                    {
+                        "name": "ard/gr/lm02.ard"
+                    },
+                    {
+                        "name": "ard/it/lm02.ard"
+                    },
+                    {
+                        "name": "ard/sp/lm02.ard"
+                    }
+                ],
+                "method": "binarc",
+                "source": [
+                    {
+                        "name": "evt",
+                        "type": "areadatascript",
+                        "method": "areadatascript",
+                        "source": [
+                            {
+                                "name": "atlantica_skip.script"
                             }
                         ]
                     }

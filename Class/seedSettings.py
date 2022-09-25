@@ -1188,6 +1188,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=True,
         tooltip='Changes Port Royal map screen with text options, useful for avoiding crashes in PC.'
     ),
+    Toggle(
+        name=settingkey.ATLANTICA_TUTORIAL_SKIP,
+        ui_label='Skip Atlantica Minigame Tutorial',
+        shared=True,
+        default=False,
+        tooltip='Skips the Atlantica Music Tutorial (not the swimming tutorial).'
+    ),
 
     Toggle(
         name=settingkey.TT1_JAILBREAK,

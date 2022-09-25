@@ -155,6 +155,7 @@ class RandomizerSettings():
         self.block_cor_skip = ui_settings.get(settingkey.BLOCK_COR_SKIP)
         self.block_shan_yu_skip = ui_settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
         self.pr_map_skip = ui_settings.get(settingkey.PR_MAP_SKIP)
+        self.atlantica_skip = ui_settings.get(settingkey.ATLANTICA_TUTORIAL_SKIP)
         self.include_maps = ui_settings.get(settingkey.MAPS_IN_ITEM_POOL)
         self.include_recipes = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
         self.remove_popups = ui_settings.get(settingkey.REMOVE_POPUPS)

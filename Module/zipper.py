@@ -400,6 +400,7 @@ class SeedZip():
             self.createSkipCarpetAssets(settings, mod, outZip)
             self.createMapSkipAssets(settings, mod, outZip)
             self.createBlockingSkipAssets(settings, mod, outZip)
+            self.createAtlanticaSkipAssets(settings, mod, outZip)
             # self.createDropRateAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
@@ -561,6 +562,11 @@ class SeedZip():
         if settings.skip_carpet_escape:
             mod["assets"] += [modYml.getSkipCarpetEscapeMod()]
             outZip.write(resource_path("static/skip_carpet_escape.script"), "skip_carpet_escape.script")
+
+    def createAtlanticaSkipAssets(self,settings,mod,outZip):
+        if settings.atlantica_skip:
+            mod["assets"] += [modYml.getAtlanticaTutorialSkipMod()]
+            outZip.write(resource_path("static/atlantica_skip.script"), "atlantica_skip.script")
 
     def createBlockingSkipAssets(self,settings,mod,outZip):
         if settings.block_cor_skip:

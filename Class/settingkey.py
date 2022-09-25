@@ -74,6 +74,7 @@ RECIPES_IN_ITEM_POOL = 'recipes_in_item_pool'
 REVERSE_RANDO = 'reverse_rando'
 ROXAS_ABILITIES_ENABLED = 'roxas_abilities_enabled'
 DISABLE_FINAL_FORM = 'disable_final_form'
+ATLANTICA_TUTORIAL_SKIP = 'skip_atlantica_tutorial'
 SCHMOVEMENT = 'schmovement'
 STARTING_MOVEMENT = "starting_movement"
 SKIP_CARPET_ESCAPE = 'skip_carpet_escape'
