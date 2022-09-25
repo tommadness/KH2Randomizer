@@ -31,16 +31,15 @@
 
 ![Panacea Wizard Window](../images/Panacea-ModLoader/Panacea%20Install%20Window.png)
 
-5. If you want Mod Manager to bypass the Epic Games launcher check the **"Bypass the launcher"** check box. YOU HAVE TO RUN KH2 THROUGH THE MOD MANAGER USING THE "**RUN"** COMMAND IF YOU CHOOSE THIS OPTION. YOU CANNOT RUN KH2 THROUGH THE REGULAR LAUNCHER WHILE THIS OPTION IS ENABLED.
-	* *You will need to input your Epic Games user id, which can be found using the link below the text box*
+5. OpenKH can launch KH2 directly from the Epic Games Store Launcher. This option can save you time and a few clicks whenever you want to run the game after changing your mods or seed. It's recommended to enable this but is not required.
 
-![Bypass Launcher](../images/Panacea-ModLoader/Bypass%20Launcher.png)
+![Launch Via Epic Games](../images/Panacea-ModLoader/Luanch%20Via%20Epic%20Games%20Option.png)
 
-6. Keep the extraction folder location as defaulted by the wizard, and click on the **"extract game data"** button. You will need to wait a few minutes for the process to complete.
+6. Keep the extraction folder location as defaulted by the wizard, and click on the **"extract game data"** button. You will need to wait a few minutes for the process to complete. The game extraction totals to about 23GB so be sure you have room on your drive for it.
 
 ![Extraction Window](../images/Panacea-ModLoader/Extraction%20Window.png)
 
-## Garden of Assemblage Mod:
+## Garden of Assemblage Mod Installation:
 1. Click **"Mods"** in the top left
 
 ![Install New Mod](../images/Panacea-ModLoader/Install%20New%20Mod.png)
@@ -54,11 +53,12 @@
 
 ![Enable GoA ROM](../images/Panacea-ModLoader/Enable_GoA_ROM.png)
 
-4. Then click **"Game"** and **"Build"**, then **"Build Only"**
+4. Then click **"Mod Loader"** then **"Build Only"**
+* *If you enabled "Launch via Epic Games" in setup wizard, you can also choose to **"Build and Run"** here. This option will build your mod files and then immediately run the game for you.*
 
 ![Build Only](../images/Panacea-ModLoader/Build%20Only.png)
 
-* *Note: Every time you add a new mod to the list you will need to **"Build"** again, or it wont show up in game*
+* *Note: Newly enabled mods won't show up in game unless you **"Build"** after enabling them*
 
 ## Lua Backend Installation:
 1. Open the seed Generator Program `KH2 Randomizer.exe`
@@ -78,6 +78,8 @@
 ## Installing a new seed to play:
 1. Choose your seed settings in the generator window and then click on **"Generate Seed"** in the bottom right.
 
+![Generate Seed](../images/Panacea-ModLoader/Generate%20Seed.png)
+
 *If you choose settings that may not act the same between the PCSX2 and PC version, the button will separate between PC and PCSX2, be sure to click the right one if it does so.*
 
 2. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
@@ -85,7 +87,7 @@
 4. This time click on **"Select and Install Mod Archive"**, navigate to your new seed zip file and click **"Open"**
 5. Be sure to click on the check box next to the seed, then click on **"Build"** and **"Build Only"** to enable the mod in game. Note the 4 buttons to the right of the mod list. The First button lets you move a mod up the list, the second moves them down the list. The Green '+' icon is a shortcut to install a new mod, while the Red "-" icon is a shortcut to deleting a mod.
 
-![Install New Seed](../images/Panacea-ModLoader/Install%20New%20Seed.gif)
+![Install New Seed](../images/Panacea-ModLoader/Install%20New%20Seed-Updated.gif)
 
 ### *Note: It is very important that the seed is always ABOVE the GoA ROM mod in the list. The Randomizer will not work otherwise.*
 
@@ -96,12 +98,12 @@
 *  **[KH2 Rando Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/tag/v1.6.8)** - Not an OpenKH mod but instead a full fledged automated tracker program for the Important Checks in game. Checkout [Hint Systems](https://kh2rando.com/hints) for info about different ways to play Rando!
 
 
-# *You are now ready to play a KH2 Rando Seed! Run the game from the epic games launcher and have fun!*
+# *You are now ready to play the KH2 Randomizer!*
 
 __Technical And Stability Notes__
 1. Recommended to set fps limit to **60fps**.
 2. Recommended to run game in windows/borderless windowed mode. Fullscreen is stable but the game can crash if you alt-tab out.
 3. Overlays that hook onto the game process (Steam, RivaTuner, Nvidia Overlay, etc) and recording programs (Obs, Streamlabs, Xsplit) seem to decrease stability when playing rando. It's recommended to disable them, or in the case of recording programs use window/desktop capture, in order to minimize your chances of a crash.
 4. GoA ROM and the Seed Generator will always be compatible with one another. Any other mods beyond that should be compatible as long as they don't overlap on changes. Mods at the top of the list will overwrite mods below them if there's any overlapping files. Feel free to ask in the [Community Discord](https://discord.gg/vKhdwNAmzE) if you aren't sure.
-5. Consistent crashes are rare but possible, try installing a new seed if you can't load into a specific room, and please report your issue in our Discord server.
+5. Consistent crashes are rare but possible, try installing a new seed or even restarting your computer if you can't load into a specific room, and please report your issue in our Discord server.
 6. Boss/Enemy Rando is amazing but still a work in progress. Please report any bugs/softlocks/out-of-bounds glitches you encounter to the coresponding Google Form listed in the #bug-reports channels of our Discord. 
