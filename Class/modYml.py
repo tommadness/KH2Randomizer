@@ -477,6 +477,9 @@ class modYml:
                 ]
             }
 
+    def getWardrobeSkipMod():
+        return {"name": "obj/N_BB080_BTL.mset","method": "copy","source": [{"name": "wardrobe_skip.mset"}]}
+
 
     def getMapSkipMod():
         return [{

@@ -1195,6 +1195,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Skips the Atlantica Music Tutorial (not the swimming tutorial).'
     ),
+    Toggle(
+        name=settingkey.REMOVE_WARDROBE_ANIMATION,
+        ui_label='Remove Wardrobe Wakeup Animation',
+        shared=True,
+        default=False,
+        tooltip='Wardrobe in BC will not wake up when pushing it.'
+    ),
 
     Toggle(
         name=settingkey.TT1_JAILBREAK,

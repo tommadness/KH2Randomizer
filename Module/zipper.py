@@ -401,6 +401,7 @@ class SeedZip():
             self.createMapSkipAssets(settings, mod, outZip)
             self.createBlockingSkipAssets(settings, mod, outZip)
             self.createAtlanticaSkipAssets(settings, mod, outZip)
+            self.createWardrobeSkipAssets(settings, mod, outZip)
             # self.createDropRateAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
@@ -567,6 +568,11 @@ class SeedZip():
         if settings.atlantica_skip:
             mod["assets"] += [modYml.getAtlanticaTutorialSkipMod()]
             outZip.write(resource_path("static/atlantica_skip.script"), "atlantica_skip.script")
+
+    def createWardrobeSkipAssets(self,settings,mod,outZip):
+        if settings.wardrobe_skip:
+            mod["assets"] += [modYml.getWardrobeSkipMod()]
+            outZip.write(resource_path("static/wardrobe/N_BB080_BTL.mset"), "wardrobe_skip.mset")
 
     def createBlockingSkipAssets(self,settings,mod,outZip):
         if settings.block_cor_skip:
