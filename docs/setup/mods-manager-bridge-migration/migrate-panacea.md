@@ -34,7 +34,7 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 ### 3. Run the Mods Manager setup wizard
 
-* Open Mods Manager. If you are starting fresh, the setup wizard will display. If not, choose `Settings -> Run wizard`.
+* Open Mods Manager. The setup-wizard should automatically open first after updating your files. If not please choose `Settings -> Run Wizard`.
 
 ![Run wizard](../images/mods-manager/run-wizard.png)
 
@@ -49,10 +49,9 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 ![Panacea](../images/mods-manager/wizard/panacea-not-installed.png) ![Panacea installed](../images/mods-manager/wizard/panacea-installed.png)
 
-* On the next screen, leave `Bypass the launcher` unchecked and choose `Next` to move on. Bypassing the launcher is not
-  recommended.
+* OpenKH can launch KH2 directly from the Epic Games Store Launcher. This option can save you time and a few clicks whenever you want to run the game after changing your mods or seed. It's recommended to enable this but is not required.
 
-![Launcher](../images/mods-manager/wizard/bypass-launcher-unchecked.png)
+![Launch Via Epic Games](../images/Panacea-ModLoader/Luanch%20Via%20Epic%20Games%20Option.png)
 
 * For the `Set Game Data Location` screen's `Extraction folder location`, you can use one of two approaches:
     * Browse to the folder where you extracted your KH2 game data using Mods Manager Bridge originally. As long as
@@ -108,11 +107,11 @@ with bundled scripts.
 
 * Use Mods Manager to add/remove/check/uncheck mods as usual. (You may have fewer or more mods than shown here.)
 
-![Mods list](../images/mods-manager/example-mods-list.png)
+![Mods list](../images/Panacea-ModLoader/Panacea%20Migration%20Basic%20View.png)
 
-* Choose `Game -> Build -> Build Only` to prepare your mods.
+* You may notice that your old `Game` tab has been renamed to `Mod Loader`. This is where you can now build your mods and run your game. If you enabled the `Launch via Epic Games` option in the wizard then you can choose the `Build and Run` option here to build your mods and immediately start your game. Otherwise you only want to use the `Build` option and then run your game through the Epic Games Launcher manually.
 
-![Build only](../images/mods-manager/build-only.png)
+![Build only](../images/Panacea-ModLoader/Panacea%20Migration%20Mod%20Loader%20Tab.png)
 
 * A console window will come up while preparing mods and will disappear once finished. After this has finished, start
   your game normally and your chosen mods should be applied.
