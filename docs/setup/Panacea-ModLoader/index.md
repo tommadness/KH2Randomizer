@@ -4,6 +4,7 @@
 * Feel free to go to the [discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated help channel where you can find people to help you, if you're facing any difficulties. (P.S. Please be polite)
 * **You must run the game once** before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
 * **VERIFY GAME FILES** through the Epic Games Launcher for Kingdom Hearts 1.5 + 2.5 Remix (v1.0.0.8_WW), they need to be clean/unpatched files for the extraction process to work.
+* If you have EVER installed the KH2 Randomizer before then please check your `C:\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2 folder` (if you have one) and EMPTY IT.
 * Unofficial copies of the game are not supported, it is strongly recommended you buy and install the game directly from the Epic Game Store.
 
 ## Resources Needed:
