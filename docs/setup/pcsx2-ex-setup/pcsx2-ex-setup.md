@@ -59,9 +59,9 @@ But if you have difficulty following this GIF, here’s the steps in condensed f
 5.	Select the region. If you're playing with English controls, select `English (text US, menu US, voice US)`; or `Use game default region` if you're playing with JP controls. Click `Next`.
 6.	Click `Finish`.
 
-From here on out, we’re now going to get the OpenKH mods needed for this the rando. Click on the green + icon on the middle of the screen, and in the **Add a new mod from Github** text space, type on `Rikysonic/languagepack-en`, then click Install. This will translate our KINGDOM HEARTS II FINAL MIX ISO file from Japanese to English in real time. If you are playing in a different language, replace this mod with the appropriate language mod.
+From here on out, we’re now going to get the OpenKH mods needed for this the rando. Click on the green + icon on the middle of the screen (Or click the "Mods" tab and then "Install New Mod"), and in the **Add a new mod from Github** text space, type on `Rikysonic/languagepack-en`, then click Install. This will translate our KINGDOM HEARTS II FINAL MIX ISO file from Japanese to English in real time. If you are playing in a different language, replace this mod with the appropriate language mod.
 
-<img src="./diagram2.png" width="600">
+![Install New Mod](./diagram2-update.png)
 
 Once that’s done, click the green + icon to add a mod again, but this time, type in `KH2FM-Mods-Num/GOA-ROM-Edition` 
 
@@ -93,12 +93,12 @@ Then, open the OpenKH Mods Manager program, click the green + icon, but instead 
 
 From here, you should have three mods installed: the Language pack of your choice, the Garden of Assemblage ROM Edition, and the Randomizer seed itself, arranged by mod priority from bottom to top. Don’t forget the enable the mod by checking the teeny tiny check box next to the gargantuan icon of the mod.
 
-![Almost there...](./three-mods.png)
+![Almost there...](./three-mods-update.png)
 
 =======
-From here, click on `Run` in the menu, then select `Build and Run` (Keyboard shortcut: `F5`). This will build the mods, automatically open PCSX2-EX with KINGDOM HEARTS II FINAL MIX, and will inject the mods loaded in OpenKH Mods Manager into the game in real time.
+From here, click on `Mod Loader` in the menu, then select `Build and Run` (Keyboard shortcut: `F5`). This will build the mods, automatically open PCSX2-EX with KINGDOM HEARTS II FINAL MIX, and will inject the mods loaded in OpenKH Mods Manager into the game in real time.
 
-![Run > Build and Run](./build-and-run.png)
+![Run > Build and Run](./build-and-run-update.png)
 
 All that’s left now is to start the game and play KINGDOM HEARTS II FINAL MIX… now Randomized!
 

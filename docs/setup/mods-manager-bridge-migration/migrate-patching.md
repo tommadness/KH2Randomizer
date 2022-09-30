@@ -33,7 +33,7 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 ### 3. Run the Mods Manager setup wizard
 
-* Open Mods Manager. If you are starting fresh, the setup wizard will display. If not, choose `Settings -> Run wizard`.
+* Open Mods Manager. The setup-wizard should automatically open first after updating your files. If not please choose `Settings -> Run Wizard`.
 
 ![Run wizard](../images/mods-manager/run-wizard.png)
 
@@ -48,10 +48,9 @@ You absolutely want to make sure you start from a fresh set of game files. There
 
 ![Panacea](../images/mods-manager/wizard/panacea-not-installed.png)
 
-* On the next screen, leave `Bypass the launcher` unchecked and choose `Next` to move on. Bypassing the launcher
-  requires OpenKH Panacea to be installed, which we are choosing not to do with this setup.
+* On the next screen, leave the `Launch via Epic Games` option **unchecked**. This option cannot be enabled for the patching setup as it requires the Panacea Mod Loader to work.
 
-![Launcher](../images/mods-manager/wizard/bypass-launcher-unchecked.png)
+![Launcher](../images/Panacea-ModLoader/Unchecked%20Luanch%20Via%20Epic%20Games.png)
 
 * For the `Set Game Data Location` screen's `Extraction folder location`, you can use one of two approaches:
     * Browse to the folder where you extracted your KH2 game data using Mods Manager Bridge originally. As long as
@@ -106,14 +105,14 @@ with bundled scripts.
 
 * Use Mods Manager to add/remove/check/uncheck mods as usual. (You may have fewer or more mods than shown here.)
 
-![Mods list](../images/mods-manager/example-mods-list.png)
+![Mods list](../images/Panacea-ModLoader/PC%20Patching%20New%20UI%20Basic.png)
 
-* Choose one of the `Game -> Build -> Build and Patch` options to begin patching your game.
+* You may notice that your old `Game` tab in the top left has been renamed to `PC`. This is where you can `Patch` or `Fast Patch` your game now. 
     * If you've been using `fast_patch` all along in Mods Manager Bridge, the `Fast` option works mostly the same. If
       you've needed to use the full `patch` option in Mods Manager Bridge, then you probably want to avoid the `Fast`
       option here as well.
 
-![Patch options](../images/mods-manager/build-and-patch.png)
+![Patch options](../images/Panacea-ModLoader/PC%20Patching%20New%20UI.png)
 
 * A console window will come up while patching and will disappear once finished. After the patching has finished, start
   your game normally and your chosen mods should be applied.
@@ -129,7 +128,7 @@ with bundled scripts.
   will take longer than subsequent patches. Choose `Game -> Restore` if you ever want to restore your game files to
   their original state from these backups.
 
-![Restore](../images/mods-manager/restore.png)
+![Restore](../images/Panacea-ModLoader/Panacea%20Patching%20Migration%20Restore.png)
 
 ### What happens to my old KH2PCPATCH files?
 
