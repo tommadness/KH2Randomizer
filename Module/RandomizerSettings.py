@@ -19,6 +19,7 @@ class RandomizerSettings():
         self.full_ui_settings = full_ui_settings
         self.ui_settings = ui_settings
         self.crit_mode = ui_settings.get(settingkey.CRITICAL_BONUS_REWARDS)
+        self.item_accessibility = ui_settings.get(settingkey.ACCESSIBILITY)
 
         include_list = []
         include_list_keys = [

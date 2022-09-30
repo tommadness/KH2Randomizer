@@ -336,32 +336,6 @@ class Randomizer():
         if len(invalid_test)>0:
             allItems.sort(reverse=True,key=item_sorter)
 
-        inventory = []
-        inventory += settings.startingItems
-
-        regular_location_reqs = self.regular_locations.getAllSoraLocations(True)
-        reverse_location_reqs = self.reverse_locations.getAllSoraLocations(True)
-        all_reqs = {}
-
-        def evaluate(inventory,reqs_list):
-            result = True
-            for r in reqs_list:
-                result = result and r(inventory)
-            return result
-
-        for valid_loc in validLocations:
-            all_reqs[valid_loc] = []
-            if settings.regular_rando:
-                for l,r in regular_location_reqs:
-                    if l==valid_loc:
-                        all_reqs[valid_loc]+=r
-            if settings.reverse_rando:
-                for l,r in reverse_location_reqs:
-                    if l==valid_loc:
-                        all_reqs[valid_loc]+=r
-
-
-
         #assign valid items to all valid locations remaining
         for item in allItems:
             if len(validLocations) == 0:
@@ -373,7 +347,6 @@ class Randomizer():
                 if len(starry_hill_loc_list) == 0:
                     raise GeneratorException("Yeet the Bear setting is set, when 100 acre wood is turned off.")
                 starry_hill_cure = starry_hill_loc_list[0]
-                inventory.append(item.Id)
                 if self.assignItem(starry_hill_cure,item):
                     validLocations.remove(starry_hill_cure)
                 continue
@@ -398,12 +371,10 @@ class Randomizer():
                 if sum(weights) == 0 and restricted_reports:
                     raise CantAssignItemException(f"Somehow, can't assign an item. If using report depth option that restricts to specific bosses, make sure all worlds with doors in GoA are enabled.")
                 randomLocation = random.choices(validLocations,weights)[0]
-                if len(invalid_test)>0 or evaluate(inventory,all_reqs[randomLocation]):
-                    if item.ItemType not in randomLocation.InvalidChecks:
-                        inventory.append(item.Id)
-                        if self.assignItem(randomLocation,item):
-                            validLocations.remove(randomLocation)
-                        break
+                if item.ItemType not in randomLocation.InvalidChecks:
+                    if self.assignItem(randomLocation,item):
+                        validLocations.remove(randomLocation)
+                    break
                 if count==100:
                     raise CantAssignItemException(f"Trying to assign {item} and failed 100 times in {len([i for i in validLocations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(validLocations)}")
         invalidLocations+=validLocations

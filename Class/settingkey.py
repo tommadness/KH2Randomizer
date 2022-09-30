@@ -1,4 +1,5 @@
 ABILITY_POOL = 'ability_pool'
+ACCESSIBILITY = 'seed_accessibility'
 ALLOW_PROOF_HINTING = 'allow_proof_hinting'
 ALLOW_REPORT_HINTING = 'allow_report_hinting'
 AS_DATA_SPLIT = "as_data_reward_split"

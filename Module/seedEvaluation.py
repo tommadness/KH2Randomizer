@@ -6,6 +6,12 @@ from List.NewLocationList import get_all_parent_edge_reqs
 
 from Module.newRandomize import Randomizer
 
+class ValidationResult:
+    def __init__(self,any_per=False,clear=False):
+        self.any_percent = any_per
+        self.full_clear = clear
+
+
 class LocationInformedSeedValidator:
     def __init__(self):
         pass
@@ -25,7 +31,10 @@ class LocationInformedSeedValidator:
         if settings.reverse_rando:
             location_graphs.append(randomizer.reverse_locations.location_graph)
 
+        results = ValidationResult(True,True)
+
         for graph in location_graphs:
+            result = ValidationResult()
             inventory = []
             inventory += startingInventory
 
@@ -39,10 +48,14 @@ class LocationInformedSeedValidator:
             depth = 0
             while changed:
                 depth+=1
+                if all([x in inventory for x in [593,594,595]]):
+                    result.any_percent = True
+
                 if len(location_requirements)==0:
                     if verbose:
                         print(f"Logic Depth {depth}")
-                    return True
+                    result.full_clear = True
+                    break
                 changed = False
                 locations_to_remove = []
                 for loc_req in location_requirements:
@@ -59,7 +72,16 @@ class LocationInformedSeedValidator:
                         changed = True
                 for i in locations_to_remove:
                     location_requirements.remove(i)
-            
+
+            results.any_percent &= result.any_percent
+            results.full_clear &= result.full_clear
+
+            print(len(location_requirements))
+
+        if (settings.item_accessibility=="all" and results.full_clear) or (settings.item_accessibility=="beatable" and results.any_percent):
+            #we all good
+            pass
+        else:
             if verbose:
                 print("Failed seed, trying again")
             

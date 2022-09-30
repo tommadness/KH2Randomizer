@@ -42,6 +42,7 @@ class Locations:
         self.location_graph = Graph()
         self.reverse_rando = secondary_graph
         self.nightmare = settings.nightmare
+        self.no_final_form = settings.disable_final_form
         self.first_boss_nodes = []
         self.second_boss_nodes = []
         self.data_nodes = []
@@ -228,7 +229,12 @@ class Locations:
             self.add_node(f"Summon-{i}",LocationNode([KH2Location(i,f"Summon Level {i}", locationCategory.SUMMONLEVEL,[locationType.SummonLevel])]))
 
 
-            form_helper = ItemPlacementHelpers.make_form_lambda_nightmare if self.nightmare else ItemPlacementHelpers.make_form_lambda
+            form_helper = ItemPlacementHelpers.make_form_lambda
+
+            if self.nightmare and self.no_final_form:
+                form_helper = ItemPlacementHelpers.make_form_lambda_nightmare_no_final
+            elif self.nightmare:
+                form_helper = ItemPlacementHelpers.make_form_lambda_nightmare
 
             if i != 1:
                 self.add_edge(f"Valor-{i-1}",f"Valor-{i}",RequirementEdge(req=form_helper("Valor",i)))

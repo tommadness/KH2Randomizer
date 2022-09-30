@@ -39,6 +39,7 @@ class ItemPlacementMenu(KH2Submenu):
 
         self.start_column()
         self.addHeader("Where Items Can Go")
+        self.add_option(settingkey.ACCESSIBILITY)
         self.add_option(settingkey.SOFTLOCK_CHECKING)
         self.add_option(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.add_option(settingkey.NIGHTMARE_LOGIC)

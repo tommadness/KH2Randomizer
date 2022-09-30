@@ -1348,10 +1348,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.NIGHTMARE_LOGIC,
-        ui_label='Advanced Nightmare Logic',
+        ui_label='Extended Item Placement Logic',
         shared=True,
         default=False,
-        tooltip="Enables weighting for keyblades with good abilities, and puts auto forms `in-logic` meaning they may be required",
+        tooltip="Enables weighting for keyblades with good abilities, and puts auto forms and final forcing `in-logic` meaning they may be required to complete the seed.",
         randomizable=True
     ),
     SingleSelect(
@@ -1365,6 +1365,21 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default="default",
         tooltip='What type of rando are you playing? Regular is default, reverse rando with visits reversed, or co-op with both regular and reverse'
+    ),
+    SingleSelect(
+        name=settingkey.ACCESSIBILITY,
+        ui_label='Accessibility',
+        choices={
+            'all': '100% Locations',
+            'beatable': 'Beatable',
+        },
+        shared=True,
+        default="all",
+        tooltip=textwrap.dedent('''
+            How accessible locations need to be for the seed to be `completeable`
+            100% Locations means all locations must be reachable, and nothing will be permenantly locked
+            Beatable means the 3 proofs will be accessible, but nothing else is guaranteed. 
+        ''')
     ),
 
     SingleSelect(
