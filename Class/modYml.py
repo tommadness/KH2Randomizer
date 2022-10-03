@@ -286,6 +286,18 @@ class modYml:
                     ]
                 }
 
+    def getShopMod():
+        return  {
+                    "name": "shop",
+                    "type": "unknown41",
+                    "method": "copy",
+                    "source": [
+                        {
+                            "name": "modified_shop.bin"
+                        }
+                    ]
+                }
+
     def getSynthMod(pc=False):
         mod_dict = {
                     "method": "binarc",

@@ -20,6 +20,7 @@ from Module.newRandomize import Randomizer, SynthesisRecipe
 from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.resources import resource_path
+from Module.seedEvaluation import LocationInformedSeedValidator
 from Module.spoilerLog import itemSpoilerDictionary, levelStatsDictionary
 
 
@@ -403,6 +404,7 @@ class SeedZip():
             self.createAtlanticaSkipAssets(settings, mod, outZip)
             self.createWardrobeSkipAssets(settings, mod, outZip)
             # self.createDropRateAssets(settings, randomizer, mod, outZip)
+            # self.createShopRandoAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -495,7 +497,7 @@ class SeedZip():
                                                                                             "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
                                                        .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
                                                        .replace("SETTINGS_JSON",json.dumps(settings.full_ui_settings)) \
-                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights), indent=4, cls=ItemEncoder)) \
+                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights,LocationInformedSeedValidator().validateSeed(settings, randomizer, False)), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
                                                        .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON))
@@ -661,6 +663,96 @@ class SeedZip():
                 for drop in all_drops:
                     all_drops[drop].write(binaryContent)
                 outZip.writestr("modified_drops.bin",binaryContent)
+
+    def createShopRandoAssets(self, settings, randomizer, mod, outZip):
+        if True:
+            for x in mod["assets"]:
+                if x["name"]=="03system.bin":
+                    x["source"].append(modYml.getShopMod())
+
+            test_items = [593,594,595]
+            # self.formattedItem["Items"] = []
+            # for x in test_items:
+            #     self.formattedItem["Items"].append({
+            #         "Id": x,
+            #         "ShopBuy": 1000,
+            #         "ShopSell": 500
+            #     })
+
+
+            with open(resource_path("static/shop.bin"), "rb") as shopbar:
+                binaryContent = bytearray(shopbar.read())
+
+                byte0,byte1 = number_to_bytes(80+len(test_items))
+                binaryContent[10] = byte0
+                binaryContent[11] = byte1
+
+                byte0,byte1 = number_to_bytes(len(test_items))
+
+                # inventory 752
+                binaryContent[754] = byte0
+                binaryContent[755] = byte1
+                byte0,byte1 = number_to_bytes(984)
+                binaryContent[756] = byte0
+                binaryContent[757] = byte1
+
+
+                valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
+                for x in range(len(test_items)):
+                    product_index = 984+2*x
+                    valid_item_index = valid_start + (60+x)*2
+                    byte0,byte1 = number_to_bytes(test_items[x])
+                    binaryContent[product_index] = byte0
+                    binaryContent[product_index+1] = byte1
+                    binaryContent[valid_item_index] = byte0
+                    binaryContent[valid_item_index+1] = byte1
+                
+                outZip.writestr("modified_shop.bin",binaryContent)
+
+                print(f"file type: {bytes_to_number(binaryContent[4],binaryContent[5])}")
+                shop_list_count = bytes_to_number(binaryContent[6],binaryContent[7])
+                print(f"shop list count: {shop_list_count}")
+                inventory_list_count = bytes_to_number(binaryContent[8],binaryContent[9])
+                print(f"inventory entry count: {inventory_list_count}")
+                product_list_count = bytes_to_number(binaryContent[10],binaryContent[11])
+                print(f"product entry count: {product_list_count}")
+                valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
+                print(f"valid items offset: {valid_start}")
+                
+                shop_start = 16
+                # print("Shop Entries")
+                # for x in range(shop_list_count):
+                #     shop_index = shop_start+x*24
+                #     print(f"---- Shop ID: {bytes_to_number(binaryContent[shop_index+18])}")
+                #     print(f"---- Inventory Amount: {bytes_to_number(binaryContent[shop_index+16],binaryContent[shop_index+17])}")
+                #     print(f"---- Inventory Offset: {bytes_to_number(binaryContent[shop_index+20],binaryContent[shop_index+21])}")
+                #     print("----------")
+
+                inventory_start = shop_start+shop_list_count*24
+                print("Inventory Entries")
+                for x in range(inventory_list_count):
+                    inventory_index = inventory_start+x*8
+                    print(f"---- Inventory Address: {inventory_index}")
+                    print(f"---- Unlock event: {bytes_to_number(binaryContent[inventory_index],binaryContent[inventory_index+1])}")
+                    print(f"---- Product Amount: {bytes_to_number(binaryContent[inventory_index+2],binaryContent[inventory_index+3])}")
+                    print(f"---- Product Offset: {bytes_to_number(binaryContent[inventory_index+4],binaryContent[inventory_index+5])}")
+                    print("----------")
+
+                product_start = inventory_start+inventory_list_count*8
+                print("Product Entries")
+                for x in range(product_list_count):
+                    product_index = product_start+x*2
+                    print(f"---- Address {product_index}")
+                    print(f"---- Product (Item Id):  {bytes_to_number(binaryContent[product_index],binaryContent[product_index+1])}")
+
+                print("Valid Items")
+                for x in range(63):
+                    valid_index = valid_start+x*2
+                    item_id = bytes_to_number(binaryContent[valid_index],binaryContent[valid_index+1])
+                    if item_id!=0:
+                        print(f"---- Valid Item (Item Id):  {item_id}")
+
+        pass
 
     def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.SYNTH in settings.disabledLocations:

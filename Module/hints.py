@@ -60,10 +60,11 @@ class Hints:
                         hintsText['world'][world_of_location] = []
                     hintsText['world'][world_of_location].append(item.Name)
         
-        report_master = [locationType.Free]*14
+        report_master = [[locationType.Free]]*14
         found_reports = False
         for location,item in locationItems:
             if item.ItemType is itemType.REPORT:
+                print(location)
                 reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                 found_reports = True
                 if locationType.Critical in location.LocationTypes:
@@ -226,6 +227,7 @@ class Hints:
 
 
 
+            print(report_master)
             for x in range(1,14):
                 report_location = report_master[x][0]
                 hintsText["Reports"][x] = {

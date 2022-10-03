@@ -34,7 +34,7 @@ from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.seedSettings import RandoRandoSettings, SeedSettings, getRandoRandoTooltip
 from Module.cosmetics import CustomCosmetics
-from Module.dailySeed import getDailyModifiers
+from Module.dailySeed import allDailyModifiers, getDailyModifiers
 from Module.generate import generateMultiWorldSeed, generateSeed
 from Module.RandomizerSettings import RandomizerSettings
 from Module.newRandomize import Randomizer
@@ -285,7 +285,19 @@ class KH2RandomizerApp(QMainWindow):
     def loadDailySeed(self):
         self.seedName.setText(self.dailySeedName)
         self.recalculate = False
-        self.settings.apply_settings_json(self.preset_json['BaseDailySeed'])
+
+        #test all daily settings for sanity
+        try:
+            all_mods = allDailyModifiers()
+            for m in all_mods:
+                self.settings.apply_settings_json(self.preset_json['StarterSettings'])
+                m.local_modifier(self.settings)
+                for widget in self.widgets:
+                    widget.update_widgets()
+        except:
+            print("Error found with one of the options")
+
+        self.settings.apply_settings_json(self.preset_json['StarterSettings'])
 
         # use the modifications to change the preset
         mod_string = f'Updated settings for Daily Seed {self.startTime.strftime("%a %b %d %Y")}\n\n'

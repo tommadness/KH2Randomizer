@@ -76,11 +76,10 @@ class LocationInformedSeedValidator:
             results.any_percent &= result.any_percent
             results.full_clear &= result.full_clear
 
-            print(len(location_requirements))
-
         if (settings.item_accessibility=="all" and results.full_clear) or (settings.item_accessibility=="beatable" and results.any_percent):
             #we all good
-            pass
+            print(f"Unreachable locations {len(location_requirements)}")
+            return [i[0] for i in location_requirements]
         else:
             if verbose:
                 print("Failed seed, trying again")
