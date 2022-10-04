@@ -404,7 +404,7 @@ class SeedZip():
             self.createAtlanticaSkipAssets(settings, mod, outZip)
             self.createWardrobeSkipAssets(settings, mod, outZip)
             # self.createDropRateAssets(settings, randomizer, mod, outZip)
-            # self.createShopRandoAssets(settings, randomizer, mod, outZip)
+            self.createShopRandoAssets(settings, randomizer, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -671,13 +671,17 @@ class SeedZip():
                     x["source"].append(modYml.getShopMod())
 
             test_items = [593,594,595]
-            # self.formattedItem["Items"] = []
-            # for x in test_items:
-            #     self.formattedItem["Items"].append({
-            #         "Id": x,
-            #         "ShopBuy": 1000,
-            #         "ShopSell": 500
-            #     })
+            with open(resource_path("static/full_items.json"), "r") as itemjson:
+                all_item_jsons = json.loads(itemjson.read())
+                self.formattedItem["Items"] = []
+                for x in test_items:
+                    item_json = None
+                    for y in all_item_jsons["Items"]:
+                        if y["Id"]==x:
+                            item_json = y
+                            break
+                    item_json["ShopBuy"]=1000
+                    self.formattedItem["Items"].append(item_json)
 
 
             with open(resource_path("static/shop.bin"), "rb") as shopbar:
@@ -709,17 +713,19 @@ class SeedZip():
                 
                 outZip.writestr("modified_shop.bin",binaryContent)
 
-                print(f"file type: {bytes_to_number(binaryContent[4],binaryContent[5])}")
-                shop_list_count = bytes_to_number(binaryContent[6],binaryContent[7])
-                print(f"shop list count: {shop_list_count}")
-                inventory_list_count = bytes_to_number(binaryContent[8],binaryContent[9])
-                print(f"inventory entry count: {inventory_list_count}")
-                product_list_count = bytes_to_number(binaryContent[10],binaryContent[11])
-                print(f"product entry count: {product_list_count}")
-                valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
-                print(f"valid items offset: {valid_start}")
+                ### code below prints out the shop information in relevant format
+
+                # print(f"file type: {bytes_to_number(binaryContent[4],binaryContent[5])}")
+                # shop_list_count = bytes_to_number(binaryContent[6],binaryContent[7])
+                # print(f"shop list count: {shop_list_count}")
+                # inventory_list_count = bytes_to_number(binaryContent[8],binaryContent[9])
+                # print(f"inventory entry count: {inventory_list_count}")
+                # product_list_count = bytes_to_number(binaryContent[10],binaryContent[11])
+                # print(f"product entry count: {product_list_count}")
+                # valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
+                # print(f"valid items offset: {valid_start}")
                 
-                shop_start = 16
+                # shop_start = 16
                 # print("Shop Entries")
                 # for x in range(shop_list_count):
                 #     shop_index = shop_start+x*24
@@ -728,29 +734,29 @@ class SeedZip():
                 #     print(f"---- Inventory Offset: {bytes_to_number(binaryContent[shop_index+20],binaryContent[shop_index+21])}")
                 #     print("----------")
 
-                inventory_start = shop_start+shop_list_count*24
-                print("Inventory Entries")
-                for x in range(inventory_list_count):
-                    inventory_index = inventory_start+x*8
-                    print(f"---- Inventory Address: {inventory_index}")
-                    print(f"---- Unlock event: {bytes_to_number(binaryContent[inventory_index],binaryContent[inventory_index+1])}")
-                    print(f"---- Product Amount: {bytes_to_number(binaryContent[inventory_index+2],binaryContent[inventory_index+3])}")
-                    print(f"---- Product Offset: {bytes_to_number(binaryContent[inventory_index+4],binaryContent[inventory_index+5])}")
-                    print("----------")
+                # inventory_start = shop_start+shop_list_count*24
+                # print("Inventory Entries")
+                # for x in range(inventory_list_count):
+                #     inventory_index = inventory_start+x*8
+                #     print(f"---- Inventory Address: {inventory_index}")
+                #     print(f"---- Unlock event: {bytes_to_number(binaryContent[inventory_index],binaryContent[inventory_index+1])}")
+                #     print(f"---- Product Amount: {bytes_to_number(binaryContent[inventory_index+2],binaryContent[inventory_index+3])}")
+                #     print(f"---- Product Offset: {bytes_to_number(binaryContent[inventory_index+4],binaryContent[inventory_index+5])}")
+                #     print("----------")
 
-                product_start = inventory_start+inventory_list_count*8
-                print("Product Entries")
-                for x in range(product_list_count):
-                    product_index = product_start+x*2
-                    print(f"---- Address {product_index}")
-                    print(f"---- Product (Item Id):  {bytes_to_number(binaryContent[product_index],binaryContent[product_index+1])}")
+                # product_start = inventory_start+inventory_list_count*8
+                # print("Product Entries")
+                # for x in range(product_list_count):
+                #     product_index = product_start+x*2
+                #     print(f"---- Address {product_index}")
+                #     print(f"---- Product (Item Id):  {bytes_to_number(binaryContent[product_index],binaryContent[product_index+1])}")
 
-                print("Valid Items")
-                for x in range(63):
-                    valid_index = valid_start+x*2
-                    item_id = bytes_to_number(binaryContent[valid_index],binaryContent[valid_index+1])
-                    if item_id!=0:
-                        print(f"---- Valid Item (Item Id):  {item_id}")
+                # print("Valid Items")
+                # for x in range(63):
+                #     valid_index = valid_start+x*2
+                #     item_id = bytes_to_number(binaryContent[valid_index],binaryContent[valid_index+1])
+                #     if item_id!=0:
+                #         print(f"---- Valid Item (Item Id):  {item_id}")
 
         pass
 
