@@ -403,8 +403,8 @@ class SeedZip():
             self.createBlockingSkipAssets(settings, mod, outZip)
             self.createAtlanticaSkipAssets(settings, mod, outZip)
             self.createWardrobeSkipAssets(settings, mod, outZip)
-            # self.createDropRateAssets(settings, randomizer, mod, outZip)
-            self.createShopRandoAssets(settings, randomizer, mod, outZip)
+            self.createDropRateAssets(settings, randomizer, mod, outZip)
+            self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -609,7 +609,13 @@ class SeedZip():
 
                 
     def createDropRateAssets(self, settings, randomizer, mod, outZip):
-        if True:
+        global_jackpot = 2
+        global_lucky_lucky = 2
+        fast_urns = True
+        rich_enemies = True
+        near_unlimited_mp = True
+
+        if global_jackpot>0 or global_lucky_lucky>0 or fast_urns or rich_enemies or near_unlimited_mp:
             for x in mod["assets"]:
                 if x["name"]=="00battle.bin":
                     x["source"].append(modYml.getDropMod())
@@ -625,37 +631,46 @@ class SeedZip():
                     if rate.id not in id_to_enemy_name:
                         testing.append(rate.id)
 
-            # make changes
-            print(len(testing))
 
-            # this is the very secret thing
-            all_drops[72].item1 = 593
-            all_drops[72].item1_chance = 100
-            all_drops[72].item2 = 594
-            all_drops[72].item2_chance = 100
-            all_drops[72].item3 = 595
-            all_drops[72].item3_chance = 100
-            
-            all_drops[117].small_hp = 100
+            spawnable_enemy_ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,15,17,18,22,23,24,25,26,27,28,29,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,63,64,65,66,69,73,87,88,89,96,112,171,172,173,174,175,176,177,178,179,180,181,182]
+            urn_ids = [70,71]
+            stt_enemies = [119,120,121,130,145]
 
+            if rich_enemies: 
+                for drop in all_drops.values():
+                    if drop.id in spawnable_enemy_ids:
+                        drop.big_munny = max(drop.big_munny,3)
+                        drop.medium_munny = max(drop.medium_munny,3)
+                        drop.small_munny = max(drop.small_munny,3)
+            if near_unlimited_mp: 
+                for drop in all_drops.values():
+                    if drop.id in spawnable_enemy_ids:
+                        drop.big_mp = max(drop.big_mp,5)
+                        drop.small_mp = max(drop.small_mp,5)
+            if global_lucky_lucky > 0: 
+                for drop in all_drops.values():
+                    if drop.item1 != 0:
+                        drop.item1_chance = min(drop.item1_chance + (drop.item1_chance//2)*global_lucky_lucky,100)
+                    if drop.item2 != 0:
+                        drop.item2_chance = min(drop.item2_chance + (drop.item2_chance//2)*global_lucky_lucky,100)
+                    if drop.item3 != 0:
+                        drop.item3_chance = min(drop.item3_chance + (drop.item3_chance//2)*global_lucky_lucky,100)
+            if global_jackpot > 0: 
+                for drop in all_drops.values():
+                    drop.small_hp = min(drop.small_hp + (drop.small_hp//2)*global_jackpot,64)
+                    drop.big_hp = min(drop.big_hp + (drop.big_hp//2)*global_jackpot,64)
+                    drop.big_munny = min(drop.big_munny + (drop.big_munny//2)*global_jackpot,64)
+                    drop.medium_munny = min(drop.medium_munny + (drop.medium_munny//2)*global_jackpot,64)
+                    drop.small_munny = min(drop.small_munny + (drop.small_munny//2)*global_jackpot,64)
+                    drop.small_mp = min(drop.small_mp + (drop.small_mp//2)*global_jackpot,64)
+                    drop.big_mp = min(drop.big_mp + (drop.big_mp//2)*global_jackpot,64)
+                    drop.small_drive = min(drop.small_drive + (drop.small_drive//2)*global_jackpot,64)
+                    drop.big_drive = min(drop.big_drive + (drop.big_drive//2)*global_jackpot,64)
 
-            first_barrier = len(testing)//4
-            second_barrier = len(testing)//2
-            third_barrier = (len(testing)*3)//4
+            if fast_urns:
+                for u in urn_ids:
+                    all_drops[u].big_hp = 64
 
-            for i,t in enumerate(testing):
-                if i < first_barrier:
-                    print(f"{t} munny")
-                    all_drops[t].big_munny = 100
-                elif i < second_barrier:
-                    print(f"{t} mp")
-                    all_drops[t].big_mp = 100
-                elif i < third_barrier:
-                    print(f"{t} drive")
-                    all_drops[t].big_drive = 100
-                else:
-                    print(f"{t} hp")
-                    all_drops[t].big_hp = 100
 
             # write changes
             with open(resource_path("static/drops.bin"), "rb") as dropsbar:
@@ -664,34 +679,56 @@ class SeedZip():
                     all_drops[drop].write(binaryContent)
                 outZip.writestr("modified_drops.bin",binaryContent)
 
-    def createShopRandoAssets(self, settings, randomizer, mod, outZip):
-        if True:
+    def createShopRandoAssets(self, settings, randomizer, mod, outZip, sys):
+        keyblades_shop = True
+        reports_shop = True
+        unlock_shop = True
+
+        if keyblades_shop or reports_shop or unlock_shop:
             for x in mod["assets"]:
                 if x["name"]=="03system.bin":
                     x["source"].append(modYml.getShopMod())
 
-            test_items = [593,594,595]
+            items_for_shop = []
+
+            keyblade_item_ids = [42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,544]
+            report_item_ids = [226,227,228,229,230,231,232,233,234,235,236,237,238]
+            story_unlock_ids = [54,55,59,60,61,62,72,74,369,375,376]
+
+            for i in keyblade_item_ids:
+                items_for_shop.append((i,500))
+
+            for i in report_item_ids:
+                items_for_shop.append((i,250))
+            for i in range(13):
+                sys.append({"id":46778-32768+i*2,"en":f"Ansem Report {i+1}"})
+
+            for i in story_unlock_ids:
+                items_for_shop.append((i,500))
+
+        
+
             with open(resource_path("static/full_items.json"), "r") as itemjson:
                 all_item_jsons = json.loads(itemjson.read())
                 self.formattedItem["Items"] = []
-                for x in test_items:
+                for x,price in items_for_shop:
                     item_json = None
                     for y in all_item_jsons["Items"]:
                         if y["Id"]==x:
                             item_json = y
                             break
-                    item_json["ShopBuy"]=1000
+                    item_json["ShopBuy"]=price
                     self.formattedItem["Items"].append(item_json)
 
 
             with open(resource_path("static/shop.bin"), "rb") as shopbar:
                 binaryContent = bytearray(shopbar.read())
 
-                byte0,byte1 = number_to_bytes(80+len(test_items))
+                byte0,byte1 = number_to_bytes(80+len(items_for_shop))
                 binaryContent[10] = byte0
                 binaryContent[11] = byte1
 
-                byte0,byte1 = number_to_bytes(len(test_items))
+                byte0,byte1 = number_to_bytes(len(items_for_shop))
 
                 # inventory 752
                 binaryContent[754] = byte0
@@ -702,10 +739,10 @@ class SeedZip():
 
 
                 valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
-                for x in range(len(test_items)):
+                for x in range(len(items_for_shop)):
                     product_index = 984+2*x
                     valid_item_index = valid_start + (60+x)*2
-                    byte0,byte1 = number_to_bytes(test_items[x])
+                    byte0,byte1 = number_to_bytes(items_for_shop[x][0])
                     binaryContent[product_index] = byte0
                     binaryContent[product_index+1] = byte1
                     binaryContent[valid_item_index] = byte0
@@ -757,8 +794,6 @@ class SeedZip():
                 #     item_id = bytes_to_number(binaryContent[valid_index],binaryContent[valid_index+1])
                 #     if item_id!=0:
                 #         print(f"---- Valid Item (Item Id):  {item_id}")
-
-        pass
 
     def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.SYNTH in settings.disabledLocations:
