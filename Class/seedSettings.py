@@ -1202,6 +1202,76 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Wardrobe in BC will not wake up when pushing it.'
     ),
+    Toggle(
+        name=settingkey.FAST_URNS,
+        ui_label='Fast OC Urns',
+        shared=True,
+        default=False,
+        tooltip="OC Urns drop a lot more orbs.",
+        randomizable=False
+    ),
+    Toggle(
+        name=settingkey.RICH_ENEMIES,
+        ui_label='All Enemies Drop Munny',
+        shared=True,
+        default=False,
+        tooltip="Enemies will all drop munny (pretty straightforward)",
+        randomizable=False
+    ),
+    Toggle(
+        name=settingkey.UNLIMITED_MP,
+        ui_label='All Enemies Drop MP Orbs',
+        shared=True,
+        default=False,
+        tooltip="Enemies will all drop mp orbs (pretty straightforward)",
+        randomizable=False
+    ),
+    IntSpinner(
+        name=settingkey.GLOBAL_JACKPOT,
+        ui_label="Global Jackpots",
+        minimum=0,
+        maximum=3,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip="Increase orb/munny drops as if you had this many Jackpots equipped (each adds 50 percent of the original amount)",
+        randomizable=True
+    ),
+    IntSpinner(
+        name=settingkey.GLOBAL_LUCKY,
+        ui_label="Global Lucky Lucky",
+        minimum=0,
+        maximum=3,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip="Increase item drops as if you had this many Lucky Luckys equipped (each adds 50 percent of the chance to drop the item)",
+        randomizable=True
+    ),
+    Toggle(
+        name=settingkey.SHOP_KEYBLADES,
+        ui_label='Add Keyblades To Shop',
+        shared=True,
+        default=False,
+        tooltip="Adds duplicates of keyblades into the moogle shop.",
+        randomizable=False
+    ),
+    Toggle(
+        name=settingkey.SHOP_REPORTS,
+        ui_label='Add Reports To Shop',
+        shared=True,
+        default=False,
+        tooltip="Adds duplicates of reports into the moogle shop.",
+        randomizable=False
+    ),
+    Toggle(
+        name=settingkey.SHOP_UNLOCKS,
+        ui_label='Add World Unlock Items To Shop',
+        shared=True,
+        default=False,
+        tooltip="Adds duplicates of world unlock items into the moogle shop.",
+        randomizable=False
+    ),
 
     Toggle(
         name=settingkey.TT1_JAILBREAK,

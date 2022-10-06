@@ -162,6 +162,16 @@ class RandomizerSettings():
         self.include_recipes = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
         self.remove_popups = ui_settings.get(settingkey.REMOVE_POPUPS)
 
+        self.global_jackpot = ui_settings.get(settingkey.GLOBAL_JACKPOT)
+        self.global_lucky = ui_settings.get(settingkey.GLOBAL_LUCKY)
+        self.rich_enemies = ui_settings.get(settingkey.RICH_ENEMIES)
+        self.unlimited_mp = ui_settings.get(settingkey.UNLIMITED_MP)
+        self.fast_urns = ui_settings.get(settingkey.FAST_URNS)
+        
+        self.shop_keyblades = ui_settings.get(settingkey.SHOP_KEYBLADES)
+        self.shop_unlocks = ui_settings.get(settingkey.SHOP_UNLOCKS)
+        self.shop_reports = ui_settings.get(settingkey.SHOP_REPORTS)
+
         self.point_hint_values = {"proof":ui_settings.get(settingkey.POINTS_PROOF),
                                     "form":ui_settings.get(settingkey.POINTS_FORM),
                                     "magic":ui_settings.get(settingkey.POINTS_MAGIC), 

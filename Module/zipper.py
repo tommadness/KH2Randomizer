@@ -609,11 +609,11 @@ class SeedZip():
 
                 
     def createDropRateAssets(self, settings, randomizer, mod, outZip):
-        global_jackpot = 2
-        global_lucky_lucky = 2
-        fast_urns = True
-        rich_enemies = True
-        near_unlimited_mp = True
+        global_jackpot = settings.global_jackpot
+        global_lucky_lucky = settings.global_lucky
+        fast_urns = settings.fast_urns
+        rich_enemies = settings.rich_enemies
+        near_unlimited_mp = settings.unlimited_mp
 
         if global_jackpot>0 or global_lucky_lucky>0 or fast_urns or rich_enemies or near_unlimited_mp:
             for x in mod["assets"]:
@@ -639,9 +639,9 @@ class SeedZip():
             if rich_enemies: 
                 for drop in all_drops.values():
                     if drop.id in spawnable_enemy_ids:
-                        drop.big_munny = max(drop.big_munny,3)
-                        drop.medium_munny = max(drop.medium_munny,3)
-                        drop.small_munny = max(drop.small_munny,3)
+                        drop.big_munny = max(drop.big_munny,2)
+                        drop.medium_munny = max(drop.medium_munny,2)
+                        drop.small_munny = max(drop.small_munny,2)
             if near_unlimited_mp: 
                 for drop in all_drops.values():
                     if drop.id in spawnable_enemy_ids:
@@ -680,9 +680,9 @@ class SeedZip():
                 outZip.writestr("modified_drops.bin",binaryContent)
 
     def createShopRandoAssets(self, settings, randomizer, mod, outZip, sys):
-        keyblades_shop = True
-        reports_shop = True
-        unlock_shop = True
+        keyblades_shop = settings.shop_keyblades
+        reports_shop = settings.shop_reports
+        unlock_shop = settings.shop_unlocks
 
         if keyblades_shop or reports_shop or unlock_shop:
             for x in mod["assets"]:
@@ -695,16 +695,19 @@ class SeedZip():
             report_item_ids = [226,227,228,229,230,231,232,233,234,235,236,237,238]
             story_unlock_ids = [54,55,59,60,61,62,72,74,369,375,376]
 
-            for i in keyblade_item_ids:
-                items_for_shop.append((i,500))
+            if keyblades_shop: 
+                for i in keyblade_item_ids:
+                    items_for_shop.append((i,700))
 
-            for i in report_item_ids:
-                items_for_shop.append((i,250))
-            for i in range(13):
-                sys.append({"id":46778-32768+i*2,"en":f"Ansem Report {i+1}"})
+            if reports_shop:
+                for i in report_item_ids:
+                    items_for_shop.append((i,250))
+                for i in range(13):
+                    sys.append({"id":46778-32768+i*2,"en":f"Ansem Report {i+1}"})
 
-            for i in story_unlock_ids:
-                items_for_shop.append((i,500))
+            if unlock_shop:
+                for i in story_unlock_ids:
+                    items_for_shop.append((i,4000))
 
         
 
