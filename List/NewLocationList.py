@@ -1400,6 +1400,10 @@ class Locations:
             self.add_edge("New Day is Dawning","Ursula",RequirementEdge(req=ItemPlacementHelpers.need_1_magnet))
             self.add_edge("Ursula","Atlantica Tutorial",RequirementEdge(req=lambda inv : ItemPlacementHelpers.need_2_magnet(inv) and ItemPlacementHelpers.need_3_thunders(inv)))
 
+    @staticmethod
+    def ShopLocation():
+        return KH2Location(999,"Shop Item",locationCategory.CREATION,[locationType.SYNTH])
+
 
     @staticmethod
     def WeaponList():

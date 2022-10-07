@@ -19,7 +19,7 @@ def generateSeed(settings: RandomizerSettings,data):
         try:
             randomizer = Randomizer(settings)
             newSeedValidation.validateSeed(settings,randomizer)
-            hints = Hints.generateHints(randomizer.assignedItems,settings)
+            hints = Hints.generateHints(randomizer,settings)
             CosmeticsMod.randomize_cosmetics(settings)
             zipper = SeedZip(settings,randomizer,hints,data)
             return zipper.outputZip, zipper.spoiler_log, zipper.enemy_log
@@ -59,7 +59,7 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], data):
 
     seed_outputs = []
     for settings,randomizer in zip(settingsSet,randomizers):
-        hints = Hints.generateHints(randomizer.assignedItems,settings)
+        hints = Hints.generateHints(randomizer,settings)
         zipper = SeedZip(settings,randomizer,hints,data,m.multi_output)
         seed_outputs.append((zipper.outputZip, zipper.spoiler_log, zipper.enemy_log))
 

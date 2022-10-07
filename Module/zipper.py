@@ -677,35 +677,38 @@ class SeedZip():
                 outZip.writestr("modified_drops.bin",binaryContent)
 
     def createShopRandoAssets(self, settings, randomizer, mod, outZip, sys):
-        keyblades_shop = settings.shop_keyblades
-        reports_shop = settings.shop_reports
-        unlock_shop = settings.shop_unlocks
-
-        if keyblades_shop or reports_shop or unlock_shop:
+        if len(randomizer.shop_items)>0:
             for x in mod["assets"]:
                 if x["name"]=="03system.bin":
                     x["source"].append(modYml.getShopMod())
 
             items_for_shop = []
 
-            keyblade_item_ids = [42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,544]
-            report_item_ids = [226,227,228,229,230,231,232,233,234,235,236,237,238]
-            story_unlock_ids = [54,55,59,60,61,62,72,74,369,375,376]
+            keyblade_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.KEYBLADE]#[42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,544]
+            report_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.REPORT]#[226,227,228,229,230,231,232,233,234,235,236,237,238]
+            story_unlock_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.STORYUNLOCK]#[54,55,59,60,61,62,72,74,369,375,376]
 
-            if keyblades_shop: 
+            remaining_items = [i for i in randomizer.shop_items if i not in keyblade_item_ids+report_item_ids+story_unlock_ids]
+
+            if len(keyblade_item_ids)>0: 
                 for i in keyblade_item_ids:
                     items_for_shop.append((i,700))
 
-            if reports_shop:
+            if len(report_item_ids)>0:
                 for i in report_item_ids:
                     items_for_shop.append((i,250))
                 for i in range(13):
                     sys.append({"id":46778-32768+i*2,"en":f"Ansem Report {i+1}"})
 
-            if unlock_shop:
+            if len(story_unlock_ids)>0:
                 for i in story_unlock_ids:
                     items_for_shop.append((i,4000))
 
+            price_map = {itemRarity.COMMON:100,itemRarity.UNCOMMON:300, itemRarity.RARE:500, itemRarity.MYTHIC:1000}
+
+            if len(remaining_items)>0:
+                for i in remaining_items:
+                    items_for_shop.append((i.Id,price_map[i.Rarity]))
         
 
             with open(resource_path("static/full_items.json"), "r") as itemjson:

@@ -114,6 +114,7 @@ class Randomizer():
         self.levelStats = []
         self.formLevelExp = []
         self.synthesis_recipes = []
+        self.shop_items = []
         self.assignSoraItems(settings)
         self.assignPartyItems()
         self.assignWeaponStats(settings)
@@ -229,6 +230,15 @@ class Randomizer():
             allItems = [i for i in allItems if i.Id!=71]
         if not settings.antiform:
             allItems = [i for i in allItems if i.Id!=30]
+
+        if settings.shop_reports:
+            self.shop_items+=[i for i in allItems if i.ItemType==itemType.REPORT]
+            allItems = [i for i in allItems if i.ItemType!=itemType.REPORT]
+        if settings.shop_unlocks:
+            self.shop_items+=[i for i in allItems if i.ItemType==itemType.STORYUNLOCK]
+            allItems = [i for i in allItems if i.ItemType!=itemType.STORYUNLOCK]
+        if settings.shop_unlocks:
+            self.shop_items+=[i for i in allItems if i.ItemType==itemType.KEYBLADE and i.Id!=71]
 
         if settings.fifty_ap:
             allItems += list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50))

@@ -6,18 +6,26 @@ import base64, json, random
 from itertools import permutations,chain
 
 from Module.RandomizerSettings import RandomizerSettings
+from Module.newRandomize import Randomizer
 
+from List.NewLocationList import Locations
 
 class Hints:
-    def convertItemAssignmentToTuple(itemAssignment):
+    def convertItemAssignmentToTuple(itemAssignment,shop_items):
         locationItems = []
         for assignment in itemAssignment:
             locationItems.append((assignment.location,assignment.item))
             if assignment.item2 is not None:
                 locationItems.append((assignment.location,assignment.item2))
+
+        for i in shop_items:
+            locationItems.append((Locations.ShopLocation(),i))
+            
+    
         return locationItems
 
-    def generateHints(locationItems, settings: RandomizerSettings):
+    def generateHints(randomizer: Randomizer, settings: RandomizerSettings):
+        locationItems = randomizer.assignedItems
         hintsType = settings.hintsType
         excludeList = copy.deepcopy(settings.disabledLocations)
         preventSelfHinting = settings.prevent_self_hinting
@@ -25,14 +33,14 @@ class Hints:
         allowReportHinting = settings.allow_report_hinting
         pointHintValues = settings.point_hint_values
         spoilerHintValues = settings.spoiler_hint_values
-        tracker_includes = settings.tracker_includes
+        tracker_includes = settings.tracker_includes + ([] if len(randomizer.shop_items)==0 or locationType.SYNTH.value in settings.tracker_includes else [locationType.SYNTH.value])
 
         if locationType.HB in excludeList and (locationType.TTR not in excludeList or locationType.CoR not in excludeList):
             excludeList.remove(locationType.HB)
         if locationType.OC in excludeList and (locationType.OCCups not in excludeList or locationType.OCCups not in excludeList):
             excludeList.remove(locationType.OC)
 
-        locationItems = Hints.convertItemAssignmentToTuple(locationItems)
+        locationItems = Hints.convertItemAssignmentToTuple(locationItems,randomizer.shop_items)
         if hintsType=="Disabled":
             return None
         hintsText = {}
@@ -68,6 +76,8 @@ class Hints:
                 found_reports = True
                 if locationType.Critical in location.LocationTypes:
                     report_master[reportNumber] = [""]
+                elif locationType.SYNTH in location.LocationTypes:
+                    report_master[reportNumber] = ["Creations"]
                 else:
                     report_master[reportNumber] = location.LocationTypes
     
@@ -245,7 +255,7 @@ class Hints:
             importantChecks += [itemType.REPORT]
             hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
 
-            if locationType.SYNTH not in excludeList or locationType.Puzzle not in excludeList:
+            if locationType.SYNTH not in excludeList or locationType.Puzzle not in excludeList or len(randomizer.shop_items)>0:
                 hintableWorlds += ["Creations"]
 
             freeReports = []
