@@ -9,7 +9,6 @@ from Class import settingkey
 from Class.exceptions import SettingsException
 from List.ItemList import Items,itemRarity
 from List.configDict import expCurve, locationType, locationDepth
-from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 
 
@@ -1473,21 +1472,28 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default='vanilla'
     ),
 
-    MultiSelect(
-        name=settingkey.BGM_OPTIONS,
-        ui_label='Music Options (PC Only)',
-        choices={option: option for option in RandomBGM.getOptions()},
+    Toggle(
+        name=settingkey.MUSIC_RANDO_ENABLED_PC,
+        ui_label='Randomize Music',
         shared=False,
-        default=[]
+        default=False,
+        tooltip=textwrap.dedent("""
+If enabled, generates a mod for OpenKH Mods Manager that will replace game music with randomized replacements.
+See the Randomized Music page on kh2rando.com for more detailed instructions.
+        """.strip())
     ),
 
-    MultiSelect(
-        name=settingkey.BGM_GAMES,
-        ui_label='Music Games To Include',
-        choices={option: option for option in RandomBGM.getGames()},
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES,
+        ui_label='Allow Duplicate Replacements',
         shared=False,
-        default=[]
-    ),
+        default=False,
+        tooltip=textwrap.dedent("""
+If enabled, song replacements are used multiple times if there aren't enough replacements for every song.
+If disabled, replacement songs are only used once, and some songs will stay un-randomized if there aren't enough
+replacements.
+        """.strip())
+    )
 ]
 
 
