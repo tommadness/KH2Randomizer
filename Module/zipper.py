@@ -17,7 +17,6 @@ from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
 from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe
-from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.resources import resource_path
 from Module.spoilerLog import itemSpoilerDictionary, levelStatsDictionary
@@ -385,7 +384,6 @@ class SeedZip():
 
             cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
             platform = cosmetics_data["platform"]
-            randomBGMOptions = cosmetics_data["randomBGM"]
             tourney_gen = cosmetics_data["tourney"]
 
             if multiworld:
@@ -508,7 +506,6 @@ class SeedZip():
 
 
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
-            mod["assets"] += RandomBGM.randomizeBGM(randomBGMOptions, platform)
 
             outZip.write(resource_path("Module/icon.png"), "icon.png")
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
