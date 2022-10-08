@@ -137,6 +137,13 @@ class CosmeticsMod:
                             relative_path = (root_path / file).relative_to(cosmetics_mod_path)
                             category_songs.append(relative_path)
                 result[child] = category_songs
+        
+        default_music_path = cosmetics_mod_path.parent.parent / "data"
+        if default_music_path.is_dir():
+            for default_song in default_music_list:
+                relative_path = Path("../../data") / default_song["filename"]
+                result[default_song["type"][0].lower()].append(relative_path)
+        
 
         return result
 

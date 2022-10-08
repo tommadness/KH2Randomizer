@@ -522,7 +522,7 @@ default_music_list = [
     {
         "filename": "vagstream\\End_Piano.win32.scd",
         "title": "Dearly Beloved -Reprise-",
-        "type": ["Ending", "Ending", "Wild"]
+        "type": ["Title", "Title", "Wild"]
     },
     {
         "filename": "vagstream\\GM1_Asteroid.win32.scd",

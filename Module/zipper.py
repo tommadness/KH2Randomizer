@@ -684,7 +684,7 @@ class SeedZip():
 
             items_for_shop = []
 
-            keyblade_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.KEYBLADE]#[42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,544]
+            keyblade_item_ids = [42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,544]
             report_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.REPORT]#[226,227,228,229,230,231,232,233,234,235,236,237,238]
             story_unlock_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.STORYUNLOCK]#[54,55,59,60,61,62,72,74,369,375,376]
 
@@ -692,11 +692,11 @@ class SeedZip():
 
             if len(keyblade_item_ids)>0: 
                 for i in keyblade_item_ids:
-                    items_for_shop.append((i,700))
+                    items_for_shop.append((i,400))
 
             if len(report_item_ids)>0:
                 for i in report_item_ids:
-                    items_for_shop.append((i,250))
+                    items_for_shop.append((i,500))
                 for i in range(13):
                     sys.append({"id":46778-32768+i*2,"en":f"Ansem Report {i+1}"})
 

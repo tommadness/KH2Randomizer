@@ -37,6 +37,10 @@ class LocationInformedSeedValidator:
             result = ValidationResult()
             inventory = []
             inventory += startingInventory
+            if len(randomizer.shop_items)>0:
+                for i in randomizer.shop_items:
+                    inventory.append(i.Id)
+
 
             location_requirements = []
             for node in graph.node_list():
