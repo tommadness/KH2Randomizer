@@ -148,7 +148,7 @@ id_to_enemy_name[118] = "Lance Soldier RC End"
 id_to_enemy_name[119] = "Dusk (Station)"
 id_to_enemy_name[120] = "Dusk (STT)"
 id_to_enemy_name[121] = "Creeper (STT)"
-# id_to_enemy_name[122] = ""
+id_to_enemy_name[122] = "Hayner (Finisher)"
 id_to_enemy_name[123] = "Creeper Plant RC"
 id_to_enemy_name[125] = "Crescendo RC"
 id_to_enemy_name[126] = "Gambler RC"
@@ -156,8 +156,8 @@ id_to_enemy_name[126] = "Gambler RC"
 # id_to_enemy_name[128] = ""
 id_to_enemy_name[129] = "Meg"
 id_to_enemy_name[130] = "Assassin (STT)"
-# id_to_enemy_name[131] = ""
-# id_to_enemy_name[132] = ""
+id_to_enemy_name[131] = "Vivi (Finisher)"
+id_to_enemy_name[132] = "Setzer (Finisher)"
 id_to_enemy_name[133] = "Luxord Minigame"
 id_to_enemy_name[134] = "Card"
 # id_to_enemy_name[135] = ""
@@ -683,8 +683,7 @@ class SeedZip():
                     x["source"].append(modYml.getShopMod())
 
             items_for_shop = []
-
-            keyblade_item_ids = [42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,544]
+            keyblade_item_ids = [42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,543,544]
             report_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.REPORT]#[226,227,228,229,230,231,232,233,234,235,236,237,238]
             story_unlock_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.STORYUNLOCK]#[54,55,59,60,61,62,72,74,369,375,376]
 
