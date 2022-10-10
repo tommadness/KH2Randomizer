@@ -384,6 +384,20 @@ class Randomizer():
                 if item.ItemType not in randomLocation.InvalidChecks:
                     if self.assignItem(randomLocation,item):
                         validLocations.remove(randomLocation)
+                        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 389: 
+                            # assign same item to 390
+                            struggle_reward_loc = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==390]
+                            if len(struggle_reward_loc) == 0:
+                                raise GeneratorException("Tried assigning struggle reward, but failed")
+                            self.assignItem(struggle_reward_loc[0],item)
+                            validLocations.remove(struggle_reward_loc[0])
+                        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 390: 
+                            # assign same item to 389
+                            struggle_reward_loc = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==389]
+                            if len(struggle_reward_loc) == 0:
+                                raise GeneratorException("Tried assigning struggle reward, but failed")
+                            self.assignItem(struggle_reward_loc[0],item)
+                            validLocations.remove(struggle_reward_loc[0])
                     break
                 if count==100:
                     raise CantAssignItemException(f"Trying to assign {item} and failed 100 times in {len([i for i in validLocations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(validLocations)}")

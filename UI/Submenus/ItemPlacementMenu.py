@@ -18,7 +18,7 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.FIFTY_AP_BOOSTS)
         self.add_option(settingkey.ENABLE_PROMISE_CHARM)
         self.add_option(settingkey.PUREBLOOD)
-        # self.add_option(settingkey.ANTIFORM)
+        self.add_option(settingkey.ANTIFORM)
         self.add_option(settingkey.MAPS_IN_ITEM_POOL)
         self.add_option(settingkey.RECIPES_IN_ITEM_POOL)
         self.add_option(settingkey.ABILITY_POOL)

@@ -1133,8 +1133,8 @@ class Locations:
                                         KH2Location(472, "Station of Calling Potion", locationCategory.CHEST,[locationType.STT]),]))
         self.add_node("Twilight Thorn",LocationNode([KH2Location(33, "Twilight Thorn", locationCategory.ITEMBONUS,[locationType.STT]),]))
         self.add_node("Axel 1",LocationNode([KH2Location(73, "Axel 1", locationCategory.ITEMBONUS,[locationType.STT]),]))
-        self.add_node("Struggle Champion",LocationNode([KH2Location(389, "(Junk) Champion Belt", locationCategory.CHEST,[locationType.STT], InvalidChecks=[e for e in itemType if e not in [itemType.SYNTH,itemType.ITEM] ]),
-                                        KH2Location(390, "(Junk) Medal", locationCategory.CHEST,[locationType.STT], InvalidChecks=[e for e in itemType if e not in [itemType.SYNTH,itemType.ITEM] ]),
+        self.add_node("Struggle Champion",LocationNode([KH2Location(389, "(Struggle Winner) Champion Belt", locationCategory.POPUP,[locationType.STT] ),
+                                        KH2Location(390, "(Struggle Loser) Medal", locationCategory.POPUP,[locationType.STT]),
                                         KH2Location(519, "The Struggle Trophy", locationCategory.POPUP,[locationType.STT]),]))
         self.add_node("STT Central Station",LocationNode([KH2Location(428, "Central Station Potion (1)", locationCategory.CHEST,[locationType.STT]),
                                         KH2Location(429, "STT Central Station Hi-Potion", locationCategory.CHEST,[locationType.STT]),
@@ -1402,7 +1402,7 @@ class Locations:
 
     @staticmethod
     def ShopLocation():
-        return KH2Location(999,"Shop Item",locationCategory.CREATION,[locationType.SYNTH])
+        return KH2Location(999,"Shop Item",locationCategory.CREATION,[locationType.SHOP])
 
 
     @staticmethod

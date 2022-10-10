@@ -42,6 +42,7 @@ class locationType(str, Enum):
     WeaponSlot = "Slot"
     TTR = "Transport to Remembrance"
     SYNTH = "Synthesis"
+    SHOP = "Shop"
 
 class locationCategory(str,Enum):
     CHEST = "Chest"

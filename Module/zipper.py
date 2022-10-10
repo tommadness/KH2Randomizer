@@ -632,11 +632,11 @@ class SeedZip():
             spawnable_enemy_ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,15,17,18,22,23,24,25,26,27,28,29,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,63,64,65,66,69,73,87,88,89,96,112,171,172,173,174,175,176,177,178,179,180,181,182]
             urn_ids = [70,71]
             stt_enemies = [119,120,121,130,145]
+            struggles = [122,131,132]
 
             if rich_enemies: 
                 for drop in all_drops.values():
                     if drop.id in spawnable_enemy_ids:
-                        drop.big_munny = max(drop.big_munny,2)
                         drop.medium_munny = max(drop.medium_munny,2)
                         drop.small_munny = max(drop.small_munny,2)
             if near_unlimited_mp: 
@@ -644,6 +644,11 @@ class SeedZip():
                     if drop.id in spawnable_enemy_ids:
                         drop.big_mp = max(drop.big_mp,5)
                         drop.small_mp = max(drop.small_mp,5)
+            if True:
+                for drop in all_drops.values():
+                    if drop.id in struggles:
+                        drop.big_hp = max(drop.big_hp,100)
+
             if global_lucky_lucky > 0: 
                 for drop in all_drops.values():
                     if drop.item1 != 0:
@@ -683,7 +688,7 @@ class SeedZip():
                     x["source"].append(modYml.getShopMod())
 
             items_for_shop = []
-            keyblade_item_ids = [42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,543,544]
+            keyblade_item_ids = [42,43,480,481,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,543,544] if settings.shop_keyblades else []
             report_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.REPORT]#[226,227,228,229,230,231,232,233,234,235,236,237,238]
             story_unlock_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.STORYUNLOCK]#[54,55,59,60,61,62,72,74,369,375,376]
 

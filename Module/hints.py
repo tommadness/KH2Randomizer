@@ -62,7 +62,7 @@ class Hints:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     world_of_location = location.LocationTypes[0]
-                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH:
+                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
                     if not world_of_location in hintsText['world']:
                         hintsText['world'][world_of_location] = []
@@ -77,6 +77,8 @@ class Hints:
                 if locationType.Critical in location.LocationTypes:
                     report_master[reportNumber] = [""]
                 elif locationType.SYNTH in location.LocationTypes:
+                    report_master[reportNumber] = ["Creations"]
+                elif locationType.SHOP in location.LocationTypes:
                     report_master[reportNumber] = ["Creations"]
                 else:
                     report_master[reportNumber] = location.LocationTypes
@@ -136,7 +138,7 @@ class Hints:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     world_of_location = location.LocationTypes[0]
-                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH:
+                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
                     if not world_of_location in hintsText['world']:
                         hintsText['world'][world_of_location] = []
@@ -270,7 +272,7 @@ class Hints:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     world_of_location = location.LocationTypes[0]
-                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH:
+                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
                     worldChecks[world_of_location].append(item)
                     if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]:
@@ -291,7 +293,7 @@ class Hints:
                                 proof_of_nonexistence_index = worldsToHint.index(world_of_location)
             for location,item in locationItems:
                 world_of_location = location.LocationTypes[0]
-                if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH:
+                if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                     world_of_location = "Creations"
                 if world_of_location in [locationType.Free, locationType.Critical]:
                     if item.ItemType is itemType.REPORT:
@@ -506,7 +508,7 @@ class Hints:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     world_of_location = location.LocationTypes[0]
-                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH:
+                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
                     if not world_of_location in hintsText['world']:
                         hintsText['world'][world_of_location] = []
@@ -521,7 +523,7 @@ class Hints:
                     
             for location,item in locationItems:
                 world_of_location = location.LocationTypes[0]
-                if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH:
+                if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                     world_of_location = "Creations"
                 if world_of_location == locationType.WeaponSlot or world_of_location == locationType.Free or world_of_location == locationType.Critical:
                     continue
@@ -687,7 +689,7 @@ class Hints:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     world_of_location = location.LocationTypes[0]
-                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH:
+                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
                     if not world_of_location in hintsText['world']:
                         hintsText['world'][world_of_location] = []
@@ -723,7 +725,7 @@ class Hints:
                     
             for location,item in locationItems:
                 world_of_location = location.LocationTypes[0]
-                if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH:
+                if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                     world_of_location = "Creations"
                 if world_of_location == locationType.WeaponSlot or world_of_location == locationType.Free or world_of_location == locationType.Critical:
                     continue
