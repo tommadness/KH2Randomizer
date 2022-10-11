@@ -1,4 +1,5 @@
 import base64
+import copy
 from doctest import master
 import enum
 import io
@@ -372,7 +373,10 @@ class SeedZip():
         self.assignFormLevels(randomizer)
         self.assignWeaponStats(randomizer)
         self.assignStartingItems(settings, randomizer)
-        self.createZip(settings, randomizer, hints, cosmetics_data, multiworld)
+        for i in range(5):
+            if self.createZip(settings, randomizer, hints, cosmetics_data, multiworld):
+                return
+        raise BossEnemyException(f"Boss/enemy module had an unexpected error. Try different a different seed or different settings.")
 
     def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data, multiworld):
 
@@ -386,35 +390,9 @@ class SeedZip():
             cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
             platform = cosmetics_data["platform"]
             tourney_gen = cosmetics_data["tourney"]
-
-            if multiworld:
-                outZip.writestr("multiworld.multi", json.dumps(multiworld()))
-
             
             pc_seed_toggle = (platform=="PC")
 
-            self.createPuzzleAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
-            self.createSynthAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
-            self.createASDataAssets(settings, mod, outZip)
-            self.createSkipCarpetAssets(settings, mod, outZip)
-            self.createMapSkipAssets(settings, mod, outZip)
-            self.createBlockingSkipAssets(settings, mod, outZip)
-            self.createAtlanticaSkipAssets(settings, mod, outZip)
-            self.createWardrobeSkipAssets(settings, mod, outZip)
-            self.createDropRateAssets(settings, randomizer, mod, outZip)
-            self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
-
-            outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
-            outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
-            outZip.writestr("LvupList.yml", yaml.dump(self.formattedLvup, line_break="\r\n"))
-            outZip.writestr("FmlvList.yml", yaml.dump(self.formattedFmlv, line_break="\r\n"))
-            outZip.writestr("ItemList.yml", yaml.dump(self.formattedItem, line_break="\r\n"))
-            outZip.writestr("PlrpList.yml", yaml.dump(self.formattedPlrp, line_break="\r\n"))
-            outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
-            outZip.writestr("jm.yml", yaml.dump(modYml.getJMYAML(), line_break="\r\n"))
-
-            if hints is not None:
-                Hints.writeHints(hints, "HintFile", outZip)
 
             def _shouldRunKHBR():
                 if not settings.enemy_options.get("boss", False) in [False, "Disabled"]:
@@ -435,6 +413,12 @@ class SeedZip():
             enemySpoilers = None
             enemySpoilersJSON = {}
             if _shouldRunKHBR():
+                known_crashes = {}
+                with open(resource_path("static/known_crashes.json"), "r") as knowncrashes:
+                    known_crashes = json.loads(knowncrashes.read())
+                # load in known crashing combinations
+                enemySpoilers = None
+                enemySpoilersJSON = {}
                 try:
                     if platform == "PC":
                         settings.enemy_options["memory_expansion"] = True
@@ -474,9 +458,46 @@ class SeedZip():
                             enemySpoilersJSON[current_key] = []
                     if enemySpoilersJSON:
                         outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
+                        # for boss_replacement in enemySpoilersJSON["BOSSES"]:
+                        #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
+                        for c_key,c_value in known_crashes.items():
+                            for boss_replacement in enemySpoilersJSON["BOSSES"]:
+                                if boss_replacement["original"] == c_key and boss_replacement["new"] in c_value:
+                                    #reroll
+                                    print(f"Rerolling boss replacements since {c_key} got replaced with {boss_replacement['new']} ")
+                                    return False
                 except Exception as e:
-                    raise BossEnemyException(f"Boss/enemy module had an unexpected error {e}. Try different a different seed or different settings.")
+                    print(f"{e}")
+                    return False
+                    # raise BossEnemyException(f"Boss/enemy module had an unexpected error {e}. Try different a different seed or different settings.")
 
+            print("Passed boss/enemy")
+
+            if multiworld:
+                outZip.writestr("multiworld.multi", json.dumps(multiworld()))
+
+            self.createPuzzleAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
+            self.createSynthAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
+            self.createASDataAssets(settings, mod, outZip)
+            self.createSkipCarpetAssets(settings, mod, outZip)
+            self.createMapSkipAssets(settings, mod, outZip)
+            self.createBlockingSkipAssets(settings, mod, outZip)
+            self.createAtlanticaSkipAssets(settings, mod, outZip)
+            self.createWardrobeSkipAssets(settings, mod, outZip)
+            self.createDropRateAssets(settings, randomizer, mod, outZip)
+            self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
+
+            outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
+            outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
+            outZip.writestr("LvupList.yml", yaml.dump(self.formattedLvup, line_break="\r\n"))
+            outZip.writestr("FmlvList.yml", yaml.dump(self.formattedFmlv, line_break="\r\n"))
+            outZip.writestr("ItemList.yml", yaml.dump(self.formattedItem, line_break="\r\n"))
+            outZip.writestr("PlrpList.yml", yaml.dump(self.formattedPlrp, line_break="\r\n"))
+            outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
+            outZip.writestr("jm.yml", yaml.dump(modYml.getJMYAML(), line_break="\r\n"))
+
+            if hints is not None:
+                Hints.writeHints(hints, "HintFile", outZip)
 
             self.createBetterSTTAssets(settings, mod, outZip)
             self.addCmdListModifications(settings, mod, outZip)
@@ -516,6 +537,7 @@ class SeedZip():
             outZip.close()
         data.seek(0)
         self.outputZip = data
+        return True
 
     def addCmdListModifications(self,settings,mod,outZip):
         with open(resource_path("static/better_stt/cmd.list"), "rb") as cmdlist:
@@ -648,6 +670,10 @@ class SeedZip():
                 for drop in all_drops.values():
                     if drop.id in struggles:
                         drop.big_hp = max(drop.big_hp,100)
+                for drop in all_drops.values():
+                    if drop.id in stt_enemies:
+                        drop.item3 = 4
+                        drop.item3_chance = 100
 
             if global_lucky_lucky > 0: 
                 for drop in all_drops.values():
@@ -682,7 +708,7 @@ class SeedZip():
                 outZip.writestr("modified_drops.bin",binaryContent)
 
     def createShopRandoAssets(self, settings, randomizer, mod, outZip, sys):
-        if len(randomizer.shop_items)>0:
+        if len(randomizer.shop_items)>0 or settings.shop_keyblades:
             for x in mod["assets"]:
                 if x["name"]=="03system.bin":
                     x["source"].append(modYml.getShopMod())
