@@ -413,9 +413,6 @@ class SeedZip():
             enemySpoilers = None
             enemySpoilersJSON = {}
             if _shouldRunKHBR():
-                known_crashes = {}
-                with open(resource_path("static/known_crashes.json"), "r") as knowncrashes:
-                    known_crashes = json.loads(knowncrashes.read())
                 # load in known crashing combinations
                 enemySpoilers = None
                 enemySpoilersJSON = {}
@@ -460,12 +457,6 @@ class SeedZip():
                         outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
                         # for boss_replacement in enemySpoilersJSON["BOSSES"]:
                         #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
-                        for c_key,c_value in known_crashes.items():
-                            for boss_replacement in enemySpoilersJSON["BOSSES"]:
-                                if boss_replacement["original"] == c_key and boss_replacement["new"] in c_value:
-                                    #reroll
-                                    print(f"Rerolling boss replacements since {c_key} got replaced with {boss_replacement['new']} ")
-                                    return False
                 except Exception as e:
                     print(f"{e}")
                     return False

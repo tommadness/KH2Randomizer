@@ -12,6 +12,14 @@ def levelItUpLocal(seed_settings: SeedSettings):
     seed_settings.set(settingkey.SORA_LEVELS, 'ExcludeFrom99')
     seed_settings.set(settingkey.SORA_EXP_MULTIPLIER, 10.0)
 
+def cupsOn(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.CUPS_GIVE_XP,True)
+    seed_settings.set(settingkey.MISC_LOCATIONS_WITH_REWARDS,seed_settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS)+[locationType.OCCups.name])
+    seed_settings.set(settingkey.STARTING_INVENTORY,seed_settings.get(settingkey.STARTING_INVENTORY)+[537])
+
+def corOn(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.MISC_LOCATIONS_WITH_REWARDS,seed_settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS)+[locationType.CoR.name])
+
 def turnOffWorldsLocal(worlds: list):
     def _turnOffLocal(settings: SeedSettings):
         worlds_with_rewards = settings.get(settingkey.WORLDS_WITH_REWARDS)
@@ -46,14 +54,14 @@ def modifyShutOut(daily: DailyModifier):
     return daily
 
 dailyModifiers = [
-    DailyModifier(name="Level it up",
+    DailyModifier(name="Level Up!",
                 initMod=None,
-                description="Level 99 but Sora XP multiplier set to 10x",
+                description="Level checks up to 99 but Sora XP multiplier set to 10x",
                 categories={"xp"},
                 local_modifier=levelItUpLocal
                 ),
     DailyModifier(name="Shut Out of Worlds",
-                description="The following worlds have closed their doors and hold no good checks: {}",
+                description="The following worlds have no good checks and are filled with junk: {}",
                 initMod=modifyShutOut,
                 categories={'worlds'},
                 local_modifier=lambda worlds: turnOffWorldsLocal(worlds)
@@ -66,24 +74,59 @@ dailyModifiers = [
                 ),
     DailyModifier(name="Locked Second Visits",
                 initMod=None,
-                description="Visit locks are dispersed in the seed, requiring you to find to get to second visits.",
+                description="Visit locks are dispersed in the seed, requiring you to find them to get to second visits.",
                 categories={'progression'},
                 local_modifier=lambda settings: settings.set(settingkey.STARTING_STORY_UNLOCKS,[])
+                ),
+    DailyModifier(name="Glass Cannon",
+                initMod=None,
+                description="Level up stats will not include Defense Ups, all stats are Strength, Magic, and Max AP.",
+                categories={'stats'},
+                local_modifier=lambda settings: settings.set(settingkey.GLASS_CANNON,True)
+                ),
+    DailyModifier(name="Moving Quick",
+                initMod=None,
+                description="All Growth Abilities start at level 3",
+                categories={'qol'},
+                local_modifier=lambda settings: settings.set(settingkey.STARTING_MOVEMENT,"Level_3")
+                ),
+    DailyModifier(name="Weapons In Stock",
+                initMod=None,
+                description="Adds all obtainable Keyblades into the Moogle shops.",
+                categories={'qol'},
+                local_modifier=lambda settings: settings.set(settingkey.SHOP_KEYBLADES,True)
+                ),
+    DailyModifier(name="Beatable Seed",
+                initMod=None,
+                description="Seed is guaranteed to give you the three proofs, but some locations may be impossible to reach.",
+                categories={'access'},
+                local_modifier=lambda settings: settings.set(settingkey.ACCESSIBILITY,"beatable")
+                ),
+    DailyModifier(name="Mini Super Bosses",
+                initMod=None,
+                description="Adds Absent Silhouettes and Sephiroth as possible locations.",
+                categories={'bosses'},
+                local_modifier=lambda settings: settings.set(settingkey.SUPERBOSSES_WITH_REWARDS,[locationType.AS.name, locationType.Sephi.name])
+                ),
+    DailyModifier(name="Enter the Tournament",
+                initMod=None,
+                description="Cups are enabled, they give experience, and you start with full access to every cup (after beating Hydra)",
+                categories={'misc'},
+                local_modifier=cupsOn
+                ),
+    DailyModifier(name="What's in this Cavern?",
+                initMod=None,
+                description="Cavern of Remembrance is enabled",
+                categories={'misc'},
+                local_modifier=corOn
                 )
 ]
 
-# glass cannon
-# schmovement
-# AS/Sephi on
-# synth + synth junk
-# cups, with trophy, and exp
-# cor
 # randomized ability pool
 # yeet the bear
 # proofs on second visit bosses
 # slightly hard
 # slightly easy
-# any%
 # remove damage cap
 
 
@@ -107,7 +150,7 @@ def allDailyModifiers():
 def getDailyModifiers(date):
     random.seed(date.strftime('%d_%m_%Y'))
     # Weekends have more modifiers
-    numMods = 1#3 if date.isoweekday() < 5 else 5
+    numMods = 3 if date.isoweekday() < 5 else 5
     chosenMods = []
     usedCategories = set()
     for _ in range(numMods):

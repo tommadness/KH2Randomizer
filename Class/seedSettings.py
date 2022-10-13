@@ -472,15 +472,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=0,
         randomizable=True
     ),
-    
-
-    Toggle(
-        name=settingkey.LIBRARY_OF_ASSEMBLAGE,
-        ui_label='Library of Assemblage',
-        shared=True,
-        default=False,
-        tooltip='Start with all the Ansem Reports, which act as hints for JSmartee, Point, and Path hints'
-    ),
 
     MultiSelect(
         name=settingkey.STARTING_INVENTORY,
@@ -1058,14 +1049,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='No more pesky Defense Ups in the level up stats pool'
     ),
-
-    Toggle(
-        name=settingkey.BETTER_JUNK,
-        ui_label='Better Junk',
-        shared=True,
-        default=False,
-        tooltip='No more synthesis materials in the junk item pool'
-    ),
     MultiSelect(
         name=settingkey.JUNK_ITEMS,
         ui_label='Junk Items',
@@ -1074,15 +1057,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=list(set([str(item.Id) for item in Items.getJunkList(False)])),
         tooltip='Once all of the required items are placed, items from this list are used to fill the rest. This item pool is also used for worlds that are disabled'
     ),
-
-    Toggle(
-        name=settingkey.START_NO_AP,
-        ui_label='Start with No AP',
-        shared=True,
-        default=False,
-        tooltip='Sora/Donald/Goofy start the game with 0 AP'
-    ),
-
     
     IntSpinner(
         name=settingkey.SORA_AP,
@@ -1325,15 +1299,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="If enabled, the promise charm will be added to the item pool, which can allow skipping TWTNW by talking to the computer in the GoA when you have all 3 proofs",
         randomizable=True
     ),
-
-    # Toggle(
-    #     name=settingkey.STORY_UNLOCKS,
-    #     ui_label='World Key Items',
-    #     shared=True,
-    #     default=True,
-    #     tooltip="Gives the player all the visit locking items at the start, making all worlds open from the start.",
-    #     randomizable=True
-    # ),
 
     MultiSelect(
         name=settingkey.STARTING_STORY_UNLOCKS,

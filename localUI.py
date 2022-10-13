@@ -296,8 +296,8 @@ class KH2RandomizerApp(QMainWindow):
                 m.local_modifier(self.settings)
                 for widget in self.widgets:
                     widget.update_widgets()
-        except:
-            print("Error found with one of the options")
+        except Exception as e:
+            print(f"Error found with one of the options {e}")
 
         self.settings.apply_settings_json(self.preset_json['StarterSettings'])
 
