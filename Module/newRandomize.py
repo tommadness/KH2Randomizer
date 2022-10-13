@@ -330,21 +330,79 @@ class Randomizer():
         if restricted_story:
             invalid_test.append(itemType.STORYUNLOCK)
 
-        def item_sorter(item1):
-            rank_map = {}
-            rank_map[itemRarity.COMMON] = 1
-            rank_map[itemRarity.UNCOMMON] = 2
-            rank_map[itemRarity.RARE] = 3
-            rank_map[itemRarity.MYTHIC] = 4
+        # def item_sorter(item1):
+        #     rank_map = {}
+        #     rank_map[itemRarity.COMMON] = 1
+        #     rank_map[itemRarity.UNCOMMON] = 2
+        #     rank_map[itemRarity.RARE] = 3
+        #     rank_map[itemRarity.MYTHIC] = 4
 
-            if item1.ItemType in invalid_test:
-                return 5
+        #     if item1.ItemType in invalid_test:
+        #         return 5
 
-            return rank_map[item1.Rarity]
+        #     return rank_map[item1.Rarity]
 
-        random.shuffle(allItems)
-        if len(invalid_test)>0:
-            allItems.sort(reverse=True,key=item_sorter)
+        # random.shuffle(allItems)
+        # if len(invalid_test)>0:
+        #     allItems.sort(reverse=True,key=item_sorter)
+
+
+
+        def local_item_weights_computation(item,location_pool):
+            if restricted_proofs or restricted_reports or restricted_story:
+                weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in invalid_test)) else 0 for loc in location_pool]
+            else:
+                weights = [self.location_weights.getWeight(item,loc) for loc in location_pool]
+
+            if restricted_reports and item.ItemType is itemType.REPORT:
+                weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in location_pool ]
+            if restricted_proofs and item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
+                weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in location_pool ]
+            if restricted_story and item.ItemType is itemType.STORYUNLOCK:
+                weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in location_pool ]
+            return weights
+
+
+
+        # chain logic placement
+        if settings.chainLogic:
+            from Module.seedEvaluation import LocationInformedSeedValidator
+            validator = LocationInformedSeedValidator()
+
+            locking_items = [[54],[55],[59],[60],[61],[62],[72,21,22,23],[74],[369],[376,375],[26],[27],[29],[31],[563],[32],[32],[32],[32],[32]]
+            if self.yeet_the_bear:
+                locking_items.pop()
+            random.shuffle(locking_items)
+            if self.yeet_the_bear:
+                locking_items.append([32])
+            locking_items.append([594])
+            validator.prep_req_list(settings,self)
+
+            current_inventory = []
+            accessible_locations = [[l for l in validLocations if validator.is_location_available(current_inventory,l)]]
+            for items in locking_items:
+                accessible_locations_start = [l for l in validLocations if validator.is_location_available(current_inventory,l)]
+                accessible_locations_new = [l for l in validLocations if validator.is_location_available(current_inventory + items,l) and l not in accessible_locations_start]
+                accessible_locations.append(accessible_locations_new)
+                current_inventory += items
+            for iter,items in enumerate(locking_items):
+                accessible_locations_new = accessible_locations[iter]
+                for i in items:
+                    #find item in item list
+                    i_data = [it for it in allItems if it.Id==i][0]
+                    weights = local_item_weights_computation(i_data,accessible_locations_new)
+                    if len(weights)==0:
+                        break
+                    randomLocation = random.choices(accessible_locations_new,weights)[0]
+                    if i_data.ItemType not in randomLocation.InvalidChecks:
+                        allItems.remove(i_data)
+                        if self.assignItem(randomLocation,i_data):
+                            validLocations.remove(randomLocation)
+                            accessible_locations_new.remove(randomLocation)
+
+
+
+
 
         #assign valid items to all valid locations remaining
         for item in allItems:
@@ -361,17 +419,7 @@ class Randomizer():
                     validLocations.remove(starry_hill_cure)
                 continue
 
-            if restricted_proofs or restricted_reports or restricted_story:
-                weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in invalid_test)) else 0 for loc in validLocations]
-            else:
-                weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
-
-            if restricted_reports and item.ItemType is itemType.REPORT:
-                weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
-            if restricted_proofs and item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
-                weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations ]
-            if restricted_story and item.ItemType is itemType.STORYUNLOCK:
-                weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in validLocations ]
+            weights = local_item_weights_computation(item,validLocations)
 
             count=0
             while True:
@@ -403,6 +451,7 @@ class Randomizer():
                     raise CantAssignItemException(f"Trying to assign {item} and failed 100 times in {len([i for i in validLocations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(validLocations)}")
         invalidLocations+=validLocations
         self.assignJunkLocations(settings, invalidLocations)
+
 
     def assignJunkLocations(self, settings, invalidLocations):
         """ assign the rest of the locations with "junk" """

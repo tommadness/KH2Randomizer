@@ -26,6 +26,7 @@ UNLIMITED_MP = 'unlimited_mp'
 SHOP_KEYBLADES = 'shop_keyblades'
 SHOP_REPORTS = 'shop_reports'
 SHOP_UNLOCKS = 'shop_unlocks'
+CHAIN_LOGIC = 'chain_logic'
 GOOFY_AP = "goofy_ap"
 HINT_SYSTEM = 'hint_system'
 ITEM_PLACEMENT_DIFFICULTY = 'item_placement_difficulty'

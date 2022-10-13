@@ -666,14 +666,6 @@ class SeedZip():
                     if drop.id in spawnable_enemy_ids:
                         drop.big_mp = max(drop.big_mp,5)
                         drop.small_mp = max(drop.small_mp,5)
-            if True:
-                for drop in all_drops.values():
-                    if drop.id in struggles:
-                        drop.big_hp = max(drop.big_hp,100)
-                for drop in all_drops.values():
-                    if drop.id in stt_enemies:
-                        drop.item3 = 4
-                        drop.item3_chance = 100
 
             if global_lucky_lucky > 0: 
                 for drop in all_drops.values():

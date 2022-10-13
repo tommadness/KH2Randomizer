@@ -819,6 +819,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="Force the Proof of Nonexistence onto Starry Hill popup in 100 acre",
         randomizable=True
     ),
+    Toggle(
+        name=settingkey.CHAIN_LOGIC,
+        ui_label='Chain Logic',
+        shared=True,
+        default=False,
+        tooltip="Place all the locking items in a chain with one another, making the seed very linear.",
+        randomizable=False
+    ),
 
     Toggle(
         name=settingkey.PREVENT_SELF_HINTING,
