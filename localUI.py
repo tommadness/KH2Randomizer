@@ -125,6 +125,7 @@ class KH2RandomizerApp(QMainWindow):
         self.startTime = datetime.datetime.now(self.UTC)
         self.dailySeedName = self.startTime.strftime('%d-%m-%Y')
         self.mods = getDailyModifiers(self.startTime)
+        self.mods_hard = getDailyModifiers(self.startTime,True)
         self.progress = None
         self.spoiler_log_output = "<html>No spoiler log generated</html>"
 
@@ -273,6 +274,7 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addMenu(self.config_menu)
 
         menu_bar.addAction("Load Daily Seed", self.loadDailySeed)
+        menu_bar.addAction("Load Hard Daily Seed", self.loadHardDailySeed)
         menu_bar.addAction("About", self.showAbout)
 
     def closeEvent(self, e):
@@ -284,7 +286,7 @@ class KH2RandomizerApp(QMainWindow):
 
         e.accept()
 
-    def loadDailySeed(self):
+    def dailySeedHandler(self,difficulty):
         self.seedName.setText(self.dailySeedName)
         self.recalculate = False
 
@@ -303,9 +305,10 @@ class KH2RandomizerApp(QMainWindow):
 
         # use the modifications to change the preset
         mod_string = f'Updated settings for Daily Seed {self.startTime.strftime("%a %b %d %Y")}\n\n'
-        for m in self.mods:
+        which_mods = self.mods if difficulty=="easy" else self.mods_hard
+        for m in which_mods:
             m.local_modifier(self.settings)
-            mod_string += m.name + ' - ' + m.description + '\n'
+            mod_string += m.name + ' - ' + m.description + '\n\n'
 
         for widget in self.widgets:
             widget.update_widgets()
@@ -317,6 +320,13 @@ class KH2RandomizerApp(QMainWindow):
         message = QMessageBox(text=mod_string)
         message.setWindowTitle('KH2 Seed Generator - Daily Seed')
         message.exec()
+
+    def loadDailySeed(self):
+        self.dailySeedHandler(difficulty="easy")
+
+    def loadHardDailySeed(self):
+        self.dailySeedHandler(difficulty="hard")
+
 
     def fixSeedName(self):
         new_string = re.sub(r'[^a-zA-Z0-9]', '', self.seedName.text())
