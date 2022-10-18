@@ -369,16 +369,65 @@ class Randomizer():
             from Module.seedEvaluation import LocationInformedSeedValidator
             validator = LocationInformedSeedValidator()
 
-            locking_items = [[54],[55],[59],[60],[61],[62],[72,21,22,23],[74],[369],[376,375],[26],[27],[29],[31],[563],[32],[32],[32],[32],[32]]
+            minimum_terra_depth = 10
+            unlocks = {}
+            unlocks[locationType.HB] = [[595],[369]]
+            unlocks[locationType.OC] = [[54]]
+            unlocks[locationType.LoD] = [[55]]
+            unlocks[locationType.PL] = [[61]]
+            unlocks[locationType.HT] = [[60]]
+            unlocks[locationType.SP] = [[74]]
+            unlocks[locationType.FormLevel] = [[26],[27],[29],[31],[563]]
+            unlocks[locationType.TT] = [[375],[376]]
+            unlocks[locationType.BC] = [[59]]
+            unlocks[locationType.Agrabah] = [[72]]
+            unlocks[locationType.HUNDREDAW] = [[32],[32],[32],[32],[32]]
+            unlocks[locationType.LW] = [[593]]
+            unlocks[locationType.PR] = [[62]]
+            unlocks[locationType.PR] = [[62]]
+            unlocks[locationType.Atlantica] = [[23,23,23],[87,87]]
+
+            locking_items = []
+            for loc_type in settings.enabledLocations:
+                if loc_type in unlocks:
+                    locking_items+=unlocks[loc_type]
+
+            
+            for i in settings.startingItems:
+                if [i] in locking_items:
+                    locking_items.remove([i])
+
             if self.yeet_the_bear:
-                locking_items.pop()
-            random.shuffle(locking_items)
+                locking_items.remove([32])
+            
+            terra = [593] in locking_items
+            atlantica = [23,23,23] in locking_items
+            tt_condition = [376] in locking_items and [375] in locking_items
+            hb_condition = [369] in locking_items
+            ag_condition = [72] in locking_items
+
+            while True:
+                random.shuffle(locking_items)
+                if tt_condition and locking_items.index([376]) > locking_items.index([375]): # ice cream needs to be after picture
+                    continue
+                if hb_condition and locking_items.index([369]) > locking_items.index([595]): # proof of peace needs to be after membership card
+                    continue
+                if terra and locking_items.index([593]) < minimum_terra_depth:
+                    continue
+                if ag_condition and atlantica and locking_items.index([23,23,23]) > locking_items.index([72]): # scimitar needs to be after thunders for atlantica
+                    continue
+                if atlantica and locking_items.index([23,23,23]) - locking_items.index([87,87]) <= 1: # thundaga needs to be at least 2 steps away
+                    continue
+                if atlantica and locking_items.index([23,23,23]) == locking_items.index([595])+1: # thundaga can't be the step right after mushrooms
+                    continue
+                break
             if self.yeet_the_bear:
                 locking_items.append([32])
-            locking_items.append([594])
+            locking_items.append([594]) # add the proof of nonexistence at the end of the chain
             validator.prep_req_list(settings,self)
 
-            current_inventory = []
+            current_inventory = [] + settings.startingItems
+
             accessible_locations = [[l for l in validLocations if validator.is_location_available(current_inventory,l)]]
             for items in locking_items:
                 accessible_locations_start = [l for l in validLocations if validator.is_location_available(current_inventory,l)]

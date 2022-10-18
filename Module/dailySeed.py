@@ -248,7 +248,5 @@ def getDailyModifiers(date,hard_mode = False):
     
     if hard_mode:
         chosenMods = crit_modifier + chosenMods
-    
-    print(chosenMods)
 
     return chosenMods
