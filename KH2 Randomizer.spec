@@ -45,6 +45,7 @@ a = Analysis(
         'static/as_data_split/*.*',
         'static/better_stt/*.*',
         'static/map_skip/*.*',
+        'static/wardrobe/*.*',
         'static/*.bar',
         'static/*.script',
         'static/*.bin',

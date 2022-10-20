@@ -818,6 +818,34 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="Place all the locking items in a chain with one another, making the seed very linear.",
         randomizable=False
     ),
+    Toggle(
+        name=settingkey.CHAIN_LOGIC_TERRA,
+        ui_label='Include Lingering Will in Chain',
+        shared=True,
+        default=False,
+        tooltip="Puts the Proof of Connection into the logic chain, effectively requiring beating Lingering Will",
+        randomizable=False
+    ),
+    Toggle(
+        name=settingkey.CHAIN_LOGIC_MIN_TERRA,
+        ui_label='Force Late Depth for Proof of Connection',
+        shared=True,
+        default=False,
+        tooltip="Will force the proof of connection to be in the last 5 steps of the chain, to give more chances for finding combat tools.",
+        randomizable=False
+    ),
+    IntSpinner(
+        name=settingkey.CHAIN_LOGIC_LENGTH,
+        ui_label="Minimum Logic Length",
+        minimum=10,
+        maximum=26, # theoretical max
+        step=1,
+        shared=True,
+        default=26,
+        tooltip="How many steps in the logic chain you'd like to guarantee. Could be more based on randomization, but will guarantee this many steps.",
+        randomizable=False
+    ),
+
 
     Toggle(
         name=settingkey.PREVENT_SELF_HINTING,

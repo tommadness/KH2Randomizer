@@ -47,6 +47,9 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.STORY_UNLOCK_DEPTH)
         self.add_option(settingkey.YEET_THE_BEAR)
         self.add_option(settingkey.CHAIN_LOGIC)
+        self.add_option(settingkey.CHAIN_LOGIC_LENGTH)
+        self.add_option(settingkey.CHAIN_LOGIC_TERRA)
+        self.add_option(settingkey.CHAIN_LOGIC_MIN_TERRA)
         self.add_option(settingkey.PROOF_DEPTH)
         self.end_column()
 

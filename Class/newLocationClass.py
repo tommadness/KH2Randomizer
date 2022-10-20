@@ -9,6 +9,7 @@ class KH2Location:
     LocationCategory: locationCategory
     LocationTypes: list[locationType] = field(compare=False)
     InvalidChecks: list[itemType] = field(default_factory=list,compare=False)
+    VanillaItem: int = None
 
     def __eq__(self, obj):
         return self.LocationId==obj.LocationId and self.LocationCategory==obj.LocationCategory and self.LocationTypes==obj.LocationTypes

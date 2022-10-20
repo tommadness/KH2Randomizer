@@ -369,9 +369,11 @@ class Randomizer():
             from Module.seedEvaluation import LocationInformedSeedValidator
             validator = LocationInformedSeedValidator()
 
-            minimum_terra_depth = 10
             unlocks = {}
-            unlocks[locationType.HB] = [[595],[369]]
+            if settings.regular_rando:
+                unlocks[locationType.HB] = [[595],[369]]
+            elif settings.reverse_rando:
+                unlocks[locationType.HB] = [[369]]
             unlocks[locationType.OC] = [[54]]
             unlocks[locationType.LoD] = [[55]]
             unlocks[locationType.PL] = [[61]]
@@ -380,7 +382,10 @@ class Randomizer():
             unlocks[locationType.FormLevel] = [[26],[27],[29],[31],[563]]
             unlocks[locationType.TT] = [[375],[376]]
             unlocks[locationType.BC] = [[59]]
-            unlocks[locationType.Agrabah] = [[72]]
+            if settings.regular_rando:
+                unlocks[locationType.Agrabah] = [[72,21,22,23]]
+            elif settings.reverse_rando:
+                unlocks[locationType.Agrabah] = [[72],[21,22,23]]
             unlocks[locationType.HUNDREDAW] = [[32],[32],[32],[32],[32]]
             unlocks[locationType.LW] = [[593]]
             unlocks[locationType.PR] = [[62]]
@@ -397,14 +402,14 @@ class Randomizer():
                 if [i] in locking_items:
                     locking_items.remove([i])
 
+            minimum_terra_depth = len(locking_items)-5 if settings.chainLogicTerraLate else 0
+
             if self.yeet_the_bear:
                 locking_items.remove([32])
             
-            terra = [593] in locking_items
-            atlantica = [23,23,23] in locking_items
+            terra = settings.chainLogicIncludeTerra and [593] in locking_items
             tt_condition = [376] in locking_items and [375] in locking_items
-            hb_condition = [369] in locking_items
-            ag_condition = [72] in locking_items
+            hb_condition = [595] in locking_items
 
             while True:
                 random.shuffle(locking_items)
@@ -414,16 +419,18 @@ class Randomizer():
                     continue
                 if terra and locking_items.index([593]) < minimum_terra_depth:
                     continue
-                if ag_condition and atlantica and locking_items.index([23,23,23]) > locking_items.index([72]): # scimitar needs to be after thunders for atlantica
-                    continue
-                if atlantica and locking_items.index([23,23,23]) - locking_items.index([87,87]) <= 1: # thundaga needs to be at least 2 steps away
-                    continue
-                if atlantica and locking_items.index([23,23,23]) == locking_items.index([595])+1: # thundaga can't be the step right after mushrooms
-                    continue
                 break
             if self.yeet_the_bear:
                 locking_items.append([32])
+
+            if len(locking_items) > settings.chainLogicMinLength:
+                # keep the last parts of the chain
+                num_to_remove = len(locking_items) - settings.chainLogicMinLength;
+                locking_items = locking_items[num_to_remove:]
+
             locking_items.append([594]) # add the proof of nonexistence at the end of the chain
+
+            # print(locking_items)
             validator.prep_req_list(settings,self)
 
             current_inventory = [] + settings.startingItems
@@ -433,12 +440,17 @@ class Randomizer():
                 accessible_locations_start = [l for l in validLocations if validator.is_location_available(current_inventory,l)]
                 accessible_locations_new = [l for l in validLocations if validator.is_location_available(current_inventory + items,l) and l not in accessible_locations_start]
                 accessible_locations.append(accessible_locations_new)
+                # print(len(accessible_locations[-1]))
                 current_inventory += items
             for iter,items in enumerate(locking_items):
                 accessible_locations_new = accessible_locations[iter]
                 for i in items:
                     #find item in item list
-                    i_data = [it for it in allItems if it.Id==i][0]
+                    
+                    i_data_list = [it for it in allItems if it.Id==i]
+                    if len(i_data_list)==0:
+                        continue
+                    i_data = i_data_list[0]
                     weights = local_item_weights_computation(i_data,accessible_locations_new)
                     if len(weights)==0:
                         break
