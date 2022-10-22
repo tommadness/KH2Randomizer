@@ -417,7 +417,7 @@ class Items:
             KH2Item(271, "Horizontal Slash", itemType.ACTION_ABILITY,itemRarity.RARE),
             KH2Item(267, "Finishing Leap", itemType.ACTION_ABILITY,itemRarity.RARE),
             KH2Item(273, "Retaliating Slash", itemType.ACTION_ABILITY),
-            KH2Item(262, "Slapshot", itemType.ACTION_ABILITY),
+            KH2Item(262, "Slapshot", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
             KH2Item(263, "Dodge Slash", itemType.ACTION_ABILITY),
             KH2Item(559, "Flash Step", itemType.ACTION_ABILITY,itemRarity.RARE),
             KH2Item(264, "Slide Dash", itemType.ACTION_ABILITY,itemRarity.RARE),

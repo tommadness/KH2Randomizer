@@ -34,8 +34,8 @@ def turnOffWorldsLocal(worlds: list):
     def _turnOffLocal(settings: SeedSettings):
         worlds_with_rewards = settings.get(settingkey.WORLDS_WITH_REWARDS)
         for world in worlds:
-            if world.name in worlds_with_rewards:
-                worlds_with_rewards.remove(world.name)
+            if world.name in worlds_with_rewards[0]:
+                worlds_with_rewards[0].remove(world.name)
     return _turnOffLocal
 
 def modifyShutOut(daily: DailyModifier):
@@ -59,7 +59,7 @@ def modifyShutOut(daily: DailyModifier):
     random.shuffle(choices)
     shut_out_worlds = choices[:X]
     shut_out_world_names = [l.name for l in shut_out_worlds]
-    daily = daily._replace(description = daily.description.format(','.join(shut_out_world_names)),
+    daily = daily._replace(description = daily.description.format(', '.join(shut_out_world_names)),
                    local_modifier = daily.local_modifier(shut_out_worlds))
     return daily
 

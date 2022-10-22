@@ -22,6 +22,7 @@ class RandomizerSettings():
         self.item_accessibility = ui_settings.get(settingkey.ACCESSIBILITY)
 
         include_list = []
+        vanilla_list = []
         include_list_keys = [
             (settingkey.FORM_LEVEL_REWARDS, 'Form Levels'),
             (settingkey.CRITICAL_BONUS_REWARDS, 'Critical Bonuses'),
@@ -30,13 +31,21 @@ class RandomizerSettings():
         for key in include_list_keys:
             if ui_settings.get(key[0]):
                 include_list.append(key[1])
-        for location in ui_settings.get(settingkey.WORLDS_WITH_REWARDS):
+        worlds_with_rewards =  ui_settings.get(settingkey.WORLDS_WITH_REWARDS)
+        vanilla_worlds = []
+        if isinstance(worlds_with_rewards[0],list):
+            vanilla_worlds = worlds_with_rewards[1]
+            worlds_with_rewards = worlds_with_rewards[0]
+        for location in worlds_with_rewards:
             include_list.append(locationType[location].value)
+        for location in vanilla_worlds:
+            vanilla_list.append(locationType[location].value)
         for location in ui_settings.get(settingkey.SUPERBOSSES_WITH_REWARDS):
             include_list.append(locationType[location].value)
         for location in ui_settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS):
             include_list.append(locationType[location].value)
         self.enabledLocations = [l for l in locationType if l in include_list]
+        self.vanillaLocations = [l for l in locationType if l in vanilla_list]
         self.disabledLocations = [l for l in locationType if l not in include_list and l not in [locationType.Mush13,locationType.WeaponSlot,locationType.Level]]
        
         level_setting = ui_settings.get(settingkey.SORA_LEVELS)
@@ -76,6 +85,7 @@ class RandomizerSettings():
         self.goofy_ap = ui_settings.get(settingkey.GOOFY_AP)
 
         ui_ability_pool = ui_settings.get(settingkey.ABILITY_POOL)
+        self.abilityListModifierString = ui_ability_pool
         if ui_ability_pool == "default":
             self.abilityListModifier = SeedModifier.defaultAbilityPool
         elif ui_ability_pool == "randomize":
@@ -235,6 +245,9 @@ class RandomizerSettings():
             if l.value in self.enabledLocations:
                 if l.value!="Level": # don't duplicate the level info
                     self.tracker_includes.append(l.value)
+            if l.value in self.vanillaLocations:
+                if l.value!="Level": # don't duplicate the level info
+                    self.tracker_includes.append(l.value)
 
         self.validateSettings()
 
@@ -253,6 +266,11 @@ class RandomizerSettings():
         
         if locationType.TTR in self.enabledLocations and not self.statSanity:
             raise SettingsException("Enabling Transport to Remembrance when not in Statsanity is incorrect. Enable Statsanity or disable TTR.")
+
+        if self.chainLogic and len(self.vanillaLocations)>0:
+            raise SettingsException("Currently can't do chain logic and vanilla worlds. Sorry about that. ")
+        if self.abilityListModifierString!="default" and len(self.vanillaLocations)>0:
+            raise SettingsException("Currently can't do randomized ability pools and vanilla worlds. Sorry about that. ")
 
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel

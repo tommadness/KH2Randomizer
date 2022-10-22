@@ -2,14 +2,14 @@ import os
 from typing import Optional
 
 from PySide6.QtCore import Qt, QSize
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon,QPixmap
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView
+    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView,QRadioButton
 )
 
 import Class.seedSettings
-from Class.seedSettings import SeedSettings, Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect
+from Class.seedSettings import MultiSelectTristate, SeedSettings, Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect
 from Module.resources import resource_path
 
 
@@ -28,6 +28,8 @@ class KH2Submenu(QWidget):
             self.menulayout = QHBoxLayout()
 
         self.pending_column: Optional[QVBoxLayout] = None
+
+        self.tristate_groups = {}
 
     def start_column(self):
         self.pending_column = QVBoxLayout()
@@ -98,6 +100,8 @@ class KH2Submenu(QWidget):
             widget = self.make_combo_box(setting_name)
         elif isinstance(setting, MultiSelect):
             widget = self.make_multi_select_list(setting_name)
+        elif isinstance(setting, MultiSelectTristate):
+            widget = self.make_multi_select_tristate_list(setting_name)
         else:
             print('Unknown setting type')
             return
@@ -118,6 +122,60 @@ class KH2Submenu(QWidget):
         elif isinstance(widget, list) and len(widget) > 0:
             # The multi-select buttons are represented as a list but they're contained within a parent widget as well
             widget[0].parentWidget().setVisible(visible)
+
+    def make_multiselect_tristate(self, setting_name: str) -> (MultiSelectTristate, list[QGroupBox]):
+        setting = Class.seedSettings.settings_by_name[setting_name]
+
+        if not isinstance(setting, MultiSelectTristate):
+            print('Expected a MultiSelectTristate for ' + setting_name)
+            return
+
+        path = os.path.abspath(__file__)
+        dir_path = os.path.dirname(path)
+
+        widgets = []
+        selected_keys = self.settings.get(setting_name)
+        partial_keys = []
+        if isinstance(selected_keys[0],list):
+            partial_keys = selected_keys[1]
+            selected_keys = selected_keys[0]
+        for index, choice_key in enumerate(setting.choice_keys):
+            groupbox = QGroupBox(setting.choice_values[index])
+
+            randomize_button = QRadioButton("Randomized")
+            vanilla_button = QRadioButton("Vanilla")
+            junk_button = QRadioButton("Off")
+            if choice_key in selected_keys:
+                randomize_button.setChecked(True)
+            elif choice_key in partial_keys:
+                vanilla_button.setChecked(True)
+            else:
+                junk_button.setChecked(True)
+            randomize_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
+            vanilla_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
+            junk_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
+
+            self.tristate_groups[choice_key] = (randomize_button,vanilla_button,junk_button)
+
+            hbox = QHBoxLayout()
+            hbox.setContentsMargins(0, 0, 0, 0)
+            hbox.setSpacing(0)
+            label = QLabel()
+            icon = QIcon(resource_path(dir_path + '/' + setting.choice_icons[choice_key]))
+            pixmap = icon.pixmap(icon.actualSize(QSize(36, 36)))
+            label.setPixmap(pixmap)
+            hbox.addWidget(label)
+            hbox.addWidget(randomize_button)
+            hbox.addWidget(vanilla_button)
+            hbox.addWidget(junk_button)
+            hbox.insertStretch(-1,1)
+
+            groupbox.setLayout(hbox)
+            widgets.append(groupbox)
+
+        self.widgets_and_settings_by_name[setting_name] = (setting, widgets)
+
+        return setting, widgets
 
     def make_multiselect_buttons(self, setting_name: str) -> (MultiSelect, list[QPushButton]):
         setting = Class.seedSettings.settings_by_name[setting_name]
@@ -146,11 +204,16 @@ class KH2Submenu(QWidget):
 
         return setting, widgets
 
-    def add_multiselect_buttons(self, setting_name: str, columns: int, group_title: str):
-        setting, widgets = self.make_multiselect_buttons(setting_name)
+    def add_multiselect_buttons(self, setting_name: str, columns: int, group_title: str, tristate = False):
 
         grid = QGridLayout()
         grid.setAlignment(Qt.AlignTop)
+        if tristate:
+            setting, widgets = self.make_multiselect_tristate(setting_name)
+            grid.setContentsMargins(0,0,0,0)
+            grid.setSpacing(3)
+        else:
+            setting, widgets = self.make_multiselect_buttons(setting_name)
 
         for index, choice_key in enumerate(setting.choice_keys):
             button = widgets[index]
@@ -203,6 +266,10 @@ class KH2Submenu(QWidget):
                 elif isinstance(widget, list):
                     for index, key in enumerate(setting.choice_keys):
                         widget[index].setDisabled(True)
+            elif isinstance(setting, MultiSelectTristate):
+                if isinstance(widget, list):
+                    for index, key in enumerate(setting.choice_keys):
+                        widget[index].setDisabled(True)
 
     def update_widgets(self):
         for name in self.widgets_and_settings_by_name:
@@ -228,6 +295,28 @@ class KH2Submenu(QWidget):
                     for index, key in enumerate(setting.choice_keys):
                         selected = key in selected_keys
                         widget[index].setChecked(selected)
+            elif isinstance(setting, MultiSelectTristate):
+                if isinstance(widget, list):
+                    selected_keys = self.settings.get(name)
+                    if isinstance(selected_keys[0],list):
+                        # we have the updated settings
+                        enabled_locs = selected_keys[0]
+                        vanilla_locs = selected_keys[1]
+                    else:
+                        # we have the updated settings
+                        enabled_locs = selected_keys
+                        vanilla_locs = []
+
+                    for index, key in enumerate(setting.choice_keys):
+                        selected = key in enabled_locs
+                        vanil_selected = key in vanilla_locs
+                        rando,vanil,junk = self.tristate_groups[setting.choice_keys[index]]
+                        if selected:
+                            rando.setChecked(True)
+                        elif vanil_selected:
+                            vanil.setChecked(True)
+                        else:
+                            junk.setChecked(True)
 
     def make_combo_box(self, name: str):
         setting: SingleSelect = Class.seedSettings.settings_by_name[name]
@@ -281,12 +370,35 @@ class KH2Submenu(QWidget):
         list_widget.itemSelectionChanged.connect(lambda: self._update_multi_list(setting, list_widget))
         return list_widget
 
+    def make_multi_select_tristate_list(self, name: str):
+        return None
+        # setting: MultiSelectTristate = Class.seedSettings.settings_by_name[name]
+        # list_widget = QListWidget()
+        # list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
+        # list_widget.addItems(setting.choice_values)
+
+        # for selected in self.settings.get(name):
+        #     if selected in setting.choice_keys:
+        #         index = setting.choice_keys.index(selected)
+        #         list_widget.item(index).setSelected(True)
+
+        # list_widget.itemSelectionChanged.connect(lambda: self._update_multi_tristate_list(setting, list_widget))
+        # return list_widget
+
     def _update_multi_list(self, setting: MultiSelect, widget: QListWidget):
         choice_keys = setting.choice_keys
         selected_keys = []
         for index in widget.selectedIndexes():
             selected_keys.append(choice_keys[index.row()])
         self.settings.set(setting.name, selected_keys)
+
+    def _update_multi_tristate_list(self, setting: MultiSelectTristate, widget: QListWidget):
+        return None
+        # choice_keys = setting.choice_keys
+        # selected_keys = []
+        # for index in widget.selectedIndexes():
+        #     selected_keys.append(choice_keys[index.row()])
+        # self.settings.set(setting.name, [selected_keys,[]])
 
     def _update_multi_buttons(self, setting: MultiSelect):
         (_, buttons) = self.widgets_and_settings_by_name[setting.name]
@@ -296,3 +408,16 @@ class KH2Submenu(QWidget):
             if button.isChecked():
                 selected_keys.append(choice_keys[index])
         self.settings.set(setting.name, selected_keys)
+
+    def _update_multi_tristate_buttons(self, setting: MultiSelectTristate):
+        (_, buttons) = self.widgets_and_settings_by_name[setting.name]
+        choice_keys = setting.choice_keys
+        selected_keys = []
+        partial_keys = []
+        for index, button in enumerate(buttons):
+            rando,vanil,junk = self.tristate_groups[choice_keys[index]]
+            if rando.isChecked():
+                selected_keys.append(choice_keys[index])
+            if vanil.isChecked():
+                partial_keys.append(choice_keys[index])
+        self.settings.set(setting.name, [selected_keys,partial_keys])

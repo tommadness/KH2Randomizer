@@ -463,6 +463,19 @@ class Randomizer():
 
 
 
+        # vanilla location item assignment
+        locations_with_vanilla_items = [l for l in invalidLocations if len(l.VanillaItems)>0 and any(item in l.LocationTypes for item in settings.vanillaLocations)]
+        for l in locations_with_vanilla_items:
+            #find item in item list
+            for i in l.VanillaItems:
+                i_data_list = [it for it in allItems if it.Id==i]
+                if len(i_data_list)==0:
+                    raise GeneratorException("Tried assigning a vanilla item, but the item isn't in the item list")
+                i_data = i_data_list[0]
+                if i_data.ItemType not in l.InvalidChecks:
+                    allItems.remove(i_data)
+                    if self.assignItem(l,i_data):
+                        invalidLocations.remove(l)
 
 
         #assign valid items to all valid locations remaining

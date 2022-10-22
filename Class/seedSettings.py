@@ -1,3 +1,4 @@
+import copy
 import math
 import random
 import textwrap
@@ -174,6 +175,67 @@ class MultiSelect(Setting):
                 selected_values.append(choice_key)
 
         return selected_values
+
+class MultiSelectTristate(Setting):
+    def __init__(
+            self,
+            name: str,
+            ui_label: str,
+            choices: dict[str, str],
+            shared: bool,
+            default: list[list[str],list[str]],
+            choice_icons: dict[str, str] = None,
+            tooltip: str = '',
+            randomizable = None):
+        super().__init__(name, str, ui_label, shared, default, tooltip, randomizable)
+        self.choices = choices
+        self.choice_keys = list(choices.keys())
+        self.partial_choice_keys = list()
+        self.choice_values = list(choices.values())
+        self.choice_icons = choice_icons
+
+    def settings_string(self, value) -> str:
+        choice_keys = self.choice_keys
+
+        bit_array = BitArray(len(choice_keys))
+        bit_array_partial = BitArray(len(choice_keys))
+        for index, choice_key in enumerate(choice_keys):
+            if isinstance(value[0],list):
+                if choice_key in value[0]:
+                    bit_array[index] = True
+                else:
+                    bit_array[index] = False
+                if choice_key in value[1]:
+                    bit_array_partial[index] = True
+                else:
+                    bit_array_partial[index] = False
+            else:
+                if choice_key in value:
+                    bit_array[index] = True
+                else:
+                    bit_array[index] = False
+        return str(bit_array.uint)+"+"+str(bit_array_partial.uint)
+
+    def parse_settings_string(self, settings_string: str):
+        choice_keys = self.choice_keys
+        split_settings = settings_string.split('+')
+        rando_string = split_settings[0]
+        vanilla_string = split_settings[1]
+
+        bit_array = BitArray(uint=int(rando_string), length=len(choice_keys))
+        bit_array_partial = BitArray(uint=int(vanilla_string), length=len(choice_keys))
+
+        selected_values = []
+        partial_values = []
+        for index, choice_key in enumerate(choice_keys):
+            if bit_array[index]:
+                selected_values.append(choice_key)
+        for index, choice_key in enumerate(choice_keys):
+            if bit_array_partial[index]:
+                partial_values.append(choice_key)
+
+        return [selected_values,partial_values]
+        
 
 _drive_exp_curve_tooltip_text = textwrap.dedent('''
         Experience curve options, inspired by KH1's experience curves. Midday and dusk will reduce the total 
@@ -968,7 +1030,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip='Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.'
     ),
 
-    MultiSelect(
+    MultiSelectTristate(
         name=settingkey.WORLDS_WITH_REWARDS,
         ui_label='Worlds with Rewards',
         choices={location.name: location.value for location in [
@@ -989,7 +1051,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.Atlantica
         ]},
         shared=True,
-        default=[
+        default=[[
             locationType.STT.name,
             locationType.HB.name,
             locationType.OC.name,
@@ -1004,7 +1066,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.DC.name,
             locationType.PR.name,
             locationType.TWTNW.name
-        ],
+        ],[]],
         choice_icons={
             locationType.STT.name: "icons/worlds/simulated_twilight_town.png",
             locationType.HB.name: "icons/worlds/hollow_bastion.png",
@@ -1553,7 +1615,7 @@ class SeedSettings:
         return self._values[name]
 
     def set(self, name: str, value):
-        self._values[name] = value
+        self._values[name] = copy.deepcopy(value)
         if name in self._observers:
             for observer in self._observers[name]:
                 observer()
@@ -1630,6 +1692,10 @@ class RandoRandoSettings:
                 # get set value from settings, and then allow all values larger than that
                 self.setting_choices[r.name] = [c for c in r.selectable_values if c >= real_settings_object.get(r.name)]
             if isinstance(r,MultiSelect):
+                # get the current set of values, will allow for some to be removed
+                self.setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
+                self.multi_selects.append(r.name)
+            if isinstance(r,MultiSelectTristate):
                 # get the current set of values, will allow for some to be removed
                 self.setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
                 self.multi_selects.append(r.name)
