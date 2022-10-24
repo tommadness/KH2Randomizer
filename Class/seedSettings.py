@@ -1034,6 +1034,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.WORLDS_WITH_REWARDS,
         ui_label='Worlds with Rewards',
         choices={location.name: location.value for location in [
+            locationType.FormLevel,
             locationType.STT,
             locationType.TT,
             locationType.HB,
@@ -1052,6 +1053,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ]},
         shared=True,
         default=[[
+            locationType.FormLevel.name,
             locationType.STT.name,
             locationType.HB.name,
             locationType.OC.name,
@@ -1068,6 +1070,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.TWTNW.name
         ],[]],
         choice_icons={
+            locationType.FormLevel.name: "icons/worlds/drives.png",
             locationType.STT.name: "icons/worlds/simulated_twilight_town.png",
             locationType.HB.name: "icons/worlds/hollow_bastion.png",
             locationType.OC.name: "icons/worlds/olympus_coliseum.png",

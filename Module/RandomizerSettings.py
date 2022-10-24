@@ -24,7 +24,6 @@ class RandomizerSettings():
         include_list = []
         vanilla_list = []
         include_list_keys = [
-            (settingkey.FORM_LEVEL_REWARDS, 'Form Levels'),
             (settingkey.CRITICAL_BONUS_REWARDS, 'Critical Bonuses'),
             (settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS, 'Garden of Assemblage'),
         ]

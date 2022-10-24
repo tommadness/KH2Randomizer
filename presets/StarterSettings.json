@@ -24,7 +24,6 @@
     "fifty_ap_boosts": false,
     "final_exp_curve": "MIDDAY",
     "final_exp_multiplier": 4.0,
-    "form_level_rewards": true,
     "garden_of_assemblage_rewards": true,
     "glass_cannon": false,
     "goofy_ap": 54,
@@ -182,6 +181,7 @@
     "wisdom_exp_curve": "MIDDAY",
     "wisdom_exp_multiplier": 4.0,
     "worlds_with_rewards": [[
+        "FormLevel",
         "STT",
         "TT",
         "HB",

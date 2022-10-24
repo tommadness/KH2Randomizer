@@ -14,9 +14,10 @@ class Hints:
     def convertItemAssignmentToTuple(itemAssignment,shop_items):
         locationItems = []
         for assignment in itemAssignment:
-            locationItems.append((assignment.location,assignment.item))
-            if assignment.item2 is not None:
-                locationItems.append((assignment.location,assignment.item2))
+            if assignment.location.LocationId != 390:
+                locationItems.append((assignment.location,assignment.item))
+                if assignment.item2 is not None:
+                    locationItems.append((assignment.location,assignment.item2))
 
         for i in shop_items:
             locationItems.append((Locations.ShopLocation(),i))
