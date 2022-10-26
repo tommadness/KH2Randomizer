@@ -45,13 +45,13 @@ class RandomizerSettings():
             include_list.append(locationType[location].value)
         self.enabledLocations = [l for l in locationType if l in include_list]
         self.vanillaLocations = [l for l in locationType if l in vanilla_list]
-        self.disabledLocations = [l for l in locationType if l not in include_list and l not in [locationType.Mush13,locationType.WeaponSlot,locationType.Level]]
+        self.disabledLocations = [l for l in locationType if l not in include_list and l not in [locationType.Mush13,locationType.WeaponSlot]]
        
         level_setting = ui_settings.get(settingkey.SORA_LEVELS)
         self.level_one = False 
         if level_setting=="Level":
             self.setLevelChecks(1)
-            self.level_one = ui_settings.get(settingkey.LEVEL_ONE)
+            self.level_one = True
         elif level_setting=="ExcludeFrom50":
             self.setLevelChecks(50)
         elif level_setting=="ExcludeFrom99":
@@ -274,13 +274,10 @@ class RandomizerSettings():
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel
         if self.level_checks==99:
-            self.enabledLocations.append(locationType.Level)
             levels_to_exclude = self.excludeFrom99
         elif self.level_checks==50:
-            self.enabledLocations.append(locationType.Level)
             levels_to_exclude = self.excludeFrom50
         elif self.level_checks==1:
-            self.disabledLocations.append(locationType.Level)
             levels_to_exclude = range(1,100)
         else:
             raise SettingsException(f"Incorrect level choice {maxLevel}")

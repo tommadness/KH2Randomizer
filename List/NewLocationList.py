@@ -220,19 +220,24 @@ class Locations:
             self.add_edge("Starting","Sunset Puzzle",RequirementEdge(req=sunset_checker))
     
     def makeFormGraph(self):
+        v = [None,None,385,94,162,95,162,96]
+        w = [None,None,386,98,412,99,413,100]
+        l = [None,None,568,564,405,565,407,566]
+        m = [None,None,387,102,163,103,163,104]
+        f = [None,None,388,106,398,107,398,108]
         for i in range(1,8):
-            if i>=3 and i%2==1:
+            if i==1:
                 self.add_node(f"Valor-{i}",LocationNode([KH2Location(i,f"Valor Level {i}", locationCategory.VALORLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []))]))
                 self.add_node(f"Wisdom-{i}",LocationNode([KH2Location(i,f"Wisdom Level {i}", locationCategory.WISDOMLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []))]))
                 self.add_node(f"Limit-{i}",LocationNode([KH2Location(i,f"Limit Level {i}", locationCategory.LIMITLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []))]))
                 self.add_node(f"Master-{i}",LocationNode([KH2Location(i,f"Master Level {i}", locationCategory.MASTERLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []))]))
                 self.add_node(f"Final-{i}",LocationNode([KH2Location(i,f"Final Level {i}", locationCategory.FINALLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []))]))
             else:
-                self.add_node(f"Valor-{i}",LocationNode([KH2Location(i,f"Valor Level {i}", locationCategory.VALORLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []),VanillaItems=[94+((i-3)/2)])]))
-                self.add_node(f"Wisdom-{i}",LocationNode([KH2Location(i,f"Wisdom Level {i}", locationCategory.WISDOMLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []),VanillaItems=[98+((i-3)/2)])]))
-                self.add_node(f"Limit-{i}",LocationNode([KH2Location(i,f"Limit Level {i}", locationCategory.LIMITLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []),VanillaItems=[564+((i-3)/2)])]))
-                self.add_node(f"Master-{i}",LocationNode([KH2Location(i,f"Master Level {i}", locationCategory.MASTERLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []),VanillaItems=[102+((i-3)/2)])]))
-                self.add_node(f"Final-{i}",LocationNode([KH2Location(i,f"Final Level {i}", locationCategory.FINALLEVEL,[locationType.FormLevel] + ([locationType.FormLevel1] if i==1 else []),VanillaItems=[106+((i-3)/2)])]))
+                self.add_node(f"Valor-{i}",LocationNode([KH2Location(i,f"Valor Level {i}", locationCategory.VALORLEVEL,[locationType.FormLevel],VanillaItems=[v[i]])]))
+                self.add_node(f"Wisdom-{i}",LocationNode([KH2Location(i,f"Wisdom Level {i}", locationCategory.WISDOMLEVEL,[locationType.FormLevel],VanillaItems=[w[i]])]))
+                self.add_node(f"Limit-{i}",LocationNode([KH2Location(i,f"Limit Level {i}", locationCategory.LIMITLEVEL,[locationType.FormLevel],VanillaItems=[l[i]])]))
+                self.add_node(f"Master-{i}",LocationNode([KH2Location(i,f"Master Level {i}", locationCategory.MASTERLEVEL,[locationType.FormLevel],VanillaItems=[m[i]])]))
+                self.add_node(f"Final-{i}",LocationNode([KH2Location(i,f"Final Level {i}", locationCategory.FINALLEVEL,[locationType.FormLevel],VanillaItems=[f[i]])]))
             self.add_node(f"Summon-{i}",LocationNode([KH2Location(i,f"Summon Level {i}", locationCategory.SUMMONLEVEL,[locationType.SummonLevel])]))
 
 

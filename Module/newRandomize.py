@@ -1,3 +1,4 @@
+import copy
 from dataclasses import dataclass
 import itertools
 
@@ -292,9 +293,13 @@ class Randomizer():
 
         invalidLocations = [loc for loc in allLocations if ( no_final_form(loc) or invalid_checker(loc) or remove_popupchecker(loc) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
+        locations_with_vanilla_items = [l for l in invalidLocations if len(l.VanillaItems)>0 and any(item in l.LocationTypes for item in settings.vanillaLocations)]
+        vanilla_items = []
+        for l in locations_with_vanilla_items:
+            vanilla_items+=l.VanillaItems
 
         self.num_valid_locations = len(validLocations) + (len([loc for loc in validLocations if loc.LocationCategory in [locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS]]) if settings.statSanity else 0 )+ (len([loc for loc in validLocations if loc.LocationCategory in [locationCategory.DOUBLEBONUS]]) if settings.statSanity else 0)
-        self.num_available_items = len(allAbilities)+len(allItems)
+        self.num_available_items = len(allAbilities)+len(allItems) - (sum([len(l.VanillaItems) for l in locations_with_vanilla_items]))
 
         if self.progress_bar_vis:
             return
@@ -302,8 +307,23 @@ class Randomizer():
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):
             raise GeneratorException(f"Separating valid {len(validLocations)} and invalid {len(invalidLocations)} locations removed locations from existence (total {len(allLocations)} )")
         
-        self.assignKeybladeAbilities(settings, allAbilities, allItems)
-        allItems=allAbilities+allItems
+
+        def split_vanilla_abilities():
+            vanilla_item_copy = copy.deepcopy(vanilla_items)
+            vanilla_abilities = []
+            nonvanilla_abilities = []
+            for a in allAbilities:
+                if a.Id in vanilla_item_copy:
+                    vanilla_item_copy.remove(a.Id)
+                    vanilla_abilities.append(a)
+                else:
+                    nonvanilla_abilities.append(a)
+            return vanilla_abilities,nonvanilla_abilities
+
+        van,nonvan = split_vanilla_abilities()
+
+        self.assignKeybladeAbilities(settings, nonvan, allItems)
+        allItems=van+nonvan+allItems
 
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
@@ -401,6 +421,9 @@ class Randomizer():
             for i in settings.startingItems:
                 if [i] in locking_items:
                     locking_items.remove([i])
+            for i in vanilla_items:
+                if [i] in locking_items:
+                    locking_items.remove([i])
 
             minimum_terra_depth = len(locking_items)-5 if settings.chainLogicTerraLate else 0
 
@@ -464,13 +487,12 @@ class Randomizer():
 
 
         # vanilla location item assignment
-        locations_with_vanilla_items = [l for l in invalidLocations if len(l.VanillaItems)>0 and any(item in l.LocationTypes for item in settings.vanillaLocations)]
         for l in locations_with_vanilla_items:
             #find item in item list
             for i in l.VanillaItems:
                 i_data_list = [it for it in allItems if it.Id==i]
                 if len(i_data_list)==0:
-                    raise GeneratorException("Tried assigning a vanilla item, but the item isn't in the item list")
+                    raise GeneratorException(f"Tried assigning a vanilla item, but the item isn't in the item list {i}")
                 i_data = i_data_list[0]
                 if i_data.ItemType not in l.InvalidChecks:
                     allItems.remove(i_data)

@@ -108,8 +108,8 @@ class Items:
 
             KH2Item(42,"Oathkeeper", itemType.KEYBLADE),
             KH2Item(43,"Oblivion",itemType.KEYBLADE),
-            KH2Item(480, "Star Seeker", itemType.KEYBLADE),
-            KH2Item(481, "Hidden Dragon", itemType.KEYBLADE),
+            KH2Item(480,"Star Seeker", itemType.KEYBLADE),
+            KH2Item(481,"Hidden Dragon", itemType.KEYBLADE),
             KH2Item(484,"Hero's Crest",itemType.KEYBLADE),
             KH2Item(485,"Monochrome",itemType.KEYBLADE),
             KH2Item(486,"Follow the Wind",itemType.KEYBLADE),
