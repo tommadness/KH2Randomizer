@@ -174,6 +174,8 @@ class RandomizerSettings():
         self.wardrobe_skip = ui_settings.get(settingkey.REMOVE_WARDROBE_ANIMATION)
         self.include_maps = ui_settings.get(settingkey.MAPS_IN_ITEM_POOL)
         self.include_recipes = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
+        self.include_accessories = ui_settings.get(settingkey.ACCESSORIES_IN_ITEM_POOL)
+        self.include_armor = ui_settings.get(settingkey.ARMOR_IN_ITEM_POOL)
         self.remove_popups = ui_settings.get(settingkey.REMOVE_POPUPS)
 
         self.global_jackpot = ui_settings.get(settingkey.GLOBAL_JACKPOT)

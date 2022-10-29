@@ -6,10 +6,9 @@ from UI.Submenus.SubMenu import KH2Submenu
 class SoraMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Levels/EXP/Stats', settings=settings, in_layout='horizontal')
+        super().__init__(title='Experience and Stats', settings=settings, in_layout='horizontal')
 
         self.start_column()
-        self.add_option(settingkey.SPLIT_LEVELS)
         self.add_option(settingkey.GLASS_CANNON)
         self.add_option(settingkey.SORA_AP)
         self.add_option(settingkey.DONALD_AP)

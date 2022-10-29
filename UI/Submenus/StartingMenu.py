@@ -11,16 +11,9 @@ class StartingMenu(KH2Submenu):
         super().__init__(title='Starting Items', settings=settings, in_layout='horizontal')
 
         self.start_column()
-        self.addHeader('Rewards in Starting Areas')
-        self.add_option(settingkey.CRITICAL_BONUS_REWARDS)
-        self.add_option(settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS)
-        self.end_column()
-
-        self.start_column()
         self.addHeader("Starting Inventory Options")
         self.add_option(settingkey.STARTING_MOVEMENT)
         self.add_option(settingkey.STARTING_REPORTS)
-        self.add_option(settingkey.STARTING_STORY_UNLOCKS)
         starting_locks_layout = QHBoxLayout()
         story_lock_widget = QWidget()
         story_lock_widget.setLayout(starting_locks_layout)
@@ -29,6 +22,9 @@ class StartingMenu(KH2Submenu):
         starting_locks_layout.addWidget(start_with_all)
         starting_locks_layout.addWidget(start_with_none)
         self._add_option_widget("", "", story_lock_widget)
+        self.end_column()
+        self.start_column()
+        self.add_option(settingkey.STARTING_STORY_UNLOCKS)
         self.end_column(stretch_at_end=False)
 
         self.start_column()

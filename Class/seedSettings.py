@@ -248,7 +248,7 @@ _drive_exp_curve_tooltip_text = textwrap.dedent('''
 _all_settings = [
     SingleSelect(
         name=settingkey.SORA_LEVELS,
-        ui_label='Sora Levels',
+        ui_label='Max Level Reward',
         choices={
             'Level': 'Level 1',
             'ExcludeFrom50': 'Level 50',
@@ -1090,7 +1090,12 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.TWTNW.name: "icons/worlds/the_world_that_never_was.png",
             locationType.Atlantica.name: "icons/worlds/atlantica.png"
         },
-        randomizable=True
+        randomizable=True,
+        tooltip='''
+            Rando: Fully randomized locations, can have junk or unique items
+            Vanilla: Notable unique items are placed in their original locations for KH2FM, all other locations will get junk items
+            Junk: All locations use items from the junk item pool
+        '''
     ),
 
     MultiSelect(
@@ -1432,6 +1437,23 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=True,
         tooltip="If enabled, recipes are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
+        randomizable=True
+    ),
+
+    Toggle(
+        name=settingkey.ACCESSORIES_IN_ITEM_POOL,
+        ui_label='Accessories',
+        shared=True,
+        default=True,
+        tooltip="If enabled, all accessories are included in the required item pool.",
+        randomizable=True
+    ),
+    Toggle(
+        name=settingkey.ARMOR_IN_ITEM_POOL,
+        ui_label='Armor',
+        shared=True,
+        default=True,
+        tooltip="If enabled, all accessories are included in the required item pool.",
         randomizable=True
     ),
 

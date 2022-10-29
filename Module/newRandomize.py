@@ -248,6 +248,10 @@ class Randomizer():
             allItems = [i for i in allItems if i.ItemType != itemType.MAP]
         if not settings.include_recipes:
             allItems = [i for i in allItems if i.ItemType != itemType.RECIPE]
+        if not settings.include_accessories:
+            allItems = [i for i in allItems if i.ItemType != itemType.ACCESSORY]
+        if not settings.include_armor:
+            allItems = [i for i in allItems if i.ItemType != itemType.ARMOR]
 
         allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + (Items.getLevelAbilityList() if not settings.level_one else []) )
         # if there abilities in the starting inventory, remove them from the pool

@@ -21,6 +21,8 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.ANTIFORM)
         self.add_option(settingkey.MAPS_IN_ITEM_POOL)
         self.add_option(settingkey.RECIPES_IN_ITEM_POOL)
+        self.add_option(settingkey.ACCESSORIES_IN_ITEM_POOL)
+        self.add_option(settingkey.ARMOR_IN_ITEM_POOL)
         self.add_option(settingkey.ABILITY_POOL)
         self.end_column()
 

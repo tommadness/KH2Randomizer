@@ -196,11 +196,11 @@ class KH2RandomizerApp(QMainWindow):
         seed_layout.addWidget(self.rando_rando)
 
         self.widgets = [
+            RewardLocationsMenu(self.settings),
             SoraMenu(self.settings),
             StartingMenu(self.settings),
             HintsMenu(self.settings),
             KeybladeMenu(self.settings),
-            RewardLocationsMenu(self.settings),
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
             ShopDropMenu(self.settings),

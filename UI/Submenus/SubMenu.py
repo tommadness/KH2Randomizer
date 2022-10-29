@@ -1,11 +1,12 @@
 import os
+from secrets import choice
 from typing import Optional
 
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon,QPixmap
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView,QRadioButton
+    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView,QRadioButton,QSizePolicy
 )
 
 import Class.seedSettings
@@ -30,6 +31,7 @@ class KH2Submenu(QWidget):
         self.pending_column: Optional[QVBoxLayout] = None
 
         self.tristate_groups = {}
+        self.tristate_backgrounds = {}
 
     def start_column(self):
         self.pending_column = QVBoxLayout()
@@ -141,39 +143,45 @@ class KH2Submenu(QWidget):
             selected_keys = selected_keys[0]
         for index, choice_key in enumerate(setting.choice_keys):
             groupbox = QGroupBox(setting.choice_values[index])
+            groupbox.setAlignment(Qt.AlignCenter)
+            groupbox.setSizePolicy(QSizePolicy(QSizePolicy.Minimum,QSizePolicy.Minimum))
+            groupbox.setMaximumHeight(70)
+            groupbox.setMinimumWidth(250)
 
-            randomize_button = QRadioButton("Randomized")
+            randomize_button = QRadioButton("Rando")
             vanilla_button = QRadioButton("Vanilla")
-            junk_button = QRadioButton("Off")
+            junk_button = QRadioButton("Junk")
             if choice_key in selected_keys:
                 randomize_button.setChecked(True)
             elif choice_key in partial_keys:
                 vanilla_button.setChecked(True)
             else:
                 junk_button.setChecked(True)
+
             randomize_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
             vanilla_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
             junk_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
 
             self.tristate_groups[choice_key] = (randomize_button,vanilla_button,junk_button)
 
-            hbox = QHBoxLayout()
-            hbox.setContentsMargins(0, 0, 0, 0)
-            hbox.setSpacing(0)
+            layout = QHBoxLayout()
+            layout.setContentsMargins(0,0,0,0)
             label = QLabel()
             icon = QIcon(resource_path(dir_path + '/' + setting.choice_icons[choice_key]))
             pixmap = icon.pixmap(icon.actualSize(QSize(36, 36)))
             label.setPixmap(pixmap)
-            hbox.addWidget(label)
-            hbox.addWidget(randomize_button)
-            hbox.addWidget(vanilla_button)
-            hbox.addWidget(junk_button)
-            hbox.insertStretch(-1,1)
+            layout.addWidget(label)
+            layout.addWidget(randomize_button)
+            layout.addWidget(vanilla_button)
+            layout.addWidget(junk_button)
+            layout.insertStretch(-1,1)
 
-            groupbox.setLayout(hbox)
+            groupbox.setLayout(layout)
+            self.tristate_backgrounds[choice_key] = groupbox
             widgets.append(groupbox)
 
         self.widgets_and_settings_by_name[setting_name] = (setting, widgets)
+        self._update_multi_tristate_buttons(setting)
 
         return setting, widgets
 
@@ -416,8 +424,13 @@ class KH2Submenu(QWidget):
         partial_keys = []
         for index, button in enumerate(buttons):
             rando,vanil,junk = self.tristate_groups[choice_keys[index]]
+            choice_group = self.tristate_backgrounds[choice_keys[index]]
             if rando.isChecked():
                 selected_keys.append(choice_keys[index])
-            if vanil.isChecked():
+                choice_group.setStyleSheet("QGroupBox::title {background-color: #2E7D32}")
+            elif vanil.isChecked():
+                choice_group.setStyleSheet("QGroupBox::title {background-color: gray}")
                 partial_keys.append(choice_keys[index])
+            else:
+                choice_group.setStyleSheet("QGroupBox::title {background-color: {QTMATERIAL_PRIMARYCOLOR}}")
         self.settings.set(setting.name, [selected_keys,partial_keys])
