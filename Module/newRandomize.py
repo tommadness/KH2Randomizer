@@ -433,10 +433,14 @@ class Randomizer():
 
             if self.yeet_the_bear:
                 locking_items.remove([32])
+
+            if settings.nightmare:
+                locking_items.remove([29])
             
             terra = settings.chainLogicIncludeTerra and [593] in locking_items
             tt_condition = [376] in locking_items and [375] in locking_items
             hb_condition = [595] in locking_items
+            atlantica_condition = [87,87] in locking_items
 
             while True:
                 random.shuffle(locking_items)
@@ -445,6 +449,8 @@ class Randomizer():
                 if hb_condition and locking_items.index([369]) > locking_items.index([595]): # proof of peace needs to be after membership card
                     continue
                 if terra and locking_items.index([593]) < minimum_terra_depth:
+                    continue
+                if atlantica_condition and locking_items.index([87,87]) > locking_items.index([23,23,23]):
                     continue
                 break
             if self.yeet_the_bear:
@@ -457,15 +463,21 @@ class Randomizer():
 
             locking_items.append([594]) # add the proof of nonexistence at the end of the chain
 
-            # print(locking_items)
+            if settings.nightmare:
+                locking_items[-1].append(29)
+
+            print(locking_items)
             validator.prep_req_list(settings,self)
 
             current_inventory = [] + settings.startingItems
 
-            accessible_locations = [[l for l in validLocations if validator.is_location_available(current_inventory,l)]]
+            def open_location(inv,loc):
+                return validator.is_location_available(inv,loc) and loc.LocationId !=560
+
+            accessible_locations = [[l for l in validLocations if open_location(current_inventory,l)]]
             for items in locking_items:
-                accessible_locations_start = [l for l in validLocations if validator.is_location_available(current_inventory,l)]
-                accessible_locations_new = [l for l in validLocations if validator.is_location_available(current_inventory + items,l) and l not in accessible_locations_start]
+                accessible_locations_start = [l for l in validLocations if open_location(current_inventory,l)]
+                accessible_locations_new = [l for l in validLocations if open_location(current_inventory + items,l) and l not in accessible_locations_start]
                 accessible_locations.append(accessible_locations_new)
                 # print(len(accessible_locations[-1]))
                 current_inventory += items

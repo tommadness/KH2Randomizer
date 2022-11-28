@@ -14,6 +14,7 @@ from Class.modYml import modYml
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType
+from List.DropRateIds import id_to_enemy_name
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
 from Module.multiworld import MultiWorldOutput
@@ -38,195 +39,29 @@ def number_to_bytes(item):
 def bytes_to_number(byte0, byte1=0):
     return int(byte0)+int(byte1<<8)
 
-id_to_enemy_name = {}
 
-id_to_enemy_name[1] = "Soldier"
-id_to_enemy_name[2] = "Shadow"
-id_to_enemy_name[3] = "Large Body"
-id_to_enemy_name[4] = "Armored Knight"
-id_to_enemy_name[5] = "Surveillance Robot"
-id_to_enemy_name[6] = "Dusk"
-id_to_enemy_name[7] = "Trick Ghost"
-id_to_enemy_name[8] = "Rabid Dog"
-id_to_enemy_name[9] = "Hook Bat"
-id_to_enemy_name[10] = "Minute Bomb"
-id_to_enemy_name[11] = "Assault Rider"
-id_to_enemy_name[12] = "Hammer Frame"
-id_to_enemy_name[13] = "Aeroplane"
-id_to_enemy_name[14] = "OC Torches"
-id_to_enemy_name[15] = "Samurai"
-id_to_enemy_name[16] = "OC Bubbles"
-id_to_enemy_name[17] = "Rapid Thruster"
-id_to_enemy_name[18] = "Bolt Tower"
-# id_to_enemy_name[19] = "" # mp only drops
-id_to_enemy_name[22] = "Dragoon"
-id_to_enemy_name[23] = "Assassin"
-id_to_enemy_name[24] = "Sniper"
-id_to_enemy_name[25] = "Dancer"
-id_to_enemy_name[26] = "Berserker"
-id_to_enemy_name[27] = "Gambler"
-id_to_enemy_name[28] = "Sorcerer"
-id_to_enemy_name[29] = "Creeper"
-id_to_enemy_name[30] = "Nightwalker"
-id_to_enemy_name[32] = "Fortuneteller"
-id_to_enemy_name[33] = "Luna Bandit" #silver rock
-id_to_enemy_name[34] = "Hot Rod"
-id_to_enemy_name[35] = "Cannon Gun" # tornado step
-id_to_enemy_name[36] = "Living Bone"
-id_to_enemy_name[37] = "Devastator"
-id_to_enemy_name[38] = "Lance Soldier"
-id_to_enemy_name[39] = "Driller Mole"
-id_to_enemy_name[40] = "Shaman"
-id_to_enemy_name[41] = "Neoshadow"
-id_to_enemy_name[42] = "Magnum Loader"
-id_to_enemy_name[43] = "Morning Star"
-id_to_enemy_name[44] = "Tornado Step" #Cannon Gun
-id_to_enemy_name[45] = "Gargoyle Knight"
-id_to_enemy_name[46] = "Gargoyle Warrior"
-id_to_enemy_name[47] = "Silver Rock" #Luna Bandit
-id_to_enemy_name[48] = "Wight Knight"
-id_to_enemy_name[49] = "Emerald Blues"
-id_to_enemy_name[50] = "Crimson Jazz"
-id_to_enemy_name[51] = "Crescendo"
-id_to_enemy_name[52] = "Creeper Plant"
-id_to_enemy_name[53] = "Cerberus RC"
-id_to_enemy_name[54] = "Thresholder"
-id_to_enemy_name[56] = "Possessor"
-id_to_enemy_name[60] = "Lock"
-id_to_enemy_name[61] = "Shock"
-id_to_enemy_name[62] = "Barrel"
-id_to_enemy_name[63] = "Air Pirate"
-id_to_enemy_name[64] = "Fat Bandit"
-id_to_enemy_name[65] = "Fiery Globe"
-id_to_enemy_name[66] = "Icy Cube"
-id_to_enemy_name[69] = "Aerial Knocker"
-id_to_enemy_name[70] = "Small Urn"
-id_to_enemy_name[71] = "Big Urn"
-# id_to_enemy_name[72] = "" 100% potion
-id_to_enemy_name[73] = "Strafer"
-# id_to_enemy_name[74] = ""
-# id_to_enemy_name[75] = ""
-# id_to_enemy_name[76] = ""
-# id_to_enemy_name[77] = ""
-# id_to_enemy_name[78] = ""
-# id_to_enemy_name[79] = ""
-# id_to_enemy_name[80] = ""
-# id_to_enemy_name[81] = ""
-id_to_enemy_name[82] = "Illuminator"
-# id_to_enemy_name[83] = ""
-# id_to_enemy_name[84] = ""
-id_to_enemy_name[85] = "Shadow Stalker Chandelier"
-id_to_enemy_name[86] = "Shadow Stalker Pillar"
-id_to_enemy_name[87] = "Undead Pirate A"
-id_to_enemy_name[88] = "Undead Pirate B"
-id_to_enemy_name[89] = "Undead Pirate C"
-id_to_enemy_name[90] = "West Wing Armor"
-id_to_enemy_name[91] = "LoD Firework"
-id_to_enemy_name[92] = "LoD Rocket"
-id_to_enemy_name[93] = "LoD Crate"
-# id_to_enemy_name[94] = ""
-# id_to_enemy_name[95] = ""
-id_to_enemy_name[96] = "Bookmaster"
-id_to_enemy_name[97] = "Quickplay (Aladdin)"
-id_to_enemy_name[98] = "Quickplay (Sora)"
-id_to_enemy_name[99] = "Speedster End"
-id_to_enemy_name[100] = "Speedster Start"
-id_to_enemy_name[102] = "Hyabusa"
-id_to_enemy_name[103] = "Abu Ice Crystal"
-# id_to_enemy_name[104] = ""
-# id_to_enemy_name[105] = ""
-# id_to_enemy_name[106] = ""
-id_to_enemy_name[107] = "Water Clone"
-id_to_enemy_name[108] = "Aladdin Dash"
-id_to_enemy_name[109] = "Pan Attack"
-id_to_enemy_name[111] = "Stitch Ukulele"
-id_to_enemy_name[112] = "Graveyard/Toy Soldier"
-# id_to_enemy_name[114] = ""
-id_to_enemy_name[115] = "Lance Soldier Idle Hit"
-id_to_enemy_name[116] = "Lance Soldier RC Start"
-id_to_enemy_name[117] = "Lance Solder Idle Hit (Double)"
-id_to_enemy_name[118] = "Lance Soldier RC End"
-id_to_enemy_name[119] = "Dusk (Station)"
-id_to_enemy_name[120] = "Dusk (STT)"
-id_to_enemy_name[121] = "Creeper (STT)"
-id_to_enemy_name[122] = "Hayner (Finisher)"
-id_to_enemy_name[123] = "Creeper Plant RC"
-id_to_enemy_name[125] = "Crescendo RC"
-id_to_enemy_name[126] = "Gambler RC"
-# id_to_enemy_name[127] = ""
-# id_to_enemy_name[128] = ""
-id_to_enemy_name[129] = "Meg"
-id_to_enemy_name[130] = "Assassin (STT)"
-id_to_enemy_name[131] = "Vivi (Finisher)"
-id_to_enemy_name[132] = "Setzer (Finisher)"
-id_to_enemy_name[133] = "Luxord Minigame"
-id_to_enemy_name[134] = "Card"
-# id_to_enemy_name[135] = ""
-# id_to_enemy_name[136] = ""
-# id_to_enemy_name[137] = ""
-id_to_enemy_name[138] = "Bulky Vendor (Stage 1/4)"
-id_to_enemy_name[139] = "Bulky Vendor (Stage 2/4)"
-id_to_enemy_name[140] = "Bulky Vendor (Stage 3/4)"
-id_to_enemy_name[141] = "Bulky Vendor (Stage 4/4)"
-id_to_enemy_name[142] = "Bulky Vendor Dying"
-# id_to_enemy_name[143] = ""
-id_to_enemy_name[144] = "Hydra Head"
-id_to_enemy_name[145] = "Dusk (STT Day 1)"
-# id_to_enemy_name[146] = ""
-id_to_enemy_name[147] = "BC Box"
-# id_to_enemy_name[148] = ""
-id_to_enemy_name[149] = "Junk Breaking"
-id_to_enemy_name[150] = "BEES"
-# id_to_enemy_name[151] = ""
-id_to_enemy_name[152] = "HT Hazards"
-id_to_enemy_name[154] = "Junk Hitting Junk"
-id_to_enemy_name[155] = "PR Net Hitting"
-id_to_enemy_name[156] = "Odd Mushroom 1"
-id_to_enemy_name[157] = "Odd Mushroom 2"
-id_to_enemy_name[158] = "Odd Mushroom 3"
-id_to_enemy_name[159] = "Odd Mushroom 4"
-id_to_enemy_name[160] = "Odd Mushroom 5"
-id_to_enemy_name[161] = "Even Mushroom 1"
-id_to_enemy_name[162] = "Even Mushroom 2"
-id_to_enemy_name[163] = "Even Mushroom 3"
-id_to_enemy_name[164] = "Even Mushroom 4"
-id_to_enemy_name[165] = "Even Mushroom 5"
-id_to_enemy_name[166] = "Mushroom Prize 1"
-id_to_enemy_name[167] = "Mushroom Prize 2"
-id_to_enemy_name[168] = "Mushroom Prize 3"
-id_to_enemy_name[169] = "Mushroom Prize 4"
-id_to_enemy_name[170] = "Mushroom Prize 5"
+class BtlvViewer():
+    def __init__(self):
+        with open(resource_path("static/btlv.bin"), "rb") as btlvBar:
+            self.worlds = [None,None,locationType.TT,None,locationType.HB,locationType.BC,locationType.OC,locationType.Agrabah,locationType.LoD,locationType.HUNDREDAW,locationType.PL,locationType.Atlantica,locationType.DC,locationType.DC,locationType.HT,None,locationType.PR,locationType.SP,locationType.TWTNW,None,None,None,None,None]
+            self.binaryContent = bytearray(btlvBar.read())
+            self.flags = []
+            for x in range(20):
+                offset = 8+32*x
+                self.flags.append([])
+                for y in range(8,32):
+                    self.flags[-1].append(bytes_to_number(self.binaryContent[offset+y]))
+                    if self.flags[-1][-1] > 0:
+                        self.flags[-1][-1] = 1
+        for x in self.flags:
+            print(x)
 
-id_to_enemy_name[171] = "Befuddler"
-id_to_enemy_name[172] = "Camo Cannon"
-id_to_enemy_name[173] = "Aerial Viking"
-id_to_enemy_name[174] = "Aerial Champ"
-id_to_enemy_name[175] = "Necromancer"
-id_to_enemy_name[176] = "Magic Phantom"
-id_to_enemy_name[177] = "Spring Metal"
-id_to_enemy_name[178] = "Runemaster"
-id_to_enemy_name[179] = "Iron Hammer"
-id_to_enemy_name[180] = "Lance Warrior"
-id_to_enemy_name[181] = "Mad Bumper"
-id_to_enemy_name[182] = "Reckless"
-
-id_to_enemy_name[183] = "CoR Drive Orb Hit"
-id_to_enemy_name[184] = "CoR Drive Orb Final Hit"
-id_to_enemy_name[185] = "Valves"
-id_to_enemy_name[186] = "Vexen Anti-Sora"
-# id_to_enemy_name[187] = ""
-id_to_enemy_name[188] = "Zexion Soothe/Herb/Heal/Mend"
-id_to_enemy_name[189] = "Zexion Spirit"
-id_to_enemy_name[190] = "Zexion Stamina"
-id_to_enemy_name[191] = "Zexion Riches/Wealth"
-id_to_enemy_name[192] = "Zexion Jackpot/Bounty"
-id_to_enemy_name[193] = "Zexion Treasure/Lucky"
-id_to_enemy_name[194] = "Zexion Bonus"
-id_to_enemy_name[195] = "Seal Magic Break"
-id_to_enemy_name[196] = "Seal Attack Break"
-id_to_enemy_name[197] = "Seal Magic Break Final Hit"
-id_to_enemy_name[198] = "Seal Attack Break Final Hit"
-
+    def write_modifications(self,outZip):
+        for x in range(20):
+            offset = 8+32*x
+            for y in range(8,32):
+                self.binaryContent[offset+y] = number_to_bytes(self.flags[x][y-8])[0]
+        outZip.writestr("modified_btlv.bin",self.binaryContent)
 
 class SynthList():
     def __init__(self,offset,bytes):
@@ -477,6 +312,13 @@ class SeedZip():
             self.createWardrobeSkipAssets(settings, mod, outZip)
             self.createDropRateAssets(settings, randomizer, mod, outZip)
             self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
+            
+            btlv = BtlvViewer()
+            for x in mod["assets"]:
+                if x["name"]=="00battle.bin":
+                    x["source"]+=modYml.getBtlvMod()
+            btlv.write_modifications(outZip)
+            
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))

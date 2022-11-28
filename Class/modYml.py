@@ -580,6 +580,9 @@ class modYml:
     def getCmdListMod():
         return [{"method":"copy", "name":"cmd", "type":"list", "source":[{"name":"better_stt/cmd.list"}]}]
 
+    def getBtlvMod():
+        return [{"method":"copy", "name":"btlv", "type":"list", "source":[{"name":"modified_btlv.bin"}]}]
+
     def getBetterSTTMod(boss_enemy_enabled):
         return [{"name": "limit/fm/trinity_zz.bar","multi":[{"name":"limit/us/trinity_zz.bar"},{"name":"limit/fr/trinity_zz.bar"},{"name":"limit/gr/trinity_zz.bar"},{"name":"limit/it/trinity_zz.bar"},{"name":"limit/sp/trinity_zz.bar"}],"method": "copy","source": [{"name": "better_stt/trinity_zz.bar"}]},
                 {"name": "obj/B_EX100.mset","method": "copy","source": [{"name": "better_stt/B_EX100.mset"}]},

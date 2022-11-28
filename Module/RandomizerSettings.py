@@ -240,6 +240,8 @@ class RandomizerSettings():
             self.tracker_includes.append("extra_ics")
         if self.hiscore_mode:
             self.tracker_includes.append("ScoreMode")
+        if self.antiform:
+            self.tracker_includes.append("Anti-Form")
 
         # making tracker includes use all worlds and 
         for l in locationType:
