@@ -719,7 +719,7 @@ class Locations:
                                         KH2Location(155, "The East Wing Tent", locationCategory.CHEST,[locationType.BC]),]))
         self.add_node("West Hall",LocationNode([KH2Location(41, "The West Hall Hi-Potion", locationCategory.CHEST,[locationType.BC]),
                                         KH2Location(207, "The West Hall Power Shard", locationCategory.CHEST,[locationType.BC]),
-                                        KH2Location(158, "The West Hall AP Boost", locationCategory.CHEST,[locationType.BC]),
+                                        KH2Location(208, "The West Hall Mythril Shard", locationCategory.CHEST,[locationType.BC]),
                                         KH2Location(159, "The West Hall Bright Stone", locationCategory.CHEST,[locationType.BC]),
                                         KH2Location(206, "The West Hall Mythril Shard", locationCategory.CHEST,[locationType.BC]),]))
         self.add_node("Thresholder",LocationNode([KH2Location(2, "Thresholder", locationCategory.ITEMBONUS,[locationType.BC],VanillaItems=[137]),]))
@@ -728,7 +728,7 @@ class Locations:
         self.add_node("Secret Passage",LocationNode([KH2Location(44, "Secret Passage Mythril Shard", locationCategory.CHEST,[locationType.BC]),
                                         KH2Location(168, "Secret Passage Hi-Potion", locationCategory.CHEST,[locationType.BC]),
                                         KH2Location(45, "Secret Passage Lucid Shard", locationCategory.CHEST,[locationType.BC]),]))
-        self.add_node("West Hall Post Dungeon",LocationNode([KH2Location(208, "The West Hall Mythril Shard (Post Dungeon)", locationCategory.CHEST,[locationType.BC]),]))
+        self.add_node("West Hall Post Dungeon",LocationNode([KH2Location(158, "The West Hall AP Boost", locationCategory.CHEST,[locationType.BC]),]))
         self.add_node("West Wing",LocationNode([KH2Location(42, "The West Wing Mythril Shard", locationCategory.CHEST,[locationType.BC]),
                                         KH2Location(164, "The West Wing Tent", locationCategory.CHEST,[locationType.BC]),]))
         self.add_node("Beast Bonus",LocationNode([KH2Location(12, "Beast", locationCategory.STATBONUS,[locationType.BC]),]))
