@@ -32,31 +32,6 @@ class modYml:
                     ]
                 },
                 {
-                    "name": "msg/jp/jm.bar",
-                    "multi": [
-                        {
-                            "name": "msg/us/jm.bar"
-                        },
-                        {
-                            "name": "msg/uk/jm.bar"
-                        }
-                    ],
-                    "method": "binarc",
-                    "source": [
-                        {
-                            "name": "jm",
-                            "type": "list",
-                            "method": "kh2msg",
-                            "source": [
-                                {
-                                    "name": "jm.yml",
-                                    "language": "en"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "name": "00battle.bin",
                     "method": "binarc",
                     "source": [
@@ -136,62 +111,6 @@ class modYml:
                 }
             ]
         }
-
-    def getJMYAML():
-        return [
-            {
-                "id": 20279,
-                "en": "Defeat Xemnas at the top of the Castle"
-            },
-            {
-                "id": 20280,
-                "en": "Defeat Storm Rider"
-            },
-            {
-                "id": 20281,
-                "en": "Defeat Xaldin in the Courtyard"
-            },
-            {
-                "id": 20282,
-                "en": "Defeat Dr. Finkelstein's Experiment"
-            },
-            {
-                "id": 20283,
-                "en": "Defeat Genie Jafar"
-            },
-            {
-                "id": 20284,
-                "en": "Defeat Hades"
-            },
-            {
-                "id": 20285,
-                "en": "Defeat Groundshaker"
-            },
-            {
-                "id": 20286,
-                "en": "Fight alongside Axel in the world Between"
-            },
-            {
-                "id": 20287,
-                "en": "Defend Hollow Bastion from the Heartless Army"
-            },
-            {
-                "id": 20288,
-                "en": "Defeat Grim Reaper II"
-            },
-            {
-                "id": 20289,
-                "en": "Protect the Cornerstone of Light from Pete"
-            },
-            {
-                "id": 20290,
-                "en": "Defeat the Master Control Program"
-            },
-            {
-                "id": 20291,
-                "en": "Confront DiZ in the Mansion's Pod Room"
-            }
-        ]
 
     def getSysYAML(seedHashIcons, crit_mode = False):
         seedHashString = " ".join(["{:icon " + icon + "}" for icon in seedHashIcons])
