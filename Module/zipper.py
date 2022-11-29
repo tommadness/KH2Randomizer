@@ -327,7 +327,6 @@ class SeedZip():
             outZip.writestr("ItemList.yml", yaml.dump(self.formattedItem, line_break="\r\n"))
             outZip.writestr("PlrpList.yml", yaml.dump(self.formattedPlrp, line_break="\r\n"))
             outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
-            outZip.writestr("jm.yml", yaml.dump(modYml.getJMYAML(), line_break="\r\n"))
 
             if hints is not None:
                 Hints.writeHints(hints, "HintFile", outZip)
