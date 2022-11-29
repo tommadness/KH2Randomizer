@@ -7,14 +7,20 @@ class modYml:
             "title": "Randomizer Seed",
             "assets": [
                 {
-                    "name": "msg/jp/sys.bar",
+                    "name": "msg/us/sys.bar",
                     "multi": [
                         {
-                            "name": "msg/us/sys.bar"
+                            "name": "msg/fr/sys.bar"
                         },
                         {
-                            "name": "msg/uk/sys.bar"
-                        }
+                            "name": "msg/gr/sys.bar"
+                        },
+                        {
+                            "name": "msg/it/sys.bar"
+                        },
+                        {
+                            "name": "msg/sp/sys.bar"
+                        },
                     ],
                     "method": "binarc",
                     "source": [
@@ -26,6 +32,42 @@ class modYml:
                                 {
                                     "name": "sys.yml",
                                     "language": "en"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "msg/jp/sys.bar",
+                    "platform": "ps2",
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "sys",
+                            "type": "list",
+                            "method": "kh2msg",
+                            "source": [
+                                {
+                                    "name": "sys.yml",
+                                    "language": "en"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "msg/jp/sys.bar",
+                    "platform": "pc",
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "sys",
+                            "type": "list",
+                            "method": "kh2msg",
+                            "source": [
+                                {
+                                    "name": "sys.yml",
+                                    "language": "jp"
                                 }
                             ]
                         }
@@ -418,12 +460,10 @@ class modYml:
 
 
     def getMapSkipMod():
-        return [{
+        return [
+            {
                 "name": "msg/us/ca.bar",
                 "multi": [
-                    {
-                        "name": "msg/jp/ca.bar"
-                    },
                     {
                         "name": "msg/fr/ca.bar"
                     },
@@ -451,7 +491,44 @@ class modYml:
                         ]
                     }
                 ]
-               },{
+            },
+            {
+                "name": "msg/jp/ca.bar",
+                "platform": "ps2"
+                "method": "binarc",
+                "source": [
+                    {
+                        "name": "ca",
+                        "type": "list",
+                        "method": "kh2msg",
+                        "source": [
+                            {
+                                "name": "map_skip/ca.yml",
+                                "language": "en"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "msg/jp/ca.bar",
+                "platform": "pc"
+                "method": "binarc",
+                "source": [
+                    {
+                        "name": "ca",
+                        "type": "list",
+                        "method": "kh2msg",
+                        "source": [
+                            {
+                                "name": "map_skip/ca.yml",
+                                "language": "jp" #Change this to je whenever we update the mods manager
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
                 "name": "libretto-ca.bar",
                 "method": "copy",
                 "source": [
@@ -459,7 +536,8 @@ class modYml:
                         "name": "map_skip/libretto-ca.bar",
                     }
                 ]
-               },]
+            },
+        ]
 
 
 
