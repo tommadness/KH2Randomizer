@@ -184,11 +184,11 @@ class modYml:
         return sys
     
     def getASDataMod():
-        ASMods = []
+        ASMod = []
         for ASRoom in ['hb32','hb33','hb34','hb34']:
-            ASMods.append({
-                "name" = "ard/"+ASRoom+".ard",
-                "multi" = [
+            ASMod.append({
+                "name": "ard/"+ASRoom+".ard",
+                "multi": [
                     {"name": "ard/jp/"+ASRoom+".ard"},
                     {"name": "ard/us/"+ASRoom+".ard"},
                     {"name": "ard/fr/"+ASRoom+".ard"},
@@ -196,8 +196,8 @@ class modYml:
                     {"name": "ard/it/"+ASRoom+".ard"},
                     {"name": "ard/sp/"+ASRoom+".ard"},
                 ],
-            "method" = "binarc",
-            "source" = [
+            "method": "binarc",
+            "source": [
                     {
                         "name": "evt",
                         "type": "areadatascript",
@@ -206,7 +206,7 @@ class modYml:
                     }
                 ],
             })
-        return ASMods
+        return ASMod
         
     def getPuzzleMod(pc = False):
         mod_dict = {
@@ -437,7 +437,7 @@ class modYml:
             },
             {
                 "name": "msg/jp/ca.bar",
-                "platform": "ps2"
+                "platform": "ps2",
                 "method": "binarc",
                 "source": [
                     {
@@ -455,7 +455,7 @@ class modYml:
             },
             {
                 "name": "msg/jp/ca.bar",
-                "platform": "pc"
+                "platform": "pc",
                 "method": "binarc",
                 "source": [
                     {
