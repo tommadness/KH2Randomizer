@@ -156,8 +156,8 @@ class modYml:
 
     def getSysYAML(seedHashIcons, crit_mode = False):
         seedHashString = " ".join(["{:icon " + icon + "}" for icon in seedHashIcons])
-        sys = [{"id": 17198, "en":seedHashString}]
-        sys.append({"id": 19482, "en": "Important Checks Found"})
+        sys = [{"id": 17198, "en":seedHashString, "jp":seedHashString}]
+        #sys.append({"id": 19482, "en": "Important Checks Found"}) #Not needed until we figure out how to display the correct amount
         if crit_mode:
             sys.append({"id": 17201, "en": "{:color #FF000080}Beginner (WARNING)", "jp": "{:color #FF000080}ビギナーモード (注意!)"})
             sys.append({"id": 17202, "en": "{:color #FF000080}Standard (WARNING)", "jp": "{:color #FF000080}スタンダードモード (注意!)"})
