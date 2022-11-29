@@ -184,11 +184,30 @@ class modYml:
         return sys
     
     def getASDataMod():
-        return [{"name": "ard/hb32.ard","multi": [{"name": "ard/us/hb32.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb32evt.script"}]}] },
-                {"name": "ard/hb33.ard","multi": [{"name": "ard/us/hb33.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb33evt.script"}]}] },
-                {"name": "ard/hb34.ard","multi": [{"name": "ard/us/hb34.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb34evt.script"}]}] },
-                {"name": "ard/hb38.ard","multi": [{"name": "ard/us/hb38.ard"}],"method":"binarc","source":[{"name":"evt","type":"areadatascript","method":"areadatascript","source":[{"name":"asdata/hb38evt.script"}]}] }]
-
+        ASMods = []
+        for ASRoom in ['hb32','hb33','hb34','hb34']:
+            ASMods.append({
+                "name" = "ard/"+ASRoom+".ard",
+                "multi" = [
+                    {"name": "ard/jp/"+ASRoom+".ard"},
+                    {"name": "ard/us/"+ASRoom+".ard"},
+                    {"name": "ard/fr/"+ASRoom+".ard"},
+                    {"name": "ard/gr/"+ASRoom+".ard"},
+                    {"name": "ard/it/"+ASRoom+".ard"},
+                    {"name": "ard/sp/"+ASRoom+".ard"},
+                ],
+            "method" = "binarc",
+            "source" = [
+                    {
+                        "name": "evt",
+                        "type": "areadatascript",
+                        "method": "areadatascript",
+                        "source": [{"asdata/"+ASRoom+"evt.script"}]
+                    }
+                ],
+            })
+        return ASMods
+        
     def getPuzzleMod(pc = False):
         mod_dict = {
                     "method": "binarc",
