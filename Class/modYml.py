@@ -9,18 +9,10 @@ class modYml:
                 {
                     "name": "msg/us/sys.bar",
                     "multi": [
-                        {
-                            "name": "msg/fr/sys.bar"
-                        },
-                        {
-                            "name": "msg/gr/sys.bar"
-                        },
-                        {
-                            "name": "msg/it/sys.bar"
-                        },
-                        {
-                            "name": "msg/sp/sys.bar"
-                        },
+                        {"name": "msg/fr/sys.bar"},
+                        {"name": "msg/gr/sys.bar"},
+                        {"name": "msg/it/sys.bar"},
+                        {"name": "msg/sp/sys.bar"},
                     ],
                     "method": "binarc",
                     "source": [
@@ -157,7 +149,7 @@ class modYml:
     def getSysYAML(seedHashIcons, crit_mode = False):
         seedHashString = " ".join(["{:icon " + icon + "}" for icon in seedHashIcons])
         sys = [{"id": 17198, "en":seedHashString, "jp":seedHashString}]
-        #sys.append({"id": 19482, "en": "Important Checks Found"}) #Not needed until we figure out how to display the correct amount
+        # sys.append({"id": 19482, "en": "Important Checks Found"}) # Not needed until we figure out how to display the correct amount
         if crit_mode:
             sys.append({"id": 17201, "en": "{:color #FF000080}Beginner (WARNING)", "jp": "{:color #FF000080}ビギナーモード (注意!)"})
             sys.append({"id": 17202, "en": "{:color #FF000080}Standard (WARNING)", "jp": "{:color #FF000080}スタンダードモード (注意!)"})
@@ -218,24 +210,12 @@ class modYml:
 
         if pc:
             mod_dict["multi"] = [
-                        {
-                            "name": "menu/us/jiminy.bar"
-                        },
-                        {
-                            "name": "menu/fr/jiminy.bar"
-                        },
-                        {
-                            "name": "menu/gr/jiminy.bar"
-                        },
-                        {
-                            "name": "menu/it/jiminy.bar"
-                        },
-                        {
-                            "name": "menu/sp/jiminy.bar"
-                        },
-                        {
-                            "name": "menu/uk/jiminy.bar"
-                        },
+                        {"name": "menu/us/jiminy.bar"},
+                        {"name": "menu/fr/jiminy.bar"},
+                        {"name": "menu/gr/jiminy.bar"},
+                        {"name": "menu/it/jiminy.bar"},
+                        {"name": "menu/sp/jiminy.bar"},
+                        {"name": "menu/uk/jiminy.bar"},
                     ]
 
         return mod_dict
@@ -293,48 +273,24 @@ class modYml:
         mod_dict["name"] = "menu/fm/mixdata.bar"
         if pc:
             mod_dict["multi"] = [
-                        {
-                            "name": "menu/us/mixdata.bar"
-                        },
-                        {
-                            "name": "menu/fr/mixdata.bar"
-                        },
-                        {
-                            "name": "menu/gr/mixdata.bar"
-                        },
-                        {
-                            "name": "menu/it/mixdata.bar"
-                        },
-                        {
-                            "name": "menu/sp/mixdata.bar"
-                        },
-                        {
-                            "name": "menu/uk/mixdata.bar"
-                        },
+                        {"name": "menu/us/mixdata.bar"},
+                        {"name": "menu/fr/mixdata.bar"},
+                        {"name": "menu/gr/mixdata.bar"},
+                        {"name": "menu/it/mixdata.bar"},
+                        {"name": "menu/sp/mixdata.bar"},
+                        {"name": "menu/uk/mixdata.bar"},
                     ]
         return mod_dict
     def getSkipCarpetEscapeMod():
         return {
                 "name": "ard/al11.ard",
                 "multi": [
-                    {
-                        "name": "ard/jp/al11.ard"
-                    },
-                    {
-                        "name": "ard/us/al11.ard"
-                    },
-                    {
-                        "name": "ard/fr/al11.ard"
-                    },
-                    {
-                        "name": "ard/gr/al11.ard"
-                    },
-                    {
-                        "name": "ard/it/al11.ard"
-                    },
-                    {
-                        "name": "ard/sp/al11.ard"
-                    }
+                    {"name": "ard/jp/al11.ard"},
+                    {"name": "ard/us/al11.ard"},
+                    {"name": "ard/fr/al11.ard"},
+                    {"name": "ard/gr/al11.ard"},
+                    {"name": "ard/it/al11.ard"},
+                    {"name": "ard/sp/al11.ard"},
                 ],
                 "method": "binarc",
                 "source": [
@@ -356,24 +312,12 @@ class modYml:
         return {
                 "name": "ard/hb24.ard",
                 "multi": [
-                    {
-                        "name": "ard/jp/hb24.ard"
-                    },
-                    {
-                        "name": "ard/us/hb24.ard"
-                    },
-                    {
-                        "name": "ard/fr/hb24.ard"
-                    },
-                    {
-                        "name": "ard/gr/hb24.ard"
-                    },
-                    {
-                        "name": "ard/it/hb24.ard"
-                    },
-                    {
-                        "name": "ard/sp/hb24.ard"
-                    }
+                    {"name": "ard/jp/hb24.ard"},
+                    {"name": "ard/us/hb24.ard"},
+                    {"name": "ard/fr/hb24.ard"},
+                    {"name": "ard/gr/hb24.ard"},
+                    {"name": "ard/it/hb24.ard"},
+                    {"name": "ard/sp/hb24.ard"},
                 ],
                 "method": "binarc",
                 "source": [
@@ -395,24 +339,12 @@ class modYml:
         return {
                 "name": "ard/mu09.ard",
                 "multi": [
-                    {
-                        "name": "ard/jp/mu09.ard"
-                    },
-                    {
-                        "name": "ard/us/mu09.ard"
-                    },
-                    {
-                        "name": "ard/fr/mu09.ard"
-                    },
-                    {
-                        "name": "ard/gr/mu09.ard"
-                    },
-                    {
-                        "name": "ard/it/mu09.ard"
-                    },
-                    {
-                        "name": "ard/sp/mu09.ard"
-                    }
+                    {"name": "ard/jp/mu09.ard"},
+                    {"name": "ard/us/mu09.ard"},
+                    {"name": "ard/fr/mu09.ard"},
+                    {"name": "ard/gr/mu09.ard"},
+                    {"name": "ard/it/mu09.ard"},
+                    {"name": "ard/sp/mu09.ard"},
                 ],
                 "method": "binarc",
                 "source": [
@@ -433,24 +365,12 @@ class modYml:
         return {
                 "name": "ard/lm02.ard",
                 "multi": [
-                    {
-                        "name": "ard/jp/lm02.ard"
-                    },
-                    {
-                        "name": "ard/us/lm02.ard"
-                    },
-                    {
-                        "name": "ard/fr/lm02.ard"
-                    },
-                    {
-                        "name": "ard/gr/lm02.ard"
-                    },
-                    {
-                        "name": "ard/it/lm02.ard"
-                    },
-                    {
-                        "name": "ard/sp/lm02.ard"
-                    }
+                    {"name": "ard/jp/lm02.ard"},
+                    {"name": "ard/us/lm02.ard"},
+                    {"name": "ard/fr/lm02.ard"},
+                    {"name": "ard/gr/lm02.ard"},
+                    {"name": "ard/it/lm02.ard"},
+                    {"name": "ard/sp/lm02.ard"},
                 ],
                 "method": "binarc",
                 "source": [
@@ -476,18 +396,10 @@ class modYml:
             {
                 "name": "msg/us/ca.bar",
                 "multi": [
-                    {
-                        "name": "msg/fr/ca.bar"
-                    },
-                    {
-                        "name": "msg/gr/ca.bar"
-                    },
-                    {
-                        "name": "msg/it/ca.bar"
-                    },
-                    {
-                        "name": "msg/sp/ca.bar"
-                    }
+                    {"name": "msg/fr/ca.bar"},
+                    {"name": "msg/gr/ca.bar"},
+                    {"name": "msg/it/ca.bar"},
+                    {"name": "msg/sp/ca.bar"},
                 ],
                 "method": "binarc",
                 "source": [
@@ -534,7 +446,7 @@ class modYml:
                         "source": [
                             {
                                 "name": "map_skip/ca.yml",
-                                "language": "jp" #Change this to je whenever we update the mods manager
+                                "language": "jp" # Change this to je whenever we update the mods manager
                             }
                         ]
                     }
@@ -560,21 +472,11 @@ class modYml:
         return {
                     "name": "msn/jp/"+mod_names[mod_choice][0],
                     "multi": [
-                        {
-                            "name": "msn/us/"+mod_names[mod_choice][0]
-                        },
-                        {
-                            "name": "msn/fr/"+mod_names[mod_choice][0]
-                        },
-                        {
-                            "name": "msn/gr/"+mod_names[mod_choice][0]
-                        },
-                        {
-                            "name": "msn/it/"+mod_names[mod_choice][0]
-                        },
-                        {
-                            "name": "msn/sp/"+mod_names[mod_choice][0]
-                        }
+                        {"name": "msn/us/"+mod_names[mod_choice][0]},
+                        {"name": "msn/fr/"+mod_names[mod_choice][0]},
+                        {"name": "msn/gr/"+mod_names[mod_choice][0]},
+                        {"name": "msn/it/"+mod_names[mod_choice][0]},
+                        {"name": "msn/sp/"+mod_names[mod_choice][0]},
                     ],
                     "method": "binarc",
                     "source": [
