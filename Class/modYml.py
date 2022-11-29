@@ -318,6 +318,9 @@ class modYml:
                 "name": "ard/al11.ard",
                 "multi": [
                     {
+                        "name": "ard/jp/al11.ard"
+                    },
+                    {
                         "name": "ard/us/al11.ard"
                     },
                     {
@@ -353,6 +356,9 @@ class modYml:
         return {
                 "name": "ard/hb24.ard",
                 "multi": [
+                    {
+                        "name": "ard/jp/hb24.ard"
+                    },
                     {
                         "name": "ard/us/hb24.ard"
                     },
@@ -390,6 +396,9 @@ class modYml:
                 "name": "ard/mu09.ard",
                 "multi": [
                     {
+                        "name": "ard/jp/mu09.ard"
+                    },
+                    {
                         "name": "ard/us/mu09.ard"
                     },
                     {
@@ -424,6 +433,9 @@ class modYml:
         return {
                 "name": "ard/lm02.ard",
                 "multi": [
+                    {
+                        "name": "ard/jp/lm02.ard"
+                    },
                     {
                         "name": "ard/us/lm02.ard"
                     },
