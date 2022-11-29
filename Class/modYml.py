@@ -117,29 +117,34 @@ class modYml:
         sys = [{"id": 17198, "en":seedHashString}]
         sys.append({"id": 19482, "en": "Important Checks Found"})
         if crit_mode:
-            sys.append({"id": 17201, "en": "{:color #FF000080}Beginner (WARNING)"})
-            sys.append({"id": 17202, "en": "{:color #FF000080}Standard (WARNING)"})
-            sys.append({"id": 17203, "en": "{:color #FF000080}Proud (WARNING)"})
+            sys.append({"id": 17201, "en": "{:color #FF000080}Beginner (WARNING)", "jp": "{:color #FF000080}ビギナーモード (注意!)"})
+            sys.append({"id": 17202, "en": "{:color #FF000080}Standard (WARNING)", "jp": "{:color #FF000080}スタンダードモード (注意!)"})
+            sys.append({"id": 17203, "en": "{:color #FF000080}Proud (WARNING)", "jp": "{:color #FF000080}プラウドモード (注意!)"})
             sys.append({
                 "id": 17204,
-                "en": "An easier mode for beginners.\n{:color #FF000080}Critical Bonuses are turned on. The seven\nrandom starting items will be unobtainable."
+                "en": "An easier mode for beginners.\n{:color #FF000080}Critical Bonuses are turned on. The seven\nrandom starting items will be unobtainable.",
+                "jp": "敵が弱く サクサクすすめるかんたんモードです\n{:color #FF000080}クリティカル特典が有効になっていますがこのモード\nではゲーム開始時に7つの特典を受け取れません",
             })
             sys.append({
                 "id": 17205,
-                "en": "A balanced mode best for those challenging\nthis game for the first time.\n{:color #FF000080}Critical Bonuses are turned on. The seven\nrandom starting items will be unobtainable."
+                "en": "A balanced mode best for those challenging\nthis game for the first time.\n{:color #FF000080}Critical Bonuses are turned on. The seven\nrandom starting items will be unobtainable.",
+                "jp": "初プレイにピッタリの ほどよいバランスのモードです\n{:color #FF000080}クリティカル特典が有効になっていますがこのモード\nではゲーム開始時に7つの特典を受け取れません",
             })
             sys.append({
                 "id": 17206,
-                "en": "A difficult mode with stronger enemies.\nBest for those seeking a challenge.\n{:color #FF000080}Critical Bonuses are turned on. The seven\nrandom starting items will be unobtainable."
+                "en": "A difficult mode with stronger enemies.\nBest for those seeking a challenge.\n{:color #FF000080}Critical Bonuses are turned on. The seven\nrandom starting items will be unobtainable.",
+                "jp": "敵が強く スリリングなバトルがたのしめるモードです\n{:color #FF000080}クリティカル特典が有効になっていますがこのモード\nではゲーム開始時に7つの特典を受け取れません",
             })
             sys.append({
                 "id": 20020,
-                "en": "A true test of skill for the adept. Begin\nwith certain abilities and other perks.\n{:color #F0F00080}Critical Bonuses are turned on. The seven\nstarting items have been randomized."
+                "en": "A true test of skill for the adept. Begin\nwith certain abilities and other perks.\n{:color #F0F00080}Critical Bonuses are turned on. The seven\nstarting items have been randomized.",
+                "jp": "アクションのウデがためされる 上級者向けのモードです\n{:color #FF000080}クリティカル特典が有効になっていますゲーム開始時\nにランダムな7つの特典を受け取れます",
             })
         else:
             sys.append({
                 "id": 20020,
-                "en": "A true test of skill for the adept. Begin\nwith certain abilities and other perks.\n{:color #F0F00080}Critical Bonuses are turned off. The seven\nstarting items will be junk."
+                "en": "A true test of skill for the adept. Begin\nwith certain abilities and other perks.\n{:color #F0F00080}Critical Bonuses are turned off. The seven\nstarting items will be junk.",
+                "jp": "アクションのウデがためされる 上級者向けのモードです\n{:color #FF000080}クリティカル特典が無効になっていますゲーム開始時\nにランダムな7つのジャンクアイテムを受け取れます",
             })
 
         return sys
