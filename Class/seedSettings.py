@@ -874,7 +874,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.CHAIN_LOGIC,
-        ui_label='Chain Logic',
+        ui_label='Turn On Chain Logic',
         shared=True,
         default=False,
         tooltip="Place all the locking items in a chain with one another, making the seed very linear.",
@@ -1403,7 +1403,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     MultiSelect(
         name=settingkey.STARTING_STORY_UNLOCKS,
-        ui_label='World Key Items',
+        ui_label='Starting World Key Items',
         choices={
             '74': 'Identity Disk',
             '62': 'Skill and Crossbones',

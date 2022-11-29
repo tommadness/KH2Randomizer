@@ -51,7 +51,10 @@ class RandomizerSettings():
         self.level_one = False 
         if level_setting=="Level":
             self.setLevelChecks(1)
-            self.level_one = True
+            if locationType.Level in self.enabledLocations:
+                raise SettingsException("Please choose between Junk or Vanilla Checks when doing Level 1")
+            elif locationType in self.vanillaLocations:
+                self.level_one = True
         elif level_setting=="ExcludeFrom50":
             self.setLevelChecks(50)
         elif level_setting=="ExcludeFrom99":
