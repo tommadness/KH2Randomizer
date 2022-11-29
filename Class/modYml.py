@@ -196,8 +196,8 @@ class modYml:
                     {"name": "ard/it/"+ASRoom+".ard"},
                     {"name": "ard/sp/"+ASRoom+".ard"},
                 ],
-            "method": "binarc",
-            "source": [
+                "method": "binarc",
+                "source": [
                     {
                         "name": "evt",
                         "type": "areadatascript",
