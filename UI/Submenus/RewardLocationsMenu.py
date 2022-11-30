@@ -25,5 +25,15 @@ class RewardLocationsMenu(KH2Submenu):
         self.add_multiselect_buttons(settingkey.SUPERBOSSES_WITH_REWARDS, columns=1, group_title="Superbosses")
         self.add_multiselect_buttons(settingkey.MISC_LOCATIONS_WITH_REWARDS, columns=1, group_title='Misc Locations')
         self.end_column()
+        settings.observe(settingkey.SORA_LEVELS, self.world_update)
 
         self.finalizeMenu()
+        
+    def world_update(self):
+        level_setting = self.settings.get(settingkey.SORA_LEVELS)
+        _, widget = self.widgets_and_settings_by_name[settingkey.SPLIT_LEVELS]
+        if "Level"==level_setting:
+            widget.setChecked(False)
+            widget.setEnabled(False)
+        else:
+            widget.setEnabled(True)
