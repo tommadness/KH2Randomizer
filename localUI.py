@@ -5,7 +5,6 @@ from Class.exceptions import CantAssignItemException, RandomizerExceptions
 from List.configDict import locationType
 
 from Module.resources import resource_path
-from UI.Submenus.ShopDrop import ShopDropMenu
 
 # Keep the setting of the environment variable as close to the top as possible.
 # This needs to happen before anything Boss/Enemy Rando gets loaded for the sake of the distributed binary.
@@ -51,6 +50,8 @@ from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
+from UI.Submenus.BattleLevelMenu import BattleLevelMenu
+from UI.Submenus.ShopDrop import ShopDropMenu
 
 LOCAL_UI_VERSION = '2.2.0-beta'
 
@@ -196,6 +197,7 @@ class KH2RandomizerApp(QMainWindow):
         seed_layout.addWidget(self.rando_rando)
 
         self.widgets = [
+            BattleLevelMenu(self.settings),
             RewardLocationsMenu(self.settings),
             SoraMenu(self.settings),
             StartingMenu(self.settings),

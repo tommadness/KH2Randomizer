@@ -16,6 +16,7 @@ from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType
 from List.DropRateIds import id_to_enemy_name
 from Module.RandomizerSettings import RandomizerSettings
+from Module.battleLevels import BtlvViewer
 from Module.hints import Hints
 from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe
@@ -38,30 +39,6 @@ def number_to_bytes(item):
 
 def bytes_to_number(byte0, byte1=0):
     return int(byte0)+int(byte1<<8)
-
-
-class BtlvViewer():
-    def __init__(self):
-        with open(resource_path("static/btlv.bin"), "rb") as btlvBar:
-            self.worlds = [None,None,locationType.TT,None,locationType.HB,locationType.BC,locationType.OC,locationType.Agrabah,locationType.LoD,locationType.HUNDREDAW,locationType.PL,locationType.Atlantica,locationType.DC,locationType.DC,locationType.HT,None,locationType.PR,locationType.SP,locationType.TWTNW,None,None,None,None,None]
-            self.binaryContent = bytearray(btlvBar.read())
-            self.flags = []
-            for x in range(20):
-                offset = 8+32*x
-                self.flags.append([])
-                for y in range(8,32):
-                    self.flags[-1].append(bytes_to_number(self.binaryContent[offset+y]))
-                    if self.flags[-1][-1] > 0:
-                        self.flags[-1][-1] = 1
-        for x in self.flags:
-            print(x)
-
-    def write_modifications(self,outZip):
-        for x in range(20):
-            offset = 8+32*x
-            for y in range(8,32):
-                self.binaryContent[offset+y] = number_to_bytes(self.flags[x][y-8])[0]
-        outZip.writestr("modified_btlv.bin",self.binaryContent)
 
 class SynthList():
     def __init__(self,offset,bytes):

@@ -6,7 +6,7 @@ from Class.exceptions import GeneratorException,CantAssignItemException, Setting
 from Module.modifier import SeedModifier
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item, itemRarity
-from List.configDict import locationCategory, itemType, locationType
+from List.configDict import locationCategory, itemType, locationDepth, locationType
 from List.ItemList import Items
 from List.NewLocationList import Locations
 from Module.RandomizerSettings import RandomizerSettings
@@ -413,8 +413,9 @@ class Randomizer():
             unlocks[locationType.HUNDREDAW] = [[32],[32],[32],[32],[32]]
             unlocks[locationType.LW] = [[593]]
             unlocks[locationType.PR] = [[62]]
-            unlocks[locationType.PR] = [[62]]
             unlocks[locationType.Atlantica] = [[23,23,23],[87,87]]
+
+            second_visit_locking_items = [369,54,55,61,60,74,375,59,72,62]
 
             locking_items = []
             for loc_type in settings.enabledLocations:
@@ -425,7 +426,9 @@ class Randomizer():
             for i in settings.startingItems:
                 if [i] in locking_items:
                     locking_items.remove([i])
-            for i in vanilla_items:
+                if [i,21,22,23] in locking_items:
+                    locking_items.remove([i,21,22,23])
+            for i in vanilla_items: # TODO add vanilla worlds to chain
                 if [i] in locking_items:
                     locking_items.remove([i])
 
@@ -439,8 +442,11 @@ class Randomizer():
             
             terra = settings.chainLogicIncludeTerra and [593] in locking_items
             tt_condition = [376] in locking_items and [375] in locking_items
-            hb_condition = [595] in locking_items
+            pop_condition = [595] in locking_items
+            hb_condition = [369] in locking_items and pop_condition
             atlantica_condition = [87,87] in locking_items
+            second_visit_condition = settings.proofDepth in [locationDepth.DataFight,locationDepth.SecondVisitOnly,locationDepth.SecondBoss]
+            data_condition = settings.proofDepth is locationDepth.DataFight
 
             while True:
                 random.shuffle(locking_items)
@@ -452,6 +458,32 @@ class Randomizer():
                     continue
                 if atlantica_condition and locking_items.index([87,87]) > locking_items.index([23,23,23]):
                     continue
+
+                #proof depth checking
+                if second_visit_condition:
+                    if pop_condition:
+                        proof_index = locking_items.index([595])
+                        if proof_index==0:
+                            continue
+                        if not any(it in locking_items[proof_index-1] for it in second_visit_locking_items):
+                            continue
+                        form_indices = [locking_items.index(x) for x in unlocks[locationType.FormLevel]]
+                        # print(f"{369 in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
+                        if data_condition and 369 in locking_items[proof_index-1] and not all(x<proof_index for x in form_indices):
+                            continue
+                    if terra:
+                        proof_index = locking_items.index([593])
+                        if proof_index==0:
+                            continue
+                        if not any(it in locking_items[proof_index-1] for it in second_visit_locking_items):
+                            continue
+                        form_indices = [locking_items.index(x) for x in unlocks[locationType.FormLevel]]
+                        # print(f"{369 in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
+                        if data_condition and 369 in locking_items[proof_index-1] and not all(x<proof_index for x in form_indices):
+                            continue
+                    if not self.yeet_the_bear:
+                        if not any(it in locking_items[-1] for it in second_visit_locking_items):
+                            continue
                 break
             if self.yeet_the_bear:
                 locking_items.append([32])
@@ -470,16 +502,17 @@ class Randomizer():
             validator.prep_req_list(settings,self)
 
             current_inventory = [] + settings.startingItems
+            if settings.reverse_rando:
+                current_inventory+=[94,95,96,98,99,100,102,103,104,106,107,108,564,565,566]
 
             def open_location(inv,loc):
-                return validator.is_location_available(inv,loc) and loc.LocationId !=560
+                return validator.is_location_available(inv,loc) and (not settings.nightmare or loc.LocationId !=560)
 
             accessible_locations = [[l for l in validLocations if open_location(current_inventory,l)]]
             for items in locking_items:
                 accessible_locations_start = [l for l in validLocations if open_location(current_inventory,l)]
                 accessible_locations_new = [l for l in validLocations if open_location(current_inventory + items,l) and l not in accessible_locations_start]
                 accessible_locations.append(accessible_locations_new)
-                # print(len(accessible_locations[-1]))
                 current_inventory += items
             for iter,items in enumerate(locking_items):
                 accessible_locations_new = accessible_locations[iter]
@@ -491,10 +524,13 @@ class Randomizer():
                         continue
                     i_data = i_data_list[0]
                     weights = local_item_weights_computation(i_data,accessible_locations_new)
-                    if len(weights)==0:
-                        break
+                    # if len(weights)==0:
+                    #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
+                    # if sum(weights)==0:
+                    #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
                     randomLocation = random.choices(accessible_locations_new,weights)[0]
                     if i_data.ItemType not in randomLocation.InvalidChecks:
+                        print(f"Placed {i_data}")
                         allItems.remove(i_data)
                         if self.assignItem(randomLocation,i_data):
                             validLocations.remove(randomLocation)

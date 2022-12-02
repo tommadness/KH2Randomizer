@@ -898,13 +898,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     IntSpinner(
         name=settingkey.CHAIN_LOGIC_LENGTH,
-        ui_label="Minimum Logic Length",
+        ui_label="Maximum Logic Length",
         minimum=10,
         maximum=26, # theoretical max
         step=1,
         shared=True,
         default=26,
-        tooltip="How many steps in the logic chain you'd like to guarantee. Could be more based on randomization, but will guarantee this many steps.",
+        tooltip="How many steps in the logic chain you'd like to do at most.",
         randomizable=False
     ),
 
