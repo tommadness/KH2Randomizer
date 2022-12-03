@@ -175,6 +175,14 @@ class RandomizerSettings():
         self.chainLogicTerraLate = ui_settings.get(settingkey.CHAIN_LOGIC_MIN_TERRA)
         self.chainLogicMinLength = ui_settings.get(settingkey.CHAIN_LOGIC_LENGTH)
 
+        if self.proofDepth in [locationDepth.FirstVisit,locationDepth.FirstBoss] and self.chainLogic:
+            raise SettingsException("Chain logic is not compatible with first visit proofs")
+        if self.storyDepth not in [locationDepth.Anywhere, locationDepth.SecondVisit] and self.chainLogic:
+            raise SettingsException("Chain logic is only compatible with key item depth non-data and anywhere")
+        if self.chainLogic and self.regular_rando and self.reverse_rando:
+            raise SettingsException("Can't do chain logic with both regular and reverse rando")
+
+
         self.roxas_abilities_enabled = ui_settings.get(settingkey.ROXAS_ABILITIES_ENABLED)
         self.disable_final_form = ui_settings.get(settingkey.DISABLE_FINAL_FORM)
         self.block_cor_skip = ui_settings.get(settingkey.BLOCK_COR_SKIP)

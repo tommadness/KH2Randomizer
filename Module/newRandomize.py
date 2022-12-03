@@ -432,6 +432,9 @@ class Randomizer():
                 if [i] in locking_items:
                     locking_items.remove([i])
 
+            if not settings.chainLogicIncludeTerra:
+                locking_items.remove([593])
+
             minimum_terra_depth = len(locking_items)-5 if settings.chainLogicTerraLate else 0
 
             if self.yeet_the_bear:
@@ -444,12 +447,28 @@ class Randomizer():
             tt_condition = [376] in locking_items and [375] in locking_items
             pop_condition = [595] in locking_items
             hb_condition = [369] in locking_items and pop_condition
+            ag_condition = [72] in locking_items
             atlantica_condition = [87,87] in locking_items
             second_visit_condition = settings.proofDepth in [locationDepth.DataFight,locationDepth.SecondVisitOnly,locationDepth.SecondBoss]
             data_condition = settings.proofDepth is locationDepth.DataFight
+            story_data_condition = settings.storyDepth is locationDepth.DataFight
+
+            if second_visit_condition:
+                # check if enough unlock items are available for the chain
+                num_proofs_in_chain = int(pop_condition)+int(terra)+int(not self.yeet_the_bear)
+                
+                counter = 0
+                for world_unlocks in locking_items:
+                    for i in world_unlocks:
+                        if i in second_visit_locking_items:
+                            counter+=1
+                if counter < num_proofs_in_chain:
+                    raise SettingsException("Not enough locked second visits for chain logic.") 
 
             while True:
                 random.shuffle(locking_items)
+                if ag_condition and locking_items.index([21,22,23]) > locking_items.index([72]): # scimitar has to be after fire/blizz/thunder 
+                    continue
                 if tt_condition and locking_items.index([376]) > locking_items.index([375]): # ice cream needs to be after picture
                     continue
                 if hb_condition and locking_items.index([369]) > locking_items.index([595]): # proof of peace needs to be after membership card
@@ -458,6 +477,13 @@ class Randomizer():
                     continue
                 if atlantica_condition and locking_items.index([87,87]) > locking_items.index([23,23,23]):
                     continue
+                if story_data_condition:
+                    form_indices = [locking_items.index(x) for x in unlocks[locationType.FormLevel]]
+                    membership_index = locking_items.index([369])
+                    
+                    # print(f"{369 in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
+                    if not all(x<membership_index for x in form_indices):
+                        continue
 
                 #proof depth checking
                 if second_visit_condition:
@@ -530,7 +556,6 @@ class Randomizer():
                     #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
                     randomLocation = random.choices(accessible_locations_new,weights)[0]
                     if i_data.ItemType not in randomLocation.InvalidChecks:
-                        print(f"Placed {i_data}")
                         allItems.remove(i_data)
                         if self.assignItem(randomLocation,i_data):
                             validLocations.remove(randomLocation)
