@@ -66,7 +66,12 @@ class RandomizerSettings():
         self.battle_level_rando = ui_settings.get(settingkey.BATTLE_LEVEL_RANDO)
         self.battle_level_offset = ui_settings.get(settingkey.BATTLE_LEVEL_OFFSET)
         
-        self.random_growths = ui_settings.get(settingkey.STARTING_MOVEMENT)=="Random"
+        self.starting_growth = ui_settings.get(settingkey.STARTING_MOVEMENT)
+        self.num_random_growths = 0
+        if self.starting_growth == "Random":
+            self.num_random_growths = 5
+        elif self.starting_growth == "3Random":
+            self.num_random_growths = 3
         self.chosen_random_growths = []
 
         self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [int(value) for value in ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.STARTING_REPORTS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])

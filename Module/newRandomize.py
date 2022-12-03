@@ -220,10 +220,10 @@ class Randomizer():
                 goofyLocations.remove(randomLocation)
 
     def assignSoraItems(self, settings: RandomizerSettings):
-        if settings.random_growths:
+        if settings.num_random_growths > 0:
             for i in settings.chosen_random_growths:
                 settings.startingItems.remove(i)
-            settings.chosen_random_growths = SeedModifier.random_schmovement()
+            settings.chosen_random_growths = SeedModifier.random_schmovement(settings.num_random_growths)
             settings.startingItems+=settings.chosen_random_growths
 
         allItems = [i for i in Items.getItemList(settings.story_unlock_rarity) if i.Id not in settings.startingItems]

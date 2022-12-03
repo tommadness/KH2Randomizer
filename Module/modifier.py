@@ -142,7 +142,7 @@ class SeedModifier():
             return growth_all[1] + growth_all[2] + growth_all[3] + growth_all[4]
         return []
 
-    def random_schmovement():
+    def random_schmovement(num_growth_abilities):
         growth_all = {}
         growth_all[0] =  [] # none
         growth_all[1] =  [94,98,102,106,564] # level 1
@@ -153,12 +153,12 @@ class SeedModifier():
         random_levels = [0,0,0,0,0]
 
         iter = 0
-        while iter < 5:
+        while iter < num_growth_abilities:
             picked = random.randint(0,4)
             if random_levels[picked]!=4:
                 random_levels[picked]+=1
                 iter+=1
         #get all the abilities IDs needed for each growth and add them to a list
-        for current in range(5):
+        for current in range(num_growth_abilities):
             [random_growth.append(growth_all[i][current]) for i in range(1,random_levels[current]+1)]
         return random_growth
