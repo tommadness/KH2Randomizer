@@ -10,7 +10,6 @@ from Module.battleLevels import BtlvViewer
 from PySide6.QtWidgets import QLabel
 
 class BattleLevelMenu(KH2Submenu):
-
     def __init__(self, settings: SeedSettings):
         super().__init__(title='World Battle Levels', settings=settings, in_layout='horizontal')
         self.world_level_labels = {}
@@ -18,6 +17,7 @@ class BattleLevelMenu(KH2Submenu):
 
         self.start_column()
         self.addHeader("Options")
+        self.add_option(settingkey.BATTLE_LEVEL_RANDO)
         self.end_column()
 
         self.start_column()
@@ -39,8 +39,11 @@ class BattleLevelMenu(KH2Submenu):
 
         self.finalizeMenu()
 
-    def update_battle_level_display(self):
-        pass
+    def update_battle_level_display(self,setting_name):
+        self.battle_levels.use_setting(setting_name)
+        for world,label_list in self.world_level_labels.items():
+            for x in range(len(label_list)):
+                label_list[x].setText(str(self.battle_levels.get_battle_levels(world)[x]))
         
 
     def add_battle_level_info(self,world,visits=1):
@@ -48,8 +51,9 @@ class BattleLevelMenu(KH2Submenu):
         world_layout = QHBoxLayout()
         world_layout.addWidget(world_label)
         self.world_level_labels[world] = []
+
         for x in range(visits):
-            world_level_label = QLabel("50")
+            world_level_label = QLabel(str(self.battle_levels.get_battle_levels(world)[x]))
             world_layout.addWidget(world_level_label)
             self.world_level_labels[world].append(world_level_label)
         world_widget = QWidget()

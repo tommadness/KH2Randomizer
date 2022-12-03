@@ -864,6 +864,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         '''),
         randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),   
+    SingleSelect(
+        name=settingkey.BATTLE_LEVEL_RANDO,
+        ui_label='Battle Level Choice',
+        choices={
+            "Normal": 'Normal'
+        },
+        shared=True,
+        default="Normal",
+        tooltip=textwrap.dedent('''
+            Change the battle level of worlds.
+            Normal: unchanged battle levels
+        ''')
+    ),   
     Toggle(
         name=settingkey.YEET_THE_BEAR,
         ui_label='Yeet The Bear Required',

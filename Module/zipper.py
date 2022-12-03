@@ -290,11 +290,11 @@ class SeedZip():
             self.createDropRateAssets(settings, randomizer, mod, outZip)
             self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
             
-            btlv = BtlvViewer()
-            for x in mod["assets"]:
-                if x["name"]=="00battle.bin":
-                    x["source"]+=modYml.getBtlvMod()
-            btlv.write_modifications(outZip)
+            # btlv = BtlvViewer()
+            # for x in mod["assets"]:
+            #     if x["name"]=="00battle.bin":
+            #         x["source"]+=modYml.getBtlvMod()
+            # btlv.write_modifications(outZip)
             
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
