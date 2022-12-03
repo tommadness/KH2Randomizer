@@ -125,8 +125,10 @@ class KH2RandomizerApp(QMainWindow):
         self.UTC = pytz.utc
         self.startTime = datetime.datetime.now(self.UTC)
         self.dailySeedName = self.startTime.strftime('%d-%m-%Y')
-        self.mods = getDailyModifiers(self.startTime)
-        self.mods_hard = getDailyModifiers(self.startTime,True)
+        self.mods = getDailyModifiers(self.startTime,hard_mode=False,boss_enemy=False)
+        self.mods_hard = getDailyModifiers(self.startTime,hard_mode=True,boss_enemy=False)
+        self.mods_be = getDailyModifiers(self.startTime,hard_mode=False,boss_enemy=True)
+        self.mods_hard_be = getDailyModifiers(self.startTime,hard_mode=True,boss_enemy=True)
         self.progress = None
         self.spoiler_log_output = "<html>No spoiler log generated</html>"
 
@@ -197,7 +199,6 @@ class KH2RandomizerApp(QMainWindow):
         seed_layout.addWidget(self.rando_rando)
 
         self.widgets = [
-            BattleLevelMenu(self.settings),
             RewardLocationsMenu(self.settings),
             SoraMenu(self.settings),
             StartingMenu(self.settings),
@@ -205,6 +206,7 @@ class KH2RandomizerApp(QMainWindow):
             KeybladeMenu(self.settings),
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
+            BattleLevelMenu(self.settings),
             ShopDropMenu(self.settings),
             BossEnemyMenu(self.settings),
             CosmeticsMenu(self.settings, self.custom_cosmetics),
@@ -275,8 +277,13 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addMenu(self.presetMenu)
         menu_bar.addMenu(self.config_menu)
 
-        menu_bar.addAction("Load Daily Seed", self.loadDailySeed)
-        menu_bar.addAction("Load Hard Daily Seed", self.loadHardDailySeed)
+        self.dailyMenu = QMenu("Daily Seeds")
+        self.dailyMenu.addAction("Load Seed", self.loadDailySeed)
+        self.dailyMenu.addAction("Load Hard Seed", self.loadHardDailySeed)
+        self.dailyMenu.addAction("Load Boss/Enemy Seed", self.loadDailySeedBE)
+        self.dailyMenu.addAction("Load Hard Boss/Enemy Seed", self.loadHardDailySeedBE)
+        menu_bar.addMenu(self.dailyMenu)
+
         menu_bar.addAction("About", self.showAbout)
 
     def closeEvent(self, e):
@@ -288,7 +295,7 @@ class KH2RandomizerApp(QMainWindow):
 
         e.accept()
 
-    def dailySeedHandler(self,difficulty):
+    def dailySeedHandler(self,difficulty,boss_enemy=False):
         self.seedName.setText(self.dailySeedName)
         self.recalculate = False
 
@@ -307,7 +314,18 @@ class KH2RandomizerApp(QMainWindow):
 
         # use the modifications to change the preset
         mod_string = f'Updated settings for Daily Seed {self.startTime.strftime("%a %b %d %Y")}\n\n'
-        which_mods = self.mods if difficulty=="easy" else self.mods_hard
+        which_mods = None
+        if difficulty=="easy" and not boss_enemy:
+            which_mods = self.mods
+        elif difficulty=="easy" and boss_enemy:
+            which_mods = self.mods_be
+        elif difficulty=="hard" and not boss_enemy:
+            which_mods = self.mods_hard
+        elif difficulty=="hard" and boss_enemy:
+            which_mods = self.mods_hard_be
+        else:
+            raise RandomizerExceptions("Improper Daily Seed Setting")
+
         for m in which_mods:
             m.local_modifier(self.settings)
             mod_string += m.name + ' - ' + m.description + '\n\n'
@@ -328,6 +346,12 @@ class KH2RandomizerApp(QMainWindow):
 
     def loadHardDailySeed(self):
         self.dailySeedHandler(difficulty="hard")
+
+    def loadDailySeedBE(self):
+        self.dailySeedHandler(difficulty="easy", boss_enemy=True)
+
+    def loadHardDailySeedBE(self):
+        self.dailySeedHandler(difficulty="hard", boss_enemy=True)
 
 
     def fixSeedName(self):

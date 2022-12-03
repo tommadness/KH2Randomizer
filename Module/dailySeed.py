@@ -38,6 +38,10 @@ def turnOffWorldsLocal(worlds: list):
                 worlds_with_rewards[0].remove(world.name)
     return _turnOffLocal
 
+def enableBossEnemy(settings: SeedSettings):
+    settings.set("boss","One to One")
+    settings.set("enemy","One to One")
+
 def modifyShutOut(daily: DailyModifier):
     X = 3
     choices = [
@@ -208,6 +212,29 @@ dailyHardModifiers = [
                 ),
 ]
 
+dailyBossEnemyModifiers = [
+    DailyModifier(name="Final Fantasy Friends",
+                initMod=None,
+                description="Adds Cup Bosses to the Boss Pool",
+                categories={'boss_pool'},
+                local_modifier=lambda settings: settings.set("cups_bosses",True)
+                ),
+    DailyModifier(name="Enemies Change Per Room",
+                initMod=None,
+                description="Enemies are randomized 1-1 per room",
+                categories={'enemy_pool'},
+                local_modifier=lambda settings: settings.set("enemy","One to One Per Room")
+                ),]
+
+dailyHardBossEnemyModifiers = [
+    DailyModifier(name="Superbosses",
+                initMod=None,
+                description="Adds Superbosses to the Boss Pool",
+                categories={'hard_boss_pool'},
+                local_modifier=lambda settings: settings.set("data_bosses",True)
+                ),]
+
+
 crit_modifier = [DailyModifier(name="Critical Mode",
                 initMod=None,
                 description="Enables the Randomized critical Bonuses, which you must play on critical to get.",
@@ -216,12 +243,19 @@ crit_modifier = [DailyModifier(name="Critical Mode",
                 ),
 ]
 
+boss_enemy_modifier = [DailyModifier(name="Boss/Enemy",
+                initMod=None,
+                description="Enables boss and enemy randomization",
+                categories={'boss_enemy_setting'},
+                local_modifier=enableBossEnemy
+                ),
+]
 
 def allDailyModifiers():
-    return dailyModifiers + dailyHardModifiers
+    return dailyModifiers + dailyHardModifiers + dailyBossEnemyModifiers + dailyHardBossEnemyModifiers
 
 
-def getDailyModifiers(date,hard_mode = False):
+def getDailyModifiers(date, hard_mode = False, boss_enemy = False):
     random.seed(date.strftime('%d_%m_%Y'))
     # Weekends have more modifiers
     numMods = 3 if date.isoweekday() < 5 else 5
@@ -248,5 +282,8 @@ def getDailyModifiers(date,hard_mode = False):
     
     if hard_mode:
         chosenMods = crit_modifier + chosenMods
+    
+    if boss_enemy:
+        chosenMods = boss_enemy_modifier + chosenMods
 
     return chosenMods
