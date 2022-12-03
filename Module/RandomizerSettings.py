@@ -64,6 +64,7 @@ class RandomizerSettings():
 
         self.split_levels = ui_settings.get(settingkey.SPLIT_LEVELS)
         self.battle_level_rando = ui_settings.get(settingkey.BATTLE_LEVEL_RANDO)
+        self.battle_level_offset = ui_settings.get(settingkey.BATTLE_LEVEL_OFFSET)
         
         self.random_growths = ui_settings.get(settingkey.STARTING_MOVEMENT)=="Random"
         self.chosen_random_growths = []

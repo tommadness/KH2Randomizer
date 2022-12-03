@@ -868,15 +868,27 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.BATTLE_LEVEL_RANDO,
         ui_label='Battle Level Choice',
         choices={
-            "Normal": 'Normal'
+            "Normal": 'Normal',
+            "Offset":"Offset"
         },
         shared=True,
         default="Normal",
         tooltip=textwrap.dedent('''
             Change the battle level of worlds.
             Normal: unchanged battle levels
+            Offset: Increase/Decrease all battle levels by a given amount
         ''')
     ),   
+    IntSpinner(
+        name=settingkey.BATTLE_LEVEL_OFFSET,
+        ui_label="Level Offset",
+        minimum=-50,
+        maximum=100,
+        step=5,
+        shared=True,
+        default=0,
+        tooltip="How many levels to change the worlds by"
+    ),
     Toggle(
         name=settingkey.YEET_THE_BEAR,
         ui_label='Yeet The Bear Required',

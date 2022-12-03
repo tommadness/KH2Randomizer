@@ -18,6 +18,7 @@ class BattleLevelMenu(KH2Submenu):
         self.start_column()
         self.addHeader("Options")
         self.add_option(settingkey.BATTLE_LEVEL_RANDO)
+        self.add_option(settingkey.BATTLE_LEVEL_OFFSET)
         self.end_column()
 
         self.start_column()
@@ -37,10 +38,20 @@ class BattleLevelMenu(KH2Submenu):
         self.add_battle_level_info(locationType.TWTNW,1)
         self.end_column()
 
+        settings.observe(settingkey.BATTLE_LEVEL_RANDO, self._btlv_setting_change)
+        settings.observe(settingkey.BATTLE_LEVEL_OFFSET, self._btlv_setting_change)
+
         self.finalizeMenu()
 
-    def update_battle_level_display(self,setting_name):
-        self.battle_levels.use_setting(setting_name)
+    def _btlv_setting_change(self):
+        btlv_setting = self.settings.get(settingkey.BATTLE_LEVEL_RANDO)
+        btlv_offset = self.settings.get(settingkey.BATTLE_LEVEL_OFFSET)
+        self.set_option_visibility(settingkey.BATTLE_LEVEL_OFFSET, visible=(btlv_setting=="Offset"))
+
+        self.update_battle_level_display(btlv_setting,btlv_offset)
+
+    def update_battle_level_display(self,setting_name,btlv_offset):
+        self.battle_levels.use_setting(setting_name,btlv_offset)
         for world,label_list in self.world_level_labels.items():
             for x in range(len(label_list)):
                 label_list[x].setText(str(self.battle_levels.get_battle_levels(world)[x]))

@@ -34,27 +34,62 @@ class BtlvViewer():
         
         with open(resource_path("static/btlv.bin"), "rb") as btlvBar:
             self.binaryContent = bytearray(btlvBar.read())
-        self.make_btlv_vanilla()
+        self._make_btlv_vanilla()
     
-    def use_setting(self,setting_name):
-        if setting_name is "Normal":
-            self.make_btlv_vanilla()
+    def use_setting(self,setting_name, battle_level_offset : int = None):
+        if setting_name == "Normal":
+            self._make_btlv_vanilla()
+        elif setting_name == "Offset":
+            if battle_level_offset is None:
+                raise BackendException("Trying to offset battle levels without a provided offset")
+            self._make_btlv_vanilla()
+            self._change_btlv(battle_level_offset)
         else:
-            raise BackendException()
+            raise BackendException("Invalid battle level setting")
 
-    def make_btlv_vanilla(self):
+    def get_battle_levels(self, world: locationType):
+        list_ret = [self._interpret_flags(world,x) for x in self.visit_flags[world]]
+        return list_ret
+        
+    def write_modifications(self,outZip):
+        for x in range(20):
+            offset = 8+32*x
+            for y in range(8,32):
+                self.binaryContent[offset+y] = number_to_bytes(self.flags[x][y-8])[0]
+        outZip.writestr("modified_btlv.bin",self.binaryContent)
+
+
+    def _make_btlv_vanilla(self):
         self.flags = []
         for x in range(20):
             offset = 8+32*x
             self.flags.append([])
             for y in range(8,32):
                 self.flags[-1].append(bytes_to_number(self.binaryContent[offset+y]))
+    
+    def _change_btlv(self,btlv_change):
+        for world,visit_flag_list in self.visit_flags.items():
+            current_btlvs = self.get_battle_levels(world)
+            for visit_number in range(len(visit_flag_list)):
+                self._set_battle_level(world,visit_number,current_btlvs[visit_number]+btlv_change)
 
-    def get_battle_levels(self, world: locationType):
-        list_ret = [self.interpret_flags(world,x) for x in self.visit_flags[world]]
-        return list_ret
+    def _set_battle_level(self,world,visit_number,new_level):
+        new_level = min(max(new_level,1),99)
+        current_btlvs = self.get_battle_levels(world)
+        prev_visit_flags = 0x040000
+        prev_btlv = 1
+        if visit_number > 0:
+            prev_btlv = current_btlvs[visit_number-1]
+            prev_visit_flags = self.visit_flags[world][visit_number-1]
+            if prev_btlv > new_level:
+                raise BackendException("Trying to set battle level to less than previous visit")
+        delta_btlv = new_level-prev_btlv
+        current_visit_flags = self.visit_flags[world][visit_number]
+        changed_flags = current_visit_flags ^ prev_visit_flags
+        self._set_level(world,changed_flags,delta_btlv)
+        return new_level
 
-    def interpret_flags(self, world: locationType, flags_entry):
+    def _interpret_flags(self, world: locationType, flags_entry):
         world_index = self.worlds.index(world)
         battle_level_sum = 0
         flag_index=0
@@ -69,11 +104,19 @@ class BtlvViewer():
             flag_index+=1
             flags_entry = flags_entry>>1
         return battle_level_sum
-
-
-    def write_modifications(self,outZip):
-        for x in range(20):
-            offset = 8+32*x
-            for y in range(8,32):
-                self.binaryContent[offset+y] = number_to_bytes(self.flags[x][y-8])[0]
-        outZip.writestr("modified_btlv.bin",self.binaryContent)
+        
+    def _set_level(self, world: locationType, flags_to_set, number_to_set):
+        world_index = self.worlds.index(world)
+        flag_index=0
+        skip_9 = False
+        added_number = False
+        while flags_to_set > 0:
+            if not skip_9 and flag_index==9:
+                skip_9 = True
+                flags_to_set = flags_to_set>>1
+                continue
+            if flags_to_set % 2 == 1:
+                self.flags[flag_index][world_index] = 0 if added_number else number_to_set
+                added_number = True
+            flag_index+=1
+            flags_to_set = flags_to_set>>1

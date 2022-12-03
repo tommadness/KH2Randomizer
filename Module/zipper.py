@@ -289,13 +289,7 @@ class SeedZip():
             self.createWardrobeSkipAssets(settings, mod, outZip)
             self.createDropRateAssets(settings, randomizer, mod, outZip)
             self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
-            
-            # btlv = BtlvViewer()
-            # for x in mod["assets"]:
-            #     if x["name"]=="00battle.bin":
-            #         x["source"]+=modYml.getBtlvMod()
-            # btlv.write_modifications(outZip)
-            
+            self.createBtlvRandoAssets(settings, mod, outZip)            
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -347,6 +341,17 @@ class SeedZip():
         data.seek(0)
         self.outputZip = data
         return True
+
+    def createBtlvRandoAssets(self, settings, mod, outZip):
+        if settings.battle_level_rando == "Normal" or \
+            (settings.battle_level_rando == "Offset" and settings.battle_level_offset==0):
+            return
+        btlv = BtlvViewer()
+        btlv.use_setting(settings.battle_level_rando, settings.battle_level_offset)
+        for x in mod["assets"]:
+            if x["name"]=="00battle.bin":
+                x["source"]+=modYml.getBtlvMod()
+        btlv.write_modifications(outZip)
 
     def addCmdListModifications(self,settings,mod,outZip):
         with open(resource_path("static/better_stt/cmd.list"), "rb") as cmdlist:

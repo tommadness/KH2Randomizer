@@ -5,6 +5,7 @@ ALLOW_REPORT_HINTING = 'allow_report_hinting'
 AS_DATA_SPLIT = "as_data_reward_split"
 AUTO_EQUIP_START_ABILITIES = "auto_equip"
 BATTLE_LEVEL_RANDO = "battle_level_rando"
+BATTLE_LEVEL_OFFSET = "battle_level_offset"
 BETTER_JUNK = 'better_junk'
 BLOCK_COR_SKIP = 'block_cor_skip'
 BLOCK_SHAN_YU_SKIP = 'block_shan_yu_skip'
