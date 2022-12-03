@@ -1,13 +1,10 @@
-from ctypes import alignment
-from PySide6.QtWidgets import QHBoxLayout, QWidget, QPushButton,QSizePolicy
+from PySide6.QtWidgets import QHBoxLayout, QGridLayout, QWidget, QLabel
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from List.configDict import locationType
 from UI.Submenus.SubMenu import KH2Submenu
 from Module.battleLevels import BtlvViewer
-
-from PySide6.QtWidgets import QLabel
 
 class BattleLevelMenu(KH2Submenu):
     def __init__(self, settings: SeedSettings):
@@ -23,6 +20,13 @@ class BattleLevelMenu(KH2Submenu):
 
         self.start_column()
         self.addHeader("Battle Levels")
+        self.full_world_level_layout = QGridLayout()
+        first_label = QLabel("1st")
+        second_label = QLabel("2nd")
+        third_label = QLabel("3rd")
+        self.full_world_level_layout.addWidget(first_label,0,1)
+        self.full_world_level_layout.addWidget(second_label,0,2)
+        self.full_world_level_layout.addWidget(third_label,0,3)
         self.add_battle_level_info(locationType.STT,1)
         self.add_battle_level_info(locationType.TT,3)
         self.add_battle_level_info(locationType.HB,2)
@@ -36,6 +40,9 @@ class BattleLevelMenu(KH2Submenu):
         self.add_battle_level_info(locationType.PL,2)
         self.add_battle_level_info(locationType.SP,2)
         self.add_battle_level_info(locationType.TWTNW,1)
+        world_widget = QWidget()
+        world_widget.setLayout(self.full_world_level_layout)
+        self.pending_column.addWidget(world_widget)
         self.end_column()
 
         settings.observe(settingkey.BATTLE_LEVEL_RANDO, self._btlv_setting_change)
@@ -59,14 +66,11 @@ class BattleLevelMenu(KH2Submenu):
 
     def add_battle_level_info(self,world,visits=1):
         world_label = QLabel(world.value)
-        world_layout = QHBoxLayout()
-        world_layout.addWidget(world_label)
         self.world_level_labels[world] = []
+        world_row = len(self.world_level_labels)
+        self.full_world_level_layout.addWidget(world_label,world_row,0)
 
         for x in range(visits):
             world_level_label = QLabel(str(self.battle_levels.get_battle_levels(world)[x]))
-            world_layout.addWidget(world_level_label)
+            self.full_world_level_layout.addWidget(world_level_label,world_row,1+x)
             self.world_level_labels[world].append(world_level_label)
-        world_widget = QWidget()
-        world_widget.setLayout(world_layout)
-        self.pending_column.addWidget(world_widget)
