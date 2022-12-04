@@ -1,49 +1,6 @@
 import random
 
 class SeedModifier():
-    def getOptions():
-        return [
-            {
-                "name": "Max Logic Item Placement",
-                "description": "Less restricted item placement. All checks still obtainable."
-            },
-            {
-                "name": "Reverse Rando",
-                "description": "Use when generating a Reverse Rando seed to ensure softlock protection"
-            },
-            {
-                "name":"Glass Cannon",
-                "description": "No more pesky Defense Ups in the level up stats pool"
-            },
-            {
-                "name":"Library of Assemblage",
-                "description": "Start with all the hints"
-            },
-            {
-                "name": "Schmovement",
-                "description": "Start with selected level of all growth abilities"
-            },
-            {
-                "name": "Better Junk",
-                "description": "No more synthesis materials in the junk item pool"
-            },
-            {
-                "name": "Randomize Ability Pool",
-                "description": "Pick Sora's action/support abilities at random (guaranteed to have 1 SC & 1 OM)"
-            },
-            {
-                "name": "Start with No AP",
-                "description": "Sora/Donald/Goofy start the game with 0 AP"
-            },
-            {
-                "name": "Remove Damage Cap",
-                "description": "Removes the damage cap for every enemy/boss in the game."
-            },
-            {
-                "name": "Cups Give XP",
-                "description": "Defeating enemies while in an OC Cup will give you XP and Form XP"
-            }
-        ]
 
     def randomAbilityPool(action, support):
         abilitylist = action + support

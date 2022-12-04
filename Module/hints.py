@@ -58,9 +58,8 @@ class Hints:
         if "extra_ics" in tracker_includes:
             importantChecks+=[itemType.TROPHY, itemType.MEMBERSHIPCARD, itemType.OCSTONE]
 
-
-        if hintsType == "Shananas":
-            
+        # All hints do the Shananas thing except JSmartee
+        if hintsType != "JSmartee": 
             hintsText['world'] = {}
             for location,item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
@@ -87,9 +86,10 @@ class Hints:
                     report_master[reportNumber] = ["Creations"]
                 else:
                     report_master[reportNumber] = location.LocationTypes
-    
+        
+        hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
+
         if hintsType == "Path":
-            hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
             importantChecks += [itemType.REPORT]
             world_to_vanilla_ICs = {}
             world_to_vanilla_ICs[locationType.Level] = [415,416]
@@ -133,21 +133,13 @@ class Hints:
             proof_of_peace_world = None
             proof_of_nonexistence_world = None
 
-            for x in hintableWorlds:
-                hintsText['world'][x] = []
-
-
+            # for x in hintableWorlds:
+            #     hintsText['world'][x] = []
 
             for location,item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
-                if item.ItemType in importantChecks or item.Name in importantChecks:
-                    world_of_location = location.LocationTypes[0]
-                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
-                        world_of_location = "Creations"
-                    if not world_of_location in hintsText['world']:
-                        hintsText['world'][world_of_location] = []
-                    hintsText['world'][world_of_location].append(item.Name)                        
+                if item.ItemType in importantChecks or item.Name in importantChecks:                    
                     if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]:
                         if item.ItemType is itemType.PROOF_OF_CONNECTION:
                             proof_of_connection_world = world_of_location
@@ -506,18 +498,6 @@ class Hints:
             tempItemR = None
             tempExcludeList = []
             importantChecks += [itemType.REPORT]
-            hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
-
-            for location,item in locationItems:
-                if location.LocationTypes[0] == locationType.WeaponSlot:
-                    continue
-                if item.ItemType in importantChecks or item.Name in importantChecks:
-                    world_of_location = location.LocationTypes[0]
-                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
-                        world_of_location = "Creations"
-                    if not world_of_location in hintsText['world']:
-                        hintsText['world'][world_of_location] = []
-                    hintsText['world'][world_of_location].append(item.Name)
 
             worldChecks = {}
             worldChecksEdit = {}
@@ -687,18 +667,11 @@ class Hints:
             IC_Types["visit"] = ["Battlefields of War (Auron)","Sword of the Ancestor (Mulan)","Beast's Claw (Beast)","Bone Fist (Jack Skellington)","Proud Fang (Simba)","Skill and Crossbones (Jack Sparrow)","Scimitar (Aladdin)","Identity Disk (Tron)","Membership Card","Ice Cream","Picture"]
             worldItemTypes = {}
             importantChecks += [itemType.REPORT]
-            hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
             for location,item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
-                    world_of_location = location.LocationTypes[0]
-                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
-                        world_of_location = "Creations"
-                    if not world_of_location in hintsText['world']:
-                        hintsText['world'][world_of_location] = []
-                    hintsText['world'][world_of_location].append(item.Name)
                     #make a list of worlds and the checks they have depending on reveal list
                     if not world_of_location in worldItemTypes:
                         worldItemTypes[world_of_location] = []
@@ -829,6 +802,3 @@ class Hints:
     def writeHints(hintsText,seedName,outZip):
         #outZip.writestr("{seedName}_DebugHints.json".format(seedName = seedName), json.dumps(hintsText).encode('utf-8'))
         outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
-
-    def getOptions():
-        return ["Disabled","Shananas","JSmartee","JSmartee-FirstVisit","JSmartee-SecondVisit","JSmartee-FirstBoss","JSmartee-SecondBoss","Points","Points-FirstVisit","Points-SecondVisit","Points-FirstBoss","Points-SecondBoss"]
