@@ -202,7 +202,7 @@ class modYml:
                         "name": "evt",
                         "type": "areadatascript",
                         "method": "areadatascript",
-                        "source": [{"asdata/"+ASRoom+"evt.script"}]
+                        "source": [{"name": "asdata/"+ASRoom+"evt.script"}]
                     }
                 ],
             })
