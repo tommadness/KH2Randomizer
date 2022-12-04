@@ -59,7 +59,7 @@ class Hints:
             importantChecks+=[itemType.TROPHY, itemType.MEMBERSHIPCARD, itemType.OCSTONE]
 
         # All hints do the Shananas thing except JSmartee
-        if hintsType != "JSmartee": 
+        if hintsType != "JSmartee":
             hintsText['world'] = {}
             for location,item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
@@ -71,6 +71,9 @@ class Hints:
                     if not world_of_location in hintsText['world']:
                         hintsText['world'][world_of_location] = []
                     hintsText['world'][world_of_location].append(item.Name)
+        
+        if hintsType != "Shananas":
+            hintsText['Reports'] = {}
         
         report_master = [[locationType.Free]]*14
         found_reports = False
@@ -126,9 +129,6 @@ class Hints:
                     if i not in ICs_to_hintable_worlds:
                         ICs_to_hintable_worlds[i] = []
                     ICs_to_hintable_worlds[i].append(key)
-            
-            hintsText['world'] = {}
-            hintsText['Reports'] = {}
             proof_of_connection_world = None
             proof_of_peace_world = None
             proof_of_nonexistence_world = None
@@ -250,12 +250,10 @@ class Hints:
             worldsToHint = []
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))
-            hintsText['Reports'] = {}
             importantChecks += [itemType.REPORT]
-            hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel]
 
-            if locationType.SYNTH not in excludeList or locationType.Puzzle not in excludeList or len(randomizer.shop_items)>0:
-                hintableWorlds += ["Creations"]
+            if locationType.SYNTH in excludeList and locationType.Puzzle in excludeList and len(randomizer.shop_items)==0:
+                hintableWorlds.remove("Creations")
 
             freeReports = []
 
@@ -489,8 +487,6 @@ class Hints:
 
         if hintsType == "Points":
             #hintsText['checkValue'] = pointHintValues
-            hintsText['world'] = {}
-            hintsText['Reports'] = {}
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))
             reportRepetition = 0
@@ -649,22 +645,21 @@ class Hints:
  
         if hintsType == "Spoiler":
             hintsText['reveal'] = spoilerHintValues
-            hintsText['world'] = {}
-            hintsText['Reports'] = {}
             worldsToHint = []
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))
             tempExcludeList = []
             IC_Types = {}
-            IC_Types["magic"] = ["Fire Element","Blizzard Element","Thunder Element","Cure Element","Magnet Element","Reflect Element"]
-            IC_Types["page"] = ["Torn Pages"]
-            IC_Types["summon"] = ["Baseball Charm (Chicken Little)","Ukulele Charm (Stitch)","Feather Charm (Peter Pan)","Lamp Charm (Genie)"]
+            IC_Types["magic"] = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, 
+                        itemType.CURE, itemType.REFLECT, itemType.MAGNET]
+            IC_Types["page"] = [itemType.TORN_PAGE]
+            IC_Types["summon"] = [itemType.SUMMON]
             IC_Types["ability"] = ["Second Chance","Once More"]
-            IC_Types["proof"] = ["Proof of Connection","Proof of Nonexistence","Proof of Peace","PromiseCharm"]
-            IC_Types["form"] = ["Valor Form","Wisdom Form","Final Form","Master Form","Limit Form","Anti-Form"]
+            IC_Types["proof"] = [itemType.PROOF,itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM]
+            IC_Types["form"] = [itemType.FORM,"Anti-Form"]
             IC_Types["other"] = ["Hades Cup Trophy","Unknown Disk","Olympus Stone"]
-            IC_Types["report"] = ["Secret Ansem's Report 1","Secret Ansem's Report 2","Secret Ansem's Report 3","Secret Ansem's Report 4","Secret Ansem's Report 5","Secret Ansem's Report 6","Secret Ansem's Report 7","Secret Ansem's Report 8","Secret Ansem's Report 9","Secret Ansem's Report 10","Secret Ansem's Report 11","Secret Ansem's Report 12","Secret Ansem's Report 13"]
-            IC_Types["visit"] = ["Battlefields of War (Auron)","Sword of the Ancestor (Mulan)","Beast's Claw (Beast)","Bone Fist (Jack Skellington)","Proud Fang (Simba)","Skill and Crossbones (Jack Sparrow)","Scimitar (Aladdin)","Identity Disk (Tron)","Membership Card","Ice Cream","Picture"]
+            IC_Types["report"] = [itemType.REPORT]
+            IC_Types["visit"] = [itemType.STORYUNLOCK]
             worldItemTypes = {}
             importantChecks += [itemType.REPORT]
 
@@ -675,24 +670,9 @@ class Hints:
                     #make a list of worlds and the checks they have depending on reveal list
                     if not world_of_location in worldItemTypes:
                         worldItemTypes[world_of_location] = []
-                    if item.Name in IC_Types["magic"] and "magic" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
-                    elif item.Name in IC_Types["page"] and "page" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
-                    elif item.Name in IC_Types["summon"] and "summon" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
-                    elif item.Name in IC_Types["ability"] and "ability" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
-                    elif item.Name in IC_Types["proof"] and "proof" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
-                    elif item.Name in IC_Types["form"] and "form" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
-                    elif item.Name in IC_Types["other"] and "other" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
-                    elif item.Name in IC_Types["report"] and "report" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
-                    elif item.Name in IC_Types["visit"] and "visit" in spoilerHintValues:
-                        worldItemTypes[world_of_location].append(item)
+                    for type_name in spoilerHintValues:
+                        if type_name in IC_Types and (item.ItemType in IC_Types[type_name] or item.Name in IC_Types[type_name]):
+                            worldItemTypes[world_of_location].append(item)
 
             worldChecks = {}
             worldChecksEdit = {}
@@ -789,6 +769,7 @@ class Hints:
                     if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
                         hintsText["Reports"][reportNumber]["Location"] = world
  
+        # report validation for some hint systems
         if hintsType in ["Points","JSmartee","Spoiler"] and found_reports:
             for reportNumber in range(1,14):
                 if hintsText["Reports"][reportNumber]["Location"] not in report_master[reportNumber]:
