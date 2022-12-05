@@ -16,7 +16,6 @@
     "donald_ap": 55,
     "enable_promise_charm": false,
     "enemy": "Disabled",
-    "extra_ics": false,
     "fifty_ap_boosts": true,
     "final_exp_curve": "DAWN",
     "final_exp_multiplier": 3.0,
@@ -178,7 +177,7 @@
     "retry_data_final_xemnas": false,
     "reveal_complete": true,
     "reveal_reportmode": true,
-    "reveal_types": [
+    "hintable_checks": [
         "magic",
         "form",
         "summon",
@@ -186,8 +185,7 @@
         "ability",
         "report",
         "visit",
-        "proof",
-        "other"
+        "proof"
     ],
     "roxas_abilities_enabled": false,
     "selected_boss": null,

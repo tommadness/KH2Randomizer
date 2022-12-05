@@ -25,7 +25,6 @@
     "donald_ap": 55,
     "enable_promise_charm": true,
     "enemy": "Disabled",
-    "extra_ics": false,
     "fast_urns": false,
     "fifty_ap_boosts": false,
     "final_exp_curve": "MIDDAY",
@@ -131,15 +130,14 @@
     "retry_dark_thorn": false,
     "retry_data_final_xemnas": false,
     "reveal_complete": true,
-    "reveal_types": [
-        "visit",
-        "proof",
-        "other",
+    "hintable_checks": [
         "magic",
         "form",
         "summon",
         "page",
-        "ability"
+        "ability",
+        "visit",
+        "proof"
     ],
     "rich_enemies": false,
     "roxas_abilities_enabled": true,

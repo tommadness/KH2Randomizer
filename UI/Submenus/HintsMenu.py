@@ -11,16 +11,15 @@ class HintsMenu(KH2Submenu):
 
         self.start_column()
         self.add_option(settingkey.HINT_SYSTEM)
-        self.add_option(settingkey.EXTRA_ICS)
-        self.add_option(settingkey.SCORE_MODE)
         self.add_option(settingkey.REPORT_DEPTH)
+        self.add_option(settingkey.SCORE_MODE)
         self.add_option(settingkey.REPORTS_REVEAL)
         self.add_option(settingkey.PREVENT_SELF_HINTING)
         self.add_option(settingkey.ALLOW_PROOF_HINTING)
         self.add_option(settingkey.ALLOW_REPORT_HINTING)
         self.add_option(settingkey.REVEAL_COMPLETE)
-        self.add_option(settingkey.REVEAL_TYPES)
-        self.end_column()
+        self.add_option(settingkey.HINTABLE_CHECKS)
+        self.end_column(stretch_at_end=False)
 
         self.start_column()
         self.add_option(settingkey.POINTS_REPORT)
@@ -49,7 +48,7 @@ class HintsMenu(KH2Submenu):
         self.finalizeMenu()
 
         settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
-        settings.observe(settingkey.REPORTS_REVEAL, self._reveal_report_mode_changed)
+        # settings.observe(settingkey.REPORTS_REVEAL, self._reveal_report_mode_changed)
         settings.observe(settingkey.SCORE_MODE, self._hint_system_changed)
 
     def _hint_system_changed(self):
@@ -79,7 +78,7 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.POINTS_BOSS_TERRA, visible=(hint_system == 'Points' or score_mode_enabled == True))
         self.set_option_visibility(settingkey.POINTS_BOSS_FINAL, visible=(hint_system == 'Points' or score_mode_enabled == True))
         self.set_option_visibility(settingkey.POINTS_DEATH, visible=(hint_system == 'Points' or score_mode_enabled == True))
-        self.set_option_visibility(settingkey.REVEAL_TYPES, visible=hint_system == 'Spoiler')
+        self.set_option_visibility(settingkey.HINTABLE_CHECKS, visible=hint_system != 'Disabled')
         self.set_option_visibility(settingkey.REVEAL_COMPLETE, visible=hint_system == 'Spoiler')
         self.set_option_visibility(settingkey.REPORTS_REVEAL, visible=hint_system == 'Spoiler')
         if hint_system != "Spoiler":
@@ -88,7 +87,7 @@ class HintsMenu(KH2Submenu):
 
     def _reveal_report_mode_changed(self):
         report_mode_enabled = self.settings.get(settingkey.REPORTS_REVEAL)
-        setting, widget = self.widgets_and_settings_by_name[settingkey.REVEAL_TYPES]
+        setting, widget = self.widgets_and_settings_by_name[settingkey.HINTABLE_CHECKS]
         for selected in setting.choice_keys:
             if selected == "report":
                 index = setting.choice_keys.index(selected)

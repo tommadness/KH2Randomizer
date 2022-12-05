@@ -51,32 +51,23 @@ class Hints:
         # remove any items that aren't enabled by settings
         if settings.promiseCharm:
             tracker_includes.append("PromiseCharm")
-        else:
-            importantChecks.remove(itemType.PROMISE_CHARM)
-        if settings.extra_ics:
+        if itemType.OCSTONE in importantChecks: # questionable tracker_include. Consider more general alternative
             tracker_includes.append("extra_ics")
-        else:
-            importantChecks.remove(itemType.TROPHY)
-            importantChecks.remove(itemType.MANUFACTORYUNLOCK)
-            importantChecks.remove(itemType.OCSTONE)
         if settings.antiform:
             tracker_includes.append("Anti-Form")
-        else:
-            importantChecks.remove("Anti-Form")
-
-        importantChecks.remove(itemType.MUNNY_POUCH)
-        
-
 
         # start making the hint file
         hintsText = {}
         hintsText['hintsType'] = hintsType
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues
+        hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
         # All hints do the Shananas thing except JSmartee
         if hintsType != "JSmartee":
             hintsText['world'] = {}
+            for x in hintableWorlds:
+                hintsText['world'][x] = []
             for location,item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
@@ -107,7 +98,6 @@ class Hints:
                 else:
                     report_master[reportNumber] = location.LocationTypes
         
-        hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
         if hintsType == "Path":
             world_to_vanilla_ICs = {}
@@ -149,9 +139,6 @@ class Hints:
             proof_of_peace_world = None
             proof_of_nonexistence_world = None
 
-            # for x in hintableWorlds:
-            #     hintsText['world'][x] = []
-
             for location,item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
@@ -164,7 +151,7 @@ class Hints:
                             proof_of_peace_world = world_of_location
                         elif item.ItemType is itemType.PROOF:
                             proof_of_nonexistence_world = world_of_location
-                    elif item.ItemType not in [itemType.REPORT, itemType.PROMISE_CHARM, itemType.OCSTONE, itemType.TROPHY, itemType.MANUFACTORYUNLOCK]:
+                    elif item.ItemType not in [itemType.REPORT, itemType.PROMISE_CHARM, itemType.OCSTONE, itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.MUNNY_POUCH]:
                         # this item could have come from any world from this list
                         for w in ICs_to_hintable_worlds[item.Id]:
                             if world_of_location in hintableWorlds:

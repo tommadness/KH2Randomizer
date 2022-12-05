@@ -947,19 +947,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     Toggle(
         name=settingkey.ALLOW_PROOF_HINTING,
-        ui_label='Reports can Hint Proofs',
+        ui_label='Reports can Reveal Proofs',
         shared=True,
         default=False,
-        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports.",
+        tooltip="Points Mode only: If enabled, proofs can be directly revealed by reports.",
         randomizable=True
     ),
 
     Toggle(
         name=settingkey.ALLOW_REPORT_HINTING,
-        ui_label='Reports can Hint other Reports',
+        ui_label='Reports can Reveal other Reports',
         shared=True,
         default=True,
-        tooltip="Points Mode only: If enabled, reports can hint other reports.",
+        tooltip="Points Mode only: If enabled, reports can reveal other reports.",
         randomizable=True
     ),
     
@@ -973,8 +973,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
 
     MultiSelect(
-        name=settingkey.REVEAL_TYPES,
-        ui_label='Important Check Types to Reveal',
+        name=settingkey.HINTABLE_CHECKS,
+        ui_label='Hintable Checks',
         choices={
             'magic': 'Magic',
             'form': 'Drive Forms',
@@ -987,7 +987,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'other': 'Aux. Unlocks'
         },
         shared=True,
-        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof", "other"]
+        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof"]
     ),
 
     Toggle(
@@ -1229,13 +1229,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip='Add Antiform as an obtainable form.'
-    ),
-    Toggle(
-        name=settingkey.EXTRA_ICS,
-        ui_label='Add Aux. Unlocks as Hintable',
-        shared=True,
-        default=False,
-        tooltip='Adds Olympus Stone, Unknown Disk, and Hades Cup Trophy as hintable items.' 
     ),
     Toggle(
         name=settingkey.FIFTY_AP_BOOSTS,

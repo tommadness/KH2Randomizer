@@ -230,7 +230,7 @@ class RandomizerSettings():
         self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)
 
         self.spoiler_hint_values = [
-            item_type for item_type in ui_settings.get(settingkey.REVEAL_TYPES)
+            item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)
         ]
         if self.revealComplete:
             self.spoiler_hint_values.append("complete")
@@ -239,7 +239,6 @@ class RandomizerSettings():
             if self.revealMode == "bossreports" and ui_settings.get("boss")=="Disabled":
                 raise SettingsException("Can't use report hint bosses option without boss randomization.")
 
-        self.extra_ics = ui_settings.get(settingkey.EXTRA_ICS)
         self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)
 
         self.tracker_includes = []
@@ -254,18 +253,27 @@ class RandomizerSettings():
             self.tracker_includes.append("library")
         if self.hiscore_mode:
             self.tracker_includes.append("ScoreMode")
-        # if self.promiseCharm:
-        #     self.tracker_includes.append("PromiseCharm")
-        # if self.extra_ics:
-        #     self.tracker_includes.append("extra_ics")
-        # if self.antiform:
-        #     self.tracker_includes.append("Anti-Form")
-        self.important_checks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, 
-                        itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, 
-                        itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, 
-                        itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON,itemType.STORYUNLOCK,
-                        "Second Chance", "Once More",
-                        itemType.PROMISE_CHARM,itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.OCSTONE, "Anti-Form", itemType.MUNNY_POUCH]
+
+        hintable_checks_list = ui_settings.get(settingkey.HINTABLE_CHECKS)
+        self.important_checks = []
+
+        if "magic" in hintable_checks_list:
+            self.important_checks+=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, 
+                        itemType.CURE, itemType.REFLECT, itemType.MAGNET]
+        if "proof" in hintable_checks_list:
+            self.important_checks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE,itemType.PROMISE_CHARM]
+        if "form" in hintable_checks_list:
+            self.important_checks+=[itemType.FORM,"Anti-Form"]
+        if "page" in hintable_checks_list:
+            self.important_checks+=[itemType.TORN_PAGE]
+        if "summon" in hintable_checks_list:
+            self.important_checks+=[itemType.SUMMON]
+        if "visit" in hintable_checks_list:
+            self.important_checks+=[itemType.STORYUNLOCK]
+        if "ability" in hintable_checks_list:
+            self.important_checks+=["Second Chance", "Once More"]
+        if "other" in hintable_checks_list:
+            self.important_checks+=[itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.OCSTONE,itemType.MUNNY_POUCH]
 
         # making tracker includes use all worlds and 
         for l in locationType:
