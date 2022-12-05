@@ -224,7 +224,7 @@ class Items:
             KH2Item(362, "Munny Pouch",itemType.MUNNY_POUCH, itemRarity.RARE),
 
             KH2Item(537, "Hades Cup Trophy", itemType.TROPHY, itemRarity.UNCOMMON),
-            KH2Item(462, "Unknown Disk", itemType.MEMBERSHIPCARD, itemRarity.UNCOMMON), # DUMMY 15
+            KH2Item(462, "Unknown Disk", itemType.MANUFACTORYUNLOCK, itemRarity.UNCOMMON), # DUMMY 15
 
             KH2Item(363, "Crystal Orb", itemType.KEYITEM),
             KH2Item(364, "Seifer's Trophy", itemType.KEYITEM),

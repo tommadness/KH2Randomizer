@@ -1016,7 +1016,7 @@ class Locations:
                                         KH2Location(269, "1000 Heartless Ice Cream", locationCategory.POPUP,[locationType.HB],VanillaItems=[375]),
                                         KH2Location(511, "1000 Heartless Picture", locationCategory.POPUP,[locationType.HB],VanillaItems=[376]),]))
         self.add_node("Gull Wing",LocationNode([KH2Location(491, "Postern Gull Wing", locationCategory.CHEST,[locationType.HB],VanillaItems=[489]),]))
-        self.add_node("Heartless Manufactory",LocationNode([KH2Location(311, "Heartless Manufactory Cosmic Chain", locationCategory.CHEST,[locationType.HB], InvalidChecks=[itemType.MEMBERSHIPCARD]),]))
+        self.add_node("Heartless Manufactory",LocationNode([KH2Location(311, "Heartless Manufactory Cosmic Chain", locationCategory.CHEST,[locationType.HB], InvalidChecks=[itemType.MANUFACTORYUNLOCK]),]))
         self.add_node("Sephiroth",LocationNode([KH2Location(35, "Sephiroth Bonus", locationCategory.STATBONUS,[locationType.HB, locationType.Sephi]),
                                         KH2Location(282, "Sephiroth Fenrir", locationCategory.POPUP,[locationType.HB, locationType.Sephi],VanillaItems=[499]),]))
         self.add_node("Mushroom 13",LocationNode([KH2Location(588, "Winner's Proof", locationCategory.POPUP,[locationType.HB, locationType.Mush13], InvalidChecks=[itemType.PROOF_OF_PEACE],VanillaItems=[544]),

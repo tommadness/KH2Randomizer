@@ -126,7 +126,7 @@ class itemType(str, Enum):
     KEYITEM = "KeyItem"
     STORYUNLOCK= "Story Unlock"
     MUNNY_POUCH = "Munny Pouch"
-    MEMBERSHIPCARD = "Membership Card"
+    MANUFACTORYUNLOCK = "Manufactory Unlock"
     TROPHY = "OC Trophy"
     OCSTONE = "Olympus Stone"
     GAUGE = "Gauge Up"

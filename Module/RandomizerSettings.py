@@ -245,8 +245,6 @@ class RandomizerSettings():
         self.tracker_includes = []
         if self.level_one:
             self.tracker_includes.append("Level1Mode")
-        if self.promiseCharm:
-            self.tracker_includes.append("PromiseCharm")
         self.tracker_includes.append(level_setting)
         if self.roxas_abilities_enabled:
             self.tracker_includes.append("better_stt")
@@ -254,12 +252,20 @@ class RandomizerSettings():
             self.tracker_includes.append("visit_locking")
         if ui_settings.get(settingkey.STARTING_REPORTS)==13:
             self.tracker_includes.append("library")
-        if self.extra_ics:
-            self.tracker_includes.append("extra_ics")
         if self.hiscore_mode:
             self.tracker_includes.append("ScoreMode")
-        if self.antiform:
-            self.tracker_includes.append("Anti-Form")
+        # if self.promiseCharm:
+        #     self.tracker_includes.append("PromiseCharm")
+        # if self.extra_ics:
+        #     self.tracker_includes.append("extra_ics")
+        # if self.antiform:
+        #     self.tracker_includes.append("Anti-Form")
+        self.important_checks = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, 
+                        itemType.CURE, itemType.REFLECT, itemType.MAGNET, itemType.PROOF, 
+                        itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, 
+                        itemType.FORM, itemType.TORN_PAGE, itemType.SUMMON,itemType.STORYUNLOCK,
+                        "Second Chance", "Once More",
+                        itemType.PROMISE_CHARM,itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.OCSTONE, "Anti-Form", itemType.MUNNY_POUCH]
 
         # making tracker includes use all worlds and 
         for l in locationType:
