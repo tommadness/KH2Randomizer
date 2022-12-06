@@ -26,6 +26,10 @@ QLabel[cssClass~="header"] {{
     font-size: 20px;
 }}
 
+QLabel[cssClass~="small"] {{
+    font-size: 14px;
+}}
+
 QListView::item:selected {{
   background-color: {QTMATERIAL_PRIMARYCOLOR};
   selection-background-color: {QTMATERIAL_PRIMARYCOLOR};

@@ -22,6 +22,7 @@ class HintsMenu(KH2Submenu):
         self.end_column(stretch_at_end=False)
 
         self.start_column()
+        self.addHeader('Item Point Values')
         self.add_option(settingkey.POINTS_REPORT)
         self.add_option(settingkey.POINTS_PROOF)
         self.add_option(settingkey.POINTS_FORM)
@@ -34,6 +35,7 @@ class HintsMenu(KH2Submenu):
         self.end_column()
 
         self.start_column()
+        self.addHeader('Other Point Values')
         self.add_option(settingkey.POINTS_BONUS)
         self.add_option(settingkey.POINTS_COMPLETE)
         self.add_option(settingkey.POINTS_FORMLV)

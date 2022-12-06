@@ -8,13 +8,16 @@ from UI.Submenus.SubMenu import KH2Submenu
 class StartingMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Starting Items', settings=settings, in_layout='horizontal')
+        super().__init__(title='Starting Inventory', settings=settings, in_layout='horizontal')
 
         self.start_column()
         self.addHeader("Starting Inventory Options")
         self.add_option(settingkey.AUTO_EQUIP_START_ABILITIES)
         self.add_option(settingkey.STARTING_MOVEMENT)
         self.add_option(settingkey.STARTING_REPORTS)
+        self.end_column()
+
+        self.start_column()
         self.add_option(settingkey.STARTING_INVENTORY)
         self.end_column(stretch_at_end=False)
         self.start_column()
