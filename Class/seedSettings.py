@@ -795,10 +795,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.REPORT_DEPTH,
         ui_label='Report Depth',
         choices={
-            locationDepth.DataFight.name: 'Data Fights',
+            locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
             locationDepth.SecondBoss.name: 'Second Visit Boss',
             locationDepth.Anywhere.name: "Anywhere"
@@ -806,10 +806,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=locationDepth.SecondVisit.name,
         tooltip=textwrap.dedent('''
-            Data Fights - Force the item onto data fights only
+            Superbosses - Force the item onto superbosses only
             First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
             Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
+            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
@@ -820,10 +820,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.PROOF_DEPTH,
         ui_label='Proof Depth',
         choices={
-            locationDepth.DataFight.name: 'Data Fights',
+            locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
             locationDepth.SecondBoss.name: 'Second Visit Boss',
             locationDepth.Anywhere.name: "Anywhere"
@@ -831,10 +831,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=locationDepth.Anywhere.name,
         tooltip=textwrap.dedent('''
-            Data Fights - Force the item onto data fights only
+            Superbosses - Force the item onto superbosses only
             First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
             Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
+            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
@@ -845,10 +845,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.STORY_UNLOCK_DEPTH,
         ui_label='Key Item Depth',
         choices={
-            locationDepth.DataFight.name: 'Data Fights',
+            locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
             locationDepth.SecondBoss.name: 'Second Visit Boss',
             locationDepth.Anywhere.name: "Anywhere"
@@ -856,10 +856,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=locationDepth.Anywhere.name,
         tooltip=textwrap.dedent('''
-            Data Fights - Force the item onto data fights only
+            Superbosses - Force the item onto superbosses only
             First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
             Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
+            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
@@ -1568,11 +1568,16 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         choices={
             'default': 'Default Abilities',
             'randomize': 'Randomize Ability Pool',
-            'randomize support': 'Randomize Support Ability Pool'
+            'randomize support': 'Randomize Support Ability Pool',
+            'randomize stackable': 'Randomize Stackable Abilities'
         },
         shared=True,
         default='default',
-        tooltip='If "Randomize Ability Pool", picks Sora\'s action/support abilities at random (guaranteed to have 1 SC & 1 OM). \nRandomized Support Ability Pool will leave action abilities alone, but will randomize the support abilities (still guaranteed to have SC/OM)'
+        tooltip=textwrap.dedent('''
+            If "Randomize Ability Pool", picks Sora\'s action/support abilities at random (guaranteed to have 1 SC & 1 OM). 
+            Randomize Support Ability Pool will leave action abilities alone, but will randomize the support abilities (still guaranteed to have SC/OM)
+            Randomize Stackable Abilities will give you 1 of each ability that works on its own, but will randomize now many of the stackable abilities you get (at least 1 of each)
+        ''')
     ),
 
     SingleSelect(

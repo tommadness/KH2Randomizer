@@ -479,6 +479,7 @@ class Locations:
             self.add_edge("Ruined Chamber","Genie Jafar",RequirementEdge(battle=True))
             self.add_edge("Genie Jafar","AS Lexaeus",RequirementEdge(battle=True))
             self.add_edge("AS Lexaeus","Data Lexaeus",RequirementEdge())
+            self.data_nodes.append("AS Lexaeus")
             self.first_boss_nodes.append("Elemental Lords")
             self.second_boss_nodes.append("Genie Jafar")
         else:
@@ -549,6 +550,8 @@ class Locations:
             self.add_edge("Wisdom Popup","AS Marluxia",RequirementEdge(battle=True))
             self.add_edge("AS Marluxia","Data Marluxia",RequirementEdge())
             self.add_edge("Wisdom Popup","Lingering Will",RequirementEdge(battle=True,req=ItemPlacementHelpers.need_proof_connection))
+            
+            self.data_nodes.append("AS Marluxia")
         else:
             self.add_edge("Starting","Cornerstone Hill",RequirementEdge())
             self.add_edge("Cornerstone Hill","Pier",RequirementEdge())
@@ -682,6 +685,7 @@ class Locations:
             self.add_edge("AS Zexion","Data Zexion",RequirementEdge())
             self.first_boss_nodes.append("Hydra")
             self.second_boss_nodes.append("Hades")
+            self.data_nodes.append("AS Zexion")
         else:
             self.add_edge("Starting","Underworld Entrance",RequirementEdge())
             self.add_edge("Underworld Entrance","Passage",RequirementEdge())
@@ -822,6 +826,7 @@ class Locations:
             self.add_edge("AS Larxene","Data Larxene",RequirementEdge())
             self.first_boss_nodes.append("Photon Debugger")
             self.second_boss_nodes.append("MCP Bonus")
+            self.data_nodes.append("AS Larxene")
         else:
             self.add_edge("Starting","Pit Cell",RequirementEdge())
             self.add_edge("Pit Cell","Canyon",RequirementEdge())
@@ -885,6 +890,7 @@ class Locations:
             self.add_edge("AS Vexen","Data Vexen",RequirementEdge())
             self.first_boss_nodes.append("Oogie Boogie")
             self.second_boss_nodes.append("Experiment")
+            self.data_nodes.append("AS Vexen")
         else:
             self.add_edge("Starting","Santa's House",RequirementEdge())
             self.add_edge("Santa's House","Candy Cane Lane",RequirementEdge())

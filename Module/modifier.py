@@ -40,6 +40,49 @@ class SeedModifier():
             randomabilitypool.append(abilitydict["Once More"])
         return randomabilitypool + action
 
+    def randomStackableAbilityPool(action, support):
+        stackable_abilities = ["Combo Plus",
+                                "Air Combo Plus",
+                                "Combo Boost",
+                                "Air Combo Boost",
+                                "Reaction Boost",
+                                "Finishing Plus",
+                                "Negative Combo",
+                                "Berserk Charge",
+                                "Damage Drive",
+                                "Drive Boost",
+                                "Form Boost",
+                                "Summon Boost",
+                                "Experience Boost",
+                                "Draw",
+                                "Jackpot",
+                                "Lucky Lucky",
+                                "Drive Converter",
+                                "Fire Boost",
+                                "Blizzard Boost",
+                                "Thunder Boost",
+                                "Item Boost",
+                                "MP Rage",
+                                "MP Haste",
+                                "MP Hastera",
+                                "MP Hastega",
+                                "Defender",
+                                "Damage Control",
+                                "Combination Boost",
+                                ]
+        abilitylist = support + action
+        abilitydict = {i.Name: i for i in abilitylist}
+        unique_abilities = list(set([i.Name for i in abilitylist]))
+        unique_abilities.sort()
+        randomabilitypool = []
+        for u in unique_abilities:
+            randomabilitypool.append(abilitydict[u])
+        for _ in range(len(abilitylist)-len(unique_abilities)):
+            choice = random.choice(stackable_abilities)
+            randomabilitypool.append(abilitydict[choice])
+
+        return randomabilitypool
+
     def defaultAbilityPool(action, support):
         return action+support
 
