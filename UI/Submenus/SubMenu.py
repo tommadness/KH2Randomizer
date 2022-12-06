@@ -1,12 +1,11 @@
 import os
-from secrets import choice
 from typing import Optional
 
 from PySide6.QtCore import Qt, QSize
-from PySide6.QtGui import QIcon,QPixmap
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView,QRadioButton,QSizePolicy
+    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QRadioButton
 )
 
 import Class.seedSettings
@@ -138,16 +137,10 @@ class KH2Submenu(QWidget):
         widgets = []
         selected_keys = self.settings.get(setting_name)
         partial_keys = []
-        if isinstance(selected_keys[0],list):
+        if isinstance(selected_keys[0], list):
             partial_keys = selected_keys[1]
             selected_keys = selected_keys[0]
         for index, choice_key in enumerate(setting.choice_keys):
-            groupbox = QGroupBox(setting.choice_values[index])
-            groupbox.setAlignment(Qt.AlignCenter)
-            groupbox.setSizePolicy(QSizePolicy(QSizePolicy.Minimum,QSizePolicy.Minimum))
-            groupbox.setMaximumHeight(70)
-            groupbox.setMinimumWidth(250)
-
             randomize_button = QRadioButton("Rando")
             vanilla_button = QRadioButton("Vanilla")
             junk_button = QRadioButton("Junk")
@@ -162,23 +155,36 @@ class KH2Submenu(QWidget):
             vanilla_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
             junk_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
 
-            self.tristate_groups[choice_key] = (randomize_button,vanilla_button,junk_button)
+            self.tristate_groups[choice_key] = (randomize_button, vanilla_button, junk_button)
 
-            layout = QHBoxLayout()
-            layout.setContentsMargins(0,0,0,0)
+            top_layout = QHBoxLayout()
+            world_label = QLabel(setting.choice_values[index])
+            world_label.setProperty('cssClass', 'small')
+            top_layout.addWidget(world_label)
+
+            bottom_layout = QHBoxLayout()
+            bottom_layout.setContentsMargins(4, 0, 4, 0)
             label = QLabel()
             icon = QIcon(resource_path(dir_path + '/' + setting.choice_icons[choice_key]))
-            pixmap = icon.pixmap(icon.actualSize(QSize(36, 36)))
+            pixmap = icon.pixmap(icon.actualSize(QSize(32, 32)))
             label.setPixmap(pixmap)
-            layout.addWidget(label)
-            layout.addWidget(randomize_button)
-            layout.addWidget(vanilla_button)
-            layout.addWidget(junk_button)
-            layout.insertStretch(-1,1)
+            bottom_layout.addWidget(label)
+            button_layout = QHBoxLayout()
+            button_layout.addWidget(randomize_button)
+            button_layout.addWidget(vanilla_button)
+            button_layout.addWidget(junk_button)
+            bottom_layout.addLayout(button_layout)
 
-            groupbox.setLayout(layout)
-            self.tristate_backgrounds[choice_key] = groupbox
-            widgets.append(groupbox)
+            vertical = QVBoxLayout()
+            vertical.setContentsMargins(4, 4, 4, 4)
+            vertical.addLayout(top_layout)
+            vertical.addLayout(bottom_layout)
+            self.tristate_backgrounds[choice_key] = world_label
+
+            widget = QWidget()
+            widget.setStyleSheet('background-color: #232629')
+            widget.setLayout(vertical)
+            widgets.append(widget)
 
         self.widgets_and_settings_by_name[setting_name] = (setting, widgets)
         self._update_multi_tristate_buttons(setting)
@@ -212,14 +218,13 @@ class KH2Submenu(QWidget):
 
         return setting, widgets
 
-    def add_multiselect_buttons(self, setting_name: str, columns: int, group_title: str, tristate = False):
-
+    def add_multiselect_buttons(self, setting_name: str, columns: int, group_title: str, tristate=False):
         grid = QGridLayout()
         grid.setAlignment(Qt.AlignTop)
         if tristate:
             setting, widgets = self.make_multiselect_tristate(setting_name)
-            grid.setContentsMargins(0,0,0,0)
-            grid.setSpacing(3)
+            grid.setContentsMargins(0, 0, 0, 0)
+            grid.setSpacing(4)
         else:
             setting, widgets = self.make_multiselect_buttons(setting_name)
 
@@ -423,14 +428,14 @@ class KH2Submenu(QWidget):
         selected_keys = []
         partial_keys = []
         for index, button in enumerate(buttons):
-            rando,vanil,junk = self.tristate_groups[choice_keys[index]]
+            rando, vanil, junk = self.tristate_groups[choice_keys[index]]
             choice_group = self.tristate_backgrounds[choice_keys[index]]
             if rando.isChecked():
                 selected_keys.append(choice_keys[index])
-                choice_group.setStyleSheet("QGroupBox::title {background-color: #2E7D32}")
+                choice_group.setStyleSheet("QLabel {background-color: #2E7D32}")
             elif vanil.isChecked():
-                choice_group.setStyleSheet("QGroupBox::title {background-color: gray}")
+                choice_group.setStyleSheet("QLabel {background-color: gray}")
                 partial_keys.append(choice_keys[index])
             else:
-                choice_group.setStyleSheet("QGroupBox::title {background-color: {QTMATERIAL_PRIMARYCOLOR}}")
-        self.settings.set(setting.name, [selected_keys,partial_keys])
+                choice_group.setStyleSheet("QLabel {background-color: {QTMATERIAL_PRIMARYCOLOR}}")
+        self.settings.set(setting.name, [selected_keys, partial_keys])

@@ -6,7 +6,7 @@ from UI.Submenus.SubMenu import KH2Submenu
 class ShopDropMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Shops and Drops', settings=settings, in_layout='horizontal')
+        super().__init__(title='Shops/Drops', settings=settings, in_layout='horizontal')
 
         self.start_column()
         self.addHeader('Shops')
@@ -21,7 +21,6 @@ class ShopDropMenu(KH2Submenu):
         self.add_option(settingkey.GLOBAL_LUCKY)
         self.add_option(settingkey.RICH_ENEMIES)
         self.add_option(settingkey.UNLIMITED_MP)
-        self.add_option(settingkey.FAST_URNS)
         self.end_column(stretch_at_end=True)
         
         self.finalizeMenu()

@@ -45,6 +45,7 @@ from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CosmeticsMenu import CosmeticsMenu
 from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
+from UI.Submenus.ItemPoolMenu import ItemPoolMenu
 from UI.Submenus.KeybladeMenu import KeybladeMenu
 from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
@@ -240,6 +241,7 @@ class KH2RandomizerApp(QMainWindow):
             StartingMenu(self.settings),
             HintsMenu(self.settings),
             KeybladeMenu(self.settings),
+            ItemPoolMenu(self.settings),
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
             BattleLevelMenu(self.settings),

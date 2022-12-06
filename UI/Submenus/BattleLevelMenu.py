@@ -8,7 +8,7 @@ from Module.battleLevels import BtlvViewer
 
 class BattleLevelMenu(KH2Submenu):
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='World Battle Levels', settings=settings, in_layout='horizontal')
+        super().__init__(title='Battle Levels', settings=settings, in_layout='horizontal')
         self.world_level_labels = {}
         self.battle_levels = BtlvViewer()
 

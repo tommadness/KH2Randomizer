@@ -584,7 +584,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_PROOF,
-        ui_label="Proof Point Value",
+        ui_label="Proof",
         minimum=0,
         maximum=1000,
         step=1,
@@ -595,7 +595,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_FORM,
-        ui_label="Forms Point Value",
+        ui_label="Drive Form",
         minimum=0,
         maximum=1000,
         step=1,
@@ -606,7 +606,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_MAGIC,
-        ui_label="Magic Point Value",
+        ui_label="Magic",
         minimum=0,
         maximum=1000,
         step=1,
@@ -617,7 +617,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_SUMMON,
-        ui_label="Summon Point Value",
+        ui_label="Summon",
         minimum=0,
         maximum=1000,
         step=1,
@@ -628,7 +628,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_ABILITY,
-        ui_label="SC & OM Point Value",
+        ui_label="Second Chance/Once More",
         minimum=0,
         maximum=1000,
         step=1,
@@ -639,7 +639,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_PAGE,
-        ui_label="Page Point Value",
+        ui_label="Torn Page",
         minimum=0,
         maximum=1000,
         step=1,
@@ -650,7 +650,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_VISIT,
-        ui_label="Visit Unlock Point Value",
+        ui_label="World Key Item",
         minimum=0,
         maximum=1000,
         step=1,
@@ -661,7 +661,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
     IntSpinner(
         name=settingkey.POINTS_REPORT,
-        ui_label="Report Point Value",
+        ui_label="Ansem Report",
         minimum=0,
         maximum=1000,
         step=1,
@@ -672,7 +672,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
     IntSpinner(
         name=settingkey.POINTS_AUX,
-        ui_label="Aux Unlocks Point Value",
+        ui_label="Aux. Unlock",
         minimum=0,
         maximum=1000,
         step=1,
@@ -683,7 +683,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_BONUS,
-        ui_label="Bonus Level Points",
+        ui_label="Bonus Level",
         minimum=-10,
         maximum=1000,
         step=1,
@@ -694,7 +694,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_COMPLETE,
-        ui_label="World Completion Points",
+        ui_label="World Completion",
         minimum=-10,
         maximum=1000,
         step=1,
@@ -705,7 +705,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_FORMLV,
-        ui_label="Form level Points",
+        ui_label="Form Level",
         minimum=-10,
         maximum=1000,
         step=1,
@@ -716,7 +716,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_DEATH,
-        ui_label="Death Penalty Points",
+        ui_label="Death Penalty",
         minimum=-1000,
         maximum=1000,
         step=1,
@@ -727,7 +727,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_BOSS_NORMAL,
-        ui_label="Normal Boss Defeated Points",
+        ui_label="Normal Boss Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -738,7 +738,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_AS,
-        ui_label="Absent Silhouette Defeated Points",
+        ui_label="Absent Silhouette Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -749,7 +749,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_DATA,
-        ui_label="Data Boss Defeated Points",
+        ui_label="Data Boss Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -760,7 +760,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_SEPHIROTH,
-        ui_label="Sephiroth Defeated Points",
+        ui_label="Sephiroth Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -771,7 +771,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_TERRA,
-        ui_label="Lingering Will Defeated Points",
+        ui_label="Lingering Will Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -782,7 +782,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_FINAL,
-        ui_label="Final Xemnas Defeated Points",
+        ui_label="Final Xemnas Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -974,7 +974,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     MultiSelect(
         name=settingkey.HINTABLE_CHECKS,
-        ui_label='Hintable Checks',
+        ui_label='Hintable Items',
         choices={
             'magic': 'Magic',
             'form': 'Drive Forms',
@@ -1302,14 +1302,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Remove Wardrobe Wakeup Animation',
         shared=True,
         default=False,
-        tooltip='Wardrobe in BC will not wake up when pushing it.'
+        tooltip='The wardrobe in Beast\'s Castle will not wake up when pushing it.'
     ),
     Toggle(
         name=settingkey.FAST_URNS,
-        ui_label='Fast OC Urns',
+        ui_label='Fast Olympus Coliseum Urns',
         shared=True,
         default=False,
-        tooltip="OC Urns drop a lot more orbs.",
+        tooltip="The urns in the minigame in Olympus Coliseum drop more orbs, making the minigame much faster.",
         randomizable=False
     ),
     Toggle(
@@ -1368,10 +1368,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.SHOP_UNLOCKS,
-        ui_label='Add World Unlock Items To Shop',
+        ui_label='Add World Key Items To Shop',
         shared=True,
         default=False,
-        tooltip="Adds duplicates of world unlock items into the moogle shop.",
+        tooltip="Adds duplicates of world key items into the moogle shop.",
         randomizable=False
     ),
 
