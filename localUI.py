@@ -27,7 +27,7 @@ from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
-    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy
+    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy, QDialog, QGridLayout, QListWidget
 )
 
 from qt_material import apply_stylesheet
@@ -118,6 +118,42 @@ class MultiGenSeedThread(QThread):
             self.failed.emit(e)
 
 
+class RandomPresetDialog(QDialog):
+    def __init__(self,preset_list):
+        super().__init__()
+        self.preset_list = preset_list
+        self.setWindowTitle("Randomly Pick a Preset")
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(500)
+
+        box = QGridLayout()
+
+        self.preset_list_widget = QListWidget()
+        self.preset_list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
+        for c in self.preset_list:
+            self.preset_list_widget.addItem(c)
+        box.addWidget(self.preset_list_widget,0,0)
+        
+        select_all_button = QPushButton("Select All Presets")
+        select_all_button.clicked.connect(self.select_all_presets_from_list)
+
+        cancel_button = QPushButton("Cancel")
+        choose_button = QPushButton("Randomly Pick From Selected Presets")
+        cancel_button.clicked.connect(self.reject)
+        choose_button.clicked.connect(self.accept)
+
+        box.addWidget(select_all_button,1,0)
+        box.addWidget(cancel_button,1,1)
+        box.addWidget(choose_button,0,1)
+
+        self.setLayout(box)
+
+    def select_all_presets_from_list(self):
+        for index in range(self.preset_list_widget.count()):
+            self.preset_list_widget.item(index).setSelected(True)
+
+    def save(self):
+        return [p.text() for p in self.preset_list_widget.selectedItems()]
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
@@ -182,7 +218,7 @@ class KH2RandomizerApp(QMainWindow):
 
         for x in self.preset_json.keys():
             if x != 'BaseDailySeed':
-                self.presetsMenu.addAction(x, lambda x=x: self.usePreset(x))
+                self.loadPresetsMenu.addAction(x, lambda x=x: self.usePreset(x))
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         self.spoiler_log.setCheckState(Qt.Checked)
@@ -264,12 +300,14 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar = self.menuBar()
         self.presetMenu = QMenu("Preset")
         self.presetMenu.addAction("Open Preset Folder", self.openPresetFolder)
-        self.presetsMenu = QMenu("Presets")
+        self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
+        self.loadPresetsMenu = QMenu("Load a Preset")
+        self.presetMenu.addMenu(self.loadPresetsMenu)
+        self.presetMenu.addAction("Pick a Random Preset", self.randomPreset)
+        
         self.seedMenu = QMenu("Share Seed")
         self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
         self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
-        self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
-        self.presetMenu.addMenu(self.presetsMenu)
         self.config_menu = QMenu('Configure')
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
         self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
@@ -581,9 +619,30 @@ class KH2RandomizerApp(QMainWindow):
             # add current settings to saved presets, add to current preset list, change preset selection.
             settings_json = self.settings.settings_json()
             self.preset_json[preset_name] = settings_json
-            self.presetsMenu.addAction(preset_name, lambda: self.usePreset(preset_name))
+            self.loadPresetsMenu.addAction(preset_name, lambda: self.usePreset(preset_name))
             with open(os.path.join(PRESET_FOLDER, preset_name + '.json'), 'w') as presetData:
                 presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
+
+    def randomPreset(self):
+        preset_select_dialog = RandomPresetDialog(self.preset_json.keys())
+        if preset_select_dialog.exec():
+            random_preset_list = preset_select_dialog.save()
+            if len(random_preset_list) == 0:
+                message = QMessageBox(text="Need at least 1 preset selected")
+                message.setWindowTitle("KH2 Seed Generator")
+                message.exec()
+            else:
+                seedString = self.seedName.text()
+                if seedString == "":
+                    characters = string.ascii_letters + string.digits
+                    seedString = (''.join(random.choice(characters) for i in range(30)))
+                    self.seedName.setText(seedString)
+                random.seed(self.seedName.text())
+                selected_preset = random.choice(random_preset_list)
+                self.usePreset(selected_preset)
+                message = QMessageBox(text=f"Picked {selected_preset}")
+                message.setWindowTitle("KH2 Seed Generator")
+                message.exec()
 
     def openPresetFolder(self):
         os.startfile(PRESET_FOLDER)
