@@ -27,7 +27,7 @@ class BattleLevelMenu(KH2Submenu):
         # self.full_world_level_layout.addWidget(first_label,0,1)
         # self.full_world_level_layout.addWidget(second_label,0,2)
         # self.full_world_level_layout.addWidget(third_label,0,3)
-        # self.add_battle_level_info(locationType.STT)
+        self.add_battle_level_info(locationType.STT)
         self.add_battle_level_info(locationType.TT)
         self.add_battle_level_info(locationType.HB)
         self.add_battle_level_info(locationType.LoD)

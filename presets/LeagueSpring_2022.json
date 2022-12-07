@@ -194,6 +194,7 @@
     "wisdom_exp_curve": "DAWN",
     "wisdom_exp_multiplier": 3.0,
     "worlds_with_rewards": [
+        "Level",
         "FormLevel",
         "STT",
         "TT",

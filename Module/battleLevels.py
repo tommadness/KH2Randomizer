@@ -17,21 +17,41 @@ class BtlvViewer():
         self.worlds = [None,None,locationType.TT,None,locationType.HB,locationType.BC,locationType.OC,locationType.Agrabah,
                         locationType.LoD,locationType.HUNDREDAW,locationType.PL,locationType.Atlantica,locationType.DC,locationType.DC,
                         locationType.HT,None,locationType.PR,locationType.SP,locationType.TWTNW,None,None,None,None,None]
-        self.visit_flags = {}
-        self.visit_flags[locationType.TT] = [(2,0x040001),(2,0x140001),(2,0x140401),(2,0x141C01),(2,0x143D01),(2,0x157D79)]
-        self.visit_flags[locationType.HB] = [(4,0x141C01),(4,0x147D09),(4,0x15FD79)]
-        self.visit_flags[locationType.LoD] = [(8,0x141C01),(8,0x147D19)]
-        self.visit_flags[locationType.BC] = [(5,0x141C01),(5,0x147D19)]
-        self.visit_flags[locationType.OC] = [(6,0x141C01),(6,0x147D19)]
-        self.visit_flags[locationType.DC] = [(12,0x141D01),(13,0x141D01)]
-        self.visit_flags[locationType.PR] = [(16,0x141C01),(16,0x147D19)]
-        self.visit_flags[locationType.Agrabah] = [(7,0x141D01),(7,0x147D19)]
-        self.visit_flags[locationType.HT] = [(14,0x141D01),(14,0x147D19)]
-        self.visit_flags[locationType.PL] = [(10,0x141D01),(10,0x15FDF9)]
-        self.visit_flags[locationType.SP] = [(17,0x147D01),(17,0x15FD79)]
-        self.visit_flags[locationType.TWTNW] = [(18,0x157D79)]
+        self.goa_btlv = True
+        btlv_file = "static/btlv.bin"
+
+        if self.goa_btlv:
+            btlv_file = "static/goa_btlv.bin"
+            self.visit_flags = {}
+            self.visit_flags[locationType.STT] = [(2,0x00010),(2,0x00020),(2,0x00040)]
+            self.visit_flags[locationType.TT] = [(2,0x00100),(2,0x00200),(2,0x00800)]
+            self.visit_flags[locationType.HB] = [(4,0x00010),(4,0x00080),(4,0x00200)]
+            self.visit_flags[locationType.LoD] = [(8,0x00010),(8,0x00020)]
+            self.visit_flags[locationType.BC] = [(5,0x00010),(5,0x00020)]
+            self.visit_flags[locationType.OC] = [(6,0x00010),(6,0x00020)]
+            self.visit_flags[locationType.DC] = [(12,0x00010),(13,0x00010)]
+            self.visit_flags[locationType.PR] = [(16,0x00010),(16,0x00020)]
+            self.visit_flags[locationType.Agrabah] = [(7,0x00010),(7,0x00040)]
+            self.visit_flags[locationType.HT] = [(14,0x00010),(14,0x00040)]
+            self.visit_flags[locationType.PL] = [(10,0x00010),(10,0x00040)]
+            self.visit_flags[locationType.SP] = [(17,0x00010),(17,0x00040)]
+            self.visit_flags[locationType.TWTNW] = [(18,0x00010)]
+        else:
+            self.visit_flags = {}
+            self.visit_flags[locationType.TT] = [(2,0x040001),(2,0x140001),(2,0x140401),(2,0x141C01),(2,0x143D01),(2,0x157D79)]
+            self.visit_flags[locationType.HB] = [(4,0x141C01),(4,0x147D09),(4,0x15FD79)]
+            self.visit_flags[locationType.LoD] = [(8,0x141C01),(8,0x147D19)]
+            self.visit_flags[locationType.BC] = [(5,0x141C01),(5,0x147D19)]
+            self.visit_flags[locationType.OC] = [(6,0x141C01),(6,0x147D19)]
+            self.visit_flags[locationType.DC] = [(12,0x141D01),(13,0x141D01)]
+            self.visit_flags[locationType.PR] = [(16,0x141C01),(16,0x147D19)]
+            self.visit_flags[locationType.Agrabah] = [(7,0x141D01),(7,0x147D19)]
+            self.visit_flags[locationType.HT] = [(14,0x141D01),(14,0x147D19)]
+            self.visit_flags[locationType.PL] = [(10,0x141D01),(10,0x15FDF9)]
+            self.visit_flags[locationType.SP] = [(17,0x147D01),(17,0x15FD79)]
+            self.visit_flags[locationType.TWTNW] = [(18,0x157D79)]
         
-        with open(resource_path("static/btlv.bin"), "rb") as btlvBar:
+        with open(resource_path(btlv_file), "rb") as btlvBar:
             self.binaryContent = bytearray(btlvBar.read())
         self._make_btlv_vanilla()
     
@@ -42,7 +62,7 @@ class BtlvViewer():
             if battle_level_offset is None:
                 raise BackendException("Trying to offset battle levels without a provided offset")
             self._make_btlv_vanilla()
-            self._change_btlv(battle_level_offset)
+            self._offset_btlv(battle_level_offset)
         else:
             raise BackendException("Invalid battle level setting")
 
@@ -57,17 +77,32 @@ class BtlvViewer():
                 self.binaryContent[offset+y] = number_to_bytes(self.flags[x][y-8])[0]
         outZip.writestr("modified_btlv.bin",self.binaryContent)
 
+    def _interpret_flags(self, flags_entry):
+        battle_level_sum = 0
+        flag_index=0
+        skip_9 = self.goa_btlv
+        world_index = flags_entry[0]
+        flags_entry = flags_entry[1]
+        while flags_entry > 0:
+            if not skip_9 and flag_index==9:
+                skip_9 = True
+                flags_entry = flags_entry>>1
+                continue
+            if flags_entry % 2 == 1:
+                battle_level_sum+=self.flags[flag_index][world_index]
+            flag_index+=1
+            flags_entry = flags_entry>>1
+        return battle_level_sum
 
     def _make_btlv_vanilla(self):
         self.flags = []
-        self.modded_entries = [{} for x in self.worlds] # world - flag
         for x in range(20):
             offset = 8+32*x
             self.flags.append([])
             for y in range(8,32):
                 self.flags[-1].append(bytes_to_number(self.binaryContent[offset+y]))
     
-    def _change_btlv(self,btlv_change):
+    def _offset_btlv(self,btlv_change):
         for world,visit_flag_list in self.visit_flags.items():
             current_btlvs = self.get_battle_levels(world)
             for visit_number in range(len(visit_flag_list)):
@@ -84,7 +119,7 @@ class BtlvViewer():
             if prev_btlv > new_level:
                 raise BackendException("Trying to set battle level to less than previous visit")
         current_visit_flags = self.visit_flags[world][visit_number]
-        if prev_visit_flags[0] == current_visit_flags[0]:
+        if not self.goa_btlv and prev_visit_flags[0] == current_visit_flags[0]:
             delta_btlv = new_level-prev_btlv
             changed_flags = current_visit_flags[1] ^ prev_visit_flags[1]
             self._set_level(world_index,(current_visit_flags[0],changed_flags),delta_btlv)
@@ -93,26 +128,10 @@ class BtlvViewer():
 
         return new_level
 
-    def _interpret_flags(self, flags_entry):
-        battle_level_sum = 0
-        flag_index=0
-        skip_9 = False
-        world_index = flags_entry[0]
-        flags_entry = flags_entry[1]
-        while flags_entry > 0:
-            if not skip_9 and flag_index==9:
-                skip_9 = True
-                flags_entry = flags_entry>>1
-                continue
-            if flags_entry % 2 == 1:
-                battle_level_sum+=self.flags[flag_index][world_index]
-            flag_index+=1
-            flags_entry = flags_entry>>1
-        return battle_level_sum
         
     def _set_level(self, world_index, flags_to_set, number_to_set):
         flag_index=0
-        skip_9 = False
+        skip_9 = self.goa_btlv
         added_number = False
         world_index = flags_to_set[0]
         flags_to_set = flags_to_set[1]
