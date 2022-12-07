@@ -47,7 +47,7 @@ class CosmeticsMod:
     @staticmethod
     def cosmetics_mod_path(openkh_path: Path, create_if_missing: bool) -> Optional[Path]:
         """Returns the path to the cosmetics mod (within OpenKH `mods` folder)."""
-        cosmetics_mod_path = openkh_path / 'mods' / 'KH2Randomizer-Cosmetics-PC'
+        cosmetics_mod_path = openkh_path / 'mods' / 'kh2' / 'KH2Randomizer-Cosmetics-PC'
         if create_if_missing:
             cosmetics_mod_path.mkdir(parents=True, exist_ok=True)
         if cosmetics_mod_path.is_dir():
@@ -112,7 +112,7 @@ class CosmeticsMod:
         if openkh_path is None:
             return {}
 
-        cosmetics_mod_path = openkh_path / 'mods' / 'KH2Randomizer-Cosmetics-PC'
+        cosmetics_mod_path = openkh_path / 'mods' / 'kh2' / 'KH2Randomizer-Cosmetics-PC'
         music_files = CosmeticsMod._collect_music_files(cosmetics_mod_path)
 
         return {category: len(song_list) for category, song_list in music_files.items()}

@@ -17,6 +17,7 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.PR_MAP_SKIP)
         self.add_option(settingkey.ATLANTICA_TUTORIAL_SKIP)
         self.add_option(settingkey.REMOVE_WARDROBE_ANIMATION)
+        self.add_option(settingkey.REMOVE_CUTSCENES)
         self.end_column()
 
         self.start_column()
