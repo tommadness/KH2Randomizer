@@ -219,60 +219,43 @@ class SeedZip():
                     return True
                 if settings.enemy_options.get("retry_dark_thorn", False):
                     return True
-
+                if not settings.enemy_options.get("remove_cutscenes", False) in [False, "Disabled"]:
+                    return True
                 return False
 
             enemySpoilers = None
             enemySpoilersJSON = {}
             if _shouldRunKHBR():
-                # load in known crashing combinations
                 enemySpoilers = None
                 enemySpoilersJSON = {}
-                try:
-                    if platform == "PC":
-                        settings.enemy_options["memory_expansion"] = True
-                    else:
-                        settings.enemy_options["memory_expansion"] = False
-                    
-                    from khbr.randomizer import Randomizer as khbr
-                    enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
+            
+                if platform == "PC":
+                    settings.enemy_options["memory_expansion"] = True
+                else:
+                    settings.enemy_options["memory_expansion"] = False
+                
+                from khbr.randomizer import Randomizer as khbr
+                enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
 
-                    if pc_seed_toggle:
-                        # TODO: Remove this modification when khbr is changed to handle multi-languages
-                        for asset in mod["assets"]:
-                            if "msn/jp" in asset["name"] and ".bar" in asset["name"]:
-                                asset["multi"] = []
-                                for region in ["us","fr","gr","it","sp","uk"]:
-                                    asset["multi"].append({'name':asset["name"].replace("jp",region)})
-                            elif "ard/us" in asset["name"]:
-                                asset["multi"] = []
-                                for region in ["jp","fr","gr","it","sp","uk"]:
-                                    asset["multi"].append({'name':asset["name"].replace("us",region)})
+                lines = enemySpoilers.split("\n")
 
-
-                    lines = enemySpoilers.split("\n")
-
-                    current_key = ""
-                    for line in lines:
-                        if '\t' in line:
-                            modded_line = line.replace('\t','')
-                            enemies = modded_line.split(" became ")
-                            # this is adding to the current list
-                            new_entry = {}
-                            new_entry["original"] = enemies[0]
-                            new_entry["new"] = enemies[1]
-                            enemySpoilersJSON[current_key].append(new_entry)
-                        elif line!="":
-                            current_key = line
-                            enemySpoilersJSON[current_key] = []
-                    if enemySpoilersJSON:
-                        outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
-                        # for boss_replacement in enemySpoilersJSON["BOSSES"]:
-                        #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
-                except Exception as e:
-                    print(f"{e}")
-                    return False
-                    # raise BossEnemyException(f"Boss/enemy module had an unexpected error {e}. Try different a different seed or different settings.")
+                current_key = ""
+                for line in lines:
+                    if '\t' in line:
+                        modded_line = line.replace('\t','')
+                        enemies = modded_line.split(" became ")
+                        # this is adding to the current list
+                        new_entry = {}
+                        new_entry["original"] = enemies[0]
+                        new_entry["new"] = enemies[1]
+                        enemySpoilersJSON[current_key].append(new_entry)
+                    elif line!="":
+                        current_key = line
+                        enemySpoilersJSON[current_key] = []
+                if enemySpoilersJSON:
+                    outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
+                    # for boss_replacement in enemySpoilersJSON["BOSSES"]:
+                    #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
 
             print("Passed boss/enemy")
 

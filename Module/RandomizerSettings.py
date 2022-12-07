@@ -158,7 +158,8 @@ class RandomizerSettings():
         self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
                               'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
                               'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
-                              'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN)}
+                              'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN),
+                              'remove_cutscenes': ui_settings.get(settingkey.REMOVE_CUTSCENES)}
         for setting in seedSettings.boss_settings + seedSettings.enemy_settings:
             value = ui_settings.get(setting.name)
             if value is not None:

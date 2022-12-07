@@ -1304,6 +1304,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='The wardrobe in Beast\'s Castle will not wake up when pushing it.'
     ),
+    SingleSelect(
+        name=settingkey.REMOVE_CUTSCENES,
+        ui_label='Remove Most Cutscenes',
+        shared=True,
+        choices={
+            'Disabled': 'Disabled',
+            'Minimal': 'Minimal',
+            'Non-Reward': 'Non-Reward',
+            'Maximum': 'Maximum'
+        },
+        default='Disabled',
+        tooltip='Removes as many cutscenes from the game as possible. 3 different levels. 1 - Minimal: Remove as many cutscenes as possible without causing side effects. 2 - Non-Reward: Also remove cutscenes prior to forced fights, which causes the "continue" on game over to force you back into the fight (can be worked around using the auto-save mod). 3 - Maximum: Also remove cutscenes prior to receiving popup rewards, which causes the popops to not appear (you still get the reward, and it still shows up on the tracker).'
+    ),
     Toggle(
         name=settingkey.FAST_URNS,
         ui_label='Fast Olympus Coliseum Urns',

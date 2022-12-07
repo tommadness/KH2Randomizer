@@ -59,6 +59,7 @@ CUPS_GIVE_XP = 'cups_give_xp'
 REMOVE_POPUPS = 'remove_popups'
 RETRY_DFX = 'retry_data_final_xemnas'
 RETRY_DARK_THORN = 'retry_dark_thorn'
+REMOVE_CUTSCENES = 'remove_cutscenes'
 REPORT_DEPTH = 'report_depth'
 SCORE_MODE = 'score_mode'
 POINTS_PROOF = "points_proofs"

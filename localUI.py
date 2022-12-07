@@ -465,6 +465,8 @@ class KH2RandomizerApp(QMainWindow):
                 disable_emu = False
                 disable_emu = disable_emu or rando_settings.enemy_options["enemy"] == "Wild"
                 disable_emu = disable_emu or rando_settings.enemy_options["bosses_replace_enemies"]
+                disable_emu = disable_emu or rando_settings.enemy_options["combine_enemy_sizes"]
+                disable_emu = disable_emu or rando_settings.enemy_options["combine_melee_ranged"]
                 # disable_emu = disable_emu or self.settings.get(settingkey.TT1_JAILBREAK)
 
 
