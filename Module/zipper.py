@@ -1,20 +1,20 @@
 import base64
-import copy
-from doctest import master
-import enum
 import io
 import json
-import yaml
 import zipfile
 from itertools import accumulate
-from Class.exceptions import BossEnemyException
+from pathlib import Path
 
+import yaml
+from PIL import Image
+
+from Class.exceptions import BossEnemyException
 from Class.itemClass import ItemEncoder, itemRarity
 from Class.modYml import modYml
+from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType
-from List.DropRateIds import id_to_enemy_name
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
 from Module.hints import Hints
@@ -262,6 +262,7 @@ class SeedZip():
             if multiworld:
                 outZip.writestr("multiworld.multi", json.dumps(multiworld()))
 
+            self.generate_seed_hash_image(settings, outZip)
             self.createPuzzleAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
             self.createSynthAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
             self.createASDataAssets(settings, mod, outZip)
@@ -324,6 +325,33 @@ class SeedZip():
         data.seek(0)
         self.outputZip = data
         return True
+
+    def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
+        hash_icon_path = Path(resource_path("static/seed-hash-icons"))
+        icon_paths = [resource_path(hash_icon_path / (icon + '.png')) for icon in settings.seedHashIcons]
+
+        # Adapted from https://stackoverflow.com/a/30228308
+        images = [Image.open(x) for x in icon_paths]
+        widths, heights = zip(*(i.size for i in images))
+
+        total_width = sum(widths)
+        max_height = max(heights)
+
+        stitched_image = Image.new('RGBA', (total_width, max_height))
+
+        x_offset = 0
+        for image in images:
+            stitched_image.paste(image, (x_offset, 0))
+            x_offset += image.size[0]
+
+        image_file = io.BytesIO()
+        stitched_image.save(image_file, 'PNG')
+        out_zip.writestr('seed_hash.png', image_file.getvalue())
+
+        for image in images:
+            image.close()
+        image_file.close()
+        stitched_image.close()
 
     def createBtlvRandoAssets(self, settings, mod, outZip):
         if settings.battle_level_rando == "Normal" or \
