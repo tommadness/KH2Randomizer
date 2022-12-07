@@ -16,11 +16,9 @@
     "donald_ap": 55,
     "enable_promise_charm": false,
     "enemy": "Disabled",
-    "extra_ics": false,
     "fifty_ap_boosts": true,
     "final_exp_curve": "DAWN",
     "final_exp_multiplier": 3.5,
-    "form_level_rewards": true,
     "garden_of_assemblage_rewards": true,
     "glass_cannon": false,
     "goofy_ap": 54,
@@ -153,7 +151,7 @@
     "retry_data_final_xemnas": true,
     "reveal_complete": true,
     "reveal_reportmode": true,
-    "reveal_types": [
+    "hintable_checks": [
         "magic",
         "form",
         "summon",
@@ -161,8 +159,7 @@
         "ability",
         "report",
         "visit",
-        "proof",
-        "other"
+        "proof"
     ],
     "roxas_abilities_enabled": false,
     "selected_boss": null,
@@ -197,6 +194,7 @@
     "wisdom_exp_curve": "DAWN",
     "wisdom_exp_multiplier": 3.0,
     "worlds_with_rewards": [
+        "FormLevel",
         "STT",
         "TT",
         "HB",

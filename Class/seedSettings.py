@@ -1,3 +1,4 @@
+import copy
 import math
 import random
 import textwrap
@@ -175,6 +176,67 @@ class MultiSelect(Setting):
 
         return selected_values
 
+class MultiSelectTristate(Setting):
+    def __init__(
+            self,
+            name: str,
+            ui_label: str,
+            choices: dict[str, str],
+            shared: bool,
+            default: list[list[str],list[str]],
+            choice_icons: dict[str, str] = None,
+            tooltip: str = '',
+            randomizable = None):
+        super().__init__(name, str, ui_label, shared, default, tooltip, randomizable)
+        self.choices = choices
+        self.choice_keys = list(choices.keys())
+        self.partial_choice_keys = list()
+        self.choice_values = list(choices.values())
+        self.choice_icons = choice_icons
+
+    def settings_string(self, value) -> str:
+        choice_keys = self.choice_keys
+
+        bit_array = BitArray(len(choice_keys))
+        bit_array_partial = BitArray(len(choice_keys))
+        for index, choice_key in enumerate(choice_keys):
+            if isinstance(value[0],list):
+                if choice_key in value[0]:
+                    bit_array[index] = True
+                else:
+                    bit_array[index] = False
+                if choice_key in value[1]:
+                    bit_array_partial[index] = True
+                else:
+                    bit_array_partial[index] = False
+            else:
+                if choice_key in value:
+                    bit_array[index] = True
+                else:
+                    bit_array[index] = False
+        return str(bit_array.uint)+"+"+str(bit_array_partial.uint)
+
+    def parse_settings_string(self, settings_string: str):
+        choice_keys = self.choice_keys
+        split_settings = settings_string.split('+')
+        rando_string = split_settings[0]
+        vanilla_string = split_settings[1]
+
+        bit_array = BitArray(uint=int(rando_string), length=len(choice_keys))
+        bit_array_partial = BitArray(uint=int(vanilla_string), length=len(choice_keys))
+
+        selected_values = []
+        partial_values = []
+        for index, choice_key in enumerate(choice_keys):
+            if bit_array[index]:
+                selected_values.append(choice_key)
+        for index, choice_key in enumerate(choice_keys):
+            if bit_array_partial[index]:
+                partial_values.append(choice_key)
+
+        return [selected_values,partial_values]
+        
+
 _drive_exp_curve_tooltip_text = textwrap.dedent('''
         Experience curve options, inspired by KH1's experience curves. Midday and dusk will reduce the total 
                 EXP needed to get to Level 7, but levels 2,3, and 4 will need more EXP to compensate.
@@ -186,7 +248,7 @@ _drive_exp_curve_tooltip_text = textwrap.dedent('''
 _all_settings = [
     SingleSelect(
         name=settingkey.SORA_LEVELS,
-        ui_label='Sora Levels',
+        ui_label='Max Level Reward',
         choices={
             'Level': 'Level 1',
             'ExcludeFrom50': 'Level 50',
@@ -444,6 +506,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label="Growth Ability Starting Level",
         choices={
             'Disabled': 'Disabled',
+            '3Random': '3 Random',
             'Random': '5 Random',
             'Level_1': 'Level 1',
             'Level_2': 'Level 2',
@@ -453,13 +516,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default='Level_1',
         tooltip=textwrap.dedent('''
+            3 Random - Start with 3 individual growths at random.
             5 Random - Start with 5 individual growths at random.
             Level 1 - Start with level 1 of all growth abilities.
             Level 2 - Start with level 2 of all growth abilities.
             Level 3 - Start with level 3 of all growth abilities.
             Max - Start with max level of all growth abilities.
         '''),
-        randomizable=["Disabled","Random","Level_1","Level_2","Level_3","Level_4"]
+        randomizable=["Disabled","3Random","Random","Level_1","Level_2","Level_3","Level_4"]
     ),
 
     IntSpinner(
@@ -520,7 +584,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_PROOF,
-        ui_label="Proof Point Value",
+        ui_label="Proof",
         minimum=0,
         maximum=1000,
         step=1,
@@ -531,7 +595,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_FORM,
-        ui_label="Forms Point Value",
+        ui_label="Drive Form",
         minimum=0,
         maximum=1000,
         step=1,
@@ -542,7 +606,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_MAGIC,
-        ui_label="Magic Point Value",
+        ui_label="Magic",
         minimum=0,
         maximum=1000,
         step=1,
@@ -553,7 +617,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_SUMMON,
-        ui_label="Summon Point Value",
+        ui_label="Summon",
         minimum=0,
         maximum=1000,
         step=1,
@@ -564,7 +628,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_ABILITY,
-        ui_label="SC & OM Point Value",
+        ui_label="Second Chance/Once More",
         minimum=0,
         maximum=1000,
         step=1,
@@ -575,7 +639,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_PAGE,
-        ui_label="Page Point Value",
+        ui_label="Torn Page",
         minimum=0,
         maximum=1000,
         step=1,
@@ -586,7 +650,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_VISIT,
-        ui_label="Visit Unlock Point Value",
+        ui_label="World Key Item",
         minimum=0,
         maximum=1000,
         step=1,
@@ -597,7 +661,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
     IntSpinner(
         name=settingkey.POINTS_REPORT,
-        ui_label="Report Point Value",
+        ui_label="Ansem Report",
         minimum=0,
         maximum=1000,
         step=1,
@@ -608,7 +672,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
     IntSpinner(
         name=settingkey.POINTS_AUX,
-        ui_label="Aux Unlocks Point Value",
+        ui_label="Aux. Unlock",
         minimum=0,
         maximum=1000,
         step=1,
@@ -619,7 +683,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_BONUS,
-        ui_label="Bonus Level Points",
+        ui_label="Bonus Level",
         minimum=-10,
         maximum=1000,
         step=1,
@@ -630,7 +694,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_COMPLETE,
-        ui_label="World Completion Points",
+        ui_label="World Completion",
         minimum=-10,
         maximum=1000,
         step=1,
@@ -641,7 +705,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_FORMLV,
-        ui_label="Form level Points",
+        ui_label="Form Level",
         minimum=-10,
         maximum=1000,
         step=1,
@@ -652,7 +716,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_DEATH,
-        ui_label="Death Penalty Points",
+        ui_label="Death Penalty",
         minimum=-1000,
         maximum=1000,
         step=1,
@@ -663,7 +727,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     IntSpinner(
         name=settingkey.POINTS_BOSS_NORMAL,
-        ui_label="Normal Boss Defeated Points",
+        ui_label="Normal Boss Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -674,7 +738,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_AS,
-        ui_label="Absent Silhouette Defeated Points",
+        ui_label="Absent Silhouette Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -685,7 +749,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_DATA,
-        ui_label="Data Boss Defeated Points",
+        ui_label="Data Boss Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -696,7 +760,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_SEPHIROTH,
-        ui_label="Sephiroth Defeated Points",
+        ui_label="Sephiroth Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -707,7 +771,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_TERRA,
-        ui_label="Lingering Will Defeated Points",
+        ui_label="Lingering Will Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -718,7 +782,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     
         IntSpinner(
         name=settingkey.POINTS_BOSS_FINAL,
-        ui_label="Final Xemnas Defeated Points",
+        ui_label="Final Xemnas Defeated",
         minimum=0,
         maximum=1000,
         step=1,
@@ -731,10 +795,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.REPORT_DEPTH,
         ui_label='Report Depth',
         choices={
-            locationDepth.DataFight.name: 'Data Fights',
+            locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
             locationDepth.SecondBoss.name: 'Second Visit Boss',
             locationDepth.Anywhere.name: "Anywhere"
@@ -742,10 +806,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=locationDepth.SecondVisit.name,
         tooltip=textwrap.dedent('''
-            Data Fights - Force the item onto data fights only
+            Superbosses - Force the item onto superbosses only
             First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
             Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
+            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
@@ -756,10 +820,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.PROOF_DEPTH,
         ui_label='Proof Depth',
         choices={
-            locationDepth.DataFight.name: 'Data Fights',
+            locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
             locationDepth.SecondBoss.name: 'Second Visit Boss',
             locationDepth.Anywhere.name: "Anywhere"
@@ -767,10 +831,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=locationDepth.Anywhere.name,
         tooltip=textwrap.dedent('''
-            Data Fights - Force the item onto data fights only
+            Superbosses - Force the item onto superbosses only
             First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
             Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
+            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
@@ -781,10 +845,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.STORY_UNLOCK_DEPTH,
         ui_label='Key Item Depth',
         choices={
-            locationDepth.DataFight.name: 'Data Fights',
+            locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Data',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
             locationDepth.SecondBoss.name: 'Second Visit Boss',
             locationDepth.Anywhere.name: "Anywhere"
@@ -792,16 +856,41 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=locationDepth.Anywhere.name,
         tooltip=textwrap.dedent('''
-            Data Fights - Force the item onto data fights only
+            Superbosses - Force the item onto superbosses only
             First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
             Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Data - Force the item to not be on a Data/Sephiroth/Terra (all other locations possible)
+            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
             First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
         '''),
         randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),   
+    SingleSelect(
+        name=settingkey.BATTLE_LEVEL_RANDO,
+        ui_label='Battle Level Choice',
+        choices={
+            "Normal": 'Normal',
+            "Offset":"Offset"
+        },
+        shared=True,
+        default="Normal",
+        tooltip=textwrap.dedent('''
+            Change the battle level of worlds.
+            Normal: unchanged battle levels
+            Offset: Increase/Decrease all battle levels by a given amount
+        ''')
+    ),   
+    IntSpinner(
+        name=settingkey.BATTLE_LEVEL_OFFSET,
+        ui_label="Level Offset",
+        minimum=-50,
+        maximum=100,
+        step=5,
+        shared=True,
+        default=0,
+        tooltip="How many levels to change the worlds by"
+    ),
     Toggle(
         name=settingkey.YEET_THE_BEAR,
         ui_label='Yeet The Bear Required',
@@ -812,12 +901,40 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.CHAIN_LOGIC,
-        ui_label='Chain Logic',
+        ui_label='Turn On Chain Logic',
         shared=True,
         default=False,
         tooltip="Place all the locking items in a chain with one another, making the seed very linear.",
         randomizable=False
     ),
+    Toggle(
+        name=settingkey.CHAIN_LOGIC_TERRA,
+        ui_label='Include Lingering Will in Chain',
+        shared=True,
+        default=False,
+        tooltip="Puts the Proof of Connection into the logic chain, effectively requiring beating Lingering Will",
+        randomizable=False
+    ),
+    Toggle(
+        name=settingkey.CHAIN_LOGIC_MIN_TERRA,
+        ui_label='Force Late Depth for Proof of Connection',
+        shared=True,
+        default=False,
+        tooltip="Will force the proof of connection to be in the last 5 steps of the chain, to give more chances for finding combat tools.",
+        randomizable=False
+    ),
+    IntSpinner(
+        name=settingkey.CHAIN_LOGIC_LENGTH,
+        ui_label="Maximum Logic Length",
+        minimum=10,
+        maximum=26, # theoretical max
+        step=1,
+        shared=True,
+        default=26,
+        tooltip="How many steps in the logic chain you'd like to do at most.",
+        randomizable=False
+    ),
+
 
     Toggle(
         name=settingkey.PREVENT_SELF_HINTING,
@@ -830,19 +947,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     Toggle(
         name=settingkey.ALLOW_PROOF_HINTING,
-        ui_label='Reports can Hint Proofs',
+        ui_label='Reports can Reveal Proofs',
         shared=True,
         default=False,
-        tooltip="Points Mode only: If enabled, proofs can be directly hinted by reports.",
+        tooltip="Points Mode only: If enabled, proofs can be directly revealed by reports.",
         randomizable=True
     ),
 
     Toggle(
         name=settingkey.ALLOW_REPORT_HINTING,
-        ui_label='Reports can Hint other Reports',
+        ui_label='Reports can Reveal other Reports',
         shared=True,
         default=True,
-        tooltip="Points Mode only: If enabled, reports can hint other reports.",
+        tooltip="Points Mode only: If enabled, reports can reveal other reports.",
         randomizable=True
     ),
     
@@ -856,8 +973,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
 
     MultiSelect(
-        name=settingkey.REVEAL_TYPES,
-        ui_label='Important Check Types to Reveal',
+        name=settingkey.HINTABLE_CHECKS,
+        ui_label='Hintable Items',
         choices={
             'magic': 'Magic',
             'form': 'Drive Forms',
@@ -870,7 +987,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'other': 'Aux. Unlocks'
         },
         shared=True,
-        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof", "other"]
+        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof"]
     ),
 
     Toggle(
@@ -940,10 +1057,12 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip='Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.'
     ),
 
-    MultiSelect(
+    MultiSelectTristate(
         name=settingkey.WORLDS_WITH_REWARDS,
         ui_label='Worlds with Rewards',
         choices={location.name: location.value for location in [
+            locationType.Level,
+            locationType.FormLevel,
             locationType.STT,
             locationType.TT,
             locationType.HB,
@@ -961,7 +1080,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.Atlantica
         ]},
         shared=True,
-        default=[
+        default=[[
+            locationType.Level.name,
+            locationType.FormLevel.name,
             locationType.STT.name,
             locationType.HB.name,
             locationType.OC.name,
@@ -976,8 +1097,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.DC.name,
             locationType.PR.name,
             locationType.TWTNW.name
-        ],
+        ],[]],
         choice_icons={
+            locationType.Level.name: "icons/worlds/sora.png",
+            locationType.FormLevel.name: "icons/worlds/drives.png",
             locationType.STT.name: "icons/worlds/simulated_twilight_town.png",
             locationType.HB.name: "icons/worlds/hollow_bastion.png",
             locationType.OC.name: "icons/worlds/olympus_coliseum.png",
@@ -994,7 +1117,12 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             locationType.TWTNW.name: "icons/worlds/the_world_that_never_was.png",
             locationType.Atlantica.name: "icons/worlds/atlantica.png"
         },
-        randomizable=True
+        randomizable=True,
+        tooltip='''
+            Rando: Fully randomized locations, can have junk or unique items
+            Vanilla: Notable unique items are placed in their original locations for KH2FM, all other locations will get junk items
+            Junk: All locations use items from the junk item pool
+        '''
     ),
 
     MultiSelect(
@@ -1103,13 +1231,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip='Add Antiform as an obtainable form.'
     ),
     Toggle(
-        name=settingkey.EXTRA_ICS,
-        ui_label='Add Aux. Unlocks as Hintable',
-        shared=True,
-        default=False,
-        tooltip='Adds Olympus Stone, Unknown Disk, and Hades Cup Trophy as hintable items.' 
-    ),
-    Toggle(
         name=settingkey.FIFTY_AP_BOOSTS,
         ui_label='50 AP Boosts',
         shared=True,
@@ -1181,7 +1302,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Remove Wardrobe Wakeup Animation',
         shared=True,
         default=False,
-        tooltip='Wardrobe in BC will not wake up when pushing it.'
+        tooltip='The wardrobe in Beast\'s Castle will not wake up when pushing it.'
     ),
     SingleSelect(
         name=settingkey.REMOVE_CUTSCENES,
@@ -1198,10 +1319,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.FAST_URNS,
-        ui_label='Fast OC Urns',
+        ui_label='Fast Olympus Coliseum Urns',
         shared=True,
         default=False,
-        tooltip="OC Urns drop a lot more orbs.",
+        tooltip="The urns in the minigame in Olympus Coliseum drop more orbs, making the minigame much faster.",
         randomizable=False
     ),
     Toggle(
@@ -1260,10 +1381,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.SHOP_UNLOCKS,
-        ui_label='Add World Unlock Items To Shop',
+        ui_label='Add World Key Items To Shop',
         shared=True,
         default=False,
-        tooltip="Adds duplicates of world unlock items into the moogle shop.",
+        tooltip="Adds duplicates of world key items into the moogle shop.",
         randomizable=False
     ),
 
@@ -1315,7 +1436,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     MultiSelect(
         name=settingkey.STARTING_STORY_UNLOCKS,
-        ui_label='World Key Items',
+        ui_label='Starting World Key Items',
         choices={
             '74': 'Identity Disk',
             '62': 'Skill and Crossbones',
@@ -1349,6 +1470,23 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=True,
         tooltip="If enabled, recipes are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
+        randomizable=True
+    ),
+
+    Toggle(
+        name=settingkey.ACCESSORIES_IN_ITEM_POOL,
+        ui_label='Accessories',
+        shared=True,
+        default=True,
+        tooltip="If enabled, all accessories are included in the required item pool.",
+        randomizable=True
+    ),
+    Toggle(
+        name=settingkey.ARMOR_IN_ITEM_POOL,
+        ui_label='Armor',
+        shared=True,
+        default=True,
+        tooltip="If enabled, all accessories are included in the required item pool.",
         randomizable=True
     ),
 
@@ -1443,11 +1581,16 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         choices={
             'default': 'Default Abilities',
             'randomize': 'Randomize Ability Pool',
-            'randomize support': 'Randomize Support Ability Pool'
+            'randomize support': 'Randomize Support Ability Pool',
+            'randomize stackable': 'Randomize Stackable Abilities'
         },
         shared=True,
         default='default',
-        tooltip='If "Randomize Ability Pool", picks Sora\'s action/support abilities at random (guaranteed to have 1 SC & 1 OM). \nRandomized Support Ability Pool will leave action abilities alone, but will randomize the support abilities (still guaranteed to have SC/OM)'
+        tooltip=textwrap.dedent('''
+            If "Randomize Ability Pool", picks Sora\'s action/support abilities at random (guaranteed to have 1 SC & 1 OM). 
+            Randomize Support Ability Pool will leave action abilities alone, but will randomize the support abilities (still guaranteed to have SC/OM)
+            Randomize Stackable Abilities will give you 1 of each ability that works on its own, but will randomize now many of the stackable abilities you get (at least 1 of each)
+        ''')
     ),
 
     SingleSelect(
@@ -1538,7 +1681,7 @@ class SeedSettings:
         return self._values[name]
 
     def set(self, name: str, value):
-        self._values[name] = value
+        self._values[name] = copy.deepcopy(value)
         if name in self._observers:
             for observer in self._observers[name]:
                 observer()
@@ -1615,6 +1758,10 @@ class RandoRandoSettings:
                 # get set value from settings, and then allow all values larger than that
                 self.setting_choices[r.name] = [c for c in r.selectable_values if c >= real_settings_object.get(r.name)]
             if isinstance(r,MultiSelect):
+                # get the current set of values, will allow for some to be removed
+                self.setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
+                self.multi_selects.append(r.name)
+            if isinstance(r,MultiSelectTristate):
                 # get the current set of values, will allow for some to be removed
                 self.setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
                 self.multi_selects.append(r.name)

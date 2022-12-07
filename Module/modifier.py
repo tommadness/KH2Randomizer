@@ -1,49 +1,6 @@
 import random
 
 class SeedModifier():
-    def getOptions():
-        return [
-            {
-                "name": "Max Logic Item Placement",
-                "description": "Less restricted item placement. All checks still obtainable."
-            },
-            {
-                "name": "Reverse Rando",
-                "description": "Use when generating a Reverse Rando seed to ensure softlock protection"
-            },
-            {
-                "name":"Glass Cannon",
-                "description": "No more pesky Defense Ups in the level up stats pool"
-            },
-            {
-                "name":"Library of Assemblage",
-                "description": "Start with all the hints"
-            },
-            {
-                "name": "Schmovement",
-                "description": "Start with selected level of all growth abilities"
-            },
-            {
-                "name": "Better Junk",
-                "description": "No more synthesis materials in the junk item pool"
-            },
-            {
-                "name": "Randomize Ability Pool",
-                "description": "Pick Sora's action/support abilities at random (guaranteed to have 1 SC & 1 OM)"
-            },
-            {
-                "name": "Start with No AP",
-                "description": "Sora/Donald/Goofy start the game with 0 AP"
-            },
-            {
-                "name": "Remove Damage Cap",
-                "description": "Removes the damage cap for every enemy/boss in the game."
-            },
-            {
-                "name": "Cups Give XP",
-                "description": "Defeating enemies while in an OC Cup will give you XP and Form XP"
-            }
-        ]
 
     def randomAbilityPool(action, support):
         abilitylist = action + support
@@ -82,6 +39,49 @@ class SeedModifier():
             randomabilitypool.append(abilitydict["Second Chance"])
             randomabilitypool.append(abilitydict["Once More"])
         return randomabilitypool + action
+
+    def randomStackableAbilityPool(action, support):
+        stackable_abilities = ["Combo Plus",
+                                "Air Combo Plus",
+                                "Combo Boost",
+                                "Air Combo Boost",
+                                "Reaction Boost",
+                                "Finishing Plus",
+                                "Negative Combo",
+                                "Berserk Charge",
+                                "Damage Drive",
+                                "Drive Boost",
+                                "Form Boost",
+                                "Summon Boost",
+                                "Experience Boost",
+                                "Draw",
+                                "Jackpot",
+                                "Lucky Lucky",
+                                "Drive Converter",
+                                "Fire Boost",
+                                "Blizzard Boost",
+                                "Thunder Boost",
+                                "Item Boost",
+                                "MP Rage",
+                                "MP Haste",
+                                "MP Hastera",
+                                "MP Hastega",
+                                "Defender",
+                                "Damage Control",
+                                "Combination Boost",
+                                ]
+        abilitylist = support + action
+        abilitydict = {i.Name: i for i in abilitylist}
+        unique_abilities = list(set([i.Name for i in abilitylist]))
+        unique_abilities.sort()
+        randomabilitypool = []
+        for u in unique_abilities:
+            randomabilitypool.append(abilitydict[u])
+        for _ in range(len(abilitylist)-len(unique_abilities)):
+            choice = random.choice(stackable_abilities)
+            randomabilitypool.append(abilitydict[choice])
+
+        return randomabilitypool
 
     def defaultAbilityPool(action, support):
         return action+support
@@ -142,7 +142,7 @@ class SeedModifier():
             return growth_all[1] + growth_all[2] + growth_all[3] + growth_all[4]
         return []
 
-    def random_schmovement():
+    def random_schmovement(num_growth_abilities):
         growth_all = {}
         growth_all[0] =  [] # none
         growth_all[1] =  [94,98,102,106,564] # level 1
@@ -153,12 +153,12 @@ class SeedModifier():
         random_levels = [0,0,0,0,0]
 
         iter = 0
-        while iter < 5:
+        while iter < num_growth_abilities:
             picked = random.randint(0,4)
             if random_levels[picked]!=4:
                 random_levels[picked]+=1
                 iter+=1
         #get all the abilities IDs needed for each growth and add them to a list
-        for current in range(5):
+        for current in range(num_growth_abilities):
             [random_growth.append(growth_all[i][current]) for i in range(1,random_levels[current]+1)]
         return random_growth

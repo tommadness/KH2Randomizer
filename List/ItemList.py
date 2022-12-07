@@ -108,8 +108,8 @@ class Items:
 
             KH2Item(42,"Oathkeeper", itemType.KEYBLADE),
             KH2Item(43,"Oblivion",itemType.KEYBLADE),
-            KH2Item(480, "Star Seeker", itemType.KEYBLADE),
-            KH2Item(481, "Hidden Dragon", itemType.KEYBLADE),
+            KH2Item(480,"Star Seeker", itemType.KEYBLADE),
+            KH2Item(481,"Hidden Dragon", itemType.KEYBLADE),
             KH2Item(484,"Hero's Crest",itemType.KEYBLADE),
             KH2Item(485,"Monochrome",itemType.KEYBLADE),
             KH2Item(486,"Follow the Wind",itemType.KEYBLADE),
@@ -224,7 +224,7 @@ class Items:
             KH2Item(362, "Munny Pouch",itemType.MUNNY_POUCH, itemRarity.RARE),
 
             KH2Item(537, "Hades Cup Trophy", itemType.TROPHY, itemRarity.UNCOMMON),
-            KH2Item(462, "Unknown Disk", itemType.MEMBERSHIPCARD, itemRarity.UNCOMMON), # DUMMY 15
+            KH2Item(462, "Unknown Disk", itemType.MANUFACTORYUNLOCK, itemRarity.UNCOMMON), # DUMMY 15
 
             KH2Item(363, "Crystal Orb", itemType.KEYITEM),
             KH2Item(364, "Seifer's Trophy", itemType.KEYITEM),
@@ -417,7 +417,7 @@ class Items:
             KH2Item(271, "Horizontal Slash", itemType.ACTION_ABILITY,itemRarity.RARE),
             KH2Item(267, "Finishing Leap", itemType.ACTION_ABILITY,itemRarity.RARE),
             KH2Item(273, "Retaliating Slash", itemType.ACTION_ABILITY),
-            KH2Item(262, "Slapshot", itemType.ACTION_ABILITY),
+            KH2Item(262, "Slapshot", itemType.ACTION_ABILITY,itemRarity.UNCOMMON),
             KH2Item(263, "Dodge Slash", itemType.ACTION_ABILITY),
             KH2Item(559, "Flash Step", itemType.ACTION_ABILITY,itemRarity.RARE),
             KH2Item(264, "Slide Dash", itemType.ACTION_ABILITY,itemRarity.RARE),

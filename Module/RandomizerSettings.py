@@ -22,28 +22,39 @@ class RandomizerSettings():
         self.item_accessibility = ui_settings.get(settingkey.ACCESSIBILITY)
 
         include_list = []
+        vanilla_list = []
         include_list_keys = [
-            (settingkey.FORM_LEVEL_REWARDS, 'Form Levels'),
             (settingkey.CRITICAL_BONUS_REWARDS, 'Critical Bonuses'),
             (settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS, 'Garden of Assemblage'),
         ]
         for key in include_list_keys:
             if ui_settings.get(key[0]):
                 include_list.append(key[1])
-        for location in ui_settings.get(settingkey.WORLDS_WITH_REWARDS):
+        worlds_with_rewards =  ui_settings.get(settingkey.WORLDS_WITH_REWARDS)
+        vanilla_worlds = []
+        if isinstance(worlds_with_rewards[0],list):
+            vanilla_worlds = worlds_with_rewards[1]
+            worlds_with_rewards = worlds_with_rewards[0]
+        for location in worlds_with_rewards:
             include_list.append(locationType[location].value)
+        for location in vanilla_worlds:
+            vanilla_list.append(locationType[location].value)
         for location in ui_settings.get(settingkey.SUPERBOSSES_WITH_REWARDS):
             include_list.append(locationType[location].value)
         for location in ui_settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS):
             include_list.append(locationType[location].value)
         self.enabledLocations = [l for l in locationType if l in include_list]
-        self.disabledLocations = [l for l in locationType if l not in include_list and l not in [locationType.Mush13,locationType.WeaponSlot,locationType.Level]]
+        self.vanillaLocations = [l for l in locationType if l in vanilla_list]
+        self.disabledLocations = [l for l in locationType if l not in include_list and l not in [locationType.Mush13,locationType.WeaponSlot]]
        
         level_setting = ui_settings.get(settingkey.SORA_LEVELS)
         self.level_one = False 
         if level_setting=="Level":
             self.setLevelChecks(1)
-            self.level_one = ui_settings.get(settingkey.LEVEL_ONE)
+            if locationType.Level in self.enabledLocations:
+                raise SettingsException("Please choose between Junk or Vanilla Checks when doing Level 1")
+            elif locationType in self.vanillaLocations:
+                self.level_one = True
         elif level_setting=="ExcludeFrom50":
             self.setLevelChecks(50)
         elif level_setting=="ExcludeFrom99":
@@ -52,8 +63,15 @@ class RandomizerSettings():
             raise SettingsException("Invalid Level choice")
 
         self.split_levels = ui_settings.get(settingkey.SPLIT_LEVELS)
+        self.battle_level_rando = ui_settings.get(settingkey.BATTLE_LEVEL_RANDO)
+        self.battle_level_offset = ui_settings.get(settingkey.BATTLE_LEVEL_OFFSET)
         
-        self.random_growths = ui_settings.get(settingkey.STARTING_MOVEMENT)=="Random"
+        self.starting_growth = ui_settings.get(settingkey.STARTING_MOVEMENT)
+        self.num_random_growths = 0
+        if self.starting_growth == "Random":
+            self.num_random_growths = 5
+        elif self.starting_growth == "3Random":
+            self.num_random_growths = 3
         self.chosen_random_growths = []
 
         self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [int(value) for value in ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.STARTING_REPORTS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
@@ -76,12 +94,15 @@ class RandomizerSettings():
         self.goofy_ap = ui_settings.get(settingkey.GOOFY_AP)
 
         ui_ability_pool = ui_settings.get(settingkey.ABILITY_POOL)
+        self.abilityListModifierString = ui_ability_pool
         if ui_ability_pool == "default":
             self.abilityListModifier = SeedModifier.defaultAbilityPool
         elif ui_ability_pool == "randomize":
             self.abilityListModifier = SeedModifier.randomAbilityPool
         elif ui_ability_pool == "randomize support":
             self.abilityListModifier = SeedModifier.randomSupportAbilityPool
+        elif ui_ability_pool == "randomize stackable":
+            self.abilityListModifier = SeedModifier.randomStackableAbilityPool
         else:
             raise SettingsException("Invalid ability pool option")
 
@@ -153,6 +174,18 @@ class RandomizerSettings():
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.chainLogic = ui_settings.get(settingkey.CHAIN_LOGIC)
+        self.chainLogicIncludeTerra = ui_settings.get(settingkey.CHAIN_LOGIC_TERRA)
+        self.chainLogicTerraLate = ui_settings.get(settingkey.CHAIN_LOGIC_MIN_TERRA)
+        self.chainLogicMinLength = ui_settings.get(settingkey.CHAIN_LOGIC_LENGTH)
+
+        if self.proofDepth in [locationDepth.FirstVisit,locationDepth.FirstBoss] and self.chainLogic:
+            raise SettingsException("Chain logic is not compatible with first visit proofs")
+        if self.storyDepth not in [locationDepth.Anywhere, locationDepth.SecondVisit] and self.chainLogic:
+            raise SettingsException("Chain logic is only compatible with key item depth non-data and anywhere")
+        if self.chainLogic and self.regular_rando and self.reverse_rando:
+            raise SettingsException("Can't do chain logic with both regular and reverse rando")
+
+
         self.roxas_abilities_enabled = ui_settings.get(settingkey.ROXAS_ABILITIES_ENABLED)
         self.disable_final_form = ui_settings.get(settingkey.DISABLE_FINAL_FORM)
         self.block_cor_skip = ui_settings.get(settingkey.BLOCK_COR_SKIP)
@@ -162,6 +195,8 @@ class RandomizerSettings():
         self.wardrobe_skip = ui_settings.get(settingkey.REMOVE_WARDROBE_ANIMATION)
         self.include_maps = ui_settings.get(settingkey.MAPS_IN_ITEM_POOL)
         self.include_recipes = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
+        self.include_accessories = ui_settings.get(settingkey.ACCESSORIES_IN_ITEM_POOL)
+        self.include_armor = ui_settings.get(settingkey.ARMOR_IN_ITEM_POOL)
         self.remove_popups = ui_settings.get(settingkey.REMOVE_POPUPS)
 
         self.global_jackpot = ui_settings.get(settingkey.GLOBAL_JACKPOT)
@@ -198,7 +233,7 @@ class RandomizerSettings():
         self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)
 
         self.spoiler_hint_values = [
-            item_type for item_type in ui_settings.get(settingkey.REVEAL_TYPES)
+            item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)
         ]
         if self.revealComplete:
             self.spoiler_hint_values.append("complete")
@@ -207,14 +242,11 @@ class RandomizerSettings():
             if self.revealMode == "bossreports" and ui_settings.get("boss")=="Disabled":
                 raise SettingsException("Can't use report hint bosses option without boss randomization.")
 
-        self.extra_ics = ui_settings.get(settingkey.EXTRA_ICS)
         self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)
 
         self.tracker_includes = []
         if self.level_one:
             self.tracker_includes.append("Level1Mode")
-        if self.promiseCharm:
-            self.tracker_includes.append("PromiseCharm")
         self.tracker_includes.append(level_setting)
         if self.roxas_abilities_enabled:
             self.tracker_includes.append("better_stt")
@@ -222,14 +254,36 @@ class RandomizerSettings():
             self.tracker_includes.append("visit_locking")
         if ui_settings.get(settingkey.STARTING_REPORTS)==13:
             self.tracker_includes.append("library")
-        if self.extra_ics:
-            self.tracker_includes.append("extra_ics")
         if self.hiscore_mode:
             self.tracker_includes.append("ScoreMode")
+
+        hintable_checks_list = ui_settings.get(settingkey.HINTABLE_CHECKS)
+        self.important_checks = []
+
+        if "magic" in hintable_checks_list:
+            self.important_checks+=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, 
+                        itemType.CURE, itemType.REFLECT, itemType.MAGNET]
+        if "proof" in hintable_checks_list:
+            self.important_checks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE,itemType.PROMISE_CHARM]
+        if "form" in hintable_checks_list:
+            self.important_checks+=[itemType.FORM,"Anti-Form"]
+        if "page" in hintable_checks_list:
+            self.important_checks+=[itemType.TORN_PAGE]
+        if "summon" in hintable_checks_list:
+            self.important_checks+=[itemType.SUMMON]
+        if "visit" in hintable_checks_list:
+            self.important_checks+=[itemType.STORYUNLOCK]
+        if "ability" in hintable_checks_list:
+            self.important_checks+=["Second Chance", "Once More"]
+        if "other" in hintable_checks_list:
+            self.important_checks+=[itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.OCSTONE,itemType.MUNNY_POUCH]
 
         # making tracker includes use all worlds and 
         for l in locationType:
             if l.value in self.enabledLocations:
+                if l.value!="Level": # don't duplicate the level info
+                    self.tracker_includes.append(l.value)
+            if l.value in self.vanillaLocations:
                 if l.value!="Level": # don't duplicate the level info
                     self.tracker_includes.append(l.value)
 
@@ -251,16 +305,18 @@ class RandomizerSettings():
         if locationType.TTR in self.enabledLocations and not self.statSanity:
             raise SettingsException("Enabling Transport to Remembrance when not in Statsanity is incorrect. Enable Statsanity or disable TTR.")
 
+        if self.chainLogic and len(self.vanillaLocations)>0:
+            raise SettingsException("Currently can't do chain logic and vanilla worlds. Sorry about that. ")
+        if self.abilityListModifierString!="default" and len(self.vanillaLocations)>0:
+            raise SettingsException("Currently can't do randomized ability pools and vanilla worlds. Sorry about that. ")
+
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel
         if self.level_checks==99:
-            self.enabledLocations.append(locationType.Level)
             levels_to_exclude = self.excludeFrom99
         elif self.level_checks==50:
-            self.enabledLocations.append(locationType.Level)
             levels_to_exclude = self.excludeFrom50
         elif self.level_checks==1:
-            self.disabledLocations.append(locationType.Level)
             levels_to_exclude = range(1,100)
         else:
             raise SettingsException(f"Incorrect level choice {maxLevel}")

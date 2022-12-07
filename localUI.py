@@ -5,7 +5,6 @@ from Class.exceptions import CantAssignItemException, RandomizerExceptions
 from List.configDict import locationType
 
 from Module.resources import resource_path
-from UI.Submenus.ShopDrop import ShopDropMenu
 
 # Keep the setting of the environment variable as close to the top as possible.
 # This needs to happen before anything Boss/Enemy Rando gets loaded for the sake of the distributed binary.
@@ -28,7 +27,7 @@ from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
-    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy
+    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy, QDialog, QGridLayout, QListWidget
 )
 
 from qt_material import apply_stylesheet
@@ -46,11 +45,14 @@ from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CosmeticsMenu import CosmeticsMenu
 from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
+from UI.Submenus.ItemPoolMenu import ItemPoolMenu
 from UI.Submenus.KeybladeMenu import KeybladeMenu
 from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
+from UI.Submenus.BattleLevelMenu import BattleLevelMenu
+from UI.Submenus.ShopDrop import ShopDropMenu
 
 LOCAL_UI_VERSION = '2.2.0-beta'
 
@@ -117,6 +119,42 @@ class MultiGenSeedThread(QThread):
             self.failed.emit(e)
 
 
+class RandomPresetDialog(QDialog):
+    def __init__(self,preset_list):
+        super().__init__()
+        self.preset_list = preset_list
+        self.setWindowTitle("Randomly Pick a Preset")
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(500)
+
+        box = QGridLayout()
+
+        self.preset_list_widget = QListWidget()
+        self.preset_list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
+        for c in self.preset_list:
+            self.preset_list_widget.addItem(c)
+        box.addWidget(self.preset_list_widget,0,0)
+        
+        select_all_button = QPushButton("Select All Presets")
+        select_all_button.clicked.connect(self.select_all_presets_from_list)
+
+        cancel_button = QPushButton("Cancel")
+        choose_button = QPushButton("Randomly Pick From Selected Presets")
+        cancel_button.clicked.connect(self.reject)
+        choose_button.clicked.connect(self.accept)
+
+        box.addWidget(select_all_button,1,0)
+        box.addWidget(cancel_button,1,1)
+        box.addWidget(choose_button,0,1)
+
+        self.setLayout(box)
+
+    def select_all_presets_from_list(self):
+        for index in range(self.preset_list_widget.count()):
+            self.preset_list_widget.item(index).setSelected(True)
+
+    def save(self):
+        return [p.text() for p in self.preset_list_widget.selectedItems()]
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
@@ -124,7 +162,10 @@ class KH2RandomizerApp(QMainWindow):
         self.UTC = pytz.utc
         self.startTime = datetime.datetime.now(self.UTC)
         self.dailySeedName = self.startTime.strftime('%d-%m-%Y')
-        self.mods = getDailyModifiers(self.startTime)
+        self.mods = getDailyModifiers(self.startTime,hard_mode=False,boss_enemy=False)
+        self.mods_hard = getDailyModifiers(self.startTime,hard_mode=True,boss_enemy=False)
+        self.mods_be = getDailyModifiers(self.startTime,hard_mode=False,boss_enemy=True)
+        self.mods_hard_be = getDailyModifiers(self.startTime,hard_mode=True,boss_enemy=True)
         self.progress = None
         self.spoiler_log_output = "<html>No spoiler log generated</html>"
 
@@ -178,7 +219,7 @@ class KH2RandomizerApp(QMainWindow):
 
         for x in self.preset_json.keys():
             if x != 'BaseDailySeed':
-                self.presetsMenu.addAction(x, lambda x=x: self.usePreset(x))
+                self.loadPresetsMenu.addAction(x, lambda x=x: self.usePreset(x))
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         self.spoiler_log.setCheckState(Qt.Checked)
@@ -195,13 +236,15 @@ class KH2RandomizerApp(QMainWindow):
         seed_layout.addWidget(self.rando_rando)
 
         self.widgets = [
+            RewardLocationsMenu(self.settings),
             SoraMenu(self.settings),
             StartingMenu(self.settings),
             HintsMenu(self.settings),
             KeybladeMenu(self.settings),
-            RewardLocationsMenu(self.settings),
+            ItemPoolMenu(self.settings),
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
+            BattleLevelMenu(self.settings),
             ShopDropMenu(self.settings),
             BossEnemyMenu(self.settings),
             CosmeticsMenu(self.settings, self.custom_cosmetics),
@@ -259,12 +302,14 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar = self.menuBar()
         self.presetMenu = QMenu("Preset")
         self.presetMenu.addAction("Open Preset Folder", self.openPresetFolder)
-        self.presetsMenu = QMenu("Presets")
+        self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
+        self.loadPresetsMenu = QMenu("Load a Preset")
+        self.presetMenu.addMenu(self.loadPresetsMenu)
+        self.presetMenu.addAction("Pick a Random Preset", self.randomPreset)
+        
         self.seedMenu = QMenu("Share Seed")
         self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
         self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
-        self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
-        self.presetMenu.addMenu(self.presetsMenu)
         self.config_menu = QMenu('Configure')
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
         self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
@@ -272,7 +317,13 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addMenu(self.presetMenu)
         menu_bar.addMenu(self.config_menu)
 
-        menu_bar.addAction("Load Daily Seed", self.loadDailySeed)
+        self.dailyMenu = QMenu("Daily Seeds")
+        self.dailyMenu.addAction("Load Seed", self.loadDailySeed)
+        self.dailyMenu.addAction("Load Hard Seed", self.loadHardDailySeed)
+        self.dailyMenu.addAction("Load Boss/Enemy Seed", self.loadDailySeedBE)
+        self.dailyMenu.addAction("Load Hard Boss/Enemy Seed", self.loadHardDailySeedBE)
+        menu_bar.addMenu(self.dailyMenu)
+
         menu_bar.addAction("About", self.showAbout)
 
     def closeEvent(self, e):
@@ -284,7 +335,7 @@ class KH2RandomizerApp(QMainWindow):
 
         e.accept()
 
-    def loadDailySeed(self):
+    def dailySeedHandler(self,difficulty,boss_enemy=False):
         self.seedName.setText(self.dailySeedName)
         self.recalculate = False
 
@@ -303,9 +354,21 @@ class KH2RandomizerApp(QMainWindow):
 
         # use the modifications to change the preset
         mod_string = f'Updated settings for Daily Seed {self.startTime.strftime("%a %b %d %Y")}\n\n'
-        for m in self.mods:
+        which_mods = None
+        if difficulty=="easy" and not boss_enemy:
+            which_mods = self.mods
+        elif difficulty=="easy" and boss_enemy:
+            which_mods = self.mods_be
+        elif difficulty=="hard" and not boss_enemy:
+            which_mods = self.mods_hard
+        elif difficulty=="hard" and boss_enemy:
+            which_mods = self.mods_hard_be
+        else:
+            raise RandomizerExceptions("Improper Daily Seed Setting")
+
+        for m in which_mods:
             m.local_modifier(self.settings)
-            mod_string += m.name + ' - ' + m.description + '\n'
+            mod_string += m.name + ' - ' + m.description + '\n\n'
 
         for widget in self.widgets:
             widget.update_widgets()
@@ -317,6 +380,19 @@ class KH2RandomizerApp(QMainWindow):
         message = QMessageBox(text=mod_string)
         message.setWindowTitle('KH2 Seed Generator - Daily Seed')
         message.exec()
+
+    def loadDailySeed(self):
+        self.dailySeedHandler(difficulty="easy")
+
+    def loadHardDailySeed(self):
+        self.dailySeedHandler(difficulty="hard")
+
+    def loadDailySeedBE(self):
+        self.dailySeedHandler(difficulty="easy", boss_enemy=True)
+
+    def loadHardDailySeedBE(self):
+        self.dailySeedHandler(difficulty="hard", boss_enemy=True)
+
 
     def fixSeedName(self):
         new_string = re.sub(r'[^a-zA-Z0-9]', '', self.seedName.text())
@@ -547,9 +623,30 @@ class KH2RandomizerApp(QMainWindow):
             # add current settings to saved presets, add to current preset list, change preset selection.
             settings_json = self.settings.settings_json()
             self.preset_json[preset_name] = settings_json
-            self.presetsMenu.addAction(preset_name, lambda: self.usePreset(preset_name))
+            self.loadPresetsMenu.addAction(preset_name, lambda: self.usePreset(preset_name))
             with open(os.path.join(PRESET_FOLDER, preset_name + '.json'), 'w') as presetData:
                 presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
+
+    def randomPreset(self):
+        preset_select_dialog = RandomPresetDialog(self.preset_json.keys())
+        if preset_select_dialog.exec():
+            random_preset_list = preset_select_dialog.save()
+            if len(random_preset_list) == 0:
+                message = QMessageBox(text="Need at least 1 preset selected")
+                message.setWindowTitle("KH2 Seed Generator")
+                message.exec()
+            else:
+                seedString = self.seedName.text()
+                if seedString == "":
+                    characters = string.ascii_letters + string.digits
+                    seedString = (''.join(random.choice(characters) for i in range(30)))
+                    self.seedName.setText(seedString)
+                random.seed(self.seedName.text())
+                selected_preset = random.choice(random_preset_list)
+                self.usePreset(selected_preset)
+                message = QMessageBox(text=f"Picked {selected_preset}")
+                message.setWindowTitle("KH2 Seed Generator")
+                message.exec()
 
     def openPresetFolder(self):
         os.startfile(PRESET_FOLDER)
