@@ -233,15 +233,12 @@ class Randomizer():
             allItems = [i for i in allItems if i.Id!=30]
 
         if settings.shop_reports:
-            print("shop reports")
             self.shop_items+=[i for i in allItems if i.ItemType==itemType.REPORT]
             allItems = [i for i in allItems if i.ItemType!=itemType.REPORT]
         if settings.shop_unlocks:
-            print("shop unlocks")
             self.shop_items+=[i for i in allItems if i.ItemType==itemType.STORYUNLOCK]
             allItems = [i for i in allItems if i.ItemType!=itemType.STORYUNLOCK]
         if settings.shop_keyblades:
-            print("shop keys")
             self.shop_items+=[i for i in allItems if i.ItemType==itemType.KEYBLADE and i.Id!=71]
 
         if settings.fifty_ap:
