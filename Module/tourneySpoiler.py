@@ -93,5 +93,5 @@ class TourneySeedSaver():
 <h2>Seed {len(self.seed_strings)}</h2>
 <h3>{self.seed_strings[-1]}</h3><br/>
 <img src="{self.seed_names[-1]}.png"><br/>
-<a href="{self.seed_names[-1]}.html">Spoiler Log</a><br/><br/>
+<a href="{self.seed_names[-1]}.html">Spoiler Log</a><hr/><br/><br/>
 """)

@@ -773,7 +773,7 @@ class Hints:
                         hintsText["Reports"][reportNumber]["Location"] = world
  
         # report validation for some hint systems
-        if hintsType in ["Points","JSmartee","Spoiler"] and found_reports:
+        if hintsType in ["Points","JSmartee","Spoiler"] and found_reports and itemType.REPORT in importantChecks:
             for reportNumber in range(1,14):
                 if hintsText["Reports"][reportNumber]["Location"] not in report_master[reportNumber]:
                     if hintsText["Reports"][reportNumber]["Location"]=="" and (locationType.Critical in report_master[reportNumber] or locationType.Free in report_master[reportNumber]):
