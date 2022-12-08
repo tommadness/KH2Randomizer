@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-import os, glob, khbr, shutil, borb
+import os, glob, khbr, shutil
 
 for root, dirs, files in os.walk(DISTPATH):
     for f in files:
@@ -14,7 +14,6 @@ for root, dirs, files in os.walk(DISTPATH):
 
 
 khbrpath = os.path.dirname(khbr.__file__)
-borbpath = os.path.dirname(borb.__file__)
 def build_datas_recursive(paths):
   datas = []
   
@@ -52,8 +51,7 @@ a = Analysis(
         'static/*.bin',
         'static/*.json',
         'Module/icon.png',
-       ])+[(khbrpath+'/KH2/data/*','khbr/KH2/data'), (khbrpath+'/KH2/data/ai_mods/*','khbr/KH2/data/ai_mods')] + 
-          [(borbpath,'borb')],
+       ])+[(khbrpath+'/KH2/data/*','khbr/KH2/data'), (khbrpath+'/KH2/data/ai_mods/*','khbr/KH2/data/ai_mods')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

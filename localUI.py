@@ -5,6 +5,7 @@ from Class.exceptions import CantAssignItemException, RandomizerExceptions
 from List.configDict import locationType
 
 from Module.resources import resource_path
+from Module.tourneySpoiler import TourneySeedSaver
 
 # Keep the setting of the environment variable as close to the top as possible.
 # This needs to happen before anything Boss/Enemy Rando gets loaded for the sake of the distributed binary.
@@ -19,11 +20,8 @@ import string
 from pathlib import Path
 
 import pyperclip as pc
-from PIL import Image
-from borb import pdf
-from borb.pdf.canvas.layout.image.image import Image as PDFImage
 
-import pytz, io
+import pytz
 # from PIL import Image
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QThread, Signal
@@ -607,8 +605,7 @@ class KH2RandomizerApp(QMainWindow):
         self.thread.start()
 
     def genTourneySeeds(self,data):
-        self.tourney_seed_data = pdf.Document() #canvas.Canvas("tourney_seeds.pdf")
-        self.tourney_spoilers = []
+        self.tourney_spoilers = TourneySeedSaver(Path("tourney/"),"test_name")
         for seed_number in range(0,15):
             characters = string.ascii_letters + string.digits
             seedString = (''.join(random.choice(characters) for i in range(30)))
@@ -625,52 +622,8 @@ class KH2RandomizerApp(QMainWindow):
                 if self.progress:
                     self.progress.close()
                 self.progress = None
-                self.zip_file = zip_file
-                self.spoiler_log_output = spoiler_log
-                self.enemy_log_output = enemy_log
-                self.makeSeedHashPNG(tourney_rando_settings)
-                self.downloadTourneySeed()
-
-        with open(Path("tourney_seeds.pdf"),"wb") as pdf_file:
-            pdf.PDF.dumps(pdf_file,self.tourney_seed_data)
-
-    def makeSeedHashPNG(self, settings: RandomizerSettings):
-        page = pdf.Page()
-        self.tourney_seed_data.add_page(page)
-        layout = pdf.SingleColumnLayout(page)
-        seed_string = self.createSharedString()
-        seed_string_wrap_length = 70
-        pdf_seed_string = " ".join(list(seed_string[0+i:seed_string_wrap_length+i] for i in range(0, len(seed_string), seed_string_wrap_length)))
-        layout.add(pdf.Paragraph(pdf_seed_string,text_alignment=pdf.Alignment.JUSTIFIED))
-
-        hash_icon_path = Path(resource_path("static/seed-hash-icons"))
-        icon_paths = [resource_path(hash_icon_path / (icon + '.png')) for icon in settings.seedHashIcons]
-
-        # Adapted from https://stackoverflow.com/a/30228308
-        images = [Image.open(x) for x in icon_paths]
-        widths, heights = zip(*(i.size for i in images))
-
-        total_width = sum(widths)
-        max_height = max(heights)
-
-        stitched_image = Image.new('RGBA', (total_width, max_height))
-
-        x_offset = 0
-        for image in images:
-            stitched_image.paste(image, (x_offset, 0))
-            x_offset += image.size[0]
-        layout.add(PDFImage(stitched_image,width=350,height=50))
-
-        for image in images:
-            image.close()
-        # stitched_image.close()
-
-    def downloadTourneySeed(self):
-        self.tourney_spoilers.append((self.spoiler_log_output,self.enemy_log_output))
-        self.zip_file=None
-        self.spoiler_log_output=None
-        self.enemy_log_output=None
-
+                self.tourney_spoilers.add_seed(self.createSharedString(),tourney_rando_settings,spoiler_log)
+        self.tourney_spoilers.save()
 
     def genMultiSeed(self,data,rando_settings):
         self.thread = QThread()
