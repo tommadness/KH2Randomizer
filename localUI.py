@@ -19,7 +19,11 @@ import string
 from pathlib import Path
 
 import pyperclip as pc
-import pytz
+from PIL import Image
+from borb import pdf
+from borb.pdf.canvas.layout.image.image import Image as PDFImage
+
+import pytz, io
 # from PIL import Image
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QThread, Signal
@@ -75,6 +79,7 @@ sys.stderr = logger
 
 AUTOSAVE_FOLDER = "auto-save"
 PRESET_FOLDER = "presets"
+
 
 
 class GenSeedThread(QThread):
@@ -499,6 +504,7 @@ class KH2RandomizerApp(QMainWindow):
                 'customCosmeticsExecutables': [],
                 'tourney': True
             }
+            self.genTourneySeeds(data)
         else:
             data = {
                 'platform': platform,
@@ -507,9 +513,9 @@ class KH2RandomizerApp(QMainWindow):
                 'tourney': False
             }
 
-        rando_settings = self.make_rando_settings()
-        if rando_settings is not None:
-            self.genSeed(data,rando_settings)
+            rando_settings = self.make_rando_settings()
+            if rando_settings is not None:
+                self.genSeed(data,rando_settings)
 
         # rando_settings = self.make_rando_settings()
         # self.seedName.setText("")
@@ -599,6 +605,72 @@ class KH2RandomizerApp(QMainWindow):
         
         self.progress.canceled.connect(lambda : self.thread.terminate())
         self.thread.start()
+
+    def genTourneySeeds(self,data):
+        self.tourney_seed_data = pdf.Document() #canvas.Canvas("tourney_seeds.pdf")
+        self.tourney_spoilers = []
+        for seed_number in range(0,15):
+            characters = string.ascii_letters + string.digits
+            seedString = (''.join(random.choice(characters) for i in range(30)))
+            self.seedName.setText(seedString)
+            tourney_rando_settings = self.make_rando_settings()
+            if tourney_rando_settings is not None:
+                self.thread = QThread()
+                self.progress = QProgressDialog(f"Creating seed number {seed_number}...","Cancel",0,0,None)
+                self.progress.setWindowTitle("Making your Seed, please wait...")
+                # self.progress.setCancelButton(None)
+                self.progress.setModal(True)
+                self.progress.show()
+                zip_file, spoiler_log, enemy_log = generateSeed(tourney_rando_settings, data)
+                if self.progress:
+                    self.progress.close()
+                self.progress = None
+                self.zip_file = zip_file
+                self.spoiler_log_output = spoiler_log
+                self.enemy_log_output = enemy_log
+                self.makeSeedHashPNG(tourney_rando_settings)
+                self.downloadTourneySeed()
+
+        with open(Path("tourney_seeds.pdf"),"wb") as pdf_file:
+            pdf.PDF.dumps(pdf_file,self.tourney_seed_data)
+
+    def makeSeedHashPNG(self, settings: RandomizerSettings):
+        page = pdf.Page()
+        self.tourney_seed_data.add_page(page)
+        layout = pdf.SingleColumnLayout(page)
+        seed_string = self.createSharedString()
+        seed_string_wrap_length = 70
+        pdf_seed_string = " ".join(list(seed_string[0+i:seed_string_wrap_length+i] for i in range(0, len(seed_string), seed_string_wrap_length)))
+        layout.add(pdf.Paragraph(pdf_seed_string,text_alignment=pdf.Alignment.JUSTIFIED))
+
+        hash_icon_path = Path(resource_path("static/seed-hash-icons"))
+        icon_paths = [resource_path(hash_icon_path / (icon + '.png')) for icon in settings.seedHashIcons]
+
+        # Adapted from https://stackoverflow.com/a/30228308
+        images = [Image.open(x) for x in icon_paths]
+        widths, heights = zip(*(i.size for i in images))
+
+        total_width = sum(widths)
+        max_height = max(heights)
+
+        stitched_image = Image.new('RGBA', (total_width, max_height))
+
+        x_offset = 0
+        for image in images:
+            stitched_image.paste(image, (x_offset, 0))
+            x_offset += image.size[0]
+        layout.add(PDFImage(stitched_image,width=350,height=50))
+
+        for image in images:
+            image.close()
+        # stitched_image.close()
+
+    def downloadTourneySeed(self):
+        self.tourney_spoilers.append((self.spoiler_log_output,self.enemy_log_output))
+        self.zip_file=None
+        self.spoiler_log_output=None
+        self.enemy_log_output=None
+
 
     def genMultiSeed(self,data,rando_settings):
         self.thread = QThread()
@@ -690,9 +762,10 @@ class KH2RandomizerApp(QMainWindow):
 
     def receiveSeed(self):
         try:
+            print("".join(str(pc.paste()).splitlines()))
             shared_seed = SharedSeed.from_share_string(
                 local_generator_version=LOCAL_UI_VERSION,
-                share_string=str(pc.paste()).strip()
+                share_string="".join(str(pc.paste()).splitlines())
             )
             self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
         except ShareStringException as exception:

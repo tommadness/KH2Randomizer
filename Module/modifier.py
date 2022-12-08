@@ -153,17 +153,13 @@ class SeedModifier():
         random_levels = [0,0,0,0,0]
 
         iter = 0
-        print("-----------------")
-        print(num_growth_abilities)
         while iter < num_growth_abilities:
             picked = random.randint(0,4)
             if random_levels[picked]!=4:
                 print(picked)
                 random_levels[picked]+=1
                 iter+=1
-        print("Selected")
         #get all the abilities IDs needed for each growth and add them to a list
         for current in range(5):
             [random_growth.append(growth_all[i][current]) for i in range(1,random_levels[current]+1)]
-        print(random_growth)
         return random_growth
