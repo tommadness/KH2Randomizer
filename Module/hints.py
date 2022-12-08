@@ -81,7 +81,7 @@ class Hints:
         
         if hintsType != "Shananas":
             hintsText['Reports'] = {}
-            importantChecks += [itemType.REPORT]
+            # importantChecks += [itemType.REPORT]
         
         report_master = [[locationType.Free]]*14
         found_reports = False
