@@ -109,7 +109,7 @@ class RandomizerSettings():
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
         self.auto_equip_abilities = ui_settings.get(settingkey.AUTO_EQUIP_START_ABILITIES)
         self.tt1_jailbreak = ui_settings.get(settingkey.TT1_JAILBREAK)
-        self.pureblood = ui_settings.get(settingkey.PUREBLOOD)
+        self.pureblood = True # ui_settings.get(settingkey.PUREBLOOD)
         self.antiform = ui_settings.get(settingkey.ANTIFORM)
         self.fifty_ap = ui_settings.get(settingkey.FIFTY_AP_BOOSTS)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
@@ -269,6 +269,8 @@ class RandomizerSettings():
             self.important_checks+=[itemType.FORM,"Anti-Form"]
         if "page" in hintable_checks_list:
             self.important_checks+=[itemType.TORN_PAGE]
+        if "report" in hintable_checks_list:
+            self.important_checks+=[itemType.REPORT]
         if "summon" in hintable_checks_list:
             self.important_checks+=[itemType.SUMMON]
         if "visit" in hintable_checks_list:
@@ -277,6 +279,10 @@ class RandomizerSettings():
             self.important_checks+=["Second Chance", "Once More"]
         if "other" in hintable_checks_list:
             self.important_checks+=[itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.OCSTONE,itemType.MUNNY_POUCH]
+
+        for check_type in ["magic","proof","form","page","summon","visit","ability","other","report"]:
+            if check_type not in hintable_checks_list:
+                self.point_hint_values[check_type] = 0
 
         # making tracker includes use all worlds and 
         for l in locationType:

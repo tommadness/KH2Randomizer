@@ -704,6 +704,7 @@ class Randomizer():
                     # change the rarity of the keyblade item to the rarity of the ability
                     keyItemId = Items.locationToKeybladeItem(keyblade.LocationId)
                     if keyItemId:
+                        print(keyItemId)
                         keybladeItem = [key for key in allItems if key.Id == keyItemId][0]
                         allItems.remove(keybladeItem)
                         allItems.append(KH2Item(keybladeItem.Id,keybladeItem.Name,keybladeItem.ItemType,randomAbility.Rarity))
