@@ -489,7 +489,7 @@ class Hints:
                 raise HintException("Two reports hint the same location. This is an error, try a new seedname.")
 
         if hintsType == "Points":
-            reportRestrictions = [[]]*13
+            reportRestrictions = [[] for x in range(13)]
             reportsList = list(range(1,14))
             reportRepetition = 0
             tempWorldR = None
@@ -519,7 +519,6 @@ class Hints:
                     #report can't hint itself
                     reportNumber = int(item.Name.replace("Secret Ansem's Report ",""))
                     reportRestrictions[reportNumber-1].append(world_of_location)
-
             attempts = 0
             while len(reportsList) > 0:
                 # condition for running out of hintable items
@@ -527,7 +526,7 @@ class Hints:
                     break
                 attempts+=1
                 if attempts > 500:
-                    raise HintException(f"Points hints got stuck assigning report text with {len(reportsList)}")
+                    raise HintException(f"Points hints got stuck assigning {len(reportsList)} reports")
             
                 temp_worlds = list(worldChecksEdit.keys())
                 worlds = []
@@ -542,6 +541,7 @@ class Hints:
                 
                 #reset list
                 if len(worlds) == 0:
+                    print("reset list")
                     tempExcludeList.clear()
                     continue
 
