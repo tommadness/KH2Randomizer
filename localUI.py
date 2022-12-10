@@ -29,7 +29,7 @@ from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
-    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy, QDialog, QGridLayout, QListWidget
+    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy, QDialog, QGridLayout, QListWidget,QSpinBox,QComboBox
 )
 
 from qt_material import apply_stylesheet
@@ -121,6 +121,43 @@ class MultiGenSeedThread(QThread):
         except Exception as e:
             self.failed.emit(e)
 
+class TourneySeedDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Tourney Mode")
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(500)
+
+        box = QGridLayout()
+
+        tourney_label = QLabel("How many seeds?")
+        box.addWidget(tourney_label,0,0)
+
+        self.num_seeds = QSpinBox()
+        self.num_seeds.setRange(1,32)
+        self.num_seeds.setSingleStep(1)
+        self.num_seeds.setValue(1)
+        box.addWidget(self.num_seeds,0,1)
+
+        platform_label = QLabel("Make seeds for")
+        box.addWidget(platform_label,1,0)
+        self.platform = QComboBox()
+        self.platform.addItem("PCSX2")
+        self.platform.addItem("PC")
+        box.addWidget(self.platform,1,1)
+       
+        cancel_button = QPushButton("Cancel")
+        choose_button = QPushButton("Generate Seeds")
+        cancel_button.clicked.connect(self.reject)
+        choose_button.clicked.connect(self.accept)
+
+        box.addWidget(cancel_button,2,0)
+        box.addWidget(choose_button,2,1)
+
+        self.setLayout(box)
+
+    def save(self):
+        return (self.num_seeds.value(),self.platform.currentText())
 
 class RandomPresetDialog(QDialog):
     def __init__(self,preset_list):
@@ -171,6 +208,7 @@ class KH2RandomizerApp(QMainWindow):
         self.mods_hard_be = getDailyModifiers(self.startTime,hard_mode=True,boss_enemy=True)
         self.progress = None
         self.spoiler_log_output = "<html>No spoiler log generated</html>"
+        self.num_tourney_seeds = 0
 
         self.settings = SeedSettings()
         self.custom_cosmetics = CustomCosmetics()
@@ -228,15 +266,16 @@ class KH2RandomizerApp(QMainWindow):
         self.spoiler_log.setCheckState(Qt.Checked)
         seed_layout.addWidget(self.spoiler_log)
 
-        self.tourney_gen_toggle = QCheckBox("Tourney Mode")
-        self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
-        self.tourney_gen_toggle.setToolTip("Allows tourney organizer to make seeds with spoilers, and share seed strings that disable changing settings, but allow cosmetics.")
-        seed_layout.addWidget(self.tourney_gen_toggle)
+        # self.tourney_gen_toggle = QCheckBox("Tourney Mode")
+        # self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
+        # self.tourney_gen_toggle.setToolTip("Allows tourney organizer to make seeds with spoilers, and share seed strings that disable changing settings, but allow cosmetics.")
+        # seed_layout.addWidget(self.tourney_gen_toggle)
         
-        self.rando_rando = QCheckBox("Rando Settings (Experimental)")
-        self.rando_rando.setToolTip(getRandoRandoTooltip())
-        self.rando_rando.setCheckState(Qt.Unchecked)
-        seed_layout.addWidget(self.rando_rando)
+
+        # self.rando_rando = QCheckBox("Rando Settings (Experimental)")
+        # self.rando_rando.setToolTip(getRandoRandoTooltip())
+        # self.rando_rando.setCheckState(Qt.Unchecked)
+        # seed_layout.addWidget(self.rando_rando)
 
         self.widgets = [
             RewardLocationsMenu(self.settings),
@@ -327,6 +366,8 @@ class KH2RandomizerApp(QMainWindow):
         self.dailyMenu.addAction("Load Hard Boss/Enemy Seed", self.loadHardDailySeedBE)
         menu_bar.addMenu(self.dailyMenu)
 
+        menu_bar.addAction("Tourney Seeds", self.makeTourneySeeds)
+
         menu_bar.addAction("About", self.showAbout)
 
     def closeEvent(self, e):
@@ -396,15 +437,30 @@ class KH2RandomizerApp(QMainWindow):
     def loadHardDailySeedBE(self):
         self.dailySeedHandler(difficulty="hard", boss_enemy=True)
 
+    def makeTourneySeeds(self):
+        tourney_dialog = TourneySeedDialog()
+        if tourney_dialog.exec():
+            num_tourney_seeds,seed_platform = tourney_dialog.save()
+            self.num_tourney_seeds = num_tourney_seeds
+
+            self.tourney_seed_path = Path("tourney/")
+            self.tourney_name = "index"
+
+            self.makeSeed(seed_platform)
+            self.num_tourney_seeds = 0   
+
+            message = QMessageBox(text=f"Done making seeds")
+            message.setWindowTitle("KH2 Seed Generator")
+            message.exec()
 
     def fixSeedName(self):
         new_string = re.sub(r'[^a-zA-Z0-9]', '', self.seedName.text())
         self.seedName.setText(new_string)
-        if self.tourney_gen_toggle.isChecked():
+        if self.num_tourney_seeds>0:
             self.spoiler_log.setChecked(False)
 
     def make_rando_settings(self):
-        if self.tourney_gen_toggle.isChecked():
+        if self.num_tourney_seeds>0:
             makeSpoilerLog = False
         else:
             makeSpoilerLog = self.spoiler_log.isChecked()
@@ -417,10 +473,10 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setText(seedString)
 
         try:
-            if self.rando_rando.isChecked():
-                print("Generating randomized settings...")
-                random.seed(seedString)
-                _ = RandoRandoSettings(self.settings)
+            # if self.rando_rando.isChecked():
+            #     print("Generating randomized settings...")
+            #     random.seed(seedString)
+            #     _ = RandoRandoSettings(self.settings)
             rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
             # update the seed hash display
             self.update_ui_hash_icons(rando_settings)
@@ -491,7 +547,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def makeSeed(self,platform):
         self.fixSeedName()
-        if self.tourney_gen_toggle.isChecked():
+        if self.num_tourney_seeds>0:
             message = QMessageBox(text="Tourney Mode in Use. Spoiler will be generated outside the zip, and cosmetics disabled.")
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
@@ -535,24 +591,12 @@ class KH2RandomizerApp(QMainWindow):
         spoiler_outfile = outfile_name
         enemy_outfile = outfile_name
         if outfile_name!="":
-            if not self.tourney_gen_toggle.isChecked():
-                if not outfile_name.endswith(".zip"):
-                    outfile_name+=".zip"
-                with open(outfile_name, "wb") as out_zip:
-                    out_zip.write(self.zip_file.getbuffer())
+            if not outfile_name.endswith(".zip"):
+                outfile_name+=".zip"
+            with open(outfile_name, "wb") as out_zip:
+                out_zip.write(self.zip_file.getbuffer())
 
             last_seed_folder_txt.write_text(str(Path(outfile_name).parent))
-
-            if self.tourney_gen_toggle.isChecked():
-                if not spoiler_outfile.endswith(".html"):
-                    spoiler_outfile+=".html"
-                with open(spoiler_outfile, "w") as out_html:
-                    out_html.write(self.spoiler_log_output)
-                if not enemy_outfile.endswith(".txt"):
-                    enemy_outfile+=".txt"
-                if self.enemy_log_output:
-                    with open(enemy_outfile, "w") as out_enemy:
-                        out_enemy.write(self.enemy_log_output)
 
         self.zip_file=None
         self.spoiler_log_output=None
@@ -605,8 +649,8 @@ class KH2RandomizerApp(QMainWindow):
         self.thread.start()
 
     def genTourneySeeds(self,data):
-        self.tourney_spoilers = TourneySeedSaver(Path("tourney/"),"test_name")
-        for seed_number in range(0,15):
+        self.tourney_spoilers = TourneySeedSaver(self.tourney_seed_path,self.tourney_name)
+        for seed_number in range(0,self.num_tourney_seeds):
             characters = string.ascii_letters + string.digits
             seedString = (''.join(random.choice(characters) for i in range(30)))
             self.seedName.setText(seedString)
@@ -708,7 +752,7 @@ class KH2RandomizerApp(QMainWindow):
             seed_name=current_seed,
             spoiler_log=self.spoiler_log.isChecked(),
             settings_string=self.settings.settings_string(),
-            tourney_gen=self.tourney_gen_toggle.isChecked()
+            tourney_gen=self.num_tourney_seeds>0
         )
         output_text = shared_seed.to_share_string()
         return output_text
@@ -720,7 +764,7 @@ class KH2RandomizerApp(QMainWindow):
                 local_generator_version=LOCAL_UI_VERSION,
                 share_string="".join(str(pc.paste()).splitlines())
             )
-            self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
+            # self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
         except ShareStringException as exception:
             message = QMessageBox(text=exception.message)
             message.setWindowTitle("KH2 Seed Generator")
@@ -734,8 +778,8 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setDisabled(True)
             self.seedName.setHidden(True)
             self.spoiler_log.setDisabled(True)
-            self.tourney_gen_toggle.setDisabled(True)
-            self.rando_rando.setDisabled(True)
+            # self.tourney_gen_toggle.setDisabled(True)
+            # self.rando_rando.setDisabled(True)
             for w in self.widgets:
                 if not isinstance(w,CosmeticsMenu):
                     w.disable_widgets()
