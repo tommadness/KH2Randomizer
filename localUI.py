@@ -839,7 +839,7 @@ class KH2RandomizerApp(QMainWindow):
     def showAbout(self):
         aboutText = '''
 Kingdom Hearts II Final Mix Zip Seed Generator Version {0}<br>
-Created by Thundrio, Tommadness, and ZakTheRobot<br><br>
+Created by Equations19, Thundrio, Tommadness, and ZakTheRobot<br><br>
 
 Thank you to all contributors, testers, and advocates.<br><br>
 

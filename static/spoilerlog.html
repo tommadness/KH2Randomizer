@@ -12,6 +12,7 @@
         depth_data = DEPTH_VALUES_JSON
         settings_data = SETTINGS_JSON
         boss_enemy_data = BOSS_ENEMY_JSON
+        battle_level_data = BATTLE_LEVEL_JSON
 
     </script>
 
@@ -137,6 +138,19 @@
     <div class="panel">
         <div class="table-wrapper">
             <table class="styled-table" id="formExpTable">
+            </table>
+        </div>
+    </div>
+    <button class="accordion">World Battle Levels</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="btlvTable">
+                <tr>
+                    <th>World</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
             </table>
         </div>
     </div>
@@ -300,6 +314,38 @@ for(var i=0;i<forms.length;i++)
     form_exp_string+="</td>";
     form_exp_row.innerHTML+=form_exp_string;
     formExpTable.appendChild(form_exp_row);
+}
+
+btlvWorlds = ["Simulated Twilight Town", "Twilight Town", "Space Paranoids", "Port Royal", "Olympus Coliseum", "Halloween Town", "Land of Dragons", "The World That Never Was", "Beast's Castle", "Agrabah", "Pride Lands", "Hollow Bastion", "Disney Castle / Timeless River"]
+btlvWorlds.sort()
+var btlvTableDisplay = document.getElementById("btlvTable");
+for (var i=0; i < 13; i++)
+{
+    var world_string = btlvWorlds[i]
+    var btlv_data = battle_level_data[world_string]
+
+    var table_entry = document.createElement("tr");
+    table_entry.className = "custom-class"
+    var level_html = "";
+    level_html+="<td>"
+    level_html+=world_string
+    level_html+="</td>"
+
+    data_length = Object.keys(btlv_data).length
+
+    for(var j=0;j<data_length;j++)
+    {
+        level_html+="<td>"
+        level_html+=btlv_data[j]
+        level_html+="</td>"
+    }
+    for(var j=data_length;j<3;j++)
+    {
+        level_html+="<td>"
+        level_html+="</td>"
+    }
+    table_entry.innerHTML += level_html;
+    btlvTableDisplay.appendChild(table_entry);
 }
 
 var levelStatTable = document.getElementById("expTable");

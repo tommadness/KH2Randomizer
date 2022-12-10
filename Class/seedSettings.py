@@ -871,7 +871,11 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Battle Level Choice',
         choices={
             "Normal": 'Normal',
-            "Offset":"Offset"
+            "Offset":"Offset",
+            "+-10":"Within 10",
+            "Random":"Random (Max 50)",
+            "50":"Scale to 50",
+
         },
         shared=True,
         default="Normal",
@@ -879,6 +883,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             Change the battle level of worlds.
             Normal: unchanged battle levels
             Offset: Increase/Decrease all battle levels by a given amount
+            Within 10: Vary battle levels of every visit, but always within 10 levels (above or below)
+            Random (Max 50): All battle levels are random, with a max level of 50
+            Scale to 50: All last visits are level 50, with previous visits scaled proportionally
         ''')
     ),   
     IntSpinner(

@@ -59,9 +59,13 @@ class BattleLevelMenu(KH2Submenu):
 
     def update_battle_level_display(self,setting_name,btlv_offset):
         self.battle_levels.use_setting(setting_name,btlv_offset)
+
         for world,label_list in self.world_level_labels.items():
             for x in range(len(label_list)):
-                label_list[x].setText(str(self.battle_levels.get_battle_levels(world)[x]))
+                if setting_name in ["+-10","Random"]:
+                    label_list[x].setText("?")
+                else:
+                    label_list[x].setText(str(self.battle_levels.get_battle_levels(world)[x]))
         
 
     def add_battle_level_info(self,world):

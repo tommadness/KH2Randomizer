@@ -1,3 +1,4 @@
+import random
 from Class.exceptions import BackendException
 from Module.resources import resource_path
 from List.configDict import locationType
@@ -18,6 +19,7 @@ class BtlvViewer():
                         locationType.LoD,locationType.HUNDREDAW,locationType.PL,locationType.Atlantica,locationType.DC,locationType.DC,
                         locationType.HT,None,locationType.PR,locationType.SP,locationType.TWTNW,None,None,None,None,None]
         self.goa_btlv = True
+        self.random_option = None
         btlv_file = "static/btlv.bin"
 
         if self.goa_btlv:
@@ -63,14 +65,36 @@ class BtlvViewer():
                 raise BackendException("Trying to offset battle levels without a provided offset")
             self._make_btlv_vanilla()
             self._offset_btlv(battle_level_offset)
+        elif setting_name == "+-10":
+            self._make_btlv_vanilla()
+            self.random_option=setting_name
+        elif setting_name == "Random":
+            self._make_btlv_vanilla()
+            self.random_option=setting_name
+        elif setting_name == "50":
+            self._make_btlv_vanilla()
+            self._scale_btlv(50)
         else:
             raise BackendException("Invalid battle level setting")
+
+    def get_spoiler(self):
+        output_json = {}
+        for world in self.visit_flags:
+            output_json[world] = self.get_battle_levels(world)
+        return output_json
 
     def get_battle_levels(self, world: locationType):
         list_ret = [self._interpret_flags(x) for x in self.visit_flags[world]]
         return list_ret
         
     def write_modifications(self,outZip):
+        # we are writing out the zip, so random can be called
+        if self.random_option:
+            if self.random_option == "+-10":
+                self._variance_btlv()
+            if self.random_option == "Random":
+                self._pure_random_btlv()
+
         for x in range(20):
             offset = 8+32*x
             for y in range(8,32):
@@ -95,6 +119,7 @@ class BtlvViewer():
         return battle_level_sum
 
     def _make_btlv_vanilla(self):
+        self.random_option = None
         self.flags = []
         for x in range(20):
             offset = 8+32*x
@@ -102,6 +127,26 @@ class BtlvViewer():
             for y in range(8,32):
                 self.flags[-1].append(bytes_to_number(self.binaryContent[offset+y]))
     
+    def _variance_btlv(self):
+        for world,visit_flag_list in self.visit_flags.items():
+            current_btlvs = self.get_battle_levels(world)
+            for visit_number in range(len(visit_flag_list)):
+                btlv_change = random.randint(-10,10)
+                self._set_battle_level(world,visit_flag_list[visit_number][0],visit_number,current_btlvs[visit_number]+btlv_change)
+
+    def _pure_random_btlv(self):
+        for world,visit_flag_list in self.visit_flags.items():
+            for visit_number in range(len(visit_flag_list)):
+                btlv_change = random.randint(1,50)
+                self._set_battle_level(world,visit_flag_list[visit_number][0],visit_number,btlv_change)
+
+    def _scale_btlv(self,scaled_level):
+        for world,visit_flag_list in self.visit_flags.items():
+            current_btlvs = self.get_battle_levels(world)
+            for visit_number in range(len(visit_flag_list)):
+                new_level = int((current_btlvs[visit_number]*1.0/current_btlvs[-1])*scaled_level)
+                self._set_battle_level(world,visit_flag_list[visit_number][0],visit_number,new_level)
+
     def _offset_btlv(self,btlv_change):
         for world,visit_flag_list in self.visit_flags.items():
             current_btlvs = self.get_battle_levels(world)
@@ -116,8 +161,8 @@ class BtlvViewer():
         if visit_number > 0:
             prev_btlv = current_btlvs[visit_number-1]
             prev_visit_flags = self.visit_flags[world][visit_number-1]
-            if prev_btlv > new_level:
-                raise BackendException("Trying to set battle level to less than previous visit")
+            # if prev_btlv > new_level:
+            #     raise BackendException("Trying to set battle level to less than previous visit")
         current_visit_flags = self.visit_flags[world][visit_number]
         if not self.goa_btlv and prev_visit_flags[0] == current_visit_flags[0]:
             delta_btlv = new_level-prev_btlv

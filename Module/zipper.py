@@ -273,7 +273,7 @@ class SeedZip():
             self.createWardrobeSkipAssets(settings, mod, outZip)
             self.createDropRateAssets(settings, randomizer, mod, outZip)
             self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
-            self.createBtlvRandoAssets(settings, mod, outZip)            
+            battle_level_spoiler = self.createBtlvRandoAssets(settings, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
             outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
@@ -306,7 +306,8 @@ class SeedZip():
                                                        .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights,LocationInformedSeedValidator().validateSeed(settings, randomizer, False)), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
-                                                       .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON))
+                                                       .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON)) \
+                                                       .replace("BATTLE_LEVEL_JSON",json.dumps(battle_level_spoiler))
                     html_template = html_template.replace("PromiseCharm","Promise Charm")
                     if not tourney_gen:
                         outZip.writestr("spoilerlog.html",html_template)
@@ -354,15 +355,16 @@ class SeedZip():
         stitched_image.close()
 
     def createBtlvRandoAssets(self, settings, mod, outZip):
-        if settings.battle_level_rando == "Normal" or \
-            (settings.battle_level_rando == "Offset" and settings.battle_level_offset==0):
-            return
         btlv = BtlvViewer()
         btlv.use_setting(settings.battle_level_rando, settings.battle_level_offset)
+        if settings.battle_level_rando == "Normal" or \
+            (settings.battle_level_rando == "Offset" and settings.battle_level_offset==0):
+            return btlv.get_spoiler()
         for x in mod["assets"]:
             if x["name"]=="00battle.bin":
                 x["source"]+=modYml.getBtlvMod()
         btlv.write_modifications(outZip)
+        return btlv.get_spoiler()
 
     def addCmdListModifications(self,settings,mod,outZip):
         with open(resource_path("static/better_stt/cmd.list"), "rb") as cmdlist:
