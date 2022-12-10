@@ -205,6 +205,9 @@ class RandomizerSettings():
         self.unlimited_mp = ui_settings.get(settingkey.UNLIMITED_MP)
         self.fast_urns = ui_settings.get(settingkey.FAST_URNS)
         
+        self.shop_elixirs = ui_settings.get(settingkey.SHOP_ELIXIRS)
+        self.shop_recoveries = ui_settings.get(settingkey.SHOP_RECOVERIES)
+        self.shop_boosts = ui_settings.get(settingkey.SHOP_BOOSTS)
         self.shop_keyblades = ui_settings.get(settingkey.SHOP_KEYBLADES)
         self.shop_unlocks = ui_settings.get(settingkey.SHOP_UNLOCKS)
         self.shop_reports = ui_settings.get(settingkey.SHOP_REPORTS)

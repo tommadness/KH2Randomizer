@@ -1365,26 +1365,56 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     Toggle(
         name=settingkey.SHOP_KEYBLADES,
-        ui_label='Add Keyblades To Shop',
+        ui_label='Keyblades',
         shared=True,
         default=False,
         tooltip="Adds duplicates of keyblades into the moogle shop.",
         randomizable=False
     ),
     Toggle(
-        name=settingkey.SHOP_REPORTS,
-        ui_label='Add Reports To Shop',
+        name=settingkey.SHOP_ELIXIRS,
+        ui_label='Elixirs',
         shared=True,
         default=False,
-        tooltip="Adds duplicates of reports into the moogle shop.",
+        tooltip="Adds Elixirs/Megalixirs to shop.",
         randomizable=False
     ),
     Toggle(
+        name=settingkey.SHOP_RECOVERIES,
+        ui_label='Drive Recoveries',
+        shared=True,
+        default=False,
+        tooltip="Adds Drive Recovery/High Drive Recovery to shop.",
+        randomizable=False
+    ),
+    Toggle(
+        name=settingkey.SHOP_BOOSTS,
+        ui_label='Stat Boosts',
+        shared=True,
+        default=False,
+        tooltip="Adds Power/Magic/AP/Defense Boosts to shop.",
+        randomizable=False
+    ),
+    IntSpinner(
+        name=settingkey.SHOP_REPORTS,
+        ui_label='Add Reports To Shop',
+        shared=True,
+        minimum=0,
+        maximum=13,
+        step=1,
+        default=0,
+        tooltip="Adds a number of reports into the moogle shop.",
+        randomizable=False
+    ),
+    IntSpinner(
         name=settingkey.SHOP_UNLOCKS,
         ui_label='Add World Key Items To Shop',
         shared=True,
-        default=False,
-        tooltip="Adds duplicates of world key items into the moogle shop.",
+        minimum=0,
+        maximum=11,
+        step=1,
+        default=0,
+        tooltip="Adds a number of world key items into the moogle shop.",
         randomizable=False
     ),
 

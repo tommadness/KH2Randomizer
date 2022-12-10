@@ -8,7 +8,7 @@ from pathlib import Path
 import yaml
 from PIL import Image
 
-from Class.exceptions import BossEnemyException
+from Class.exceptions import BossEnemyException, GeneratorException
 from Class.itemClass import ItemEncoder, itemRarity
 from Class.modYml import modYml
 from List.DropRateIds import id_to_enemy_name
@@ -525,7 +525,7 @@ class SeedZip():
                 outZip.writestr("modified_drops.bin",binaryContent)
 
     def createShopRandoAssets(self, settings, randomizer, mod, outZip, sys):
-        if len(randomizer.shop_items)>0 or settings.shop_keyblades:
+        if len(randomizer.shop_items)>0:
             for x in mod["assets"]:
                 if x["name"]=="03system.bin":
                     x["source"].append(modYml.getShopMod())
@@ -536,9 +536,8 @@ class SeedZip():
             story_unlock_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.STORYUNLOCK]
             consumables = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.ITEM]
             
-            consumable_price_map = {4:400,7:600}
-
-            remaining_items = [i for i in randomizer.shop_items if i not in keyblade_item_ids+report_item_ids+story_unlock_ids+consumables]
+            remaining_items = [i.Id for i in randomizer.shop_items if i.Id not in keyblade_item_ids+report_item_ids+story_unlock_ids+consumables]
+            print(remaining_items)
 
             if len(keyblade_item_ids)>0: 
                 for i in keyblade_item_ids:
@@ -546,29 +545,27 @@ class SeedZip():
 
             if len(report_item_ids)>0:
                 for i in report_item_ids:
-                    items_for_shop.append((i,500))
+                    items_for_shop.append((i,75*(i-225)))
                 for i in range(13):
                     sys.append({"id":46778-32768+i*2,"en":f"Ansem Report {i+1}"})
 
             if len(story_unlock_ids)>0:
                 for i in story_unlock_ids:
-                    items_for_shop.append((i,4000))
+                    items_for_shop.append((i,500))
             
             if len(consumables)>0:
+                consumable_price_map = {4:400,7:600,274:400,275:600,276:250,277:250,278:250,279:250}
                 for i in consumables:
                     if i in consumable_price_map:
-                        print((i,consumable_price_map[i]))
                         items_for_shop.append((i,consumable_price_map[i]))
                     else:
                         items_for_shop.append((i,700))
 
-
-
-            price_map = {itemRarity.COMMON:100,itemRarity.UNCOMMON:300, itemRarity.RARE:500, itemRarity.MYTHIC:1000}
-
-            # if len(remaining_items)>0:
-            #     for i in remaining_items:
-            #         items_for_shop.append((i.Id,price_map[i.Rarity]))
+            if len(remaining_items)>0:
+                raise GeneratorException(f"Trying to put items in the shop that weren't expected: {len(remaining_items)}")
+                # price_map = {itemRarity.COMMON:100,itemRarity.UNCOMMON:300, itemRarity.RARE:500, itemRarity.MYTHIC:1000}
+                # for i in remaining_items:
+                #     items_for_shop.append((i.Id,price_map[i.Rarity]))
         
 
             with open(resource_path("static/full_items.json"), "r") as itemjson:

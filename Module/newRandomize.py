@@ -232,17 +232,36 @@ class Randomizer():
         if not settings.antiform:
             allItems = [i for i in allItems if i.Id!=30]
 
-        if settings.shop_reports:
-            self.shop_items+=[i for i in allItems if i.ItemType==itemType.REPORT]
-            allItems = [i for i in allItems if i.ItemType!=itemType.REPORT]
-        if settings.shop_unlocks:
-            self.shop_items+=[i for i in allItems if i.ItemType==itemType.STORYUNLOCK]
-            allItems = [i for i in allItems if i.ItemType!=itemType.STORYUNLOCK]
+        # pick N of the reports and key items
+        if settings.shop_reports > 0:
+            all_reports_available = [i for i in allItems if i.ItemType==itemType.REPORT]
+            random.shuffle(all_reports_available)
+            num_reports_in_shop = min(settings.shop_reports,len(all_reports_available))
+            self.shop_items += all_reports_available[0:num_reports_in_shop]
+
+            # self.shop_items+=[i for i in allItems if i.ItemType==itemType.REPORT]
+        if settings.shop_unlocks > 0:
+            all_unlocks_available = [i for i in allItems if i.ItemType==itemType.STORYUNLOCK]
+            random.shuffle(all_unlocks_available)
+            num_unlocks_in_shop = min(settings.shop_unlocks,len(all_unlocks_available))
+            self.shop_items += all_unlocks_available[0:num_unlocks_in_shop]
+        
+        allItems = [i for i in allItems if i not in self.shop_items]
+            
         if settings.shop_keyblades:
-            self.shop_items+=[i for i in allItems if i.ItemType==itemType.KEYBLADE] #  and i.Id!=71
-
-        self.shop_items+=[KH2Item(4, "Elixir", itemType.ITEM),KH2Item(7, "Megalixir", itemType.ITEM)]
-
+            self.shop_items+=[i for i in allItems if i.ItemType==itemType.KEYBLADE]
+        if settings.shop_elixirs:
+            self.shop_items+=[KH2Item(4, "Elixir", itemType.ITEM),
+                                KH2Item(7, "Megalixir", itemType.ITEM)]
+        if settings.shop_recoveries:
+            self.shop_items+=[KH2Item(274, "Drive Recovery", itemType.ITEM),
+                                KH2Item(275, "High Drive Recovery", itemType.ITEM)]
+        if settings.shop_boosts:
+            self.shop_items+=[KH2Item(276, "Power Boost", itemType.ITEM),
+                                KH2Item(277, "Magic Boost", itemType.ITEM),
+                                KH2Item(278, "Defense Boost", itemType.ITEM),
+                                KH2Item(279, "AP Boost", itemType.ITEM)]
+  
         if settings.fifty_ap:
             allItems += list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50))
 
