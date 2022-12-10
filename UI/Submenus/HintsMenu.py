@@ -86,6 +86,13 @@ class HintsMenu(KH2Submenu):
         if hint_system != "Spoiler":
             setting, widget = self.widgets_and_settings_by_name[settingkey.REPORTS_REVEAL]
             widget.setCurrentIndex(0)
+        if hint_system in ['JSmartee', 'Points', 'Spoiler', 'Path']:
+            setting, widget = self.widgets_and_settings_by_name[settingkey.HINTABLE_CHECKS]
+            for selected in setting.choice_keys:
+                if selected == "report":
+                    index = setting.choice_keys.index(selected)
+                    widget.item(index).setSelected(True)
+                    widget.item(index).setFlags(Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
 
     def _reveal_report_mode_changed(self):
         report_mode_enabled = self.settings.get(settingkey.REPORTS_REVEAL)
