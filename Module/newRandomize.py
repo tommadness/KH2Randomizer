@@ -239,7 +239,9 @@ class Randomizer():
             self.shop_items+=[i for i in allItems if i.ItemType==itemType.STORYUNLOCK]
             allItems = [i for i in allItems if i.ItemType!=itemType.STORYUNLOCK]
         if settings.shop_keyblades:
-            self.shop_items+=[i for i in allItems if i.ItemType==itemType.KEYBLADE and i.Id!=71]
+            self.shop_items+=[i for i in allItems if i.ItemType==itemType.KEYBLADE] #  and i.Id!=71
+
+        self.shop_items+=[KH2Item(4, "Elixir", itemType.ITEM),KH2Item(7, "Megalixir", itemType.ITEM)]
 
         if settings.fifty_ap:
             allItems += list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50))
@@ -301,6 +303,9 @@ class Randomizer():
         vanilla_items = []
         for l in locations_with_vanilla_items:
             vanilla_items+=l.VanillaItems
+
+        if len(vanilla_items) > 0 and settings.chainLogic:
+            raise GeneratorException("Can't use vanilla worlds with chain logic for now. Sorry")
 
         self.num_valid_locations = len(validLocations) + (len([loc for loc in validLocations if loc.LocationCategory in [locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS]]) if settings.statSanity else 0 )+ (len([loc for loc in validLocations if loc.LocationCategory in [locationCategory.DOUBLEBONUS]]) if settings.statSanity else 0)
         self.num_available_items = len(allAbilities)+len(allItems) - (sum([len(l.VanillaItems) for l in locations_with_vanilla_items]))
