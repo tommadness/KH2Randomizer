@@ -46,7 +46,6 @@ class ProgressionPoints():
         }
 
     def get_hint_thresholds(self,world_count):
-        print(world_count)
         output = [x for x in self.point_thresholds if x < world_count]
         return output
 

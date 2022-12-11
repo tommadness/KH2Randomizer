@@ -687,7 +687,8 @@ class KH2RandomizerApp(QMainWindow):
 
     def savePreset(self):
         preset_name, ok = QInputDialog.getText(self, 'Make New Preset', 'Enter a name for your preset...')
-
+        valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
+        preset_name = ''.join(c for c in preset_name if c in valid_chars)
         if ok:
             # add current settings to saved presets, add to current preset list, change preset selection.
             settings_json = self.settings.settings_json()
