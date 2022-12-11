@@ -9,6 +9,7 @@ from itertools import chain
 import math,random
 from Class import modYml, seedSettings, settingkey
 from Class.seedSettings import SeedSettings, Setting
+from Module.progressionPoints import ProgressionPoints
 
 class RandomizerSettings():
     excludeFrom50 = list(chain([1,3,5,6,8,11,13,16,18,19,21,22,24,26,27,29,31,33,35,37,38,40,42,43,45,47,49],range(51,100)))
@@ -233,30 +234,14 @@ class RandomizerSettings():
                                     "deaths":ui_settings.get(settingkey.POINTS_DEATH)}
 
         self.progression_hints = ui_settings.get(settingkey.PROGRESSION_HINTS)
-        self.progression_world_complete_bonus = 0
-        self.progression_report_bonus = 0
+        self.progression_world_complete_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
+        self.progression_report_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_REPORT_BONUS)
 
-        self.progression_hint_settings = {
-            "HintCosts":[ 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7 ],
-            "WorldCompleteBonus":[self.progression_world_complete_bonus],
-            "ReportBonus":[self.progression_report_bonus],
-            "SimulatedTwilightTown":[ 0, 1, 2, 0, 2, 3, 1, 6 ],
-            "TwilightTown":[ 0, 1, 2, 2, 3, 2, 6 ],
-            "HollowBastion":[ 0, 1, 1, 2, 1, 2, 2, 2, 5, 6 ],
-            "BeastsCastle":[ 0, 2, 1, 2, 1, 3, 6 ],
-            "OlympusColiseum":[ 0, 2, 1, 2, 1, 2, 1, 2, 3, 5 ],
-            "Agrabah":[ 0, 1, 1, 2, 2, 3, 2, 2, 5 ],
-            "LandofDragons":[ 0, 1, 1, 1, 1, 2, 1, 3, 6 ],
-            "HundredAcreWood":[ 0, 0, 1, 2, 2, 4 ],
-            "PrideLands":[ 0, 1, 1, 2, 1, 3, 6 ],
-            "Atlantica":[ 0, 4, 3 ],
-            "DisneyCastle":[ 0, 1, 1, 2, 2, 1, 3, 8 ],
-            "HalloweenTown":[ 0, 1, 2, 1, 1, 1, 2, 3, 6 ],
-            "PortRoyal":[ 0, 1, 1, 2, 1, 2, 2, 1, 2, 6 ],
-            "SpaceParanoids":[ 0, 2, 2, 2, 3, 3, 6 ],
-            "TWTNW":[ 0, 2, 2, 2, 2, 2, 7 ]
-        }
-
+        prog_points = ProgressionPoints()
+        self.progression_hint_settings = prog_points.get_points_json()
+        self.progression_hint_settings["HintCosts"] = [ 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7 ]
+        self.progression_hint_settings["WorldCompleteBonus"] = [self.progression_world_complete_bonus]
+        self.progression_hint_settings["ReportBonus"] = [self.progression_report_bonus]
 
         self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)

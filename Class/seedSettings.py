@@ -587,6 +587,35 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Progression Hint Mode',
         shared=True,
         default=False,
+        tooltip=textwrap.dedent('''
+            Instead of reports providing the source of hints, world progress unlocks more hints in your tracker.
+        '''),
+        randomizable=False
+    ),
+    IntSpinner(
+        name=settingkey.PROGRESSION_HINTS_REPORT_BONUS,
+        ui_label="Progression Report Reward",
+        minimum=0,
+        maximum=5,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip=textwrap.dedent('''
+            When you find a report, how many points toward your hints you get.
+        '''),
+        randomizable=False
+    ),
+    IntSpinner(
+        name=settingkey.PROGRESSION_HINTS_COMPLETE_BONUS,
+        ui_label="Progression World Complete Reward",
+        minimum=0,
+        maximum=5,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip=textwrap.dedent('''
+            When you finish a world, how many points toward your hints you get.
+        '''),
         randomizable=False
     ),
 

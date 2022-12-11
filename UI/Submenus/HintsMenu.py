@@ -15,6 +15,8 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.STARTING_REPORTS)
         self.add_option(settingkey.REPORT_DEPTH)
         self.add_option(settingkey.PROGRESSION_HINTS)
+        self.add_option(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
+        self.add_option(settingkey.PROGRESSION_HINTS_REPORT_BONUS)
         self.add_option(settingkey.SCORE_MODE)
         self.add_option(settingkey.REPORTS_REVEAL)
         self.add_option(settingkey.PREVENT_SELF_HINTING)
@@ -61,6 +63,14 @@ class HintsMenu(KH2Submenu):
         settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
         # settings.observe(settingkey.REPORTS_REVEAL, self._reveal_report_mode_changed)
         settings.observe(settingkey.SCORE_MODE, self._hint_system_changed)
+        settings.observe(settingkey.PROGRESSION_HINTS, self._progression_toggle)
+
+    def _progression_toggle(self):
+        progression_on = self.settings.get(settingkey.PROGRESSION_HINTS)
+        _, complete_widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS_COMPLETE_BONUS]
+        _, report_widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS_REPORT_BONUS]
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on)
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on)
 
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)
