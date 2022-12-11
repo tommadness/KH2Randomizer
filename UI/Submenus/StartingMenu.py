@@ -14,7 +14,6 @@ class StartingMenu(KH2Submenu):
         self.addHeader("Starting Inventory Options")
         self.add_option(settingkey.AUTO_EQUIP_START_ABILITIES)
         self.add_option(settingkey.STARTING_MOVEMENT)
-        self.add_option(settingkey.STARTING_REPORTS)
         self.end_column()
 
         self.start_column()

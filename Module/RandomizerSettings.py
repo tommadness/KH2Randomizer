@@ -232,6 +232,32 @@ class RandomizerSettings():
                                     "boss_other":ui_settings.get(settingkey.POINTS_BOSS_NORMAL),
                                     "deaths":ui_settings.get(settingkey.POINTS_DEATH)}
 
+        self.progression_hints = ui_settings.get(settingkey.PROGRESSION_HINTS)
+        self.progression_world_complete_bonus = 0
+        self.progression_report_bonus = 0
+
+        self.progression_hint_settings = {
+            "HintCosts":[ 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7 ],
+            "WorldCompleteBonus":[self.progression_world_complete_bonus],
+            "ReportBonus":[self.progression_report_bonus],
+            "SimulatedTwilightTown":[ 0, 1, 2, 0, 2, 3, 1, 6 ],
+            "TwilightTown":[ 0, 1, 2, 2, 3, 2, 6 ],
+            "HollowBastion":[ 0, 1, 1, 2, 1, 2, 2, 2, 5, 6 ],
+            "BeastsCastle":[ 0, 2, 1, 2, 1, 3, 6 ],
+            "OlympusColiseum":[ 0, 2, 1, 2, 1, 2, 1, 2, 3, 5 ],
+            "Agrabah":[ 0, 1, 1, 2, 2, 3, 2, 2, 5 ],
+            "LandofDragons":[ 0, 1, 1, 1, 1, 2, 1, 3, 6 ],
+            "HundredAcreWood":[ 0, 0, 1, 2, 2, 4 ],
+            "PrideLands":[ 0, 1, 1, 2, 1, 3, 6 ],
+            "Atlantica":[ 0, 4, 3 ],
+            "DisneyCastle":[ 0, 1, 1, 2, 2, 1, 3, 8 ],
+            "HalloweenTown":[ 0, 1, 2, 1, 1, 1, 2, 3, 6 ],
+            "PortRoyal":[ 0, 1, 1, 2, 1, 2, 2, 1, 2, 6 ],
+            "SpaceParanoids":[ 0, 2, 2, 2, 3, 3, 6 ],
+            "TWTNW":[ 0, 2, 2, 2, 2, 2, 7 ]
+        }
+
+
         self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)
 
@@ -248,6 +274,8 @@ class RandomizerSettings():
         self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)
 
         self.tracker_includes = []
+        if self.progression_hints:
+            self.tracker_includes.append("ProgressionHints")
         if self.level_one:
             self.tracker_includes.append("Level1Mode")
         self.tracker_includes.append(level_setting)

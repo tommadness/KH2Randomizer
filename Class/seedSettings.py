@@ -582,6 +582,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         randomizable=["Shananas","JSmartee","Points","Path","Spoiler"]
     ),
 
+    Toggle(
+        name=settingkey.PROGRESSION_HINTS,
+        ui_label='Progression Hint Mode',
+        shared=True,
+        default=False,
+        randomizable=False
+    ),
+
     IntSpinner(
         name=settingkey.POINTS_PROOF,
         ui_label="Proof",

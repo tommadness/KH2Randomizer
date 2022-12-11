@@ -58,6 +58,8 @@ class Hints:
 
         # start making the hint file
         hintsText = {}
+        if settings.progression_hints:
+            hintsText["ProgressionSettings"] = settings.progression_hint_settings
         hintsText['hintsType'] = hintsType
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues

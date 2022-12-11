@@ -11,7 +11,9 @@ class HintsMenu(KH2Submenu):
 
         self.start_column()
         self.add_option(settingkey.HINT_SYSTEM)
+        self.add_option(settingkey.STARTING_REPORTS)
         self.add_option(settingkey.REPORT_DEPTH)
+        self.add_option(settingkey.PROGRESSION_HINTS)
         self.add_option(settingkey.SCORE_MODE)
         self.add_option(settingkey.REPORTS_REVEAL)
         self.add_option(settingkey.PREVENT_SELF_HINTING)
