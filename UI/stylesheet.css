@@ -1,6 +1,6 @@
 QCheckBox {{
     font-family: KhMenu;
-    font-size: 16px;
+    font-size: 14px;
 }}
 
 QComboBox::drop-down {{
@@ -9,7 +9,7 @@ QComboBox::drop-down {{
 
 QGroupBox {{
     font-family: KhMenu;
-    font-size: 16px;
+    font-size: 14px;
     text-transform: none;
 }}
 
@@ -19,15 +19,15 @@ QGroupBox::title {{
 
 QLabel {{
     font-family: KhMenu;
-    font-size: 16px;
+    font-size: 14px;
 }}
 
 QLabel[cssClass~="header"] {{
     font-size: 20px;
 }}
 
-QLabel[cssClass~="small"] {{
-    font-size: 14px;
+QLabel[cssClass~="groupHeader"] {{
+    font-size: 16px;
 }}
 
 QListView::item:selected {{
@@ -44,4 +44,11 @@ QPushButton {{
 QTabBar {{
     text-transform: none;
     font-weight: normal;
+}}
+
+QFrame[cssClass~="settingsFrame"],
+QFrame[cssClass~="settingsFrame"] QCheckBox,
+QFrame[cssClass~="settingsFrame"] QLabel,
+QFrame[cssClass~="settingsFrame"] QWidget[cssClass~="layoutWidget"] {{
+    background: #3c3f41;
 }}

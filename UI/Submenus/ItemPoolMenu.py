@@ -13,7 +13,7 @@ class ItemPoolMenu(KH2Submenu):
         self.disable_signal = False
 
         self.start_column()
-        self.addHeader('Include in Item Pool')
+        self.start_group()
         self.add_option(settingkey.STATSANITY)
         self.add_option(settingkey.FIFTY_AP_BOOSTS)
         self.add_option(settingkey.ENABLE_PROMISE_CHARM)
@@ -24,19 +24,23 @@ class ItemPoolMenu(KH2Submenu):
         self.add_option(settingkey.ACCESSORIES_IN_ITEM_POOL)
         self.add_option(settingkey.ARMOR_IN_ITEM_POOL)
         self.add_option(settingkey.ABILITY_POOL)
+        self.end_group('Include in Item Pool')
         self.end_column()
 
         self.start_column()
+        self.start_group()
         self.add_option(settingkey.JUNK_ITEMS)
 
         junk_widget_layout = QHBoxLayout()
         junk_widget = QWidget()
+        junk_widget.setProperty('cssClass', 'layoutWidget')
         junk_widget.setLayout(junk_widget_layout)
         select_all_junk = QPushButton("Select All")
         select_better_junk = QPushButton("No Synth")
         junk_widget_layout.addWidget(select_all_junk)
         junk_widget_layout.addWidget(select_better_junk)
         self._add_option_widget("", "", junk_widget)
+        self.end_group('Junk Items')
         self.end_column(stretch_at_end=False)
         select_all_junk.clicked.connect(lambda: self.toggle_all_items())
         select_better_junk.clicked.connect(lambda: self.toggle_better_junk())

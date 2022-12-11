@@ -228,7 +228,7 @@ class KH2RandomizerApp(QMainWindow):
         random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator ({0})".format(LOCAL_UI_VERSION))
         self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
-        self.setMinimumWidth(1000)
+        self.setMinimumWidth(1200)
         self.setup = None
         pagelayout = QVBoxLayout()
         seed_layout = QHBoxLayout()
