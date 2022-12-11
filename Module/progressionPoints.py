@@ -21,7 +21,10 @@ class ProgressionPoints():
             locationType.TWTNW:"TWTNW"
         }
         self.set_points()
+        self.set_hint_thresholds()
 
+    def set_hint_thresholds(self):
+        self.point_thresholds = [ 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8] # max 18
 
     def set_points(self):
         self.points = {
@@ -41,6 +44,11 @@ class ProgressionPoints():
             locationType.SP:[ 0, 2, 2, 2, 3, 3, 6 ],
             locationType.TWTNW:[ 0, 2, 2, 2, 2, 2, 7 ]
         }
+
+    def get_hint_thresholds(self,world_count):
+        print(world_count)
+        output = [x for x in self.point_thresholds if x < world_count]
+        return output
 
     def get_points_json(self):
         output = {}
