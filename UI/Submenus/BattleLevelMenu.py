@@ -13,13 +13,14 @@ class BattleLevelMenu(KH2Submenu):
         self.battle_levels = BtlvViewer()
 
         self.start_column()
-        self.addHeader("Options")
+        self.start_group()
         self.add_option(settingkey.BATTLE_LEVEL_RANDO)
         self.add_option(settingkey.BATTLE_LEVEL_OFFSET)
+        self.end_group('Options')
         self.end_column()
 
         self.start_column()
-        self.addHeader("Battle Levels")
+        self.start_group()
         self.full_world_level_layout = QGridLayout()
         # first_label = QLabel("1st")
         # second_label = QLabel("2nd")
@@ -41,8 +42,10 @@ class BattleLevelMenu(KH2Submenu):
         self.add_battle_level_info(locationType.SP)
         self.add_battle_level_info(locationType.TWTNW)
         world_widget = QWidget()
+        world_widget.setProperty('cssClass', 'layoutWidget')
         world_widget.setLayout(self.full_world_level_layout)
-        self.pending_column.addWidget(world_widget)
+        self.pending_group.addWidget(world_widget)
+        self.end_group('Battle Levels')
         self.end_column()
 
         settings.observe(settingkey.BATTLE_LEVEL_RANDO, self._btlv_setting_change)
