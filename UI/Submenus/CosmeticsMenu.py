@@ -16,41 +16,43 @@ class CosmeticsMenu(KH2Submenu):
         self.custom_cosmetics = custom_cosmetics
 
         self.start_column()
-        self.addHeader('Visuals')
+        self.start_group()
         self.add_option(settingkey.COMMAND_MENU)
+        self.end_group('Visuals')
         self.end_column()
 
         self.start_column()
-        self.addHeader('Music (PC Only)')
+        self.start_group()
 
         openkh_path = CosmeticsMod.read_openkh_path()
         if openkh_path is None:
             label = QLabel('OpenKH folder not configured. Use\nthe option in the Configure menu.')
-            self.pending_column.addWidget(label)
+            self.pending_group.addWidget(label)
         else:
             cosmetics_mod_path = CosmeticsMod.cosmetics_mod_path(openkh_path, create_if_missing=False)
             if cosmetics_mod_path is None:
-                self.pending_column.addWidget(QLabel('Cosmetics mod not set up yet.'))
+                self.pending_group.addWidget(QLabel('Cosmetics mod not set up yet.'))
                 button = QPushButton('Set up now')
                 button.clicked.connect(self._set_up_mod)
-                self.pending_column.addWidget(button)
+                self.pending_group.addWidget(button)
             else:
                 self.add_option(settingkey.MUSIC_RANDO_ENABLED_PC)
                 self.add_option(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES)
 
                 music_summary = CosmeticsMod.get_music_summary()
                 if len(music_summary) == 0:
-                    self.pending_column.addWidget(QLabel('(No Music Found)'))
+                    self.pending_group.addWidget(QLabel('(No Music Found)'))
                 else:
                     label_text = 'Found Music\n'
                     for category, count in music_summary.items():
                         label_text += '{} : {}\n'.format(category, count)
-                    self.pending_column.addWidget(QLabel(label_text))
+                    self.pending_group.addWidget(QLabel(label_text))
 
+        self.end_group('Music (PC Only)')
         self.end_column()
 
         self.start_column()
-        self.addHeader('External Randomization Executables')
+        self.start_group()
 
         custom_list = QListWidget()
         custom_list_tooltip = textwrap.dedent('''
@@ -58,7 +60,7 @@ class CosmeticsMenu(KH2Submenu):
         running a Randomize.exe file (or similar) to randomize their contents.
         ''').strip()
         custom_list.setToolTip(custom_list_tooltip)
-        self.pending_column.addWidget(custom_list)
+        self.pending_group.addWidget(custom_list)
         self.custom_list = custom_list
 
         button_layout = QHBoxLayout()
@@ -66,8 +68,9 @@ class CosmeticsMenu(KH2Submenu):
         remove_button = QPushButton('Remove')
         button_layout.addWidget(add_button)
         button_layout.addWidget(remove_button)
-        self.pending_column.addLayout(button_layout)
+        self.pending_group.addLayout(button_layout)
 
+        self.end_group('External Randomization Executables')
         self.end_column()
 
         self.finalizeMenu()

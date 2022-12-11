@@ -10,6 +10,7 @@ class HintsMenu(KH2Submenu):
         super().__init__(title='Hints', settings=settings, in_layout='horizontal')
 
         self.start_column()
+        self.start_group()
         self.add_option(settingkey.HINT_SYSTEM)
         self.add_option(settingkey.STARTING_REPORTS)
         self.add_option(settingkey.REPORT_DEPTH)
@@ -20,11 +21,15 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.ALLOW_PROOF_HINTING)
         self.add_option(settingkey.ALLOW_REPORT_HINTING)
         self.add_option(settingkey.REVEAL_COMPLETE)
+        self.end_group()
+
+        self.start_group()
         self.add_option(settingkey.HINTABLE_CHECKS)
+        self.end_group('Hintable Items')
         self.end_column(stretch_at_end=False)
 
         self.start_column()
-        self.addHeader('Item Point Values')
+        self.start_group()
         self.add_option(settingkey.POINTS_REPORT)
         self.add_option(settingkey.POINTS_PROOF)
         self.add_option(settingkey.POINTS_FORM)
@@ -33,11 +38,12 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_ABILITY)
         self.add_option(settingkey.POINTS_PAGE)
         self.add_option(settingkey.POINTS_VISIT)
-        self.add_option(settingkey.POINTS_AUX)    
+        self.add_option(settingkey.POINTS_AUX)
+        self.end_group('Item Point Values')
         self.end_column()
 
         self.start_column()
-        self.addHeader('Other Point Values')
+        self.start_group()
         self.add_option(settingkey.POINTS_BONUS)
         self.add_option(settingkey.POINTS_COMPLETE)
         self.add_option(settingkey.POINTS_FORMLV)
@@ -48,6 +54,7 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_BOSS_SEPHIROTH)
         self.add_option(settingkey.POINTS_BOSS_TERRA)
         self.add_option(settingkey.POINTS_DEATH)
+        self.end_group('Other Point Values')
         self.end_column()
         self.finalizeMenu()
 

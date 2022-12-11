@@ -13,27 +13,30 @@ class ItemPlacementMenu(KH2Submenu):
         self.disable_signal = False
 
         self.start_column()
-        self.addHeader("Where Items Can Go")
+        self.start_group()
         self.add_option(settingkey.ACCESSIBILITY)
         self.add_option(settingkey.SOFTLOCK_CHECKING)
         self.add_option(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.add_option(settingkey.NIGHTMARE_LOGIC)
         self.add_option(settingkey.STORY_UNLOCK_CATEGORY)
         self.add_option(settingkey.STORY_UNLOCK_DEPTH)
+        self.end_group('Where Items Can Go')
         self.end_column()
 
         self.start_column()
-        self.addHeader("Proof Restrictions")
+        self.start_group()
         self.add_option(settingkey.YEET_THE_BEAR)
         self.add_option(settingkey.PROOF_DEPTH)
+        self.end_group('Proof Restrictions')
         self.end_column()
 
         self.start_column()
-        self.addHeader("Chain Logic")
+        self.start_group()
         self.add_option(settingkey.CHAIN_LOGIC)
         self.add_option(settingkey.CHAIN_LOGIC_LENGTH)
         self.add_option(settingkey.CHAIN_LOGIC_TERRA)
         self.add_option(settingkey.CHAIN_LOGIC_MIN_TERRA)
+        self.end_group('Chain Logic')
         self.end_column()
 
         self.finalizeMenu()

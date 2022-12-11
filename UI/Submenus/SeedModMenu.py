@@ -10,7 +10,7 @@ class SeedModMenu(KH2Submenu):
         self.disable_signal = False
 
         self.start_column()
-        self.addHeader('Quality of Life')
+        self.start_group()
         self.add_option(settingkey.ROXAS_ABILITIES_ENABLED)
         self.add_option(settingkey.TT1_JAILBREAK)
         self.add_option(settingkey.SKIP_CARPET_ESCAPE)
@@ -19,22 +19,25 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.FAST_URNS)
         self.add_option(settingkey.ATLANTICA_TUTORIAL_SKIP)
         self.add_option(settingkey.REMOVE_CUTSCENES)
+        self.end_group('Quality of Life')
         self.end_column()
 
         self.start_column()
-        self.addHeader('Other Modifiers')
+        self.start_group()
         self.add_option(settingkey.AS_DATA_SPLIT)
         self.add_option(settingkey.CUPS_GIVE_XP)
         self.add_option(settingkey.RETRY_DFX)
         self.add_option(settingkey.RETRY_DARK_THORN)
         self.add_option(settingkey.REMOVE_DAMAGE_CAP)
+        self.end_group('Other Modifiers')
         self.end_column()
 
         self.start_column()
-        self.addHeader('Even More Other Modifiers')
+        self.start_group()
         self.add_option(settingkey.BLOCK_COR_SKIP)
         self.add_option(settingkey.BLOCK_SHAN_YU_SKIP)
         self.add_option(settingkey.DISABLE_FINAL_FORM)
+        self.end_group('Even More Other Modifiers')
         self.end_column()
 
         settings.observe(settingkey.SOFTLOCK_CHECKING, self.reverse_rando_checking)

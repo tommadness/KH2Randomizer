@@ -1,4 +1,5 @@
 import os
+import random
 from typing import Optional
 
 from PySide6.QtCore import Qt, QSize
@@ -28,21 +29,63 @@ class KH2Submenu(QWidget):
             self.menulayout = QHBoxLayout()
 
         self.pending_column: Optional[QVBoxLayout] = None
+        self.pending_group: Optional[QVBoxLayout] = None
 
         self.tristate_groups = {}
         self.tristate_backgrounds = {}
 
+        self.random_header_styles = [
+            'background: #4d0d0e; color: #ff8080;',  # reds
+            'background: #685901; color: #fff34b;',  # yellows
+            'background: #04641b; color: #31f626;',  # greens
+            'background: #032169; color: #63c6f5;',  # blues
+            'background: #422169; color: #c663f5;',  # purples
+        ]
+        self.next_header_style = random.randint(0, len(self.random_header_styles) - 1)
+
     def start_column(self):
         self.pending_column = QVBoxLayout()
+        self.pending_column.setContentsMargins(0, 0, 0, 0)
 
     def end_column(self, stretch_at_end=True):
         if stretch_at_end:
             self.pending_column.addStretch()
-        frame = QFrame()
-        frame.setLayout(self.pending_column)
-        self.menulayout.addWidget(frame)
+        column_widget = QWidget()
+        column_widget.setLayout(self.pending_column)
+        self.menulayout.addWidget(column_widget)
         self.menulayout.addSpacing(8)
         self.pending_column = None
+
+    def start_group(self):
+        self.pending_group = QVBoxLayout()
+        self.pending_group.setContentsMargins(8, 0, 8, 0)
+
+    def end_group(self, title=''):
+        group = QVBoxLayout()
+        group.setContentsMargins(0, 0, 0, 0)
+
+        header_style_choice = self.next_header_style % len(self.random_header_styles)
+        self.next_header_style = self.next_header_style + 1
+
+        if title != '':
+            title_label = QLabel(title)
+            title_label.setContentsMargins(8, 8, 8, 8)
+            title_label.setProperty('cssClass', 'groupHeader')
+            title_label.setStyleSheet(self.random_header_styles[header_style_choice])
+            group.addWidget(title_label)
+
+        group.addLayout(self.pending_group)
+
+        frame = QFrame()
+        if title == '':
+            frame.setContentsMargins(0, 8, 0, 8)
+        else:
+            frame.setContentsMargins(0, 0, 0, 8)
+        frame.setProperty('cssClass', 'settingsFrame')
+        frame.setLayout(group)
+
+        self.pending_column.addWidget(frame)
+        self.pending_group = None
 
     def _add_option_widget(self, label_text: str, tooltip: str, option):
         label = QLabel(label_text)
@@ -58,17 +101,24 @@ class KH2Submenu(QWidget):
                 layout.addWidget(option)
 
                 layout_widget = QWidget()
+                layout_widget.setProperty('cssClass', 'layoutWidget')
                 layout_widget.setLayout(layout)
-                self.pending_column.addWidget(layout_widget)
+                if self.pending_group:
+                    self.pending_group.addWidget(layout_widget)
+                else:
+                    self.pending_column.addWidget(layout_widget)
             elif isinstance(option, QListWidget):
                 layout = QVBoxLayout()
                 layout.setContentsMargins(0, 0, 0, 0)
-                layout.addWidget(label)
                 layout.addWidget(option, alignment=Qt.AlignLeft)
 
                 layout_widget = QWidget()
+                layout_widget.setProperty('cssClass', 'layoutWidget')
                 layout_widget.setLayout(layout)
-                self.pending_column.addWidget(layout_widget)
+                if self.pending_group:
+                    self.pending_group.addWidget(layout_widget)
+                else:
+                    self.pending_column.addWidget(layout_widget)
             else:
                 layout = QHBoxLayout()
                 layout.setContentsMargins(0, 0, 0, 0)
@@ -76,8 +126,12 @@ class KH2Submenu(QWidget):
                 layout.addWidget(option, alignment=Qt.AlignRight)
 
                 layout_widget = QWidget()
+                layout_widget.setProperty('cssClass', 'layoutWidget')
                 layout_widget.setLayout(layout)
-                self.pending_column.addWidget(layout_widget)
+                if self.pending_group:
+                    self.pending_group.addWidget(layout_widget)
+                else:
+                    self.pending_column.addWidget(layout_widget)
         else:
             layout = QHBoxLayout()
             layout.setContentsMargins(0, 0, 0, 0)
@@ -85,6 +139,7 @@ class KH2Submenu(QWidget):
             layout.addWidget(option, stretch=2, alignment=Qt.AlignLeft)
 
             layout_widget = QWidget()
+            layout_widget.setProperty('cssClass', 'layoutWidget')
             layout_widget.setLayout(layout)
             self.menulayout.addWidget(layout_widget)
 
@@ -159,7 +214,6 @@ class KH2Submenu(QWidget):
 
             top_layout = QHBoxLayout()
             world_label = QLabel(setting.choice_values[index])
-            world_label.setProperty('cssClass', 'small')
             top_layout.addWidget(world_label)
 
             bottom_layout = QHBoxLayout()
@@ -235,12 +289,10 @@ class KH2Submenu(QWidget):
             grid.addWidget(QLabel(''))
 
         if self.pending_column:
-            label = QLabel(group_title)
-            tooltip = setting.tooltip
-            if tooltip != '':
-                label.setToolTip(tooltip)
-            self.pending_column.addWidget(label)
-            self.pending_column.addLayout(grid)
+            if self.pending_group:
+                self.pending_group.addLayout(grid)
+            else:
+                self.pending_column.addLayout(grid)
         else:
             group_box = QGroupBox(group_title)
             group_box.setLayout(grid)
@@ -249,7 +301,9 @@ class KH2Submenu(QWidget):
     def addHeader(self, label_text):
         label = QLabel(label_text)
         label.setProperty('cssClass', 'header')
-        if self.pending_column:
+        if self.pending_group:
+            self.pending_group.addWidget(label)
+        elif self.pending_column:
             self.pending_column.addWidget(label)
         else:
             self.menulayout.addWidget(label)
@@ -432,7 +486,7 @@ class KH2Submenu(QWidget):
             choice_group = self.tristate_backgrounds[choice_keys[index]]
             if rando.isChecked():
                 selected_keys.append(choice_keys[index])
-                choice_group.setStyleSheet("QLabel {background-color: #2E7D32}")
+                choice_group.setStyleSheet("QLabel {background-color: #04641b}")
             elif vanil.isChecked():
                 choice_group.setStyleSheet("QLabel {background-color: gray}")
                 partial_keys.append(choice_keys[index])
