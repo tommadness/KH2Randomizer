@@ -1,6 +1,8 @@
 import os
 import subprocess
 import sys
+import textwrap
+
 from Class.exceptions import CantAssignItemException, RandomizerExceptions
 from List.configDict import locationType
 
@@ -121,43 +123,89 @@ class MultiGenSeedThread(QThread):
         except Exception as e:
             self.failed.emit(e)
 
+
 class TourneySeedDialog(QDialog):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Tourney Mode")
         self.setMinimumWidth(800)
-        self.setMinimumHeight(500)
 
-        box = QGridLayout()
+        grid = QGridLayout()
+        row = 0
 
+        explanation = textwrap.dedent('''
+Use this screen to generate a set of seeds for a tournament.
+
+The tournament organizer receives a folder containing all of the seed strings, seed hashes, and spoiler logs.
+This can be shared with other tournament organizers to make sure everyone has access to all the seeds. 
+
+When participants receive their seeds, they will NOT have access to spoiler logs.
+Participants will only be able to customize cosmetics.
+        '''.strip())
+        grid.addWidget(QLabel(explanation), row, 0, 1, 3)
+
+        row = row + 1
+        grid.addWidget(QLabel(''), row, 0)
+
+        row = row + 1
+        grid.addWidget(QLabel('Tournament Name'), row, 0)
+        name_field = QLineEdit()
+        name_field.setToolTip('The name of the tournament.')
+        self.name_field = name_field
+        grid.addWidget(name_field, row, 1, 1, 2)
+
+        row = row + 1
         tourney_label = QLabel("How many seeds?")
-        box.addWidget(tourney_label,0,0)
+        grid.addWidget(tourney_label, row, 0)
 
         self.num_seeds = QSpinBox()
-        self.num_seeds.setRange(1,32)
+        self.num_seeds.setRange(1, 32)
         self.num_seeds.setSingleStep(1)
         self.num_seeds.setValue(1)
-        box.addWidget(self.num_seeds,0,1)
+        grid.addWidget(self.num_seeds, row, 1, 1, 2)
 
+        row = row + 1
         platform_label = QLabel("Make seeds for")
-        box.addWidget(platform_label,1,0)
+        grid.addWidget(platform_label, row, 0)
         self.platform = QComboBox()
-        self.platform.addItem("PCSX2")
         self.platform.addItem("PC")
-        box.addWidget(self.platform,1,1)
-       
+        self.platform.addItem("PCSX2")
+        grid.addWidget(self.platform, row, 1, 1, 2)
+
+        row = row + 1
+        output_path_field = QLineEdit()
+        output_path_field.setToolTip('The location to which to save the generated seeds.')
+        self.output_path_field = output_path_field
+        output_path_button = QPushButton('Browse')
+        output_path_button.clicked.connect(self._choose_output_path)
+
+        grid.addWidget(QLabel('Output location'), row, 0)
+        grid.addWidget(output_path_field, row, 1)
+        grid.addWidget(output_path_button, row, 2)
+
+        row = row + 1
         cancel_button = QPushButton("Cancel")
         choose_button = QPushButton("Generate Seeds")
         cancel_button.clicked.connect(self.reject)
         choose_button.clicked.connect(self.accept)
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(cancel_button)
+        button_layout.addWidget(choose_button)
+        grid.addLayout(button_layout, row, 0, 1, 3)
 
-        box.addWidget(cancel_button,2,0)
-        box.addWidget(choose_button,2,1)
+        box = QVBoxLayout()
+        box.addLayout(grid)
 
         self.setLayout(box)
 
     def save(self):
-        return (self.num_seeds.value(),self.platform.currentText())
+        return self.name_field.text(), self.num_seeds.value(), self.platform.currentText(), self.output_path_field.text()
+
+    def _choose_output_path(self):
+        output = QFileDialog.getExistingDirectory()
+        if output is not None and output != '':
+            self.output_path_field.setText(output)
+
 
 class RandomPresetDialog(QDialog):
     def __init__(self,preset_list):
@@ -440,11 +488,11 @@ class KH2RandomizerApp(QMainWindow):
     def makeTourneySeeds(self):
         tourney_dialog = TourneySeedDialog()
         if tourney_dialog.exec():
-            num_tourney_seeds,seed_platform = tourney_dialog.save()
+            tourney_name, num_tourney_seeds, seed_platform, output_path = tourney_dialog.save()
             self.num_tourney_seeds = num_tourney_seeds
 
-            self.tourney_seed_path = Path("tourney/")
-            self.tourney_name = "index"
+            self.tourney_seed_path = Path(output_path) / tourney_name
+            self.tourney_name = tourney_name
 
             self.makeSeed(seed_platform)
             self.num_tourney_seeds = 0   
@@ -649,6 +697,8 @@ class KH2RandomizerApp(QMainWindow):
         self.thread.start()
 
     def genTourneySeeds(self,data):
+        self.tourney_seed_path.mkdir(parents=True, exist_ok=True)
+
         self.tourney_spoilers = TourneySeedSaver(self.tourney_seed_path,self.tourney_name)
         for seed_number in range(0,self.num_tourney_seeds):
             characters = string.ascii_letters + string.digits
