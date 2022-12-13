@@ -42,6 +42,10 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_VISIT)
         self.add_option(settingkey.POINTS_AUX)
         self.end_group('Item Point Values')
+
+        self.start_group()
+        self.add_option(settingkey.PROGRESSION_POINT_SELECT)
+        self.end_group("Progression Points")
         self.end_column()
 
         self.start_column()
@@ -71,6 +75,7 @@ class HintsMenu(KH2Submenu):
         _, report_widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS_REPORT_BONUS]
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on)
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on)
+        self.set_option_visibility(settingkey.PROGRESSION_POINT_SELECT, visible=progression_on)
 
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)

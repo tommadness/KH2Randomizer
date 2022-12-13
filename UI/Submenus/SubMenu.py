@@ -10,8 +10,85 @@ from PySide6.QtWidgets import (
 )
 
 import Class.seedSettings
-from Class.seedSettings import MultiSelectTristate, SeedSettings, Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect
+from Class.seedSettings import MultiSelectTristate, ProgressionChainSelect, SeedSettings, Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect
 from Module.resources import resource_path
+
+class ProgressionWidget(QWidget):
+    def __init__(self, settings, setting_name):
+        super().__init__()
+        self.settings = settings
+        self.setting_name = setting_name
+        setting: ProgressionChainSelect = Class.seedSettings.settings_by_name[setting_name]
+
+        self.world_options = setting.progression.get_world_options()
+
+        self.full_layout = QVBoxLayout()
+
+        self.world_name_layout = QHBoxLayout()
+        self.world_cp_name_layout = QHBoxLayout()
+        self.world_cp_value_layout = QHBoxLayout()
+
+        # make a combo box for worlds
+        self.world_select = QComboBox()
+        self.world_select.addItems(self.world_options)
+        # self.world_select.lineEdit().setReadOnly(True)
+        self.world_select.currentIndexChanged.connect(lambda index: self._change_visibility(self.world_options[index]))
+        self.world_name_layout.addWidget(self.world_select)
+
+        self.tier2_selects = {}
+        self.tier3_selects = {}
+        for w in self.world_options:
+            self.tier3_selects[w] = []
+            world_cp_select_labels = []
+            for w_cp_index in range(setting.progression.get_num_cp_for_world(w)):
+                world_cp_select_labels.append(setting.progression.get_cp_label_for_world(w,w_cp_index))
+                spin_box = QSpinBox()
+                spin_box.setRange(0,7)
+                spin_box.setSingleStep(1)
+                spin_box.setValue(setting.progression.get_cp_for_world(w,w_cp_index))
+                spin_box.valueChanged.connect(lambda value, world=w,world_cp=w_cp_index: self._change_setting(world,world_cp,value))
+                # spin_box.lineEdit().setReadOnly(True)
+                self.tier3_selects[w].append(spin_box)
+                self.world_cp_value_layout.addWidget(spin_box)
+            world_cp_select_box = QComboBox()
+            world_cp_select_box.addItems(world_cp_select_labels)
+            world_cp_select_box.setCurrentIndex(0)
+            world_cp_select_box.currentIndexChanged.connect(lambda index,world=w: self._change_visibility_again(world,index))
+            # world_cp_select_box.lineEdit().setReadOnly(True)
+            self.tier2_selects[w] = world_cp_select_box
+            self.world_cp_name_layout.addWidget(world_cp_select_box)
+    
+        world_name_widget = QWidget()
+        world_name_widget.setLayout(self.world_name_layout)
+        world_cp_name_widget = QWidget()
+        world_cp_name_widget.setLayout(self.world_cp_name_layout)
+        world_cp_value_widget = QWidget()
+        world_cp_value_widget.setLayout(self.world_cp_value_layout)
+        self.full_layout.addWidget(world_name_widget)
+        self.full_layout.addWidget(world_cp_name_widget)
+        self.full_layout.addWidget(world_cp_value_widget)
+
+        self.world_select.setCurrentIndex(1)
+        self.world_select.setCurrentIndex(0)
+
+        self.setLayout(self.full_layout)
+    
+    def _change_setting(self,world,world_cp,value):
+        setting: ProgressionChainSelect = Class.seedSettings.settings_by_name[self.setting_name]
+        setting.progression.set_cp_for_world(world,world_cp,value)
+        self.settings.set(self.setting_name,setting.progression.get_compressed())
+
+    def _change_visibility(self,selected_world):
+        for w in self.tier2_selects:
+            self.tier2_selects[w].setVisible(w==selected_world)
+        self._change_visibility_again(selected_world,0)
+
+    def _change_visibility_again(self,selected_world,selected_cp_index):
+        # only change visibility of tier 3
+        for w in self.tier3_selects:
+            for s in self.tier3_selects[w]:
+                s.setVisible(False)
+        self.tier3_selects[selected_world][selected_cp_index].setVisible(True)
 
 
 class KH2Submenu(QWidget):
@@ -158,6 +235,8 @@ class KH2Submenu(QWidget):
             widget = self.make_multi_select_list(setting_name)
         elif isinstance(setting, MultiSelectTristate):
             widget = self.make_multi_select_tristate_list(setting_name)
+        elif isinstance(setting, ProgressionChainSelect):
+            widget = ProgressionWidget(self.settings,setting_name)
         else:
             print('Unknown setting type')
             return

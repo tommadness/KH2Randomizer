@@ -347,7 +347,7 @@ class SeedZip():
 
         image_file = io.BytesIO()
         stitched_image.save(image_file, 'PNG')
-        out_zip.writestr('seed_hash.png', image_file.getvalue())
+        out_zip.writestr('preview.png', image_file.getvalue())
 
         for image in images:
             image.close()

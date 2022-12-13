@@ -10,6 +10,7 @@ from Class import settingkey
 from Class.exceptions import SettingsException
 from List.ItemList import Items,itemRarity
 from List.configDict import expCurve, locationType, locationDepth
+from Module.progressionPoints import ProgressionPoints
 from Module.randomCmdMenu import RandomCmdMenu
 
 
@@ -132,7 +133,28 @@ class SingleSelect(Setting):
     def parse_settings_string(self, settings_string: str):
         index = int(settings_string)
         return self.choice_keys[index]
-        
+
+class ProgressionChainSelect(Setting):
+    def __init__(
+            self,
+            name: str,
+            ui_label: str,
+            shared: bool,
+            tooltip: str = '',
+            randomizable = None
+    ):
+        self.progression = ProgressionPoints()
+        super().__init__(name, str, ui_label, shared, self.progression.get_compressed(), tooltip, randomizable)
+
+    def settings_string(self, value) -> str:
+        self.progression.set_uncompressed(value)
+        return self.progression.get_compressed()
+
+    def parse_settings_string(self, settings_string: str):
+        self.progression.set_uncompressed(settings_string)
+        return self.progression.get_compressed()
+
+
 
 class MultiSelect(Setting):
 
@@ -615,6 +637,15 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=0,
         tooltip=textwrap.dedent('''
             When you finish a world, how many points toward your hints you get.
+        '''),
+        randomizable=False
+    ),
+    ProgressionChainSelect(
+        name=settingkey.PROGRESSION_POINT_SELECT,
+        ui_label='World Progress Points',
+        shared=True,
+        tooltip=textwrap.dedent('''
+            Point values for different checkpoints in worlds.
         '''),
         randomizable=False
     ),
