@@ -23,7 +23,7 @@ class ProgressionPoints():
             locationType.TWTNW:"TWTNW"
         }
         self.initialize_points()
-        self.set_hint_thresholds()
+        self.initialize_point_thresholds()
 
     def get_world_options(self):
         return list(self.gen_to_tracker_location_map.keys())
@@ -55,8 +55,8 @@ class ProgressionPoints():
     def set_cp_for_world(self,world:locationType,index:int, value:int):
         self.points[world][index] = value
 
-    def set_hint_thresholds(self):
-        self.point_thresholds = [ 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8] # max 18
+    def initialize_point_thresholds(self):
+        self.point_thresholds = [ 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8] # max 18 (17 worlds + creations)
 
     def initialize_points(self):
         self.points = {
@@ -87,8 +87,6 @@ class ProgressionPoints():
             range_end=0
         self.points["ZZZZZZZZZZZZZZZZ"] = [0 for x in range(range_end)] # adding some padding at the end of the file
 
-        # self.set_uncompressed(self.get_compressed())
-
     def get_compressed(self):
         def int_to_hex_digits(num):
             hex_string = "{0:#0{1}x}".format(num,5)
@@ -114,9 +112,16 @@ class ProgressionPoints():
                     character_list+=int_to_hex_digits(current_number_sum)
                     current_number_sum=0
                 current_number_index = (current_number_index + 1)%4
-        return character_list
+        threshold_characters=""
+        for p in self.point_thresholds:
+            threshold_characters+=str(p)
+        return threshold_characters+character_list
 
     def set_uncompressed(self,compressed_string):
+        for p in range(len(self.point_thresholds)):
+            self.set_point_threshold(p,int(compressed_string[p]))
+        compressed_string = compressed_string[18:]
+
         def hex_digits_to_ints(char1,char2,char3):
             full_string = "0x"+char1+char2+char3
             full_int = int(full_string,16)
@@ -142,6 +147,12 @@ class ProgressionPoints():
                 compare_list.append(self.points[k][i])
                 current_number_index = (current_number_index + 1)%4
         return True
+
+    def get_point_threshold(self,index):
+        return self.point_thresholds[index]
+    
+    def set_point_threshold(self,index,value):
+        self.point_thresholds[index] = value
 
     def get_hint_thresholds(self,world_count):
         output = [x for x in self.point_thresholds if x < world_count]

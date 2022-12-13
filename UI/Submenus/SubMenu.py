@@ -24,19 +24,16 @@ class ProgressionWidget(QWidget):
 
         self.full_layout = QVBoxLayout()
 
-        self.world_name_layout = QHBoxLayout()
-        self.world_cp_name_layout = QHBoxLayout()
-        self.world_cp_value_layout = QHBoxLayout()
-
         # make a combo box for worlds
         self.world_select = QComboBox()
         self.world_select.addItems(self.world_options)
         # self.world_select.lineEdit().setReadOnly(True)
         self.world_select.currentIndexChanged.connect(lambda index: self._change_visibility(self.world_options[index]))
-        self.world_name_layout.addWidget(self.world_select)
+        self.full_layout.addWidget(self.world_select)
 
         self.tier2_selects = {}
         self.tier3_selects = {}
+        spin_boxes = []
         for w in self.world_options:
             self.tier3_selects[w] = []
             world_cp_select_labels = []
@@ -49,29 +46,57 @@ class ProgressionWidget(QWidget):
                 spin_box.valueChanged.connect(lambda value, world=w,world_cp=w_cp_index: self._change_setting(world,world_cp,value))
                 # spin_box.lineEdit().setReadOnly(True)
                 self.tier3_selects[w].append(spin_box)
-                self.world_cp_value_layout.addWidget(spin_box)
+                spin_boxes.append(spin_box)
             world_cp_select_box = QComboBox()
             world_cp_select_box.addItems(world_cp_select_labels)
             world_cp_select_box.setCurrentIndex(0)
             world_cp_select_box.currentIndexChanged.connect(lambda index,world=w: self._change_visibility_again(world,index))
             # world_cp_select_box.lineEdit().setReadOnly(True)
             self.tier2_selects[w] = world_cp_select_box
-            self.world_cp_name_layout.addWidget(world_cp_select_box)
-    
-        world_name_widget = QWidget()
-        world_name_widget.setLayout(self.world_name_layout)
-        world_cp_name_widget = QWidget()
-        world_cp_name_widget.setLayout(self.world_cp_name_layout)
-        world_cp_value_widget = QWidget()
-        world_cp_value_widget.setLayout(self.world_cp_value_layout)
-        self.full_layout.addWidget(world_name_widget)
-        self.full_layout.addWidget(world_cp_name_widget)
-        self.full_layout.addWidget(world_cp_value_widget)
+            self.full_layout.addWidget(world_cp_select_box)
+        
+        for s in spin_boxes:
+            self.full_layout.addWidget(s)
 
         self.world_select.setCurrentIndex(1)
         self.world_select.setCurrentIndex(0)
 
+
+        self.full_layout.addWidget(QLabel("Hint Thresholds"))
+
+        # widgets for the hint thresholds
+        self.threshold_select = QComboBox()
+        hint_texts = []
+        for x in range(0,18):
+            hint_texts.append(f"Hint Threshold {x+1}")
+        self.threshold_select.addItems(hint_texts)
+        self.threshold_select.currentIndexChanged.connect(lambda index: self._change_threshold_visibility(index))
+        self.full_layout.addWidget(self.threshold_select)
+
+        self.threshold_values = {}
+        for x in range(0,18):
+            spin_box = QSpinBox()
+            spin_box.setRange(0,9)
+            spin_box.setSingleStep(1)
+            spin_box.setValue(setting.progression.get_point_threshold(x))
+            spin_box.valueChanged.connect(lambda value, hint_index=x: self._change_threshold(hint_index,value))
+            # spin_box.lineEdit().setReadOnly(True)
+            self.threshold_values[x] = spin_box
+            self.full_layout.addWidget(spin_box)
+        
+        self.threshold_select.setCurrentIndex(1)
+        self.threshold_select.setCurrentIndex(0)
+
         self.setLayout(self.full_layout)
+
+    def _change_threshold(self,index,value):
+        setting: ProgressionChainSelect = Class.seedSettings.settings_by_name[self.setting_name]
+        setting.progression.set_point_threshold(index,value)
+        self.settings.set(self.setting_name,setting.progression.get_compressed())
+
+    def _change_threshold_visibility(self,index):
+        for w in self.threshold_values:
+            self.threshold_values[w].setVisible(w==index)
     
     def _change_setting(self,world,world_cp,value):
         setting: ProgressionChainSelect = Class.seedSettings.settings_by_name[self.setting_name]

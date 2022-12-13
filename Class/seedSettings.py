@@ -642,7 +642,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     ProgressionChainSelect(
         name=settingkey.PROGRESSION_POINT_SELECT,
-        ui_label='World Progress Points',
+        ui_label=None,
         shared=True,
         tooltip=textwrap.dedent('''
             Point values for different checkpoints in worlds.
