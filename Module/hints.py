@@ -60,6 +60,7 @@ class Hints:
         hintsText = {}
         if settings.progression_hints:
             hintsText["ProgressionSettings"] = settings.progression_hint_settings
+            num_progression_worlds = len(hintsText["ProgressionSettings"]["HintCosts"])
         hintsText['hintsType'] = hintsType
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues
@@ -86,6 +87,8 @@ class Hints:
             # importantChecks += [itemType.REPORT]
         
         report_master = [[locationType.Free]]*14
+        if settings.progression_hints:
+            report_master = [[locationType.Free]]*19
         found_reports = False
         for location,item in locationItems:
             if item.ItemType is itemType.REPORT:
@@ -223,31 +226,61 @@ class Hints:
                 for reportNumber in range(1,14):
                     report_master[reportNumber] = [""]
 
-            valid_reports = False
-            for iter in range(1,10):
-                report_texts = report_texts[0:13]
-                random.shuffle(report_texts)
-                valid_reports = True
+
+            if not settings.progression_hints:
+                valid_reports = False
+                for iter in range(1,10):
+                    report_texts = report_texts[0:13]
+                    random.shuffle(report_texts)
+                    valid_reports = True
+                    for x in range(1,14):
+                        report_location = report_master[x][0]
+                        report_hint_world = report_texts[x-1][1]
+                        if report_hint_world==report_location:
+                            valid_reports = False
+                            break
+                    if valid_reports:
+                        break
+                if not valid_reports:
+                    raise HintException("Failed to assign path hints due to self hinting")
+
+
                 for x in range(1,14):
                     report_location = report_master[x][0]
-                    report_hint_world = report_texts[x-1][1]
-                    if report_hint_world==report_location:
-                        valid_reports = False
+                    hintsText["Reports"][x] = {
+                                "Text": report_texts[x-1][0],
+                                "HintedWorld": report_texts[x-1][1],
+                                "ProofPath": report_texts[x-1][2],
+                                "Location": report_location
+                            }
+            else: # we are doing progression hints
+                valid_reports = False
+                for reportNumber in range(14,num_progression_worlds):
+                    report_master[reportNumber] = [""]
+                for iter in range(1,10):
+                    report_texts = report_texts[0:num_progression_worlds]
+                    random.shuffle(report_texts)
+                    valid_reports = True
+                    for x in range(1,14):
+                        report_location = report_master[x][0]
+                        report_hint_world = report_texts[x-1][1]
+                        if report_hint_world==report_location:
+                            valid_reports = False
+                            break
+                    if valid_reports:
                         break
-                if valid_reports:
-                    break
-            if not valid_reports:
-                raise HintException("Failed to assign path hints due to self hinting")
+                if not valid_reports:
+                    raise HintException("Failed to assign path hints due to self hinting")
 
 
-            for x in range(1,14):
-                report_location = report_master[x][0]
-                hintsText["Reports"][x] = {
-                            "Text": report_texts[x-1][0],
-                            "HintedWorld": report_texts[x-1][1],
-                            "ProofPath": report_texts[x-1][2],
-                            "Location": report_location
-                        }
+                for x in range(1,num_progression_worlds+1):
+                    report_location = report_master[x][0]
+                    hintsText["Reports"][x] = {
+                                "Text": report_texts[x-1][0],
+                                "HintedWorld": report_texts[x-1][1],
+                                "ProofPath": report_texts[x-1][2],
+                                "Location": report_location
+                            }
 
         if hintsType == "JSmartee":
             proof_of_connection_index = None
@@ -654,7 +687,6 @@ class Hints:
                         worldItemTypes[world_of_location] = []
                     for type_name in spoilerHintValues:
                         if type_name in IC_Types and (item.ItemType in IC_Types[type_name] or item.Name in IC_Types[type_name]):
-                            print(f"{world_of_location} has {item}")
                             worldItemTypes[world_of_location].append(item)
 
             worldChecks = {}
@@ -752,6 +784,20 @@ class Hints:
                     if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
                         hintsText["Reports"][reportNumber]["Location"] = world
  
+            if settings.progression_hints:
+                # get the hinted worlds
+                hinted_worlds = []
+                for reportNumber in range(1,14):
+                    hinted_worlds.append(hintsText["Reports"][reportNumber]["World"])
+                
+                unhinted_worlds = []
+                for h in hintableWorlds:
+                    if h not in excludeList and h not in hinted_worlds:
+                        unhinted_worlds.append(h)
+
+                for reportNumber in range(14,num_progression_worlds+1):
+                    hintsText["Reports"][reportNumber] = {"World": unhinted_worlds[reportNumber-14], "Location": ""}
+                
         # report validation for some hint systems
         if hintsType in ["Points","JSmartee","Spoiler"] and found_reports:
             for reportNumber in range(1,14):
@@ -760,6 +806,9 @@ class Hints:
                         #this is fine, continue
                         continue
                     raise RuntimeError(f"Report {reportNumber} has location written as {hintsText['Reports'][reportNumber]['Location']} but the actual location is {report_master[reportNumber]}")
+
+
+        print(json.dumps(hintsText).encode('utf-8'))
 
         return hintsText
 

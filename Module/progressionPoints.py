@@ -155,7 +155,7 @@ class ProgressionPoints():
         self.point_thresholds[index] = value
 
     def get_hint_thresholds(self,world_count):
-        output = [x for x in self.point_thresholds if x < world_count]
+        output = [self.point_thresholds[x] for x in range(len(self.point_thresholds)) if x < world_count]
         return output
 
     def get_points_json(self):
