@@ -297,16 +297,6 @@ _all_settings = [
         default=False,
         tooltip='Makes the dream weapon choice at the beginning of the game change when you get items/abillities on levels (either with the same offsets as the vanilla game, or the adjusted values for max level 50)'
     ),
-
-    Toggle(
-        name=settingkey.FORM_LEVEL_REWARDS,
-        ui_label='Form Level Rewards',
-        shared=True,
-        default=True,
-        randomizable=True,
-        tooltip="Enable non-junk items onto form levels"
-    ),
-
     Toggle(
         name=settingkey.STATSANITY,
         ui_label='Bonus Rewards as Items (Statsanity)',
@@ -657,8 +647,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5,
-        randomizable=True
+        default=5
     ),
 
     IntSpinner(
@@ -668,8 +657,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=9,
-        randomizable=True
+        default=9
     ),
 
     IntSpinner(
@@ -679,8 +667,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=7,
-        randomizable=True
+        default=7
     ),
 
     IntSpinner(
@@ -690,8 +677,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5,
-        randomizable=True
+        default=5
     ),
 
     IntSpinner(
@@ -701,8 +687,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5,
-        randomizable=True
+        default=5
     ),
 
     IntSpinner(
@@ -712,8 +697,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5,
-        randomizable=True
+        default=5
     ),
 
     IntSpinner(
@@ -723,8 +707,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5,
-        randomizable=True
+        default=5
     ),
     
     IntSpinner(
@@ -734,8 +717,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=3,
-        randomizable=True
+        default=3
     ),
     
     IntSpinner(
@@ -745,8 +727,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=1,
-        randomizable=True
+        default=1
     ),
 
     IntSpinner(
@@ -756,8 +737,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=10,
-        randomizable=True
+        default=10
     ),
 
     IntSpinner(
@@ -767,8 +747,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=10,
-        randomizable=True
+        default=10
     ),
 
     IntSpinner(
@@ -778,8 +757,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=3,
-        randomizable=True
+        default=3
     ),
     
         IntSpinner(
@@ -789,8 +767,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=-10,
-        randomizable=True
+        default=-10
     ),
 
     IntSpinner(
@@ -800,8 +777,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=10,
-        randomizable=True
+        default=10
     ),
     
         IntSpinner(
@@ -811,8 +787,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=20,
-        randomizable=True
+        default=20
     ),
     
         IntSpinner(
@@ -822,8 +797,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=30,
-        randomizable=True
+        default=30
     ),
     
         IntSpinner(
@@ -833,8 +807,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=40,
-        randomizable=True
+        default=40
     ),
     
         IntSpinner(
@@ -844,8 +817,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=50,
-        randomizable=True
+        default=50
     ),
     
         IntSpinner(
@@ -855,8 +827,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=100,
-        randomizable=True
+        default=100
     ),
 
     SingleSelect(
@@ -1780,6 +1751,7 @@ class SeedSettings:
 
     def __init__(self):
         self._values = {setting.name: setting.default for setting in _all_settings}
+        self._randomizable = [setting for setting in _all_settings if setting.randomizable]
         self._observers = {}
 
     def get(self, name: str):
@@ -1843,63 +1815,65 @@ def getRandoRandoTooltip():
     return text
     
 
-class RandoRandoSettings:
-    def __init__(self, real_settings_object: SeedSettings):
-        self.randomizable_settings = [setting for setting in _all_settings if setting.randomizable]
-        self.static_settings = [setting for setting in _all_settings if setting.randomizable is None]
-        self.setting_choices = {}
-        self.multi_selects = []
-        for r in self.randomizable_settings:
-            if isinstance(r,SingleSelect):
-                if r.randomizable is True: # randomize all choices
-                    self.setting_choices[r.name] = [c for c in r.choices]
-                elif isinstance(r.randomizable, list):
-                    self.setting_choices[r.name] = [c for c in r.randomizable]
-            if isinstance(r,Toggle):
-                self.setting_choices[r.name] = [True,False]
-            if isinstance(r,IntSpinner):
-                self.setting_choices[r.name] = [c for c in r.selectable_values if c != 0]
-            if isinstance(r,FloatSpinner):
-                # get set value from settings, and then allow all values larger than that
-                self.setting_choices[r.name] = [c for c in r.selectable_values if c >= real_settings_object.get(r.name)]
-            if isinstance(r,MultiSelect):
-                # get the current set of values, will allow for some to be removed
-                self.setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
-                self.multi_selects.append(r.name)
-            if isinstance(r,MultiSelectTristate):
-                # get the current set of values, will allow for some to be removed
-                self.setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
-                self.multi_selects.append(r.name)
+def randomize_settings(real_settings_object: SeedSettings, randomizable_settings_names):
+    randomizable_settings = [setting for setting in _all_settings if setting.name in randomizable_settings_names]
+    setting_choices = {}
+    multi_selects = []
+    trimulti_selects = []
+    for r in randomizable_settings:
+        if isinstance(r,SingleSelect):
+            if r.randomizable is True: # randomize all choices
+                setting_choices[r.name] = [c for c in r.choices]
+            elif isinstance(r.randomizable, list):
+                setting_choices[r.name] = [c for c in r.randomizable]
+        elif isinstance(r,Toggle):
+            setting_choices[r.name] = [True,False]
+        elif isinstance(r,IntSpinner):
+            setting_choices[r.name] = [c for c in r.selectable_values ]
+        elif isinstance(r,FloatSpinner):
+            setting_choices[r.name] = [c for c in r.selectable_values ]
+        elif isinstance(r,MultiSelect):
+            # get the current set of values, will allow for some to be removed
+            setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
+            multi_selects.append(r.name)
+        elif isinstance(r,MultiSelectTristate): # TODO make this work
+            # get the current set of values, will allow for some to be removed
+            setting_choices[r.name] = real_settings_object.get(r.name)
+            trimulti_selects.append(r.name)
 
-        
-        for r in self.randomizable_settings:
-            if r.name not in self.setting_choices:
-                raise SettingsException(f"Improper configuration of rando rando settings object. Missing configuration for {r.name}")
+    
+    for r in randomizable_settings:
+        if r.name not in setting_choices:
+            raise SettingsException(f"Improper configuration of rando rando settings object. Missing configuration for {r.name}")
 
-        self.random_choices = {}
-        for r in self.randomizable_settings:
-            if r.name in self.multi_selects:
-                self.random_choices[r.name] = [c for c in self.setting_choices[r.name]]
-                # pick a fraction of the multi's to keep
-                num_to_remove = random.randint(0,math.ceil(.2*len(self.setting_choices[r.name])))
-                for iter in range(num_to_remove):
-                    choice = random.choice(self.random_choices[r.name])
-                    self.random_choices[r.name].remove(choice)
-            else:
-                self.random_choices[r.name] = random.choice(self.setting_choices[r.name])
+    random_choices = {}
+    for r in randomizable_settings:
+        if r.name in multi_selects: # TODO make this work
+            random_choices[r.name] = [c for c in setting_choices[r.name]]
+            # pick a fraction of the multi's to keep
+            num_to_remove = random.randint(0,len(setting_choices[r.name]))
+            for iter in range(num_to_remove):
+                choice = random.choice(random_choices[r.name])
+                random_choices[r.name].remove(choice)
+        elif r.name in trimulti_selects:
+            random_choices[r.name] = [[],[]]
+            for r_world in setting_choices[r.name][0]:
+                prob = random.random()
+                if prob < (2.0/3.0):
+                    random_choices[r.name][0].append(r_world)
+                elif prob < (2.5/3.0):
+                    random_choices[r.name][1].append(r_world)
+            for r_world in setting_choices[r.name][1]:
+                prob = random.random()
+                if prob < (1.0/2.0):
+                    random_choices[r.name][1].append(r_world)
+        else:
+            random_choices[r.name] = random.choice(setting_choices[r.name])
 
-        while self.random_choices[settingkey.REPORT_DEPTH]==self.random_choices[settingkey.PROOF_DEPTH] and self.random_choices[settingkey.PROOF_DEPTH] in [locationDepth.DataFight.name,locationDepth.FirstBoss.name,locationDepth.SecondBoss.name]:
-            # can't make these depths the same very restricted location
-            self.random_choices[settingkey.REPORT_DEPTH] = random.choice(self.setting_choices[settingkey.REPORT_DEPTH])
-            self.random_choices[settingkey.PROOF_DEPTH] = random.choice(self.setting_choices[settingkey.PROOF_DEPTH])
-        
-        if locationType.TTR.name in self.random_choices[settingkey.MISC_LOCATIONS_WITH_REWARDS] and self.random_choices[settingkey.STATSANITY] is False:
-            # can't enable TTR and not be in statsanity
-            self.random_choices[settingkey.STATSANITY] = True
+    if settingkey.KEYBLADE_MIN_STAT in random_choices and settingkey.KEYBLADE_MAX_STAT in random_choices:
+        if random_choices[settingkey.KEYBLADE_MIN_STAT] > random_choices[settingkey.KEYBLADE_MAX_STAT]:
+            random_choices[settingkey.KEYBLADE_MAX_STAT] = random_choices[settingkey.KEYBLADE_MIN_STAT]
 
-        if self.random_choices[settingkey.KEYBLADE_MIN_STAT] > self.random_choices[settingkey.KEYBLADE_MAX_STAT]:
-            self.random_choices[settingkey.KEYBLADE_MAX_STAT] = self.random_choices[settingkey.KEYBLADE_MIN_STAT]
-
-        for r in self.randomizable_settings:
-            real_settings_object.set(r.name,self.random_choices[r.name])
+    for r in randomizable_settings:
+        real_settings_object.set(r.name,random_choices[r.name])
 

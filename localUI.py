@@ -26,17 +26,17 @@ import pyperclip as pc
 import pytz
 # from PIL import Image
 from PySide6 import QtGui
-from PySide6.QtCore import Qt, QThread, Signal
+from PySide6.QtCore import Qt, QThread, Signal, QSize
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
-    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy, QDialog, QGridLayout, QListWidget,QSpinBox,QComboBox
+    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy, QDialog, QGridLayout, QListWidget,QSpinBox,QComboBox, QListView
 )
 
 from qt_material import apply_stylesheet
 from Class import settingkey
-from Class.seedSettings import RandoRandoSettings, SeedSettings, getRandoRandoTooltip
+from Class.seedSettings import SeedSettings, randomize_settings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
 from Module.generate import generateMultiWorldSeed, generateSeed
@@ -244,6 +244,56 @@ class RandomPresetDialog(QDialog):
     def save(self):
         return [p.text() for p in self.preset_list_widget.selectedItems()]
 
+
+class RandomSettingsDialog(QDialog):
+    def __init__(self,settings: SeedSettings):
+        super().__init__()
+        self.passed_settings = settings
+        self.random_choices = self.passed_settings._randomizable
+        self.setWindowTitle("Randomized Settings")
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(800)
+
+        box = QGridLayout()
+
+        self.settings_list_widget = QListWidget()
+        self.settings_list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
+        self.settings_list_widget.setFlow(QListView.LeftToRight)
+        self.settings_list_widget.setResizeMode(QListView.Adjust)
+        self.settings_list_widget.setGridSize(QSize(128,128))
+        self.settings_list_widget.setSpacing(60)
+        self.settings_list_widget.setViewMode(QListView.IconMode)
+        for c in self.random_choices:
+            self.settings_list_widget.addItem(c.ui_label)
+        box.addWidget(self.settings_list_widget,0,0)
+        
+        select_all_button = QPushButton("Select All Settings")
+        select_all_button.clicked.connect(self.select_all_randomizable)
+        select_none_button = QPushButton("Select No Settings")
+        select_none_button.clicked.connect(self.select_none_randomizable)
+
+        cancel_button = QPushButton("Cancel")
+        choose_button = QPushButton("Randomize Selected Settings")
+        cancel_button.clicked.connect(self.reject)
+        choose_button.clicked.connect(self.accept)
+
+        box.addWidget(select_all_button,1,0)
+        box.addWidget(select_none_button,1,1)
+        box.addWidget(cancel_button,1,2)
+        box.addWidget(choose_button,0,1)
+
+        self.setLayout(box)
+
+    def select_all_randomizable(self):
+        for index in range(self.settings_list_widget.count()):
+            self.settings_list_widget.item(index).setSelected(True)
+    def select_none_randomizable(self):
+        for index in range(self.settings_list_widget.count()):
+            self.settings_list_widget.item(index).setSelected(False)
+
+    def save(self):
+        return [self.random_choices[p.row()].name for p in self.settings_list_widget.selectedIndexes()]
+
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -413,6 +463,7 @@ class KH2RandomizerApp(QMainWindow):
         self.dailyMenu.addAction("Load Boss/Enemy Seed", self.loadDailySeedBE)
         self.dailyMenu.addAction("Load Hard Boss/Enemy Seed", self.loadHardDailySeedBE)
         menu_bar.addMenu(self.dailyMenu)
+        menu_bar.addAction("Randomize Settings", self.randoRando)
 
         menu_bar.addAction("Tourney Seeds", self.makeTourneySeeds)
 
@@ -507,7 +558,7 @@ class KH2RandomizerApp(QMainWindow):
         if self.num_tourney_seeds>0:
             self.spoiler_log.setChecked(False)
 
-    def make_rando_settings(self):
+    def make_rando_settings(self, catch_exception=True):
         if self.num_tourney_seeds>0:
             makeSpoilerLog = False
         else:
@@ -521,18 +572,17 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setText(seedString)
 
         try:
-            # if self.rando_rando.isChecked():
-            #     print("Generating randomized settings...")
-            #     random.seed(seedString)
-            #     _ = RandoRandoSettings(self.settings)
             rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
             # update the seed hash display
             self.update_ui_hash_icons(rando_settings)
 
             return rando_settings
         except RandomizerExceptions as e:
-            self.handleFailure(e)
-            return None
+            if catch_exception:
+                self.handleFailure(e)
+                return None
+            else:
+                raise e
 
     def update_ui_hash_icons(self, rando_settings):
         # self.icons = []
@@ -543,11 +593,6 @@ class KH2RandomizerApp(QMainWindow):
     def clear_hash_icons(self):
         for i in range(7):
             self.hashIcons[i].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
-
-    # def make_stitched_hash_picture(self):
-    #     stitched_image = Image.new('RGB',(48*len(self.icons),48))
-    #     for index, icon in enumerate(self.icons):
-    #         stitched_image.paste(im=Image.open(str(self.hashIconPath.absolute())+"/"+icon+".png"),box=(48*index,0))
 
     def get_num_enabled_locations(self):
         if self.recalculate:
@@ -767,6 +812,41 @@ class KH2RandomizerApp(QMainWindow):
                 message = QMessageBox(text=f"Picked {selected_preset}")
                 message.setWindowTitle("KH2 Seed Generator")
                 message.exec()
+
+    def randoRando(self):
+        preset_select_dialog = RandomSettingsDialog(self.settings)
+        if preset_select_dialog.exec():
+            backup_settings = self.settings.settings_string()
+            selected_random_settings = preset_select_dialog.save()
+            if len(selected_random_settings) == 0:
+                message = QMessageBox(text="No randomized settings chosen, doing nothing")
+                message.setWindowTitle("KH2 Seed Generator")
+                message.exec()
+                return
+
+            valid_seed = False
+            invalid_seed_count = 0
+            last_exception = None
+            while not valid_seed and invalid_seed_count < 10:
+                try:
+                    #randomize
+                    randomize_settings(self.settings,selected_random_settings)
+                    self.make_rando_settings(catch_exception=False)
+                    valid_seed = True
+                except RandomizerExceptions as e:
+                    # we got exception, so try again
+                    invalid_seed_count+=1
+                    self.settings.apply_settings_string(backup_settings)
+                    last_exception = e
+            
+            if valid_seed:
+                for widget in self.widgets:
+                    widget.update_widgets()
+                message = QMessageBox(text=f"Randomized your settings, don't forget to generate your seed.")
+                message.setWindowTitle("KH2 Seed Generator")
+                message.exec()
+            else:
+                self.handleFailure(last_exception)
 
     def openPresetFolder(self):
         os.startfile(PRESET_FOLDER)

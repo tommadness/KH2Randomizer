@@ -42,7 +42,7 @@ class ProgressionPoints():
             "BeastsCastle":[ "Beast's Castle Enter", "Thresholder", "Beast's Room", "Dark Thorn", "Ballroom Dragoons Fight", "Xaldin", "Data Xaldin" ],
             "OlympusColiseum":[ "Olympus Coliseum Enter", "Cerberus", "Phil's Urns", "Demyx", "Pete", "Hydra", "Auron Statue", "Hades", "AS Zexion" ],
             "DisneyCastle":[ "Disney Castle Enter", "Minnie Escort", "Old Pete", "Timeless River Windows", "Boat Pete", "Pete", "AS Marluxia", "Lingering Will" ],
-            "PortRoyal":[ "Port Royal Enter", "Town Fight", "1 Minute Fight", "PR 2 Medallions", "Boat Barrels", "Barbossa", "Grim Reaper 1", "First Medallion Gambler", "Grim Reaper 2", "Data Luxord" ],
+            "PortRoyal":[ "Port Royal Enter", "Town Fight", "1 Minute Fight", "Boat Medallion Fight", "Boat Barrels", "Barbossa", "Grim Reaper 1", "First Medallion Gambler", "Grim Reaper 2", "Data Luxord" ],
             "Agrabah":[ "Agrabah Enter", "Abu Minigame", "Chasm of Challenges", "Treasure Room", "Twin Lords", "Carpet Magic", "Genie Jafar", "AS Lexaeus" ],
             "HalloweenTown":[ "Halloween Town Enter", "Candy Cane Lane Fight", "Prison Keeper", "Oogie Boogie", "Lock, Shock, Barrel", "Presents Minigame", "Experiment", "AS Vexen"],
             "PrideLands":[ "Pride Lands Enter", "Talking to Simba", "Hyenas 1", "Scar", "Hyenas 2", "Groundshaker", "Data Saix" ],
