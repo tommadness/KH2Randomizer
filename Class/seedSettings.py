@@ -636,7 +636,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=0,
         tooltip=textwrap.dedent('''
-            When you finish a world, how many points toward your hints you get.
+            When a world is finished, how many additional points you receive for progressing
         '''),
         randomizable=False
     ),

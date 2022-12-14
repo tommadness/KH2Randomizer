@@ -291,7 +291,7 @@ class Hints:
             reportsList = list(range(1,14))
 
             if locationType.SYNTH in excludeList and locationType.Puzzle in excludeList and len(randomizer.shop_items)==0:
-                hintableWorlds.remove("Creations")
+                excludeList.append("Creations")
 
             freeReports = []
 
@@ -522,6 +522,22 @@ class Hints:
 
             if len(worldsToHint) != len(set(worldsToHint)):
                 raise HintException("Two reports hint the same location. This is an error, try a new seedname.")
+                
+ 
+            if settings.progression_hints:
+                # get the hinted worlds
+                hinted_worlds = []
+                for reportNumber in range(1,14):
+                    hinted_worlds.append(hintsText["Reports"][reportNumber]["World"])
+                
+                unhinted_worlds = []
+                for h in hintableWorlds:
+                    if h not in excludeList and h not in hinted_worlds:
+                        unhinted_worlds.append(h)
+                print(unhinted_worlds)
+
+                for reportNumber in range(14,num_progression_worlds+1):
+                    hintsText["Reports"][reportNumber] = {"World": unhinted_worlds[reportNumber-14], "Location": ""}
 
         if hintsType == "Points":
             reportRestrictions = [[] for x in range(13)]
@@ -808,7 +824,7 @@ class Hints:
                     raise RuntimeError(f"Report {reportNumber} has location written as {hintsText['Reports'][reportNumber]['Location']} but the actual location is {report_master[reportNumber]}")
 
 
-        print(json.dumps(hintsText).encode('utf-8'))
+        # print(json.dumps(hintsText).encode('utf-8'))
 
         return hintsText
 
