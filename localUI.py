@@ -55,8 +55,6 @@ from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
-from UI.Submenus.BattleLevelMenu import BattleLevelMenu
-from UI.Submenus.ShopDrop import ShopDropMenu
 
 LOCAL_UI_VERSION = '2.2.0-beta'
 
@@ -384,8 +382,6 @@ class KH2RandomizerApp(QMainWindow):
             ItemPoolMenu(self.settings),
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
-            BattleLevelMenu(self.settings),
-            ShopDropMenu(self.settings),
             BossEnemyMenu(self.settings),
             CosmeticsMenu(self.settings, self.custom_cosmetics),
         ]
@@ -455,7 +451,6 @@ class KH2RandomizerApp(QMainWindow):
         self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
-        menu_bar.addMenu(self.config_menu)
 
         self.dailyMenu = QMenu("Daily Seeds")
         self.dailyMenu.addAction("Load Seed", self.loadDailySeed)
@@ -466,6 +461,8 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addAction("Randomize Settings", self.randoRando)
 
         menu_bar.addAction("Tourney Seeds", self.makeTourneySeeds)
+        
+        menu_bar.addMenu(self.config_menu)
 
         menu_bar.addAction("About", self.showAbout)
 

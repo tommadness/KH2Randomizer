@@ -29,6 +29,21 @@ class ItemPoolMenu(KH2Submenu):
 
         self.start_column()
         self.start_group()
+        self.add_option(settingkey.SHOP_UNLOCKS)
+        self.add_option(settingkey.SHOP_REPORTS)
+        self.end_group('Randomized Shop')
+
+        self.start_group()
+        self.add_option(settingkey.SHOP_KEYBLADES)
+        self.add_option(settingkey.SHOP_ELIXIRS)
+        self.add_option(settingkey.SHOP_RECOVERIES)
+        self.add_option(settingkey.SHOP_BOOSTS)
+        self.end_group('Guaranteed Shop Items')
+        self.end_column(stretch_at_end=True)
+
+        
+        self.start_column()
+        self.start_group()
         self.add_option(settingkey.JUNK_ITEMS)
 
         junk_widget_layout = QHBoxLayout()
