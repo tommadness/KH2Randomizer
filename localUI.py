@@ -249,36 +249,49 @@ class RandomSettingsDialog(QDialog):
         self.passed_settings = settings
         self.random_choices = self.passed_settings._randomizable
         self.setWindowTitle("Randomized Settings")
-        self.setMinimumWidth(800)
+        self.setMinimumWidth(850)
         self.setMinimumHeight(800)
 
-        box = QGridLayout()
+        box = QVBoxLayout()
+        grid = QGridLayout()
 
         self.settings_list_widget = QListWidget()
+        self.settings_list_widget.setItemAlignment(Qt.AlignVCenter)
+        self.settings_list_widget.setStyleSheet('QListWidget::item { border: 1px solid gray }')
         self.settings_list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
         self.settings_list_widget.setFlow(QListView.LeftToRight)
         self.settings_list_widget.setResizeMode(QListView.Adjust)
-        self.settings_list_widget.setGridSize(QSize(128,128))
-        self.settings_list_widget.setSpacing(60)
+        self.settings_list_widget.setGridSize(QSize(160, 48))
+        self.settings_list_widget.setUniformItemSizes(True)
+        self.settings_list_widget.setSpacing(32)
         self.settings_list_widget.setViewMode(QListView.IconMode)
+        self.settings_list_widget.setWordWrap(True)
+        self.settings_list_widget.setTextElideMode(Qt.ElideNone)
         for c in self.random_choices:
-            self.settings_list_widget.addItem(c.ui_label)
-        box.addWidget(self.settings_list_widget,0,0)
+            self.settings_list_widget.addItem(c.standalone_label)
+        grid.addWidget(self.settings_list_widget,0,0)
         
         select_all_button = QPushButton("Select All Settings")
         select_all_button.clicked.connect(self.select_all_randomizable)
         select_none_button = QPushButton("Select No Settings")
         select_none_button.clicked.connect(self.select_none_randomizable)
 
+        select_buttons = QHBoxLayout()
+        select_buttons.addWidget(select_all_button)
+        select_buttons.addWidget(select_none_button)
+
         cancel_button = QPushButton("Cancel")
         choose_button = QPushButton("Randomize Selected Settings")
         cancel_button.clicked.connect(self.reject)
         choose_button.clicked.connect(self.accept)
 
-        box.addWidget(select_all_button,1,0)
-        box.addWidget(select_none_button,1,1)
-        box.addWidget(cancel_button,1,2)
-        box.addWidget(choose_button,0,1)
+        confirm_buttons = QHBoxLayout()
+        confirm_buttons.addWidget(cancel_button)
+        confirm_buttons.addWidget(choose_button)
+
+        box.addLayout(select_buttons)
+        box.addLayout(grid)
+        box.addLayout(confirm_buttons)
 
         self.setLayout(box)
 

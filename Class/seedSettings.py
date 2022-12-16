@@ -15,13 +15,27 @@ from Module.randomCmdMenu import RandomCmdMenu
 
 class Setting:
 
-    def __init__(self, name: str, setting_type: type, ui_label: str, shared: bool, default, tooltip: str, randomizable = None):
+    def __init__(
+            self,
+            name: str,
+            setting_type: type,
+            ui_label: str,
+            shared: bool,
+            default,
+            tooltip: str,
+            standalone_label: str,
+            randomizable=None
+    ):
         self.name = name
         self.type = setting_type
         self.ui_label = ui_label
         self.shared = shared
         self.default = default
         self.tooltip = tooltip
+        if standalone_label == '':
+            self.standalone_label = ui_label
+        else:
+            self.standalone_label = standalone_label
         self.randomizable = randomizable
 
     def settings_string(self, value) -> str:
@@ -33,8 +47,17 @@ class Setting:
 
 class Toggle(Setting):
 
-    def __init__(self, name: str, ui_label: str, shared: bool, default: bool, tooltip: str = '',randomizable = None):
-        super().__init__(name, bool, ui_label, shared, default, tooltip, randomizable)
+    def __init__(
+            self,
+            name: str,
+            ui_label: str,
+            shared: bool,
+            default: bool,
+            tooltip: str = '',
+            standalone_label: str = '',
+            randomizable=None
+    ):
+        super().__init__(name, bool, ui_label, shared, default, tooltip, standalone_label, randomizable)
 
     def settings_string(self, value) -> str:
         return '1' if value else '0'
@@ -55,9 +78,10 @@ class IntSpinner(Setting):
             shared: bool,
             default: int,
             tooltip: str = '',
-            randomizable = None
+            standalone_label: str = '',
+            randomizable=None
     ):
-        super().__init__(name, int, ui_label, shared, default, tooltip, randomizable)
+        super().__init__(name, int, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.min = minimum
         self.max = maximum
         self.step = step
@@ -85,9 +109,10 @@ class FloatSpinner(Setting):
             shared: bool,
             default: float,
             tooltip: str = '',
-            randomizable = None
+            standalone_label: str = '',
+            randomizable=None
     ):
-        super().__init__(name, float, ui_label, shared, default, tooltip, randomizable)
+        super().__init__(name, float, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.min = minimum
         self.max = maximum
         self.step = step
@@ -118,9 +143,10 @@ class SingleSelect(Setting):
             shared: bool,
             default: str,
             tooltip: str = '',
+            standalone_label: str = '',
             randomizable = None
     ):
-        super().__init__(name, str, ui_label, shared, default, tooltip, randomizable)
+        super().__init__(name, str, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.choices = choices
         self.choice_keys = list(choices.keys())
         self.choice_values = list(choices.values())
@@ -133,6 +159,7 @@ class SingleSelect(Setting):
         index = int(settings_string)
         return self.choice_keys[index]
 
+
 class ProgressionChainSelect(Setting):
     def __init__(
             self,
@@ -140,10 +167,20 @@ class ProgressionChainSelect(Setting):
             ui_label: str,
             shared: bool,
             tooltip: str = '',
-            randomizable = None
+            standalone_label: str = '',
+            randomizable=None
     ):
         self.progression = ProgressionPoints()
-        super().__init__(name, str, ui_label, shared, self.progression.get_compressed(), tooltip, randomizable)
+        super().__init__(
+            name,
+            str,
+            ui_label,
+            shared,
+            self.progression.get_compressed(),
+            tooltip,
+            standalone_label,
+            randomizable
+        )
 
     def settings_string(self, value) -> str:
         self.progression.set_uncompressed(value)
@@ -152,7 +189,6 @@ class ProgressionChainSelect(Setting):
     def parse_settings_string(self, settings_string: str):
         self.progression.set_uncompressed(settings_string)
         return self.progression.get_compressed()
-
 
 
 class MultiSelect(Setting):
@@ -166,8 +202,10 @@ class MultiSelect(Setting):
             default: list[str],
             choice_icons: dict[str, str] = None,
             tooltip: str = '',
-            randomizable = None):
-        super().__init__(name, str, ui_label, shared, default, tooltip, randomizable)
+            standalone_label: str = '',
+            randomizable=None
+    ):
+        super().__init__(name, str, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.choices = choices
         self.choice_keys = list(choices.keys())
         self.choice_values = list(choices.values())
@@ -197,6 +235,7 @@ class MultiSelect(Setting):
 
         return selected_values
 
+
 class MultiSelectTristate(Setting):
     def __init__(
             self,
@@ -207,8 +246,10 @@ class MultiSelectTristate(Setting):
             default: list[list[str],list[str]],
             choice_icons: dict[str, str] = None,
             tooltip: str = '',
-            randomizable = None):
-        super().__init__(name, str, ui_label, shared, default, tooltip, randomizable)
+            standalone_label: str = '',
+            randomizable=None
+    ):
+        super().__init__(name, str, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.choices = choices
         self.choice_keys = list(choices.keys())
         self.partial_choice_keys = list()
@@ -309,6 +350,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     FloatSpinner(
         name=settingkey.SORA_EXP_MULTIPLIER,
         ui_label='Sora',
+        standalone_label='Sora EXP Multiplier',
         minimum=0.5,
         maximum=10.0,
         step=0.5,
@@ -320,6 +362,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     FloatSpinner(
         name=settingkey.VALOR_EXP_MULTIPLIER,
         ui_label='Valor',
+        standalone_label='Valor EXP Multiplier',
         minimum=1.0,
         maximum=10.0,
         step=0.5,
@@ -331,6 +374,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     FloatSpinner(
         name=settingkey.WISDOM_EXP_MULTIPLIER,
         ui_label='Wisdom',
+        standalone_label='Wisdom EXP Multiplier',
         minimum=1.0,
         maximum=10.0,
         step=0.5,
@@ -342,6 +386,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     FloatSpinner(
         name=settingkey.LIMIT_EXP_MULTIPLIER,
         ui_label='Limit',
+        standalone_label='Limit EXP Multiplier',
         minimum=1.0,
         maximum=10.0,
         step=0.5,
@@ -353,6 +398,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     FloatSpinner(
         name=settingkey.MASTER_EXP_MULTIPLIER,
         ui_label='Master',
+        standalone_label='Master EXP Multiplier',
         minimum=1.0,
         maximum=10.0,
         step=0.5,
@@ -364,6 +410,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     FloatSpinner(
         name=settingkey.FINAL_EXP_MULTIPLIER,
         ui_label='Final',
+        standalone_label='Final EXP Multiplier',
         minimum=1.0,
         maximum=10.0,
         step=0.5,
@@ -375,6 +422,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     FloatSpinner(
         name=settingkey.SUMMON_EXP_MULTIPLIER,
         ui_label='Summon',
+        standalone_label='Summon EXP Multiplier',
         minimum=1.0,
         maximum=10.0,
         step=0.5,
@@ -386,6 +434,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.SORA_EXP_CURVE,
         ui_label='Sora',
+        standalone_label='Sora EXP Curve',
         choices={
             expCurve.DAWN.name: "Dawn (Normal)",
             expCurve.MIDDAY.name: "Midday",
@@ -406,6 +455,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.VALOR_EXP_CURVE,
         ui_label='Valor',
+        standalone_label='Valor EXP Curve',
         choices={
             expCurve.DAWN.name: "Dawn (Normal)",
             expCurve.MIDDAY.name: "Midday",
@@ -420,6 +470,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.WISDOM_EXP_CURVE,
         ui_label='Wisdom',
+        standalone_label='Wisdom EXP Curve',
         choices={
             expCurve.DAWN.name: "Dawn (Normal)",
             expCurve.MIDDAY.name: "Midday",
@@ -434,6 +485,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.LIMIT_EXP_CURVE,
         ui_label='Limit',
+        standalone_label='Limit EXP Curve',
         choices={
             expCurve.DAWN.name: "Dawn (Normal)",
             expCurve.MIDDAY.name: "Midday",
@@ -448,6 +500,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.MASTER_EXP_CURVE,
         ui_label='Master',
+        standalone_label='Master EXP Curve',
         choices={
             expCurve.DAWN.name: "Dawn (Normal)",
             expCurve.MIDDAY.name: "Midday",
@@ -462,6 +515,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.FINAL_EXP_CURVE,
         ui_label='Final',
+        standalone_label='Final EXP Curve',
         choices={
             expCurve.DAWN.name: "Dawn (Normal)",
             expCurve.MIDDAY.name: "Midday",
@@ -476,6 +530,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.SUMMON_EXP_CURVE,
         ui_label='Summon',
+        standalone_label='Summon EXP Curve',
         choices={
             expCurve.DAWN.name: "Dawn (Normal)",
             expCurve.MIDDAY.name: "Midday",
@@ -490,6 +545,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.CRITICAL_BONUS_REWARDS,
         ui_label='Critical Bonuses',
+        standalone_label='Critical Bonuses in Pool',
         shared=True,
         default=True,
         randomizable=True,
@@ -499,6 +555,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS,
         ui_label='Garden of Assemblage',
+        standalone_label='Garden of Assemblage in Pool',
         shared=True,
         default=True,
         randomizable=True
@@ -540,6 +597,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.STARTING_REPORTS,
         ui_label="Starting Reports/Hints",
+        standalone_label='# Starting Reports/Hints',
         minimum=0,
         maximum=13,
         step=1,
@@ -631,7 +689,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     ProgressionChainSelect(
         name=settingkey.PROGRESSION_POINT_SELECT,
-        ui_label=None,
+        ui_label='',
         shared=True,
         tooltip=textwrap.dedent('''
             Point values for different checkpoints in worlds.
@@ -779,7 +837,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=10
     ),
     
-        IntSpinner(
+    IntSpinner(
         name=settingkey.POINTS_BOSS_AS,
         ui_label="Absent Silhouette Defeated",
         minimum=0,
@@ -789,7 +847,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=20
     ),
     
-        IntSpinner(
+    IntSpinner(
         name=settingkey.POINTS_BOSS_DATA,
         ui_label="Data Boss Defeated",
         minimum=0,
@@ -799,7 +857,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=30
     ),
     
-        IntSpinner(
+    IntSpinner(
         name=settingkey.POINTS_BOSS_SEPHIROTH,
         ui_label="Sephiroth Defeated",
         minimum=0,
@@ -809,7 +867,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=40
     ),
     
-        IntSpinner(
+    IntSpinner(
         name=settingkey.POINTS_BOSS_TERRA,
         ui_label="Lingering Will Defeated",
         minimum=0,
@@ -819,7 +877,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=50
     ),
     
-        IntSpinner(
+    IntSpinner(
         name=settingkey.POINTS_BOSS_FINAL,
         ui_label="Final Xemnas Defeated",
         minimum=0,
@@ -1275,6 +1333,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.ANTIFORM,
         ui_label='Antiform',
+        standalone_label='Obtainable Antiform',
         shared=True,
         default=False,
         tooltip='Add Antiform as an obtainable form.'
@@ -1393,6 +1452,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.GLOBAL_JACKPOT,
         ui_label="Global Jackpots",
+        standalone_label='# of Global Jackpots',
         minimum=0,
         maximum=3,
         step=1,
@@ -1404,6 +1464,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.GLOBAL_LUCKY,
         ui_label="Global Lucky Lucky",
+        standalone_label='# of Global Lucky Lucky',
         minimum=0,
         maximum=3,
         step=1,
@@ -1415,6 +1476,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.SHOP_KEYBLADES,
         ui_label='Keyblades',
+        standalone_label='Keyblades in Shop',
         shared=True,
         default=False,
         tooltip="Adds duplicates of keyblades into the moogle shop.",
@@ -1423,6 +1485,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.SHOP_ELIXIRS,
         ui_label='Elixirs',
+        standalone_label='Elixirs in Shop',
         shared=True,
         default=False,
         tooltip="Adds Elixirs/Megalixirs to shop.",
@@ -1431,6 +1494,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.SHOP_RECOVERIES,
         ui_label='Drive Recoveries',
+        standalone_label='Drive Recoveries in Shop',
         shared=True,
         default=False,
         tooltip="Adds Drive Recovery/High Drive Recovery to shop.",
@@ -1439,6 +1503,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.SHOP_BOOSTS,
         ui_label='Stat Boosts',
+        standalone_label='Stat Boosts in Shop',
         shared=True,
         default=False,
         tooltip="Adds Power/Magic/AP/Defense Boosts to shop.",
@@ -1447,6 +1512,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.SHOP_REPORTS,
         ui_label='Add Reports To Shop',
+        standalone_label='# Reports in Shop',
         shared=True,
         minimum=0,
         maximum=13,
@@ -1458,6 +1524,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     IntSpinner(
         name=settingkey.SHOP_UNLOCKS,
         ui_label='Add World Key Items To Shop',
+        standalone_label='# World Key Items in Shop',
         shared=True,
         minimum=0,
         maximum=11,
@@ -1537,6 +1604,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.MAPS_IN_ITEM_POOL,
         ui_label='Maps',
+        standalone_label='Maps in Item Pool',
         shared=True,
         default=True,
         tooltip="If enabled, maps are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
@@ -1546,6 +1614,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.RECIPES_IN_ITEM_POOL,
         ui_label='Synthesis Recipes',
+        standalone_label='Synthesis Recipes in Item Pool',
         shared=True,
         default=True,
         tooltip="If enabled, recipes are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
@@ -1555,6 +1624,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.ACCESSORIES_IN_ITEM_POOL,
         ui_label='Accessories',
+        standalone_label='Accessories in Item Pool',
         shared=True,
         default=True,
         tooltip="If enabled, all accessories are included in the required item pool.",
@@ -1563,6 +1633,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     Toggle(
         name=settingkey.ARMOR_IN_ITEM_POOL,
         ui_label='Armor',
+        standalone_label='Armor in Item Pool',
         shared=True,
         default=True,
         tooltip="If enabled, all accessories are included in the required item pool.",
@@ -1641,6 +1712,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.ACCESSIBILITY,
         ui_label='Accessibility',
+        standalone_label='Item Accessibility',
         choices={
             'all': '100% Locations',
             'beatable': 'Beatable',
