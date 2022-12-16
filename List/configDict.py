@@ -133,4 +133,12 @@ class itemType(str, Enum):
     SLOT = "Slot Up"
     SYNTH = "SYNTH"
     MULTIWORLD = "MultiWorld"
-    
+
+
+class BattleLevelOption(str, Enum):
+    NORMAL = 'Normal'
+    SHUFFLE = 'Shuffle'
+    OFFSET = 'Offset'
+    RANDOM_WITHIN_RANGE = 'Within Range of Normal'
+    RANDOM_MAX_50 = 'Random (Max 50)'
+    SCALE_TO_50 = 'Scale to 50'

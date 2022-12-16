@@ -9,12 +9,12 @@ import yaml
 from PIL import Image
 
 from Class.exceptions import BossEnemyException, GeneratorException
-from Class.itemClass import ItemEncoder, itemRarity
+from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
 from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
-from List.configDict import itemType, locationCategory, locationType
+from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
 from Module.hints import Hints
@@ -355,10 +355,17 @@ class SeedZip():
         stitched_image.close()
 
     def createBtlvRandoAssets(self, settings, mod, outZip):
+        btlv_option_name = settings.battle_level_rando
+
         btlv = BtlvViewer()
-        btlv.use_setting(settings.battle_level_rando, settings.battle_level_offset)
-        if settings.battle_level_rando == "Normal" or \
-            (settings.battle_level_rando == "Offset" and settings.battle_level_offset==0):
+        btlv.use_setting(
+            btlv_option_name,
+            battle_level_offset=settings.battle_level_offset,
+            battle_level_range=settings.battle_level_range
+        )
+        if (btlv_option_name == BattleLevelOption.NORMAL.name) or \
+                (btlv_option_name == BattleLevelOption.OFFSET.name and settings.battle_level_offset == 0) or \
+                (btlv_option_name == BattleLevelOption.RANDOM_WITHIN_RANGE.name and settings.battle_level_range == 0):
             return btlv.get_spoiler()
         for x in mod["assets"]:
             if x["name"]=="00battle.bin":
