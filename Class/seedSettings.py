@@ -1103,7 +1103,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=True,
         tooltip="If enabled, World Values will turn blue when all Important Checks in a World are found.",
-        randomizable=True
+        randomizable=None
     ),
     
     SingleSelect(
@@ -1121,7 +1121,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             Worlds - Ansem Reports will be used to reveal Important Checks in a world.
             Randomized Bosses - Ansem Reports will be used to reveal what a boss has randomized into (Requires Boss randomizer).
         '''),
-        randomizable=["Disabled","reportmode","bossreports"]
+        randomizable=None
     ),
     
     IntSpinner(

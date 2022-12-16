@@ -117,6 +117,8 @@ class Randomizer():
         self.synthesis_recipes = []
         self.shop_items = []
         self.assignSoraItems(settings)
+        if progress_bar_vis:
+            return
         self.assignPartyItems()
         self.assignWeaponStats(settings)
         self.assignLevelStats(settings)
@@ -353,6 +355,20 @@ class Randomizer():
         self.assignKeybladeAbilities(settings, nonvan, allItems)
         allItems=van+nonvan+allItems
 
+        # vanilla location item assignment
+        for l in locations_with_vanilla_items:
+            #find item in item list
+            for i in l.VanillaItems:
+                i_data_list = [it for it in allItems if it.Id==i]
+                if len(i_data_list)==0:
+                    # if we don't have the item, it means that we started with the item, or it was randomized away
+                    continue
+                i_data = i_data_list[0]
+                if i_data.ItemType not in l.InvalidChecks:
+                    allItems.remove(i_data)
+                    if self.assignItem(l,i_data):
+                        invalidLocations.remove(l)
+
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
         restricted_story = self.story_depths.very_restricted_locations
@@ -548,7 +564,6 @@ class Randomizer():
             if settings.nightmare:
                 locking_items[-1].append(29)
 
-            print(locking_items)
             validator.prep_req_list(settings,self)
 
             current_inventory = [] + settings.startingItems
@@ -584,22 +599,6 @@ class Randomizer():
                         if self.assignItem(randomLocation,i_data):
                             validLocations.remove(randomLocation)
                             accessible_locations_new.remove(randomLocation)
-
-
-
-        # vanilla location item assignment
-        for l in locations_with_vanilla_items:
-            #find item in item list
-            for i in l.VanillaItems:
-                i_data_list = [it for it in allItems if it.Id==i]
-                if len(i_data_list)==0:
-                    raise GeneratorException(f"Tried assigning a vanilla item, but the item isn't in the item list {i}")
-                i_data = i_data_list[0]
-                if i_data.ItemType not in l.InvalidChecks:
-                    allItems.remove(i_data)
-                    if self.assignItem(l,i_data):
-                        invalidLocations.remove(l)
-
 
         #assign valid items to all valid locations remaining
         for item in allItems:
@@ -728,7 +727,6 @@ class Randomizer():
                     # change the rarity of the keyblade item to the rarity of the ability
                     keyItemId = Items.locationToKeybladeItem(keyblade.LocationId)
                     if keyItemId:
-                        print(keyItemId)
                         keybladeItem = [key for key in allItems if key.Id == keyItemId][0]
                         allItems.remove(keybladeItem)
                         allItems.append(KH2Item(keybladeItem.Id,keybladeItem.Name,keybladeItem.ItemType,randomAbility.Rarity))

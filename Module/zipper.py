@@ -546,7 +546,6 @@ class SeedZip():
             consumables = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.ITEM]
             
             remaining_items = [i.Id for i in randomizer.shop_items if i.Id not in keyblade_item_ids+report_item_ids+story_unlock_ids+consumables]
-            print(remaining_items)
 
             if len(keyblade_item_ids)>0: 
                 for i in keyblade_item_ids:

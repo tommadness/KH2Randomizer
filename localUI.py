@@ -318,6 +318,8 @@ class KH2RandomizerApp(QMainWindow):
         self.progress = None
         self.spoiler_log_output = "<html>No spoiler log generated</html>"
         self.num_tourney_seeds = 0
+        self.num_items_to_place = None
+        self.num_locations_to_fill = None
 
         self.settings = SeedSettings()
         self.custom_cosmetics = CustomCosmetics()
@@ -488,6 +490,14 @@ class KH2RandomizerApp(QMainWindow):
 
         e.accept()
 
+    def resetSettings(self):
+        self.recalculate = False
+        self.settings.apply_settings_json(self.preset_json['StarterSettings'])
+        for widget in self.widgets:
+            widget.update_widgets()
+        self.recalculate = True
+        self.get_num_enabled_locations()
+
     def dailySeedHandler(self,difficulty,boss_enemy=False):
         self.seedName.setText(self.dailySeedName)
         self.recalculate = False
@@ -639,6 +649,9 @@ class KH2RandomizerApp(QMainWindow):
 
             except CantAssignItemException as e:
                 pass
+            
+            self.num_items_to_place = dummy_rando.num_available_items
+            self.num_locations_to_fill = dummy_rando.num_valid_locations
             text = f"Items: {dummy_rando.num_available_items} / Locations: {dummy_rando.num_valid_locations}"
             self.progress_bar.setRange(0,dummy_rando.num_valid_locations)
             if dummy_rando.num_valid_locations < dummy_rando.num_available_items:
@@ -840,8 +853,15 @@ class KH2RandomizerApp(QMainWindow):
             while not valid_seed and invalid_seed_count < 10:
                 try:
                     #randomize
+                    self.recalculate = False
                     randomize_settings(self.settings,selected_random_settings)
                     self.make_rando_settings(catch_exception=False)
+                    self.recalculate = True
+                    self.get_num_enabled_locations()
+                    self.recalculate = False
+                    if self.num_locations_to_fill < self.num_items_to_place:
+                        self.settings.apply_settings_string(backup_settings)
+                        continue
                     valid_seed = True
                 except RandomizerExceptions as e:
                     # we got exception, so try again
@@ -852,6 +872,8 @@ class KH2RandomizerApp(QMainWindow):
             if valid_seed:
                 for widget in self.widgets:
                     widget.update_widgets()
+                self.recalculate = True
+                self.get_num_enabled_locations()
                 message = QMessageBox(text=f"Randomized your settings, don't forget to generate your seed.")
                 message.setWindowTitle("KH2 Seed Generator")
                 message.exec()
@@ -900,7 +922,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def receiveSeed(self):
         try:
-            print("".join(str(pc.paste()).splitlines()))
+            # print("".join(str(pc.paste()).splitlines()))
             shared_seed = SharedSeed.from_share_string(
                 local_generator_version=LOCAL_UI_VERSION,
                 share_string="".join(str(pc.paste()).splitlines())
@@ -1018,7 +1040,8 @@ if __name__=="__main__":
     window.recalculate = True
     try:
         window.get_num_enabled_locations()
-    except RandomizerExceptions as e:
+    except ValueError:
+        window.resetSettings()
         pass
     window.show()
     #commenting out first time setup for 2.999 version

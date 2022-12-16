@@ -36,6 +36,10 @@ class Hints:
         if locationType.OC in excludeList and (locationType.OCCups not in excludeList or locationType.OCCups not in excludeList):
             excludeList.remove(locationType.OC)
 
+        for l in settings.vanillaLocations:
+            if l in excludeList:
+                excludeList.remove(l)
+
         locationItems = randomizer.assignedItems
         locationItems = Hints.convertItemAssignmentToTuple(locationItems,randomizer.shop_items)
 
@@ -534,7 +538,6 @@ class Hints:
                 for h in hintableWorlds:
                     if h not in excludeList and h not in hinted_worlds:
                         unhinted_worlds.append(h)
-                print(unhinted_worlds)
 
                 for reportNumber in range(14,num_progression_worlds+1):
                     hintsText["Reports"][reportNumber] = {"World": unhinted_worlds[reportNumber-14], "Location": ""}
