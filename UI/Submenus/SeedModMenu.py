@@ -1,9 +1,10 @@
 from PySide6.QtWidgets import QGridLayout, QWidget, QLabel
+
 from Class import settingkey
 from Class.seedSettings import SeedSettings
-from UI.Submenus.SubMenu import KH2Submenu
-from List.configDict import locationType
+from List.configDict import locationType, BattleLevelOption
 from Module.battleLevels import BtlvViewer
+from UI.Submenus.SubMenu import KH2Submenu
 
 
 class SeedModMenu(KH2Submenu):
@@ -32,8 +33,6 @@ class SeedModMenu(KH2Submenu):
         self.end_group('Other Modifiers')
         self.end_column()
 
-        self.world_level_labels = {}
-        self.battle_levels = BtlvViewer()
         self.start_column()
         self.start_group()
         self.add_option(settingkey.GLOBAL_JACKPOT)
@@ -48,10 +47,14 @@ class SeedModMenu(KH2Submenu):
         self.end_group('Challenge Modifiers')
         self.end_column()
 
+        self.battle_levels = BtlvViewer()
+        self.vanilla_battle_levels = BtlvViewer()
+        self.world_level_labels = {}
         self.start_column()
         self.start_group()
         self.add_option(settingkey.BATTLE_LEVEL_RANDO)
         self.add_option(settingkey.BATTLE_LEVEL_OFFSET)
+        self.add_option(settingkey.BATTLE_LEVEL_RANGE)
         self.full_world_level_layout = QGridLayout()
         self.add_battle_level_info(locationType.STT)
         self.add_battle_level_info(locationType.TT)
@@ -75,6 +78,7 @@ class SeedModMenu(KH2Submenu):
 
         settings.observe(settingkey.BATTLE_LEVEL_RANDO, self._btlv_setting_change)
         settings.observe(settingkey.BATTLE_LEVEL_OFFSET, self._btlv_setting_change)
+        settings.observe(settingkey.BATTLE_LEVEL_RANGE, self._btlv_setting_change)
         settings.observe(settingkey.SOFTLOCK_CHECKING, self.reverse_rando_checking)
         
         self.finalizeMenu()
@@ -96,21 +100,36 @@ class SeedModMenu(KH2Submenu):
     def _btlv_setting_change(self):
         btlv_setting = self.settings.get(settingkey.BATTLE_LEVEL_RANDO)
         btlv_offset = self.settings.get(settingkey.BATTLE_LEVEL_OFFSET)
-        self.set_option_visibility(settingkey.BATTLE_LEVEL_OFFSET, visible=(btlv_setting=="Offset"))
+        btlv_range = self.settings.get(settingkey.BATTLE_LEVEL_RANGE)
+        self.set_option_visibility(
+            settingkey.BATTLE_LEVEL_OFFSET,
+            visible=(btlv_setting == BattleLevelOption.OFFSET.name)
+        )
+        self.set_option_visibility(
+            settingkey.BATTLE_LEVEL_RANGE,
+            visible=(btlv_setting == BattleLevelOption.RANDOM_WITHIN_RANGE.name)
+        )
 
-        self.update_battle_level_display(btlv_setting,btlv_offset)
+        self.update_battle_level_display(btlv_setting, btlv_offset=btlv_offset, btlv_range=btlv_range)
 
-    def update_battle_level_display(self,setting_name,btlv_offset):
-        self.battle_levels.use_setting(setting_name,btlv_offset)
+    def update_battle_level_display(self, setting_name: str, btlv_offset: int, btlv_range: int):
+        self.battle_levels.use_setting(setting_name, battle_level_offset=btlv_offset, battle_level_range=btlv_range)
 
-        for world,label_list in self.world_level_labels.items():
+        for world, label_list in self.world_level_labels.items():
             for x in range(len(label_list)):
-                if setting_name in ["+-10","Random"]:
+                if setting_name in [BattleLevelOption.SHUFFLE.name, BattleLevelOption.RANDOM_MAX_50.name]:
                     label_list[x].setText("?")
+                elif setting_name == BattleLevelOption.RANDOM_WITHIN_RANGE.name:
+                    vanilla_level = self.vanilla_battle_levels.get_battle_levels(world)[x]
+                    if btlv_range == 0:
+                        label_list[x].setText(str(vanilla_level))
+                    else:
+                        minimum_level = max(vanilla_level - btlv_range, 1)
+                        maximum_level = min(vanilla_level + btlv_range, 99)
+                        label_list[x].setText('{}-{}'.format(minimum_level, maximum_level))
                 else:
                     label_list[x].setText(str(self.battle_levels.get_battle_levels(world)[x]))
         
-
     def add_battle_level_info(self,world):
         world_label = QLabel(world.value)
         self.world_level_labels[world] = []

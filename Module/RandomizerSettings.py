@@ -1,15 +1,18 @@
 
+import math
+import random
+from itertools import chain
+
+from Class import seedSettings, settingkey
 from Class.exceptions import SettingsException
+from Class.seedSettings import SeedSettings
 from List.ItemList import Items
-from Module.modifier import SeedModifier
+from List.configDict import expCurve, locationType, itemType, locationDepth
 from List.experienceValues import duskExp, duskFormExp, middayFormExp, vanillaExp, middayExp, vanillaFormExp
 from List.hashTextEntries import generateHashIcons
-from List.configDict import expCurve, locationType, itemType, locationDepth
-from itertools import chain
-import math,random
-from Class import modYml, seedSettings, settingkey
-from Class.seedSettings import SeedSettings, Setting
+from Module.modifier import SeedModifier
 from Module.progressionPoints import ProgressionPoints
+
 
 class RandomizerSettings():
     excludeFrom50 = list(chain([1,3,5,6,8,11,13,16,18,19,21,22,24,26,27,29,31,33,35,37,38,40,42,43,45,47,49],range(51,100)))
@@ -66,7 +69,8 @@ class RandomizerSettings():
         self.split_levels = ui_settings.get(settingkey.SPLIT_LEVELS)
         self.battle_level_rando = ui_settings.get(settingkey.BATTLE_LEVEL_RANDO)
         self.battle_level_offset = ui_settings.get(settingkey.BATTLE_LEVEL_OFFSET)
-        
+        self.battle_level_range = ui_settings.get(settingkey.BATTLE_LEVEL_RANGE)
+
         self.starting_growth = ui_settings.get(settingkey.STARTING_MOVEMENT)
         self.num_random_growths = 0
         if self.starting_growth == "Random":

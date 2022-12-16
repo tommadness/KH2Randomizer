@@ -1,5 +1,4 @@
 import copy
-import math
 import random
 import textwrap
 
@@ -8,8 +7,8 @@ from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
 from Class.exceptions import SettingsException
-from List.ItemList import Items,itemRarity
-from List.configDict import expCurve, locationType, locationDepth
+from List.ItemList import Items, itemRarity
+from List.configDict import expCurve, locationType, locationDepth, BattleLevelOption
 from Module.progressionPoints import ProgressionPoints
 from Module.randomCmdMenu import RandomCmdMenu
 
@@ -908,21 +907,15 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     SingleSelect(
         name=settingkey.BATTLE_LEVEL_RANDO,
         ui_label='Battle Level Choice',
-        choices={
-            "Normal": 'Normal',
-            "Offset":"Offset",
-            "+-10":"Within 10",
-            "Random":"Random (Max 50)",
-            "50":"Scale to 50",
-
-        },
+        choices={option.name: option.value for option in list(BattleLevelOption)},
         shared=True,
-        default="Normal",
+        default=BattleLevelOption.NORMAL.name,
         tooltip=textwrap.dedent('''
             Change the battle level of worlds.
             Normal: unchanged battle levels
+            Shuffle: Shuffle the normal battle levels among all visits of all worlds
             Offset: Increase/Decrease all battle levels by a given amount
-            Within 10: Vary battle levels of every visit, but always within 10 levels (above or below)
+            Within Range of Normal: Vary battle levels of all visits within a set number above or below normal
             Random (Max 50): All battle levels are random, with a max level of 50
             Scale to 50: All last visits are level 50, with previous visits scaled proportionally
         ''')
@@ -936,6 +929,16 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=0,
         tooltip="How many levels to change the worlds by"
+    ),
+    IntSpinner(
+        name=settingkey.BATTLE_LEVEL_RANGE,
+        ui_label="Level Range",
+        minimum=0,
+        maximum=50,
+        step=5,
+        shared=True,
+        default=0,
+        tooltip="How far above or below normal battle levels to choose."
     ),
     Toggle(
         name=settingkey.YEET_THE_BEAR,

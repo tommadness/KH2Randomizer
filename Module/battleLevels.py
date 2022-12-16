@@ -1,7 +1,9 @@
 import random
+
 from Class.exceptions import BackendException
+from List.configDict import locationType, BattleLevelOption
 from Module.resources import resource_path
-from List.configDict import locationType
+
 
 def number_to_bytes(item):
     # for byte1, find the most significant bits from the item Id
@@ -20,6 +22,7 @@ class BtlvViewer():
                         locationType.HT,None,locationType.PR,locationType.SP,locationType.TWTNW,None,None,None,None,None]
         self.goa_btlv = True
         self.random_option = None
+        self.battle_level_range = None
         btlv_file = "static/btlv.bin"
 
         if self.goa_btlv:
@@ -57,21 +60,25 @@ class BtlvViewer():
             self.binaryContent = bytearray(btlvBar.read())
         self._make_btlv_vanilla()
     
-    def use_setting(self,setting_name, battle_level_offset : int = None):
-        if setting_name == "Normal":
+    def use_setting(self, setting_name: str, battle_level_offset: int = None, battle_level_range: int = None):
+        self.random_option = setting_name
+        self.battle_level_range = battle_level_range
+        if setting_name == BattleLevelOption.NORMAL.name:
             self._make_btlv_vanilla()
-        elif setting_name == "Offset":
+        elif setting_name == BattleLevelOption.SHUFFLE.name:
+            self._make_btlv_vanilla()
+            self._shuffle_btlv()
+        elif setting_name == BattleLevelOption.OFFSET.name:
             if battle_level_offset is None:
                 raise BackendException("Trying to offset battle levels without a provided offset")
             self._make_btlv_vanilla()
             self._offset_btlv(battle_level_offset)
-        elif setting_name == "+-10":
+        elif setting_name == BattleLevelOption.RANDOM_WITHIN_RANGE.name:
             self._make_btlv_vanilla()
-            self.random_option=setting_name
-        elif setting_name == "Random":
-            self._make_btlv_vanilla()
-            self.random_option=setting_name
-        elif setting_name == "50":
+            self._variance_btlv()
+        elif setting_name == BattleLevelOption.RANDOM_MAX_50.name:
+            self._pure_random_btlv()
+        elif setting_name == BattleLevelOption.SCALE_TO_50.name:
             self._make_btlv_vanilla()
             self._scale_btlv(50)
         else:
@@ -87,14 +94,7 @@ class BtlvViewer():
         list_ret = [self._interpret_flags(x) for x in self.visit_flags[world]]
         return list_ret
         
-    def write_modifications(self,outZip):
-        # we are writing out the zip, so random can be called
-        if self.random_option:
-            if self.random_option == "+-10":
-                self._variance_btlv()
-            if self.random_option == "Random":
-                self._pure_random_btlv()
-
+    def write_modifications(self, outZip):
         for x in range(20):
             offset = 8+32*x
             for y in range(8,32):
@@ -128,10 +128,15 @@ class BtlvViewer():
                 self.flags[-1].append(bytes_to_number(self.binaryContent[offset+y]))
     
     def _variance_btlv(self):
-        for world,visit_flag_list in self.visit_flags.items():
+        level_range = self.battle_level_range
+        if level_range is None:
+            raise BackendException("Trying to range battle levels without a provided range")
+        elif level_range == 0:
+            return
+        for world, visit_flag_list in self.visit_flags.items():
             current_btlvs = self.get_battle_levels(world)
             for visit_number in range(len(visit_flag_list)):
-                btlv_change = random.randint(-10,10)
+                btlv_change = random.randint(-level_range, level_range)
                 self._set_battle_level(world,visit_flag_list[visit_number][0],visit_number,current_btlvs[visit_number]+btlv_change)
 
     def _pure_random_btlv(self):
@@ -139,6 +144,18 @@ class BtlvViewer():
             for visit_number in range(len(visit_flag_list)):
                 btlv_change = random.randint(1,50)
                 self._set_battle_level(world,visit_flag_list[visit_number][0],visit_number,btlv_change)
+
+    def _shuffle_btlv(self):
+        battle_level_list = []
+        for world, visit_flag_list in self.visit_flags.items():
+            battle_level_list += self.get_battle_levels(world)
+
+        random.shuffle(battle_level_list)
+
+        for world, visit_flag_list in self.visit_flags.items():
+            for visit_number in range(len(visit_flag_list)):
+                new_level = battle_level_list.pop()
+                self._set_battle_level(world, visit_flag_list[visit_number][0], visit_number, new_level)
 
     def _scale_btlv(self,scaled_level):
         for world,visit_flag_list in self.visit_flags.items():

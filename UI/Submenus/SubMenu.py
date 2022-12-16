@@ -10,9 +10,11 @@ from PySide6.QtWidgets import (
 )
 
 import Class.seedSettings
-from Class.seedSettings import MultiSelectTristate, ProgressionChainSelect, SeedSettings, Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect
+from Class.seedSettings import MultiSelectTristate, ProgressionChainSelect, SeedSettings, Toggle, IntSpinner, \
+    FloatSpinner, SingleSelect, MultiSelect
 from Module.resources import resource_path
 from UI.Submenus.ProgressionWidgets import ProgressionWidget
+
 
 class KH2Submenu(QWidget):
 
@@ -34,14 +36,14 @@ class KH2Submenu(QWidget):
         self.tristate_groups = {}
         self.tristate_backgrounds = {}
 
-        self.random_header_styles = [
+        self.header_styles = [
             'background: #4d0d0e; color: #ff8080;',  # reds
             'background: #685901; color: #fff34b;',  # yellows
             'background: #04641b; color: #31f626;',  # greens
             'background: #032169; color: #63c6f5;',  # blues
             'background: #422169; color: #c663f5;',  # purples
         ]
-        self.next_header_style = random.randint(0, len(self.random_header_styles) - 1)
+        self.next_header_style = len(title) % len(self.header_styles)
 
     def start_column(self):
         self.pending_column = QVBoxLayout()
@@ -64,14 +66,14 @@ class KH2Submenu(QWidget):
         group = QVBoxLayout()
         group.setContentsMargins(0, 0, 0, 0)
 
-        header_style_choice = self.next_header_style % len(self.random_header_styles)
+        header_style_choice = self.next_header_style % len(self.header_styles)
         self.next_header_style = self.next_header_style + 1
 
         if title != '':
             title_label = QLabel(title)
             title_label.setContentsMargins(8, 8, 8, 8)
             title_label.setProperty('cssClass', 'groupHeader')
-            title_label.setStyleSheet(self.random_header_styles[header_style_choice])
+            title_label.setStyleSheet(self.header_styles[header_style_choice])
             group.addWidget(title_label)
 
         group.addLayout(self.pending_group)
