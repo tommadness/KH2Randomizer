@@ -5,13 +5,40 @@ from Class import settingkey
 from Class.itemClass import itemRarity
 from Class.seedSettings import SeedSettings
 from List.ItemList import Items
-from List.configDict import locationDepth, locationType
+from List.configDict import BattleLevelOption, expCurve, locationDepth, locationType
 
 DailyModifier = namedtuple('DailyModifier', ['local_modifier', 'initMod', 'name', 'description', 'categories'])
 
 def levelItUpLocal(seed_settings: SeedSettings):
     seed_settings.set(settingkey.SORA_LEVELS, 'ExcludeFrom99')
     seed_settings.set(settingkey.SORA_EXP_MULTIPLIER, 10.0)
+
+def vanillaGrowth(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.VALOR_EXP_MULTIPLIER, 1.0)
+    seed_settings.set(settingkey.WISDOM_EXP_MULTIPLIER, 1.0)
+    seed_settings.set(settingkey.LIMIT_EXP_MULTIPLIER, 1.0)
+    seed_settings.set(settingkey.MASTER_EXP_MULTIPLIER, 1.0)
+    seed_settings.set(settingkey.FINAL_EXP_MULTIPLIER, 1.0)
+    seed_settings.set(settingkey.VALOR_EXP_CURVE, expCurve.DAWN.name)
+    seed_settings.set(settingkey.WISDOM_EXP_CURVE, expCurve.DAWN.name)
+    seed_settings.set(settingkey.LIMIT_EXP_CURVE, expCurve.DAWN.name)
+    seed_settings.set(settingkey.MASTER_EXP_CURVE, expCurve.DAWN.name)
+    seed_settings.set(settingkey.FINAL_EXP_CURVE, expCurve.DAWN.name)
+
+def addShops(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.SHOP_ELIXIRS,True)
+    seed_settings.set(settingkey.SHOP_BOOSTS,True)
+    seed_settings.set(settingkey.SHOP_RECOVERIES,True)
+
+def shuffleBattleLevel(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.BATTLE_LEVEL_RANDO,BattleLevelOption.SHUFFLE.name)
+
+def chaosBattleLevel(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.BATTLE_LEVEL_RANDO,BattleLevelOption.RANDOM_WITHIN_RANGE.name)
+    seed_settings.set(settingkey.BATTLE_LEVEL_RANGE,50)
+
+def fixedBattleLevel(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.BATTLE_LEVEL_RANDO,BattleLevelOption.SCALE_TO_50.name)
 
 def cupsOn(seed_settings: SeedSettings):
     seed_settings.set(settingkey.CUPS_GIVE_XP,True)
@@ -75,7 +102,7 @@ dailyModifiers = [
                 local_modifier=levelItUpLocal
                 ),
     DailyModifier(name="Shut Out of Worlds",
-                description="The following worlds have no good checks and are filled with junk: {}",
+                description="The following worlds have no unique checks and are filled with junk: {}",
                 initMod=modifyShutOut,
                 categories={'worlds'},
                 local_modifier=lambda worlds: turnOffWorldsLocal(worlds)
@@ -85,6 +112,12 @@ dailyModifiers = [
                 description="Path Hints will guide you to the proofs",
                 categories={'hints'},
                 local_modifier=lambda settings: settings.set(settingkey.HINT_SYSTEM,"Path")
+                ),
+    DailyModifier(name="Spoiler Hints",
+                initMod=None,
+                description="Spoiler Hints will guide you to the proofs",
+                categories={'hints'},
+                local_modifier=lambda settings: settings.set(settingkey.HINT_SYSTEM,"Spoiler")
                 ),
     DailyModifier(name="Locked Second Visits",
                 initMod=None,
@@ -166,12 +199,30 @@ dailyModifiers = [
                 ),
     DailyModifier(name="You can have 3 of those?",
                 initMod=None,
-                description="Randomized Support Abilities is turned on, changing the pool of potential abilities you can find",
+                description="Randomized Stacked Abilities is turned on, changing the pool of potential abilities you can find",
                 categories={'abilities'},
-                local_modifier=lambda settings: settings.set(settingkey.ABILITY_POOL,'randomize support')
-                )
-]
+                local_modifier=lambda settings: settings.set(settingkey.ABILITY_POOL,'randomize stackable')
+                ),
+    DailyModifier(name="Where did you find these?",
+                initMod=None,
+                description="Moogle shops contain useful consumable items, such as drive recoveries and elixirs",
+                categories={'qol'},
+                local_modifier=addShops
+                ),
+    DailyModifier(name="What if you went to Twilight Town Last?",
+                initMod=None,
+                description="Shuffle the battle level of worlds.",
+                categories={'btlv'},
+                local_modifier=shuffleBattleLevel
+                ),
+    DailyModifier(name="All Worlds are the Same",
+                initMod=None,
+                description="All max battle levels are 50, and visits are scaled.",
+                categories={'btlv'},
+                local_modifier=fixedBattleLevel
+                ),
 
+]
 
 dailyHardModifiers = [
     DailyModifier(name="Biased Checks Even Later",
@@ -209,6 +260,18 @@ dailyHardModifiers = [
                 description="You can't skip into CoR or Throne Room. Get there normally :)",
                 categories={'dol'},
                 local_modifier=blockSkips
+                ),
+    DailyModifier(name="Vanilla Drive Leveling",
+                initMod=None,
+                description="Remember leveling drives in vanilla? You will now.",
+                categories={'dol'},
+                local_modifier=vanillaGrowth
+                ),
+    DailyModifier(name="Battle levels make no sense.",
+                initMod=None,
+                description="Battle levels are with 50 levels of original. 1-99 possible",
+                categories={'btlv'},
+                local_modifier=chaosBattleLevel
                 ),
 ]
 
