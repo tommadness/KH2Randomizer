@@ -335,7 +335,8 @@ _all_settings = [
         ui_label='Dream Weapon Matters',
         shared=True,
         default=False,
-        tooltip='Makes the dream weapon choice at the beginning of the game change when you get items/abillities on levels (either with the same offsets as the vanilla game, or the adjusted values for max level 50)'
+        tooltip='Makes the dream weapon choice at the beginning of the game change when you get items/abillities on levels (either with the same offsets as the vanilla game, or the adjusted values for max level 50)',
+        randomizable=True
     ),
     Toggle(
         name=settingkey.STATSANITY,
@@ -603,7 +604,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         shared=True,
         default=0,
-        randomizable=True
+        randomizable=[0,1,2,3]
     ),
 
     MultiSelect(
@@ -659,7 +660,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip=textwrap.dedent('''
             Instead of reports providing the source of hints, world progress unlocks more hints in your tracker.
         '''),
-        randomizable=False
+        randomizable=True
     ),
     IntSpinner(
         name=settingkey.PROGRESSION_HINTS_REPORT_BONUS,
@@ -910,7 +911,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
         '''),
-        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+        randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.Anywhere.name]
     ),
     SingleSelect(
         name=settingkey.PROOF_DEPTH,
@@ -935,7 +936,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
             Anywhere - No restriction
         '''),
-        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+        randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),
     SingleSelect(
         name=settingkey.STORY_UNLOCK_DEPTH,
@@ -976,7 +977,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             Within Range of Normal: Vary battle levels of all visits within a set number above or below normal
             Random (Max 50): All battle levels are random, with a max level of 50
             Scale to 50: All last visits are level 50, with previous visits scaled proportionally
-        ''')
+        '''),
+        standalone_label="Battle Level Randomization",
+        randomizable=True
     ),   
     IntSpinner(
         name=settingkey.BATTLE_LEVEL_OFFSET,
@@ -986,7 +989,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=5,
         shared=True,
         default=0,
-        tooltip="How many levels to change the worlds by"
+        standalone_label="Battle Level Offset (if chosen)",
+        tooltip="How many levels to change the worlds by",
+        randomizable=[-20,-15,-10,0,10,15,20]
     ),
     IntSpinner(
         name=settingkey.BATTLE_LEVEL_RANGE,
@@ -996,39 +1001,37 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=5,
         shared=True,
         default=0,
-        tooltip="How far above or below normal battle levels to choose."
+        standalone_label="Battle Level Range (if chosen)",
+        tooltip="How far above or below normal battle levels to choose.",
+        randomizable=[0,20]
     ),
     Toggle(
         name=settingkey.YEET_THE_BEAR,
         ui_label='Yeet The Bear Required',
         shared=True,
         default=False,
-        tooltip="Force the Proof of Nonexistence onto Starry Hill popup in 100 acre",
-        randomizable=True
+        tooltip="Force the Proof of Nonexistence onto Starry Hill popup in 100 acre"
     ),
     Toggle(
         name=settingkey.CHAIN_LOGIC,
         ui_label='Turn On Chain Logic',
         shared=True,
         default=False,
-        tooltip="Place all the locking items in a chain with one another, making the seed very linear.",
-        randomizable=False
+        tooltip="Place all the locking items in a chain with one another, making the seed very linear."
     ),
     Toggle(
         name=settingkey.CHAIN_LOGIC_TERRA,
         ui_label='Include Lingering Will in Chain',
         shared=True,
         default=False,
-        tooltip="Puts the Proof of Connection into the logic chain, effectively requiring beating Lingering Will",
-        randomizable=False
+        tooltip="Puts the Proof of Connection into the logic chain, effectively requiring beating Lingering Will"
     ),
     Toggle(
         name=settingkey.CHAIN_LOGIC_MIN_TERRA,
         ui_label='Force Late Depth for Proof of Connection',
         shared=True,
         default=False,
-        tooltip="Will force the proof of connection to be in the last 5 steps of the chain, to give more chances for finding combat tools.",
-        randomizable=False
+        tooltip="Will force the proof of connection to be in the last 5 steps of the chain, to give more chances for finding combat tools."
     ),
     IntSpinner(
         name=settingkey.CHAIN_LOGIC_LENGTH,
@@ -1038,8 +1041,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         shared=True,
         default=26,
-        tooltip="How many steps in the logic chain you'd like to do at most.",
-        randomizable=False
+        tooltip="How many steps in the logic chain you'd like to do at most."
     ),
 
 
@@ -1048,8 +1050,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Remove Self-Hinting Reports',
         shared=True,
         default=False,
-        tooltip="Reports must hint a world that is different from where that report was found.",
-        randomizable=True
+        tooltip="Reports must hint a world that is different from where that report was found."
     ),
 
     Toggle(
@@ -1057,8 +1058,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Reports can Reveal Proofs',
         shared=True,
         default=False,
-        tooltip="Points Mode only: If enabled, proofs can be directly revealed by reports.",
-        randomizable=True
+        tooltip="Points Mode only: If enabled, proofs can be directly revealed by reports."
     ),
 
     Toggle(
@@ -1066,8 +1066,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Reports can Reveal other Reports',
         shared=True,
         default=True,
-        tooltip="Points Mode only: If enabled, reports can reveal other reports.",
-        randomizable=True
+        tooltip="Points Mode only: If enabled, reports can reveal other reports."
     ),
     
     Toggle(
@@ -1075,8 +1074,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Hi-Score Mode',
         shared=True,
         default=False,
-        tooltip="If enabled gain points for collecting Important Checks, completing worlds, beating bosses, ect.",
-        randomizable=False
+        tooltip="If enabled gain points for collecting Important Checks, completing worlds, beating bosses, ect."
     ),
 
     MultiSelect(
@@ -1102,8 +1100,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Change World Value color when complete',
         shared=True,
         default=True,
-        tooltip="If enabled, World Values will turn blue when all Important Checks in a World are found.",
-        randomizable=None
+        tooltip="If enabled, World Values will turn blue when all Important Checks in a World are found."
     ),
     
     SingleSelect(
@@ -1439,7 +1436,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip="Enemies will all drop munny (pretty straightforward)",
-        randomizable=False
+        randomizable=True
     ),
     Toggle(
         name=settingkey.UNLIMITED_MP,
@@ -1447,7 +1444,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip="Enemies will all drop mp orbs (pretty straightforward)",
-        randomizable=False
+        randomizable=True
     ),
     IntSpinner(
         name=settingkey.GLOBAL_JACKPOT,
@@ -1480,7 +1477,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip="Adds duplicates of keyblades into the moogle shop.",
-        randomizable=False
+        randomizable=True
     ),
     Toggle(
         name=settingkey.SHOP_ELIXIRS,
@@ -1489,7 +1486,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip="Adds Elixirs/Megalixirs to shop.",
-        randomizable=False
+        randomizable=True
     ),
     Toggle(
         name=settingkey.SHOP_RECOVERIES,
@@ -1498,7 +1495,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip="Adds Drive Recovery/High Drive Recovery to shop.",
-        randomizable=False
+        randomizable=True
     ),
     Toggle(
         name=settingkey.SHOP_BOOSTS,
@@ -1507,7 +1504,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=False,
         tooltip="Adds Power/Magic/AP/Defense Boosts to shop.",
-        randomizable=False
+        randomizable=True
     ),
     IntSpinner(
         name=settingkey.SHOP_REPORTS,
@@ -1519,7 +1516,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         default=0,
         tooltip="Adds a number of reports into the moogle shop.",
-        randomizable=False
+        randomizable=[0,1,2,3]
     ),
     IntSpinner(
         name=settingkey.SHOP_UNLOCKS,
@@ -1531,7 +1528,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         default=0,
         tooltip="Adds a number of world key items into the moogle shop.",
-        randomizable=False
+        randomizable=[0,1,2,3]
     ),
 
     Toggle(
@@ -1608,7 +1605,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=True,
         tooltip="If enabled, maps are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
-        randomizable=True
     ),
 
     Toggle(
@@ -1618,7 +1614,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=True,
         tooltip="If enabled, recipes are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
-        randomizable=True
     ),
 
     Toggle(
@@ -1628,7 +1623,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=True,
         tooltip="If enabled, all accessories are included in the required item pool.",
-        randomizable=True
     ),
     Toggle(
         name=settingkey.ARMOR_IN_ITEM_POOL,
@@ -1637,7 +1631,6 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=True,
         tooltip="If enabled, all accessories are included in the required item pool.",
-        randomizable=True
     ),
 
     Toggle(
@@ -1682,7 +1675,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default='Normal',
-        randomizable=["Easy","Slightly Easy","Normal","Slightly Hard","Hard","Very Hard"],
+        randomizable=["Easy","Slightly Easy","Normal","Slightly Hard","Hard"],
         tooltip=textwrap.dedent('''
             Bias the placement of items based on how difficult/easy you would like the seed to be. 
             Items have 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias each item gets when placing those items. 
@@ -1741,7 +1734,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             If "Randomize Ability Pool", picks Sora\'s action/support abilities at random (guaranteed to have 1 SC & 1 OM). 
             Randomize Support Ability Pool will leave action abilities alone, but will randomize the support abilities (still guaranteed to have SC/OM)
             Randomize Stackable Abilities will give you 1 of each ability that works on its own, but will randomize now many of the stackable abilities you get (at least 1 of each)
-        ''')
+        '''),
+        randomizable=["default","randomize support","randomize stackable"]
     ),
 
     SingleSelect(
