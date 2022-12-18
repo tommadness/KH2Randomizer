@@ -185,7 +185,7 @@ class modYml:
     
     def getASDataMod():
         ASMod = []
-        for ASRoom in ['hb32','hb33','hb34','hb34']:
+        for ASRoom in ['hb32','hb33','hb34','hb38']:
             ASMod.append({
                 "name": "ard/"+ASRoom+".ard",
                 "multi": [
