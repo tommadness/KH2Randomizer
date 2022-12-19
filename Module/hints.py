@@ -35,6 +35,9 @@ class Hints:
             excludeList.remove(locationType.HB)
         if locationType.OC in excludeList and (locationType.OCCups not in excludeList or locationType.OCCups not in excludeList):
             excludeList.remove(locationType.OC)
+        
+        if locationType.SYNTH in excludeList and locationType.Puzzle in excludeList and not settings.shop_hintable:
+            excludeList.append("Creations")
 
         for l in settings.vanillaLocations:
             if l in excludeList:
@@ -48,7 +51,7 @@ class Hints:
         allowReportHinting = settings.allow_report_hinting
         pointHintValues = settings.point_hint_values
         spoilerHintValues = settings.spoiler_hint_values
-        tracker_includes = settings.tracker_includes + ([] if len(randomizer.shop_items)==0 or locationType.SYNTH.value in settings.tracker_includes else [locationType.SYNTH.value])
+        tracker_includes = settings.tracker_includes + ([] if not settings.shop_hintable or locationType.SYNTH.value in settings.tracker_includes else [locationType.SYNTH.value])
 
         importantChecks = settings.important_checks
 
@@ -293,9 +296,6 @@ class Hints:
             worldsToHint = []
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))
-
-            if locationType.SYNTH in excludeList and locationType.Puzzle in excludeList and len(randomizer.shop_items)==0:
-                excludeList.append("Creations")
 
             freeReports = []
 

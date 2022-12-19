@@ -241,10 +241,11 @@ class RandomizerSettings():
         self.progression_world_complete_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
         self.progression_report_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_REPORT_BONUS)
 
+        self.shop_hintable = self.shop_unlocks or self.shop_reports or locationType.Puzzle in include_list or locationType.SYNTH in include_list
         prog_points = ProgressionPoints()
         prog_points.set_uncompressed(ui_settings.get(settingkey.PROGRESSION_POINT_SELECT))
         self.progression_hint_settings = prog_points.get_points_json()
-        num_worlds = len(vanilla_worlds) + len(worlds_with_rewards) + (1 if (self.shop_unlocks or self.shop_reports or locationType.Puzzle in include_list or locationType.SYNTH in include_list) else 0)
+        num_worlds = len(vanilla_worlds) + len(worlds_with_rewards) + (1 if self.shop_hintable else 0)
         self.progression_hint_settings["HintCosts"] = prog_points.get_hint_thresholds(num_worlds)
         self.progression_hint_settings["WorldCompleteBonus"] = [self.progression_world_complete_bonus]
         self.progression_hint_settings["ReportBonus"] = [self.progression_report_bonus]
