@@ -540,7 +540,7 @@ class Hints:
                         unhinted_worlds.append(h)
 
                 for reportNumber in range(14,num_progression_worlds+1):
-                    hintsText["Reports"][reportNumber] = {"World": unhinted_worlds[reportNumber-14], "Location": ""}
+                    hintsText["Reports"][reportNumber] = {"World": unhinted_worlds[reportNumber-14], "Location": "", "Count": len(worldChecks[unhinted_worlds[reportNumber-14]]),}
 
         if hintsType == "Points":
             reportRestrictions = [[] for x in range(13)]
