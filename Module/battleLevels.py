@@ -63,22 +63,23 @@ class BtlvViewer():
     def use_setting(self, setting_name: str, battle_level_offset: int = None, battle_level_range: int = None):
         self.random_option = setting_name
         self.battle_level_range = battle_level_range
-        if setting_name == BattleLevelOption.NORMAL.name:
+        self.random_option = self.random_option.upper()
+        if self.random_option == BattleLevelOption.NORMAL.name:
             self._make_btlv_vanilla()
-        elif setting_name == BattleLevelOption.SHUFFLE.name:
+        elif self.random_option == BattleLevelOption.SHUFFLE.name:
             self._make_btlv_vanilla()
             self._shuffle_btlv()
-        elif setting_name == BattleLevelOption.OFFSET.name:
+        elif self.random_option == BattleLevelOption.OFFSET.name:
             if battle_level_offset is None:
                 raise BackendException("Trying to offset battle levels without a provided offset")
             self._make_btlv_vanilla()
             self._offset_btlv(battle_level_offset)
-        elif setting_name == BattleLevelOption.RANDOM_WITHIN_RANGE.name:
+        elif self.random_option == BattleLevelOption.RANDOM_WITHIN_RANGE.name:
             self._make_btlv_vanilla()
             self._variance_btlv()
-        elif setting_name == BattleLevelOption.RANDOM_MAX_50.name:
+        elif self.random_option == BattleLevelOption.RANDOM_MAX_50.name:
             self._pure_random_btlv()
-        elif setting_name == BattleLevelOption.SCALE_TO_50.name:
+        elif self.random_option == BattleLevelOption.SCALE_TO_50.name:
             self._make_btlv_vanilla()
             self._scale_btlv(50)
         else:
