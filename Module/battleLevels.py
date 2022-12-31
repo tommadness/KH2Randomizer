@@ -34,7 +34,7 @@ class BtlvViewer():
             self.visit_flags[locationType.LoD] = [(8,0x00010),(8,0x00020)]
             self.visit_flags[locationType.BC] = [(5,0x00010),(5,0x00020)]
             self.visit_flags[locationType.OC] = [(6,0x00010),(6,0x00020)]
-            self.visit_flags[locationType.DC] = [(12,0x00010),(13,0x00010)]
+            self.visit_flags[locationType.DC] = [(12,0x00010),(13,0x00010),(13,0x00020)]
             self.visit_flags[locationType.PR] = [(16,0x00010),(16,0x00020)]
             self.visit_flags[locationType.Agrabah] = [(7,0x00010),(7,0x00040)]
             self.visit_flags[locationType.HT] = [(14,0x00010),(14,0x00040)]

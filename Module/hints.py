@@ -701,6 +701,8 @@ class Hints:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
                     world_of_location = location.LocationTypes[0]
+                    if world_of_location == locationType.SYNTH or world_of_location == locationType.Puzzle or world_of_location == locationType.SHOP:
+                        world_of_location = "Creations"
                     #make a list of worlds and the checks they have depending on reveal list
                     if not world_of_location in worldItemTypes:
                         worldItemTypes[world_of_location] = []
