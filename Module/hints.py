@@ -33,7 +33,7 @@ class Hints:
         excludeList = copy.deepcopy(settings.disabledLocations)
         if locationType.HB in excludeList and (locationType.TTR not in excludeList or locationType.CoR not in excludeList):
             excludeList.remove(locationType.HB)
-        if locationType.OC in excludeList and (locationType.OCCups not in excludeList or locationType.OCCups not in excludeList):
+        if locationType.OC in excludeList and (locationType.OCCups not in excludeList):
             excludeList.remove(locationType.OC)
         
         if locationType.SYNTH in excludeList and locationType.Puzzle in excludeList and not settings.shop_hintable:
@@ -86,7 +86,8 @@ class Hints:
                     if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
                     if not world_of_location in hintsText['world']:
-                        hintsText['world'][world_of_location] = []
+                        raise HintException("Something is going wrong with initializing hintText worlds")
+                        # hintsText['world'][world_of_location] = []
                     hintsText['world'][world_of_location].append(item.Name)
         
         if hintsType != "Shananas":
@@ -155,7 +156,9 @@ class Hints:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:   
-                    world_of_location = location.LocationTypes[0]                 
+                    world_of_location = location.LocationTypes[0]        
+                    if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
+                        world_of_location = "Creations"
                     if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]:
                         if item.ItemType is itemType.PROOF_OF_CONNECTION:
                             proof_of_connection_world = world_of_location
@@ -170,9 +173,11 @@ class Hints:
                                 breadcrumb_map[w].add(world_of_location)
             
 
-            hintable_world_list = list(set(chain(breadcrumb_map[proof_of_connection_world] if proof_of_connection_world else [],breadcrumb_map[proof_of_peace_world] if proof_of_peace_world else [],breadcrumb_map[proof_of_nonexistence_world] if proof_of_nonexistence_world else [])))
+            hintable_world_list = list(set(chain(breadcrumb_map[proof_of_connection_world] if proof_of_connection_world else [],
+                                                 breadcrumb_map[proof_of_peace_world] if proof_of_peace_world else [],
+                                                 breadcrumb_map[proof_of_nonexistence_world] if proof_of_nonexistence_world else [])))
             hintable_world_list.sort()
-            barren_world_list = [x for x in hintableWorlds if x not in hintable_world_list]
+            barren_world_list = [x for x in hintableWorlds if x not in hintable_world_list and x not in excludeList]
 
             hintable_world_list.sort(reverse=True,key=lambda x : len(hintsText['world'][x]))
             barren_world_list.sort(reverse=True,key=lambda x : len(hintsText['world'][x]))
