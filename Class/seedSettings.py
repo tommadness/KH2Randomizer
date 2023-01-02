@@ -1,5 +1,6 @@
 import copy
 import random
+import string
 import textwrap
 
 from bitstring import BitArray
@@ -9,8 +10,14 @@ from Class import settingkey
 from Class.exceptions import SettingsException
 from List.ItemList import Items, itemRarity
 from List.configDict import expCurve, locationType, locationDepth, BattleLevelOption
+from Module import encoding
 from Module.progressionPoints import ProgressionPoints
 from Module.randomCmdMenu import RandomCmdMenu
+
+
+# Characters available to be used for short encoding of certain settings
+single_select_chars = string.digits + string.ascii_letters
+SHORT_SELECT_LIMIT = len(single_select_chars)
 
 
 class Setting:
@@ -90,10 +97,10 @@ class IntSpinner(Setting):
 
     def settings_string(self, value) -> str:
         index = self.selectable_values.index(value)
-        return str(index)
+        return encoding.v2r(index)
 
     def parse_settings_string(self, settings_string: str):
-        index = int(settings_string)
+        index = encoding.r2v(settings_string)
         return self.selectable_values[index]
 
 
@@ -126,10 +133,10 @@ class FloatSpinner(Setting):
 
     def settings_string(self, value) -> str:
         index = self.selectable_values.index(value)
-        return str(index)
+        return encoding.v2r(index)
 
     def parse_settings_string(self, settings_string: str):
-        index = int(settings_string)
+        index = encoding.r2v(settings_string)
         return self.selectable_values[index]
 
 
@@ -153,10 +160,10 @@ class SingleSelect(Setting):
 
     def settings_string(self, value) -> str:
         index = self.choice_keys.index(value)
-        return str(index)
+        return encoding.v2r(index)
 
     def parse_settings_string(self, settings_string: str):
-        index = int(settings_string)
+        index = encoding.r2v(settings_string)
         return self.choice_keys[index]
 
 
@@ -221,12 +228,14 @@ class MultiSelect(Setting):
             else:
                 bit_array[index] = False
 
-        return str(bit_array.uint)
+        encoded = encoding.v2r(bit_array.uint)
+        return encoded
 
     def parse_settings_string(self, settings_string: str):
         choice_keys = self.choice_keys
 
-        bit_array = BitArray(uint=int(settings_string), length=len(choice_keys))
+        decoded = encoding.r2v(settings_string)
+        bit_array = BitArray(uint=decoded, length=len(choice_keys))
 
         selected_values = []
         for index, choice_key in enumerate(choice_keys):
@@ -262,7 +271,7 @@ class MultiSelectTristate(Setting):
         bit_array = BitArray(len(choice_keys))
         bit_array_partial = BitArray(len(choice_keys))
         for index, choice_key in enumerate(choice_keys):
-            if isinstance(value[0],list):
+            if isinstance(value[0], list):
                 if choice_key in value[0]:
                     bit_array[index] = True
                 else:
@@ -276,16 +285,14 @@ class MultiSelectTristate(Setting):
                     bit_array[index] = True
                 else:
                     bit_array[index] = False
-        return str(bit_array.uint)+"+"+str(bit_array_partial.uint)
+        return encoding.v2r(bit_array.uint) + "+" + encoding.v2r(bit_array_partial.uint)
 
     def parse_settings_string(self, settings_string: str):
         choice_keys = self.choice_keys
         split_settings = settings_string.split('+')
-        rando_string = split_settings[0]
-        vanilla_string = split_settings[1]
 
-        bit_array = BitArray(uint=int(rando_string), length=len(choice_keys))
-        bit_array_partial = BitArray(uint=int(vanilla_string), length=len(choice_keys))
+        bit_array = BitArray(uint=encoding.r2v(split_settings[0]), length=len(choice_keys))
+        bit_array_partial = BitArray(uint=encoding.r2v(split_settings[1]), length=len(choice_keys))
 
         selected_values = []
         partial_values = []
@@ -1848,17 +1855,75 @@ class SeedSettings:
         return {name: setting for (name, setting) in settings_by_name.items() if setting.shared or include_private}
 
     def settings_string(self, include_private: bool = False):
-        values = []
+        flags: [bool] = []
+        short_select_values = ''
+        values: [str] = []
         for name in sorted(self._filtered_settings(include_private)):
             setting = settings_by_name[name]
-            values.append(setting.settings_string(self._values[name]))
+            value = self._values[name]
+            if isinstance(setting, Toggle):
+                flags.append(value)
+            elif isinstance(setting, SingleSelect) and len(setting.choice_keys) <= SHORT_SELECT_LIMIT:
+                index = setting.choice_keys.index(value)
+                short_select_values += single_select_chars[index]
+            elif isinstance(setting, IntSpinner) and len(setting.selectable_values) <= SHORT_SELECT_LIMIT:
+                index = setting.selectable_values.index(value)
+                short_select_values += single_select_chars[index]
+            elif isinstance(setting, FloatSpinner) and len(setting.selectable_values) <= SHORT_SELECT_LIMIT:
+                index = setting.selectable_values.index(value)
+                short_select_values += single_select_chars[index]
+            else:
+                values.append(setting.settings_string(value))
+
+        # Group up all the single select settings that are small enough and make one group for them to save some space
+        values.insert(0, short_select_values)
+
+        # Group up all the toggle/flag settings to save some space
+        flags_bit_array = BitArray(len(flags))
+        for index, flag in enumerate(flags):
+            flags_bit_array[index] = flag
+        values.insert(0, encoding.v2r(flags_bit_array.uint))
+
         return DELIMITER.join(values)
 
     def apply_settings_string(self, settings_string: str, include_private: bool = False):
         parts = settings_string.split(DELIMITER)
-        for index, name in enumerate(sorted(self._filtered_settings(include_private))):
+
+        # The first part is an encoded representation of all the toggle/flag settings
+        flags_value = encoding.r2v(parts.pop(0))
+        # The second part is an encoded representation of other settings that can be represented as single chars
+        short_select_string = parts.pop(0)
+
+        toggle_settings = []
+        short_select_settings = []
+
+        used_index = 0
+        for name in sorted(self._filtered_settings(include_private)):
             setting = settings_by_name[name]
-            self.set(name, setting.parse_settings_string(parts[index]))
+            if isinstance(setting, Toggle):
+                toggle_settings.append(setting)
+            elif isinstance(setting, SingleSelect) and len(setting.choice_keys) <= SHORT_SELECT_LIMIT:
+                short_select_settings.append(setting)
+            elif isinstance(setting, IntSpinner) and len(setting.selectable_values) <= SHORT_SELECT_LIMIT:
+                short_select_settings.append(setting)
+            elif isinstance(setting, FloatSpinner) and len(setting.selectable_values) <= SHORT_SELECT_LIMIT:
+                short_select_settings.append(setting)
+            else:
+                self.set(name, setting.parse_settings_string(parts[used_index]))
+                used_index = used_index + 1
+
+        flags_bit_array = BitArray(uint=flags_value, length=len(toggle_settings))
+        for index, setting in enumerate(toggle_settings):
+            self.set(setting.name, flags_bit_array[index])
+
+        for index, setting in enumerate(short_select_settings):
+            selected_index = single_select_chars.index(short_select_string[index])
+            if isinstance(setting, SingleSelect):
+                self.set(setting.name, setting.choice_keys[selected_index])
+            elif isinstance(setting, IntSpinner):
+                self.set(setting.name, setting.selectable_values[selected_index])
+            elif isinstance(setting, FloatSpinner):
+                self.set(setting.name, setting.selectable_values[selected_index])
 
     def settings_json(self, include_private: bool = False):
         filtered_settings = {key: self.get(key) for key in self._filtered_settings(include_private).keys()}

@@ -1,4 +1,5 @@
 from List.configDict import locationType
+from Module import encoding
 
 
 class ProgressionPoints():
@@ -81,74 +82,49 @@ class ProgressionPoints():
             locationType.TWTNW:[ 0, 2, 3, 2, 2, 2, 7 ],
             locationType.CoR:[0, 4, 0, 4, 7]
         }
-        entry_count = 0
 
-        for _,i in self.points.items():
-            entry_count+=len(i)
-        range_end = 4-entry_count%4
-        if range_end==4:
-            range_end=0
-        self.points["ZZZZZZZZZZZZZZZZ"] = [0 for x in range(range_end)] # adding some padding at the end of the file
-
-    def get_compressed(self):
-        def int_to_hex_digits(num):
-            hex_string = "{0:#0{1}x}".format(num,5)
-            return hex_string[2:]
-        character_list = ""
+    def get_compressed(self) -> str:
         keys = list(self.points.keys())
-        # keys.sort()
-        current_number_sum = 0
-        current_number_index = 0
-        compare_list = []
-        for k in keys:
-            for i in range(len(self.points[k])):
-                current_number = self.points[k][i]
-                compare_list.append(current_number)
-                if current_number_index==0:
-                    current_number_sum=(current_number<<9)
-                elif current_number_index==1:
-                    current_number_sum+=(current_number<<6)
-                elif current_number_index==2:
-                    current_number_sum+=(current_number<<3)
-                elif current_number_index==3:
-                    current_number_sum+=current_number
-                    character_list+=int_to_hex_digits(current_number_sum)
-                    current_number_sum=0
-                current_number_index = (current_number_index + 1)%4
-        threshold_characters=""
+
+        threshold_characters = ''
         for p in self.point_thresholds:
-            threshold_characters+=str(p)
-        return threshold_characters+character_list
+            threshold_characters += str(p)
 
-    def set_uncompressed(self,compressed_string):
-        for p in range(len(self.point_thresholds)):
-            self.set_point_threshold(p,int(compressed_string[p]))
-        compressed_string = compressed_string[18:]
-
-        def hex_digits_to_ints(char1,char2,char3):
-            full_string = "0x"+char1+char2+char3
-            full_int = int(full_string,16)
-            #chop into the 4 ints
-            int1 = full_int>>9
-            int2 = (full_int&511)>>6
-            int3 = (full_int&63)>>3
-            int4 = (full_int&7)
-            return [int1,int2,int3,int4]
-        keys = list(self.points.keys())
-        # keys.sort()
-        current_group_index = 0
-        current_number_group = None
-        current_number_index = 0
-        compare_list = []
+        points_characters = ''
         for k in keys:
             for i in range(len(self.points[k])):
-                if current_number_index==0:
-                    current_string = compressed_string[current_group_index*3:current_group_index*3+3]
-                    current_group_index+=1
-                    current_number_group = hex_digits_to_ints(current_string[0],current_string[1],current_string[2])
-                self.points[k][i] = current_number_group[current_number_index]
-                compare_list.append(self.points[k][i])
-                current_number_index = (current_number_index + 1)%4
+                points_characters += str(self.points[k][i])
+
+        threshold_result = encoding.v2r(int(threshold_characters))
+        points_result = encoding.v2r(int(points_characters))
+        result = threshold_result + '+' + points_result
+
+        return result
+
+    def set_uncompressed(self, compressed_string: str):
+        keys = list(self.points.keys())
+
+        split_strings = compressed_string.split('+')
+
+        threshold_count = len(self.point_thresholds)
+        decoded_threshold = str(encoding.r2v(split_strings[0]))
+        threshold_characters = self._prepend_zeroes(decoded_threshold, expected_length=threshold_count)
+        for i in range(threshold_count):
+            self.set_point_threshold(i, int(threshold_characters[i]))
+
+        points_expected_length = 0
+        for k in keys:
+            points_expected_length = points_expected_length + len(self.points[k])
+        decoded_points = str(encoding.r2v(split_strings[1]))
+        points_characters = self._prepend_zeroes(decoded_points, expected_length=points_expected_length)
+
+        current_index = 0
+        for k in keys:
+            location_points: list[int] = self.points[k]
+            for i in range(len(location_points)):
+                location_points[i] = int(points_characters[current_index])
+                current_index += 1
+
         return True
 
     def get_point_threshold(self,index):
@@ -167,3 +143,8 @@ class ProgressionPoints():
             if l in self.points:
                 output[self.gen_to_tracker_location_map[l]] = self.points[l]
         return output
+
+    @staticmethod
+    def _prepend_zeroes(value: str, expected_length: int) -> str:
+        difference = expected_length - len(value)
+        return ('0' * difference) + value

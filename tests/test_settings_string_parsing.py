@@ -1,6 +1,6 @@
 import unittest
 
-from Class.seedSettings import Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect
+from Class.seedSettings import Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect, SeedSettings, _all_settings
 
 
 class Tests(unittest.TestCase):
@@ -65,6 +65,46 @@ class Tests(unittest.TestCase):
             setting.choice_keys,
             setting.parse_settings_string(setting.settings_string(setting.choice_keys))
         )
+
+    def test_full_string_toggles_all_true(self):
+        toggle_setting_names = []
+        for setting in _all_settings:
+            if isinstance(setting, Toggle):
+                toggle_setting_names.append(setting.name)
+
+        settings = SeedSettings()
+        for name in toggle_setting_names:
+            settings.set(name, True)
+
+        string = settings.settings_string(include_private=True)
+
+        for name in toggle_setting_names:
+            settings.set(name, False)
+
+        settings.apply_settings_string(string, include_private=True)
+
+        for name in toggle_setting_names:
+            self.assertTrue(settings.get(name), msg=name)
+
+    def test_full_string_toggles_all_false(self):
+        toggle_setting_names = []
+        for setting in _all_settings:
+            if isinstance(setting, Toggle):
+                toggle_setting_names.append(setting.name)
+
+        settings = SeedSettings()
+        for name in toggle_setting_names:
+            settings.set(name, False)
+
+        string = settings.settings_string(include_private=True)
+
+        for name in toggle_setting_names:
+            settings.set(name, True)
+
+        settings.apply_settings_string(string, include_private=True)
+
+        for name in toggle_setting_names:
+            self.assertFalse(settings.get(name), msg=name)
 
 
 if __name__ == '__main__':
