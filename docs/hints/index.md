@@ -144,7 +144,7 @@ These hints display a boss replacement in the current seed.
 
 For example, consider getting Report 8 in Land of Dragons as shown in the screenshot below.
 
-![Tracker with Boss Hint](hints/DA_example.png)
+![Tracker with Boss Hint](boss/DA_example.png)
 
 The report reveals the boss replacement "Scar became Roxas (Data)." This means that if you walked into Scar's arena, you would find that Data Roxas
 would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents.
@@ -153,7 +153,7 @@ INCLUDE GIF OF THIS HERE
 
 Another way to get these hints visualized is via the Battleship Tracker
 
-![Bingo Board with Boss Hint](hints/boss/roro_example.png)
+![Bingo Board with Boss Hint](boss/roro_example.png)
 
 ### Reports As Hints
 
