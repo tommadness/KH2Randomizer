@@ -137,6 +137,24 @@ In the screenshot above, 3 Important Checks were found in Land of Dragons but th
 with a combined value of 10 points. Additionally, a Magnet Element was found in Disney Castle, and since its number is
 now a blue zero, no more Important Checks are located there.
 
+## Boss
+
+These hints are primarily used for Boss Enemy randomizer modes such as (but not limited to) 1 Hour Challenge and Boss Enemy Bingo.
+These hints display a boss replacement in the current seed. 
+
+For example, consider getting Report 8 in Land of Dragons as shown in the screenshot below.
+
+![Tracker with Boss Hint](hints/DA_example.png)
+
+The report reveals the boss replacement "Scar became Roxas (Data)." This means that if you walked into Scar's arena, you would find that Data Roxas
+would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents.
+
+INCLUDE GIF OF THIS HERE
+
+Another way to get these hints visualized is via the Battleship Tracker
+
+![Bingo Board with Boss Hint](hints/boss/roro_example.png)
+
 ### Reports As Hints
 
 In this hint system, each Secret Ansem Report gives information on the location of a single Important Check.
