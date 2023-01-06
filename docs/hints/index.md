@@ -6,6 +6,7 @@ The randomizer community has come up with several hint systems.
     * [Hint logic](#hint-logic)
 * [Shananas](#shananas)
 * [Points](#points)
+* [Boss](#boss)
 * [Path Hints](#path-hints)
     * [Original Locations Cheatsheet](#original-locations-cheatsheet)
 * [Spoiler Hints](#spoiler-hints)
@@ -142,14 +143,13 @@ now a blue zero, no more Important Checks are located there.
 These hints are primarily used for Boss Enemy randomizer modes such as (but not limited to) 1 Hour Challenge and Boss Enemy Bingo.
 These hints display a boss replacement in the current seed. 
 
-For example, consider getting Report 8 in Land of Dragons as shown in the screenshot below.
+For example, consider getting Report 3 in Halloween Town as shown in the screenshot below.
 
 ![Tracker with Boss Hint](boss/DA_example.png)
 
-The report reveals the boss replacement "Scar became Roxas (Data)." This means that if you walked into Scar's arena, you would find that Data Roxas
-would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents.
+The report reveals the boss replacement "Armor(ed) Xemnas became Hostile Program." This means that if you walked into Armored Xemnas I's arena, you would find that Hostile Program would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents.
 
-INCLUDE GIF OF THIS HERE
+![Tracker Demonstration](boss/DA_animation.webvtt)
 
 Another way to get these hints visualized is via the Battleship Tracker
 
