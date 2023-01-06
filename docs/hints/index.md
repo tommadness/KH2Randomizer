@@ -149,7 +149,7 @@ For example, consider getting Report 3 in Halloween Town as shown in the screens
 
 The report reveals the boss replacement "Armor(ed) Xemnas became Hostile Program." This means that if you walked into Armored Xemnas I's arena, you would find that Hostile Program would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents.
 
-![DA_animation](https://user-images.githubusercontent.com/58533981/210922650-600b79a7-ead1-42af-a931-21e252b88a2a.gif)
+![DA_animation](https://user-images.githubusercontent.com/58533981/210922963-6b53aeef-fd8b-4266-8a6c-c2eb2068c56b.gif)
 
 Another way to get these hints visualized is via the Battleship Tracker
 
