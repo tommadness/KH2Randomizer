@@ -4,7 +4,7 @@ Agenda
 
 1. World Labels
 2. Check Labels
-3. Numbers Meaning
+3. Numbers Meaning (FOR BOTH TRACKER VERSIONS)
 4. Changing Image Styles
 5. Instructions
 
