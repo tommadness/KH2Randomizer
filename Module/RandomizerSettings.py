@@ -249,6 +249,8 @@ class RandomizerSettings():
         self.progression_hint_settings["HintCosts"] = prog_points.get_hint_thresholds(num_worlds)
         self.progression_hint_settings["WorldCompleteBonus"] = [self.progression_world_complete_bonus]
         self.progression_hint_settings["ReportBonus"] = [self.progression_report_bonus]
+        self.progression_hint_settings["FinalXemnasReveal"] = True
+
 
         self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)

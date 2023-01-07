@@ -166,7 +166,7 @@ class Hints:
                             proof_of_peace_world = world_of_location
                         elif item.ItemType is itemType.PROOF:
                             proof_of_nonexistence_world = world_of_location
-                    elif item.ItemType not in [itemType.REPORT, itemType.PROMISE_CHARM, itemType.OCSTONE, itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.MUNNY_POUCH]:
+                    elif item.ItemType not in [itemType.KEYITEM, itemType.REPORT, itemType.PROMISE_CHARM, itemType.OCSTONE, itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.MUNNY_POUCH]:
                         # this item could have come from any world from this list
                         for w in ICs_to_hintable_worlds[item.Id]:
                             if world_of_location in hintableWorlds:

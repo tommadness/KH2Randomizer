@@ -662,6 +662,16 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         '''),
         randomizable=True
     ),
+    Toggle(
+        name=settingkey.PROGRESSION_HINTS_REVEAL_END,
+        ui_label='Reveal All Hints When Done',
+        shared=True,
+        default=False,
+        tooltip=textwrap.dedent('''
+            Make all hints reveal themselves when you beat Final Xemnas.
+        '''),
+        randomizable=False
+    ),
     IntSpinner(
         name=settingkey.PROGRESSION_HINTS_REPORT_BONUS,
         ui_label="Progression Report Reward",
