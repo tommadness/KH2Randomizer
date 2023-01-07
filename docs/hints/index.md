@@ -145,17 +145,17 @@ These hints display a boss replacement in the current seed.
 
 For example, consider getting Report 3 in Halloween Town as shown in the screenshot below.
 
-<!-- ![Tracker with Boss Hint](boss/DA_example.png) -->
-
 <img src="boss/DA_example.png" width="480"/>
 
 The report reveals the boss replacement "Armor(ed) Xemnas became Hostile Program." This means that if you walked into Armored Xemnas I's arena, you would find that Hostile Program would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents. Note that if some of the bosses are absent from the card, so are their hints, so you may not actually see all 13 hints.
 
-![DA_animation](https://user-images.githubusercontent.com/58533981/210922963-6b53aeef-fd8b-4266-8a6c-c2eb2068c56b.gif)
+<img src="https://user-images.githubusercontent.com/58533981/210922963-6b53aeef-fd8b-4266-8a6c-c2eb2068c56b.gif" width="480"/>
+
+<!-- ![DA_animation](https://user-images.githubusercontent.com/58533981/210922963-6b53aeef-fd8b-4266-8a6c-c2eb2068c56b.gif) -->
 
 Another way to get these hints visualized is via the Battleship Tracker. Anytime you find a hint about a boss replacement, the arena in which you can find the boss will show up in the top right corner. So for example, because Hostile Program is in Armored Xemnas' I arena, a small Armored Xemnas image appears above Hostile Program.
 
-![Bingo Board with Boss Hint](boss/roro_example.png)
+<img src="boss/roro_example.png" width="480"/>
 
 ### Reports As Hints
 
