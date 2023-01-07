@@ -147,7 +147,7 @@ For example, consider getting Report 3 in Halloween Town as shown in the screens
 
 <!-- ![Tracker with Boss Hint](boss/DA_example.png) -->
 
-<img src="boss/DA_example.png" width="325"/>
+<img src="boss/DA_example.png" width="425"/>
 
 The report reveals the boss replacement "Armor(ed) Xemnas became Hostile Program." This means that if you walked into Armored Xemnas I's arena, you would find that Hostile Program would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents. Note that if some of the bosses are absent from the card, so are their hints, so you may not actually see all 13 hints.
 
