@@ -27,17 +27,17 @@ Checks found
 
 Note that while all the possible important checks are included in the image above, not all of them show up in various settings. For example, anti-form, munny pouches, Olympus Stone, Hades Cup, Unknown Disk, and Promise Charm are frequently omitted from seed settings. Additionally, the visit unlocks are not always turned on for certain settings. When turned on, you must find the world specific party member weapon to progress onwards to the second visit of each world. For example, to progress further than the Hydra fight in Olympus Coliseum, you must find Auron's weapon - Battlefields of War - to contine onwards. When these visit unlocking items are off, you are free to go wherever you please and those checks will disappear from the tracker. 
 
-3. Numbers Meaning
-
 4. Changing Image Styles
 
 The tracker comes decked out with many styling features. These features do not change how the tracker functions at all, but does change the layout and visuals.
 
 5. Instructions
 
+To use the KH2 Tracker, open the tracker by clicking on the KhTracker exe file you downloaded from here (include link). Once the tracker loads, go to "Options > Load Hints" and select the appropriate hints extension (most likely Kh2 Randomizer seed). Select the appropriate file once the file explorer window opens (most likely the randoseed zip you just generated)
+
 ## Novelty Tracker
 
-The randomizer community has found several new ways to enjoy the randomizer that calls for a new
+The randomizer community has found several new ways to enjoy the randomizer that calls for some novelty trackers. At the moment, the only documented one is the Battleship Tracker though others may arise in the future. The 
 2. Battleship
 3. Boss Enemy
 4. Instructions
