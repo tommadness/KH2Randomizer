@@ -29,8 +29,6 @@ Note that while all the possible important checks are included in the image abov
 
 The tracker comes decked out with many styling features. These features do not change how the tracker functions at all, but does change the layout and visuals.
 
-5. Instructions
-
 ## Novelty Tracker
 
 The randomizer community has found several new ways to enjoy the randomizer that calls for a new
