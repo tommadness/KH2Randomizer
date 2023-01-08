@@ -1,9 +1,9 @@
 The randomizer community has the primary tracker as well as some novelty ones for other game modes.
 
 * [KhTracker](#KHTracker)
-    * [Instructions](#KHTracker-instructions)
+    * [Instructions](#Instructions)
 * [Battleship Tracker](#Battleship)
-    * [Instructions](#Battleship-instructions)
+    * [Instructions](#Iinstructions)
 
 ## KHTracker
 
@@ -31,7 +31,7 @@ Note that while all the possible important checks are included in the image abov
 
 The tracker comes decked out with many styling features. These features do not change how the tracker functions at all, but does change the layout and visuals.
 
-5. Instructions
+ ## Instructions
 
 To use the KH2 Tracker, open the tracker by clicking on the KhTracker exe file you downloaded from here (include link). Once the tracker loads, go to "Options > Load Hints" and select the appropriate hints extension (most likely Kh2 Randomizer seed). Select the appropriate file once the file explorer window opens (most likely the randoseed zip you just generated)
 
