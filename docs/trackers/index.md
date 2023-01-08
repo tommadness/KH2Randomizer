@@ -2,7 +2,7 @@ The randomizer community has the primary tracker as well as some novelty ones fo
 
 * [KhTracker](#KHTracker)
     * [Instructions](#Instructions)
-* [Battleship Tracker](#Battleship Tracker)
+* [Battleship Tracker](#BattleshipTracker)
     * [Instructions](#Instructions)
 
 # KHTracker
