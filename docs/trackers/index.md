@@ -9,17 +9,17 @@ The randomizer community has the primary tracker as well as some novelty ones fo
 
 When playing the randomizer, it can be helpful to see everything you collect, what worlds you found the checks in, and your in-game stats. 
 
-![Annotated Tracker](static/annotated_tracker.png)
+<img src="static/annotated_tracker.png" width="480">
 
 ### World Labels
 
 The tracker displays all of the worlds that you may encounter while playing the randomizer. The image below showcases all of the locations where checks may potentially be found and their commonplace shorthand. The shorthand is included because many times streamers may say "I'm going to OC" instead of "I'm going to Olympus Coliseum."
 
-![Worlds](static/world_labels.png)
+<img src="static/world_labels.png" width="480">
 
 Now that all of the locations are known, it is important to know you will not always encounter a location when playing a seed. For example, Atlantica and Puzzles & Synthesis are rarely included in any seed. In the randomizer generator, one can remove any worlds from the check pool, meaning that those worlds would not contain any important checks. The tracker will have access to this information when you load a seed in and remove those worlds from the tracker layout. So, for example, the image below showcases what the tracker looks like when I only want Disney worlds in the pool.
 
-![Filtered Tracker](static/filtered_tracker.png)
+<img src="static/filtered_tracker.png" width="480">
 
 ### Check Labels
 
