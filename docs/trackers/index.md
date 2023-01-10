@@ -7,9 +7,10 @@ The randomizer community has the primary tracker as well as some novelty ones fo
 
 # KHTracker
 
-When playing the randomizer, it can be helpful to see everything you collect, what worlds you found the checks in, and your in-game stats. 
+When playing the randomizer, it can be helpful to see everything you collect, what worlds you found the checks in, and your in-game stats. Everything that the tracker can display is annotated in the image below and will be referenced throughout the remainder of this page. 
 
 <img src="static/annotated_tracker.png" width="600">
+Note: The exact layout and check inclusions are subject to change from version to version.
 
 ### World Labels
 
@@ -23,7 +24,7 @@ Now that all of the locations are known, it is important to know you will not al
 
 ### Check Labels
 
-The 
+The section of the tracker beneatht the worlds where all the checks are located are called _important checks_. These are checks that will track on the tracker to the appropriate world once you collect it in game.
 
 Note that while all the possible important checks are included in the image above, not all of them show up in various settings. For example, anti-form, munny pouches, Olympus Stone, Hades Cup, Unknown Disk, and Promise Charm are frequently omitted from seed settings. Additionally, the visit unlocks are not always turned on for certain settings. When turned on, you must find the world specific party member weapon to progress onwards to the second visit of each world. For example, to progress further than the Hydra fight in Olympus Coliseum, you must find Auron's weapon - Battlefields of War - to contine onwards. When these visit unlocking items are off, you are free to go wherever you please and those checks will disappear from the tracker. 
 
@@ -33,11 +34,13 @@ The tracker comes decked out with many styling features. These features do not c
 
 ### Instructions
 
-To use the KH2 Tracker, open the tracker by clicking on the KhTracker exe file you downloaded from here (include link). Once the tracker loads, go to "Options > Load Hints" and select the appropriate hints extension (most likely Kh2 Randomizer seed). Select the appropriate file once the file explorer window opens (most likely the randoseed zip you just generated)
+The tracker can be downloaded from ![here](https://github.com/Dee-Ayy/KH2Tracker/releases) if you do not have it already. Scroll to the version you want to download and download the ".exe" file only. In the event your computer tries to protect you from the file, select "More Info" and then "Run anyway."
+
+To use the KH2 Tracker, open the tracker by clicking on the KhTracker exe file. Once the tracker loads, go to "Options > Load Hints" and select the appropriate hints extension (most likely Kh2 Randomizer seed). Select the appropriate file once the file explorer window opens (most likely the randoseed zip you just generated). Once the seed is loaded in, launch KH2. It's good practice to confirm that the seed hash displayed in the start game menu matches the seed hash displayed on the tracker once the seed is loaded in. After this, go to "Options" > "Start [Method] Tracking" where [Method] is the version (PCSX2/PC Port) of KH2 you are playing on. Make sure the tracker confirms that the autotracking has started. You'll be able to tell because the PCSX2 icon showed up 
 
 # Battleship Tracker
 
-The randomizer community has found several new ways to enjoy the randomizer that calls for some novelty trackers. At the moment, the only documented one is the Battleship Tracker though others may arise in the future. The 
+The randomizer community has found several new ways to enjoy the randomizer that calls for some novelty trackers. At the moment, the only documented one is the Battleship Tracker though others may arise in the future. The Battleship tracker can be used to play custom game modes such as (but not limited to) Battleships, Boss Enemy Bingo, and Hitlist. 
 2. Battleship
 3. Boss Enemy
 4. Instructions
