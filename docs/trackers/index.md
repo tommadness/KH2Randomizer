@@ -9,7 +9,7 @@ The randomizer community has the primary tracker as well as some novelty ones fo
 
 When playing the randomizer, it can be helpful to see everything you collect, what worlds you found the checks in, and your in-game stats. 
 
-<img src="static/annotated_tracker.png" width="480">
+<img src="static/annotated_tracker.png" width="600">
 
 ### World Labels
 
