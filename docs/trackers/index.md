@@ -36,7 +36,9 @@ The tracker comes decked out with many styling features. These features do not c
 
 The tracker can be downloaded from ![here](https://github.com/Dee-Ayy/KH2Tracker/releases) if you do not have it already. Scroll to the version you want to download and download the ".exe" file only. In the event your computer tries to protect you from the file, select "More Info" and then "Run anyway."
 
-To use the KH2 Tracker, open the tracker by clicking on the KhTracker exe file. Once the tracker loads, go to "Options > Load Hints" and select the appropriate hints extension (most likely Kh2 Randomizer seed). Select the appropriate file once the file explorer window opens (most likely the randoseed zip you just generated). Once the seed is loaded in, launch KH2. It's good practice to confirm that the seed hash displayed in the start game menu matches the seed hash displayed on the tracker once the seed is loaded in. After this, go to "Options" > "Start [Method] Tracking" where [Method] is the version (PCSX2/PC Port) of KH2 you are playing on. Make sure the tracker confirms that the autotracking has started. You'll be able to tell because the PCSX2 icon showed up 
+To use the KH2 Tracker, open the tracker by clicking on the KhTracker exe file. Once the tracker loads, go to "Options > Load Hints" and select the appropriate hints extension (most likely Kh2 Randomizer seed). Select the appropriate file once the file explorer window opens (most likely the randoseed zip you just generated). Once the seed is loaded in, launch KH2. It's good practice to confirm that the seed hash displayed in the start game menu matches the seed hash displayed on the tracker once the seed is loaded in. After this, go to "Options" > "Start [Method] Tracking" where [Method] is the version (PCSX2/PC Port) of KH2 you are playing on. Make sure the tracker confirms that the autotracking has started. You will be able to tell because either the PCSX2 or PC icon (in green) will show up. Now you're good to start a seed!
+
+#### Saving and Loading Seeds
 
 # Battleship Tracker
 
