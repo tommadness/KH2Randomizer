@@ -7,6 +7,7 @@ The randomizer community has the primary tracker as well as some novelty ones fo
     * [Bingo Instructions](#Instructions)
     * [Boss Enemy Instructions](#Instructions)
     * [Maze Mode Instructions](#Instructions)
+    * [Hit List Instructions](#Instructions)
 
 # KHTracker
 
