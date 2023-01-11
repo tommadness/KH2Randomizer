@@ -265,6 +265,8 @@ class RandomizerSettings():
             self.spoiler_hint_values.append(self.revealMode)
             if self.revealMode == "bossreports" and ui_settings.get("boss")=="Disabled":
                 raise SettingsException("Can't use report hint bosses option without boss randomization.")
+        if self.hintsType=="Spoiler" and self.revealMode == 'Disabled' and self.progression_hints:
+            raise SettingsException("Can't use progression hints with full spoiler hints")
 
         self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)
 
@@ -276,6 +278,8 @@ class RandomizerSettings():
         self.tracker_includes.append(level_setting)
         if self.roxas_abilities_enabled:
             self.tracker_includes.append("better_stt")
+        if self.as_data_split:
+            self.tracker_includes.append("Data Split")
         if len(ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)) < 11:
             self.tracker_includes.append("visit_locking")
         if ui_settings.get(settingkey.STARTING_REPORTS)==13:
