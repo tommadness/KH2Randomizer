@@ -3,7 +3,10 @@ The randomizer community has the primary tracker as well as some novelty ones fo
 * [KhTracker](#KHTracker)
     * [Instructions](#Instructions)
 * [Battleship Tracker](#Battleship-Tracker)
-    * [Instructions](#Instructions)
+    * [Battleship Instructions](#Instructions)
+    * [Bingo Instructions](#Instructions)
+    * [Boss Enemy Instructions](#Instructions)
+    * [Maze Mode Instructions](#Instructions)
 
 # KHTracker
 
