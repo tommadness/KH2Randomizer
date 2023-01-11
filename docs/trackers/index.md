@@ -40,11 +40,16 @@ To use the KH2 Tracker, open the tracker by clicking on the KhTracker exe file. 
 
 #### Saving and Loading Seeds
 
-In the event you want to save your randomizer progress to continue it at a later time, go to "Options" > "Save Current Progress" and save the resulting ".txt" file in a location you'll remember. Later on, to load it back into the tracker, go to "Options" > "Load Tracker Progress." If you have not done a new randomizer seed since saving, you can use the (INCLUDE LINK) autosave mode to load back into your seed. Otherwise, make sure to make a hard save in KH2 before closing out your randomizer.
+In the event you want to save your randomizer progress to continue it at a later time, go to "Options" > "Save Current Progress" and save the resulting ".txt" file in a location you'll remember. Later on, to load it back into the tracker, go to "Options" > "Load Tracker Progress." If you have not done a new randomizer seed since saving, you can use the autosave mod to load back into your seed. Otherwise, make sure to make a hard save in KH2 before closing out your randomizer.
 
 # Battleship Tracker
 
 The randomizer community has found several new ways to enjoy the randomizer that calls for some novelty trackers. At the moment, the only documented one is the Battleship Tracker though others may arise in the future. The Battleship tracker can be used to play custom game modes such as (but not limited to) Battleships, Boss Enemy Bingo, and Hitlist. 
-2. Battleship
-3. Boss Enemy
-4. Instructions
+
+### Instructions for Battleship
+
+### Instructions for Bingo
+
+### Instructions for Boss Enemy
+
+### Instructions for Maze Mode
