@@ -219,8 +219,15 @@ class SeedZip():
                     return True
                 if settings.enemy_options.get("retry_dark_thorn", False):
                     return True
+                if settings.enemy_options.get("costume_rando", False):
+                    return True
+                if settings.enemy_options.get("party_rando", False):
+                    return True
                 if not settings.enemy_options.get("remove_cutscenes", False) in [False, "Disabled"]:
                     return True
+                if not settings.enemy_options.get("revenge_limit_rando", False) in [False, "Vanilla"]:
+                    return True
+                
                 return False
 
             enemySpoilers = None

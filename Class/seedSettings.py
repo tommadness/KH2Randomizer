@@ -1375,7 +1375,26 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Defeating enemies while in an OC Cup will give you XP and Form XP'
     ),
-
+    SingleSelect(
+        name=settingkey.REVENGE_LIMIT_RANDO,
+        ui_label='Randomize Revenge Limit Maximum (Beta)',
+        shared=True,
+        choices={
+            'Vanilla': 'Vanilla',
+            'Set 0': 'Set 0',
+            'Set Infinity': 'Set Infinity',
+            'Maximum': 'Random Values'
+        },
+        default='Vanilla',
+        tooltip='Randomizes the revenge value limit of each enemy/boss in the game. Can be either set to 0, set to basically infinity, randomly swapped, or set to a random value between 0 and 200'
+    ),
+    Toggle(
+        name=settingkey.PARTY_MEMBER_RANDO,
+        ui_label='Randomize World Party Members (Beta)',
+        shared=True,
+        default=False,
+        tooltip='Randomizes the World Character party member in each world.'
+    ),
     Toggle(
         name=settingkey.AS_DATA_SPLIT,
         ui_label='Split AS/Data Rewards',
@@ -1428,7 +1447,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
     SingleSelect(
         name=settingkey.REMOVE_CUTSCENES,
-        ui_label='Remove Most Cutscenes',
+        ui_label='Remove Most Cutscenes (Beta)',
         shared=True,
         choices={
             'Disabled': 'Disabled',
@@ -1438,6 +1457,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         default='Disabled',
         tooltip='Removes as many cutscenes from the game as possible. 3 different levels. 1 - Minimal: Remove as many cutscenes as possible without causing side effects. 2 - Non-Reward: Also remove cutscenes prior to forced fights, which causes the "continue" on game over to force you back into the fight (can be worked around using the auto-save mod). 3 - Maximum: Also remove cutscenes prior to receiving popup rewards, which causes the popops to not appear (you still get the reward, and it still shows up on the tracker).'
+    ),
+    Toggle(
+        name=settingkey.COSTUME_RANDO,
+        ui_label='Randomize Character Costumes (Beta)',
+        shared=False,
+        default=False,
+        tooltip='Randomizes the different costumes that Sora/Donald/Goofy switch between in the different worlds (IE Space Paranoids could now be default sora, while anywhere default sora is used could be Christmas Town Sora.'
     ),
     Toggle(
         name=settingkey.FAST_URNS,

@@ -164,7 +164,10 @@ class RandomizerSettings():
                               'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
                               'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
                               'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN),
-                              'remove_cutscenes': ui_settings.get(settingkey.REMOVE_CUTSCENES)}
+                              'remove_cutscenes': ui_settings.get(settingkey.REMOVE_CUTSCENES),
+                              'party_member_rando': ui_settings.get(settingkey.PARTY_MEMBER_RANDO),
+                              'costume_rando': ui_settings.get(settingkey.COSTUME_RANDO),
+                              'revenge_limit_rando': ui_settings.get(settingkey.REVENGE_LIMIT_RANDO)}
         for setting in seedSettings.boss_settings + seedSettings.enemy_settings:
             value = ui_settings.get(setting.name)
             if value is not None:
