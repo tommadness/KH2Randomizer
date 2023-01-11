@@ -71,7 +71,7 @@ class Hints:
         hintsText['hintsType'] = hintsType
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues
-        hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
+        hintableWorlds = [locationType.Critical, locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
         # All hints do the Shananas thing except JSmartee
         if hintsType != "JSmartee":
@@ -86,7 +86,7 @@ class Hints:
                     if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
                     if not world_of_location in hintsText['world']:
-                        raise HintException("Something is going wrong with initializing hintText worlds")
+                        raise HintException(f"Something is going wrong with initializing hintText worlds {world_of_location} {hintsText['world']}")
                         # hintsText['world'][world_of_location] = []
                     hintsText['world'][world_of_location].append(item.Name)
         
