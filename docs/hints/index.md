@@ -143,11 +143,11 @@ now a blue zero, no more Important Checks are located there.
 These hints are primarily used for Boss Enemy randomizer modes such as (but not limited to) 1 Hour Challenge and Boss Enemy Bingo.
 These hints display a boss replacement in the current seed. 
 
-For example, consider getting Report 3 in Halloween Town as shown in the screenshot below.
+For example, consider getting Report 3 in Halloween Town as shown in the image below.
 
 <img src="boss/DA_example.png" width="480"/>
 
-The report reveals the boss replacement "Armor(ed) Xemnas became Hostile Program." This means that if you walked into Armored Xemnas I's arena, you would find that Hostile Program would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents. Note that if some of the bosses are absent from the card, so are their hints, so you may not actually see all 13 hints.
+The report reveals the boss replacement "Armor(ed) Xemnas I became Hostile Program." This means that if you walked into Armored Xemnas I's arena, you would find that Hostile Program would be waiting there for you. Having 13 reports means that you get 13 boss enemy replacement hints. If you want to see a specific report's hint in DA's tracker, you can hover over it to reveals its contents. Note that if some of the bosses are absent from the card, so are their hints, so you may not actually see all 13 hints.
 
 <img src="https://user-images.githubusercontent.com/58533981/210922963-6b53aeef-fd8b-4266-8a6c-c2eb2068c56b.gif" width="480"/>
 
