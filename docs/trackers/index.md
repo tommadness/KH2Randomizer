@@ -30,7 +30,7 @@ Note that while all the possible important checks are included in the image abov
 
 ### Changing Image Styles
 
-The tracker comes decked out with many styling features. These features do not change how the tracker functions at all, but does change the layout and visuals.
+The tracker comes decked out with many styling features. These features do not change how the tracker functions at all, but does change the layout and visuals. Under "Image Visuals" you can change the world, progression, and check icon visuals to your liking.
 
 ### Instructions
 
