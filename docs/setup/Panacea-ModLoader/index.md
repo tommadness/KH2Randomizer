@@ -15,7 +15,7 @@
 1. Install .NET6 Runtime by running the `runtime-desktop-6.0.13-windows-x64-installer` executable you just downloaded
 2. Create a KH2 Rando folder somewhere on your PC (Recommended *not* to be in your games installation folder). This is where you will put all your randomizer tools
 3. Extract OpenKH to this folder 
-4. Extract the Seed Generator to this Folder
+4. Extract the Seed Generator to this Folder (Be sure to extract ALL files from the zip)
 	- It's recommended to give each app its own subfolder to make navigating their files easier (See screenshot)
 
 ![Rando Folder](../images/Panacea-ModLoader/KH2%20Rando%20Folder.png)
