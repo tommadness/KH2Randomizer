@@ -327,6 +327,8 @@ class Locations:
             vanilla_item = []
             if max_level in vanilla_levels and i in vanilla_levels[max_level]:
                 vanilla_item = [vanilla_levels[max_level][i]]
+            elif i in vanilla_levels[99]:
+                vanilla_item = [vanilla_levels[99][i]]
             current_location_list.append(KH2Location(i, level_description, locationCategory.LEVEL,[locationType.Level],VanillaItems=vanilla_item),)
             if i not in excludeLevels:
                 if double_level_reward:

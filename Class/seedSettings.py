@@ -581,7 +581,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         name=settingkey.STARTING_MOVEMENT,
         ui_label="Growth Ability Starting Level",
         choices={
-            'Disabled': 'Disabled',
+            'Disabled': 'None',
             '3Random': '3 Random',
             'Random': '5 Random',
             'Level_1': 'Level 1',
@@ -592,6 +592,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default='Level_1',
         tooltip=textwrap.dedent('''
+            None - No guaranteed starting growth.
             3 Random - Start with 3 individual growths at random.
             5 Random - Start with 5 individual growths at random.
             Level 1 - Start with level 1 of all growth abilities.

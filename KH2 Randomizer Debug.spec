@@ -22,6 +22,22 @@ def build_datas_recursive(paths):
   return datas
 
 
+def external_data_recursive(paths):
+  datas = []
+  
+  for path in paths:
+    for filename in glob.iglob(path, recursive=True):
+      dest_dirname = os.path.dirname(filename)
+      if dest_dirname == "":
+        dest_dirname = "."
+      else:
+        dest_dirname = dest_dirname.split("site-packages\\")[1]
+      
+      data_entry = (filename, dest_dirname)
+      datas.append(data_entry)
+      print(data_entry)
+  
+  return datas
 
 a = Analysis(
     ['localUI.py'],
@@ -44,8 +60,7 @@ a = Analysis(
         'static/*.json',
         'Module/icon.png',
         'extracted_data/**/*.*',
-        khbrpath+'/KH2/data/**/*.*'
-    ]),
+    ]) + external_data_recursive([khbrpath+"/**/*.*"]),
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
