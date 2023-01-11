@@ -43,8 +43,9 @@ a = Analysis(
         'static/*.bin',
         'static/*.json',
         'Module/icon.png',
-        'extracted_data/**/*.*'
-    ])+[(khbrpath+'/KH2/data/*','khbr/KH2/data'), (khbrpath+'/KH2/data/ai_mods/*','khbr/KH2/data/ai_mods')],
+        'extracted_data/**/*.*',
+        khbrpath+'/KH2/data/**/*.*'
+    ]),
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
