@@ -18,6 +18,7 @@ class CosmeticsMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.COMMAND_MENU)
+        self.add_option(settingkey.COSTUME_RANDO)
         self.end_group('Visuals')
         self.end_column()
 
