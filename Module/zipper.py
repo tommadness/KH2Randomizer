@@ -79,6 +79,26 @@ class DropRates():
         self.item3 = bytes_to_number(bytes[20],bytes[21])
         self.item3_chance = bytes_to_number(bytes[22],bytes[23])
 
+    def to_yaml(self):
+        data = {}
+        data["Id"] = self.id
+        data["SmallHpOrbs"] = self.small_hp
+        data["BigHpOrbs"] = self.big_hp
+        data["BigMoneyOrbs"] = self.big_munny
+        data["MediumMoneyOrbs"] = self.medium_munny
+        data["SmallMoneyOrbs"] = self.small_munny
+        data["SmallMpOrbs"] = self.small_mp
+        data["BigMpOrbs"] = self.big_mp
+        data["SmallDriveOrbs"] = self.small_drive
+        data["BigDriveOrbs"] = self.big_drive
+        data["Item1"] = self.item1
+        data["Item1Percentage"] = self.item1_chance
+        data["Item2"] = self.item2
+        data["Item2Percentage"] = self.item2_chance
+        data["Item3"] = self.item3
+        data["Item3Percentage"] = self.item3_chance
+        return data
+
     def write(self,binary_data):
         id_bytes = number_to_bytes(self.id)
         binary_data[self.offset] = id_bytes[0]
@@ -478,7 +498,7 @@ class SeedZip():
         if global_jackpot>0 or global_lucky_lucky>0 or fast_urns or rich_enemies or near_unlimited_mp:
             for x in mod["assets"]:
                 if x["name"]=="00battle.bin":
-                    x["source"].append(modYml.getDropMod())
+                    x["source"].append(modYml.getDropModList())
             all_drops = {}
             testing = []
             with open(resource_path("static/drops.bin"), "rb") as dropsbar:
@@ -497,27 +517,35 @@ class SeedZip():
             stt_enemies = [119,120,121,130,145]
             struggles = [122,131,132]
 
+            modded_ids = []
+
             if rich_enemies: 
                 for drop in all_drops.values():
                     if drop.id in spawnable_enemy_ids:
+                        modded_ids.append(drop.id)
                         drop.medium_munny = max(drop.medium_munny,2)
                         drop.small_munny = max(drop.small_munny,2)
             if near_unlimited_mp: 
                 for drop in all_drops.values():
                     if drop.id in spawnable_enemy_ids:
+                        modded_ids.append(drop.id)
                         drop.big_mp = max(drop.big_mp,5)
                         drop.small_mp = max(drop.small_mp,5)
 
             if global_lucky_lucky > 0: 
                 for drop in all_drops.values():
                     if drop.item1 != 0:
+                        modded_ids.append(drop.id)
                         drop.item1_chance = min(drop.item1_chance + (drop.item1_chance//2)*global_lucky_lucky,100)
                     if drop.item2 != 0:
+                        modded_ids.append(drop.id)
                         drop.item2_chance = min(drop.item2_chance + (drop.item2_chance//2)*global_lucky_lucky,100)
                     if drop.item3 != 0:
+                        modded_ids.append(drop.id)
                         drop.item3_chance = min(drop.item3_chance + (drop.item3_chance//2)*global_lucky_lucky,100)
             if global_jackpot > 0: 
                 for drop in all_drops.values():
+                    modded_ids.append(drop.id)
                     drop.small_hp = min(drop.small_hp + (drop.small_hp//2)*global_jackpot,64)
                     drop.big_hp = min(drop.big_hp + (drop.big_hp//2)*global_jackpot,64)
                     drop.big_munny = min(drop.big_munny + (drop.big_munny//2)*global_jackpot,64)
@@ -530,15 +558,21 @@ class SeedZip():
 
             if fast_urns:
                 for u in urn_ids:
+                    modded_ids.append(u)
                     all_drops[u].big_hp = 64
 
+            modded_drops_data = []
+            for drop in all_drops.values():
+                if drop.id in modded_ids:
+                    modded_drops_data.append(drop.to_yaml())
 
             # write changes
-            with open(resource_path("static/drops.bin"), "rb") as dropsbar:
-                binaryContent = bytearray(dropsbar.read())
-                for drop in all_drops:
-                    all_drops[drop].write(binaryContent)
-                outZip.writestr("modified_drops.bin",binaryContent)
+            outZip.writestr("przt.yml", yaml.dump(modded_drops_data, line_break="\r\n"))
+            # with open(resource_path("static/drops.bin"), "rb") as dropsbar:
+            #     binaryContent = bytearray(dropsbar.read())
+            #     for drop in all_drops:
+            #         all_drops[drop].write(binaryContent)
+            #     outZip.writestr("modified_drops.bin",binaryContent)
 
     def createShopRandoAssets(self, settings, randomizer, mod, outZip, sys):
         if len(randomizer.shop_items)>0:

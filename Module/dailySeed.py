@@ -72,6 +72,8 @@ def enableBossEnemy(settings: SeedSettings):
 def modifyShutOut(daily: DailyModifier):
     X = 3
     choices = [
+            locationType.Level,
+            locationType.FormLevel,
             locationType.STT,
             locationType.TT,
             locationType.HB,
