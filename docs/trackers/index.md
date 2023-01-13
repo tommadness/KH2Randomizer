@@ -7,7 +7,7 @@ The randomizer community has the primary tracker as well as some novelty ones fo
     * [Bingo Instructions](#Instructions)
     * [Boss Enemy Instructions](#Instructions)
     * [Maze Mode Instructions](#Instructions)
-    * [Hit List Instructions](#Instructions)
+    * [Hitlist Instructions](#Instructions)
 
 # KHTracker
 
@@ -48,7 +48,7 @@ In the event you want to save your randomizer progress to continue it at a later
 
 # Battleship Tracker
 
-The randomizer community has found several new ways to enjoy the randomizer that calls for some novelty trackers. At the moment, the only documented one is the Battleship Tracker though others may arise in the future. The Battleship tracker can be used to play custom game modes such as (but not limited to) Battleships, Boss Enemy Bingo, and Hitlist. 
+The randomizer community has found several new ways to enjoy the randomizer that calls for some novelty trackers. At the moment, the only documented one is the Battleship Tracker though others may arise in the future. The Battleship tracker can be used to play custom game modes such as (but not limited to) Battleships, Boss Enemy Bingo, and Hitlist. The tracker can be found and installed ![here](https://github.com/roromaniac/KH2FM-Rando-Battleship/releases). Unless you want to playtest the newest version of the tracker, it is recommended you utilize the latest stable release.
 
 ### Instructions for Battleship
 
@@ -57,3 +57,9 @@ The randomizer community has found several new ways to enjoy the randomizer that
 ### Instructions for Boss Enemy
 
 ### Instructions for Maze Mode
+
+### Instructions for Hitlist
+
+To generate a hitlist seed, open the tracker and navigate to "Actions" > "Load Preset". An explorer window should open up in your presets folder. Select "hitlist.txt". For your first time loading in the preset, the tracker will not change size and the images may appear stretched. Resize the tracker window so that the images are of the appropriate size; resizing the tracker window will save the tracker size and position for each particular preset, so your hitlist tracker will default to the new position and sizing the next time you elect to play hitlist. 
+
+As of (1/13/2023), the tracker does not support autotracking for hitlist, though it _is currently in development_. **Do not use autotracking with hitlist** because the tracker will not prevent you from doing so. However, it will track all the non-data versions of boss fights because the autotracker at the moment does not distinguish between data and original versions of Organization XIII fights.
