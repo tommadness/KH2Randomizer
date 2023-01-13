@@ -455,7 +455,7 @@ class Randomizer():
             unlocks[locationType.PR] = [[62]]
             unlocks[locationType.Atlantica] = [[23,23,23],[87,87]]
 
-            second_visit_locking_items = [369,54,55,61,60,74,375,59,72,62]
+            second_visit_locking_items = [369,54,55,61,60,74,376,59,72,62]
 
             locking_items = []
             for loc_type in settings.enabledLocations:
@@ -473,7 +473,8 @@ class Randomizer():
                     locking_items.remove([i])
 
             if not settings.chainLogicIncludeTerra:
-                locking_items.remove([593])
+                if [593] in locking_items:
+                    locking_items.remove([593])
 
             minimum_terra_depth = len(locking_items)-5 if settings.chainLogicTerraLate else 0
 
@@ -554,9 +555,11 @@ class Randomizer():
             if self.yeet_the_bear:
                 locking_items.append([32])
 
+            force_obtained = []
             if len(locking_items) > settings.chainLogicMinLength:
                 # keep the last parts of the chain
                 num_to_remove = len(locking_items) - settings.chainLogicMinLength;
+                force_obtained = locking_items[:num_to_remove]
                 locking_items = locking_items[num_to_remove:]
 
             locking_items.append([594]) # add the proof of nonexistence at the end of the chain
@@ -567,6 +570,8 @@ class Randomizer():
             validator.prep_req_list(settings,self)
 
             current_inventory = [] + settings.startingItems
+            for i in force_obtained:
+                current_inventory+=i
             if settings.reverse_rando:
                 current_inventory+=[94,95,96,98,99,100,102,103,104,106,107,108,564,565,566]
 
