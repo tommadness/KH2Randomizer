@@ -28,9 +28,9 @@ Now that all of the locations are known, it is important to know you will not al
 
 ### Check Labels
 
-The section of the tracker beneatht the worlds where all the checks are located are called _important checks_. These are checks that will track on the tracker to the appropriate world once you collect it in game.
+The section of the tracker beneath the worlds where all the checks are located are called _important checks_. These are checks that will track on the tracker to the appropriate world once you collect it in game.
 
-Note that while all the possible important checks are included in the image above, not all of them show up in various settings. For example, anti-form, munny pouches, Olympus Stone, Hades Cup, Unknown Disk, and Promise Charm are frequently omitted from seed settings. Additionally, the visit unlocks are not always turned on for certain settings. When turned on, you must find the world specific party member weapon to progress onwards to the second visit of each world. For example, to progress further than the Hydra fight in Olympus Coliseum, you must find Auron's weapon - Battlefields of War - to contine onwards. When these visit unlocking items are off, you are free to go wherever you please and those checks will disappear from the tracker. 
+Note that while all the possible important checks are included in the image above, not all of them show up in various settings. For example, anti-form, munny pouches, Olympus Stone, Hades Cup, Unknown Disk, and Promise Charm are frequently omitted from seed settings. Additionally, the visit unlocks are not always turned on for certain settings. When turned on, you must find the world specific party member weapon to progress onwards to the second visit of each world. For example, to progress further than the Hydra fight in Olympus Coliseum, you must find Auron's weapon - Battlefields of War - to continue onwards. When these visit unlocking items are off, you are free to go wherever you please and those checks will disappear from the tracker. 
 
 ### Changing Image Styles
 
