@@ -60,6 +60,8 @@ For any seeds that are generated with boss enemy randomization (One to One mode 
 
 ### Instructions for Maze Mode
 
+While this mode is still in beta, you can generate a maze out of the checks displayed on the tracker. To add a maze to the tracker simply navigate to "Customize" > "Maze Mode". This will generate a maze with the top left (border will be red) being the starting square and the bottom right (border will be green) being the ending square.
+
 ### Instructions for Hitlist
 
 To generate a hitlist seed, open the tracker and navigate to "Actions" > "Load Preset". An explorer window should open up in your presets folder. Select "hitlist.txt". For your first time loading in the preset, the tracker will not change size and the images may appear stretched. Resize the tracker window so that the images are of the appropriate size; resizing the tracker window will save the tracker size and position for each particular preset, so your hitlist tracker will default to the new position and sizing the next time you elect to play hitlist. 
