@@ -56,6 +56,8 @@ The randomizer community has found several new ways to enjoy the randomizer that
 
 ### Instructions for Boss Enemy
 
+For any seeds that are generated with boss enemy randomization (One to One mode only), the tracker can autotrack the replacement bosses. To make this happen, before you start your seed, go to "Actions" > "Load Boss Enemy Seed" and select your boss enemy rando seed. Ensure that you get a popup that confirms the boss replacements were successfully loaded. You may see a popup that warns you of a replacement known to crash the game. If this happens, it is recommended that you generate a new boss enemy seed, though nothing will prevent you from playing the seed anyways if you so choose.
+
 ### Instructions for Maze Mode
 
 ### Instructions for Hitlist
