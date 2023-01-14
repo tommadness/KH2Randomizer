@@ -138,10 +138,10 @@ class CosmeticsMod:
                             category_songs.append(relative_path)
                 result[child] = category_songs
         
-        default_music_path = cosmetics_mod_path.parent.parent / "data"
+        default_music_path = cosmetics_mod_path.parent.parent.parent / "data" / "kh2"
         if default_music_path.is_dir():
             for default_song in default_music_list:
-                relative_path = Path("../../data") / default_song["filename"]
+                relative_path = Path("../../../data/kh2") / default_song["filename"]
                 result[default_song["type"][0].lower()].append(relative_path)
         
 
