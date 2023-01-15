@@ -567,6 +567,8 @@ class Randomizer():
             if settings.nightmare:
                 locking_items[-1].append(29)
 
+            print(locking_items)
+
             validator.prep_req_list(settings,self)
 
             current_inventory = [] + settings.startingItems
@@ -583,11 +585,16 @@ class Randomizer():
                 accessible_locations_start = [l for l in validLocations if open_location(current_inventory,l)]
                 accessible_locations_new = [l for l in validLocations if open_location(current_inventory + items,l) and l not in accessible_locations_start]
                 accessible_locations.append(accessible_locations_new)
+                print(f"{items} unlocked {len(accessible_locations[-1])}")
                 current_inventory += items
             for iter,items in enumerate(locking_items):
                 accessible_locations_new = accessible_locations[iter]
+                if len(accessible_locations_new) == 0:
+                    raise GeneratorException("Chain logic created a situation where the chain item couldn't be placed")
                 for i in items:
                     #find item in item list
+                    if len(accessible_locations_new) == 0:
+                        break
                     
                     i_data_list = [it for it in allItems if it.Id==i]
                     if len(i_data_list)==0:
