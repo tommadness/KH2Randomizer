@@ -56,6 +56,18 @@ class CosmeticsMod:
             return None
 
     @staticmethod
+    def extracted_data_path() -> Optional[Path]:
+        """Returns the path to extracted kh2 data"""
+        openkh_path = CosmeticsMod.read_openkh_path()
+        with open(openkh_path / "mods-manager.yml", mode="r") as mod_manager_file:
+            mod_manager_yaml = yaml.safe_load(mod_manager_file)
+            extracted_data_path = Path(mod_manager_yaml["gameDataPath"])
+            if extracted_data_path.is_dir():
+                return extracted_data_path
+            else:
+                return None
+
+    @staticmethod
     def bootstrap_mod():
         """Creates any empty folders and default files needed for the cosmetics mod."""
         openkh_path = CosmeticsMod.read_openkh_path()
@@ -138,10 +150,10 @@ class CosmeticsMod:
                             category_songs.append(relative_path)
                 result[child] = category_songs
         
-        default_music_path = cosmetics_mod_path.parent.parent.parent / "data" / "kh2"
+        default_music_path = CosmeticsMod.extracted_data_path() / "kh2"
         if default_music_path.is_dir():
             for default_song in default_music_list:
-                relative_path = Path("../../../data/kh2") / default_song["filename"]
+                relative_path = default_music_path / default_song["filename"]
                 result[default_song["type"][0].lower()].append(relative_path)
         
 
