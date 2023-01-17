@@ -202,22 +202,22 @@ default_music_list = [
     {
         "filename": "bgm\\music106.win32.scd",
         "title": "Under the Sea (Japanese)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music107.win32.scd",
         "title": "Ursula's Revenge (Japanese)",
-        "type": ["Battle", "Battle", "Wild"]
+        "type": ["Atlantica", "Battle", "Wild"]
     },
     {
         "filename": "bgm\\music108.win32.scd",
         "title": "Part of Your World (Japanese)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music109.win32.scd",
         "title": "A New Day is Dawning (Japanese)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music110.win32.scd",
@@ -237,7 +237,7 @@ default_music_list = [
     {
         "filename": "bgm\\music113.win32.scd",
         "title": "Swim This Way (Japanese)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music114.win32.scd",
@@ -352,7 +352,7 @@ default_music_list = [
     {
         "filename": "bgm\\music140.win32.scd",
         "title": "Under the Sea (KH I)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music141.win32.scd",
@@ -482,27 +482,27 @@ default_music_list = [
     {
         "filename": "bgm\\music506.win32.scd",
         "title": "Under the Sea (English)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music507.win32.scd",
         "title": "Ursula's Revenge (English)",
-        "type": ["Battle", "Battle", "Wild"]
+        "type": ["Atlantica", "Battle", "Wild"]
     },
     {
         "filename": "bgm\\music508.win32.scd",
         "title": "Part of Your World (English)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music509.win32.scd",
         "title": "A New Day is Dawning (English)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music513.win32.scd",
         "title": "Swim This Way (English)",
-        "type": ["Field", "Field", "Wild"]
+        "type": ["Atlantica", "Field", "Wild"]
     },
     {
         "filename": "bgm\\music517.win32.scd",

@@ -81,7 +81,7 @@ class CosmeticsMod:
         # Create empty default music folders if needed
         if not music_path.is_dir():
             music_path.mkdir(parents=True)
-            for folder in ['battle', 'boss', 'cutscene', 'field', 'title', 'wild', 'your-own-category']:
+            for folder in ['battle', 'boss', 'cutscene', 'field', 'title', 'wild', 'atlantica', 'your-own-category']:
                 (music_path / folder).mkdir()
 
         # Create a default music config file if needed
