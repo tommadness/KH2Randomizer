@@ -38,16 +38,15 @@ class CosmeticsMenu(KH2Submenu):
                 self.pending_group.addWidget(button)
             else:
                 self.add_option(settingkey.MUSIC_RANDO_ENABLED_PC)
+                self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2)
                 self.add_option(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES)
 
                 music_summary = CosmeticsMod.get_music_summary()
                 if len(music_summary) == 0:
                     self.pending_group.addWidget(QLabel('(No Music Found)'))
                 else:
-                    label_text = 'Found Music\n'
-                    for category, count in music_summary.items():
-                        label_text += '{} : {}\n'.format(category, count)
-                    self.pending_group.addWidget(QLabel(label_text))
+                    self.music_count_text = QLabel(self._get_music_text())
+                    self.pending_group.addWidget(self.music_count_text)
 
         self.end_group('Music (PC Only)')
         self.end_column()
@@ -75,10 +74,26 @@ class CosmeticsMenu(KH2Submenu):
         self.end_column()
 
         self.finalizeMenu()
+        settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2, self._include_kh2_changed)
 
+        self._reload_music_text()
         self._reload_custom_list()
         add_button.clicked.connect(self._add_custom)
         remove_button.clicked.connect(self._remove_selected_custom)
+
+    def _include_kh2_changed(self):
+        CosmeticsMod.include_kh2_music = self.settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2)
+        self._reload_music_text()
+
+    def _reload_music_text(self):
+        self.music_count_text.setText(self._get_music_text())
+
+    def _get_music_text(self):
+        label_text = 'Found Music\n'
+        music_summary = CosmeticsMod.get_music_summary()
+        for category, count in music_summary.items():
+            label_text += '{} : {}\n'.format(category, count)
+        return label_text
 
     def _reload_custom_list(self):
         self.custom_list.clear()

@@ -1811,7 +1811,16 @@ If enabled, song replacements are used multiple times if there aren't enough rep
 If disabled, replacement songs are only used once, and some songs will stay un-randomized if there aren't enough
 replacements.
         """.strip())
-    )
+    ), 
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2,
+        ui_label='Include All KH2 Music',
+        shared=False,
+        default=False,
+        tooltip=textwrap.dedent("""
+If enabled, includes all the base kh2 songs in the song list for music rando.
+        """.strip())
+    ),
 ]
 
 

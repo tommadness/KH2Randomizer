@@ -43,6 +43,7 @@ class CustomCosmetics:
 
 
 class CosmeticsMod:
+    include_kh2_music = False
 
     @staticmethod
     def cosmetics_mod_path(openkh_path: Path, create_if_missing: bool) -> Optional[Path]:
@@ -150,11 +151,12 @@ class CosmeticsMod:
                             category_songs.append(relative_path)
                 result[child] = category_songs
         
-        default_music_path = CosmeticsMod.extracted_data_path() / "kh2"
-        if default_music_path.is_dir():
-            for default_song in default_music_list:
-                relative_path = default_music_path / default_song["filename"]
-                result[default_song["type"][0].lower()].append(relative_path)
+        if CosmeticsMod.include_kh2_music:
+            default_music_path = CosmeticsMod.extracted_data_path() / "kh2"
+            if default_music_path.is_dir():
+                for default_song in default_music_list:
+                    relative_path = default_music_path / default_song["filename"]
+                    result[default_song["type"][0].lower()].append(relative_path)
         
 
         return result
