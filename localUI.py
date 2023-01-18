@@ -1046,6 +1046,8 @@ if __name__=="__main__":
         window.resetSettings()
         pass
     window.show()
+    center = window.screen().geometry().center()
+    window.move(center.x() - window.width() / 2, center.y() - window.height() / 2)
     #commenting out first time setup for 2.999 version
     # configPath = Path("rando-config.yml")
     # if not configPath.is_file() or not os.environ.get("ALWAYS_SETUP") is None:
