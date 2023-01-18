@@ -1,3 +1,4 @@
+import os
 import textwrap
 
 from PySide6.QtWidgets import QListWidget, QHBoxLayout, QPushButton, QFileDialog, QLabel, QMessageBox
@@ -25,6 +26,8 @@ class CosmeticsMenu(KH2Submenu):
         self.start_column()
         self.start_group()
 
+        self.music_count_text = QLabel(self._get_music_text())
+
         openkh_path = CosmeticsMod.read_openkh_path()
         if openkh_path is None:
             label = QLabel('OpenKH folder not configured. Use\nthe option in the Configure menu.')
@@ -45,8 +48,11 @@ class CosmeticsMenu(KH2Submenu):
                 if len(music_summary) == 0:
                     self.pending_group.addWidget(QLabel('(No Music Found)'))
                 else:
-                    self.music_count_text = QLabel(self._get_music_text())
                     self.pending_group.addWidget(self.music_count_text)
+
+                open_mod_folder = QPushButton('Open mod folder')
+                open_mod_folder.clicked.connect(lambda: self._open_mod_folder(cosmetics_mod_path))
+                self.pending_group.addWidget(open_mod_folder)
 
         self.end_group('Music (PC Only)')
         self.end_column()
@@ -125,3 +131,6 @@ Please restart to the seed generator to apply changes.
         message = QMessageBox(text=text)
         message.setWindowTitle("KH2 Seed Generator")
         message.exec()
+
+    def _open_mod_folder(self, cosmetics_mod_path):
+        os.startfile(cosmetics_mod_path)
