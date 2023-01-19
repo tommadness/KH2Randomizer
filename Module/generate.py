@@ -20,7 +20,6 @@ def generateSeed(settings: RandomizerSettings,data):
             randomizer = Randomizer(settings)
             newSeedValidation.validateSeed(settings,randomizer)
             hints = Hints.generateHints(randomizer,settings)
-            CosmeticsMod.randomize_cosmetics(settings)
             zipper = SeedZip(settings,randomizer,hints,data)
             return zipper.outputZip, zipper.spoiler_log, zipper.enemy_log
         except RandomizerExceptions as e:

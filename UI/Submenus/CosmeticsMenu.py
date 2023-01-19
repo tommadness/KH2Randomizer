@@ -1,7 +1,7 @@
 import os
 import textwrap
 
-from PySide6.QtWidgets import QListWidget, QHBoxLayout, QPushButton, QFileDialog, QLabel, QMessageBox
+from PySide6.QtWidgets import QListWidget, QHBoxLayout, QPushButton, QFileDialog, QLabel
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
@@ -26,33 +26,21 @@ class CosmeticsMenu(KH2Submenu):
         self.start_column()
         self.start_group()
 
-        self.music_count_text = QLabel(self._get_music_text())
+        self.add_option(settingkey.MUSIC_RANDO_ENABLED_PC)
+        self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2)
+        self.add_option(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES)
 
-        openkh_path = CosmeticsMod.read_openkh_path()
-        if openkh_path is None:
-            label = QLabel('OpenKH folder not configured. Use\nthe option in the Configure menu.')
-            self.pending_group.addWidget(label)
-        else:
-            cosmetics_mod_path = CosmeticsMod.cosmetics_mod_path(openkh_path, create_if_missing=False)
-            if cosmetics_mod_path is None:
-                self.pending_group.addWidget(QLabel('Cosmetics mod not set up yet.'))
-                button = QPushButton('Set up now')
-                button.clicked.connect(self._set_up_mod)
-                self.pending_group.addWidget(button)
-            else:
-                self.add_option(settingkey.MUSIC_RANDO_ENABLED_PC)
-                self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2)
-                self.add_option(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES)
+        self.music_count_text = QLabel()
+        self.pending_group.addWidget(self.music_count_text)
 
-                music_summary = CosmeticsMod.get_music_summary()
-                if len(music_summary) == 0:
-                    self.pending_group.addWidget(QLabel('(No Music Found)'))
-                else:
-                    self.pending_group.addWidget(self.music_count_text)
+        self.no_custom_music = QLabel(
+            '\nCustom music folder not configured.\nUse the Configure menu to set up custom music.'
+        )
+        self.pending_group.addWidget(self.no_custom_music)
 
-                open_mod_folder = QPushButton('Open mod folder')
-                open_mod_folder.clicked.connect(lambda: self._open_mod_folder(cosmetics_mod_path))
-                self.pending_group.addWidget(open_mod_folder)
+        self.open_custom_music_folder = QPushButton('Open custom music folder')
+        self.open_custom_music_folder.clicked.connect(self._open_custom_music_folder)
+        self.pending_group.addWidget(self.open_custom_music_folder)
 
         self.end_group('Music (PC Only)')
         self.end_column()
@@ -82,24 +70,33 @@ class CosmeticsMenu(KH2Submenu):
         self.finalizeMenu()
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2, self._include_kh2_changed)
 
-        self._reload_music_text()
+        self.reload_music_widgets()
         self._reload_custom_list()
         add_button.clicked.connect(self._add_custom)
         remove_button.clicked.connect(self._remove_selected_custom)
 
     def _include_kh2_changed(self):
-        CosmeticsMod.include_kh2_music = self.settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2)
-        self._reload_music_text()
+        self.reload_music_widgets()
 
-    def _reload_music_text(self):
+    def reload_music_widgets(self):
+        _, include_kh2_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2]
+        include_kh2_widget.setEnabled(CosmeticsMod.extracted_data_path() is not None)
+
+        custom_music_configured = CosmeticsMod.read_custom_music_path() is not None
+        self.no_custom_music.setVisible(not custom_music_configured)
+        self.open_custom_music_folder.setVisible(custom_music_configured)
+
         self.music_count_text.setText(self._get_music_text())
 
     def _get_music_text(self):
-        label_text = 'Found Music\n'
-        music_summary = CosmeticsMod.get_music_summary()
-        for category, count in music_summary.items():
-            label_text += '{} : {}\n'.format(category, count)
-        return label_text
+        music_summary = CosmeticsMod.get_music_summary(self.settings)
+        if len(music_summary) == 0:
+            return 'No Music Found'
+        else:
+            label_text = 'Found Music\n'
+            for category, count in music_summary.items():
+                label_text += '{} : {}\n'.format(category, count)
+            return label_text
 
     def _reload_custom_list(self):
         self.custom_list.clear()
@@ -119,18 +116,7 @@ class CosmeticsMenu(KH2Submenu):
             self.custom_cosmetics.remove_at_index(index)
             self._reload_custom_list()
 
-    def _set_up_mod(self):
-        CosmeticsMod.bootstrap_mod()
-
-        text = textwrap.dedent("""
-Added "KH2 Randomizer Cosmetics" mod to OpenKH Mods Manager.
-Turn on this mod in Mods Manager to enable randomized cosmetics.
-
-Please restart to the seed generator to apply changes.
-        """).strip()
-        message = QMessageBox(text=text)
-        message.setWindowTitle("KH2 Seed Generator")
-        message.exec()
-
-    def _open_mod_folder(self, cosmetics_mod_path):
-        os.startfile(cosmetics_mod_path)
+    def _open_custom_music_folder(self):
+        custom_music_path = CosmeticsMod.read_custom_music_path()
+        if custom_music_path is not None:
+            os.startfile(custom_music_path)

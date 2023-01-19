@@ -17,6 +17,7 @@ from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
+from Module.cosmetics import CosmeticsMod
 from Module.hints import Hints
 from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe
@@ -344,8 +345,11 @@ class SeedZip():
                 if enemySpoilers and not tourney_gen:
                     outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
-
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
+
+            music_assets, music_replacements = CosmeticsMod.randomize_music(settings)
+            mod["assets"] += music_assets
+            self.write_music_replacements(music_replacements, outZip)
 
             outZip.write(resource_path("Module/icon.png"), "icon.png")
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
@@ -753,6 +757,14 @@ class SeedZip():
             #     binaryContent[start_index+i*12+9] = new_required_items[1]
 
             outZip.writestr("modified_synth_reqs.bin",binaryContent)
+
+    @staticmethod
+    def write_music_replacements(replacements: dict[str, str], outZip):
+        if len(replacements) > 0:
+            music_replacements_string = ''
+            for original, replacement in replacements.items():
+                music_replacements_string += '[{}] was replaced by [{}]\n'.format(original, replacement)
+            outZip.writestr('music-replacement-list.txt', music_replacements_string)
 
     def assignStartingItems(self, settings, randomizer):
         def padItems(itemList):
