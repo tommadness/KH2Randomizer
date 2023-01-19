@@ -238,7 +238,17 @@ class RandomizerSettings():
                                     "boss_terra":ui_settings.get(settingkey.POINTS_BOSS_TERRA),
                                     "boss_final":ui_settings.get(settingkey.POINTS_BOSS_FINAL),
                                     "boss_other":ui_settings.get(settingkey.POINTS_BOSS_NORMAL),
-                                    "deaths":ui_settings.get(settingkey.POINTS_DEATH)}
+                                    "deaths":ui_settings.get(settingkey.POINTS_DEATH),
+                                    "collection_magic":ui_settings.get(settingkey.POINTS_MAGIC_COLLECT),
+                                    "collection_page":ui_settings.get(settingkey.POINTS_PAGE_COLLECT),
+                                    "collection_pouches":ui_settings.get(settingkey.POINTS_POUCHES_COLLECT),
+                                    "collection_proof":ui_settings.get(settingkey.POINTS_PROOF_COLLECT),
+                                    "collection_form":ui_settings.get(settingkey.POINTS_FORM_COLLECT),
+                                    "collection_summon":ui_settings.get(settingkey.POINTS_SUMMON_COLLECT),
+                                    "collection_ability":ui_settings.get(settingkey.POINTS_ABILITY_COLLECT),
+                                    "collection_report":ui_settings.get(settingkey.POINTS_REPORT_COLLECT),
+                                    "collection_visit":ui_settings.get(settingkey.POINTS_VISIT_COLLECT),
+                                    }
 
         self.progression_hints = ui_settings.get(settingkey.PROGRESSION_HINTS)
         self.progression_world_complete_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)

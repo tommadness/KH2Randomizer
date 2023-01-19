@@ -72,7 +72,7 @@ class ProgressionPoints():
             locationType.OC:[ 0, 2, 0, 2, 0, 2, 2, 3, 3, 6 ],
             locationType.Agrabah:[ 0, 1, 1, 1, 2, 1, 3, 4, 6 ],
             locationType.LoD:[ 0, 1, 1, 1, 1, 2, 0, 3, 6 ],
-            locationType.HUNDREDAW:[ 0, 0, 1, 2, 2, 4 ],
+            locationType.HUNDREDAW:[ 0, 1, 1, 1, 2, 4 ],
             locationType.PL:[ 0, 1, 1, 2, 1, 3, 6 ],
             locationType.Atlantica:[  0, 5, 3 ],
             locationType.DC:[ 0, 1, 1, 2, 1, 2, 5, 6, 7 ],

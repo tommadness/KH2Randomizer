@@ -827,6 +827,88 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
     ),
 
     IntSpinner(
+        name=settingkey.POINTS_MAGIC_COLLECT,
+        ui_label="Magic Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_PAGE_COLLECT,
+        ui_label="Pages Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_POUCHES_COLLECT,
+        ui_label="Munny Pouch Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_PROOF_COLLECT,
+        ui_label="Proof Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_FORM_COLLECT,
+        ui_label="Form Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_SUMMON_COLLECT,
+        ui_label="Summon Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_ABILITY_COLLECT,
+        ui_label="Ability Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_REPORT_COLLECT,
+        ui_label="Report Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+    IntSpinner(
+        name=settingkey.POINTS_VISIT_COLLECT,
+        ui_label="Visit Lock Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+
+    IntSpinner(
         name=settingkey.POINTS_FORMLV,
         ui_label="Form Level",
         minimum=-10,
