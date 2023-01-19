@@ -1900,7 +1900,8 @@ replacements.
         shared=False,
         default=False,
         tooltip=textwrap.dedent("""
-If enabled, includes all the base kh2 songs in the song list for music rando.
+If enabled, includes all the base KH2 songs in the song list for music rando. Requires the OpenKH folder to be
+set up in the Configure menu.
         """.strip())
     ),
 ]

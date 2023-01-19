@@ -338,6 +338,8 @@ class KH2RandomizerApp(QMainWindow):
                     print('Unable to apply last settings - will use defaults')
                     pass
 
+        CosmeticsMod.bootstrap_music_list_file()
+
         random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator ({0})".format(LOCAL_UI_VERSION))
         self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
@@ -390,6 +392,8 @@ class KH2RandomizerApp(QMainWindow):
         # self.rando_rando.setCheckState(Qt.Unchecked)
         # seed_layout.addWidget(self.rando_rando)
 
+        self.cosmetics_menu = CosmeticsMenu(self.settings, self.custom_cosmetics)
+
         self.widgets = [
             RewardLocationsMenu(self.settings),
             SoraMenu(self.settings),
@@ -400,13 +404,12 @@ class KH2RandomizerApp(QMainWindow):
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
             BossEnemyMenu(self.settings),
-            CosmeticsMenu(self.settings, self.custom_cosmetics),
+            self.cosmetics_menu,
         ]
 
         for i in range(len(self.widgets)):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())
 
-        
         self.progress_label = QLabel("Progress Placeholder")
         self.progress_label.setAlignment(Qt.AlignCenter)
         self.progress_label.setFixedWidth(360)
@@ -466,6 +469,7 @@ class KH2RandomizerApp(QMainWindow):
         self.config_menu = QMenu('Configure')
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
         self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
+        self.config_menu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
 
@@ -970,8 +974,7 @@ class KH2RandomizerApp(QMainWindow):
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
 
-    @staticmethod
-    def openkh_folder_getter():
+    def openkh_folder_getter(self):
         save_file_widget = QFileDialog()
         selected_directory = save_file_widget.getExistingDirectory()
 
@@ -986,9 +989,19 @@ class KH2RandomizerApp(QMainWindow):
         else:
             CosmeticsMod.write_openkh_path(selected_directory)
 
-            message = QMessageBox(text="Restart the seed generator to apply changes.")
-            message.setWindowTitle("KH2 Seed Generator")
-            message.exec()
+            self.cosmetics_menu.reload_music_widgets()
+
+    def custom_music_folder_getter(self):
+        save_file_widget = QFileDialog()
+        selected_directory = save_file_widget.getExistingDirectory()
+
+        if selected_directory is None or selected_directory == "":
+            return
+
+        CosmeticsMod.bootstrap_custom_music_folder(Path(selected_directory))
+        CosmeticsMod.write_custom_music_path(selected_directory)
+
+        self.cosmetics_menu.reload_music_widgets()
 
     @staticmethod
     def show_luabackend_configuration():
