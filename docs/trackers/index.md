@@ -53,9 +53,14 @@ The randomizer community has found several new ways to enjoy the randomizer that
 In general, the instructions are as follows: 
 
    1. Setup the tracker to your liking.
+   2. Send the settings of the tracker to all racers.
+   3. Launch KH2
+   4. Autotrack if you do not have autodetect turned on.
 
-   3. Autotrack if you do not have autodetect turned on.
-   4. Launch KH2
+
+The following sub-sections detail step 1 instructions. **You will still need to do all of Steps 2-4 for the tracker to work**.
+
+# Step 1
 
 ### Instructions for Battleship
 
@@ -69,7 +74,7 @@ Battleship has various placement modes to choose from:
 
 "Place Blind Mode" will hide all the checks and it is up to you to place your ships on the grid. Once you are happy with the placements, go to "Actions" > "Save Ship Layout". This should open up a file explorer window where you can see your ships folder. Go into that folder and you'll see a file called "encrypted_ships.txt". Send this file to your opponent(s). Your opponent should send you their encrypted ships too. Load them in by clicking "Actions" > "Load Ship Layout". If you want to confirm that their ships are valid, you can click "Validate" > "Validate Opponent/Shared Ships". Load the card by entering the card seedname in "Customize" > "Change Seed Name" or just generating a new card if you have for some reason already done this step.
 
-"Place Visible Mode" will keep your current board as is but will allow you to place your ships on the specific checks/events that you desire. It is important that you and your opponent(s) are on the same card at this point. If you want to validate your own ships match the setting expectations you can do so by going to "Validate" > "Validate Your Ships". Once you are happy with the placements, go to "Actions" > "Save Ship Layout". This should open up a file explorer window where you can see your ships folder. Go into that folder and you'll see a file called "encrypted_ships.txt". Send this file to your opponent(s). Your opponent should send you their encrypted ships too. Load them in by clicking "Actions" > "Load Ship Layout". If you want to confirm that their ships are valid, you can click "Validate" > "Validate Opponent/Shared Ships". 
+"Place Visible Mode" will keep your current board as is but will allow you to place your ships on the specific checks/events that you desire. It is important that you and your opponent(s) are on the same card at this point (in other words do Step 2 before Step 1 for this game mode). If you want to validate your own ships match the setting expectations you can do so by going to "Validate" > "Validate Your Ships". Once you are happy with the placements, go to "Actions" > "Save Ship Layout". This should open up a file explorer window where you can see your ships folder. Go into that folder and you'll see a file called "encrypted_ships.txt". Send this file to your opponent(s). Your opponent should send you their encrypted ships too. Load them in by clicking "Actions" > "Load Ship Layout". If you want to confirm that their ships are valid, you can click "Validate" > "Validate Opponent/Shared Ships". 
 
 If you would like to change the number of ships and what checks they can contain, you can do so under "Customize" > "Change Ship Size" and "Customize" > "Set Ship Restrictions".
 
@@ -88,4 +93,14 @@ While this mode is still in beta, you can generate a maze out of the checks disp
 ### Instructions for Hitlist
 
 To generate a hitlist seed, open the tracker and navigate to "Actions" > "Load Preset". An explorer window should open up in your presets folder. Select "hitlist.txt". For your first time loading in the preset, the tracker will not change size and the images may appear stretched. Resize the tracker window so that the images are of the appropriate size; resizing the tracker window will save the tracker size and position for each particular preset, so your hitlist tracker will default to the new position and sizing the next time you elect to play hitlist. Hitlist autotracking development _has_ been developed but will only work if you use the hitlist preset or if that preset was the last one you opened. **This means that creating your own preset to play hitlist will not work.**
+
+# Step 2
+
+To send a card with the appropriate setting to other racers, go to "Actions" > "Save Board Settings". This should open your file explorer. Send the settings.txt to all other racers. If you're the one receiving the settings.txt. You can load the settings into your tracker by "Actions" > "Load Board Settings" and select the settings.txt you downloaded from the sender.
+
+# Step 4
+
+After launching KH2 (Step 3), if you don't have autodetect turned on (in Customize menu), go to "Actions" > "Start Autotracking" to make the tracker autotrack. The tracker title bar window will change "Not tracking." to "Autotracking!"once the tracker successfully connects to the game.
+
+
 
