@@ -2,7 +2,7 @@
 - Adds a progress bar style view of number of required items to place vs number of available locations. 
 - Dream Weapon Matters Option: When enabled, restores the differences between picking dream weapons. When disabled, all dream weapons give the same rewards on the same levels.
 - New Starting Growth Ability Options: Expands the "Schmovement" option into a larger range of starting growth options, including 5 random growths up to starting with max of all. (thanks to DA)
-- World Key Items: The party member weapons have been added into the item pool, and they now unlock the second visits of the world with those party members in them. Hollow Bastion and Twilight Town also are unlocked by Membership Card, Picture and Ice Cream. See [here](https://tommadness.github.io/KH2Randomizer/seed-generator/#starting-items) for more details. (Thanks to Num for GoA changes and DA for tracker updates)
+- Visit Unlocks: The party member weapons have been added into the item pool, and they now unlock the second visits of the world with those party members in them. Hollow Bastion and Twilight Town also are unlocked by Membership Card, Picture and Ice Cream. See [here](https://tommadness.github.io/KH2Randomizer/seed-generator/#starting-items) for more details. (Thanks to Num for GoA changes and DA for tracker updates)
 - Adding the Unknown Disk as an item you can start with, and it replaces the Membership Card as early entry into the Heartless Manufactory.
 - Two new hint modes, [Path](https://tommadness.github.io/KH2Randomizer/hints/#path-hints) and [Spoiler](https://tommadness.github.io/KH2Randomizer/hints/#spoiler-hints) (thanks to DA for spoiler hints)
 - Randomizable Synthesis Rewards: The 30 recipes in-game are given to Free Development, and can have randomized rewards and randomized recipes to synthesize those rewards.
@@ -12,7 +12,7 @@
 - New softlock prevention for Regular/Reverse Rando combination seeds: Intended for co-op where one player plays regular randomizer, and the second plays reverse randomizer. This setting guarantees both players will be able to finish the seed.
 - Can now enable Nightmare logic outside the Nightmare item placement difficulty.
 - New Item Placement Difficulties of Slightly Hard and Slightly Easy.
-- Custom options for where the world key items are placed in the seed. 
+- Custom options for where the visit unlocks are placed in the seed. 
 - Roxas Magic/Movement/Trinity QoL Option (aka Better STT): Allows Roxas the ability to use magic, movement, and trinity limit just like Sora in Simulated Twilight Town without softlocking. (thanks to DA)
 - Early Twilight Town 1 Exit QoL Option: When enabled, you are no longer trapped in TT1 and can leave at any time. (thanks to Num)
 - Skip Magic Carpet Escape QoL Option: When enabled, the magic carpet auto-scroller in Agrabah 2 is skipped, taking you directly before Genie Jafar. (thanks to Num)

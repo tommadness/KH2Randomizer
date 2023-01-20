@@ -36,7 +36,7 @@ class StartingMenu(KH2Submenu):
         starting_locks_layout.addWidget(start_with_none)
         story_lock_widget.setLayout(starting_locks_layout)
         self._add_option_widget("", "", story_lock_widget)
-        self.end_group('Starting World Key Items')
+        self.end_group('Starting Visit Unlocks')
         self.end_column(stretch_at_end=False)
 
         self.finalizeMenu()

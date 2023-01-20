@@ -123,7 +123,7 @@ dailyModifiers = [
                 ),
     DailyModifier(name="Locked Second Visits",
                 initMod=None,
-                description="Visit locks are dispersed in the seed, requiring you to find them to get to second visits",
+                description="Visit unlocks are dispersed in the seed, requiring you to find them to get to second visits",
                 categories={'progression'},
                 local_modifier=lambda settings: settings.set(settingkey.STARTING_STORY_UNLOCKS,[])
                 ),
@@ -247,7 +247,7 @@ dailyHardModifiers = [
                 ),
     DailyModifier(name="Locked Second Visits (Mythic Version)",
                 initMod=None,
-                description="Visit locks are dispersed in the seed, requiring you to find them to get to second visits, and those items are Mythic rarity",
+                description="Visit unlocks are dispersed in the seed, requiring you to find them to get to second visits, and those items are Mythic rarity",
                 categories={'progression'},
                 local_modifier=lockedVisitsHard
                 ),
