@@ -131,7 +131,7 @@ class RandomizerSettings():
             if self.reportDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:
                 raise SettingsException(f"Setting report depth to {self.reportDepth} will contradict either regular or reverse rando. Please use another setting")
             if self.storyDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:
-                raise SettingsException(f"Setting key item depth to {self.storyDepth} will contradict either regular or reverse rando. Please use another setting")
+                raise SettingsException(f"Setting visit unlock depth to {self.storyDepth} will contradict either regular or reverse rando. Please use another setting")
 
 
         self.prevent_self_hinting = ui_settings.get(settingkey.PREVENT_SELF_HINTING)
@@ -189,7 +189,7 @@ class RandomizerSettings():
         if self.proofDepth in [locationDepth.FirstVisit,locationDepth.FirstBoss] and self.chainLogic:
             raise SettingsException("Chain logic is not compatible with first visit proofs")
         if self.storyDepth not in [locationDepth.Anywhere, locationDepth.SecondVisit] and self.chainLogic:
-            raise SettingsException("Chain logic is only compatible with key item depth non-data and anywhere")
+            raise SettingsException("Chain logic is only compatible with visit unlock depth non-data and anywhere")
         if self.chainLogic and self.regular_rando and self.reverse_rando:
             raise SettingsException("Can't do chain logic with both regular and reverse rando")
 
@@ -347,9 +347,9 @@ class RandomizerSettings():
         if self.reportDepth == self.proofDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
             raise SettingsException("Proof depth and report depth can't be set to the same boss category")
         if self.storyDepth == self.proofDepth and self.proofDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
-            raise SettingsException("Proof depth and key item depth can't be set to the same boss category")
+            raise SettingsException("Proof depth and visit unlock depth can't be set to the same boss category")
         if self.reportDepth == self.storyDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
-            raise SettingsException("Key item depth and report depth can't be set to the same boss category")
+            raise SettingsException("Visit unlock depth and report depth can't be set to the same boss category")
         
         if locationType.TTR in self.enabledLocations and not self.statSanity:
             raise SettingsException("Enabling Transport to Remembrance when not in Statsanity is incorrect. Enable Statsanity or disable TTR.")

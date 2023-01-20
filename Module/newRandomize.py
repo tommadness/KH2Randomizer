@@ -234,7 +234,7 @@ class Randomizer():
         if not settings.antiform:
             allItems = [i for i in allItems if i.Id!=30]
 
-        # pick N of the reports and key items
+        # pick N of the reports and visit unlocks
         if settings.shop_reports > 0:
             all_reports_available = [i for i in allItems if i.ItemType==itemType.REPORT]
             random.shuffle(all_reports_available)
