@@ -11,7 +11,7 @@ The randomizer community has the primary tracker as well as some novelty ones fo
 
 # KHTracker
 
-When playing the randomizer, it can be helpful to see everything you collect, what worlds you found the checks in, and your in-game stats. Everything that the tracker can display is annotated in the image below and will be referenced throughout the remainder of this page. 
+When playing the randomizer, it can be helpful to see everything you collect, what worlds you found the checks in, and your in-game stats. Everything that the tracker can display is annotated in the image below and will be referenced throughout the remainder of this page. If you want a complete summary of all the possible check locations in game, please refer to [Xtreone's summary](https://docs.google.com/spreadsheets/u/1/d/1XMUNvlLNSHX8f38_rm__eWByZA3whqh0tgHBGHWNfb8/edit#gid=1519464140).
 
 <img src="static/annotated_tracker.png" width="600">
 Note: The exact layout and check inclusions are subject to change from version to version.
@@ -50,9 +50,17 @@ In the event you want to save your randomizer progress to continue it at a later
 
 The randomizer community has found several new ways to enjoy the randomizer that calls for some novelty trackers. At the moment, the only documented one is the Battleship Tracker though others may arise in the future. The Battleship tracker can be used to play custom game modes such as (but not limited to) Battleships, Boss Enemy Bingo, and Hitlist. The tracker can be found and installed [here](https://github.com/roromaniac/KH2FM-Rando-Battleship/releases). Unless you want to playtest the newest version of the tracker, it is recommended you utilize the latest stable release.
 
+In general, the instructions are as follows: 
+
+   1. Setup the tracker to your liking.
+   2. Autotrack if you do not have autodetect turned on.
+   3. Launch KH2
+
 ### Instructions for Battleship
 
 ### Instructions for Bingo
+
+To play bingo (regardless of if it is boss enemy or not), the board must be square. Certain presets already have this option included, but if you want to play bingo, you can include the bingo logic by ticking it on in "Customize" > "Bingo Mode". 
 
 ### Instructions for Boss Enemy
 
@@ -64,6 +72,5 @@ While this mode is still in beta, you can generate a maze out of the checks disp
 
 ### Instructions for Hitlist
 
-To generate a hitlist seed, open the tracker and navigate to "Actions" > "Load Preset". An explorer window should open up in your presets folder. Select "hitlist.txt". For your first time loading in the preset, the tracker will not change size and the images may appear stretched. Resize the tracker window so that the images are of the appropriate size; resizing the tracker window will save the tracker size and position for each particular preset, so your hitlist tracker will default to the new position and sizing the next time you elect to play hitlist. 
+To generate a hitlist seed, open the tracker and navigate to "Actions" > "Load Preset". An explorer window should open up in your presets folder. Select "hitlist.txt". For your first time loading in the preset, the tracker will not change size and the images may appear stretched. Resize the tracker window so that the images are of the appropriate size; resizing the tracker window will save the tracker size and position for each particular preset, so your hitlist tracker will default to the new position and sizing the next time you elect to play hitlist. Hitlist autotracking development _has_ been developed but will only work if you use the hitlist preset or if that preset was the last one you opened. **This means that creating your own preset to play hitlist will not work.**
 
-As of (1/13/2023), the tracker does not support autotracking for hitlist, though it _is currently in development_. **Do not use autotracking with hitlist** because the tracker will not prevent you from doing so. However, it will track all the non-data versions of boss fights because the autotracker at the moment does not distinguish between data and original versions of Organization XIII fights.
