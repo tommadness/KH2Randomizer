@@ -53,7 +53,7 @@ The randomizer community has found several new ways to enjoy the randomizer that
 In general, the instructions are as follows: 
 
    1. Setup the tracker to your liking.
-   2. 
+
    3. Autotrack if you do not have autodetect turned on.
    4. Launch KH2
 
