@@ -352,11 +352,29 @@ class SeedZip():
             self.write_music_replacements(music_replacements, outZip)
 
             outZip.write(resource_path("Module/icon.png"), "icon.png")
+
+            self.validate_mod_yml(mod)
+
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             outZip.close()
         data.seek(0)
         self.outputZip = data
         return True
+
+    def validate_mod_yml(self,mod):
+        for modded_file in ["00battle.bin","03system.bin"]:
+            first_asset_index = None
+            delete_asset_indices = []
+            for index,a in enumerate(mod["assets"]):
+                if a["name"]==modded_file:
+                    if first_asset_index:
+                        delete_asset_indices.append(index)
+                        # add these sources into this group
+                        mod["assets"][first_asset_index]["source"]+=a["source"]
+                    else:
+                        first_asset_index = index
+            # delete all duplicates
+            mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
 
     def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
         hash_icon_path = Path(resource_path("static/seed-hash-icons"))
@@ -401,6 +419,7 @@ class SeedZip():
         for x in mod["assets"]:
             if x["name"]=="00battle.bin":
                 x["source"]+=modYml.getBtlvMod()
+                break
         btlv.write_modifications(outZip)
         return btlv.get_spoiler()
 
@@ -422,6 +441,7 @@ class SeedZip():
         for x in mod["assets"]:
             if x["name"]=="03system.bin":
                 x["source"]+=modYml.getCmdListMod()
+                break
 
 
     def createASDataAssets(self,settings,mod,outZip):
@@ -503,6 +523,7 @@ class SeedZip():
             for x in mod["assets"]:
                 if x["name"]=="00battle.bin":
                     x["source"].append(modYml.getDropModList())
+                    break
             all_drops = {}
             testing = []
             with open(resource_path("static/drops.bin"), "rb") as dropsbar:
@@ -583,6 +604,7 @@ class SeedZip():
             for x in mod["assets"]:
                 if x["name"]=="03system.bin":
                     x["source"].append(modYml.getShopMod())
+                    break
 
             items_for_shop = []
             keyblade_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.KEYBLADE]

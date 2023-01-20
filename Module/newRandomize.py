@@ -463,7 +463,7 @@ class Randomizer():
                     locking_items+=unlocks[loc_type]
 
             
-            for i in settings.startingItems:
+            for i in settings.startingItems + [i.Id in self.shop_items]:
                 if [i] in locking_items:
                     locking_items.remove([i])
                 if [i,21,22,23] in locking_items:
