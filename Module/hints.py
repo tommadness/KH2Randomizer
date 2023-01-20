@@ -71,6 +71,7 @@ class Hints:
         hintsText['hintsType'] = hintsType
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues
+        hintsText['reveal'] = spoilerHintValues
         hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
         # All hints do the Shananas thing except JSmartee
@@ -684,7 +685,6 @@ class Hints:
                 hintsText["Reports"][reportNumber]["Location"] = report_master[reportNumber][0]
  
         if hintsType == "Spoiler":
-            hintsText['reveal'] = spoilerHintValues
             worldsToHint = []
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))
