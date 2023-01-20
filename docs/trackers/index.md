@@ -53,14 +53,29 @@ The randomizer community has found several new ways to enjoy the randomizer that
 In general, the instructions are as follows: 
 
    1. Setup the tracker to your liking.
-   2. Autotrack if you do not have autodetect turned on.
-   3. Launch KH2
+   2. 
+   3. Autotrack if you do not have autodetect turned on.
+   4. Launch KH2
 
 ### Instructions for Battleship
 
+Battleship has various placement modes to choose from: 
+
+   1. Same Board Mode
+   2. Blind Mode
+   3. Visible Mode
+
+"Same Board Mode" means that once you and any other players have the same card, selecting "Placement" > "Same Board Mode" will create the same randomly generated battleship board with the ships of your choosing. 
+
+"Place Blind Mode" will hide all the checks and it is up to you to place your ships on the grid. Once you are happy with the placements, go to "Actions" > "Save Ship Layout". This should open up a file explorer window where you can see your ships folder. Go into that folder and you'll see a file called "encrypted_ships.txt". Send this file to your opponent(s). Your opponent should send you their encrypted ships too. Load them in by clicking "Actions" > "Load Ship Layout". If you want to confirm that their ships are valid, you can click "Validate" > "Validate Opponent/Shared Ships". Load the card by entering the card seedname in "Customize" > "Change Seed Name" or just generating a new card if you have for some reason already done this step.
+
+"Place Visible Mode" will keep your current board as is but will allow you to place your ships on the specific checks/events that you desire. It is important that you and your opponent(s) are on the same card at this point. If you want to validate your own ships match the setting expectations you can do so by going to "Validate" > "Validate Your Ships". Once you are happy with the placements, go to "Actions" > "Save Ship Layout". This should open up a file explorer window where you can see your ships folder. Go into that folder and you'll see a file called "encrypted_ships.txt". Send this file to your opponent(s). Your opponent should send you their encrypted ships too. Load them in by clicking "Actions" > "Load Ship Layout". If you want to confirm that their ships are valid, you can click "Validate" > "Validate Opponent/Shared Ships". 
+
+If you would like to change the number of ships and what checks they can contain, you can do so under "Customize" > "Change Ship Size" and "Customize" > "Set Ship Restrictions".
+
 ### Instructions for Bingo
 
-To play bingo (regardless of if it is boss enemy or not), the board must be square. Certain presets already have this option included, but if you want to play bingo, you can include the bingo logic by ticking it on in "Customize" > "Bingo Mode". 
+To play bingo (regardless of if it is boss enemy or not), the board must be square. Certain presets already have this option included, but if you want to play bingo with your own custom checks included, you can include the bingo logic by ticking it on in "Customize" > "Bingo Mode". Cells will change from the marking color to the bingo color once you achieve a bingo.
 
 ### Instructions for Boss Enemy
 
