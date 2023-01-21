@@ -12,7 +12,7 @@
 * [KH2 Door Randomizer](https://github.com/MainMemory/KH2DoorRando/releases/latest)
     * PCSX2-EX is needed for Lua Support if not using PC version
 
-### PC Epic Games Store Version
+### PC Epic Games Store Version ([setup guide](../setup/Panacea-ModLoader/index.md))
 
 * [LuaBackend Hook](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip)
     * This is installed through the Seed Generator's setup wizard, but see [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional randomizer-specific setup instructions
