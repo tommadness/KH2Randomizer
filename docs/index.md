@@ -4,6 +4,9 @@ title: Home
 
 # Quick Links
 
+* [3.0 Beta Information Page (Clone of this page with 3.0 beta updates)](https://kh2fm-mods-equations19.github.io/KH2Randomizer/)
+* [3.0 Beta Music Rando Setup](https://kh2fm-mods-equations19.github.io/KH2Randomizer/music/)
+
 * [Downloads](downloads/index.md)
 * [Randomizer Discord](https://discord.com/invite/KH2FMRando)
 
