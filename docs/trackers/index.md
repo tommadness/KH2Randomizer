@@ -100,7 +100,4 @@ To send a card with the appropriate setting to other racers, go to "Actions" > "
 
 # Step 4
 
-After launching KH2 (Step 3), if you don't have autodetect turned on (in Customize menu), go to "Actions" > "Start Autotracking" to make the tracker autotrack. The tracker title bar window will change "Not tracking." to "Autotracking!"once the tracker successfully connects to the game.
-
-
-
+After launching KH2 (Step 3), if you don't have autodetect turned on (in Customize menu), go to "Actions" > "Start Autotracking" to start autotracking. The tracker title bar window will change "Not tracking." to "Autotracking!"once the tracker successfully connects to the game.
