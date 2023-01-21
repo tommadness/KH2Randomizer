@@ -15,12 +15,11 @@
 ### PC Epic Games Store Version
 
 * [LuaBackend Hook](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip)
-    * See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional randomizer-specific setup
-      instructions
+    * This is installed through the Seed Generator's setup wizard, but see [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional randomizer-specific setup instructions
 * [Garden of Assemblage ROM Lua Script](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition/releases/latest/download/F266B00B.GoA.ROM.lua)
     * If you've followed the LuaBackend Hook Setup guide on the previous bullet, this script will be automatically
       managed for you
-* Garden of Assemblage Mod
+* [Garden of Assemblage Mod](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition/releases)
     * Installed via OpenKH Mods Manager by typing `KH2FM-Mods-Num/GoA-ROM-Edition` into the "Add a new mod from GitHub"
       text box and clicking Install
 * [Auto-Save Lua Script](https://raw.githubusercontent.com/Denhonator/KHPCSpeedrunTools/main/2FMMods/scripts/2fmAutosave.lua)
