@@ -243,7 +243,7 @@ dailyHardModifiers = [
                 initMod=None,
                 description="Adds Absent Silhouettes, Sephiroth, Lingering Will, and Data Org as possible locations",
                 categories={'bosses'},
-                local_modifier=lambda settings: settings.set(settingkey.SUPERBOSSES_WITH_REWARDS,[locationType.AS.name, locationType.Sephi.name, locationType.DataOrg.name, locationType.LW])
+                local_modifier=lambda settings: settings.set(settingkey.SUPERBOSSES_WITH_REWARDS,[locationType.AS.name, locationType.Sephi.name, locationType.DataOrg.name, locationType.LW.name])
                 ),
     DailyModifier(name="Locked Second Visits (Mythic Version)",
                 initMod=None,
