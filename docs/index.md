@@ -17,8 +17,8 @@ title: Home
 
 * [Overview](overview/index.md)
 * [Seed Generator Options / Frequently Asked Questions](seed-generator/index.md)
-* [Hint Systems](hints/index.md)
 * [Trackers](trackers/index.md)
+* [Hint Systems](hints/index.md)
 * [Randomized Synthesis](synthesis/index.md)
 * [Superboss Locations](superboss-locations/index.md) (Absent Silhouettes, Data Organization XIII, Lingering Will)
 * [Randomized Music](music/index.md)
