@@ -23,12 +23,13 @@
     * Installed via OpenKH Mods Manager by typing `KH2FM-Mods-Num/GoA-ROM-Edition` into the "Add a new mod from GitHub"
       text box and clicking Install
 * [Auto-Save Lua Script](https://raw.githubusercontent.com/Denhonator/KHPCSpeedrunTools/main/2FMMods/scripts/2fmAutosave.lua)
+    * Can also be installed via OpenKH Mods Manager using `KH2FM-Mods-equations19/auto-save` if you've followed the
+      LuaBackend Hook Setup guide above
     * Automatically saves your game when you enter a room (with some safeguards to prevent getting stuck in a room)
     * The auto-save does not itself appear in your save files list
     * To load an auto-save, hold down Select while choosing _any_ save file (make sure to hold Select the whole time)
     * It's still recommended to create normal saves occasionally
-    * Can also be installed via OpenKH Mods Manager using `KH2FM-Mods-equations19/auto-save` if you've followed the
-      LuaBackend Hook Setup guide above
+
 
 
 ### PCSX2-EX Emulator Version ([setup guide](../setup/pcsx2-ex-setup/pcsx2-ex-setup.md))
