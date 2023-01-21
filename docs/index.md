@@ -11,7 +11,6 @@ title: Home
 
 * [PC New Setup Guide](setup/Panacea-ModLoader/index.md)
 * [Emulator New Setup Guide](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) By gameaddict
-* [Migrating from Mods Manager Bridge (PC version)](setup/mods-manager-bridge-migration/index.md)
 
 # Game/Randomizer Information
 
