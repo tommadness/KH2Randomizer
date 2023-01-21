@@ -7,9 +7,8 @@
 * [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/download/v2.0Beta/KhTracker_2.0Beta6.5.exe)
 * [LiveSplit Load Remover for Randomizer](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/releases)
   ([instructions](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/blob/main/README.md))
-* [.NET Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.13-windows-x64-installer) (required for some of the randomizer
-  tools)
-    * Unless you know your machine needs otherwise, use the `Download x64` version under "Run desktop apps"
+* [.NET Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.13-windows-x64-installer)
+    * Required to run the Mod Manager
 * [KH2 Door Randomizer](https://github.com/MainMemory/KH2DoorRando/releases/latest)
     * PCSX2-EX is needed for Lua Support if not using PC version
 
