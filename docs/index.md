@@ -16,6 +16,7 @@ title: Home
 
 * [Overview](overview/index.md)
 * [Seed Generator Options / Frequently Asked Questions](seed-generator/index.md)
+* [Trackers](trackers/index.md)
 * [Hint Systems](hints/index.md)
 * [Randomized Synthesis](synthesis/index.md)
 * [Superboss Locations](superboss-locations/index.md) (Absent Silhouettes, Data Organization XIII, Lingering Will)
@@ -28,6 +29,10 @@ title: Home
 # Other Guides/Tools
 
 * [Chests, Popups, and Bonuses Guide](https://docs.google.com/spreadsheets/d/1Q9xE8mVvdnXTXpQg6j0cpnLxti8pjUD9qRMugFymRw4/edit#gid=0)
-  by CrunchieVT
+  by HoshinoHaru
+* [Randomizer Check Sheet](https://docs.google.com/spreadsheets/d/1XMUNvlLNSHX8f38_rm__eWByZA3whqh0tgHBGHWNfb8/edit#gid=1519464140) 
+  by Xtreone
+* [Battle Level Exp Values](https://docs.google.com/spreadsheets/d/1q3Fa4UCiqQRbHLpU7ZVj8y7oqbn0L5ZSYhXW_z5piFU/edit?usp=sharing)
+  by Bulcon
 * [Damage Floors and Caps charts](https://docs.google.com/document/d/e/2PACX-1vQ8yNy11UJvLyGyCbpsKuXFvwyLZki-a3DSt6jEJeQQSneOuZM9M_k7oJoaxVDJxrramLYdQL3PAR6p/pub)
   by VGMaster

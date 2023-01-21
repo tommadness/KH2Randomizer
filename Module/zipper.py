@@ -1,25 +1,29 @@
 import base64
-from doctest import master
-import enum
 import io
 import json
-import yaml
 import zipfile
 from itertools import accumulate
-from Class.exceptions import BossEnemyException
+from pathlib import Path
 
-from Class.itemClass import ItemEncoder, itemRarity
+import yaml
+from PIL import Image
+
+from Class.exceptions import BossEnemyException, GeneratorException
+from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
+from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
-from List.configDict import itemType, locationCategory, locationType
+from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
 from Module.RandomizerSettings import RandomizerSettings
+from Module.battleLevels import BtlvViewer
+from Module.cosmetics import CosmeticsMod
 from Module.hints import Hints
 from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe
-from Module.randomBGM import RandomBGM
 from Module.randomCmdMenu import RandomCmdMenu
 from Module.resources import resource_path
+from Module.seedEvaluation import LocationInformedSeedValidator
 from Module.spoilerLog import itemSpoilerDictionary, levelStatsDictionary
 
 
@@ -36,196 +40,6 @@ def number_to_bytes(item):
 
 def bytes_to_number(byte0, byte1=0):
     return int(byte0)+int(byte1<<8)
-
-id_to_enemy_name = {}
-
-id_to_enemy_name[1] = "Soldier"
-id_to_enemy_name[2] = "Shadow"
-id_to_enemy_name[3] = "Large Body"
-id_to_enemy_name[4] = "Armored Knight"
-id_to_enemy_name[5] = "Surveillance Robot"
-id_to_enemy_name[6] = "Dusk"
-id_to_enemy_name[7] = "Trick Ghost"
-id_to_enemy_name[8] = "Rabid Dog"
-id_to_enemy_name[9] = "Hook Bat"
-id_to_enemy_name[10] = "Minute Bomb"
-id_to_enemy_name[11] = "Assault Rider"
-id_to_enemy_name[12] = "Hammer Frame"
-id_to_enemy_name[13] = "Aeroplane"
-id_to_enemy_name[14] = "OC Torches"
-id_to_enemy_name[15] = "Samurai"
-id_to_enemy_name[16] = "OC Bubbles"
-id_to_enemy_name[17] = "Rapid Thruster"
-id_to_enemy_name[18] = "Bolt Tower"
-# id_to_enemy_name[19] = "" # mp only drops
-id_to_enemy_name[22] = "Dragoon"
-id_to_enemy_name[23] = "Assassin"
-id_to_enemy_name[24] = "Sniper"
-id_to_enemy_name[25] = "Dancer"
-id_to_enemy_name[26] = "Berserker"
-id_to_enemy_name[27] = "Gambler"
-id_to_enemy_name[28] = "Sorcerer"
-id_to_enemy_name[29] = "Creeper"
-id_to_enemy_name[30] = "Nightwalker"
-id_to_enemy_name[32] = "Fortuneteller"
-id_to_enemy_name[33] = "Luna Bandit" #silver rock
-id_to_enemy_name[34] = "Hot Rod"
-id_to_enemy_name[35] = "Cannon Gun" # tornado step
-id_to_enemy_name[36] = "Living Bone"
-id_to_enemy_name[37] = "Devastator"
-id_to_enemy_name[38] = "Lance Soldier"
-id_to_enemy_name[39] = "Driller Mole"
-id_to_enemy_name[40] = "Shaman"
-id_to_enemy_name[41] = "Neoshadow"
-id_to_enemy_name[42] = "Magnum Loader"
-id_to_enemy_name[43] = "Morning Star"
-id_to_enemy_name[44] = "Tornado Step" #Cannon Gun
-id_to_enemy_name[45] = "Gargoyle Knight"
-id_to_enemy_name[46] = "Gargoyle Warrior"
-id_to_enemy_name[47] = "Silver Rock" #Luna Bandit
-id_to_enemy_name[48] = "Wight Knight"
-id_to_enemy_name[49] = "Emerald Blues"
-id_to_enemy_name[50] = "Crimson Jazz"
-id_to_enemy_name[51] = "Crescendo"
-id_to_enemy_name[52] = "Creeper Plant"
-id_to_enemy_name[53] = "Cerberus RC"
-id_to_enemy_name[54] = "Thresholder"
-id_to_enemy_name[56] = "Possessor"
-id_to_enemy_name[60] = "Lock"
-id_to_enemy_name[61] = "Shock"
-id_to_enemy_name[62] = "Barrel"
-id_to_enemy_name[63] = "Air Pirate"
-id_to_enemy_name[64] = "Fat Bandit"
-id_to_enemy_name[65] = "Fiery Globe"
-id_to_enemy_name[66] = "Icy Cube"
-id_to_enemy_name[69] = "Aerial Knocker"
-id_to_enemy_name[70] = "Small Urn"
-id_to_enemy_name[71] = "Big Urn"
-# id_to_enemy_name[72] = "" 100% potion
-id_to_enemy_name[73] = "Strafer"
-# id_to_enemy_name[74] = ""
-# id_to_enemy_name[75] = ""
-# id_to_enemy_name[76] = ""
-# id_to_enemy_name[77] = ""
-# id_to_enemy_name[78] = ""
-# id_to_enemy_name[79] = ""
-# id_to_enemy_name[80] = ""
-# id_to_enemy_name[81] = ""
-id_to_enemy_name[82] = "Illuminator"
-# id_to_enemy_name[83] = ""
-# id_to_enemy_name[84] = ""
-id_to_enemy_name[85] = "Shadow Stalker Chandelier"
-id_to_enemy_name[86] = "Shadow Stalker Pillar"
-id_to_enemy_name[87] = "Undead Pirate A"
-id_to_enemy_name[88] = "Undead Pirate B"
-id_to_enemy_name[89] = "Undead Pirate C"
-id_to_enemy_name[90] = "West Wing Armor"
-id_to_enemy_name[91] = "LoD Firework"
-id_to_enemy_name[92] = "LoD Rocket"
-id_to_enemy_name[93] = "LoD Crate"
-# id_to_enemy_name[94] = ""
-# id_to_enemy_name[95] = ""
-id_to_enemy_name[96] = "Bookmaster"
-id_to_enemy_name[97] = "Quickplay (Aladdin)"
-id_to_enemy_name[98] = "Quickplay (Sora)"
-id_to_enemy_name[99] = "Speedster End"
-id_to_enemy_name[100] = "Speedster Start"
-id_to_enemy_name[102] = "Hyabusa"
-id_to_enemy_name[103] = "Abu Ice Crystal"
-# id_to_enemy_name[104] = ""
-# id_to_enemy_name[105] = ""
-# id_to_enemy_name[106] = ""
-id_to_enemy_name[107] = "Water Clone"
-id_to_enemy_name[108] = "Aladdin Dash"
-id_to_enemy_name[109] = "Pan Attack"
-id_to_enemy_name[111] = "Stitch Ukulele"
-id_to_enemy_name[112] = "Graveyard/Toy Soldier"
-# id_to_enemy_name[114] = ""
-id_to_enemy_name[115] = "Lance Soldier Idle Hit"
-id_to_enemy_name[116] = "Lance Soldier RC Start"
-id_to_enemy_name[117] = "Lance Solder Idle Hit (Double)"
-id_to_enemy_name[118] = "Lance Soldier RC End"
-id_to_enemy_name[119] = "Dusk (Station)"
-id_to_enemy_name[120] = "Dusk (STT)"
-id_to_enemy_name[121] = "Creeper (STT)"
-# id_to_enemy_name[122] = ""
-id_to_enemy_name[123] = "Creeper Plant RC"
-id_to_enemy_name[125] = "Crescendo RC"
-id_to_enemy_name[126] = "Gambler RC"
-# id_to_enemy_name[127] = ""
-# id_to_enemy_name[128] = ""
-id_to_enemy_name[129] = "Meg"
-id_to_enemy_name[130] = "Assassin (STT)"
-# id_to_enemy_name[131] = ""
-# id_to_enemy_name[132] = ""
-id_to_enemy_name[133] = "Luxord Minigame"
-id_to_enemy_name[134] = "Card"
-# id_to_enemy_name[135] = ""
-# id_to_enemy_name[136] = ""
-# id_to_enemy_name[137] = ""
-id_to_enemy_name[138] = "Bulky Vendor (Stage 1/4)"
-id_to_enemy_name[139] = "Bulky Vendor (Stage 2/4)"
-id_to_enemy_name[140] = "Bulky Vendor (Stage 3/4)"
-id_to_enemy_name[141] = "Bulky Vendor (Stage 4/4)"
-id_to_enemy_name[142] = "Bulky Vendor Dying"
-# id_to_enemy_name[143] = ""
-id_to_enemy_name[144] = "Hydra Head"
-id_to_enemy_name[145] = "Dusk (STT Day 1)"
-# id_to_enemy_name[146] = ""
-id_to_enemy_name[147] = "BC Box"
-# id_to_enemy_name[148] = ""
-id_to_enemy_name[149] = "Junk Breaking"
-id_to_enemy_name[150] = "BEES"
-# id_to_enemy_name[151] = ""
-id_to_enemy_name[152] = "HT Hazards"
-id_to_enemy_name[154] = "Junk Hitting Junk"
-id_to_enemy_name[155] = "PR Net Hitting"
-id_to_enemy_name[156] = "Odd Mushroom 1"
-id_to_enemy_name[157] = "Odd Mushroom 2"
-id_to_enemy_name[158] = "Odd Mushroom 3"
-id_to_enemy_name[159] = "Odd Mushroom 4"
-id_to_enemy_name[160] = "Odd Mushroom 5"
-id_to_enemy_name[161] = "Even Mushroom 1"
-id_to_enemy_name[162] = "Even Mushroom 2"
-id_to_enemy_name[163] = "Even Mushroom 3"
-id_to_enemy_name[164] = "Even Mushroom 4"
-id_to_enemy_name[165] = "Even Mushroom 5"
-id_to_enemy_name[166] = "Mushroom Prize 1"
-id_to_enemy_name[167] = "Mushroom Prize 2"
-id_to_enemy_name[168] = "Mushroom Prize 3"
-id_to_enemy_name[169] = "Mushroom Prize 4"
-id_to_enemy_name[170] = "Mushroom Prize 5"
-
-id_to_enemy_name[171] = "Befuddler"
-id_to_enemy_name[172] = "Camo Cannon"
-id_to_enemy_name[173] = "Aerial Viking"
-id_to_enemy_name[174] = "Aerial Champ"
-id_to_enemy_name[175] = "Necromancer"
-id_to_enemy_name[176] = "Magic Phantom"
-id_to_enemy_name[177] = "Spring Metal"
-id_to_enemy_name[178] = "Runemaster"
-id_to_enemy_name[179] = "Iron Hammer"
-id_to_enemy_name[180] = "Lance Warrior"
-id_to_enemy_name[181] = "Mad Bumper"
-id_to_enemy_name[182] = "Reckless"
-
-id_to_enemy_name[183] = "CoR Drive Orb Hit"
-id_to_enemy_name[184] = "CoR Drive Orb Final Hit"
-id_to_enemy_name[185] = "Valves"
-id_to_enemy_name[186] = "Vexen Anti-Sora"
-# id_to_enemy_name[187] = ""
-id_to_enemy_name[188] = "Zexion Soothe/Herb/Heal/Mend"
-id_to_enemy_name[189] = "Zexion Spirit"
-id_to_enemy_name[190] = "Zexion Stamina"
-id_to_enemy_name[191] = "Zexion Riches/Wealth"
-id_to_enemy_name[192] = "Zexion Jackpot/Bounty"
-id_to_enemy_name[193] = "Zexion Treasure/Lucky"
-id_to_enemy_name[194] = "Zexion Bonus"
-id_to_enemy_name[195] = "Seal Magic Break"
-id_to_enemy_name[196] = "Seal Attack Break"
-id_to_enemy_name[197] = "Seal Magic Break Final Hit"
-id_to_enemy_name[198] = "Seal Attack Break Final Hit"
-
 
 class SynthList():
     def __init__(self,offset,bytes):
@@ -265,6 +79,26 @@ class DropRates():
         self.item2_chance = bytes_to_number(bytes[18],bytes[19])
         self.item3 = bytes_to_number(bytes[20],bytes[21])
         self.item3_chance = bytes_to_number(bytes[22],bytes[23])
+
+    def to_yaml(self):
+        data = {}
+        data["Id"] = self.id
+        data["SmallHpOrbs"] = self.small_hp
+        data["BigHpOrbs"] = self.big_hp
+        data["BigMoneyOrbs"] = self.big_munny
+        data["MediumMoneyOrbs"] = self.medium_munny
+        data["SmallMoneyOrbs"] = self.small_munny
+        data["SmallMpOrbs"] = self.small_mp
+        data["BigMpOrbs"] = self.big_mp
+        data["SmallDriveOrbs"] = self.small_drive
+        data["BigDriveOrbs"] = self.big_drive
+        data["Item1"] = self.item1
+        data["Item1Percentage"] = self.item1_chance
+        data["Item2"] = self.item2
+        data["Item2Percentage"] = self.item2_chance
+        data["Item3"] = self.item3
+        data["Item3Percentage"] = self.item3_chance
+        return data
 
     def write(self,binary_data):
         id_bytes = number_to_bytes(self.id)
@@ -372,7 +206,10 @@ class SeedZip():
         self.assignFormLevels(randomizer)
         self.assignWeaponStats(randomizer)
         self.assignStartingItems(settings, randomizer)
-        self.createZip(settings, randomizer, hints, cosmetics_data, multiworld)
+        for i in range(5):
+            if self.createZip(settings, randomizer, hints, cosmetics_data, multiworld):
+                return
+        raise BossEnemyException(f"Boss/enemy module had an unexpected error. Try different a different seed or different settings.")
 
     def createZip(self, settings: RandomizerSettings, randomizer : Randomizer, hints, cosmetics_data, multiworld):
 
@@ -385,34 +222,10 @@ class SeedZip():
 
             cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
             platform = cosmetics_data["platform"]
-            randomBGMOptions = cosmetics_data["randomBGM"]
             tourney_gen = cosmetics_data["tourney"]
-
-            if multiworld:
-                outZip.writestr("multiworld.multi", json.dumps(multiworld()))
-
             
             pc_seed_toggle = (platform=="PC")
 
-            self.createPuzzleAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
-            self.createSynthAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
-            self.createASDataAssets(settings, mod, outZip)
-            self.createSkipCarpetAssets(settings, mod, outZip)
-            self.createMapSkipAssets(settings, mod, outZip)
-            self.createBlockingSkipAssets(settings, mod, outZip)
-            # self.createDropRateAssets(settings, randomizer, mod, outZip)
-
-            outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
-            outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
-            outZip.writestr("LvupList.yml", yaml.dump(self.formattedLvup, line_break="\r\n"))
-            outZip.writestr("FmlvList.yml", yaml.dump(self.formattedFmlv, line_break="\r\n"))
-            outZip.writestr("ItemList.yml", yaml.dump(self.formattedItem, line_break="\r\n"))
-            outZip.writestr("PlrpList.yml", yaml.dump(self.formattedPlrp, line_break="\r\n"))
-            outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
-            outZip.writestr("jm.yml", yaml.dump(modYml.getJMYAML(), line_break="\r\n"))
-
-            if hints is not None:
-                Hints.writeHints(hints, "HintFile", outZip)
 
             def _shouldRunKHBR():
                 if not settings.enemy_options.get("boss", False) in [False, "Disabled"]:
@@ -427,54 +240,79 @@ class SeedZip():
                     return True
                 if settings.enemy_options.get("retry_dark_thorn", False):
                     return True
-
+                if settings.enemy_options.get("costume_rando", False):
+                    return True
+                if settings.enemy_options.get("party_rando", False):
+                    return True
+                if not settings.enemy_options.get("remove_cutscenes", False) in [False, "Disabled"]:
+                    return True
+                if not settings.enemy_options.get("revenge_limit_rando", False) in [False, "Vanilla"]:
+                    return True
+                
                 return False
 
             enemySpoilers = None
             enemySpoilersJSON = {}
             if _shouldRunKHBR():
-                try:
-                    if platform == "PC":
-                        settings.enemy_options["memory_expansion"] = True
-                    else:
-                        settings.enemy_options["memory_expansion"] = False
-                    
-                    from khbr.randomizer import Randomizer as khbr
-                    enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
+                enemySpoilers = None
+                enemySpoilersJSON = {}
+            
+                if platform == "PC":
+                    settings.enemy_options["memory_expansion"] = True
+                else:
+                    settings.enemy_options["memory_expansion"] = False
+                
+                from khbr.randomizer import Randomizer as khbr
+                enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
 
-                    if pc_seed_toggle:
-                        # TODO: Remove this modification when khbr is changed to handle multi-languages
-                        for asset in mod["assets"]:
-                            if "msn/jp" in asset["name"] and ".bar" in asset["name"]:
-                                asset["multi"] = []
-                                for region in ["us","fr","gr","it","sp","uk"]:
-                                    asset["multi"].append({'name':asset["name"].replace("jp",region)})
-                            elif "ard/us" in asset["name"]:
-                                asset["multi"] = []
-                                for region in ["jp","fr","gr","it","sp","uk"]:
-                                    asset["multi"].append({'name':asset["name"].replace("us",region)})
+                lines = enemySpoilers.split("\n")
 
+                current_key = ""
+                for line in lines:
+                    if '\t' in line:
+                        modded_line = line.replace('\t','')
+                        enemies = modded_line.split(" became ")
+                        # this is adding to the current list
+                        new_entry = {}
+                        new_entry["original"] = enemies[0]
+                        new_entry["new"] = enemies[1]
+                        enemySpoilersJSON[current_key].append(new_entry)
+                    elif line!="":
+                        current_key = line
+                        enemySpoilersJSON[current_key] = []
+                if enemySpoilersJSON:
+                    outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
+                    # for boss_replacement in enemySpoilersJSON["BOSSES"]:
+                    #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
 
-                    lines = enemySpoilers.split("\n")
+            print("Passed boss/enemy")
 
-                    current_key = ""
-                    for line in lines:
-                        if '\t' in line:
-                            modded_line = line.replace('\t','')
-                            enemies = modded_line.split(" became ")
-                            # this is adding to the current list
-                            new_entry = {}
-                            new_entry["original"] = enemies[0]
-                            new_entry["new"] = enemies[1]
-                            enemySpoilersJSON[current_key].append(new_entry)
-                        elif line!="":
-                            current_key = line
-                            enemySpoilersJSON[current_key] = []
-                    if enemySpoilersJSON:
-                        outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
-                except Exception as e:
-                    raise BossEnemyException(f"Boss/enemy module had an unexpected error {e}. Try different a different seed or different settings.")
+            if multiworld:
+                outZip.writestr("multiworld.multi", json.dumps(multiworld()))
 
+            self.generate_seed_hash_image(settings, outZip)
+            self.createPuzzleAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
+            self.createSynthAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
+            self.createASDataAssets(settings, mod, outZip)
+            self.createSkipCarpetAssets(settings, mod, outZip)
+            self.createMapSkipAssets(settings, mod, outZip)
+            self.createBlockingSkipAssets(settings, mod, outZip)
+            self.createAtlanticaSkipAssets(settings, mod, outZip)
+            self.createWardrobeSkipAssets(settings, mod, outZip)
+            self.createDropRateAssets(settings, randomizer, mod, outZip)
+            self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
+            battle_level_spoiler = self.createBtlvRandoAssets(settings, mod, outZip)
+
+            outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
+            outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
+            outZip.writestr("LvupList.yml", yaml.dump(self.formattedLvup, line_break="\r\n"))
+            outZip.writestr("FmlvList.yml", yaml.dump(self.formattedFmlv, line_break="\r\n"))
+            outZip.writestr("ItemList.yml", yaml.dump(self.formattedItem, line_break="\r\n"))
+            outZip.writestr("PlrpList.yml", yaml.dump(self.formattedPlrp, line_break="\r\n"))
+            outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
+
+            if hints is not None:
+                Hints.writeHints(hints, "HintFile", outZip)
 
             self.createBetterSTTAssets(settings, mod, outZip)
             self.addCmdListModifications(settings, mod, outZip)
@@ -493,10 +331,11 @@ class SeedZip():
                                                                                             "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
                                                        .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
                                                        .replace("SETTINGS_JSON",json.dumps(settings.full_ui_settings)) \
-                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights), indent=4, cls=ItemEncoder)) \
+                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights,LocationInformedSeedValidator().validateSeed(settings, randomizer, False)), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
-                                                       .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON))
+                                                       .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON)) \
+                                                       .replace("BATTLE_LEVEL_JSON",json.dumps(battle_level_spoiler))
                     html_template = html_template.replace("PromiseCharm","Promise Charm")
                     if not tourney_gen:
                         outZip.writestr("spoilerlog.html",html_template)
@@ -506,19 +345,101 @@ class SeedZip():
                 if enemySpoilers and not tourney_gen:
                     outZip.writestr("enemyspoilers.txt", enemySpoilers)
 
-
             mod["assets"] += RandomCmdMenu.randomizeCmdMenus(cmdMenuChoice, outZip, platform)
-            mod["assets"] += RandomBGM.randomizeBGM(randomBGMOptions, platform)
+
+            music_assets, music_replacements = CosmeticsMod.randomize_music(settings)
+            mod["assets"] += music_assets
+            self.write_music_replacements(music_replacements, outZip)
 
             outZip.write(resource_path("Module/icon.png"), "icon.png")
+
+            self.validate_mod_yml(mod)
+
             outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             outZip.close()
         data.seek(0)
         self.outputZip = data
+        return True
+
+    def validate_mod_yml(self,mod):
+        for modded_file in ["00battle.bin","03system.bin"]:
+            first_asset_index = None
+            delete_asset_indices = []
+            for index,a in enumerate(mod["assets"]):
+                if a["name"]==modded_file:
+                    if first_asset_index:
+                        delete_asset_indices.append(index)
+                        # add these sources into this group
+                        mod["assets"][first_asset_index]["source"]+=a["source"]
+                    else:
+                        first_asset_index = index
+            # delete all duplicates
+            mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
+        
+        # remove duplicate cmd.list
+        for a in mod["assets"]:
+            if a["name"]=="03system.bin":
+                first_cmd_list_index = None
+                delete_asset_indices = []
+                for index, b in enumerate(a["source"]):
+                    if b["name"]=="cmd":
+                        if first_cmd_list_index:
+                            delete_asset_indices.append(index)
+                        else:
+                            first_cmd_list_index = index
+                a["source"] = [i for j, i in enumerate(a["source"]) if j not in delete_asset_indices]
+
+
+
+
+    def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
+        hash_icon_path = Path(resource_path("static/seed-hash-icons"))
+        icon_paths = [resource_path(hash_icon_path / (icon + '.png')) for icon in settings.seedHashIcons]
+
+        # Adapted from https://stackoverflow.com/a/30228308
+        images = [Image.open(x) for x in icon_paths]
+        widths, heights = zip(*(i.size for i in images))
+
+        total_width = sum(widths)
+        max_height = max(heights)
+
+        stitched_image = Image.new('RGBA', (total_width, max_height))
+
+        x_offset = 0
+        for image in images:
+            stitched_image.paste(image, (x_offset, 0))
+            x_offset += image.size[0]
+
+        image_file = io.BytesIO()
+        stitched_image.save(image_file, 'PNG')
+        out_zip.writestr('preview.png', image_file.getvalue())
+
+        for image in images:
+            image.close()
+        image_file.close()
+        stitched_image.close()
+
+    def createBtlvRandoAssets(self, settings, mod, outZip):
+        btlv_option_name = settings.battle_level_rando
+
+        btlv = BtlvViewer()
+        btlv.use_setting(
+            btlv_option_name,
+            battle_level_offset=settings.battle_level_offset,
+            battle_level_range=settings.battle_level_range
+        )
+        if (btlv_option_name == BattleLevelOption.NORMAL.name) or \
+                (btlv_option_name == BattleLevelOption.OFFSET.name and settings.battle_level_offset == 0) or \
+                (btlv_option_name == BattleLevelOption.RANDOM_WITHIN_RANGE.name and settings.battle_level_range == 0):
+            return btlv.get_spoiler()
+        for x in mod["assets"]:
+            if x["name"]=="00battle.bin":
+                x["source"]+=modYml.getBtlvMod()
+                break
+        btlv.write_modifications(outZip)
+        return btlv.get_spoiler()
 
     def addCmdListModifications(self,settings,mod,outZip):
-        if not settings.roxas_abilities_enabled:
-            return
         with open(resource_path("static/better_stt/cmd.list"), "rb") as cmdlist:
             binaryContent = bytearray(cmdlist.read())
 
@@ -527,15 +448,16 @@ class SeedZip():
                 binaryContent[0x3345] = 0xB7
                 binaryContent[0x3375] = 0xB7
                 binaryContent[0x33A5] = 0xB7
-            if False:
+            if settings.disable_final_form:
                 # disable final form 0x0A, vanilla 0x5
-                print(hex(binaryContent[0x234]))
-                print(hex(binaryContent[0x6234]))
+                binaryContent[0x234] = 0x0A
+                binaryContent[0x6234] = 0x0A
             outZip.writestr("better_stt/cmd.list",binaryContent)
 
         for x in mod["assets"]:
             if x["name"]=="03system.bin":
                 x["source"]+=modYml.getCmdListMod()
+                break
 
 
     def createASDataAssets(self,settings,mod,outZip):
@@ -563,6 +485,16 @@ class SeedZip():
         if settings.skip_carpet_escape:
             mod["assets"] += [modYml.getSkipCarpetEscapeMod()]
             outZip.write(resource_path("static/skip_carpet_escape.script"), "skip_carpet_escape.script")
+
+    def createAtlanticaSkipAssets(self,settings,mod,outZip):
+        if settings.atlantica_skip:
+            mod["assets"] += [modYml.getAtlanticaTutorialSkipMod()]
+            outZip.write(resource_path("static/atlantica_skip.script"), "atlantica_skip.script")
+
+    def createWardrobeSkipAssets(self,settings,mod,outZip):
+        if settings.wardrobe_skip:
+            mod["assets"] += [modYml.getWardrobeSkipMod()]
+            outZip.write(resource_path("static/wardrobe/N_BB080_BTL.mset"), "wardrobe_skip.mset")
 
     def createBlockingSkipAssets(self,settings,mod,outZip):
         if settings.block_cor_skip:
@@ -597,10 +529,17 @@ class SeedZip():
 
                 
     def createDropRateAssets(self, settings, randomizer, mod, outZip):
-        if True:
+        global_jackpot = settings.global_jackpot
+        global_lucky_lucky = settings.global_lucky
+        fast_urns = settings.fast_urns
+        rich_enemies = settings.rich_enemies
+        near_unlimited_mp = settings.unlimited_mp
+
+        if global_jackpot>0 or global_lucky_lucky>0 or fast_urns or rich_enemies or near_unlimited_mp:
             for x in mod["assets"]:
                 if x["name"]=="00battle.bin":
-                    x["source"].append(modYml.getDropMod())
+                    x["source"].append(modYml.getDropModList())
+                    break
             all_drops = {}
             testing = []
             with open(resource_path("static/drops.bin"), "rb") as dropsbar:
@@ -613,44 +552,199 @@ class SeedZip():
                     if rate.id not in id_to_enemy_name:
                         testing.append(rate.id)
 
-            # make changes
-            print(len(testing))
 
-            # this is the very secret thing
-            all_drops[72].item1 = 593
-            all_drops[72].item1_chance = 100
-            all_drops[72].item2 = 594
-            all_drops[72].item2_chance = 100
-            all_drops[72].item3 = 595
-            all_drops[72].item3_chance = 100
-            
-            all_drops[117].small_hp = 100
+            spawnable_enemy_ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,15,17,18,22,23,24,25,26,27,28,29,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,63,64,65,66,69,73,87,88,89,96,112,171,172,173,174,175,176,177,178,179,180,181,182]
+            urn_ids = [70,71]
+            stt_enemies = [119,120,121,130,145]
+            struggles = [122,131,132]
 
+            modded_ids = []
 
-            first_barrier = len(testing)//4
-            second_barrier = len(testing)//2
-            third_barrier = (len(testing)*3)//4
+            if rich_enemies: 
+                for drop in all_drops.values():
+                    if drop.id in spawnable_enemy_ids:
+                        modded_ids.append(drop.id)
+                        drop.medium_munny = max(drop.medium_munny,2)
+                        drop.small_munny = max(drop.small_munny,2)
+            if near_unlimited_mp: 
+                for drop in all_drops.values():
+                    if drop.id in spawnable_enemy_ids:
+                        modded_ids.append(drop.id)
+                        drop.big_mp = max(drop.big_mp,5)
+                        drop.small_mp = max(drop.small_mp,5)
 
-            for i,t in enumerate(testing):
-                if i < first_barrier:
-                    print(f"{t} munny")
-                    all_drops[t].big_munny = 100
-                elif i < second_barrier:
-                    print(f"{t} mp")
-                    all_drops[t].big_mp = 100
-                elif i < third_barrier:
-                    print(f"{t} drive")
-                    all_drops[t].big_drive = 100
-                else:
-                    print(f"{t} hp")
-                    all_drops[t].big_hp = 100
+            if global_lucky_lucky > 0: 
+                for drop in all_drops.values():
+                    if drop.item1 != 0:
+                        modded_ids.append(drop.id)
+                        drop.item1_chance = min(drop.item1_chance + (drop.item1_chance//2)*global_lucky_lucky,100)
+                    if drop.item2 != 0:
+                        modded_ids.append(drop.id)
+                        drop.item2_chance = min(drop.item2_chance + (drop.item2_chance//2)*global_lucky_lucky,100)
+                    if drop.item3 != 0:
+                        modded_ids.append(drop.id)
+                        drop.item3_chance = min(drop.item3_chance + (drop.item3_chance//2)*global_lucky_lucky,100)
+            if global_jackpot > 0: 
+                for drop in all_drops.values():
+                    modded_ids.append(drop.id)
+                    drop.small_hp = min(drop.small_hp + (drop.small_hp//2)*global_jackpot,64)
+                    drop.big_hp = min(drop.big_hp + (drop.big_hp//2)*global_jackpot,64)
+                    drop.big_munny = min(drop.big_munny + (drop.big_munny//2)*global_jackpot,64)
+                    drop.medium_munny = min(drop.medium_munny + (drop.medium_munny//2)*global_jackpot,64)
+                    drop.small_munny = min(drop.small_munny + (drop.small_munny//2)*global_jackpot,64)
+                    drop.small_mp = min(drop.small_mp + (drop.small_mp//2)*global_jackpot,64)
+                    drop.big_mp = min(drop.big_mp + (drop.big_mp//2)*global_jackpot,64)
+                    drop.small_drive = min(drop.small_drive + (drop.small_drive//2)*global_jackpot,64)
+                    drop.big_drive = min(drop.big_drive + (drop.big_drive//2)*global_jackpot,64)
+
+            if fast_urns:
+                for u in urn_ids:
+                    modded_ids.append(u)
+                    all_drops[u].big_hp = 64
+
+            modded_drops_data = []
+            for drop in all_drops.values():
+                if drop.id in modded_ids:
+                    modded_drops_data.append(drop.to_yaml())
 
             # write changes
-            with open(resource_path("static/drops.bin"), "rb") as dropsbar:
-                binaryContent = bytearray(dropsbar.read())
-                for drop in all_drops:
-                    all_drops[drop].write(binaryContent)
-                outZip.writestr("modified_drops.bin",binaryContent)
+            outZip.writestr("przt.yml", yaml.dump(modded_drops_data, line_break="\r\n"))
+            # with open(resource_path("static/drops.bin"), "rb") as dropsbar:
+            #     binaryContent = bytearray(dropsbar.read())
+            #     for drop in all_drops:
+            #         all_drops[drop].write(binaryContent)
+            #     outZip.writestr("modified_drops.bin",binaryContent)
+
+    def createShopRandoAssets(self, settings, randomizer, mod, outZip, sys):
+        if len(randomizer.shop_items)>0:
+            for x in mod["assets"]:
+                if x["name"]=="03system.bin":
+                    x["source"].append(modYml.getShopMod())
+                    break
+
+            items_for_shop = []
+            keyblade_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.KEYBLADE]
+            report_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.REPORT]
+            story_unlock_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.STORYUNLOCK]
+            consumables = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.ITEM]
+            
+            remaining_items = [i.Id for i in randomizer.shop_items if i.Id not in keyblade_item_ids+report_item_ids+story_unlock_ids+consumables]
+
+            if len(keyblade_item_ids)>0: 
+                for i in keyblade_item_ids:
+                    items_for_shop.append((i,400))
+
+            if len(report_item_ids)>0:
+                for i in report_item_ids:
+                    items_for_shop.append((i,75*(i-225)))
+                for i in range(13):
+                    sys.append({"id":46778-32768+i*2,"en":f"Ansem Report {i+1}"})
+
+            if len(story_unlock_ids)>0:
+                for i in story_unlock_ids:
+                    items_for_shop.append((i,500))
+            
+            if len(consumables)>0:
+                consumable_price_map = {4:400,7:600,274:400,275:600,276:250,277:250,278:250,279:250}
+                for i in consumables:
+                    if i in consumable_price_map:
+                        items_for_shop.append((i,consumable_price_map[i]))
+                    else:
+                        items_for_shop.append((i,700))
+
+            if len(remaining_items)>0:
+                raise GeneratorException(f"Trying to put items in the shop that weren't expected: {len(remaining_items)}")
+                # price_map = {itemRarity.COMMON:100,itemRarity.UNCOMMON:300, itemRarity.RARE:500, itemRarity.MYTHIC:1000}
+                # for i in remaining_items:
+                #     items_for_shop.append((i.Id,price_map[i.Rarity]))
+        
+
+            with open(resource_path("static/full_items.json"), "r") as itemjson:
+                all_item_jsons = json.loads(itemjson.read())
+                self.formattedItem["Items"] = []
+                for x,price in items_for_shop:
+                    item_json = None
+                    for y in all_item_jsons["Items"]:
+                        if y["Id"]==x:
+                            item_json = y
+                            break
+                    item_json["ShopBuy"]=price
+                    self.formattedItem["Items"].append(item_json)
+
+
+            with open(resource_path("static/shop.bin"), "rb") as shopbar:
+                binaryContent = bytearray(shopbar.read())
+
+                byte0,byte1 = number_to_bytes(80+len(items_for_shop))
+                binaryContent[10] = byte0
+                binaryContent[11] = byte1
+
+                byte0,byte1 = number_to_bytes(len(items_for_shop))
+
+                # inventory 752
+                binaryContent[754] = byte0
+                binaryContent[755] = byte1
+                byte0,byte1 = number_to_bytes(984)
+                binaryContent[756] = byte0
+                binaryContent[757] = byte1
+
+
+                valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
+                for x in range(len(items_for_shop)):
+                    product_index = 984+2*x
+                    valid_item_index = valid_start + (60+x)*2
+                    byte0,byte1 = number_to_bytes(items_for_shop[x][0])
+                    binaryContent[product_index] = byte0
+                    binaryContent[product_index+1] = byte1
+                    binaryContent[valid_item_index] = byte0
+                    binaryContent[valid_item_index+1] = byte1
+                
+                outZip.writestr("modified_shop.bin",binaryContent)
+
+                ### code below prints out the shop information in relevant format
+
+                # print(f"file type: {bytes_to_number(binaryContent[4],binaryContent[5])}")
+                # shop_list_count = bytes_to_number(binaryContent[6],binaryContent[7])
+                # print(f"shop list count: {shop_list_count}")
+                # inventory_list_count = bytes_to_number(binaryContent[8],binaryContent[9])
+                # print(f"inventory entry count: {inventory_list_count}")
+                # product_list_count = bytes_to_number(binaryContent[10],binaryContent[11])
+                # print(f"product entry count: {product_list_count}")
+                # valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
+                # print(f"valid items offset: {valid_start}")
+                
+                # shop_start = 16
+                # print("Shop Entries")
+                # for x in range(shop_list_count):
+                #     shop_index = shop_start+x*24
+                #     print(f"---- Shop ID: {bytes_to_number(binaryContent[shop_index+18])}")
+                #     print(f"---- Inventory Amount: {bytes_to_number(binaryContent[shop_index+16],binaryContent[shop_index+17])}")
+                #     print(f"---- Inventory Offset: {bytes_to_number(binaryContent[shop_index+20],binaryContent[shop_index+21])}")
+                #     print("----------")
+
+                # inventory_start = shop_start+shop_list_count*24
+                # print("Inventory Entries")
+                # for x in range(inventory_list_count):
+                #     inventory_index = inventory_start+x*8
+                #     print(f"---- Inventory Address: {inventory_index}")
+                #     print(f"---- Unlock event: {bytes_to_number(binaryContent[inventory_index],binaryContent[inventory_index+1])}")
+                #     print(f"---- Product Amount: {bytes_to_number(binaryContent[inventory_index+2],binaryContent[inventory_index+3])}")
+                #     print(f"---- Product Offset: {bytes_to_number(binaryContent[inventory_index+4],binaryContent[inventory_index+5])}")
+                #     print("----------")
+
+                # product_start = inventory_start+inventory_list_count*8
+                # print("Product Entries")
+                # for x in range(product_list_count):
+                #     product_index = product_start+x*2
+                #     print(f"---- Address {product_index}")
+                #     print(f"---- Product (Item Id):  {bytes_to_number(binaryContent[product_index],binaryContent[product_index+1])}")
+
+                # print("Valid Items")
+                # for x in range(63):
+                #     valid_index = valid_start+x*2
+                #     item_id = bytes_to_number(binaryContent[valid_index],binaryContent[valid_index+1])
+                #     if item_id!=0:
+                #         print(f"---- Valid Item (Item Id):  {item_id}")
 
     def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
         if locationType.SYNTH in settings.disabledLocations:
@@ -701,6 +795,14 @@ class SeedZip():
             #     binaryContent[start_index+i*12+9] = new_required_items[1]
 
             outZip.writestr("modified_synth_reqs.bin",binaryContent)
+
+    @staticmethod
+    def write_music_replacements(replacements: dict[str, str], outZip):
+        if len(replacements) > 0:
+            music_replacements_string = ''
+            for original, replacement in replacements.items():
+                music_replacements_string += '[{}] was replaced by [{}]\n'.format(original, replacement)
+            outZip.writestr('music-replacement-list.txt', music_replacements_string)
 
     def assignStartingItems(self, settings, randomizer):
         def padItems(itemList):

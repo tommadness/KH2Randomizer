@@ -13,4 +13,8 @@ extracted_data
 log.txt
 custom_songlist.json
 DBGHELP-tmp.zip
+musiclist.json
+randomizer-config.json
 tourney_gen.txt
+presets/devonly-*.json
+music-rando-config.json

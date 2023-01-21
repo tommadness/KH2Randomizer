@@ -138,6 +138,38 @@ class ItemPlacementHelpers():
         return lambda inventory : False
 
     @staticmethod
+    def make_form_lambda_nightmare_no_final(form_id,form_level):
+        has_valor = lambda inventory : (26 in inventory)
+        has_wisdom = lambda inventory : (27 in inventory)
+        has_limit = lambda inventory : (563 in inventory)
+        has_master = lambda inventory : (31 in inventory)
+        has_final = lambda inventory : (29 in inventory)
+        has_auto_valor = lambda inventory : (385 in inventory)
+        has_auto_wisdom = lambda inventory : (386 in inventory)
+        has_auto_limit = lambda inventory : (568 in inventory)
+        has_auto_master = lambda inventory : (387 in inventory)
+        has_auto_final = lambda inventory : (388 in inventory)
+        final_possible_but_not_obtained = lambda inventory : False
+        form_level_obtainable = lambda inventory : ItemPlacementHelpers.count_forms(inventory) + (1 if final_possible_but_not_obtained(inventory) else 0) + 2
+
+        if form_id=="Valor":
+            return lambda inventory : (has_valor(inventory) or has_auto_valor(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Wisdom":
+            return lambda inventory : (has_wisdom(inventory) or has_auto_wisdom(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Limit":
+            return lambda inventory : (has_limit(inventory) or has_auto_limit(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Master":
+            return lambda inventory : (has_master(inventory) or has_auto_master(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Final":
+            have_final_form = lambda inventory : final_possible_but_not_obtained(inventory) or has_final(inventory)
+            if form_level==2:
+                return lambda inventory : have_final_form(inventory) or has_auto_final(inventory)
+            else:
+                return lambda inventory : have_final_form(inventory) and form_level_obtainable(inventory)>=form_level
+
+        return lambda inventory : False
+
+    @staticmethod
     def auron_check(inventory):
         return 54 in inventory
     @staticmethod

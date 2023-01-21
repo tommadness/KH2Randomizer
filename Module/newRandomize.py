@@ -1,3 +1,4 @@
+import copy
 from dataclasses import dataclass
 import itertools
 
@@ -5,7 +6,7 @@ from Class.exceptions import GeneratorException,CantAssignItemException, Setting
 from Module.modifier import SeedModifier
 from Class.newLocationClass import KH2Location
 from Class.itemClass import KH2Item, itemRarity
-from List.configDict import locationCategory, itemType, locationType
+from List.configDict import locationCategory, itemType, locationDepth, locationType
 from List.ItemList import Items
 from List.NewLocationList import Locations
 from Module.RandomizerSettings import RandomizerSettings
@@ -114,7 +115,10 @@ class Randomizer():
         self.levelStats = []
         self.formLevelExp = []
         self.synthesis_recipes = []
+        self.shop_items = []
         self.assignSoraItems(settings)
+        if progress_bar_vis:
+            return
         self.assignPartyItems()
         self.assignWeaponStats(settings)
         self.assignLevelStats(settings)
@@ -218,10 +222,10 @@ class Randomizer():
                 goofyLocations.remove(randomLocation)
 
     def assignSoraItems(self, settings: RandomizerSettings):
-        if settings.random_growths:
+        if settings.num_random_growths > 0:
             for i in settings.chosen_random_growths:
                 settings.startingItems.remove(i)
-            settings.chosen_random_growths = SeedModifier.random_schmovement()
+            settings.chosen_random_growths = SeedModifier.random_schmovement(settings.num_random_growths)
             settings.startingItems+=settings.chosen_random_growths
 
         allItems = [i for i in Items.getItemList(settings.story_unlock_rarity) if i.Id not in settings.startingItems]
@@ -230,6 +234,36 @@ class Randomizer():
         if not settings.antiform:
             allItems = [i for i in allItems if i.Id!=30]
 
+        # pick N of the reports and visit unlocks
+        if settings.shop_reports > 0:
+            all_reports_available = [i for i in allItems if i.ItemType==itemType.REPORT]
+            random.shuffle(all_reports_available)
+            num_reports_in_shop = min(settings.shop_reports,len(all_reports_available))
+            self.shop_items += all_reports_available[0:num_reports_in_shop]
+
+            # self.shop_items+=[i for i in allItems if i.ItemType==itemType.REPORT]
+        if settings.shop_unlocks > 0:
+            all_unlocks_available = [i for i in allItems if i.ItemType==itemType.STORYUNLOCK]
+            random.shuffle(all_unlocks_available)
+            num_unlocks_in_shop = min(settings.shop_unlocks,len(all_unlocks_available))
+            self.shop_items += all_unlocks_available[0:num_unlocks_in_shop]
+        
+        allItems = [i for i in allItems if i not in self.shop_items]
+            
+        if settings.shop_keyblades:
+            self.shop_items+=[i for i in allItems if i.ItemType==itemType.KEYBLADE]
+        if settings.shop_elixirs:
+            self.shop_items+=[KH2Item(4, "Elixir", itemType.ITEM),
+                                KH2Item(7, "Megalixir", itemType.ITEM)]
+        if settings.shop_recoveries:
+            self.shop_items+=[KH2Item(274, "Drive Recovery", itemType.ITEM),
+                                KH2Item(275, "High Drive Recovery", itemType.ITEM)]
+        if settings.shop_boosts:
+            self.shop_items+=[KH2Item(276, "Power Boost", itemType.ITEM),
+                                KH2Item(277, "Magic Boost", itemType.ITEM),
+                                KH2Item(278, "Defense Boost", itemType.ITEM),
+                                KH2Item(279, "AP Boost", itemType.ITEM)]
+  
         if settings.fifty_ap:
             allItems += list(itertools.repeat(KH2Item(279, "AP Boost", itemType.ITEM),50))
 
@@ -237,6 +271,10 @@ class Randomizer():
             allItems = [i for i in allItems if i.ItemType != itemType.MAP]
         if not settings.include_recipes:
             allItems = [i for i in allItems if i.ItemType != itemType.RECIPE]
+        if not settings.include_accessories:
+            allItems = [i for i in allItems if i.ItemType != itemType.ACCESSORY]
+        if not settings.include_armor:
+            allItems = [i for i in allItems if i.ItemType != itemType.ARMOR]
 
         allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + (Items.getLevelAbilityList() if not settings.level_one else []) )
         # if there abilities in the starting inventory, remove them from the pool
@@ -275,11 +313,23 @@ class Randomizer():
                 result = True
             return result
 
-        invalidLocations = [loc for loc in allLocations if ( invalid_checker(loc) or remove_popupchecker(loc) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
+        def no_final_form(loc):
+            if not settings.disable_final_form:
+                return False
+            return loc.LocationCategory is locationCategory.FINALLEVEL
+
+        invalidLocations = [loc for loc in allLocations if ( no_final_form(loc) or invalid_checker(loc) or remove_popupchecker(loc) or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId in settings.excludedLevels))]
         validLocations =  [loc for loc in allLocations if loc not in invalidLocations]
+        locations_with_vanilla_items = [l for l in invalidLocations if len(l.VanillaItems)>0 and any(item in l.LocationTypes for item in settings.vanillaLocations)]
+        vanilla_items = []
+        for l in locations_with_vanilla_items:
+            vanilla_items+=l.VanillaItems
+
+        if len(vanilla_items) > 0 and settings.chainLogic:
+            raise GeneratorException("Can't use vanilla worlds with chain logic for now. Sorry")
 
         self.num_valid_locations = len(validLocations) + (len([loc for loc in validLocations if loc.LocationCategory in [locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS]]) if settings.statSanity else 0 )+ (len([loc for loc in validLocations if loc.LocationCategory in [locationCategory.DOUBLEBONUS]]) if settings.statSanity else 0)
-        self.num_available_items = len(allAbilities)+len(allItems)
+        self.num_available_items = len(allAbilities)+len(allItems) - (sum([len(l.VanillaItems) for l in locations_with_vanilla_items]))
 
         if self.progress_bar_vis:
             return
@@ -287,8 +337,37 @@ class Randomizer():
         if len(allLocations)!=(len(invalidLocations)+len(validLocations)):
             raise GeneratorException(f"Separating valid {len(validLocations)} and invalid {len(invalidLocations)} locations removed locations from existence (total {len(allLocations)} )")
         
-        self.assignKeybladeAbilities(settings, allAbilities, allItems)
-        allItems=allAbilities+allItems
+
+        def split_vanilla_abilities():
+            vanilla_item_copy = copy.deepcopy(vanilla_items)
+            vanilla_abilities = []
+            nonvanilla_abilities = []
+            for a in allAbilities:
+                if a.Id in vanilla_item_copy:
+                    vanilla_item_copy.remove(a.Id)
+                    vanilla_abilities.append(a)
+                else:
+                    nonvanilla_abilities.append(a)
+            return vanilla_abilities,nonvanilla_abilities
+
+        van,nonvan = split_vanilla_abilities()
+
+        self.assignKeybladeAbilities(settings, nonvan, allItems)
+        allItems=van+nonvan+allItems
+
+        # vanilla location item assignment
+        for l in locations_with_vanilla_items:
+            #find item in item list
+            for i in l.VanillaItems:
+                i_data_list = [it for it in allItems if it.Id==i]
+                if len(i_data_list)==0:
+                    # if we don't have the item, it means that we started with the item, or it was randomized away
+                    continue
+                i_data = i_data_list[0]
+                if i_data.ItemType not in l.InvalidChecks:
+                    allItems.remove(i_data)
+                    if self.assignItem(l,i_data):
+                        invalidLocations.remove(l)
 
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
@@ -315,47 +394,223 @@ class Randomizer():
         if restricted_story:
             invalid_test.append(itemType.STORYUNLOCK)
 
-        def item_sorter(item1):
-            rank_map = {}
-            rank_map[itemRarity.COMMON] = 1
-            rank_map[itemRarity.UNCOMMON] = 2
-            rank_map[itemRarity.RARE] = 3
-            rank_map[itemRarity.MYTHIC] = 4
+        # def item_sorter(item1):
+        #     rank_map = {}
+        #     rank_map[itemRarity.COMMON] = 1
+        #     rank_map[itemRarity.UNCOMMON] = 2
+        #     rank_map[itemRarity.RARE] = 3
+        #     rank_map[itemRarity.MYTHIC] = 4
 
-            if item1.ItemType in invalid_test:
-                return 5
+        #     if item1.ItemType in invalid_test:
+        #         return 5
 
-            return rank_map[item1.Rarity]
+        #     return rank_map[item1.Rarity]
 
-        random.shuffle(allItems)
-        if len(invalid_test)>0:
-            allItems.sort(reverse=True,key=item_sorter)
+        # random.shuffle(allItems)
+        # if len(invalid_test)>0:
+        #     allItems.sort(reverse=True,key=item_sorter)
 
-        inventory = []
-        inventory += settings.startingItems
 
-        regular_location_reqs = self.regular_locations.getAllSoraLocations(True)
-        reverse_location_reqs = self.reverse_locations.getAllSoraLocations(True)
-        all_reqs = {}
 
-        def evaluate(inventory,reqs_list):
-            result = True
-            for r in reqs_list:
-                result = result and r(inventory)
-            return result
+        def local_item_weights_computation(item,location_pool):
+            if restricted_proofs or restricted_reports or restricted_story:
+                weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in invalid_test)) else 0 for loc in location_pool]
+            else:
+                weights = [self.location_weights.getWeight(item,loc) for loc in location_pool]
 
-        for valid_loc in validLocations:
-            all_reqs[valid_loc] = []
+            if restricted_reports and item.ItemType is itemType.REPORT:
+                weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in location_pool ]
+            if restricted_proofs and item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
+                weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in location_pool ]
+            if restricted_story and item.ItemType is itemType.STORYUNLOCK:
+                weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in location_pool ]
+            return weights
+
+
+
+        # chain logic placement
+        if settings.chainLogic:
+            from Module.seedEvaluation import LocationInformedSeedValidator
+            validator = LocationInformedSeedValidator()
+
+            unlocks = {}
             if settings.regular_rando:
-                for l,r in regular_location_reqs:
-                    if l==valid_loc:
-                        all_reqs[valid_loc]+=r
+                unlocks[locationType.HB] = [[595],[369]]
+            elif settings.reverse_rando:
+                unlocks[locationType.HB] = [[369]]
+            unlocks[locationType.OC] = [[54]]
+            unlocks[locationType.LoD] = [[55]]
+            unlocks[locationType.PL] = [[61]]
+            unlocks[locationType.HT] = [[60]]
+            unlocks[locationType.SP] = [[74]]
+            unlocks[locationType.FormLevel] = [[26],[27],[29],[31],[563]]
+            unlocks[locationType.TT] = [[375],[376]]
+            unlocks[locationType.BC] = [[59]]
+            if settings.regular_rando:
+                unlocks[locationType.Agrabah] = [[72,21,22,23]]
+            elif settings.reverse_rando:
+                unlocks[locationType.Agrabah] = [[72],[21,22,23]]
+            unlocks[locationType.HUNDREDAW] = [[32],[32],[32],[32],[32]]
+            unlocks[locationType.LW] = [[593]]
+            unlocks[locationType.PR] = [[62]]
+            unlocks[locationType.Atlantica] = [[23,23,23],[87,87]]
+
+            second_visit_locking_items = [369,54,55,61,60,74,376,59,72,62]
+
+            locking_items = []
+            for loc_type in settings.enabledLocations:
+                if loc_type in unlocks:
+                    locking_items+=unlocks[loc_type]
+
+            
+            for i in settings.startingItems + [i.Id in self.shop_items]:
+                if [i] in locking_items:
+                    locking_items.remove([i])
+                if [i,21,22,23] in locking_items:
+                    locking_items.remove([i,21,22,23])
+            for i in vanilla_items: # TODO add vanilla worlds to chain
+                if [i] in locking_items:
+                    locking_items.remove([i])
+
+            if not settings.chainLogicIncludeTerra:
+                if [593] in locking_items:
+                    locking_items.remove([593])
+
+            minimum_terra_depth = len(locking_items)-5 if settings.chainLogicTerraLate else 0
+
+            if self.yeet_the_bear:
+                locking_items.remove([32])
+
+            if settings.nightmare:
+                locking_items.remove([29])
+            
+            terra = settings.chainLogicIncludeTerra and [593] in locking_items
+            tt_condition = [376] in locking_items and [375] in locking_items
+            pop_condition = [595] in locking_items
+            hb_condition = [369] in locking_items and pop_condition
+            ag_condition = [72] in locking_items
+            atlantica_condition = [87,87] in locking_items
+            second_visit_condition = settings.proofDepth in [locationDepth.DataFight,locationDepth.SecondVisitOnly,locationDepth.SecondBoss]
+            data_condition = settings.proofDepth is locationDepth.DataFight
+            story_data_condition = settings.storyDepth is locationDepth.DataFight
+
+            if second_visit_condition:
+                # check if enough unlock items are available for the chain
+                num_proofs_in_chain = int(pop_condition)+int(terra)+int(not self.yeet_the_bear)
+                
+                counter = 0
+                for world_unlocks in locking_items:
+                    for i in world_unlocks:
+                        if i in second_visit_locking_items:
+                            counter+=1
+                if counter < num_proofs_in_chain:
+                    raise SettingsException("Not enough locked second visits for chain logic.") 
+
+            while True:
+                random.shuffle(locking_items)
+                if ag_condition and locking_items.index([21,22,23]) > locking_items.index([72]): # scimitar has to be after fire/blizz/thunder 
+                    continue
+                if tt_condition and locking_items.index([376]) > locking_items.index([375]): # ice cream needs to be after picture
+                    continue
+                if hb_condition and locking_items.index([369]) > locking_items.index([595]): # proof of peace needs to be after membership card
+                    continue
+                if terra and locking_items.index([593]) < minimum_terra_depth:
+                    continue
+                if atlantica_condition and locking_items.index([87,87]) > locking_items.index([23,23,23]):
+                    continue
+                if story_data_condition:
+                    form_indices = [locking_items.index(x) for x in unlocks[locationType.FormLevel]]
+                    membership_index = locking_items.index([369])
+                    
+                    # print(f"{369 in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
+                    if not all(x<membership_index for x in form_indices):
+                        continue
+
+                #proof depth checking
+                if second_visit_condition:
+                    if pop_condition:
+                        proof_index = locking_items.index([595])
+                        if proof_index==0:
+                            continue
+                        if not any(it in locking_items[proof_index-1] for it in second_visit_locking_items):
+                            continue
+                        form_indices = [locking_items.index(x) for x in unlocks[locationType.FormLevel]]
+                        # print(f"{369 in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
+                        if data_condition and 369 in locking_items[proof_index-1] and not all(x<proof_index for x in form_indices):
+                            continue
+                    if terra:
+                        proof_index = locking_items.index([593])
+                        if proof_index==0:
+                            continue
+                        if not any(it in locking_items[proof_index-1] for it in second_visit_locking_items):
+                            continue
+                        form_indices = [locking_items.index(x) for x in unlocks[locationType.FormLevel]]
+                        # print(f"{369 in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
+                        if data_condition and 369 in locking_items[proof_index-1] and not all(x<proof_index for x in form_indices):
+                            continue
+                    if not self.yeet_the_bear:
+                        if not any(it in locking_items[-1] for it in second_visit_locking_items):
+                            continue
+                break
+            if self.yeet_the_bear:
+                locking_items.append([32])
+
+            force_obtained = []
+            if len(locking_items) > settings.chainLogicMinLength:
+                # keep the last parts of the chain
+                num_to_remove = len(locking_items) - settings.chainLogicMinLength;
+                force_obtained = locking_items[:num_to_remove]
+                locking_items = locking_items[num_to_remove:]
+
+            locking_items.append([594]) # add the proof of nonexistence at the end of the chain
+
+            if settings.nightmare:
+                locking_items[-1].append(29)
+
+            print(locking_items)
+
+            validator.prep_req_list(settings,self)
+
+            current_inventory = [] + settings.startingItems
+            for i in force_obtained:
+                current_inventory+=i
             if settings.reverse_rando:
-                for l,r in reverse_location_reqs:
-                    if l==valid_loc:
-                        all_reqs[valid_loc]+=r
+                current_inventory+=[94,95,96,98,99,100,102,103,104,106,107,108,564,565,566]
 
+            def open_location(inv,loc):
+                return validator.is_location_available(inv,loc) and (not settings.nightmare or loc.LocationId !=560)
 
+            accessible_locations = [[l for l in validLocations if open_location(current_inventory,l)]]
+            for items in locking_items:
+                accessible_locations_start = [l for l in validLocations if open_location(current_inventory,l)]
+                accessible_locations_new = [l for l in validLocations if open_location(current_inventory + items,l) and l not in accessible_locations_start]
+                accessible_locations.append(accessible_locations_new)
+                print(f"{items} unlocked {len(accessible_locations[-1])}")
+                current_inventory += items
+            for iter,items in enumerate(locking_items):
+                accessible_locations_new = accessible_locations[iter]
+                if len(accessible_locations_new) == 0:
+                    raise GeneratorException("Chain logic created a situation where the chain item couldn't be placed")
+                for i in items:
+                    #find item in item list
+                    if len(accessible_locations_new) == 0:
+                        break
+                    
+                    i_data_list = [it for it in allItems if it.Id==i]
+                    if len(i_data_list)==0:
+                        continue
+                    i_data = i_data_list[0]
+                    weights = local_item_weights_computation(i_data,accessible_locations_new)
+                    # if len(weights)==0:
+                    #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
+                    # if sum(weights)==0:
+                    #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
+                    randomLocation = random.choices(accessible_locations_new,weights)[0]
+                    if i_data.ItemType not in randomLocation.InvalidChecks:
+                        allItems.remove(i_data)
+                        if self.assignItem(randomLocation,i_data):
+                            validLocations.remove(randomLocation)
+                            accessible_locations_new.remove(randomLocation)
 
         #assign valid items to all valid locations remaining
         for item in allItems:
@@ -368,22 +623,11 @@ class Randomizer():
                 if len(starry_hill_loc_list) == 0:
                     raise GeneratorException("Yeet the Bear setting is set, when 100 acre wood is turned off.")
                 starry_hill_cure = starry_hill_loc_list[0]
-                inventory.append(item.Id)
                 if self.assignItem(starry_hill_cure,item):
                     validLocations.remove(starry_hill_cure)
                 continue
 
-            if restricted_proofs or restricted_reports or restricted_story:
-                weights = [self.location_weights.getWeight(item,loc) if (any(i_type in loc.InvalidChecks for i_type in invalid_test)) else 0 for loc in validLocations]
-            else:
-                weights = [self.location_weights.getWeight(item,loc) for loc in validLocations]
-
-            if restricted_reports and item.ItemType is itemType.REPORT:
-                weights = [1 if itemType.REPORT not in loc.InvalidChecks else 0 for loc in validLocations ]
-            if restricted_proofs and item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]:
-                weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in validLocations ]
-            if restricted_story and item.ItemType is itemType.STORYUNLOCK:
-                weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in validLocations ]
+            weights = local_item_weights_computation(item,validLocations)
 
             count=0
             while True:
@@ -393,16 +637,29 @@ class Randomizer():
                 if sum(weights) == 0 and restricted_reports:
                     raise CantAssignItemException(f"Somehow, can't assign an item. If using report depth option that restricts to specific bosses, make sure all worlds with doors in GoA are enabled.")
                 randomLocation = random.choices(validLocations,weights)[0]
-                if len(invalid_test)>0 or evaluate(inventory,all_reqs[randomLocation]):
-                    if item.ItemType not in randomLocation.InvalidChecks:
-                        inventory.append(item.Id)
-                        if self.assignItem(randomLocation,item):
-                            validLocations.remove(randomLocation)
-                        break
+                if item.ItemType not in randomLocation.InvalidChecks:
+                    if self.assignItem(randomLocation,item):
+                        validLocations.remove(randomLocation)
+                        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 389: 
+                            # assign same item to 390
+                            struggle_reward_loc = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==390]
+                            if len(struggle_reward_loc) == 0:
+                                raise GeneratorException("Tried assigning struggle reward, but failed")
+                            self.assignItem(struggle_reward_loc[0],item)
+                            validLocations.remove(struggle_reward_loc[0])
+                        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 390: 
+                            # assign same item to 389
+                            struggle_reward_loc = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==389]
+                            if len(struggle_reward_loc) == 0:
+                                raise GeneratorException("Tried assigning struggle reward, but failed")
+                            self.assignItem(struggle_reward_loc[0],item)
+                            validLocations.remove(struggle_reward_loc[0])
+                    break
                 if count==100:
                     raise CantAssignItemException(f"Trying to assign {item} and failed 100 times in {len([i for i in validLocations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(validLocations)}")
         invalidLocations+=validLocations
         self.assignJunkLocations(settings, invalidLocations)
+
 
     def assignJunkLocations(self, settings, invalidLocations):
         """ assign the rest of the locations with "junk" """

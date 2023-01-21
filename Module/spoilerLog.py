@@ -2,7 +2,7 @@ from Module.weighting import LocationWeights
 
 
 
-def itemSpoilerDictionary(locationItems, weights: LocationWeights = None):
+def itemSpoilerDictionary(locationItems, weights: LocationWeights = None, unreachable_locations = None):
     outDict = {}
 
     for assignment in locationItems:
@@ -11,14 +11,21 @@ def itemSpoilerDictionary(locationItems, weights: LocationWeights = None):
             added_string = f" <{weights.getDepth(location)}>"
         else:
             added_string = ""
+
+        if unreachable_locations and location in unreachable_locations:
+            prepend_string = "Unreachable "
+        else:
+            prepend_string = ""
+
+
         item = assignment.item
         item2 = assignment.item2
         if not location.LocationTypes == []:
             if not location.LocationTypes[0] in outDict.keys():
                 outDict[location.LocationTypes[0]] = []
-            outDict[location.LocationTypes[0]].append((location.Description+added_string,item))
+            outDict[location.LocationTypes[0]].append((prepend_string+location.Description+added_string,item))
             if item2 is not None:
-                outDict[location.LocationTypes[0]].append((location.Description+added_string,item2))
+                outDict[location.LocationTypes[0]].append((prepend_string+location.Description+added_string,item2))
     return outDict
 
 def levelStatsDictionary(level_stats):

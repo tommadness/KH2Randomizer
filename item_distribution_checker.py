@@ -22,7 +22,7 @@ def make_rando_seed(difficulty,seed_name):
     while True:
         try:
             randomizer = Randomizer(settings)
-            newSeedValidation.validateSeed(settings,randomizer)
+            result = newSeedValidation.validateSeed(settings,randomizer)
             break
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits

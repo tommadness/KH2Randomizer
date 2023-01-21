@@ -1,14 +1,18 @@
 
+import math
+import random
+from itertools import chain
+
+from Class import seedSettings, settingkey
 from Class.exceptions import SettingsException
+from Class.seedSettings import SeedSettings
 from List.ItemList import Items
-from Module.modifier import SeedModifier
+from List.configDict import expCurve, locationType, itemType, locationDepth
 from List.experienceValues import duskExp, duskFormExp, middayFormExp, vanillaExp, middayExp, vanillaFormExp
 from List.hashTextEntries import generateHashIcons
-from List.configDict import expCurve, locationType, itemType, locationDepth
-from itertools import chain
-import math,random
-from Class import modYml, seedSettings, settingkey
-from Class.seedSettings import SeedSettings, Setting
+from Module.modifier import SeedModifier
+from Module.progressionPoints import ProgressionPoints
+
 
 class RandomizerSettings():
     excludeFrom50 = list(chain([1,3,5,6,8,11,13,16,18,19,21,22,24,26,27,29,31,33,35,37,38,40,42,43,45,47,49],range(51,100)))
@@ -19,30 +23,42 @@ class RandomizerSettings():
         self.full_ui_settings = full_ui_settings
         self.ui_settings = ui_settings
         self.crit_mode = ui_settings.get(settingkey.CRITICAL_BONUS_REWARDS)
+        self.item_accessibility = ui_settings.get(settingkey.ACCESSIBILITY)
 
         include_list = []
+        vanilla_list = []
         include_list_keys = [
-            (settingkey.FORM_LEVEL_REWARDS, 'Form Levels'),
             (settingkey.CRITICAL_BONUS_REWARDS, 'Critical Bonuses'),
             (settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS, 'Garden of Assemblage'),
         ]
         for key in include_list_keys:
             if ui_settings.get(key[0]):
                 include_list.append(key[1])
-        for location in ui_settings.get(settingkey.WORLDS_WITH_REWARDS):
+        worlds_with_rewards =  ui_settings.get(settingkey.WORLDS_WITH_REWARDS)
+        vanilla_worlds = []
+        if isinstance(worlds_with_rewards[0],list):
+            vanilla_worlds = worlds_with_rewards[1]
+            worlds_with_rewards = worlds_with_rewards[0]
+        for location in worlds_with_rewards:
             include_list.append(locationType[location].value)
+        for location in vanilla_worlds:
+            vanilla_list.append(locationType[location].value)
         for location in ui_settings.get(settingkey.SUPERBOSSES_WITH_REWARDS):
             include_list.append(locationType[location].value)
         for location in ui_settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS):
             include_list.append(locationType[location].value)
         self.enabledLocations = [l for l in locationType if l in include_list]
-        self.disabledLocations = [l for l in locationType if l not in include_list and l not in [locationType.Mush13,locationType.WeaponSlot,locationType.Level]]
+        self.vanillaLocations = [l for l in locationType if l in vanilla_list]
+        self.disabledLocations = [l for l in locationType if l not in include_list and l not in [locationType.Mush13,locationType.WeaponSlot]]
        
         level_setting = ui_settings.get(settingkey.SORA_LEVELS)
         self.level_one = False 
         if level_setting=="Level":
             self.setLevelChecks(1)
-            self.level_one = ui_settings.get(settingkey.LEVEL_ONE)
+            if locationType.Level in self.enabledLocations:
+                raise SettingsException("Please choose between Junk or Vanilla Checks when doing Level 1")
+            elif locationType.Level in self.vanillaLocations:
+                self.level_one = True
         elif level_setting=="ExcludeFrom50":
             self.setLevelChecks(50)
         elif level_setting=="ExcludeFrom99":
@@ -51,8 +67,16 @@ class RandomizerSettings():
             raise SettingsException("Invalid Level choice")
 
         self.split_levels = ui_settings.get(settingkey.SPLIT_LEVELS)
-        
-        self.random_growths = ui_settings.get(settingkey.STARTING_MOVEMENT)=="Random"
+        self.battle_level_rando = ui_settings.get(settingkey.BATTLE_LEVEL_RANDO)
+        self.battle_level_offset = ui_settings.get(settingkey.BATTLE_LEVEL_OFFSET)
+        self.battle_level_range = ui_settings.get(settingkey.BATTLE_LEVEL_RANGE)
+
+        self.starting_growth = ui_settings.get(settingkey.STARTING_MOVEMENT)
+        self.num_random_growths = 0
+        if self.starting_growth == "Random":
+            self.num_random_growths = 5
+        elif self.starting_growth == "3Random":
+            self.num_random_growths = 3
         self.chosen_random_growths = []
 
         self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [int(value) for value in ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.STARTING_REPORTS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
@@ -75,19 +99,22 @@ class RandomizerSettings():
         self.goofy_ap = ui_settings.get(settingkey.GOOFY_AP)
 
         ui_ability_pool = ui_settings.get(settingkey.ABILITY_POOL)
+        self.abilityListModifierString = ui_ability_pool
         if ui_ability_pool == "default":
             self.abilityListModifier = SeedModifier.defaultAbilityPool
         elif ui_ability_pool == "randomize":
             self.abilityListModifier = SeedModifier.randomAbilityPool
         elif ui_ability_pool == "randomize support":
             self.abilityListModifier = SeedModifier.randomSupportAbilityPool
+        elif ui_ability_pool == "randomize stackable":
+            self.abilityListModifier = SeedModifier.randomStackableAbilityPool
         else:
             raise SettingsException("Invalid ability pool option")
 
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
         self.auto_equip_abilities = ui_settings.get(settingkey.AUTO_EQUIP_START_ABILITIES)
         self.tt1_jailbreak = ui_settings.get(settingkey.TT1_JAILBREAK)
-        self.pureblood = ui_settings.get(settingkey.PUREBLOOD)
+        self.pureblood = True # ui_settings.get(settingkey.PUREBLOOD)
         self.antiform = ui_settings.get(settingkey.ANTIFORM)
         self.fifty_ap = ui_settings.get(settingkey.FIFTY_AP_BOOSTS)
         self.hintsType = ui_settings.get(settingkey.HINT_SYSTEM)
@@ -104,7 +131,7 @@ class RandomizerSettings():
             if self.reportDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:
                 raise SettingsException(f"Setting report depth to {self.reportDepth} will contradict either regular or reverse rando. Please use another setting")
             if self.storyDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:
-                raise SettingsException(f"Setting key item depth to {self.storyDepth} will contradict either regular or reverse rando. Please use another setting")
+                raise SettingsException(f"Setting visit unlock depth to {self.storyDepth} will contradict either regular or reverse rando. Please use another setting")
 
 
         self.prevent_self_hinting = ui_settings.get(settingkey.PREVENT_SELF_HINTING)
@@ -136,7 +163,11 @@ class RandomizerSettings():
         self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
                               'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
                               'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
-                              'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN)}
+                              'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN),
+                              'remove_cutscenes': ui_settings.get(settingkey.REMOVE_CUTSCENES),
+                              'party_member_rando': ui_settings.get(settingkey.PARTY_MEMBER_RANDO),
+                              'costume_rando': ui_settings.get(settingkey.COSTUME_RANDO),
+                              'revenge_limit_rando': ui_settings.get(settingkey.REVENGE_LIMIT_RANDO)}
         for setting in seedSettings.boss_settings + seedSettings.enemy_settings:
             value = ui_settings.get(setting.name)
             if value is not None:
@@ -150,13 +181,44 @@ class RandomizerSettings():
 
         self.statSanity = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear = ui_settings.get(settingkey.YEET_THE_BEAR)
+        self.chainLogic = ui_settings.get(settingkey.CHAIN_LOGIC)
+        self.chainLogicIncludeTerra = ui_settings.get(settingkey.CHAIN_LOGIC_TERRA)
+        self.chainLogicTerraLate = ui_settings.get(settingkey.CHAIN_LOGIC_MIN_TERRA)
+        self.chainLogicMinLength = ui_settings.get(settingkey.CHAIN_LOGIC_LENGTH)
+
+        if self.proofDepth in [locationDepth.FirstVisit,locationDepth.FirstBoss] and self.chainLogic:
+            raise SettingsException("Chain logic is not compatible with first visit proofs")
+        if self.storyDepth not in [locationDepth.Anywhere, locationDepth.SecondVisit] and self.chainLogic:
+            raise SettingsException("Chain logic is only compatible with visit unlock depth non-data and anywhere")
+        if self.chainLogic and self.regular_rando and self.reverse_rando:
+            raise SettingsException("Can't do chain logic with both regular and reverse rando")
+
+
         self.roxas_abilities_enabled = ui_settings.get(settingkey.ROXAS_ABILITIES_ENABLED)
+        self.disable_final_form = ui_settings.get(settingkey.DISABLE_FINAL_FORM)
         self.block_cor_skip = ui_settings.get(settingkey.BLOCK_COR_SKIP)
         self.block_shan_yu_skip = ui_settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
         self.pr_map_skip = ui_settings.get(settingkey.PR_MAP_SKIP)
+        self.atlantica_skip = ui_settings.get(settingkey.ATLANTICA_TUTORIAL_SKIP)
+        self.wardrobe_skip = ui_settings.get(settingkey.REMOVE_WARDROBE_ANIMATION)
         self.include_maps = ui_settings.get(settingkey.MAPS_IN_ITEM_POOL)
         self.include_recipes = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
+        self.include_accessories = ui_settings.get(settingkey.ACCESSORIES_IN_ITEM_POOL)
+        self.include_armor = ui_settings.get(settingkey.ARMOR_IN_ITEM_POOL)
         self.remove_popups = ui_settings.get(settingkey.REMOVE_POPUPS)
+
+        self.global_jackpot = ui_settings.get(settingkey.GLOBAL_JACKPOT)
+        self.global_lucky = ui_settings.get(settingkey.GLOBAL_LUCKY)
+        self.rich_enemies = ui_settings.get(settingkey.RICH_ENEMIES)
+        self.unlimited_mp = ui_settings.get(settingkey.UNLIMITED_MP)
+        self.fast_urns = ui_settings.get(settingkey.FAST_URNS)
+        
+        self.shop_elixirs = ui_settings.get(settingkey.SHOP_ELIXIRS)
+        self.shop_recoveries = ui_settings.get(settingkey.SHOP_RECOVERIES)
+        self.shop_boosts = ui_settings.get(settingkey.SHOP_BOOSTS)
+        self.shop_keyblades = ui_settings.get(settingkey.SHOP_KEYBLADES)
+        self.shop_unlocks = ui_settings.get(settingkey.SHOP_UNLOCKS)
+        self.shop_reports = ui_settings.get(settingkey.SHOP_REPORTS)
 
         self.point_hint_values = {"proof":ui_settings.get(settingkey.POINTS_PROOF),
                                     "form":ui_settings.get(settingkey.POINTS_FORM),
@@ -176,13 +238,39 @@ class RandomizerSettings():
                                     "boss_terra":ui_settings.get(settingkey.POINTS_BOSS_TERRA),
                                     "boss_final":ui_settings.get(settingkey.POINTS_BOSS_FINAL),
                                     "boss_other":ui_settings.get(settingkey.POINTS_BOSS_NORMAL),
-                                    "deaths":ui_settings.get(settingkey.POINTS_DEATH)}
+                                    "deaths":ui_settings.get(settingkey.POINTS_DEATH),
+                                    "collection_magic":ui_settings.get(settingkey.POINTS_MAGIC_COLLECT),
+                                    "collection_page":ui_settings.get(settingkey.POINTS_PAGE_COLLECT),
+                                    "collection_pouches":ui_settings.get(settingkey.POINTS_POUCHES_COLLECT),
+                                    "collection_proof":ui_settings.get(settingkey.POINTS_PROOF_COLLECT),
+                                    "collection_form":ui_settings.get(settingkey.POINTS_FORM_COLLECT),
+                                    "collection_summon":ui_settings.get(settingkey.POINTS_SUMMON_COLLECT),
+                                    "collection_ability":ui_settings.get(settingkey.POINTS_ABILITY_COLLECT),
+                                    "collection_report":ui_settings.get(settingkey.POINTS_REPORT_COLLECT),
+                                    "collection_visit":ui_settings.get(settingkey.POINTS_VISIT_COLLECT),
+                                    }
+
+        self.progression_hints = ui_settings.get(settingkey.PROGRESSION_HINTS)
+        self.progression_world_complete_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
+        self.progression_report_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_REPORT_BONUS)
+        self.progression_reveal_all = ui_settings.get(settingkey.PROGRESSION_HINTS_REVEAL_END)
+
+        self.shop_hintable = self.shop_unlocks or self.shop_reports or locationType.Puzzle in include_list or locationType.SYNTH in include_list
+        prog_points = ProgressionPoints()
+        prog_points.set_uncompressed(ui_settings.get(settingkey.PROGRESSION_POINT_SELECT))
+        self.progression_hint_settings = prog_points.get_points_json()
+        num_worlds = len(vanilla_worlds) + len(worlds_with_rewards) + (1 if self.shop_hintable else 0)
+        self.progression_hint_settings["HintCosts"] = prog_points.get_hint_thresholds(num_worlds)
+        self.progression_hint_settings["WorldCompleteBonus"] = [self.progression_world_complete_bonus]
+        self.progression_hint_settings["ReportBonus"] = [self.progression_report_bonus]
+        self.progression_hint_settings["FinalXemnasReveal"] = [1 if self.progression_reveal_all else 0]
+
 
         self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)
 
         self.spoiler_hint_values = [
-            item_type for item_type in ui_settings.get(settingkey.REVEAL_TYPES)
+            item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)
         ]
         if self.revealComplete:
             self.spoiler_hint_values.append("complete")
@@ -190,30 +278,61 @@ class RandomizerSettings():
             self.spoiler_hint_values.append(self.revealMode)
             if self.revealMode == "bossreports" and ui_settings.get("boss")=="Disabled":
                 raise SettingsException("Can't use report hint bosses option without boss randomization.")
+        if self.hintsType=="Spoiler" and self.revealMode == 'Disabled' and self.progression_hints:
+            raise SettingsException("Can't use progression hints with full spoiler hints")
 
-        self.extra_ics = ui_settings.get(settingkey.EXTRA_ICS)
         self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)
 
         self.tracker_includes = []
+        if self.progression_hints:
+            self.tracker_includes.append("ProgressionHints")
         if self.level_one:
             self.tracker_includes.append("Level1Mode")
-        if self.promiseCharm:
-            self.tracker_includes.append("PromiseCharm")
         self.tracker_includes.append(level_setting)
         if self.roxas_abilities_enabled:
             self.tracker_includes.append("better_stt")
+        if self.as_data_split:
+            self.tracker_includes.append("Data Split")
         if len(ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)) < 11:
             self.tracker_includes.append("visit_locking")
         if ui_settings.get(settingkey.STARTING_REPORTS)==13:
             self.tracker_includes.append("library")
-        if self.extra_ics:
-            self.tracker_includes.append("extra_ics")
         if self.hiscore_mode:
             self.tracker_includes.append("ScoreMode")
+
+        hintable_checks_list = ui_settings.get(settingkey.HINTABLE_CHECKS)
+        self.important_checks = []
+
+        if "magic" in hintable_checks_list:
+            self.important_checks+=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, 
+                        itemType.CURE, itemType.REFLECT, itemType.MAGNET]
+        if "proof" in hintable_checks_list:
+            self.important_checks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE,itemType.PROMISE_CHARM]
+        if "form" in hintable_checks_list:
+            self.important_checks+=[itemType.FORM,"Anti-Form"]
+        if "page" in hintable_checks_list:
+            self.important_checks+=[itemType.TORN_PAGE]
+        if "report" in hintable_checks_list:
+            self.important_checks+=[itemType.REPORT]
+        if "summon" in hintable_checks_list:
+            self.important_checks+=[itemType.SUMMON]
+        if "visit" in hintable_checks_list:
+            self.important_checks+=[itemType.STORYUNLOCK]
+        if "ability" in hintable_checks_list:
+            self.important_checks+=["Second Chance", "Once More"]
+        if "other" in hintable_checks_list:
+            self.important_checks+=[itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.OCSTONE,itemType.MUNNY_POUCH]
+
+        for check_type in ["magic","proof","form","page","summon","visit","ability","other","report"]:
+            if check_type not in hintable_checks_list:
+                self.point_hint_values[check_type] = 0
 
         # making tracker includes use all worlds and 
         for l in locationType:
             if l.value in self.enabledLocations:
+                if l.value!="Level": # don't duplicate the level info
+                    self.tracker_includes.append(l.value)
+            if l.value in self.vanillaLocations:
                 if l.value!="Level": # don't duplicate the level info
                     self.tracker_includes.append(l.value)
 
@@ -228,23 +347,25 @@ class RandomizerSettings():
         if self.reportDepth == self.proofDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
             raise SettingsException("Proof depth and report depth can't be set to the same boss category")
         if self.storyDepth == self.proofDepth and self.proofDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
-            raise SettingsException("Proof depth and key item depth can't be set to the same boss category")
+            raise SettingsException("Proof depth and visit unlock depth can't be set to the same boss category")
         if self.reportDepth == self.storyDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
-            raise SettingsException("Key item depth and report depth can't be set to the same boss category")
+            raise SettingsException("Visit unlock depth and report depth can't be set to the same boss category")
         
         if locationType.TTR in self.enabledLocations and not self.statSanity:
             raise SettingsException("Enabling Transport to Remembrance when not in Statsanity is incorrect. Enable Statsanity or disable TTR.")
 
+        if self.chainLogic and len(self.vanillaLocations)>0:
+            raise SettingsException("Currently can't do chain logic and vanilla worlds. Sorry about that. ")
+        if self.abilityListModifierString!="default" and len(self.vanillaLocations)>0:
+            raise SettingsException("Currently can't do randomized ability pools and vanilla worlds. Sorry about that. ")
+
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel
         if self.level_checks==99:
-            self.enabledLocations.append(locationType.Level)
             levels_to_exclude = self.excludeFrom99
         elif self.level_checks==50:
-            self.enabledLocations.append(locationType.Level)
             levels_to_exclude = self.excludeFrom50
         elif self.level_checks==1:
-            self.disabledLocations.append(locationType.Level)
             levels_to_exclude = range(1,100)
         else:
             raise SettingsException(f"Incorrect level choice {maxLevel}")

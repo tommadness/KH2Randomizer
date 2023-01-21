@@ -10,19 +10,28 @@ class HintsMenu(KH2Submenu):
         super().__init__(title='Hints', settings=settings, in_layout='horizontal')
 
         self.start_column()
+        self.start_group()
         self.add_option(settingkey.HINT_SYSTEM)
-        self.add_option(settingkey.EXTRA_ICS)
-        self.add_option(settingkey.SCORE_MODE)
         self.add_option(settingkey.REPORT_DEPTH)
+        self.add_option(settingkey.PROGRESSION_HINTS)
+        self.add_option(settingkey.PROGRESSION_HINTS_REVEAL_END)
+        self.add_option(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
+        self.add_option(settingkey.PROGRESSION_HINTS_REPORT_BONUS)
+        self.add_option(settingkey.SCORE_MODE)
         self.add_option(settingkey.REPORTS_REVEAL)
         self.add_option(settingkey.PREVENT_SELF_HINTING)
         self.add_option(settingkey.ALLOW_PROOF_HINTING)
         self.add_option(settingkey.ALLOW_REPORT_HINTING)
         self.add_option(settingkey.REVEAL_COMPLETE)
-        self.add_option(settingkey.REVEAL_TYPES)
-        self.end_column()
+        self.end_group()
+
+        self.start_group()
+        self.add_option(settingkey.HINTABLE_CHECKS)
+        self.end_group('Hintable Items')
+        self.end_column(stretch_at_end=False)
 
         self.start_column()
+        self.start_group()
         self.add_option(settingkey.POINTS_REPORT)
         self.add_option(settingkey.POINTS_PROOF)
         self.add_option(settingkey.POINTS_FORM)
@@ -31,10 +40,30 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_ABILITY)
         self.add_option(settingkey.POINTS_PAGE)
         self.add_option(settingkey.POINTS_VISIT)
-        self.add_option(settingkey.POINTS_AUX)    
+        self.add_option(settingkey.POINTS_AUX)
+        self.end_group('Item Point Values')
+
+        self.start_group()
+        self.add_option(settingkey.PROGRESSION_POINT_SELECT)
+        self.end_group("Progression Points")
         self.end_column()
 
         self.start_column()
+        self.start_group()
+        self.add_option(settingkey.POINTS_REPORT_COLLECT)
+        self.add_option(settingkey.POINTS_PROOF_COLLECT)
+        self.add_option(settingkey.POINTS_FORM_COLLECT)
+        self.add_option(settingkey.POINTS_MAGIC_COLLECT)
+        self.add_option(settingkey.POINTS_SUMMON_COLLECT)
+        self.add_option(settingkey.POINTS_ABILITY_COLLECT)
+        self.add_option(settingkey.POINTS_PAGE_COLLECT)
+        self.add_option(settingkey.POINTS_VISIT_COLLECT)
+        self.add_option(settingkey.POINTS_POUCHES_COLLECT)
+        self.end_group('Set Bonuses')
+        self.end_column()
+
+        self.start_column()
+        self.start_group()
         self.add_option(settingkey.POINTS_BONUS)
         self.add_option(settingkey.POINTS_COMPLETE)
         self.add_option(settingkey.POINTS_FORMLV)
@@ -45,12 +74,24 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_BOSS_SEPHIROTH)
         self.add_option(settingkey.POINTS_BOSS_TERRA)
         self.add_option(settingkey.POINTS_DEATH)
+        self.end_group('Misc Point Values')
         self.end_column()
         self.finalizeMenu()
 
         settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
-        settings.observe(settingkey.REPORTS_REVEAL, self._reveal_report_mode_changed)
+        # settings.observe(settingkey.REPORTS_REVEAL, self._reveal_report_mode_changed)
         settings.observe(settingkey.SCORE_MODE, self._hint_system_changed)
+        settings.observe(settingkey.PROGRESSION_HINTS, self._progression_toggle)
+
+    def _progression_toggle(self):
+        progression_on = self.settings.get(settingkey.PROGRESSION_HINTS)
+        # _, complete_widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS_COMPLETE_BONUS]
+        # _, report_widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS_REPORT_BONUS]
+        # _, reveal_widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS_REVEAL_END]
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on)
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on)
+        self.set_option_visibility(settingkey.PROGRESSION_POINT_SELECT, visible=progression_on)
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS_REVEAL_END, visible=progression_on)
 
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)
@@ -79,13 +120,32 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.POINTS_BOSS_TERRA, visible=(hint_system == 'Points' or score_mode_enabled == True))
         self.set_option_visibility(settingkey.POINTS_BOSS_FINAL, visible=(hint_system == 'Points' or score_mode_enabled == True))
         self.set_option_visibility(settingkey.POINTS_DEATH, visible=(hint_system == 'Points' or score_mode_enabled == True))
-        self.set_option_visibility(settingkey.REVEAL_TYPES, visible=hint_system == 'Spoiler')
+        self.set_option_visibility(settingkey.POINTS_MAGIC_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.POINTS_PAGE_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.POINTS_POUCHES_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.POINTS_PROOF_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.POINTS_FORM_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.POINTS_SUMMON_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.POINTS_ABILITY_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.POINTS_REPORT_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.POINTS_VISIT_COLLECT, visible=(hint_system == 'Points' or score_mode_enabled == True))
+        self.set_option_visibility(settingkey.HINTABLE_CHECKS, visible=hint_system != 'Disabled')
         self.set_option_visibility(settingkey.REVEAL_COMPLETE, visible=hint_system == 'Spoiler')
         self.set_option_visibility(settingkey.REPORTS_REVEAL, visible=hint_system == 'Spoiler')
+        if hint_system != "Spoiler":
+            setting, widget = self.widgets_and_settings_by_name[settingkey.REPORTS_REVEAL]
+            widget.setCurrentIndex(0)
+        if hint_system in ['JSmartee', 'Points', 'Spoiler', 'Path']:
+            setting, widget = self.widgets_and_settings_by_name[settingkey.HINTABLE_CHECKS]
+            for selected in setting.choice_keys:
+                if selected == "report":
+                    index = setting.choice_keys.index(selected)
+                    widget.item(index).setSelected(True)
+                    widget.item(index).setFlags(Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
 
     def _reveal_report_mode_changed(self):
         report_mode_enabled = self.settings.get(settingkey.REPORTS_REVEAL)
-        setting, widget = self.widgets_and_settings_by_name[settingkey.REVEAL_TYPES]
+        setting, widget = self.widgets_and_settings_by_name[settingkey.HINTABLE_CHECKS]
         for selected in setting.choice_keys:
             if selected == "report":
                 index = setting.choice_keys.index(selected)

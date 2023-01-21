@@ -42,6 +42,7 @@ class locationType(str, Enum):
     WeaponSlot = "Slot"
     TTR = "Transport to Remembrance"
     SYNTH = "Synthesis"
+    SHOP = "Shop"
 
 class locationCategory(str,Enum):
     CHEST = "Chest"
@@ -125,11 +126,19 @@ class itemType(str, Enum):
     KEYITEM = "KeyItem"
     STORYUNLOCK= "Story Unlock"
     MUNNY_POUCH = "Munny Pouch"
-    MEMBERSHIPCARD = "Membership Card"
+    MANUFACTORYUNLOCK = "Manufactory Unlock"
     TROPHY = "OC Trophy"
     OCSTONE = "Olympus Stone"
     GAUGE = "Gauge Up"
     SLOT = "Slot Up"
     SYNTH = "SYNTH"
     MULTIWORLD = "MultiWorld"
-    
+
+
+class BattleLevelOption(str, Enum):
+    NORMAL = 'Normal'
+    SHUFFLE = 'Shuffle'
+    OFFSET = 'Offset'
+    RANDOM_WITHIN_RANGE = 'Within Range of Normal'
+    RANDOM_MAX_50 = 'Random (Max 50)'
+    SCALE_TO_50 = 'Scale to 50'

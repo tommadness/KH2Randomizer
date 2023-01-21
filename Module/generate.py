@@ -3,6 +3,7 @@ import copy
 from typing import List
 from Class.exceptions import RandomizerExceptions
 from Module.RandomizerSettings import RandomizerSettings
+from Module.cosmetics import CosmeticsMod
 from Module.hints import Hints
 from Module.multiworld import MultiWorld, MultiWorldConfig
 from Module.newRandomize import Randomizer
@@ -18,7 +19,7 @@ def generateSeed(settings: RandomizerSettings,data):
         try:
             randomizer = Randomizer(settings)
             newSeedValidation.validateSeed(settings,randomizer)
-            hints = Hints.generateHints(randomizer.assignedItems,settings)
+            hints = Hints.generateHints(randomizer,settings)
             zipper = SeedZip(settings,randomizer,hints,data)
             return zipper.outputZip, zipper.spoiler_log, zipper.enemy_log
         except RandomizerExceptions as e:
@@ -57,7 +58,7 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], data):
 
     seed_outputs = []
     for settings,randomizer in zip(settingsSet,randomizers):
-        hints = Hints.generateHints(randomizer.assignedItems,settings)
+        hints = Hints.generateHints(randomizer,settings)
         zipper = SeedZip(settings,randomizer,hints,data,m.multi_output)
         seed_outputs.append((zipper.outputZip, zipper.spoiler_log, zipper.enemy_log))
 

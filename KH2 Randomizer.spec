@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-import os, glob, khbr, shutil
+import os, glob, shutil, importlib, khbr
 
 for root, dirs, files in os.walk(DISTPATH):
     for f in files:
@@ -29,6 +29,22 @@ def build_datas_recursive(paths):
   
   return datas
 
+def external_data_recursive(paths):
+  datas = []
+  
+  for path in paths:
+    for filename in glob.iglob(path, recursive=True):
+      dest_dirname = os.path.dirname(filename)
+      if dest_dirname == "":
+        dest_dirname = "."
+      else:
+        dest_dirname = dest_dirname.split("site-packages\\")[1]
+      
+      data_entry = (filename, dest_dirname)
+      datas.append(data_entry)
+      print(data_entry)
+  
+  return datas
 
 
 a = Analysis(
@@ -45,11 +61,13 @@ a = Analysis(
         'static/as_data_split/*.*',
         'static/better_stt/*.*',
         'static/map_skip/*.*',
+        'static/wardrobe/*.*',
         'static/*.bar',
         'static/*.script',
         'static/*.bin',
+        'static/*.json',
         'Module/icon.png',
-       ])+[(khbrpath+'/KH2/data/*','khbr/KH2/data'), (khbrpath+'/KH2/data/ai_mods/*','khbr/KH2/data/ai_mods')],
+       ]) + external_data_recursive([khbrpath+"/**/*.*"]),
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
