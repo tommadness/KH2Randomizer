@@ -680,8 +680,9 @@ class Hints:
                 }
                 
             for reportNumber in range(1,14):
-                if "Report" in hintsText["Reports"][reportNumber]["check"]:
-                    hintsText["Reports"][reportNumber]["check"] = "Ansem Report"
+                # cant make reports anonymous because then report ghosts are unable to know which report was hinted
+                # if "Report" in hintsText["Reports"][reportNumber]["check"]:
+                #     hintsText["Reports"][reportNumber]["check"] = "Ansem Report"
                 if hintsText["Reports"][reportNumber]["Location"] != "":
                     continue
                 hintsText["Reports"][reportNumber]["Location"] = report_master[reportNumber][0]

@@ -875,11 +875,12 @@ class KH2RandomizerApp(QMainWindow):
                     self.settings.apply_settings_string(backup_settings)
                     last_exception = e
             
+            for widget in self.widgets:
+                widget.update_widgets()
+            self.recalculate = True
+            self.get_num_enabled_locations()
+            self.recalculate = False
             if valid_seed:
-                for widget in self.widgets:
-                    widget.update_widgets()
-                self.recalculate = True
-                self.get_num_enabled_locations()
                 message = QMessageBox(text=f"Randomized your settings, don't forget to generate your seed.")
                 message.setWindowTitle("KH2 Seed Generator")
                 message.exec()

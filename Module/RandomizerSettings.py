@@ -301,6 +301,9 @@ class RandomizerSettings():
             self.tracker_includes.append("ScoreMode")
 
         hintable_checks_list = ui_settings.get(settingkey.HINTABLE_CHECKS)
+        
+        if self.hintsType in ["JSmartee","Path"] and "proof" not in hintable_checks_list:
+            raise SettingsException("Jsmartee and Path hints really need proofs hintable.")
         self.important_checks = []
 
         if "magic" in hintable_checks_list:
@@ -357,7 +360,8 @@ class RandomizerSettings():
         if self.chainLogic and len(self.vanillaLocations)>0:
             raise SettingsException("Currently can't do chain logic and vanilla worlds. Sorry about that. ")
         if self.abilityListModifierString!="default" and len(self.vanillaLocations)>0:
-            raise SettingsException("Currently can't do randomized ability pools and vanilla worlds. Sorry about that. ")
+            pass
+            # raise SettingsException("Currently can't do randomized ability pools and vanilla worlds. Sorry about that. ")
 
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel
