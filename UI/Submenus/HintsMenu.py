@@ -60,6 +60,9 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_VISIT_COLLECT)
         self.add_option(settingkey.POINTS_POUCHES_COLLECT)
         self.end_group('Set Bonuses')
+        self.start_group()
+        self.add_option(settingkey.SPOILER_REVEAL_TYPES)
+        self.end_group('Spoiled Items')
         self.end_column()
 
         self.start_column()

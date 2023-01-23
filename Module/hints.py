@@ -51,6 +51,7 @@ class Hints:
         allowReportHinting = settings.allow_report_hinting
         pointHintValues = settings.point_hint_values
         spoilerHintValues = settings.spoiler_hint_values
+        hintedItemValues = settings.hintable_check_types
         tracker_includes = settings.tracker_includes + ([] if not settings.shop_hintable or locationType.SYNTH.value in settings.tracker_includes else [locationType.SYNTH.value])
 
         importantChecks = settings.important_checks
@@ -71,7 +72,7 @@ class Hints:
         hintsText['hintsType'] = hintsType
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues
-        hintsText['reveal'] = spoilerHintValues
+        hintsText['hintableItems'] = hintedItemValues
         hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
         # All hints do the Shananas thing except JSmartee
@@ -688,6 +689,7 @@ class Hints:
                 hintsText["Reports"][reportNumber]["Location"] = report_master[reportNumber][0]
  
         if hintsType == "Spoiler":
+            hintsText['reveal'] = spoilerHintValues
             worldsToHint = []
             reportRestrictions = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
             reportsList = list(range(1,14))

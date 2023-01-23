@@ -99,6 +99,7 @@ POINTS_ABILITY_COLLECT = 'points_ability_collect'
 POINTS_REPORT_COLLECT = 'points_report_collect'
 POINTS_VISIT_COLLECT = 'points_visit_collect'
 HINTABLE_CHECKS = "hintable_checks"
+SPOILER_REVEAL_TYPES = 'spoiler_reveal_types'
 REVEAL_COMPLETE = "reveal_complete"
 REPORTS_REVEAL = "reports_reveal"
 PROOF_DEPTH = 'proof_depth'

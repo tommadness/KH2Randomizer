@@ -1280,6 +1280,23 @@ _all_settings = [
         shared=True,
         default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof"]
     ),
+    MultiSelect(
+        name=settingkey.SPOILER_REVEAL_TYPES,
+        ui_label='Spoiled Items',
+        choices={
+            'magic': 'Magic',
+            'form': 'Drive Forms',
+            'summon': 'Summon Charms',
+            'page': 'Torn Pages',
+            'ability': 'Second Chance/Once More',
+            'report': 'Ansem Reports',
+            'visit': 'Visit Unlocks',
+            'proof': 'Proofs',
+            'other': 'Aux. Unlocks'
+        },
+        shared=True,
+        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof"]
+    ),
 
     Toggle(
         name=settingkey.REVEAL_COMPLETE,

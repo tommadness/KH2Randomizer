@@ -269,8 +269,11 @@ class RandomizerSettings():
         self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)
 
-        self.spoiler_hint_values = [
+        self.hintable_check_types = [
             item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)
+        ]
+        self.spoiler_hint_values = [
+            item_type for item_type in ui_settings.get(settingkey.SPOILER_REVEAL_TYPES)
         ]
         if self.revealComplete:
             self.spoiler_hint_values.append("complete")
