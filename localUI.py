@@ -5,6 +5,7 @@ import textwrap
 
 from Class.exceptions import CantAssignItemException, RandomizerExceptions
 from List.configDict import locationType
+from Module import appconfig
 
 from Module.resources import resource_path
 from Module.tourneySpoiler import TourneySeedSaver
@@ -343,7 +344,6 @@ class KH2RandomizerApp(QMainWindow):
         random.seed(str(datetime.datetime.now()))
         self.setWindowTitle("KH2 Randomizer Seed Generator ({0})".format(LOCAL_UI_VERSION))
         self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
-        self.setMinimumWidth(1200)
         self.setup = None
         pagelayout = QVBoxLayout()
         seed_layout = QHBoxLayout()
@@ -470,6 +470,9 @@ class KH2RandomizerApp(QMainWindow):
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
         self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
         self.config_menu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
+        self.config_menu.addSeparator()
+        self.remember_window_position_action = self.config_menu.addAction('Remember Window Size/Position')
+        self.remember_window_position_action.setCheckable(True)
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
 
@@ -493,6 +496,17 @@ class KH2RandomizerApp(QMainWindow):
             presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
 
         self.custom_cosmetics.write_file()
+
+        if self.remember_window_position_action.isChecked():
+            obj = {
+                'width': self.width(),
+                'height': self.height(),
+                'x': self.x(),
+                'y': self.y()
+            }
+            appconfig.update_app_config('window_position', obj)
+        else:
+            appconfig.remove_app_config('window_position')
 
         e.accept()
 
@@ -1060,8 +1074,31 @@ if __name__=="__main__":
         window.resetSettings()
         pass
     window.show()
-    center = window.screen().geometry().center()
-    window.move(center.x() - window.width() / 2, center.y() - window.height() / 2)
+
+    app_config = appconfig.read_app_config()
+
+    if 'window_position' in app_config:
+        window.remember_window_position_action.setChecked(True)
+        window_position = app_config['window_position']
+        window.resize(window_position['width'], window_position['height'])
+        window.move(window_position['x'], window_position['y'])
+    else:
+        window.remember_window_position_action.setChecked(False)
+        screen_geometry = window.screen().geometry()
+        top_left = screen_geometry.topLeft()
+        bottom_right = screen_geometry.bottomRight()
+        screen_width = bottom_right.x() - top_left.x()
+        screen_height = bottom_right.y() - top_left.y()
+
+        # This is basically the best effort to get the window sized such that there aren't any scrollbars.
+        # It might need to get updated over time if any of the tabs gets any bigger.
+        # As of when this was written, 1400x900 fits everything other than when progression hints is turned on.
+        # If the screen is smaller than that, try to make it big enough without going full width/height.
+        window.resize(min(1400, screen_width - 64), min(900, screen_height - 64))
+
+        center = screen_geometry.center()
+        window.move(center.x() - window.width() / 2, center.y() - window.height() / 2)
+
     #commenting out first time setup for 2.999 version
     # configPath = Path("rando-config.yml")
     # if not configPath.is_file() or not os.environ.get("ALWAYS_SETUP") is None:
