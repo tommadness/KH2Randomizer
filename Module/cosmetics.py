@@ -8,9 +8,8 @@ import yaml
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
-from Module import appconfig
+from Module import appconfig, music
 from Module.RandomizerSettings import RandomizerSettings
-from Module.music import default_music_list
 
 
 class CustomCosmetics:
@@ -69,7 +68,7 @@ class CosmeticsMod:
         music_list_file_path = Path('musiclist.json')
         if not music_list_file_path.is_file():
             with open(music_list_file_path, mode='w', encoding='utf-8') as music_list_file:
-                json.dump(default_music_list, music_list_file, indent=4)
+                json.dump(music.kh2_music_list, music_list_file, indent=4)
         return music_list_file_path
 
     @staticmethod
@@ -94,35 +93,76 @@ class CosmeticsMod:
 
     @staticmethod
     def _collect_music_files(settings: SeedSettings) -> dict[str, list[Path]]:
-        """Returns music files grouped by category, based on what folder they reside."""
+        """Returns music files grouped by category."""
         result: dict[str, list[Path]] = {}
 
-        custom_music_path = CosmeticsMod.read_custom_music_path()
-        if custom_music_path is not None:
-            for child in [str(category_file).lower() for category_file in os.listdir(custom_music_path)]:
-                child_path = custom_music_path / child
-                if child_path.is_dir():
-                    category_songs: list[Path] = []
-                    for root, dirs, files in os.walk(child_path):
-                        root_path = Path(root)
-                        for file in files:
-                            _, extension = os.path.splitext(file)
-                            if extension.lower() == '.scd':
-                                file_path = root_path / file
-                                category_songs.append(file_path)
-                    result[child] = category_songs
+        categorize = settings.get(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES)
+        dmca_safe = settings.get(settingkey.MUSIC_RANDO_PC_DMCA_SAFE)
 
-        if settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2):
-            extracted_data_path = CosmeticsMod.extracted_data_path()
-            if extracted_data_path is not None:
-                default_music_path = extracted_data_path / 'kh2'
-                if default_music_path.is_dir():
-                    for default_song in default_music_list:
-                        file_path = default_music_path / default_song['filename']
-                        category = default_song['type'][0].lower()
-                        if category not in result:
-                            result[category] = []
-                        result[category].append(file_path)
+        if settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM):
+            custom_music_path = CosmeticsMod.read_custom_music_path()
+            if custom_music_path is not None:
+                for child in [str(category_file).lower() for category_file in os.listdir(custom_music_path)]:
+                    child_path = custom_music_path / child
+                    if child_path.is_dir():
+                        category_songs: list[Path] = []
+                        for root, dirs, files in os.walk(child_path):
+                            root_path = Path(root)
+                            for file in files:
+                                _, extension = os.path.splitext(file)
+                                if extension.lower() == '.scd':
+                                    file_path = root_path / file
+                                    category_songs.append(file_path)
+                        resolved_category = child
+                        if not categorize:
+                            resolved_category = 'wild'
+                        if resolved_category not in result:
+                            result[resolved_category] = []
+                        result[resolved_category] += category_songs
+
+        extracted_data_path = CosmeticsMod.extracted_data_path()
+        if extracted_data_path is not None:
+            def add_game_song(song_file_path: Path, category: str, song_dmca: bool):
+                if not categorize:
+                    category = 'wild'
+                if category not in result:
+                    result[category] = []
+                if not dmca_safe or not song_dmca:
+                    result[category].append(song_file_path)
+
+            if settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2):
+                kh2_path = extracted_data_path / 'kh2'
+                if kh2_path.is_dir():
+                    for kh2_song in music.kh2_music_list:
+                        add_game_song(
+                            song_file_path=kh2_path / kh2_song['filename'],
+                            category=kh2_song['type'][0].lower(),
+                            song_dmca=kh2_song.get('dmca', False)
+                        )
+
+            def add_other_game_music(enabled_key: str, game_music_path: Path, game_music_list: list):
+                if settings.get(enabled_key) and game_music_path.is_dir():
+                    for song in game_music_list:
+                        add_game_song(
+                            song_file_path=game_music_path / song['name'],
+                            category=song['kind'],
+                            song_dmca=song.get('dmca', False)
+                        )
+            add_other_game_music(
+                enabled_key=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
+                game_music_path=extracted_data_path / 'kh1' / 'remastered' / 'amusic',
+                game_music_list=music.kh1_music_list
+            )
+            add_other_game_music(
+                enabled_key=settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM,
+                game_music_path=extracted_data_path / 'recom' / 'STREAM' / '0001',
+                game_music_list=music.recom_music_list
+            )
+            add_other_game_music(
+                enabled_key=settingkey.MUSIC_RANDO_PC_INCLUDE_BBS,
+                game_music_path=extracted_data_path / 'bbs' / 'sound' / 'win' / 'bgm',
+                game_music_list=music.bbs_music_list
+            )
 
         return result
 

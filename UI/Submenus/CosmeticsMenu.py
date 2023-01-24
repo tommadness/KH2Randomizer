@@ -27,7 +27,13 @@ class CosmeticsMenu(KH2Submenu):
         self.start_group()
 
         self.add_option(settingkey.MUSIC_RANDO_ENABLED_PC)
-        self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2)
+        self.add_option(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES)
+        self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_KH1)
+        self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2)
+        self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM)
+        self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_BBS)
+        self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM)
+        self.add_option(settingkey.MUSIC_RANDO_PC_DMCA_SAFE)
         self.add_option(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES)
 
         self.music_count_text = QLabel()
@@ -68,21 +74,40 @@ class CosmeticsMenu(KH2Submenu):
         self.end_column()
 
         self.finalizeMenu()
-        settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2, self._include_kh2_changed)
+        settings.observe(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_KH1, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_BBS, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_PC_DMCA_SAFE, self.reload_music_widgets)
 
         self.reload_music_widgets()
         self._reload_custom_list()
         add_button.clicked.connect(self._add_custom)
         remove_button.clicked.connect(self._remove_selected_custom)
 
-    def _include_kh2_changed(self):
-        self.reload_music_widgets()
-
     def reload_music_widgets(self):
-        _, include_kh2_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2]
-        include_kh2_widget.setEnabled(CosmeticsMod.extracted_data_path() is not None)
+        _, include_kh1_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_KH1]
+        _, include_kh2_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_KH2]
+        _, include_recom_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM]
+        _, include_bbs_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_BBS]
 
+        extracted_data_path = CosmeticsMod.extracted_data_path()
+        if extracted_data_path is None:
+            include_kh1_widget.setEnabled(False)
+            include_kh2_widget.setEnabled(False)
+            include_recom_widget.setEnabled(False)
+            include_bbs_widget.setEnabled(False)
+        else:
+            include_kh1_widget.setEnabled((extracted_data_path / 'kh1').is_dir())
+            include_kh2_widget.setEnabled((extracted_data_path / 'kh2').is_dir())
+            include_recom_widget.setEnabled((extracted_data_path / 'recom').is_dir())
+            include_bbs_widget.setEnabled((extracted_data_path / 'bbs').is_dir())
+
+        _, include_custom_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM]
         custom_music_configured = CosmeticsMod.read_custom_music_path() is not None
+        include_custom_widget.setEnabled(custom_music_configured)
         self.no_custom_music.setVisible(not custom_music_configured)
         self.open_custom_music_folder.setVisible(custom_music_configured)
 
