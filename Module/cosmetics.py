@@ -8,6 +8,7 @@ import yaml
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
+from Module import appconfig
 from Module.RandomizerSettings import RandomizerSettings
 from Module.music import default_music_list
 
@@ -190,7 +191,7 @@ class CosmeticsMod:
 
     @staticmethod
     def read_openkh_path() -> Optional[Path]:
-        randomizer_config = CosmeticsMod._read_randomizer_config()
+        randomizer_config = appconfig.read_app_config()
         openkh_path = Path(randomizer_config.get('openkh_folder', 'to-nowhere'))
         if openkh_path.is_dir():
             return openkh_path
@@ -199,13 +200,11 @@ class CosmeticsMod:
 
     @staticmethod
     def write_openkh_path(selected_directory):
-        randomizer_config = CosmeticsMod._read_randomizer_config()
-        randomizer_config['openkh_folder'] = selected_directory
-        CosmeticsMod._write_randomizer_config(randomizer_config)
+        appconfig.update_app_config('openkh_folder', selected_directory)
 
     @staticmethod
     def read_custom_music_path() -> Optional[Path]:
-        randomizer_config = CosmeticsMod._read_randomizer_config()
+        randomizer_config = appconfig.read_app_config()
         custom_music_path = Path(randomizer_config.get('custom_music_folder', 'to-nowhere'))
         if custom_music_path.is_dir():
             return custom_music_path
@@ -214,21 +213,4 @@ class CosmeticsMod:
 
     @staticmethod
     def write_custom_music_path(selected_directory):
-        randomizer_config = CosmeticsMod._read_randomizer_config()
-        randomizer_config['custom_music_folder'] = selected_directory
-        CosmeticsMod._write_randomizer_config(randomizer_config)
-
-    @staticmethod
-    def _read_randomizer_config():
-        config_path = Path('randomizer-config.json').absolute()
-        if config_path.is_file():
-            with open(config_path, encoding='utf-8') as config_file:
-                return json.load(config_file)
-        else:
-            return {}
-
-    @staticmethod
-    def _write_randomizer_config(randomizer_config):
-        config_path = Path('randomizer-config.json').absolute()
-        with open(config_path, mode='w', encoding='utf-8') as config_file:
-            json.dump(randomizer_config, config_file, indent=4)
+        appconfig.update_app_config('custom_music_folder', selected_directory)
