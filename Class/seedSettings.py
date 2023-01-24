@@ -2093,6 +2093,19 @@ _all_settings = [
     ),
 
     Toggle(
+        name=settingkey.MUSIC_RANDO_PC_USE_CATEGORIES,
+        ui_label='Categorize Music',
+        shared=False,
+        default=True,
+        tooltip='''
+        If enabled, randomizes music separately by category ("boss" songs are only replaced with other "boss" songs,
+        "cutscene" songs are only replaced with other "cutscene" songs, etc.).
+        
+        If disabled, any song in the list can replace any other song.
+        '''
+    ),
+
+    Toggle(
         name=settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES,
         ui_label='Allow Duplicate Replacements',
         shared=False,
@@ -2106,8 +2119,31 @@ _all_settings = [
     ),
 
     Toggle(
-        name=settingkey.MUSIC_RANDO_PC_INCLUDE_ALL_KH2,
-        ui_label='Include All KH2 Music',
+        name=settingkey.MUSIC_RANDO_PC_DMCA_SAFE,
+        ui_label='DMCA Safe',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, excludes songs from the song list that are known to have some copyright concerns.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
+        ui_label='Include KH1 Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes all the base KH1 songs in the song list for music rando.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for KH1 to have been extracted using the
+        OpenKH Mods Manager setup wizard.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH2,
+        ui_label='Include KH2 Music',
         shared=False,
         default=False,
         tooltip='''
@@ -2116,6 +2152,44 @@ _all_settings = [
         Requires the OpenKH folder to be set up in the Configure menu.
         '''
     ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM,
+        ui_label='Include Re:Chain of Memories Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes all the base Re:Chain of Memories songs in the song list for music rando.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for Re:Chain of Memories to have been
+        extracted using the OpenKH Mods Manager setup wizard.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_BBS,
+        ui_label='Include Birth by Sleep Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes all the base Birth by Sleep songs in the song list for music rando.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for BBS to have been extracted using the
+        OpenKH Mods Manager setup wizard.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM,
+        ui_label='Include Custom Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes any added custom music in the song list for music rando.
+
+        Requires the custom music folder to be set up in the Configure menu.
+        '''
+    )
 ]
 
 
