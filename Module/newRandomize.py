@@ -578,7 +578,7 @@ class Randomizer():
                 current_inventory+=[94,95,96,98,99,100,102,103,104,106,107,108,564,565,566]
 
             def open_location(inv,loc):
-                return validator.is_location_available(inv,loc) and (not settings.nightmare or loc.LocationId !=560)
+                return validator.is_location_available(inv,loc) and (not settings.nightmare or loc.LocationId !=560) and (locationType.SYNTH not in loc.LocationTypes)
 
             accessible_locations = [[l for l in validLocations if open_location(current_inventory,l)]]
             for items in locking_items:

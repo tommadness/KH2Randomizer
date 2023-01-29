@@ -19,7 +19,7 @@ MOD_MANAGER_EXE_FILE_NAME = 'OpenKh.Tools.ModsManager.exe'
 MOD_MANAGER_CONFIG_FILE_NAME = 'mods-manager.yml'
 # Note - we choose to target a specific known version so that we know exactly what files we'll find and their format
 #      - there's definite tradeoff here since we could get out of date, but this way is at least under our control
-BACKEND_DOWNLOAD_URI = 'https://github.com/Sirius902/LuaBackend/releases/download/v1.7.1-hook/DBGHELP.zip'
+BACKEND_DOWNLOAD_URI = 'https://github.com/Sirius902/LuaBackend/releases/download/v1.7.2-hook/DBGHELP.zip'
 
 
 class LuaBackendSetupDialog(QDialog):

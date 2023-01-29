@@ -193,6 +193,7 @@ class CosmeticsMod:
         music_list_file_path = CosmeticsMod.bootstrap_music_list_file()
         with open(music_list_file_path, encoding='utf-8') as music_list_file:
             music_metadata = json.load(music_list_file)
+        random.shuffle(music_metadata)
         for info in music_metadata:
             filename = info['filename']
             title = info['title']
