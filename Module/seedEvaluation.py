@@ -4,6 +4,7 @@ from typing import Any
 from Class.exceptions import ValidationException
 from Class.newLocationClass import KH2Location
 from List.ItemList import Items
+from List.configDict import locationType
 from Module.RandomizerSettings import RandomizerSettings
 from List.NewLocationList import get_all_parent_edge_reqs
 
@@ -35,9 +36,6 @@ class LocationInformedSeedValidator:
         if settings.reverse_rando:
             self.location_graphs.append(randomizer.reverse_locations.location_graph)
 
-        results = ValidationResult(True,True)
-
-        
         self.location_requirements = {}
         for graph in self.location_graphs:
             for node in graph.node_list():
@@ -47,6 +45,22 @@ class LocationInformedSeedValidator:
                         self.location_requirements[loc] += reqs
                     else:
                         self.location_requirements[loc] = reqs
+
+        # def get_recipe(loc):
+        #     for r in randomizer.synthesis_recipes:
+        #         if r.location == loc:
+        #             return r
+        #     return None
+
+        # for loc in self.location_requirements:
+        #     if locationType.SYNTH in loc.LocationTypes:
+        #         # this is a synth location, we need to get its recipe to know what locks it logically
+        #         recipe = get_recipe(loc)
+        #         for req in recipe.requirements:
+        #             synth_item_id = req.item_id
+        #             # now that we know what synth item is in the recipe, we can determine what to add to the logic
+        #             # TODO FINISH
+
 
     def validateSeed(self, settings: RandomizerSettings, randomizer: Randomizer, verbose=True):
 
