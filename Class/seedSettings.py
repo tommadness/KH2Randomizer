@@ -1384,7 +1384,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'Vanilla': 'Vanilla',
             'Set 0': 'Set 0',
             'Set Infinity': 'Set Infinity',
-            'Maximum': 'Random Values'
+            'Random Swap': 'Random Swap',
+            'Random Values': 'Random Values'
         },
         default='Vanilla',
         tooltip='Randomizes the revenge value limit of each enemy/boss in the game. Can be either set to 0, set to basically infinity, randomly swapped, or set to a random value between 0 and 200'
