@@ -1,17 +1,15 @@
 import json
 import os
 import random
-import shutil
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 
 import yaml
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
+from Module import appconfig, music
 from Module.RandomizerSettings import RandomizerSettings
-from Module.music import default_music_list
-from Module.resources import resource_path
 
 
 class CustomCosmetics:
@@ -45,125 +43,134 @@ class CustomCosmetics:
 class CosmeticsMod:
 
     @staticmethod
-    def cosmetics_mod_path(openkh_path: Path, create_if_missing: bool) -> Optional[Path]:
-        """Returns the path to the cosmetics mod (within OpenKH `mods` folder)."""
-        cosmetics_mod_path = openkh_path / 'mods' / 'kh2' / 'KH2Randomizer-Cosmetics-PC'
-        if create_if_missing:
-            cosmetics_mod_path.mkdir(parents=True, exist_ok=True)
-        if cosmetics_mod_path.is_dir():
-            return cosmetics_mod_path
-        else:
+    def extracted_data_path() -> Optional[Path]:
+        """Returns the path to extracted game data"""
+        openkh_path = CosmeticsMod.read_openkh_path()
+        if openkh_path is None:
             return None
 
+        mods_manager_yml_path = openkh_path / 'mods-manager.yml'
+        if not mods_manager_yml_path.is_file():
+            return None
+
+        with open(mods_manager_yml_path, encoding='utf-8') as mod_manager_file:
+            mod_manager_yaml = yaml.safe_load(mod_manager_file)
+            game_data_path = mod_manager_yaml.get('gameDataPath', 'to-nowhere')
+            extracted_data_path = Path(game_data_path)
+            if extracted_data_path.is_dir():
+                return extracted_data_path
+            else:
+                return None
+
     @staticmethod
-    def bootstrap_mod():
-        """Creates any empty folders and default files needed for the cosmetics mod."""
-        openkh_path = CosmeticsMod.read_openkh_path()
-        if openkh_path is None:
-            raise Exception('OpenKH path not found')
-
-        cosmetics_mod_path = CosmeticsMod.cosmetics_mod_path(openkh_path, create_if_missing=True)
-
-        music_path = cosmetics_mod_path / 'music'
-
-        # Create empty default music folders if needed
-        if not music_path.is_dir():
-            music_path.mkdir(parents=True)
-            for folder in ['battle', 'boss', 'cutscene', 'field', 'title', 'wild', 'your-own-category']:
-                (music_path / folder).mkdir()
-
-        # Create a default music config file if needed
-        music_list_file_path = cosmetics_mod_path / 'musiclist.json'
+    def bootstrap_music_list_file() -> Path:
+        """Creates the musiclist file if needed."""
+        music_list_file_path = Path('musiclist.json')
         if not music_list_file_path.is_file():
             with open(music_list_file_path, mode='w', encoding='utf-8') as music_list_file:
-                json.dump(default_music_list, music_list_file, indent=4)
-
-        mod_yml_path = cosmetics_mod_path / 'mod.yml'
-        if not mod_yml_path.is_file():
-            with open(mod_yml_path, 'w', encoding='utf-8') as mod_yml_file:
-                mod_yml = CosmeticsMod._get_mod_yml(cosmetics_mod_path, settings=None)
-                yaml.dump(mod_yml, mod_yml_file, encoding='utf-8')
-
-        icon_path = cosmetics_mod_path / 'icon.png'
-        if not icon_path.is_file():
-            resource = Path(resource_path('UI/Submenus/icons/misc/concert.png'))
-            shutil.copyfile(src=resource, dst=icon_path)
+                json.dump(music.kh2_music_list, music_list_file, indent=4)
+        return music_list_file_path
 
     @staticmethod
-    def randomize_cosmetics(settings: RandomizerSettings):
-        music_rando_enabled = settings.ui_settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
-        if not music_rando_enabled:
-            return
-
-        openkh_path = CosmeticsMod.read_openkh_path()
-        if openkh_path is None:
-            return
-
-        CosmeticsMod.bootstrap_mod()
-        cosmetics_mod_path = CosmeticsMod.cosmetics_mod_path(openkh_path, create_if_missing=False)
-
-        with open(cosmetics_mod_path / 'mod.yml', 'w', encoding='utf-8') as mod_yml_file:
-            mod_yml = CosmeticsMod._get_mod_yml(cosmetics_mod_path, settings.ui_settings)
-            yaml.dump(mod_yml, mod_yml_file, encoding='utf-8')
+    def bootstrap_custom_music_folder(custom_music_path: Path):
+        """Creates folders for each of the default music categories."""
+        for folder in ['atlantica', 'battle', 'boss', 'cutscene', 'field', 'title', 'wild']:
+            (custom_music_path / folder).mkdir(exist_ok=True)
 
     @staticmethod
-    def get_music_summary() -> dict[str, int]:
-        openkh_path = CosmeticsMod.read_openkh_path()
-        if openkh_path is None:
-            return {}
+    def randomize_music(settings: RandomizerSettings) -> Tuple[list[dict], dict[str, str]]:
+        """
+        Randomizes music, returning a list of assets to be added to the seed mod and a dictionary of which song was
+        replaced by which replacement.
+        """
+        return CosmeticsMod._get_music_assets(settings.ui_settings)
 
-        cosmetics_mod_path = openkh_path / 'mods' / 'kh2' / 'KH2Randomizer-Cosmetics-PC'
-        music_files = CosmeticsMod._collect_music_files(cosmetics_mod_path)
+    @staticmethod
+    def get_music_summary(settings: SeedSettings) -> dict[str, int]:
+        music_files = CosmeticsMod._collect_music_files(settings)
 
         return {category: len(song_list) for category, song_list in music_files.items()}
 
     @staticmethod
-    def _collect_music_files(cosmetics_mod_path: Path) -> dict[str, list[Path]]:
-        """Returns music files grouped by category, based on what folder they reside."""
+    def _collect_music_files(settings: SeedSettings) -> dict[str, list[Path]]:
+        """Returns music files grouped by category."""
         result: dict[str, list[Path]] = {}
-        music_path = cosmetics_mod_path / 'music'
-        if not music_path.is_dir():
-            return result
 
-        for child in [str(category_file).lower() for category_file in os.listdir(music_path)]:
-            child_path = music_path / child
-            if child_path.is_dir():
-                category_songs: list[Path] = []
-                for root, dirs, files in os.walk(child_path):
-                    root_path = Path(root)
-                    for file in files:
-                        _, extension = os.path.splitext(file)
-                        if extension.lower() == '.scd':
-                            relative_path = (root_path / file).relative_to(cosmetics_mod_path)
-                            category_songs.append(relative_path)
-                result[child] = category_songs
-        
-        default_music_path = cosmetics_mod_path.parent.parent / "data"
-        if default_music_path.is_dir():
-            for default_song in default_music_list:
-                relative_path = Path("../../data") / default_song["filename"]
-                result[default_song["type"][0].lower()].append(relative_path)
-        
+        categorize = settings.get(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES)
+        dmca_safe = settings.get(settingkey.MUSIC_RANDO_PC_DMCA_SAFE)
+
+        if settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM):
+            custom_music_path = CosmeticsMod.read_custom_music_path()
+            if custom_music_path is not None:
+                for child in [str(category_file).lower() for category_file in os.listdir(custom_music_path)]:
+                    child_path = custom_music_path / child
+                    if child_path.is_dir():
+                        category_songs: list[Path] = []
+                        for root, dirs, files in os.walk(child_path):
+                            root_path = Path(root)
+                            for file in files:
+                                _, extension = os.path.splitext(file)
+                                if extension.lower() == '.scd':
+                                    file_path = root_path / file
+                                    category_songs.append(file_path)
+                        resolved_category = child
+                        if not categorize:
+                            resolved_category = 'wild'
+                        if resolved_category not in result:
+                            result[resolved_category] = []
+                        result[resolved_category] += category_songs
+
+        extracted_data_path = CosmeticsMod.extracted_data_path()
+        if extracted_data_path is not None:
+            def add_game_song(song_file_path: Path, category: str, song_dmca: bool):
+                if not categorize:
+                    category = 'wild'
+                if category not in result:
+                    result[category] = []
+                if not dmca_safe or not song_dmca:
+                    result[category].append(song_file_path)
+
+            if settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2):
+                kh2_path = extracted_data_path / 'kh2'
+                if kh2_path.is_dir():
+                    for kh2_song in music.kh2_music_list:
+                        add_game_song(
+                            song_file_path=kh2_path / kh2_song['filename'],
+                            category=kh2_song['type'][0].lower(),
+                            song_dmca=kh2_song.get('dmca', False)
+                        )
+
+            def add_other_game_music(enabled_key: str, game_music_path: Path, game_music_list: list):
+                if settings.get(enabled_key) and game_music_path.is_dir():
+                    for song in game_music_list:
+                        add_game_song(
+                            song_file_path=game_music_path / song['name'],
+                            category=song['kind'],
+                            song_dmca=song.get('dmca', False)
+                        )
+            add_other_game_music(
+                enabled_key=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
+                game_music_path=extracted_data_path / 'kh1' / 'remastered' / 'amusic',
+                game_music_list=music.kh1_music_list
+            )
+            add_other_game_music(
+                enabled_key=settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM,
+                game_music_path=extracted_data_path / 'recom' / 'STREAM' / '0001',
+                game_music_list=music.recom_music_list
+            )
+            add_other_game_music(
+                enabled_key=settingkey.MUSIC_RANDO_PC_INCLUDE_BBS,
+                game_music_path=extracted_data_path / 'bbs' / 'sound' / 'win' / 'bgm',
+                game_music_list=music.bbs_music_list
+            )
 
         return result
 
     @staticmethod
-    def _get_mod_yml(cosmetics_mod_path: Path, settings: Optional[SeedSettings]) -> dict:
-        raw_yaml = {
-            'title': 'KH2 Randomizer Cosmetics (PC only)',
-            'description': 'Contains randomized cosmetics from the KH2 Randomizer seed generator.'
-        }
-
-        assets = []
-        if settings is not None:
-            assets += CosmeticsMod._get_music_assets(cosmetics_mod_path, settings)
-
-        raw_yaml['assets'] = assets
-        return raw_yaml
-
-    @staticmethod
-    def _get_music_assets(cosmetics_mod_path: Path, settings: SeedSettings) -> list[dict]:
-        music_list_file_path = cosmetics_mod_path / 'musiclist.json'
+    def _get_music_assets(settings: SeedSettings) -> Tuple[list[dict], dict[str, str]]:
+        music_rando_enabled = settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
+        if not music_rando_enabled:
+            return [], {}
 
         allow_duplicates = settings.get(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES)
 
@@ -172,7 +179,7 @@ class CosmeticsMod:
         # Secondary copy of the music. Used to refill the lists once all are gone.
         backup_files_by_categories: dict[str, list[Path]] = {}
 
-        music_files = CosmeticsMod._collect_music_files(cosmetics_mod_path)
+        music_files = CosmeticsMod._collect_music_files(settings)
         for category, song_list in music_files.items():
             main_list = song_list.copy()
             random.shuffle(main_list)
@@ -181,10 +188,12 @@ class CosmeticsMod:
             backup_files_by_categories[category] = song_list
 
         assets = []
-        replacements = {}
+        replacements: dict[str, str] = {}
 
+        music_list_file_path = CosmeticsMod.bootstrap_music_list_file()
         with open(music_list_file_path, encoding='utf-8') as music_list_file:
             music_metadata = json.load(music_list_file)
+        random.shuffle(music_metadata)
         for info in music_metadata:
             filename = info['filename']
             title = info['title']
@@ -219,27 +228,30 @@ class CosmeticsMod:
 
                         break
 
-        spoiler_path = cosmetics_mod_path / 'music-replacement-list.txt'
-        with open(spoiler_path, mode='w', encoding='utf-8') as spoiler_file:
-            for original, replacement in replacements.items():
-                spoiler_file.write('[{}] was replaced by [{}]\n'.format(original, replacement))
-
-        return assets
+        return assets, replacements
 
     @staticmethod
     def read_openkh_path() -> Optional[Path]:
-        config_path = Path("randomizer-config.json").absolute()
-        if config_path.is_file():
-            with open(config_path, encoding='utf-8') as music_config:
-                raw_json = json.load(music_config)
-                openkh_path = Path(raw_json.get('openkh_folder', 'to-nowhere'))
-                if openkh_path.is_dir():
-                    return openkh_path
-        return None
+        randomizer_config = appconfig.read_app_config()
+        openkh_path = Path(randomizer_config.get('openkh_folder', 'to-nowhere'))
+        if openkh_path.is_dir():
+            return openkh_path
+        else:
+            return None
 
     @staticmethod
     def write_openkh_path(selected_directory):
-        config_path = Path("randomizer-config.json").absolute()
-        with open(config_path, mode='w', encoding='utf-8') as music_config:
-            out_data = {'openkh_folder': selected_directory}
-            json.dump(out_data, music_config, indent=4)
+        appconfig.update_app_config('openkh_folder', selected_directory)
+
+    @staticmethod
+    def read_custom_music_path() -> Optional[Path]:
+        randomizer_config = appconfig.read_app_config()
+        custom_music_path = Path(randomizer_config.get('custom_music_folder', 'to-nowhere'))
+        if custom_music_path.is_dir():
+            return custom_music_path
+        else:
+            return None
+
+    @staticmethod
+    def write_custom_music_path(selected_directory):
+        appconfig.update_app_config('custom_music_folder', selected_directory)

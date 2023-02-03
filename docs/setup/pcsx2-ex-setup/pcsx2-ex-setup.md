@@ -8,10 +8,10 @@ This guide will help you set up Randomizer Mod for the PCSX2-EX (PS2 Emulator) v
 
 To set up Rando, Extract, Download and/or Install the following:
 
-- [Custom Build of OpenKH Mod Manager](https://github.com/shananas/OpenKh/releases/download/release-372-KH2Rando/openkh-modmanager.zip)
+- [Custom Build of OpenKH Mod Manager](https://github.com/aliosgaming/OpenKh/releases/download/v3.0.0/OpenKH.Mod.Manager.2023.zip)
     - OpenKH Pre-requisite: [.NET Desktop Runtime 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime)
 - A copy of KINGDOM HEARTS II FINAL MIX+, ripped in an ISO format. (will not be provided here for legal reasons)
-- [PCSX2-EX](https://cdn.discordapp.com/attachments/712837252279173153/974389136540713030/PCSX2-EX.v3.10.0.7z) (edit the downloaded archive: remove the “, attachment” bit on the extension file)
+- [PCSX2-EX](https://cdn.discordapp.com/attachments/803658031749267517/1066421486652497950/PCSX2-EX.v3.10.0.zip) (edit the downloaded archive: remove the “, attachment” bit on the extension file)
     - PCSX2-EX Pre-requisite: PCSX2 BIOS files (will not be provided here for legal reasons)
 - [KINGDOM HEARTS II FINAL MIX Randomizer Seed Generator](https://github.com/tommadness/KH2Randomizer/releases)
 - [Special PNACH](https://cdn.discordapp.com/attachments/811885954754412545/893022782412193812/F266B00B_OpenKH_fixes.pnach) to mitigate gameplay-related problems caused by setting the game to the English region (X to attack/confirm, O to jump/cancel). Disregard this if you want to play with JP controls (X to jump/cancel, O to attack/confirm)

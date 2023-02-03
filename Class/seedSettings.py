@@ -38,7 +38,7 @@ class Setting:
         self.ui_label = ui_label
         self.shared = shared
         self.default = default
-        self.tooltip = tooltip
+        self.tooltip = textwrap.dedent(tooltip).strip()
         if standalone_label == '':
             self.standalone_label = ui_label
         else:
@@ -307,12 +307,38 @@ class MultiSelectTristate(Setting):
         
 
 _drive_exp_curve_tooltip_text = textwrap.dedent('''
-        Experience curve options, inspired by KH1's experience curves. Midday and dusk will reduce the total 
-                EXP needed to get to Level 7, but levels 2,3, and 4 will need more EXP to compensate.
-        Dawn: This is the default exp rate from the game, adjusted as well from the multipiers.
-        Midday: Early levels (2,3,4) have their required exp increased, later levels (5,6,7) have been lowered.
-        Dusk: Early levels (2,3,4) have their required exp further increased, and later levels (5,6,7) are lowered more. 
-    ''')
+        Experience curve options, inspired by KH1's experience curves. Midday and Dusk reduce the total experience
+        needed to get to Level 7, but levels 2-4 require more experience to compensate.
+        
+        Dawn - The default experience rate.
+        
+        Midday - Early levels (2-4) require more experience, but later levels (5-7) require less.
+        
+        Dusk - Early levels (2-4) require even more experience, but later levels (5-7) require even less.
+''')
+
+_drive_exp_multiplier_tooltip_text = textwrap.dedent('''
+        Adjusts the amount of experience needed to reach each drive form level.
+        For example, setting the multiplier to 2.0 cuts the required experience to reach each level in half.
+''')
+
+_depth_options_text = textwrap.dedent('''
+
+        Superbosses - Force onto superbosses only (Data Organization/Absent Silhouette/Sephiroth/Terra).
+        
+        First Visit - Force into a first visit (only for the 13 main hub worlds with portals).
+        
+        Second Visit - Force into a second visit (only for the 13 main hub worlds with portals).
+        
+        Non-Superboss - Cannot be on a superboss (Data Organization/Absent Silhouette/Sephiroth/Terra).
+        All other locations are possible.
+        
+        First Visit Boss - Force onto the first visit boss of a world (only for the 13 main hub worlds with portals).
+        
+        Second Visit Boss - Force onto the last boss of a world (only for the 13 main hub worlds with portals).
+        
+        Anywhere - No restriction.
+''')
 
 _all_settings = [
     SingleSelect(
@@ -326,7 +352,7 @@ _all_settings = [
         shared=True,
         default='ExcludeFrom50',
         randomizable=True,
-        tooltip="Maximum Level for Randomized Rewards that aren't `junk`"
+        tooltip="Maximum Level for randomized rewards."
     ),
 
     Toggle(
@@ -342,17 +368,23 @@ _all_settings = [
         ui_label='Dream Weapon Matters',
         shared=True,
         default=False,
-        tooltip='Makes the dream weapon choice at the beginning of the game change when you get items/abillities on levels (either with the same offsets as the vanilla game, or the adjusted values for max level 50)',
+        tooltip='''
+        Makes the dream weapon choice at the beginning of the game change when you get items/abilities on levels
+        (either with the same offsets as the vanilla game, or the adjusted values for max level 50).
+        ''',
         randomizable=True
     ),
+
     Toggle(
         name=settingkey.STATSANITY,
         ui_label='Bonus Rewards as Items (Statsanity)',
         shared=True,
         default=True,
         randomizable=True,
-        tooltip=textwrap.dedent('''Takes HP, MP, Drive, Accessory Slot, Armor Slot, and Item Slot upgrades from the normal bonus 
-popup locations and lets them appear in chests. Those bonus locations can now have other items in them.'''),
+        tooltip='''
+        Takes HP, MP, Drive, Accessory Slot, Armor Slot, and Item Slot upgrades from their normal bonus locations and
+        lets them appear in chests or other locations. Those bonus locations can now have other items in them.
+        ''',
     ),
 
     FloatSpinner(
@@ -364,7 +396,11 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=0.5,
         shared=True,
         default=2.0,
-        randomizable=True
+        randomizable=True,
+        tooltip='''
+        Adjusts the amount of experience needed to reach each level.
+        For example, setting the multiplier to 2.0 cuts the required experience to reach each level in half.
+        '''
     ),
 
     FloatSpinner(
@@ -376,7 +412,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=0.5,
         shared=True,
         default=7.0,
-        randomizable=True
+        randomizable=True,
+        tooltip=_drive_exp_multiplier_tooltip_text
     ),
 
     FloatSpinner(
@@ -388,7 +425,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=0.5,
         shared=True,
         default=3.0,
-        randomizable=True
+        randomizable=True,
+        tooltip=_drive_exp_multiplier_tooltip_text
     ),
 
     FloatSpinner(
@@ -400,7 +438,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=0.5,
         shared=True,
         default=4.0,
-        randomizable=True
+        randomizable=True,
+        tooltip=_drive_exp_multiplier_tooltip_text
     ),
 
     FloatSpinner(
@@ -412,7 +451,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=0.5,
         shared=True,
         default=3.0,
-        randomizable=True
+        randomizable=True,
+        tooltip=_drive_exp_multiplier_tooltip_text
     ),
 
     FloatSpinner(
@@ -424,7 +464,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=0.5,
         shared=True,
         default=3.5,
-        randomizable=True
+        randomizable=True,
+        tooltip=_drive_exp_multiplier_tooltip_text
     ),
 
     FloatSpinner(
@@ -436,9 +477,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=0.5,
         shared=True,
         default=2.0,
-        randomizable=True
+        randomizable=True,
+        tooltip='''
+        Adjusts the amount of experience needed to reach each summon level.
+        For example, setting the multiplier to 2.0 cuts the required experience to reach each level in half.
+        '''
     ),
-    
+
     SingleSelect(
         name=settingkey.SORA_EXP_CURVE,
         ui_label='Sora',
@@ -450,13 +495,16 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default=expCurve.DAWN.name,
-        tooltip=textwrap.dedent('''
-            Experience curve options, inspired by KH1's experience curves. Midday and dusk will reduce the total 
-                EXP needed to get to 99, but levels before 50 will take more EXP to compensate
-            Dawn: This is the default exp rate from the game, adjusted as well from the multipiers.
-            Midday: Early levels (up to 50) have their required exp increased, and 50 and later have been lowered.
-            Dusk: Early levels (up to 50) have their required exp further increased, and 50 and higher are lowered more. 
-        '''),
+        tooltip='''
+        Experience curve options, inspired by KH1's experience curves. Midday and Dusk reduce the total experience
+        needed to get to level 99, but levels up to 50 require more experience to compensate.
+        
+        Dawn - The default experience rate.
+        
+        Midday - Early levels (up to 50) require more experience, but levels 51-99 require less.
+        
+        Dusk - Early levels (up to 50) require even more experience, but levels 51-99 require even less.
+        ''',
         randomizable=True
     ),
     
@@ -566,7 +614,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         standalone_label='Garden of Assemblage in Pool',
         shared=True,
         default=True,
-        randomizable=True
+        randomizable=True,
+        tooltip='Randomizes the items in the treasure chests in the Garden of Assemblage.'
     ),
 
     Toggle(
@@ -574,7 +623,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
        ui_label='Starting Abilities Equipped',
        shared=True,
        default=False,
-       tooltip='Start with abilities auto-equiped (except ones from critical bonuses)'
+       tooltip='Start with abilities auto-equipped (except ones from critical bonuses).'
     ),
 
     SingleSelect(
@@ -591,28 +640,35 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default='Level_1',
-        tooltip=textwrap.dedent('''
-            None - No guaranteed starting growth.
-            3 Random - Start with 3 individual growths at random.
-            5 Random - Start with 5 individual growths at random.
-            Level 1 - Start with level 1 of all growth abilities.
-            Level 2 - Start with level 2 of all growth abilities.
-            Level 3 - Start with level 3 of all growth abilities.
-            Max - Start with max level of all growth abilities.
-        '''),
+        tooltip='''
+        None - No guaranteed starting growth.
+        
+        3 Random - Start with 3 individual growths at random.
+        
+        5 Random - Start with 5 individual growths at random.
+        
+        Level 1 - Start with level 1 of all growth abilities.
+        
+        Level 2 - Start with level 2 of all growth abilities.
+        
+        Level 3 - Start with level 3 of all growth abilities.
+        
+        Max - Start with the maximum level of all growth abilities.
+        ''',
         randomizable=["Disabled","3Random","Random","Level_1","Level_2","Level_3","Level_4"]
     ),
 
     IntSpinner(
         name=settingkey.STARTING_REPORTS,
-        ui_label="Starting Reports/Hints",
-        standalone_label='# Starting Reports/Hints',
+        ui_label="Starting Ansem Reports",
+        standalone_label='# Starting Ansem Reports',
         minimum=0,
         maximum=13,
         step=1,
         shared=True,
         default=0,
-        randomizable=[0,1,2,3]
+        randomizable=[0,1,2,3],
+        tooltip='Start with this number of Ansem Reports already obtained.'
     ),
 
     MultiSelect(
@@ -633,7 +689,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             '524': 'Promise Charm',
         },
         shared=True,
-        default=[]
+        default=[],
+        tooltip='Start with the selected items/abilities already obtained.'
     ),
 
     SingleSelect(
@@ -649,14 +706,23 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default='Shananas',
-        tooltip=textwrap.dedent('''
-            Disabled - Use no hint system
-            JSmartee - Secret Ansem Reports provide information for how many "important checks" are in a world
-            Shananas - Each world informs you once the world has no more "important checks"
-            Points - Each "important check" is assigned a point value, and you are told the number of points in each world. Secret Ansem Reports tell you where items are.
-            Path - Reports will tell you if a world contains `breadcrumbs` left by a world that has a proof. `Breadcrumbs` being vanilla important checks from a world.
-            Spoiler - Reveal "Important Check" locations in a world at the start of a seed.
-        '''),
+        tooltip='''
+        Which hint system to use. More detailed explanations the hint systems can be found on the website.
+    
+        Disabled - Use no hint system.
+        
+        JSmartee - Ansem Reports reveal how many "important checks" are in a world.
+        
+        Shananas - Each world informs you once the world has no more "important checks".
+        
+        Points - Each "important check" is assigned a point value, and you are told the number of points in each
+        world. Ansem Reports reveal where items are.
+        
+        Path - Ansem Reports will tell you if a world contains "breadcrumbs" left by a world that has a proof.
+        "Breadcrumbs" being vanilla important checks from a world.
+        
+        Spoiler - Reveal "Important Check" locations in a world at the start of a seed.
+        ''',
         randomizable=["Shananas","JSmartee","Points","Path","Spoiler"]
     ),
 
@@ -665,21 +731,23 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Progression Hint Mode',
         shared=True,
         default=False,
-        tooltip=textwrap.dedent('''
-            Instead of reports providing the source of hints, world progress unlocks more hints in your tracker.
-        '''),
+        tooltip='''
+        Instead of Ansem Reports providing the source of hints, world progress unlocks more hints in your tracker.
+        ''',
         randomizable=True
     ),
+
     Toggle(
         name=settingkey.PROGRESSION_HINTS_REVEAL_END,
         ui_label='Reveal All Hints When Done',
         shared=True,
         default=False,
-        tooltip=textwrap.dedent('''
-            Make all hints reveal themselves when you beat Final Xemnas.
-        '''),
+        tooltip='''
+        Make all hints reveal themselves when you beat Final Xemnas.
+        ''',
         randomizable=False
     ),
+
     IntSpinner(
         name=settingkey.PROGRESSION_HINTS_REPORT_BONUS,
         ui_label="Progression Report Reward",
@@ -688,11 +756,12 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         shared=True,
         default=0,
-        tooltip=textwrap.dedent('''
-            When you find a report, how many points toward your hints you get.
-        '''),
+        tooltip='''
+        When you find an Ansem Report, how many points toward your hints you get.
+        ''',
         randomizable=False
     ),
+
     IntSpinner(
         name=settingkey.PROGRESSION_HINTS_COMPLETE_BONUS,
         ui_label="Progression World Complete Reward",
@@ -701,18 +770,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         shared=True,
         default=0,
-        tooltip=textwrap.dedent('''
-            When a world is finished, how many additional points you receive for progressing
-        '''),
+        tooltip='''
+        When a world is finished, how many additional points you receive for progressing.
+        ''',
         randomizable=False
     ),
+
     ProgressionChainSelect(
         name=settingkey.PROGRESSION_POINT_SELECT,
         ui_label='',
         shared=True,
-        tooltip=textwrap.dedent('''
-            Point values for different checkpoints in worlds.
-        '''),
+        tooltip='''
+        Point values for different checkpoints in worlds.
+        ''',
         randomizable=False
     ),
 
@@ -723,7 +793,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5
+        default=5,
+        tooltip='Point value for each Proof.'
     ),
 
     IntSpinner(
@@ -733,7 +804,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=9
+        default=9,
+        tooltip='Point value for each Drive Form.'
     ),
 
     IntSpinner(
@@ -743,7 +815,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=7
+        default=7,
+        tooltip='Point value for each Magic.'
     ),
 
     IntSpinner(
@@ -753,7 +826,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5
+        default=5,
+        tooltip='Point value for each Summon.'
     ),
 
     IntSpinner(
@@ -763,7 +837,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5
+        default=5,
+        tooltip='Point value for each of the Second Chance and Once More abilities.'
     ),
 
     IntSpinner(
@@ -773,17 +848,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=5
+        default=5,
+        tooltip='Point value for each Torn Page.'
     ),
 
     IntSpinner(
         name=settingkey.POINTS_VISIT,
-        ui_label="World Key Item",
+        ui_label="Visit Unlock",
         minimum=0,
         maximum=1000,
         step=1,
         shared=True,
-        default=5
+        default=5,
+        tooltip='Point value for each Visit Unlock.'
     ),
     
     IntSpinner(
@@ -793,7 +870,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=3
+        default=3,
+        tooltip='Point value for each Ansem Report.'
     ),
     
     IntSpinner(
@@ -803,7 +881,106 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         maximum=1000,
         step=1,
         shared=True,
-        default=1
+        default=1,
+        tooltip='Point value for each Aux. Unlock.'
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_MAGIC_COLLECT,
+        ui_label="Magic Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip='Bonus points for collecting all Magic.'
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_PAGE_COLLECT,
+        ui_label="Torn Page Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip='Bonus points for collecting all Torn Pages.'
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_POUCHES_COLLECT,
+        ui_label="Munny Pouch Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip='Bonus points for collecting all Munny Pouches.'
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_PROOF_COLLECT,
+        ui_label="Proof Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip='Bonus points for collecting all Proofs.'
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_FORM_COLLECT,
+        ui_label="Drive Form Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip='Bonus points for collecting all Drive Forms.'
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_SUMMON_COLLECT,
+        ui_label="Summon Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip='Bonus points for collecting all Summons.'
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_ABILITY_COLLECT,
+        ui_label="Ability Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_REPORT_COLLECT,
+        ui_label="Ansem Report Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip='Bonus points for collecting all Ansem Reports.'
+    ),
+
+    IntSpinner(
+        name=settingkey.POINTS_VISIT_COLLECT,
+        ui_label="Visit Unlock Set",
+        minimum=-10,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=0,
+        tooltip='Bonus points for collecting all Visit Unlocks.'
     ),
 
     IntSpinner(
@@ -835,8 +1012,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=3
     ),
-    
-        IntSpinner(
+
+    IntSpinner(
         name=settingkey.POINTS_DEATH,
         ui_label="Death Penalty",
         minimum=-1000,
@@ -908,7 +1085,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
-        ui_label='Report Depth',
+        ui_label='Ansem Report Depth',
         choices={
             locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
@@ -920,17 +1097,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default=locationDepth.SecondVisit.name,
-        tooltip=textwrap.dedent('''
-            Superbosses - Force the item onto superbosses only
-            First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
-            Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
-            First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
-            Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
-            Anywhere - No restriction
-        '''),
+        tooltip='The set of locations in which Ansem Reports are allowed to be placed.' + _depth_options_text,
         randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.Anywhere.name]
     ),
+
     SingleSelect(
         name=settingkey.PROOF_DEPTH,
         ui_label='Proof Depth',
@@ -945,20 +1115,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default=locationDepth.Anywhere.name,
-        tooltip=textwrap.dedent('''
-            Superbosses - Force the item onto superbosses only
-            First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
-            Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
-            First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
-            Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
-            Anywhere - No restriction
-        '''),
+        tooltip='The set of locations in which Proofs are allowed to be placed.' + _depth_options_text,
         randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),
+
     SingleSelect(
         name=settingkey.STORY_UNLOCK_DEPTH,
-        ui_label='Key Item Depth',
+        ui_label='Visit Unlock Depth',
         choices={
             locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
@@ -970,35 +1133,35 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default=locationDepth.Anywhere.name,
-        tooltip=textwrap.dedent('''
-            Superbosses - Force the item onto superbosses only
-            First Visit - Force the item into a first visit (only the 13 main hub worlds with portals)
-            Second Visit - Force the item into a second visit (only the 13 main hub worlds with portals)
-            Non-Superboss - Force the item to not be on a Data/AS/Sephiroth/Terra (all other locations possible)
-            First Boss - Force the item onto the first visit boss of a world (only the 13 main hub worlds with portals)
-            Second Boss - Force the item onto the last boss of a world (only the 13 main hub worlds with portals)
-            Anywhere - No restriction
-        '''),
+        tooltip='The set of locations in which Visit Unlocks are allowed to be placed.' + _depth_options_text,
         randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
-    ),   
+    ),
+
     SingleSelect(
         name=settingkey.BATTLE_LEVEL_RANDO,
         ui_label='Battle Level Choice',
         choices={option.name: option.value for option in list(BattleLevelOption)},
         shared=True,
         default=BattleLevelOption.NORMAL.name,
-        tooltip=textwrap.dedent('''
-            Change the battle level of worlds.
-            Normal: unchanged battle levels
-            Shuffle: Shuffle the normal battle levels among all visits of all worlds
-            Offset: Increase/Decrease all battle levels by a given amount
-            Within Range of Normal: Vary battle levels of all visits within a set number above or below normal
-            Random (Max 50): All battle levels are random, with a max level of 50
-            Scale to 50: All last visits are level 50, with previous visits scaled proportionally
-        '''),
+        tooltip='''
+        Changes the battle levels of worlds.
+        
+        Normal - Battle levels are unchanged.
+        
+        Shuffle - Shuffle the normal battle levels among all visits of all worlds.
+        
+        Offset - Increase/Decrease all battle levels by a given amount.
+        
+        Within Range of Normal - Vary battle levels of all visits within a set number above or below normal.
+        
+        Random (Max 50) - All battle levels are random, with a maximum level of 50.
+        
+        Scale to 50 - All last visits are level 50, with previous visits scaled proportionally.
+        ''',
         standalone_label="Battle Level Randomization",
         randomizable=True
-    ),   
+    ),
+
     IntSpinner(
         name=settingkey.BATTLE_LEVEL_OFFSET,
         ui_label="Level Offset",
@@ -1008,9 +1171,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=0,
         standalone_label="Battle Level Offset (if chosen)",
-        tooltip="How many levels to change the worlds by",
+        tooltip="How many battle levels to change the worlds by.",
         randomizable=[-20,-15,-10,0,10,15,20]
     ),
+
     IntSpinner(
         name=settingkey.BATTLE_LEVEL_RANGE,
         ui_label="Level Range",
@@ -1023,34 +1187,39 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="How far above or below normal battle levels to choose.",
         randomizable=[0,20]
     ),
+
     Toggle(
         name=settingkey.YEET_THE_BEAR,
         ui_label='Yeet The Bear Required',
         shared=True,
         default=False,
-        tooltip="Force the Proof of Nonexistence onto Starry Hill popup in 100 acre"
+        tooltip="Forces the Proof of Nonexistence onto the Starry Hill popup in 100 Acre Wood"
     ),
+
     Toggle(
         name=settingkey.CHAIN_LOGIC,
         ui_label='Turn On Chain Logic',
         shared=True,
         default=False,
-        tooltip="Place all the locking items in a chain with one another, making the seed very linear."
+        tooltip="Places all the locking items in a chain with one another, making the seed very linear."
     ),
+
     Toggle(
         name=settingkey.CHAIN_LOGIC_TERRA,
         ui_label='Include Lingering Will in Chain',
         shared=True,
         default=False,
-        tooltip="Puts the Proof of Connection into the logic chain, effectively requiring beating Lingering Will"
+        tooltip="Puts the Proof of Connection into the logic chain, effectively requiring beating Lingering Will."
     ),
+
     Toggle(
         name=settingkey.CHAIN_LOGIC_MIN_TERRA,
         ui_label='Force Late Depth for Proof of Connection',
         shared=True,
         default=False,
-        tooltip="Will force the proof of connection to be in the last 5 steps of the chain, to give more chances for finding combat tools."
+        tooltip="Forces the Proof of Connection to be in the last 5 steps of the chain, to give more chances for finding combat tools."
     ),
+
     IntSpinner(
         name=settingkey.CHAIN_LOGIC_LENGTH,
         ui_label="Maximum Logic Length",
@@ -1062,13 +1231,12 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="How many steps in the logic chain you'd like to do at most."
     ),
 
-
     Toggle(
         name=settingkey.PREVENT_SELF_HINTING,
         ui_label='Remove Self-Hinting Reports',
         shared=True,
         default=False,
-        tooltip="Reports must hint a world that is different from where that report was found."
+        tooltip="Each Ansem Report must hint a world that is different from where that report was found."
     ),
 
     Toggle(
@@ -1076,7 +1244,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Reports can Reveal Proofs',
         shared=True,
         default=False,
-        tooltip="Points Mode only: If enabled, proofs can be directly revealed by reports."
+        tooltip="If enabled, proofs can be directly revealed by Ansem Reports."
     ),
 
     Toggle(
@@ -1084,7 +1252,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Reports can Reveal other Reports',
         shared=True,
         default=True,
-        tooltip="Points Mode only: If enabled, reports can reveal other reports."
+        tooltip="If enabled, Ansem Reports can reveal other Ansem Reports."
     ),
     
     Toggle(
@@ -1092,7 +1260,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Hi-Score Mode',
         shared=True,
         default=False,
-        tooltip="If enabled gain points for collecting Important Checks, completing worlds, beating bosses, ect."
+        tooltip="If enabled, gain points for collecting Important Checks, completing worlds, beating bosses, etc."
     ),
 
     MultiSelect(
@@ -1105,7 +1273,24 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'page': 'Torn Pages',
             'ability': 'Second Chance/Once More',
             'report': 'Ansem Reports',
-            'visit': 'World Key Items',
+            'visit': 'Visit Unlocks',
+            'proof': 'Proofs',
+            'other': 'Aux. Unlocks'
+        },
+        shared=True,
+        default=["magic", "form", "summon", "page", "ability", "report", "visit", "proof"]
+    ),
+    MultiSelect(
+        name=settingkey.SPOILER_REVEAL_TYPES,
+        ui_label='Spoiled Items',
+        choices={
+            'magic': 'Magic',
+            'form': 'Drive Forms',
+            'summon': 'Summon Charms',
+            'page': 'Torn Pages',
+            'ability': 'Second Chance/Once More',
+            'report': 'Ansem Reports',
+            'visit': 'Visit Unlocks',
             'proof': 'Proofs',
             'other': 'Aux. Unlocks'
         },
@@ -1115,10 +1300,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
 
     Toggle(
         name=settingkey.REVEAL_COMPLETE,
-        ui_label='Change World Value color when complete',
+        ui_label='Reveal World Completion',
         shared=True,
         default=True,
-        tooltip="If enabled, World Values will turn blue when all Important Checks in a World are found."
+        tooltip="If enabled, the tracker will reveal when all Important Checks in a world are found."
     ),
     
     SingleSelect(
@@ -1131,11 +1316,15 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default='reportmode',
-        tooltip=textwrap.dedent('''
-            Disabled - All worlds will be revealed at the start
-            Worlds - Ansem Reports will be used to reveal Important Checks in a world.
-            Randomized Bosses - Ansem Reports will be used to reveal what a boss has randomized into (Requires Boss randomizer).
-        '''),
+        tooltip='''
+        Configures how Ansem Reports reveal information.
+    
+        Disabled - All worlds will be revealed at the start.
+        
+        Worlds - Ansem Reports reveal the Important Checks in a world.
+        
+        Randomized Bosses - Ansem Reports reveal what a boss has randomized into (Requires Boss randomizer).
+        ''',
         randomizable=None
     ),
     
@@ -1147,7 +1336,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         shared=True,
         default=0,
-        randomizable=True
+        randomizable=True,
+        tooltip='The minimum strength and magic stat that each keyblade must have.'
     ),
 
     IntSpinner(
@@ -1158,7 +1348,8 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         shared=True,
         default=7,
-        randomizable=True
+        randomizable=True,
+        tooltip='The maximum strength and magic stat that each keyblade must have.'
     ),
 
     MultiSelect(
@@ -1241,9 +1432,14 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         randomizable=True,
         tooltip='''
-            Rando: Fully randomized locations, can have junk or unique items
-            Vanilla: Notable unique items are placed in their original locations for KH2FM, all other locations will get junk items
-            Junk: All locations use items from the junk item pool
+        Configures the reward placement for a world.
+    
+        Rando - Fully randomized locations, can have junk or unique items.
+        
+        Vanilla - Notable unique items are placed in their original locations for KH2FM.
+        All other locations will get junk items.
+        
+        Junk - All locations use items from the junk item pool.
         '''
     ),
 
@@ -1297,15 +1493,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Glass Cannon',
         shared=True,
         default=False,
-        tooltip='No more pesky Defense Ups in the level up stats pool'
+        tooltip='Removes Defense Ups from the level up statistics pool.'
     ),
+
     MultiSelect(
         name=settingkey.JUNK_ITEMS,
         ui_label='Junk Items',
         choices={str(item.Id): item.Name for item in Items.getJunkList(False)},
         shared=True,
         default=list(set([str(item.Id) for item in Items.getJunkList(False)])),
-        tooltip='Once all of the required items are placed, items from this list are used to fill the rest. This item pool is also used for worlds that are disabled'
+        tooltip='''
+        Once all of the required items are placed, items from this list are used to fill the rest.
+        This item pool is also used for locations that are set to contain only junk or are disabled.
+        '''
     ),
     
     IntSpinner(
@@ -1316,8 +1516,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=25,
         shared=True,
         default=50,
-        randomizable=True
+        randomizable=True,
+        tooltip='Sora starts with this much AP.'
     ),
+
     IntSpinner(
         name=settingkey.DONALD_AP,
         ui_label="Donald Starting AP",
@@ -1326,8 +1528,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=5,
         shared=True,
         default=55,
-        randomizable=True
+        randomizable=True,
+        tooltip='Donald starts with this much AP.'
     ),
+
     IntSpinner(
         name=settingkey.GOOFY_AP,
         ui_label="Goofy Starting AP",
@@ -1336,29 +1540,33 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=5,
         shared=True,
         default=54,
-        randomizable=True
+        randomizable=True,
+        tooltip='Goofy starts with this much AP.'
     ),
+
     Toggle(
         name=settingkey.PUREBLOOD,
         ui_label='Pureblood Keyblade',
         shared=True,
         default=True,
-        tooltip='Add the Pureblood Keyblade into the item pool (may be disabled for older versions of GoA)'
+        tooltip='Adds the Pureblood Keyblade into the item pool (may be disabled for older versions of GoA).'
     ),
+
     Toggle(
         name=settingkey.ANTIFORM,
         ui_label='Antiform',
         standalone_label='Obtainable Antiform',
         shared=True,
         default=False,
-        tooltip='Add Antiform as an obtainable form.'
+        tooltip='Adds Antiform as an obtainable form.'
     ),
+
     Toggle(
         name=settingkey.FIFTY_AP_BOOSTS,
         ui_label='50 AP Boosts',
         shared=True,
         default=True,
-        tooltip='Adds guaranteed 50 AP boosts into the item pool'
+        tooltip='Adds 50 guaranteed AP boosts into the item pool.'
     ),
 
     Toggle(
@@ -1366,7 +1574,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Remove Damage Cap',
         shared=True,
         default=False,
-        tooltip='Removes the damage cap for every enemy/boss in the game'
+        tooltip='Removes the damage cap for every enemy/boss in the game.'
     ),
 
     Toggle(
@@ -1374,8 +1582,9 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Cups Give Experience',
         shared=True,
         default=False,
-        tooltip='Defeating enemies while in an OC Cup will give you XP and Form XP'
+        tooltip='Defeating enemies while in an Olympus Coliseum Cup will give you experience and Form experience.'
     ),
+
     SingleSelect(
         name=settingkey.REVENGE_LIMIT_RANDO,
         ui_label='Randomize Revenge Limit Maximum (Beta)',
@@ -1390,6 +1599,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default='Vanilla',
         tooltip='Randomizes the revenge value limit of each enemy/boss in the game. Can be either set to 0, set to basically infinity, randomly swapped, or set to a random value between 0 and 200'
     ),
+
     Toggle(
         name=settingkey.PARTY_MEMBER_RANDO,
         ui_label='Randomize World Party Members (Beta)',
@@ -1397,12 +1607,16 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Randomizes the World Character party member in each world.'
     ),
+
     Toggle(
         name=settingkey.AS_DATA_SPLIT,
         ui_label='Split AS/Data Rewards',
         shared=True,
         default=False,
-        tooltip="When enabled, Absent Silhouette rewards will NOT give the reward from their Data Org versions. You must beat the Data Org version to get its reward"
+        tooltip='''
+        When enabled, Absent Silhouette rewards will NOT give the reward from their Data Organization versions.
+        You must beat the Data Organization version to get its reward.
+        '''
     ),
 
     Toggle(
@@ -1410,22 +1624,35 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Retry Data Final Xemnas',
         shared=True,
         default=False,
-        tooltip='If you die to Data Final Xemnas, continue will put you right back into the fight, instead of having to fight Data Xemnas I again (warning will be a softlock if you are unable to beat Final Xemnas)'
+        tooltip='''
+        If you die to Data Final Xemnas, Continue will put you right back into the fight, instead of having to fight
+        Data Xemnas I again.
+         
+        WARNING: This will be an effective softlock if you are unable to beat Data Final Xemnas.
+        '''
     ),
+
     Toggle(
         name=settingkey.RETRY_DARK_THORN,
         ui_label='Retry Dark Thorn',
         shared=True,
         default=False,
-        tooltip='If you die to Dark Thorn, continue will put you right back into the fight, instead of having to fight Shadow Stalker again (warning will be a softlock if you are unable to beat Dark Thorn)'
+        tooltip='''
+        If you die to Dark Thorn, Continue will put you right back into the fight, instead of having to fight
+        Shadow Stalker again.
+         
+        WARNING: This will be an effective softlock if you are unable to beat Dark Thorn.
+        '''
     ),
+
     Toggle(
         name=settingkey.SKIP_CARPET_ESCAPE,
         ui_label='Skip Magic Carpet Escape',
         shared=True,
         default=False,
-        tooltip='After reaching Ruined Chamber, the carpet escape sequence will be skipped.'
+        tooltip='After reaching Ruined Chamber in Agrabah, the magic carpet escape sequence will be skipped.'
     ),
+
     Toggle(
         name=settingkey.PR_MAP_SKIP,
         ui_label='Remove Port Royal Map Select',
@@ -1433,6 +1660,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=True,
         tooltip='Changes Port Royal map screen with text options, useful for avoiding crashes in PC.'
     ),
+
     Toggle(
         name=settingkey.ATLANTICA_TUTORIAL_SKIP,
         ui_label='Skip Atlantica Minigame Tutorial',
@@ -1440,6 +1668,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Skips the Atlantica Music Tutorial (not the swimming tutorial).'
     ),
+
     Toggle(
         name=settingkey.REMOVE_WARDROBE_ANIMATION,
         ui_label='Remove Wardrobe Wakeup Animation',
@@ -1447,6 +1676,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='The wardrobe in Beast\'s Castle will not wake up when pushing it.'
     ),
+
     SingleSelect(
         name=settingkey.REMOVE_CUTSCENES,
         ui_label='Remove Most Cutscenes (Beta)',
@@ -1458,8 +1688,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
             'Maximum': 'Maximum'
         },
         default='Disabled',
-        tooltip='Removes as many cutscenes from the game as possible. 3 different levels. 1 - Minimal: Remove as many cutscenes as possible without causing side effects. 2 - Non-Reward: Also remove cutscenes prior to forced fights, which causes the "continue" on game over to force you back into the fight (can be worked around using the auto-save mod). 3 - Maximum: Also remove cutscenes prior to receiving popup rewards, which causes the popops to not appear (you still get the reward, and it still shows up on the tracker).'
+        tooltip='''
+        Removes as many cutscenes from the game as possible.
+        
+        Minimal - Remove as many cutscenes as possible without causing side effects.
+
+        Non-Reward - Also remove cutscenes prior to forced fights, which causes the Continue on game over to force you
+        back into the fight. This can be worked around using the auto-save mod.
+        
+        Maximum: Also remove cutscenes prior to receiving popup rewards, which causes the popups to not appear.
+        You still get the reward, and it still shows up on the tracker.
+        '''
     ),
+
     Toggle(
         name=settingkey.COSTUME_RANDO,
         ui_label='Randomize Character Costumes (Beta)',
@@ -1467,6 +1708,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Randomizes the different costumes that Sora/Donald/Goofy switch between in the different worlds (IE Space Paranoids could now be default sora, while anywhere default sora is used could be Christmas Town Sora.'
     ),
+
     Toggle(
         name=settingkey.FAST_URNS,
         ui_label='Fast Olympus Coliseum Urns',
@@ -1475,22 +1717,25 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="The urns in the minigame in Olympus Coliseum drop more orbs, making the minigame much faster.",
         randomizable=False
     ),
+
     Toggle(
         name=settingkey.RICH_ENEMIES,
         ui_label='All Enemies Drop Munny',
         shared=True,
         default=False,
-        tooltip="Enemies will all drop munny (pretty straightforward)",
+        tooltip="Enemies will all drop munny.",
         randomizable=True
     ),
+
     Toggle(
         name=settingkey.UNLIMITED_MP,
         ui_label='All Enemies Drop MP Orbs',
         shared=True,
         default=False,
-        tooltip="Enemies will all drop mp orbs (pretty straightforward)",
+        tooltip="Enemies will all drop MP orbs.",
         randomizable=True
     ),
+
     IntSpinner(
         name=settingkey.GLOBAL_JACKPOT,
         ui_label="Global Jackpots",
@@ -1500,9 +1745,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         shared=True,
         default=0,
-        tooltip="Increase orb/munny drops as if you had this many Jackpots equipped (each adds 50 percent of the original amount)",
+        tooltip='''
+        Increases orb/munny drops as if you had this many Jackpots equipped.
+        Each Jackpot adds 50 percent of the original amount.
+        ''',
         randomizable=True
     ),
+
     IntSpinner(
         name=settingkey.GLOBAL_LUCKY,
         ui_label="Global Lucky Lucky",
@@ -1512,9 +1761,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         step=1,
         shared=True,
         default=0,
-        tooltip="Increase item drops as if you had this many Lucky Luckys equipped (each adds 50 percent of the chance to drop the item)",
+        tooltip='''
+        Increases item drops as if you had this many Lucky Lucky abilities equipped.
+        Each Lucky Lucky adds 50 percent of the chance to drop the item.
+        ''',
         randomizable=True
     ),
+
     Toggle(
         name=settingkey.SHOP_KEYBLADES,
         ui_label='Keyblades',
@@ -1524,55 +1777,60 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="Adds duplicates of keyblades into the moogle shop.",
         randomizable=True
     ),
+
     Toggle(
         name=settingkey.SHOP_ELIXIRS,
         ui_label='Elixirs',
         standalone_label='Elixirs in Shop',
         shared=True,
         default=False,
-        tooltip="Adds Elixirs/Megalixirs to shop.",
+        tooltip="Adds Elixirs/Megalixirs into the moogle shop.",
         randomizable=True
     ),
+
     Toggle(
         name=settingkey.SHOP_RECOVERIES,
         ui_label='Drive Recoveries',
         standalone_label='Drive Recoveries in Shop',
         shared=True,
         default=False,
-        tooltip="Adds Drive Recovery/High Drive Recovery to shop.",
+        tooltip="Adds Drive Recovery/High Drive Recovery into the moogle shop.",
         randomizable=True
     ),
+
     Toggle(
         name=settingkey.SHOP_BOOSTS,
         ui_label='Stat Boosts',
         standalone_label='Stat Boosts in Shop',
         shared=True,
         default=False,
-        tooltip="Adds Power/Magic/AP/Defense Boosts to shop.",
+        tooltip="Adds Power/Magic/AP/Defense Boosts into the moogle shop.",
         randomizable=True
     ),
+
     IntSpinner(
         name=settingkey.SHOP_REPORTS,
-        ui_label='Add Reports To Shop',
-        standalone_label='# Reports in Shop',
+        ui_label='Add Ansem Reports To Shop',
+        standalone_label='# Ansem Reports in Shop',
         shared=True,
         minimum=0,
         maximum=13,
         step=1,
         default=0,
-        tooltip="Adds a number of reports into the moogle shop.",
+        tooltip="Adds a number of Ansem Reports into the moogle shop.",
         randomizable=[0,1,2,3]
     ),
+
     IntSpinner(
         name=settingkey.SHOP_UNLOCKS,
-        ui_label='Add World Key Items To Shop',
-        standalone_label='# World Key Items in Shop',
+        ui_label='Add Visit Unlocks To Shop',
+        standalone_label='# Visit Unlocks in Shop',
         shared=True,
         minimum=0,
         maximum=11,
         step=1,
         default=0,
-        tooltip="Adds a number of world key items into the moogle shop.",
+        tooltip="Adds a number of visit unlocks into the moogle shop.",
         randomizable=[0,1,2,3]
     ),
 
@@ -1581,7 +1839,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Early Twilight Town 1 Exit',
         shared=True,
         default=False,
-        tooltip='Allows the use of save points to leave TT1 anytime.'
+        tooltip='Allows the use of save points to leave Twilight Town 1 anytime.'
     ),
 
     Toggle(
@@ -1591,13 +1849,19 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Allows Roxas to use magic, Sora\'s movement abilities, and Trinity Limit in Simulated Twilight Town.'
     ),
+
     Toggle(
         name=settingkey.DISABLE_FINAL_FORM,
         ui_label='Disable Final Form',
         shared=True,
         default=False,
-        tooltip='Disabled going into Final Form in any way. Final form can still be found to let other forms level up and for Final Genie. All items from Final form are replaced with junk.'
+        tooltip='''
+        Disables going into Final Form in any way.
+        Final Form can still be found to let other forms level up and for Final Genie.
+        All items from Final Form are replaced with junk.
+        '''
     ),
+
     Toggle(
         name=settingkey.BLOCK_COR_SKIP,
         ui_label='Block Skipping CoR',
@@ -1605,9 +1869,10 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         default=False,
         tooltip='Disables skipping into the Cavern of Remembrance, requiring completion of the fights to progress.'
     ),
+
     Toggle(
         name=settingkey.BLOCK_SHAN_YU_SKIP,
-        ui_label='Block Skipping Shan Yu',
+        ui_label='Block Skipping Shan-Yu',
         shared=True,
         default=False,
         tooltip='Disables skipping into the throne room of Land of Dragons, requiring beating Shan-Yu to progress.'
@@ -1618,13 +1883,16 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Promise Charm',
         shared=True,
         default=False,
-        tooltip="If enabled, the promise charm will be added to the item pool, which can allow skipping TWTNW by talking to the computer in the GoA when you have all 3 proofs",
+        tooltip='''
+        If enabled, the Promise Charm will be added to the item pool.
+        This allows skipping TWTNW by talking to the computer in the Garden of Assemblage when you have all 3 Proofs.
+        ''',
         randomizable=True
     ),
 
     MultiSelect(
         name=settingkey.STARTING_STORY_UNLOCKS,
-        ui_label='Starting World Key Items',
+        ui_label='Starting Visit Unlocks',
         choices={
             '74': 'Identity Disk',
             '62': 'Skill and Crossbones',
@@ -1640,7 +1908,11 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default=['74','62','376','375','54','60','55','59','72','61','369'],
-        tooltip="Determines which world key items to start with. See kh2rando.com for more details",
+        tooltip='''
+        Start with the selected visit unlocks already obtained.
+        Each of these items unlocks a second (or third) visit of a particular world.
+        See the website for more details.
+        ''',
     ),
 
     Toggle(
@@ -1649,7 +1921,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         standalone_label='Maps in Item Pool',
         shared=True,
         default=True,
-        tooltip="If enabled, maps are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
+        tooltip="If enabled, maps are included in the required item pool. Disabling frees up more slots for the other 'junk' items.",
     ),
 
     Toggle(
@@ -1658,7 +1930,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         standalone_label='Synthesis Recipes in Item Pool',
         shared=True,
         default=True,
-        tooltip="If enabled, recipes are included in the required item pool. Disabling frees up more slots for the other 'junk' items",
+        tooltip="If enabled, recipes are included in the required item pool. Disabling frees up more slots for the other 'junk' items.",
     ),
 
     Toggle(
@@ -1675,7 +1947,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         standalone_label='Armor in Item Pool',
         shared=True,
         default=True,
-        tooltip="If enabled, all accessories are included in the required item pool.",
+        tooltip="If enabled, all armor items are included in the required item pool.",
     ),
 
     Toggle(
@@ -1683,12 +1955,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Remove Non-Superboss Popups',
         shared=True,
         default=False,
-        tooltip="Removes story popup and bonus rewards from eligble location pool for non-junk items. Used for door-rando primarily",
+        tooltip="Removes story popup and bonus rewards from eligble location pool for non-junk items. Used for door-rando primarily.",
         randomizable=False
     ),
+
     SingleSelect(
         name=settingkey.STORY_UNLOCK_CATEGORY,
-        ui_label='Key Item Category',
+        ui_label='Visit Unlock Category',
         choices={
             itemRarity.COMMON : itemRarity.COMMON,
             itemRarity.UNCOMMON : itemRarity.UNCOMMON,
@@ -1698,10 +1971,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default=itemRarity.UNCOMMON,
         randomizable=False,
-        tooltip=textwrap.dedent('''
-            Change visit locking items to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias each item gets when randomizing. 
-            Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items in the harder item placement difficulties.
-        '''),
+        tooltip='''
+        Change visit unlocks to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
+        each item gets when randomizing.
+         
+        Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items
+        in the harder item placement difficulties.
+        ''',
     ),
 
     SingleSelect(
@@ -1721,12 +1997,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         shared=True,
         default='Normal',
         randomizable=["Easy","Slightly Easy","Normal","Slightly Hard","Hard"],
-        tooltip=textwrap.dedent('''
-            Bias the placement of items based on how difficult/easy you would like the seed to be. 
-            Items have 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias each item gets when placing those items. 
-            Super Easy and Easy will bias Rare and Mythic items early, while the Hard settings will bias those later.
-        '''),
+        tooltip='''
+        Bias the placement of items based on how difficult/easy you would like the seed to be. 
+        Items have 4 categories (Common, Uncommon, Rare, Mythic) that influence what bias each item gets when placing those items. 
+        Super Easy and Easy will bias Rare and Mythic items early, while the Hard settings will bias those later.
+        ''',
     ),
+
     Toggle(
         name=settingkey.NIGHTMARE_LOGIC,
         ui_label='Extended Item Placement Logic',
@@ -1735,6 +2012,7 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         tooltip="Enables weighting for keyblades with good abilities, and puts auto forms and final forcing `in-logic` meaning they may be required to complete the seed.",
         randomizable=True
     ),
+
     SingleSelect(
         name=settingkey.SOFTLOCK_CHECKING,
         ui_label='Softlock Prevention',
@@ -1745,8 +2023,17 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default="default",
-        tooltip='What type of rando are you playing? Regular is default, reverse rando with visits reversed, or co-op with both regular and reverse'
+        tooltip='''
+        What type of rando are you playing?
+        
+        Regular Rando - The default setting.
+        
+        Reverse Rando - Playing with visits reversed.
+        
+        Satisfy Regular & Reverse - Playing cooperatively with both regular and reverse.
+        '''
     ),
+
     SingleSelect(
         name=settingkey.ACCESSIBILITY,
         ui_label='Accessibility',
@@ -1757,11 +2044,13 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default="all",
-        tooltip=textwrap.dedent('''
-            How accessible locations need to be for the seed to be `completeable`
-            100% Locations means all locations must be reachable, and nothing will be permenantly locked
-            Beatable means the 3 proofs will be accessible, but nothing else is guaranteed. 
-        ''')
+        tooltip='''
+        How accessible locations need to be for the seed to be "completable".
+        
+        100% Locations - All locations must be reachable, and nothing will be permanently locked.
+        
+        Beatable - The 3 Proofs must be reachable, but nothing else is guaranteed. 
+        '''
     ),
 
     SingleSelect(
@@ -1775,11 +2064,18 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         },
         shared=True,
         default='default',
-        tooltip=textwrap.dedent('''
-            If "Randomize Ability Pool", picks Sora\'s action/support abilities at random (guaranteed to have 1 SC & 1 OM). 
-            Randomize Support Ability Pool will leave action abilities alone, but will randomize the support abilities (still guaranteed to have SC/OM)
-            Randomize Stackable Abilities will give you 1 of each ability that works on its own, but will randomize now many of the stackable abilities you get (at least 1 of each)
-        '''),
+        tooltip='''
+        Configures the ability pool randomization.
+    
+        Randomize Ability Pool - Picks Sora\'s action/support abilities at random
+        (guaranteed to have 1 Second Chance and 1 Once More).
+         
+        Randomize Support Ability Pool - Leaves action abilities alone, but will randomize the support abilities
+        (still guaranteed to have 1 Second Chance and 1 Once More).
+        
+        Randomize Stackable Abilities - Gives 1 of each ability that works on its own, but randomizes how many of
+        the stackable abilities you can get (guaranteeing at least 1 of each).
+        ''',
         randomizable=["default","randomize support","randomize stackable"]
     ),
 
@@ -1788,7 +2084,18 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Command Menu',
         choices=RandomCmdMenu.getOptions(),
         shared=False,
-        default='vanilla'
+        default='vanilla',
+        tooltip='''
+        Controls the appearance of the command menu on-screen.
+        
+        Vanilla - Command menus will have their normal appearance.
+        
+        Randomize (one) - Chooses a single random command menu to use for the entire game.
+        
+        Randomize (all) - Chooses random command menus for each world/location that has a unique command menu.
+        
+        individual command menu options - Forces all command menus to have the chosen appearance.
+        '''
     ),
 
     Toggle(
@@ -1796,10 +2103,24 @@ popup locations and lets them appear in chests. Those bonus locations can now ha
         ui_label='Randomize Music',
         shared=False,
         default=False,
-        tooltip=textwrap.dedent("""
-If enabled, generates a mod for OpenKH Mods Manager that will replace game music with randomized replacements.
-See the Randomized Music page on kh2rando.com for more detailed instructions.
-        """.strip())
+        tooltip='''
+        If enabled, randomizes in-game music.
+
+        See the Randomized Music page on the website for more detailed instructions.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_USE_CATEGORIES,
+        ui_label='Categorize Music',
+        shared=False,
+        default=True,
+        tooltip='''
+        If enabled, randomizes music separately by category ("boss" songs are only replaced with other "boss" songs,
+        "cutscene" songs are only replaced with other "cutscene" songs, etc.).
+        
+        If disabled, any song in the list can replace any other song.
+        '''
     ),
 
     Toggle(
@@ -1807,11 +2128,85 @@ See the Randomized Music page on kh2rando.com for more detailed instructions.
         ui_label='Allow Duplicate Replacements',
         shared=False,
         default=False,
-        tooltip=textwrap.dedent("""
-If enabled, song replacements are used multiple times if there aren't enough replacements for every song.
-If disabled, replacement songs are only used once, and some songs will stay un-randomized if there aren't enough
-replacements.
-        """.strip())
+        tooltip='''
+        If enabled, song replacements are used multiple times if there aren't enough replacements for every song.
+
+        If disabled, replacement songs are only used once, and some songs will stay un-randomized if there aren't
+        enough replacements.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_DMCA_SAFE,
+        ui_label='DMCA Safe',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, excludes songs from the song list that are known to have some copyright concerns.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
+        ui_label='Include KH1 Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes all the base KH1 songs in the song list for music rando.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for KH1 to have been extracted using the
+        OpenKH Mods Manager setup wizard.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH2,
+        ui_label='Include KH2 Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes all the base KH2 songs in the song list for music rando.
+
+        Requires the OpenKH folder to be set up in the Configure menu.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM,
+        ui_label='Include Re:Chain of Memories Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes all the base Re:Chain of Memories songs in the song list for music rando.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for Re:Chain of Memories to have been
+        extracted using the OpenKH Mods Manager setup wizard.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_BBS,
+        ui_label='Include Birth by Sleep Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes all the base Birth by Sleep songs in the song list for music rando.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for BBS to have been extracted using the
+        OpenKH Mods Manager setup wizard.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM,
+        ui_label='Include Custom Music',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, includes any added custom music in the song list for music rando.
+
+        Requires the custom music folder to be set up in the Configure menu.
+        '''
     )
 ]
 

@@ -250,6 +250,18 @@ class modYml:
                         }
                     ]
                 }
+    def getDropModList():
+        return  {
+                    "name": "przt",
+                    "type": "list",
+                    "method": "listpatch",
+                    "source": [
+                        {
+                            "name": "przt.yml",
+                            "type": "przt"
+                        }
+                    ]
+                }
 
     def getShopMod():
         return  {

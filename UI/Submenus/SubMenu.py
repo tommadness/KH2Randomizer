@@ -1,12 +1,11 @@
 import os
-import random
 from typing import Optional
 
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QRadioButton
+    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QRadioButton, QScrollArea
 )
 
 import Class.seedSettings
@@ -314,7 +313,18 @@ class KH2Submenu(QWidget):
 
     def finalizeMenu(self):
         self.menulayout.addStretch(1)
-        self.setLayout(self.menulayout)
+
+        scroll_child = QWidget()
+        scroll_child.setLayout(self.menulayout)
+
+        scroll_area = QScrollArea()
+        scroll_area.setWidget(scroll_child)
+        scroll_area.setWidgetResizable(True)
+
+        layout = QVBoxLayout()
+        layout.addWidget(scroll_area)
+
+        self.setLayout(layout)
 
     def getName(self):
         return self.title

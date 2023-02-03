@@ -131,7 +131,7 @@ class RandomizerSettings():
             if self.reportDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:
                 raise SettingsException(f"Setting report depth to {self.reportDepth} will contradict either regular or reverse rando. Please use another setting")
             if self.storyDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:
-                raise SettingsException(f"Setting key item depth to {self.storyDepth} will contradict either regular or reverse rando. Please use another setting")
+                raise SettingsException(f"Setting visit unlock depth to {self.storyDepth} will contradict either regular or reverse rando. Please use another setting")
 
 
         self.prevent_self_hinting = ui_settings.get(settingkey.PREVENT_SELF_HINTING)
@@ -189,7 +189,7 @@ class RandomizerSettings():
         if self.proofDepth in [locationDepth.FirstVisit,locationDepth.FirstBoss] and self.chainLogic:
             raise SettingsException("Chain logic is not compatible with first visit proofs")
         if self.storyDepth not in [locationDepth.Anywhere, locationDepth.SecondVisit] and self.chainLogic:
-            raise SettingsException("Chain logic is only compatible with key item depth non-data and anywhere")
+            raise SettingsException("Chain logic is only compatible with visit unlock depth non-data and anywhere")
         if self.chainLogic and self.regular_rando and self.reverse_rando:
             raise SettingsException("Can't do chain logic with both regular and reverse rando")
 
@@ -238,7 +238,17 @@ class RandomizerSettings():
                                     "boss_terra":ui_settings.get(settingkey.POINTS_BOSS_TERRA),
                                     "boss_final":ui_settings.get(settingkey.POINTS_BOSS_FINAL),
                                     "boss_other":ui_settings.get(settingkey.POINTS_BOSS_NORMAL),
-                                    "deaths":ui_settings.get(settingkey.POINTS_DEATH)}
+                                    "deaths":ui_settings.get(settingkey.POINTS_DEATH),
+                                    "collection_magic":ui_settings.get(settingkey.POINTS_MAGIC_COLLECT),
+                                    "collection_page":ui_settings.get(settingkey.POINTS_PAGE_COLLECT),
+                                    "collection_pouches":ui_settings.get(settingkey.POINTS_POUCHES_COLLECT),
+                                    "collection_proof":ui_settings.get(settingkey.POINTS_PROOF_COLLECT),
+                                    "collection_form":ui_settings.get(settingkey.POINTS_FORM_COLLECT),
+                                    "collection_summon":ui_settings.get(settingkey.POINTS_SUMMON_COLLECT),
+                                    "collection_ability":ui_settings.get(settingkey.POINTS_ABILITY_COLLECT),
+                                    "collection_report":ui_settings.get(settingkey.POINTS_REPORT_COLLECT),
+                                    "collection_visit":ui_settings.get(settingkey.POINTS_VISIT_COLLECT),
+                                    }
 
         self.progression_hints = ui_settings.get(settingkey.PROGRESSION_HINTS)
         self.progression_world_complete_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
@@ -253,14 +263,17 @@ class RandomizerSettings():
         self.progression_hint_settings["HintCosts"] = prog_points.get_hint_thresholds(num_worlds)
         self.progression_hint_settings["WorldCompleteBonus"] = [self.progression_world_complete_bonus]
         self.progression_hint_settings["ReportBonus"] = [self.progression_report_bonus]
-        self.progression_hint_settings["FinalXemnasReveal"] = [self.progression_reveal_all]
+        self.progression_hint_settings["FinalXemnasReveal"] = [1 if self.progression_reveal_all else 0]
 
 
         self.revealComplete = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode = ui_settings.get(settingkey.REPORTS_REVEAL)
 
-        self.spoiler_hint_values = [
+        self.hintable_check_types = [
             item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)
+        ]
+        self.spoiler_hint_values = [
+            item_type for item_type in ui_settings.get(settingkey.SPOILER_REVEAL_TYPES)
         ]
         if self.revealComplete:
             self.spoiler_hint_values.append("complete")
@@ -291,6 +304,9 @@ class RandomizerSettings():
             self.tracker_includes.append("ScoreMode")
 
         hintable_checks_list = ui_settings.get(settingkey.HINTABLE_CHECKS)
+        
+        if self.hintsType in ["JSmartee","Path"] and "proof" not in hintable_checks_list:
+            raise SettingsException("Jsmartee and Path hints really need proofs hintable.")
         self.important_checks = []
 
         if "magic" in hintable_checks_list:
@@ -337,9 +353,9 @@ class RandomizerSettings():
         if self.reportDepth == self.proofDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
             raise SettingsException("Proof depth and report depth can't be set to the same boss category")
         if self.storyDepth == self.proofDepth and self.proofDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
-            raise SettingsException("Proof depth and key item depth can't be set to the same boss category")
+            raise SettingsException("Proof depth and visit unlock depth can't be set to the same boss category")
         if self.reportDepth == self.storyDepth and self.reportDepth in [locationDepth.DataFight,locationDepth.FirstBoss,locationDepth.SecondBoss]:
-            raise SettingsException("Key item depth and report depth can't be set to the same boss category")
+            raise SettingsException("Visit unlock depth and report depth can't be set to the same boss category")
         
         if locationType.TTR in self.enabledLocations and not self.statSanity:
             raise SettingsException("Enabling Transport to Remembrance when not in Statsanity is incorrect. Enable Statsanity or disable TTR.")
@@ -347,7 +363,8 @@ class RandomizerSettings():
         if self.chainLogic and len(self.vanillaLocations)>0:
             raise SettingsException("Currently can't do chain logic and vanilla worlds. Sorry about that. ")
         if self.abilityListModifierString!="default" and len(self.vanillaLocations)>0:
-            raise SettingsException("Currently can't do randomized ability pools and vanilla worlds. Sorry about that. ")
+            pass
+            # raise SettingsException("Currently can't do randomized ability pools and vanilla worlds. Sorry about that. ")
 
     def setLevelChecks(self,maxLevel):
         self.level_checks = maxLevel

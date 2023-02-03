@@ -72,6 +72,8 @@ def enableBossEnemy(settings: SeedSettings):
 def modifyShutOut(daily: DailyModifier):
     X = 3
     choices = [
+            locationType.Level,
+            locationType.FormLevel,
             locationType.STT,
             locationType.TT,
             locationType.HB,
@@ -121,7 +123,7 @@ dailyModifiers = [
                 ),
     DailyModifier(name="Locked Second Visits",
                 initMod=None,
-                description="Visit locks are dispersed in the seed, requiring you to find them to get to second visits",
+                description="Visit unlocks are dispersed in the seed, requiring you to find them to get to second visits",
                 categories={'progression'},
                 local_modifier=lambda settings: settings.set(settingkey.STARTING_STORY_UNLOCKS,[])
                 ),
@@ -241,11 +243,11 @@ dailyHardModifiers = [
                 initMod=None,
                 description="Adds Absent Silhouettes, Sephiroth, Lingering Will, and Data Org as possible locations",
                 categories={'bosses'},
-                local_modifier=lambda settings: settings.set(settingkey.SUPERBOSSES_WITH_REWARDS,[locationType.AS.name, locationType.Sephi.name, locationType.DataOrg.name, locationType.LW])
+                local_modifier=lambda settings: settings.set(settingkey.SUPERBOSSES_WITH_REWARDS,[locationType.AS.name, locationType.Sephi.name, locationType.DataOrg.name, locationType.LW.name])
                 ),
     DailyModifier(name="Locked Second Visits (Mythic Version)",
                 initMod=None,
-                description="Visit locks are dispersed in the seed, requiring you to find them to get to second visits, and those items are Mythic rarity",
+                description="Visit unlocks are dispersed in the seed, requiring you to find them to get to second visits, and those items are Mythic rarity",
                 categories={'progression'},
                 local_modifier=lockedVisitsHard
                 ),

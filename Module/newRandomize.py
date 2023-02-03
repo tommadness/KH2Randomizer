@@ -234,7 +234,7 @@ class Randomizer():
         if not settings.antiform:
             allItems = [i for i in allItems if i.Id!=30]
 
-        # pick N of the reports and key items
+        # pick N of the reports and visit unlocks
         if settings.shop_reports > 0:
             all_reports_available = [i for i in allItems if i.ItemType==itemType.REPORT]
             random.shuffle(all_reports_available)
@@ -455,7 +455,7 @@ class Randomizer():
             unlocks[locationType.PR] = [[62]]
             unlocks[locationType.Atlantica] = [[23,23,23],[87,87]]
 
-            second_visit_locking_items = [369,54,55,61,60,74,375,59,72,62]
+            second_visit_locking_items = [369,54,55,61,60,74,376,59,72,62]
 
             locking_items = []
             for loc_type in settings.enabledLocations:
@@ -463,7 +463,7 @@ class Randomizer():
                     locking_items+=unlocks[loc_type]
 
             
-            for i in settings.startingItems:
+            for i in settings.startingItems + [i.Id in self.shop_items]:
                 if [i] in locking_items:
                     locking_items.remove([i])
                 if [i,21,22,23] in locking_items:
@@ -473,7 +473,8 @@ class Randomizer():
                     locking_items.remove([i])
 
             if not settings.chainLogicIncludeTerra:
-                locking_items.remove([593])
+                if [593] in locking_items:
+                    locking_items.remove([593])
 
             minimum_terra_depth = len(locking_items)-5 if settings.chainLogicTerraLate else 0
 
@@ -554,9 +555,11 @@ class Randomizer():
             if self.yeet_the_bear:
                 locking_items.append([32])
 
+            force_obtained = []
             if len(locking_items) > settings.chainLogicMinLength:
                 # keep the last parts of the chain
                 num_to_remove = len(locking_items) - settings.chainLogicMinLength;
+                force_obtained = locking_items[:num_to_remove]
                 locking_items = locking_items[num_to_remove:]
 
             locking_items.append([594]) # add the proof of nonexistence at the end of the chain
@@ -564,25 +567,34 @@ class Randomizer():
             if settings.nightmare:
                 locking_items[-1].append(29)
 
+            print(locking_items)
+
             validator.prep_req_list(settings,self)
 
             current_inventory = [] + settings.startingItems
+            for i in force_obtained:
+                current_inventory+=i
             if settings.reverse_rando:
                 current_inventory+=[94,95,96,98,99,100,102,103,104,106,107,108,564,565,566]
 
             def open_location(inv,loc):
-                return validator.is_location_available(inv,loc) and (not settings.nightmare or loc.LocationId !=560)
+                return validator.is_location_available(inv,loc) and (not settings.nightmare or loc.LocationId !=560) and (locationType.SYNTH not in loc.LocationTypes)
 
             accessible_locations = [[l for l in validLocations if open_location(current_inventory,l)]]
             for items in locking_items:
                 accessible_locations_start = [l for l in validLocations if open_location(current_inventory,l)]
                 accessible_locations_new = [l for l in validLocations if open_location(current_inventory + items,l) and l not in accessible_locations_start]
                 accessible_locations.append(accessible_locations_new)
+                print(f"{items} unlocked {len(accessible_locations[-1])}")
                 current_inventory += items
             for iter,items in enumerate(locking_items):
                 accessible_locations_new = accessible_locations[iter]
+                if len(accessible_locations_new) == 0:
+                    raise GeneratorException("Chain logic created a situation where the chain item couldn't be placed")
                 for i in items:
                     #find item in item list
+                    if len(accessible_locations_new) == 0:
+                        break
                     
                     i_data_list = [it for it in allItems if it.Id==i]
                     if len(i_data_list)==0:

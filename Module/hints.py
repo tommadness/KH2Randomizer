@@ -51,6 +51,7 @@ class Hints:
         allowReportHinting = settings.allow_report_hinting
         pointHintValues = settings.point_hint_values
         spoilerHintValues = settings.spoiler_hint_values
+        hintedItemValues = settings.hintable_check_types
         tracker_includes = settings.tracker_includes + ([] if not settings.shop_hintable or locationType.SYNTH.value in settings.tracker_includes else [locationType.SYNTH.value])
 
         importantChecks = settings.important_checks
@@ -71,11 +72,13 @@ class Hints:
         hintsText['hintsType'] = hintsType
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues
-        hintableWorlds = [locationType.Critical, locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
+        hintsText['hintableItems'] = hintedItemValues
+        hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
         # All hints do the Shananas thing except JSmartee
         if hintsType != "JSmartee":
             hintsText['world'] = {}
+            hintsText['world'][locationType.Critical] = []
             for x in hintableWorlds:
                 hintsText['world'][x] = []
             for location,item in locationItems:
@@ -678,6 +681,9 @@ class Hints:
                 }
                 
             for reportNumber in range(1,14):
+                # cant make reports anonymous because then report ghosts are unable to know which report was hinted
+                # if "Report" in hintsText["Reports"][reportNumber]["check"]:
+                #     hintsText["Reports"][reportNumber]["check"] = "Ansem Report"
                 if hintsText["Reports"][reportNumber]["Location"] != "":
                     continue
                 hintsText["Reports"][reportNumber]["Location"] = report_master[reportNumber][0]
@@ -825,7 +831,7 @@ class Hints:
                     hintsText["Reports"][reportNumber] = {"World": unhinted_worlds[reportNumber-14], "Location": ""}
                 
         # report validation for some hint systems
-        if hintsType in ["Points","JSmartee","Spoiler"] and found_reports:
+        if hintsType in ["Points","JSmartee","Spoiler"] and found_reports and "report" in hintedItemValues:
             for reportNumber in range(1,14):
                 if hintsText["Reports"][reportNumber]["Location"] not in report_master[reportNumber]:
                     if hintsText["Reports"][reportNumber]["Location"]=="" and (locationType.Critical in report_master[reportNumber] or locationType.Free in report_master[reportNumber]):
