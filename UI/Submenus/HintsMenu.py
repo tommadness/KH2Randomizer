@@ -135,6 +135,7 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.HINTABLE_CHECKS, visible=hint_system != 'Disabled')
         self.set_option_visibility(settingkey.REVEAL_COMPLETE, visible=hint_system == 'Spoiler')
         self.set_option_visibility(settingkey.REPORTS_REVEAL, visible=hint_system == 'Spoiler')
+        self.set_option_visibility(settingkey.SPOILER_REVEAL_TYPES, visible=hint_system == 'Spoiler')
         if hint_system != "Spoiler":
             setting, widget = self.widgets_and_settings_by_name[settingkey.REPORTS_REVEAL]
             widget.setCurrentIndex(0)

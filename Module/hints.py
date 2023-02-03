@@ -70,6 +70,7 @@ class Hints:
             hintsText["ProgressionSettings"] = settings.progression_hint_settings
             num_progression_worlds = len(hintsText["ProgressionSettings"]["HintCosts"])
         hintsText['hintsType'] = hintsType
+        hintsText['generatorVersion'] = settings.ui_version
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues
         hintsText['hintableItems'] = hintedItemValues
