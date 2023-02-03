@@ -23,6 +23,7 @@ class KH2Submenu(QWidget):
         self.title = title
         self.settings = settings
         self.widgets_and_settings_by_name = {}
+        self.groups_by_id: dict[str, QWidget] = {}
 
         if in_layout == "vertical":
             self.menulayout = QVBoxLayout()
@@ -61,7 +62,7 @@ class KH2Submenu(QWidget):
         self.pending_group = QVBoxLayout()
         self.pending_group.setContentsMargins(8, 0, 8, 0)
 
-    def end_group(self, title=''):
+    def end_group(self, title='', group_id=''):
         group = QVBoxLayout()
         group.setContentsMargins(0, 0, 0, 0)
 
@@ -87,6 +88,9 @@ class KH2Submenu(QWidget):
 
         self.pending_column.addWidget(frame)
         self.pending_group = None
+
+        if group_id != '':
+            self.groups_by_id[group_id] = frame
 
     def _add_option_widget(self, label_text: str, tooltip: str, option):
         label = QLabel(label_text)
@@ -181,6 +185,11 @@ class KH2Submenu(QWidget):
         elif isinstance(widget, list) and len(widget) > 0:
             # The multi-select buttons are represented as a list but they're contained within a parent widget as well
             widget[0].parentWidget().setVisible(visible)
+
+    def set_group_visibility(self, group_id: str, visible: bool):
+        if group_id in self.groups_by_id:
+            widget = self.groups_by_id[group_id]
+            widget.setVisible(visible)
 
     def make_multiselect_tristate(self, setting_name: str) -> (MultiSelectTristate, list[QGroupBox]):
         setting = Class.seedSettings.settings_by_name[setting_name]
