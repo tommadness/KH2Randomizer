@@ -23,8 +23,11 @@ class CustomCosmetics:
 
         if config_path.is_file():
             with open(config_path, encoding='utf-8') as config_file:
-                raw_json: dict = json.load(config_file)
-                self.external_executables = raw_json.get('external_executables', [])
+                try:
+                    raw_json: dict = json.load(config_file)
+                    self.external_executables = raw_json.get('external_executables', [])
+                except Exception:
+                    print('Error decoding custom-cosmetics.json, using empty list of external executables')
 
     def add_custom_executable(self, path_str: str):
         self.external_executables.append(path_str)
