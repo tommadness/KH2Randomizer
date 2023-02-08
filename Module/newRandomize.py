@@ -276,7 +276,7 @@ class Randomizer():
         if not settings.include_armor:
             allItems = [i for i in allItems if i.ItemType != itemType.ARMOR]
 
-        allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + (Items.getLevelAbilityList() if not settings.level_one else []) )
+        allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + Items.getLevelAbilityList() )
         # if there abilities in the starting inventory, remove them from the pool
         removeAbilities = []
         for startItem in settings.startingItems:

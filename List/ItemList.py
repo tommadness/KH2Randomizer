@@ -610,14 +610,15 @@ class Items:
             KH2Item(342, "Twilight Stone", itemType.SYNTH),
             KH2Item(343, "Twilight Gem", itemType.SYNTH),
             KH2Item(344, "Twilight Crystal", itemType.SYNTH),
-            KH2Item(349, "Bright Shard", itemType.SYNTH),
-            KH2Item(350, "Bright Stone", itemType.SYNTH),
-            KH2Item(351, "Bright Gem", itemType.SYNTH),
-            KH2Item(352, "Bright Crystal", itemType.SYNTH),
-            KH2Item(353, "Energy Shard", itemType.SYNTH),
-            KH2Item(354, "Energy Stone", itemType.SYNTH),
-            KH2Item(355, "Energy Gem", itemType.SYNTH),
-            KH2Item(356, "Energy Crystal", itemType.SYNTH),
+            # may be able to bring these back if the class of item is known
+            # KH2Item(349, "Bright Shard", itemType.SYNTH),
+            # KH2Item(350, "Bright Stone", itemType.SYNTH),
+            # KH2Item(351, "Bright Gem", itemType.SYNTH),
+            # KH2Item(352, "Bright Crystal", itemType.SYNTH),
+            # KH2Item(353, "Energy Shard", itemType.SYNTH),
+            # KH2Item(354, "Energy Stone", itemType.SYNTH),
+            # KH2Item(355, "Energy Gem", itemType.SYNTH),
+            # KH2Item(356, "Energy Crystal", itemType.SYNTH),
         ]
 
     @staticmethod

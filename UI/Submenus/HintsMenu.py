@@ -90,7 +90,6 @@ class HintsMenu(KH2Submenu):
         self.finalizeMenu()
 
         settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
-        # settings.observe(settingkey.REPORTS_REVEAL, self._reveal_report_mode_changed)
         settings.observe(settingkey.SCORE_MODE, self._hint_system_changed)
         settings.observe(settingkey.PROGRESSION_HINTS, self._progression_toggle)
 
@@ -105,6 +104,7 @@ class HintsMenu(KH2Submenu):
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)
         score_mode_enabled = hint_system == 'Points' or self.settings.get(settingkey.SCORE_MODE)
+        progression_points = self.settings.get(settingkey.PROGRESSION_HINTS)
 
         if hint_system == 'Disabled':
             _, widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS]
@@ -128,23 +128,10 @@ class HintsMenu(KH2Submenu):
         if hint_system != "Spoiler":
             setting, widget = self.widgets_and_settings_by_name[settingkey.REPORTS_REVEAL]
             widget.setCurrentIndex(0)
-        if hint_system in ['JSmartee', 'Points', 'Spoiler', 'Path']:
+        if hint_system in ['JSmartee', 'Points', 'Spoiler', 'Path'] and not progression_points:
             setting, widget = self.widgets_and_settings_by_name[settingkey.HINTABLE_CHECKS]
             for selected in setting.choice_keys:
                 if selected == "report":
                     index = setting.choice_keys.index(selected)
-                    widget.item(index).setSelected(True)
-                    widget.item(index).setFlags(Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
-
-    def _reveal_report_mode_changed(self):
-        report_mode_enabled = self.settings.get(settingkey.REPORTS_REVEAL)
-        setting, widget = self.widgets_and_settings_by_name[settingkey.HINTABLE_CHECKS]
-        for selected in setting.choice_keys:
-            if selected == "report":
-                index = setting.choice_keys.index(selected)
-                if report_mode_enabled == 'Disabled':
-                    widget.item(index).setSelected(False)
-                    widget.item(index).setFlags(Qt.NoItemFlags)
-                else:
                     widget.item(index).setSelected(True)
                     widget.item(index).setFlags(Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)

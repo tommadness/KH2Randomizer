@@ -137,6 +137,7 @@ class ProgressionWidget(QWidget):
     def _change_setting(self,world,world_cp,value):
         setting: ProgressionChainSelect = Class.seedSettings.settings_by_name[self.setting_name]
         setting.progression.set_cp_for_world(world,world_cp,value)
+        self._update_spinboxes()
         self.settings.set(self.setting_name,setting.progression.get_compressed())
 
     def _change_visibility(self,selected_world):
@@ -150,3 +151,9 @@ class ProgressionWidget(QWidget):
             for s in self.tier3_selects[w]:
                 s.setVisible(False)
         self.tier3_selects[selected_world][selected_cp_index].setVisible(True)
+
+    def _update_spinboxes(self):
+        setting: ProgressionChainSelect = Class.seedSettings.settings_by_name[self.setting_name]
+        for w in self.world_options:
+            for w_cp_index in range(setting.progression.get_num_cp_for_world(w)):
+                self.tier3_selects[w][w_cp_index].setValue(setting.progression.get_cp_for_world(w,w_cp_index))

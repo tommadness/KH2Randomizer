@@ -55,7 +55,7 @@ class SynthList():
 
     def __str__(self):
         if self.reward_type == 1:
-            return f"{self.offset}: {self.reward} {self.condition_type} {self.count_needed}"
+            return f"{self.offset}: ID{self.id} R{self.reward} RT{self.reward_type} MT{self.material_type} MR{self.material_rank} CT{self.condition_type} CN{self.count_needed}"
         else:
             return ""
 
@@ -780,12 +780,26 @@ class SeedZip():
             #     print(SynthList(index,binaryContent[index:]))
             #     index+=12
 
+            # 3/6 free dev 8,9 bytes from offset index
             free_dev1 = number_to_bytes(3)
             free_dev2 = number_to_bytes(6)
             binaryContent[36] = free_dev1[0]
             binaryContent[37] = free_dev1[1]
             binaryContent[72] = free_dev2[0]
             binaryContent[73] = free_dev2[1]
+            
+            # 1,3 ori+ version, 
+            # free_dev1 = number_to_bytes(1)
+            # free_dev2 = number_to_bytes(3)
+            # ori_plus_id = number_to_bytes(12) # not sure on this
+            # binaryContent[33] = ori_plus_id[0]
+            # binaryContent[35] = 0
+            # binaryContent[36] = free_dev1[0]
+            # binaryContent[37] = free_dev1[1]
+            # binaryContent[69] = ori_plus_id[0]
+            # binaryContent[71] = 0
+            # binaryContent[72] = free_dev2[0]
+            # binaryContent[73] = free_dev2[1]
 
             # uncomment to make all existing synth buyable conditions need 7 of that material
             # new_required_items = number_to_bytes(7)
