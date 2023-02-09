@@ -3,10 +3,8 @@ import io
 import json
 import zipfile
 from itertools import accumulate
-from pathlib import Path
 
 import yaml
-from PIL import Image
 
 from Class.exceptions import BossEnemyException, GeneratorException
 from Class.itemClass import ItemEncoder
@@ -15,6 +13,7 @@ from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
+from Module import hashimage
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
 from Module.cosmetics import CosmeticsMod
@@ -389,35 +388,9 @@ class SeedZip():
                             first_cmd_list_index = index
                 a["source"] = [i for j, i in enumerate(a["source"]) if j not in delete_asset_indices]
 
-
-
-
     def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
-        hash_icon_path = Path(resource_path("static/seed-hash-icons"))
-        icon_paths = [resource_path(hash_icon_path / (icon + '.png')) for icon in settings.seedHashIcons]
-
-        # Adapted from https://stackoverflow.com/a/30228308
-        images = [Image.open(x) for x in icon_paths]
-        widths, heights = zip(*(i.size for i in images))
-
-        total_width = sum(widths)
-        max_height = max(heights)
-
-        stitched_image = Image.new('RGBA', (total_width, max_height))
-
-        x_offset = 0
-        for image in images:
-            stitched_image.paste(image, (x_offset, 0))
-            x_offset += image.size[0]
-
-        image_file = io.BytesIO()
-        stitched_image.save(image_file, 'PNG')
-        out_zip.writestr('preview.png', image_file.getvalue())
-
-        for image in images:
-            image.close()
-        image_file.close()
-        stitched_image.close()
+        image_data = hashimage.generate_seed_hash_image(settings.seedHashIcons, use_bitmap=False)
+        out_zip.writestr('preview.png', image_data)
 
     def createBtlvRandoAssets(self, settings, mod, outZip):
         btlv_option_name = settings.battle_level_rando
