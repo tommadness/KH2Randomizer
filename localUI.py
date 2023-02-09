@@ -430,6 +430,9 @@ class KH2RandomizerApp(QMainWindow):
         for key in settings_keys:
             self.settings.observe(key,self.get_num_enabled_locations)
 
+        # make hash update when things change in seed name
+        self.seedName.editingFinished.connect(lambda : self.make_rando_settings())
+
     def _configure_menu_bar(self):
         menu_bar = self.menuBar()
         self.presetMenu = QMenu("Preset")
