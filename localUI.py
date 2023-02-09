@@ -5,7 +5,6 @@ import textwrap
 
 from Class.exceptions import CantAssignItemException, RandomizerExceptions
 from List.configDict import locationType
-from Module import appconfig
 
 from Module.resources import resource_path
 from Module.tourneySpoiler import TourneySeedSaver
@@ -25,19 +24,20 @@ from pathlib import Path
 import pyperclip as pc
 
 import pytz
-# from PIL import Image
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QThread, Signal, QSize
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtGui import QIcon, QPixmap, QImage
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
-    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QSizePolicy, QDialog, QGridLayout, QListWidget,QSpinBox,QComboBox, QListView
+    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QDialog, QGridLayout, QListWidget, QSpinBox, QComboBox,
+    QListView, QFrame
 )
 
 from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.seedSettings import SeedSettings, randomize_settings
+from Module import appconfig, hashimage
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
 from Module.generate import generateMultiWorldSeed, generateSeed
@@ -417,33 +417,9 @@ class KH2RandomizerApp(QMainWindow):
         progress_layout.addWidget(self.progress_label)
         progress_layout.addWidget(self.progress_bar)
 
-        submit_layout.addWidget(QLabel("Seed Hash"))
-
-        self.hashIconPath = Path(resource_path("static/seed-hash-icons"))
-        self.hashIcons = []
-        for i in range(7):
-            self.hashIcons.append(QLabel())
-            self.hashIcons[-1].blockSignals(True)
-            submit_layout.addWidget(self.hashIcons[-1])
-            
-        self.clear_hash_icons()
-
-        submit_layout.addSpacing(16)
-
-        self.emu_button = QPushButton("Generate Seed (PCSX2)")
-        self.emu_button.clicked.connect(lambda : self.makeSeed("PCSX2"))
-        submit_layout.addWidget(self.emu_button, stretch=1)
-        self.emu_button.setVisible(False)
-
-        self.pc_button = QPushButton("Generate Seed (PC)")
-        self.pc_button.clicked.connect(lambda : self.makeSeed("PC"))
-        submit_layout.addWidget(self.pc_button, stretch=1)
-        self.pc_button.setVisible(False)
-
-
-        self.both_button = QPushButton("Generate Seed (PC/PCSX2)")
-        self.both_button.clicked.connect(lambda : self.makeSeed("Both"))
-        submit_layout.addWidget(self.both_button, stretch=1)
+        submit_layout.addWidget(self._build_seed_hash_frame())
+        submit_layout.addSpacing(8)
+        submit_layout.addWidget(self._build_generate_seed_frame())
 
         widget = QWidget()
         widget.setLayout(pagelayout)
@@ -489,6 +465,65 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addMenu(self.config_menu)
 
         menu_bar.addAction("About", self.showAbout)
+
+    def _build_seed_hash_frame(self) -> QFrame:
+        self.hashIconPath = Path(resource_path('static/seed-hash-icons'))
+        self.hash_icon_names = []
+        self.hash_icon_labels = []
+
+        hash_layout = QHBoxLayout()
+        hash_layout.setContentsMargins(0, 0, 8, 0)
+
+        seed_hash_label = QLabel('Seed Hash')
+        seed_hash_label.setContentsMargins(8, 8, 8, 8)
+        seed_hash_label.setStyleSheet('background: #422169; color: #c663f5;')
+        hash_layout.addWidget(seed_hash_label)
+
+        for i in range(7):
+            hash_icon_label = QLabel()
+            hash_icon_label.blockSignals(True)
+            self.hash_icon_labels.append(hash_icon_label)
+            hash_layout.addWidget(hash_icon_label)
+
+        copy_hash = QPushButton('Copy')
+        copy_hash.clicked.connect(self._copy_hash_to_clipboard)
+        hash_layout.addWidget(copy_hash)
+
+        hash_frame = QFrame()
+        hash_frame.setProperty('cssClass', 'settingsFrame')
+        hash_frame.setLayout(hash_layout)
+
+        self.clear_hash_icons()
+
+        return hash_frame
+
+    def _build_generate_seed_frame(self):
+        generate_layout = QHBoxLayout()
+        generate_layout.setContentsMargins(0, 0, 8, 0)
+
+        generate_label = QLabel('Seed Generation')
+        generate_label.setContentsMargins(8, 8, 8, 8)
+        generate_label.setStyleSheet('background: #4d0d0e; color: #ff8080;')
+        generate_layout.addWidget(generate_label)
+
+        self.emu_button = QPushButton("Generate Seed (PCSX2)")
+        self.emu_button.clicked.connect(lambda: self.makeSeed("PCSX2"))
+        generate_layout.addWidget(self.emu_button, stretch=1)
+        self.emu_button.setVisible(False)
+
+        self.pc_button = QPushButton("Generate Seed (PC)")
+        self.pc_button.clicked.connect(lambda: self.makeSeed("PC"))
+        generate_layout.addWidget(self.pc_button, stretch=1)
+        self.pc_button.setVisible(False)
+
+        self.both_button = QPushButton("Generate Seed (PC/PCSX2)")
+        self.both_button.clicked.connect(lambda: self.makeSeed("Both"))
+        generate_layout.addWidget(self.both_button, stretch=1)
+
+        generate_frame = QFrame()
+        generate_frame.setProperty('cssClass', 'settingsFrame')
+        generate_frame.setLayout(generate_layout)
+        return generate_frame
 
     def closeEvent(self, e):
         settings_json = self.settings.settings_json(include_private=True)
@@ -625,14 +660,19 @@ class KH2RandomizerApp(QMainWindow):
                 raise e
 
     def update_ui_hash_icons(self, rando_settings):
-        # self.icons = []
+        self.hash_icon_names.clear()
         for index, icon in enumerate(rando_settings.seedHashIcons):
-            self.hashIcons[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
-            # self.icons.append(icon)
+            self.hash_icon_names.append(icon)
+            self.hash_icon_labels[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
 
     def clear_hash_icons(self):
+        self.hash_icon_names.clear()
         for i in range(7):
-            self.hashIcons[i].setPixmap(QPixmap(str(self.hashIconPath.absolute())+"/"+"question-mark.png"))
+            self.hash_icon_labels[i].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + "/" + "question-mark.png"))
+
+    def _copy_hash_to_clipboard(self):
+        image_data = hashimage.generate_seed_hash_image(self.hash_icon_names, use_bitmap=True)
+        QApplication.clipboard().setImage(QImage.fromData(image_data))
 
     def get_num_enabled_locations(self):
         if self.recalculate:
