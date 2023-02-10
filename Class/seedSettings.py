@@ -356,14 +356,6 @@ _all_settings = [
     ),
 
     Toggle(
-        name=settingkey.LEVEL_ONE,
-        ui_label='Level 1 Mode',
-        shared=True,
-        default=False,
-        tooltip='Give no stats or items on level ups, removes abilities that would be on levels in vanilla from the item pool.'
-    ),
-
-    Toggle(
         name=settingkey.SPLIT_LEVELS,
         ui_label='Dream Weapon Matters',
         shared=True,
@@ -1542,14 +1534,6 @@ _all_settings = [
         default=54,
         randomizable=True,
         tooltip='Goofy starts with this much AP.'
-    ),
-
-    Toggle(
-        name=settingkey.PUREBLOOD,
-        ui_label='Pureblood Keyblade',
-        shared=True,
-        default=True,
-        tooltip='Adds the Pureblood Keyblade into the item pool (may be disabled for older versions of GoA).'
     ),
 
     Toggle(

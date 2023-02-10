@@ -15,7 +15,6 @@ def make_rando_seed(difficulty,seed_name):
     seed_settings.set(settingkey.SORA_LEVELS,"ExcludeFrom99")
     seed_settings.set(settingkey.SUPERBOSSES_WITH_REWARDS,["AS","Sephi"])#"DataOrg",
     seed_settings.set(settingkey.STORY_UNLOCK_CATEGORY,itemRarity.RARE)
-    seed_settings.set(settingkey.STORY_UNLOCKS,False)
     settings = RandomizerSettings(seed_name,True,"version",seed_settings, "")
     newSeedValidation = LocationInformedSeedValidator()
     randomizer = None
