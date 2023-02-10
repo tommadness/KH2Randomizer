@@ -27,13 +27,13 @@ class CosmeticsMenu(KH2Submenu):
         self.start_group()
 
         self.add_option(settingkey.MUSIC_RANDO_ENABLED_PC)
-        self.add_option(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES)
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_KH1)
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2)
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM)
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_BBS)
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM)
         self.add_option(settingkey.MUSIC_RANDO_PC_DMCA_SAFE)
+        self.add_option(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES)
         self.add_option(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES)
 
         self.music_count_text = QLabel()
@@ -74,13 +74,14 @@ class CosmeticsMenu(KH2Submenu):
         self.end_column()
 
         self.finalizeMenu()
-        settings.observe(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_ENABLED_PC, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_KH1, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_BBS, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_DMCA_SAFE, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES, self.reload_music_widgets)
 
         self.reload_music_widgets()
         self._reload_custom_list()
@@ -92,6 +93,17 @@ class CosmeticsMenu(KH2Submenu):
         _, include_kh2_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_KH2]
         _, include_recom_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM]
         _, include_bbs_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_BBS]
+        _, include_custom_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM]
+
+        music_rando_enabled = self.settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_KH1, visible=music_rando_enabled)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2, visible=music_rando_enabled)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM, visible=music_rando_enabled)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_BBS, visible=music_rando_enabled)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM, visible=music_rando_enabled)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES, visible=music_rando_enabled)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_DMCA_SAFE, visible=music_rando_enabled)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES, visible=music_rando_enabled)
 
         extracted_data_path = CosmeticsMod.extracted_data_path()
         if extracted_data_path is None:
@@ -105,20 +117,20 @@ class CosmeticsMenu(KH2Submenu):
             include_recom_widget.setEnabled((extracted_data_path / 'recom').is_dir())
             include_bbs_widget.setEnabled((extracted_data_path / 'bbs').is_dir())
 
-        _, include_custom_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM]
         custom_music_configured = CosmeticsMod.read_custom_music_path() is not None
         include_custom_widget.setEnabled(custom_music_configured)
-        self.no_custom_music.setVisible(not custom_music_configured)
-        self.open_custom_music_folder.setVisible(custom_music_configured)
+        self.no_custom_music.setVisible(music_rando_enabled and not custom_music_configured)
+        self.open_custom_music_folder.setVisible(music_rando_enabled and custom_music_configured)
 
+        self.music_count_text.setVisible(music_rando_enabled)
         self.music_count_text.setText(self._get_music_text())
 
     def _get_music_text(self):
         music_summary = CosmeticsMod.get_music_summary(self.settings)
         if len(music_summary) == 0:
-            return 'No Music Found'
+            return 'No Songs Found'
         else:
-            label_text = 'Found Music\n'
+            label_text = 'Found Songs\n'
             for category, count in music_summary.items():
                 label_text += '{} : {}\n'.format(category, count)
             return label_text

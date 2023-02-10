@@ -2112,7 +2112,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_USE_CATEGORIES,
-        ui_label='Categorize Music',
+        ui_label='Categorize Songs',
         shared=False,
         default=True,
         tooltip='''
@@ -2148,7 +2148,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
-        ui_label='Include KH1 Music',
+        ui_label='Include KH1 Songs',
         shared=False,
         default=False,
         tooltip='''
@@ -2161,7 +2161,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH2,
-        ui_label='Include KH2 Music',
+        ui_label='Include KH2 Songs',
         shared=False,
         default=False,
         tooltip='''
@@ -2173,7 +2173,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM,
-        ui_label='Include Re:Chain of Memories Music',
+        ui_label='Include Re:Chain of Memories Songs',
         shared=False,
         default=False,
         tooltip='''
@@ -2186,7 +2186,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_BBS,
-        ui_label='Include Birth by Sleep Music',
+        ui_label='Include Birth by Sleep Songs',
         shared=False,
         default=False,
         tooltip='''
@@ -2199,7 +2199,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM,
-        ui_label='Include Custom Music',
+        ui_label='Include Custom Songs',
         shared=False,
         default=False,
         tooltip='''
