@@ -333,11 +333,10 @@ class KH2RandomizerApp(QMainWindow):
         if os.path.exists(auto_settings_save_path):
             with open(auto_settings_save_path, 'r') as source:
                 try:
-                    auto_settings_json = json.loads(source.read())
+                    auto_settings_json = json.load(source)
                     self.settings.apply_settings_json(auto_settings_json, include_private=True)
                 except Exception:
                     print('Unable to apply last settings - will use defaults')
-                    pass
 
         CosmeticsMod.bootstrap_music_list_file()
 
@@ -356,12 +355,15 @@ class KH2RandomizerApp(QMainWindow):
         self.preset_json = {}
         if not os.path.exists(PRESET_FOLDER):
             os.makedirs(PRESET_FOLDER)
-        for file in os.listdir(PRESET_FOLDER):
-            preset_name, extension = os.path.splitext(file)
+        for preset_file_name in os.listdir(PRESET_FOLDER):
+            preset_name, extension = os.path.splitext(preset_file_name)
             if extension == '.json':
-                with open(os.path.join(PRESET_FOLDER, file), 'r') as presetData:
-                    settings_json = json.loads(presetData.read())
-                    self.preset_json[preset_name] = settings_json
+                with open(os.path.join(PRESET_FOLDER, preset_file_name), 'r') as presetData:
+                    try:
+                        settings_json = json.load(presetData)
+                        self.preset_json[preset_name] = settings_json
+                    except Exception:
+                        print('Unable to load preset [{}], skipping'.format(preset_file_name))
 
         pagelayout.addLayout(seed_layout)
         pagelayout.addWidget(self.tabs)        
@@ -986,12 +988,12 @@ class KH2RandomizerApp(QMainWindow):
 
     def receiveSeed(self):
         try:
-            # print("".join(str(pc.paste()).splitlines()))
+            share_string = "".join(str(pc.paste()).strip().splitlines())
+            # print(share_string)
             shared_seed = SharedSeed.from_share_string(
                 local_generator_version=LOCAL_UI_VERSION,
-                share_string="".join(str(pc.paste()).splitlines())
+                share_string=share_string
             )
-            # self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
         except ShareStringException as exception:
             message = QMessageBox(text=exception.message)
             message.setWindowTitle("KH2 Seed Generator")
@@ -1005,10 +1007,8 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setDisabled(True)
             self.seedName.setHidden(True)
             self.spoiler_log.setDisabled(True)
-            # self.tourney_gen_toggle.setDisabled(True)
-            # self.rando_rando.setDisabled(True)
             for w in self.widgets:
-                if not isinstance(w,CosmeticsMenu):
+                if not isinstance(w, CosmeticsMenu):
                     w.disable_widgets()
         self.seedName.setText(shared_seed.seed_name)
         self.spoiler_log.setCheckState(Qt.Checked if shared_seed.spoiler_log else Qt.Unchecked)
