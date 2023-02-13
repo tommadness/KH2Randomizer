@@ -36,6 +36,7 @@ from PySide6.QtWidgets import (
 
 from qt_material import apply_stylesheet
 from Class import settingkey
+from Class.exceptions import SettingsException
 from Class.seedSettings import SeedSettings, randomize_settings
 from Module import appconfig, hashimage
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
@@ -57,7 +58,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '3.0.0-beta'
+LOCAL_UI_VERSION = '3.0.0-beta-v2'
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -1113,7 +1114,7 @@ if __name__=="__main__":
     window.recalculate = True
     try:
         window.get_num_enabled_locations()
-    except ValueError:
+    except (SettingsException,ValueError):
         window.resetSettings()
         pass
     window.show()
