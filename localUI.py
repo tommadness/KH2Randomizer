@@ -497,6 +497,7 @@ class KH2RandomizerApp(QMainWindow):
 
         hash_frame = QFrame()
         hash_frame.setProperty('cssClass', 'settingsFrame')
+        hash_frame.setStyleSheet('QLabel, QFrame[cssClass~="settingsFrame"] { background: #281e3c; }')
         hash_frame.setLayout(hash_layout)
 
         self.clear_hash_icons()
@@ -528,6 +529,7 @@ class KH2RandomizerApp(QMainWindow):
 
         generate_frame = QFrame()
         generate_frame.setProperty('cssClass', 'settingsFrame')
+        generate_frame.setStyleSheet('QLabel, QFrame[cssClass~="settingsFrame"] { background: #3c0000; }')
         generate_frame.setLayout(generate_layout)
         return generate_frame
 
