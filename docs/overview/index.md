@@ -58,7 +58,7 @@ are not limited to:
 
 ### Land of Dragons
 
-* If you have the tools to gain enough height, you can jump over a cutscene trigger before the Shan Yu fight and enter
+* If you have the tools to gain enough height, you can jump over a cutscene trigger before the Shan-Yu fight and enter
   the Throne Room to acquire its many treasure chests early
 
 ### Halloween Town
@@ -94,7 +94,7 @@ are not limited to:
     * This area of the cavern is used in a technique called "CoR skip" where players clip out-of-bounds in order to
       bypass difficult fights in this area
     * Instead of falling forever, once Sora hits this added loading zone, the game warps Sora back to the entrance to
-      the room
+      the cavern
 
 ### Disney Castle
 
@@ -164,6 +164,11 @@ The goal is to obtain all items designated as Important Checks for the seed.
 
 Some variations of ABN/AIC consider the game won immediately once the final Important Check is found and shown on the
 tracker. Other variations also require Final Xemnas to be defeated after all Important Checks are found.
+
+### Hitlist
+
+The player is given a certain number of objectives to fulfill (usually defeating either certain story bosses or
+superbosses). The goal is to fulfill all or a subset of these objectives.
 
 ### Bingo
 

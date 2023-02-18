@@ -4,23 +4,14 @@ title: Home
 
 # Quick Links
 
-* [3.0 Beta Information Page (Clone of this page with 3.0 beta updates)](https://kh2fm-mods-equations19.github.io/KH2Randomizer/)
-* [3.0 Beta Music Rando Setup](https://kh2fm-mods-equations19.github.io/KH2Randomizer/music/)
-
 * [Downloads](downloads/index.md)
 * [Randomizer Discord](https://discord.com/invite/KH2FMRando)
+* [Archipelago ("Multiworld") Information](https://archipelago.gg/games/Kingdom%20Hearts%202/info/en)
 
 # Installation Guides
 
 * [PC New Setup Guide](setup/Panacea-ModLoader/index.md) By Alios
 * [Emulator New Setup Guide](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) By gameaddict
-
-# League Information
-
-* [General Race Rules](https://docs.google.com/document/d/1VSCjXHokrwG2hWMOmxsrNeGEkmbyHIvOqtd6Z1w0epc)
-* [League Format](league/league_format.md)
-* [League Rankings](league/league_rankings.md)
-* [League Placement Stage Results](league/league_placements.md)
 
 # Game/Randomizer Information
 
@@ -28,6 +19,12 @@ title: Home
 * [Seed Generator Options / Frequently Asked Questions](seed-generator/index.md)
 * [Trackers](trackers/index.md)
 * [Hint Systems](hints/index.md)
+  * [Shananas](hints/shananas/index.md)
+  * [JSmartee](hints/jsmartee/index.md)
+  * [Points](hints/points/index.md)
+  * [Path](hints/path/index.md)
+  * [Spoiler](hints/spoiler/index.md)
+  * [Progression Hints Mode](hints/progression/index.md)
 * [Randomized Synthesis](synthesis/index.md)
 * [Superboss Locations](superboss-locations/index.md) (Absent Silhouettes, Data Organization XIII, Lingering Will)
 * [Randomized Music](music/index.md)
