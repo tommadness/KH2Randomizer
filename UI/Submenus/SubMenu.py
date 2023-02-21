@@ -43,6 +43,13 @@ class KH2Submenu(QWidget):
             'background: #032169; color: #63c6f5;',  # blues
             'background: #422169; color: #c663f5;',  # purples
         ]
+        self.frame_styles = [
+            'background: #3c0000;',  # reds
+            'background: #503c00;',  # yellows
+            'background: #003214;',  # greens
+            'background: #001e3c;',  # blues
+            'background: #281e3c;',  # purples
+        ]
         self.next_header_style = len(title) % len(self.header_styles)
 
     def start_column(self):
@@ -84,6 +91,8 @@ class KH2Submenu(QWidget):
         else:
             frame.setContentsMargins(0, 0, 0, 8)
         frame.setProperty('cssClass', 'settingsFrame')
+        frame_style = self.frame_styles[header_style_choice]
+        frame.setStyleSheet('QFrame[cssClass~="settingsFrame"], QWidget[cssClass~="layoutWidget"], QLabel, QCheckBox {' + frame_style + '}')
         frame.setLayout(group)
 
         self.pending_column.addWidget(frame)
