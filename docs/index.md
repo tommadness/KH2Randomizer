@@ -15,6 +15,11 @@ title: Home
 * [PC New Setup Guide](setup/Panacea-ModLoader/index.md) By Alios
 * [Emulator New Setup Guide](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) By gameaddict
 
+# League Information
+
+* [League Format](league/league_format.md)
+* [League Rankings](league/league_rankings.md)
+
 # Game/Randomizer Information
 
 * [Overview](overview/index.md)

@@ -605,12 +605,17 @@ class Randomizer():
                     #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
                     # if sum(weights)==0:
                     #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
-                    randomLocation = random.choices(accessible_locations_new,weights)[0]
-                    if i_data.ItemType not in randomLocation.InvalidChecks:
-                        allItems.remove(i_data)
-                        if self.assignItem(randomLocation,i_data):
-                            validLocations.remove(randomLocation)
-                            accessible_locations_new.remove(randomLocation)
+                    
+
+                    # try to assign the item multiple times
+                    for i in range(5):
+                        randomLocation = random.choices(accessible_locations_new,weights)[0]
+                        if i_data.ItemType not in randomLocation.InvalidChecks:
+                            allItems.remove(i_data)
+                            if self.assignItem(randomLocation,i_data):
+                                validLocations.remove(randomLocation)
+                                accessible_locations_new.remove(randomLocation)
+                            break
 
         #assign valid items to all valid locations remaining
         for item in allItems:

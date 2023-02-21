@@ -574,7 +574,7 @@ class Hints:
                 if world_of_location == locationType.WeaponSlot or world_of_location == locationType.Free or world_of_location == locationType.Critical:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
-                    if item.ItemType not in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE, itemType.REPORT] or (item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE] and allowProofHinting) or (item.ItemType in [itemType.REPORT] and allowReportHinting):
+                    if item.ItemType not in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.REPORT] or (item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM] and allowProofHinting) or (item.ItemType in [itemType.REPORT] and allowReportHinting):
                         hintable_item_count+=1 
                     worldChecks[world_of_location].append(item)
                     worldChecksEdit[world_of_location].append(item)
@@ -626,7 +626,7 @@ class Hints:
                     reportRepetition = reportRepetition + 1
 
                 #should we hint proofs?
-                if randomItem.ItemType in [itemType.PROOF,itemType.PROOF_OF_PEACE,itemType.PROOF_OF_CONNECTION]:
+                if randomItem.ItemType in [itemType.PROOF,itemType.PROOF_OF_PEACE,itemType.PROOF_OF_CONNECTION, itemType.PROMISE_CHARM]:
                     if not allowProofHinting:
                         worldChecksEdit[randomWorld].remove(randomItem)
                         reportsList.append(reportNumber)
