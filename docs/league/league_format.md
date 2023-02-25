@@ -1,5 +1,7 @@
 # League Format
 
+![League Format Illustration](League_Format.png)
+
 There will be three stages to the league, a placement stage, a swiss stage, and a bracket stage. All stages will be coordinated via Discord, so join the discord to see updates.
 
 ## Placement Stage
