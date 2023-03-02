@@ -413,6 +413,9 @@ class SeedZip():
         return btlv.get_spoiler()
 
     def addCmdListModifications(self,settings,mod,outZip):
+        if not settings.roxas_abilities_enabled and not settings.disable_final_form:
+            return
+
         with open(resource_path("static/better_stt/cmd.list"), "rb") as cmdlist:
             binaryContent = bytearray(cmdlist.read())
 

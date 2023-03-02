@@ -288,7 +288,6 @@ class Items:
             KH2Item(119, "Disney Castle Map", itemType.MAP),
             KH2Item(114, "Cornerstone Hill Map", itemType.MAP),
             KH2Item(518, "Window of Time Map", itemType.MAP),
-            KH2Item(115, "Window of Time Map?", itemType.MAP),
             KH2Item(116, "Lilliput Map", itemType.MAP),
             KH2Item(117, "Building Site Map", itemType.MAP),
             KH2Item(118, "Mickey's House Map", itemType.MAP),
@@ -321,6 +320,11 @@ class Items:
     @staticmethod
     def getPromiseCharm():
         return KH2Item(524, "PromiseCharm",itemType.PROMISE_CHARM, itemRarity.MYTHIC)
+
+    @staticmethod
+    def getDummyFormItems():
+        return [KH2Item(115, "Final Form", itemType.FORM, itemRarity.MYTHIC), #dummy final (was window of time map 2)
+                KH2Item(89, "Valor Form", itemType.FORM, itemRarity.MYTHIC)] # dummy valor (was navigational map)
 
 
     @staticmethod
