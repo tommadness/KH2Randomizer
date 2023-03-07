@@ -1661,28 +1661,12 @@ _all_settings = [
         tooltip='The wardrobe in Beast\'s Castle will not wake up when pushing it.'
     ),
 
-    SingleSelect(
+    Toggle(
         name=settingkey.REMOVE_CUTSCENES,
-        ui_label='Remove Most Cutscenes (Beta)',
+        ui_label='Remove Cutscenes',
         shared=True,
-        choices={
-            'Disabled': 'Disabled',
-            'Minimal': 'Minimal',
-            'Non-Reward': 'Non-Reward',
-            'Maximum': 'Maximum'
-        },
-        default='Disabled',
-        tooltip='''
-        Removes as many cutscenes from the game as possible.
-        
-        Minimal - Remove as many cutscenes as possible without causing side effects.
-
-        Non-Reward - Also remove cutscenes prior to forced fights, which causes the Continue on game over to force you
-        back into the fight. This can be worked around using the auto-save mod.
-        
-        Maximum: Also remove cutscenes prior to receiving popup rewards, which causes the popups to not appear.
-        You still get the reward, and it still shows up on the tracker.
-        '''
+        default=False,
+        tooltip='Removes all cutscenes from the game. As a consequence there are occassionally strange flashes/backgrounds when in a spot a cutscene would normally occur.'
     ),
 
     Toggle(

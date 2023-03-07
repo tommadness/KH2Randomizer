@@ -148,7 +148,7 @@
     "proof_depth": "Anywhere",
     "pureblood": true,
     "recipes_in_item_pool": false,
-    "remove_cutscenes": "Disabled",
+    "remove_cutscenes": false,
     "remove_damage_cap": false,
     "remove_popups": false,
     "remove_wardrobe_animation": false,
