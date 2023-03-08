@@ -58,7 +58,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 
-LOCAL_UI_VERSION = '3.0.0-beta-v2'
+LOCAL_UI_VERSION = '3.0.0-beta-v3'
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -693,6 +693,7 @@ class KH2RandomizerApp(QMainWindow):
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DARK_THORN)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DFX)
+                split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_CUTSCENES)
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_COR_SKIP)
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
                 split_pc_emu = split_pc_emu or (locationType.Puzzle.name in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS))
