@@ -378,14 +378,15 @@ class SeedZip():
         # remove duplicate cmd.list
         for a in mod["assets"]:
             if a["name"]=="03system.bin":
-                first_cmd_list_index = None
+                last_cmd_list_index = None
                 delete_asset_indices = []
                 for index, b in enumerate(a["source"]):
                     if b["name"]=="cmd":
-                        if first_cmd_list_index:
-                            delete_asset_indices.append(index)
+                        if last_cmd_list_index:
+                            delete_asset_indices.append(last_cmd_list_index)
+                            last_cmd_list_index = index
                         else:
-                            first_cmd_list_index = index
+                            last_cmd_list_index = index
                 a["source"] = [i for j, i in enumerate(a["source"]) if j not in delete_asset_indices]
 
     def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
