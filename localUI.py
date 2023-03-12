@@ -273,6 +273,7 @@ class RandomSettingsDialog(QDialog):
             self.settings_list_widget.addItem(c.standalone_label)
         for i in range(len(self.random_choices)):
             self.settings_list_widget.item(i).setSizeHint(QSize(160, 48))
+        self.settings_list_widget.setDragEnabled(False)
         grid.addWidget(self.settings_list_widget,0,0)
         
         select_all_button = QPushButton("Select All Settings")
