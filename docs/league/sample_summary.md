@@ -14,7 +14,7 @@
 |9|Player18|939.09|2|
 |10|Player10|898.51|2|
 
- ### Race 1 [Racetime]()
+### Race 1 [Racetime]()
 
 | Place | Name | Old ELO | New ELO | Change |
 | --: | --- | --: | --: | --: |
@@ -29,7 +29,7 @@
 |9|Player9|1000.00|952.10|-47.90|
 |10|Player10|1000.00|942.40|-57.60|
 
- ### Race 2 [Racetime]()
+### Race 2 [Racetime]()
 
 | Place | Name | Old ELO | New ELO | Change |
 | --: | --- | --: | --: | --: |
@@ -39,7 +39,7 @@
 |4|Player18|962.77|939.09|-23.68|
 |5|Player10|942.40|898.51|-43.89|
 
- ### Race 3 [Racetime]()
+### Race 3 [Racetime]()
 
 | Place | Name | Old ELO | New ELO | Change |
 | --: | --- | --: | --: | --: |
@@ -50,7 +50,7 @@
 |5|Player9|952.10|927.62|-24.48|
 |6|Player2|1100.83|1036.30|-64.54|
 
- ### Race 4 [Racetime]()
+### Race 4 [Racetime]()
 
 | Place | Name | Old ELO | New ELO | Change |
 | --: | --- | --: | --: | --: |
@@ -59,7 +59,7 @@
 |3|Player6|985.63|976.44|-9.19|
 |4|Player2|1036.30|989.84|-46.45|
 
- ### Race 5 [Racetime](test_link)
+### Race 5 [Racetime](test_link)
 
 | Place | Name | Old ELO | New ELO | Change |
 | --: | --- | --: | --: | --: |
