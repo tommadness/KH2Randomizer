@@ -2,42 +2,48 @@
 
 | Place | Name | ELO | # of Races |
 | --: | --- | --: | --: |
+|1|Ragnoth|1127.87|3|
+|2|Ragna|1009.43|3|
+|3|JHobz|948.78|3|
+|4|WiipartyU|869.63|3|
 ||&uarr; Qualifiers|
-|1|jaylawn|1123.89|1|
-|2|SonicShadowSilver2|1106.46|2|
-|3|Metthaios|1105.14|1|
-|4|Atzero|1090.69|1|
-|5|CrazyComics|1072.59|1|
-|6|Megaslim|1059.10|1|
-|7|Ragnoth|1054.82|2|
-|8|BDBonk|1047.83|2|
-|9|chaserdk|1045.69|1|
-|10|Glow|1045.42|1|
-|11|Ragna|1043.56|2|
-|12|DjDiabeatus|1034.05|1|
-|13|CoreySG9|1032.98|1|
-|14|L0rdRaiden|1013.84|1|
-|15|Eldric|1005.10|1|
-|16|equations19|1002.06|1|
-|17|JHobz|989.67|2|
-|18|Dragonblast1007|985.85|1|
-|19|WallpeSH|983.34|1|
-|20|DoubleADewi|971.94|1|
-|21|shadowjc32|970.22|2|
-|22|Doomrider|968.30|2|
-|23|Roromaniac|967.24|2|
-|24|Hypodeck|966.65|1|
-|25|Cheeko Kyun|958.43|1|
-|26|CapitanBublo|956.58|1|
-|27|Angel_KAL|952.23|1|
-|28|Subconjazz|951.35|1|
-|29|Akagitsune|945.49|1|
-|30|Adam_OWA|944.66|1|
-|31|Dair|940.65|1|
-|32|Fallen_Tsu|938.56|1|
-|33|ryeguy45|922.71|2|
-|34|WiipartyU|913.22|2|
-|35|Ugh_Sunlight|889.69|2|
+|5|Megaslim|1166.71|2|
+|6|CoreySG9|1125.94|2|
+|7|jaylawn|1123.89|1|
+|8|SonicShadowSilver2|1106.46|2|
+|9|Metthaios|1105.14|1|
+|10|CrazyComics|1072.59|1|
+|11|equations19|1053.69|2|
+|12|BDBonk|1047.83|2|
+|13|Glow|1045.42|1|
+|14|Atzero|1044.51|2|
+|15|DjDiabeatus|1034.05|1|
+|16|CapitanBublo|1028.68|2|
+|17|akashortstack|1017.50|1|
+|18|L0rdRaiden|1013.84|1|
+|19|Hypodeck|1010.86|2|
+|20|Eldric|1005.10|1|
+|21|DoubleADewi|1003.93|2|
+|22|Dragonblast1007|995.96|2|
+|23|Alios|991.63|1|
+|24|WallpeSH|985.22|2|
+|25|CJ2123|984.53|1|
+|26|chaserdk|982.94|2|
+|27|shadowjc32|970.22|2|
+|28|Doomrider|968.30|2|
+|29|Roromaniac|967.24|2|
+|30|puffin|962.01|1|
+|31|Angel_KAL|952.23|1|
+|32|Subconjazz|951.35|1|
+|33|Akagitsune|945.49|1|
+|34|Bulcon|943.89|1|
+|35|WarehouseJesus|943.89|1|
+|36|Cheeko Kyun|942.55|2|
+|37|Dair|940.65|1|
+|38|ryeguy45|922.71|2|
+|39|Adam_OWA|906.29|2|
+|40|Fallen_Tsu|891.37|2|
+|41|Ugh_Sunlight|889.69|2|
 
 ### Race 1 [Racetime](https://racetime.gg/kh2fmr/classic-frankerz-9242)
 
@@ -94,3 +100,31 @@
 |19|Adam_OWA|1000.00|944.66|-55.34|
 |20|WiipartyU|967.00|913.22|-53.78|
 |21|Ugh_Sunlight|942.96|889.69|-53.27|
+
+### Race 3 [Racetime](https://racetime.gg/kh2fmr/lawful-daddy-1653)
+
+| Place | Name | Old ELO | New ELO | Change |
+| --: | --- | --: | --: | --: |
+|1|Megaslim|1059.10|1166.71|107.62|
+|2|CoreySG9|1032.98|1125.94|92.95|
+|3|Ragnoth|1054.82|1127.87|73.05|
+|4|CapitanBublo|956.58|1028.68|72.10|
+|5|equations19|1002.06|1053.69|51.63|
+|6|Hypodeck|966.65|1010.86|44.21|
+|7|DoubleADewi|971.94|1003.93|32.00|
+|8|akashortstack|1000.00|1017.50|17.50|
+|9|Dragonblast1007|985.85|995.96|10.11|
+|10|WallpeSH|983.34|985.22|1.88|
+|11|Alios|1000.00|991.63|-8.37|
+|12|CJ2123|1000.00|984.53|-15.47|
+|13|Cheeko Kyun|958.43|942.55|-15.87|
+|14|Ragna|1043.56|1009.43|-34.14|
+|15|Atzero|1090.69|1044.51|-46.18|
+|16|puffin|1000.00|962.01|-37.99|
+|17|JHobz|989.67|948.78|-40.90|
+|18|Adam_OWA|944.66|906.29|-38.37|
+|19|Bulcon|1000.00|943.89|-56.11|
+|20|Fallen_Tsu|938.56|891.37|-47.19|
+|21|WarehouseJesus|1000.00|943.89|-56.11|
+|22|WiipartyU|913.22|869.63|-43.59|
+|23|chaserdk|1045.69|982.94|-62.76|
