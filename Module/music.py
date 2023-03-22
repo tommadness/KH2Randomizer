@@ -47,7 +47,7 @@ kh2_music_list = [
     {
         "filename": "bgm\\music062.win32.scd",
         "title": "Darkness of the Unknown III",
-        "type": ["Battle", "Battle", "Wild"]
+        "type": ["Boss", "Boss", "Wild"]
     },
     {
         "filename": "bgm\\music063.win32.scd",
