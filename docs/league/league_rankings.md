@@ -2,54 +2,53 @@
 
 | Place | Name | ELO | # of Races |
 | --: | --- | --: | --: |
-|1|Ragnoth|1232.94|4|
-|2|SonicShadowSilver2|1138.98|3|
-|3|DoubleADewi|1063.39|3|
-|4|Atzero|1055.02|3|
-|5|CapitanBublo|1050.75|3|
-|6|Dragonblast1007|1032.99|3|
+|1|Ragnoth|1229.21|4|
+|2|SonicShadowSilver2|1136.24|3|
+|3|DoubleADewi|1060.48|3|
+|4|Atzero|1052.68|3|
+|5|CapitanBublo|1048.29|3|
+|6|Dragonblast1007|1030.39|3|
 |7|Ragna|1009.43|3|
-|8|WallpeSH|974.88|3|
+|8|WallpeSH|972.93|3|
 |9|JHobz|948.78|3|
-|10|shadowjc32|946.29|3|
-|11|chaserdk|939.10|3|
-|12|Cheeko Kyun|918.26|3|
-|13|Ugh_Sunlight|847.25|3|
-|14|WiipartyU|829.90|4|
+|10|shadowjc32|944.54|3|
+|11|chaserdk|940.51|3|
+|12|Cheeko Kyun|916.57|3|
+|13|Ugh_Sunlight|847.64|3|
+|14|WiipartyU|830.29|4|
 ||&uarr; Qualifiers|
-|15|Metthaios|1233.18|2|
+|15|Metthaios|1229.19|2|
 |16|Megaslim|1166.71|2|
 |17|CoreySG9|1125.94|2|
 |18|jaylawn|1123.89|1|
-|19|CJ2123|1091.80|2|
-|20|akashortstack|1088.59|2|
+|19|CJ2123|1088.29|2|
+|20|akashortstack|1085.50|2|
 |21|CrazyComics|1072.59|1|
 |22|equations19|1053.69|2|
 |23|BDBonk|1047.83|2|
-|24|Angel_KAL|1047.71|2|
-|25|Eldric|1012.86|2|
-|26|L0rdRaiden|1012.67|2|
-|27|DjDiabeatus|1010.87|2|
-|28|Hypodeck|1010.86|2|
-|29|Glow|980.70|2|
-|30|Fireboltssb|976.51|1|
+|24|Angel_KAL|1044.42|2|
+|25|Hypodeck|1010.86|2|
+|26|Eldric|1010.63|2|
+|27|L0rdRaiden|1010.54|2|
+|28|DjDiabeatus|1009.00|2|
+|29|Glow|981.11|2|
+|30|Fireboltssb|974.70|1|
 |31|Doomrider|968.30|2|
 |32|Roromaniac|967.24|2|
-|33|SeriouslySurly|963.48|1|
-|34|puffin|961.37|2|
-|35|Aurrun|956.64|1|
-|36|chemigoku|951.00|1|
-|37|PowerForge|948.55|1|
-|38|Akagitsune|945.49|1|
-|39|Bulcon|943.89|1|
-|40|SweepingRocks|941.85|1|
-|41|Dair|940.65|1|
-|42|Alios|934.70|2|
-|43|ryeguy45|922.71|2|
-|44|Subconjazz|918.28|2|
-|45|Adam_OWA|906.29|2|
-|46|WarehouseJesus|893.84|2|
-|47|Fallen_Tsu|891.37|2|
+|33|puffin|959.33|2|
+|34|Aurrun|958.31|1|
+|35|chemigoku|952.18|1|
+|36|PowerForge|949.53|1|
+|37|Akagitsune|945.49|1|
+|38|Bulcon|943.89|1|
+|39|SweepingRocks|942.25|1|
+|40|Dair|940.65|1|
+|41|Alios|935.10|2|
+|42|ryeguy45|922.71|2|
+|43|Subconjazz|920.22|2|
+|44|Adam_OWA|906.29|2|
+|45|WarehouseJesus|894.24|2|
+|46|Fallen_Tsu|891.37|2|
 
 ### Race 1 [Racetime](https://racetime.gg/kh2fmr/classic-frankerz-9242)
 
@@ -139,33 +138,32 @@
 
 | Place | Name | Old ELO | New ELO | Change |
 | --: | --- | --: | --: | --: |
-|1|Metthaios|1105.14|1233.18|128.05|
-|2|Ragnoth|1127.87|1232.94|105.07|
-|3|CJ2123|984.53|1091.80|107.27|
-|4|Angel_KAL|952.23|1047.71|95.48|
-|5|akashortstack|1017.50|1088.59|71.08|
-|6|DoubleADewi|1003.93|1063.39|59.46|
-|7|SonicShadowSilver2|1106.46|1138.98|32.53|
-|8|Dragonblast1007|995.96|1032.99|37.03|
-|9|CapitanBublo|1028.68|1050.75|22.07|
-|10|Atzero|1044.51|1055.02|10.51|
-|11|Eldric|1005.10|1012.86|7.76|
-|12|L0rdRaiden|1013.84|1012.67|-1.18|
-|13|puffin|962.01|961.37|-0.64|
-|14|WallpeSH|985.22|974.88|-10.34|
-|15|DjDiabeatus|1034.05|1010.87|-23.18|
-|16|Fireboltssb|1000.00|976.51|-23.49|
-|17|shadowjc32|970.22|946.29|-23.94|
-|18|Cheeko Kyun|942.55|918.26|-24.29|
-|19|SeriouslySurly|1000.00|963.48|-36.52|
-|20|Subconjazz|951.35|918.28|-33.06|
-|21|Aurrun|1000.00|956.64|-43.36|
-|22|chaserdk|982.94|939.10|-43.84|
-|23|chemigoku|1000.00|951.00|-49.00|
-|24|PowerForge|1000.00|948.55|-51.45|
-|25|Ugh_Sunlight|889.69|847.25|-42.45|
-|26|WiipartyU|869.63|829.90|-39.73|
-|27|WarehouseJesus|943.89|893.84|-50.04|
-|28|SweepingRocks|1000.00|941.85|-58.15|
-|29|Alios|991.63|934.70|-56.93|
-|30|Glow|1045.42|980.70|-64.72|
+|1|Metthaios|1105.14|1229.19|124.05|
+|2|Ragnoth|1127.87|1229.21|101.34|
+|3|CJ2123|984.53|1088.29|103.76|
+|4|Angel_KAL|952.23|1044.42|92.20|
+|5|akashortstack|1017.50|1085.50|68.00|
+|6|DoubleADewi|1003.93|1060.48|56.55|
+|7|SonicShadowSilver2|1106.46|1136.24|29.79|
+|8|Dragonblast1007|995.96|1030.39|34.43|
+|9|CapitanBublo|1028.68|1048.29|19.61|
+|10|Atzero|1044.51|1052.68|8.17|
+|11|Eldric|1005.10|1010.63|5.54|
+|12|L0rdRaiden|1013.84|1010.54|-3.30|
+|13|puffin|962.01|959.33|-2.68|
+|14|WallpeSH|985.22|972.93|-12.29|
+|15|DjDiabeatus|1034.05|1009.00|-25.05|
+|16|Fireboltssb|1000.00|974.70|-25.30|
+|17|shadowjc32|970.22|944.54|-25.68|
+|18|Cheeko Kyun|942.55|916.57|-25.98|
+|19|Subconjazz|951.35|920.22|-31.12|
+|20|Aurrun|1000.00|958.31|-41.69|
+|21|chaserdk|982.94|940.51|-42.42|
+|22|chemigoku|1000.00|952.18|-47.82|
+|23|PowerForge|1000.00|949.53|-50.47|
+|24|Ugh_Sunlight|889.69|847.64|-42.05|
+|25|WiipartyU|869.63|830.29|-39.34|
+|26|WarehouseJesus|943.89|894.24|-49.64|
+|27|SweepingRocks|1000.00|942.25|-57.75|
+|28|Glow|1045.42|981.11|-64.31|
+|29|Alios|991.63|935.10|-56.53|
