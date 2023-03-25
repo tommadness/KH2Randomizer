@@ -3,54 +3,55 @@
 | Place | Name | ELO | # of Races |
 | --: | --- | --: | --: |
 |1|Metthaios|1305.99|3|
-|2|Ragnoth|1271.39|5|
-|3|SonicShadowSilver2|1136.24|3|
-|4|DoubleADewi|1095.61|4|
-|5|Atzero|1052.68|3|
-|6|CapitanBublo|1048.29|3|
-|7|Dragonblast1007|1030.39|3|
-|8|Ragna|1028.10|4|
-|9|Eldric|1018.90|3|
-|10|L0rdRaiden|1009.52|3|
-|11|WallpeSH|972.93|3|
-|12|DjDiabeatus|972.91|3|
-|13|Roromaniac|963.89|3|
-|14|puffin|949.41|3|
-|15|JHobz|948.78|3|
-|16|Glow|943.72|3|
-|17|chaserdk|919.88|4|
-|18|Cheeko Kyun|905.61|4|
-|19|shadowjc32|903.19|4|
-|20|ryeguy45|888.74|3|
-|21|Ugh_Sunlight|847.64|3|
-|22|WiipartyU|830.29|4|
+|2|Megaslim|1243.38|3|
+|3|Ragnoth|1238.48|6|
+|4|SonicShadowSilver2|1198.70|4|
+|5|CoreySG9|1132.17|3|
+|6|DoubleADewi|1095.61|4|
+|7|Angel_KAL|1087.92|3|
+|8|equations19|1082.25|3|
+|9|Atzero|1057.68|4|
+|10|CapitanBublo|1048.29|3|
+|11|Roromaniac|1033.68|4|
+|12|Ragna|1028.10|4|
+|13|Eldric|1018.90|3|
+|14|L0rdRaiden|1009.52|3|
+|15|Dragonblast1007|1002.76|4|
+|16|WallpeSH|972.93|3|
+|17|puffin|949.26|4|
+|18|JHobz|948.78|3|
+|19|Glow|943.72|3|
+|20|DjDiabeatus|934.18|4|
+|21|Alios|928.44|3|
+|22|chaserdk|919.88|4|
+|23|Cheeko Kyun|905.61|4|
+|24|shadowjc32|903.19|4|
+|25|ryeguy45|888.74|3|
+|26|chemigoku|882.43|3|
+|27|Subconjazz|878.66|3|
+|28|Ugh_Sunlight|847.64|3|
+|29|WiipartyU|830.29|4|
 ||&uarr; Qualifiers|
-|23|Megaslim|1166.71|2|
-|24|jaylawn|1137.99|2|
-|25|CoreySG9|1125.94|2|
-|26|VGmaster|1088.77|1|
-|27|CJ2123|1088.29|2|
-|28|akashortstack|1085.50|2|
-|29|CrazyComics|1072.59|1|
-|30|Ninten|1057.30|1|
-|31|equations19|1053.69|2|
-|32|BDBonk|1047.83|2|
-|33|Angel_KAL|1044.42|2|
-|34|Hypodeck|1010.86|2|
-|35|Fireboltssb|974.70|1|
-|36|Doomrider|968.30|2|
-|37|Aurrun|958.31|1|
-|38|PowerForge|949.53|1|
-|39|Akagitsune|945.49|1|
-|40|Bulcon|943.89|1|
-|41|Alios|935.10|2|
-|42|Subconjazz|920.22|2|
-|43|Adam_OWA|906.29|2|
-|44|chemigoku|898.96|2|
-|45|SweepingRocks|897.28|2|
-|46|WarehouseJesus|894.24|2|
-|47|Dair|892.31|2|
-|48|Fallen_Tsu|891.37|2|
+|30|jaylawn|1137.99|2|
+|31|VGmaster|1088.77|1|
+|32|CJ2123|1088.29|2|
+|33|akashortstack|1085.50|2|
+|34|CrazyComics|1072.59|1|
+|35|Ninten|1057.30|1|
+|36|BDBonk|1047.83|2|
+|37|Hypodeck|1010.86|2|
+|38|Fireboltssb|974.70|1|
+|39|Doomrider|968.30|2|
+|40|PowerForge|949.53|1|
+|41|Bulcon|943.89|1|
+|42|danimalforlife|943.08|1|
+|43|Aurrun|916.34|2|
+|44|Akagitsune|916.34|2|
+|45|Adam_OWA|906.29|2|
+|46|SweepingRocks|897.28|2|
+|47|WarehouseJesus|894.24|2|
+|48|Dair|892.31|2|
+|49|Fallen_Tsu|891.37|2|
 
 ### Race 1 [Racetime](https://racetime.gg/kh2fmr/classic-frankerz-9242)
 
@@ -194,3 +195,25 @@
 |18|SweepingRocks|942.25|897.28|-44.98|
 |19|Dair|940.65|892.31|-48.34|
 |20|chemigoku|952.18|898.96|-53.22|
+
+### Race 6 [Racetime](https://racetime.gg/kh2fmr/good-banjo-8586)
+
+| Place | Name | Old ELO | New ELO | Change |
+| --: | --- | --: | --: | --: |
+|1|Megaslim|1166.71|1243.38|76.67|
+|2|SonicShadowSilver2|1136.24|1198.70|62.46|
+|3|Roromaniac|963.89|1033.68|69.79|
+|4|Angel_KAL|1044.42|1087.92|43.50|
+|5|equations19|1053.69|1082.25|28.55|
+|6|CoreySG9|1125.94|1132.17|6.24|
+|7|Atzero|1052.68|1057.68|5.00|
+|8|Ragnoth|1271.39|1238.48|-32.91|
+|9|puffin|949.41|949.26|-0.14|
+|10|Alios|935.10|928.44|-6.66|
+|11|Dragonblast1007|1030.39|1002.76|-27.63|
+|12|chemigoku|898.96|882.43|-16.53|
+|13|Akagitsune|945.49|916.34|-29.16|
+|14|DjDiabeatus|972.91|934.18|-38.73|
+|15|Aurrun|958.31|916.34|-41.97|
+|16|Subconjazz|920.22|878.66|-41.56|
+|17|danimalforlife|1000.00|943.08|-56.92|
