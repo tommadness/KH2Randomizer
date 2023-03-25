@@ -201,7 +201,7 @@ class ItemPlacementHelpers():
         return 376 in inventory # Picture
     @staticmethod
     def tt3_check(inventory):
-        return 375 in inventory # Ice Cream
+        return 376 in inventory and 375 in inventory # Picture and Ice Cream
     @staticmethod
     def hb_check(inventory):
         return 369 in inventory # Membership Card

@@ -7,6 +7,7 @@ from List.ItemList import Items
 from List.configDict import locationType
 from Module.RandomizerSettings import RandomizerSettings
 from List.NewLocationList import get_all_parent_edge_reqs
+from List.configDict import locationCategory
 
 from Module.newRandomize import Randomizer
 
@@ -95,6 +96,9 @@ class LocationInformedSeedValidator:
                 if self.evaluate(inventory,req):
                     #find assigned item to location
                     for assignment in randomizer.assignedItems:
+                        # if assignment is one of the struggle win/lose items, only count one, and not count the second.
+                        if assignment.location.LocationCategory is locationCategory.POPUP and assignment.location.LocationId == 389:
+                            continue
                         if loc == assignment.location:
                             inventory.append(assignment.item.Id)
                             if assignment.item2 is not None:
