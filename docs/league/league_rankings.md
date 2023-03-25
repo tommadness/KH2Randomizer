@@ -2,52 +2,52 @@
 
 | Place | Name | ELO | # of Races |
 | --: | --- | --: | --: |
-|1|Metthaios|1305.99|3|
-|2|Megaslim|1243.38|3|
+|1|Megaslim|1307.79|4|
+|2|Metthaios|1305.99|3|
 |3|Ragnoth|1238.48|6|
-|4|SonicShadowSilver2|1198.70|4|
-|5|CoreySG9|1132.17|3|
-|6|DoubleADewi|1095.61|4|
-|7|Angel_KAL|1087.92|3|
+|4|SonicShadowSilver2|1192.13|5|
+|5|CoreySG9|1103.01|4|
+|6|Angel_KAL|1087.92|3|
+|7|CJ2123|1084.72|3|
 |8|equations19|1082.25|3|
-|9|Atzero|1057.68|4|
-|10|CapitanBublo|1048.29|3|
-|11|Roromaniac|1033.68|4|
-|12|Ragna|1028.10|4|
-|13|Eldric|1018.90|3|
-|14|L0rdRaiden|1009.52|3|
-|15|Dragonblast1007|1002.76|4|
-|16|WallpeSH|972.93|3|
-|17|puffin|949.26|4|
-|18|JHobz|948.78|3|
-|19|Glow|943.72|3|
-|20|DjDiabeatus|934.18|4|
-|21|Alios|928.44|3|
-|22|chaserdk|919.88|4|
-|23|Cheeko Kyun|905.61|4|
-|24|shadowjc32|903.19|4|
-|25|ryeguy45|888.74|3|
-|26|chemigoku|882.43|3|
-|27|Subconjazz|878.66|3|
-|28|Ugh_Sunlight|847.64|3|
-|29|WiipartyU|830.29|4|
+|9|Hypodeck|1055.57|3|
+|10|WallpeSH|1054.62|4|
+|11|CapitanBublo|1048.29|3|
+|12|DoubleADewi|1041.62|5|
+|13|akashortstack|1039.29|3|
+|14|Roromaniac|1033.68|4|
+|15|Ragna|1028.10|4|
+|16|Atzero|1022.35|5|
+|17|Eldric|1018.90|3|
+|18|L0rdRaiden|1009.52|3|
+|19|Cheeko Kyun|979.77|5|
+|20|Dragonblast1007|955.80|5|
+|21|puffin|949.26|4|
+|22|JHobz|948.78|3|
+|23|Glow|943.72|3|
+|24|Alios|936.60|4|
+|25|DjDiabeatus|934.18|4|
+|26|chaserdk|919.88|4|
+|27|ryeguy45|888.74|3|
+|28|chemigoku|882.43|3|
+|29|Subconjazz|875.43|4|
+|30|shadowjc32|859.67|5|
+|31|Ugh_Sunlight|847.64|3|
+|32|WiipartyU|830.29|4|
 ||&uarr; Qualifiers|
-|30|jaylawn|1137.99|2|
-|31|VGmaster|1088.77|1|
-|32|CJ2123|1088.29|2|
-|33|akashortstack|1085.50|2|
-|34|CrazyComics|1072.59|1|
-|35|Ninten|1057.30|1|
-|36|BDBonk|1047.83|2|
-|37|Hypodeck|1010.86|2|
-|38|Fireboltssb|974.70|1|
-|39|Doomrider|968.30|2|
-|40|PowerForge|949.53|1|
+|33|jaylawn|1137.99|2|
+|34|VGmaster|1088.77|1|
+|35|CrazyComics|1072.59|1|
+|36|Ninten|1057.30|1|
+|37|BDBonk|1047.83|2|
+|38|danimalforlife|983.41|2|
+|39|Fireboltssb|974.70|1|
+|40|Doomrider|968.30|2|
 |41|Bulcon|943.89|1|
-|42|danimalforlife|943.08|1|
-|43|Aurrun|916.34|2|
-|44|Akagitsune|916.34|2|
-|45|Adam_OWA|906.29|2|
+|42|Aurrun|916.34|2|
+|43|Akagitsune|916.34|2|
+|44|Adam_OWA|906.29|2|
+|45|PowerForge|904.62|2|
 |46|SweepingRocks|897.28|2|
 |47|WarehouseJesus|894.24|2|
 |48|Dair|892.31|2|
@@ -217,3 +217,24 @@
 |15|Aurrun|958.31|916.34|-41.97|
 |16|Subconjazz|920.22|878.66|-41.56|
 |17|danimalforlife|1000.00|943.08|-56.92|
+
+### Race 7 [Racetime](https://racetime.gg/kh2fmr/critical-mewtwo-5153)
+
+| Place | Name | Old ELO | New ELO | Change |
+| --: | --- | --: | --: | --: |
+|1|Megaslim|1243.38|1307.79|64.41|
+|2|WallpeSH|972.93|1054.62|81.69|
+|3|Cheeko Kyun|905.61|979.77|74.16|
+|4|Hypodeck|1010.86|1055.57|44.71|
+|5|danimalforlife|943.08|983.41|40.33|
+|6|SonicShadowSilver2|1198.70|1192.13|-6.57|
+|7|CJ2123|1088.29|1084.72|-3.57|
+|8|Alios|928.44|936.60|8.16|
+|9|CoreySG9|1132.17|1103.01|-29.16|
+|10|Subconjazz|878.66|875.43|-3.23|
+|11|Atzero|1057.68|1022.35|-35.33|
+|12|akashortstack|1085.50|1039.29|-46.21|
+|13|DoubleADewi|1095.61|1041.62|-53.99|
+|14|Dragonblast1007|1002.76|955.80|-46.96|
+|15|PowerForge|949.53|904.62|-44.91|
+|16|shadowjc32|903.19|859.67|-43.52|
