@@ -216,7 +216,7 @@ class SeedZip():
         sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
 
         data = io.BytesIO()
-        with zipfile.ZipFile(data,"w") as outZip:
+        with zipfile.ZipFile(data, "w", zipfile.ZIP_DEFLATED) as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
             cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
