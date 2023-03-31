@@ -216,7 +216,7 @@ class SeedZip():
         sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
 
         data = io.BytesIO()
-        with zipfile.ZipFile(data,"w") as outZip:
+        with zipfile.ZipFile(data, "w", zipfile.ZIP_DEFLATED) as outZip:
             yaml.emitter.Emitter.process_tag = noop
 
             cmdMenuChoice = cosmetics_data["cmdMenuChoice"]
@@ -390,8 +390,10 @@ class SeedZip():
                 a["source"] = [i for j, i in enumerate(a["source"]) if j not in delete_asset_indices]
 
     def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
-        image_data = hashimage.generate_seed_hash_image(settings.seedHashIcons, use_bitmap=False)
+        hash_icons = settings.seedHashIcons
+        image_data = hashimage.generate_seed_hash_image(hash_icons, use_bitmap=False)
         out_zip.writestr('preview.png', image_data)
+        out_zip.writestr('misc/randoseed-hash-icons.csv', ','.join(hash_icons))
 
     def createBtlvRandoAssets(self, settings, mod, outZip):
         btlv_option_name = settings.battle_level_rando
