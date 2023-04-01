@@ -2,56 +2,56 @@
 
 | Place | Name | ELO | # of Races |
 | --: | --- | --: | --: |
-|1|Megaslim|1257.41|5|
-|2|CJ2123|1245.99|5|
-|3|Ragnoth|1245.60|7|
-|4|Metthaios|1244.63|4|
-|5|SonicShadowSilver2|1223.35|6|
+|1|Metthaios|1318.48|5|
+|2|SonicShadowSilver2|1281.50|7|
+|3|Megaslim|1257.41|5|
+|4|CJ2123|1256.56|6|
+|5|Ragnoth|1245.60|7|
 |6|VGmaster|1180.71|3|
 |7|DoubleADewi|1117.47|7|
-|8|L0rdRaiden|1105.60|5|
-|9|Angel_KAL|1087.92|3|
-|10|equations19|1082.25|3|
-|11|CrazyComics|1073.67|3|
-|12|Atzero|1067.55|7|
-|13|BDBonk|1061.12|3|
-|14|Hypodeck|1055.57|3|
+|8|Ninten|1110.04|3|
+|9|BDBonk|1108.65|4|
+|10|L0rdRaiden|1105.60|5|
+|11|Angel_KAL|1087.92|3|
+|12|equations19|1082.25|3|
+|13|CrazyComics|1073.67|3|
+|14|CoreySG9|1065.23|6|
 |15|CapitanBublo|1054.94|5|
-|16|CoreySG9|1053.93|5|
-|17|Dragonblast1007|1050.57|6|
+|16|Dragonblast1007|1050.57|6|
+|17|Atzero|1049.02|8|
 |18|akashortstack|1043.56|4|
 |19|Roromaniac|1033.68|4|
-|20|WallpeSH|1031.32|5|
+|20|Hypodeck|1031.01|4|
 |21|Ragna|1028.10|4|
-|22|Eldric|1021.70|5|
-|23|Cheeko Kyun|979.77|5|
-|24|Alios|969.85|5|
-|25|JHobz|948.78|3|
-|26|Glow|943.72|3|
+|22|WallpeSH|1026.24|6|
+|23|Cheeko Kyun|1012.59|6|
+|24|Eldric|994.85|6|
+|25|Glow|943.72|3|
+|26|SeriouslySurly|934.87|3|
 |27|danimalforlife|932.70|3|
 |28|chaserdk|930.01|5|
-|29|DjDiabeatus|924.99|6|
-|30|ryeguy45|888.74|3|
-|31|puffin|883.60|7|
-|32|chemigoku|882.43|3|
+|29|JHobz|925.64|4|
+|30|Alios|923.71|6|
+|31|puffin|907.85|8|
+|32|DjDiabeatus|894.05|7|
 ||&uarr; Qualifiers|
-|33|Akagitsune|882.43|3|
-|34|Adam_OWA|870.00|3|
-|35|PowerForge|861.03|3|
-|36|shadowjc32|859.67|5|
-|37|Dair|854.50|3|
-|38|SweepingRocks|850.29|3|
-|39|Ugh_Sunlight|847.64|3|
-|40|Subconjazz|847.46|5|
-|41|WiipartyU|830.29|4|
-|42|jaylawn|1137.99|2|
-|43|Ninten|1045.38|2|
-|44|Fireboltssb|974.70|1|
-|45|Doomrider|968.30|2|
-|46|SeriouslySurly|966.16|2|
-|47|Bulcon|943.89|1|
-|48|Aurrun|916.34|2|
-|49|wolfscout|907.09|2|
+|33|ryeguy45|888.74|3|
+|34|chemigoku|882.43|3|
+|35|Akagitsune|882.43|3|
+|36|wolfscout|873.75|3|
+|37|Aurrun|873.51|3|
+|38|PowerForge|861.03|3|
+|39|shadowjc32|859.67|5|
+|40|Dair|854.50|3|
+|41|SweepingRocks|850.29|3|
+|42|Ugh_Sunlight|847.64|3|
+|43|Subconjazz|847.46|5|
+|44|WiipartyU|830.29|4|
+|45|Adam_OWA|829.60|4|
+|46|jaylawn|1137.99|2|
+|47|Fireboltssb|974.70|1|
+|48|Doomrider|968.30|2|
+|49|Bulcon|943.89|1|
 |50|WarehouseJesus|894.24|2|
 |51|Fallen_Tsu|891.37|2|
 
@@ -299,3 +299,27 @@
 |10|Akagitsune|916.34|882.43|-33.91|
 |11|wolfscout|954.73|907.09|-47.64|
 |12|SweepingRocks|897.28|850.29|-46.98|
+
+### Race 11 [Racetime](https://racetime.gg/kh2fmr/lawful-ness-0075)
+
+| Place | Name | Old ELO | New ELO | Change |
+| --: | --- | --: | --: | --: |
+|1|Metthaios|1244.63|1318.48|73.85|
+|2|SonicShadowSilver2|1223.35|1281.50|58.15|
+|3|Ninten|1045.38|1110.04|64.66|
+|4|BDBonk|1061.12|1108.65|47.53|
+|5|CJ2123|1245.99|1256.56|10.57|
+|6|Cheeko Kyun|979.77|1012.59|32.81|
+|7|CoreySG9|1053.93|1065.23|11.30|
+|8|puffin|883.60|907.85|24.24|
+|9|WallpeSH|1031.32|1026.24|-5.08|
+|10|Atzero|1067.55|1049.02|-18.53|
+|11|Hypodeck|1055.57|1031.01|-24.56|
+|12|Eldric|1021.70|994.85|-26.86|
+|13|JHobz|948.78|925.64|-23.14|
+|14|SeriouslySurly|966.16|934.87|-31.29|
+|15|DjDiabeatus|924.99|894.05|-30.95|
+|16|wolfscout|907.09|873.75|-33.34|
+|17|Alios|969.85|923.71|-46.14|
+|18|Aurrun|916.34|873.51|-42.84|
+|19|Adam_OWA|870.00|829.60|-40.41|
