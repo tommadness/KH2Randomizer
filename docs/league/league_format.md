@@ -5,11 +5,9 @@
 There will be three stages to the league, a placement stage, a swiss stage, and a bracket stage. All stages will be coordinated via Discord, so join the discord to see updates.
 
 ## Placement Stage
-In this stage, runners will join group races that are run for 3 weeks, 4 races per week. In these races, runners will gain/lose an ELO score (similar to racetime, but calculated by league orgs). The top 32 ranked runners will move onto the swiss stage. Rankings will be updated on kh2rando.com after each race. **Races will begin on March 17th** and will follow this schedule:
+In this stage, runners will join group races that are run for 3 weeks, 4 races per week. In these races, runners will gain/lose an ELO score (similar to racetime, but calculated by league orgs). The top 32 ranked runners will move onto the swiss stage. Rankings will be updated on kh2rando.com after each race. **Races began on March 17th and continued for 3 weeks.**
 
-<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FNew_York&showTitle=1&title=League%20Races&showNav=1&showDate=0&showPrint=0&showTabs=0&showCalendars=0&showTz=1&mode=AGENDA&src=ZjY4MmZmZThmMTM1ZmI0ZGRkNTA1OWEwZDIxZjY2MTFkY2M4MWVkNGY5MmY0ZjE3NjE4YWM2Y2E3YWJiMThjOUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23B39DDB" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-
-If you cannot make any of these times, you are allowed to contact a league organizer/assistant to async the Friday race on Thursday. While there are several volunteers to facilitate this, we can't guarantee availability. We will be as accommodating as possible.
+If you couldn't make any of the times, you were allowed to contact a league organizer/assistant to async the Friday race on Thursday. While there are several volunteers to facilitate this, we can't guarantee availability. We will be as accommodating as possible.
 
 ### Notes
 ```

@@ -20,6 +20,7 @@ title: Home
 * [General Race Rules](https://docs.google.com/document/d/1VSCjXHokrwG2hWMOmxsrNeGEkmbyHIvOqtd6Z1w0epc)
 * [League Format](league/league_format.md)
 * [League Rankings](league/league_rankings.md)
+* [League Placement Stage Results](league/league_placements.md)
 
 # Game/Randomizer Information
 
