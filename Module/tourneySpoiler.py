@@ -1,11 +1,9 @@
+from Module import hashimage
 
-from Module.resources import resource_path
-from pathlib import Path
-from PIL import Image
-import io
 
-class TourneySeedSaver():
-    def __init__(self,path_to_save,tourney_name):
+class TourneySeedSaver:
+
+    def __init__(self, path_to_save, tourney_name):
         self.start_html = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -51,41 +49,19 @@ class TourneySeedSaver():
                 outfile.write(h)
             outfile.write(self.end_html)
 
-
-    def add_seed(self,seed_string,settings,spoilers):
+    def add_seed(self, seed_string, settings, spoilers):
         self.seed_strings.append(seed_string)
 
-        hash_icon_path = Path(resource_path("static/seed-hash-icons"))
-        icon_paths = [resource_path(hash_icon_path / (icon + '.png')) for icon in settings.seedHashIcons]
-
-        # Adapted from https://stackoverflow.com/a/30228308
-        images = [Image.open(x) for x in icon_paths]
-        widths, heights = zip(*(i.size for i in images))
-
-        total_width = sum(widths)
-        max_height = max(heights)
-
-        stitched_image = Image.new('RGBA', (total_width, max_height))
-
-        x_offset = 0
-        for image in images:
-            stitched_image.paste(image, (x_offset, 0))
-            x_offset += image.size[0]
-
-        image_file = io.BytesIO()
-        stitched_image.save(image_file, 'PNG')
         seed_filename = f"seed{len(self.seed_strings)}"
         self.seed_names.append(seed_filename)
-        with open(self.path_to_save / f"{seed_filename}.png","wb") as outfile:
-            outfile.write(image_file.getvalue())
-            
-        with open(self.path_to_save / f"{seed_filename}.html","w") as outfile:
+
+        image_data = hashimage.generate_seed_hash_image(settings.seedHashIcons, use_bitmap=False)
+        with open(self.path_to_save / f"{seed_filename}.png", "wb") as outfile:
+            outfile.write(image_data)
+
+        with open(self.path_to_save / f"{seed_filename}.html", "w") as outfile:
             outfile.write(spoilers)
 
-        for image in images:
-            image.close()
-        image_file.close()
-        stitched_image.close()
         self._add_seed_html()
 
     def _add_seed_html(self):

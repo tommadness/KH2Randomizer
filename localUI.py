@@ -1,31 +1,17 @@
-import os
-import subprocess
-import sys
-import textwrap
-
-from Class.exceptions import CantAssignItemException, RandomizerExceptions
-from List.configDict import locationType
-
-from Module.resources import resource_path
-from Module.tourneySpoiler import TourneySeedSaver
-
-# Keep the setting of the environment variable as close to the top as possible.
-# This needs to happen before anything Boss/Enemy Rando gets loaded for the sake of the distributed binary.
-os.environ["USE_KH2_GITPATH"] = "extracted_data"
-
-
 import datetime
 import json
+import os
 import random
 import re
 import string
+import sys
+import textwrap
 from pathlib import Path
 
 import pyperclip as pc
-
 import pytz
 from PySide6 import QtGui
-from PySide6.QtCore import Qt, QThread, Signal, QSize
+from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon, QPixmap, QImage
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
@@ -33,18 +19,21 @@ from PySide6.QtWidgets import (
     QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QDialog, QGridLayout, QListWidget, QSpinBox, QComboBox,
     QListView, QFrame
 )
-
 from qt_material import apply_stylesheet
+
 from Class import settingkey
-from Class.exceptions import SettingsException
-from Class.seedSettings import SeedSettings, randomize_settings
-from Module import appconfig, hashimage
+from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
+from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
+from List.configDict import locationType
+from Module import appconfig, hashimage, commandmenu
+from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
-from Module.generate import generateMultiWorldSeed, generateSeed
-from Module.RandomizerSettings import RandomizerSettings
+from Module.generate import generateSeed
 from Module.newRandomize import Randomizer
+from Module.resources import resource_path
 from Module.seedshare import SharedSeed, ShareStringException
+from Module.tourneySpoiler import TourneySeedSaver
 from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
@@ -57,6 +46,7 @@ from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
+from UI.worker import GenerateSeedWorker
 
 LOCAL_UI_VERSION = '3.0.0-beta-v3'
 
@@ -75,53 +65,6 @@ logger = Logger(sys.stdout)
 
 sys.stdout = logger
 sys.stderr = logger
-
-
-AUTOSAVE_FOLDER = "auto-save"
-PRESET_FOLDER = "presets"
-
-
-
-class GenSeedThread(QThread):
-    finished = Signal(object)
-    failed = Signal(Exception)
-
-    def provideData(self,data,rando_settings):
-        self.data=data
-        self.rando_settings = rando_settings
-        self.zip_file = None
-
-    def run(self):
-        try:
-            zip_file, spoiler_log, enemy_log = generateSeed(self.rando_settings, self.data)
-
-            custom_executables = self.data.get('customCosmeticsExecutables', [])
-            for custom_executable in custom_executables:
-                custom_file_path = Path(custom_executable)
-                if custom_file_path.is_file():
-                    custom_cwd = custom_file_path.parent
-                    subprocess.call(custom_file_path,cwd=custom_cwd)
-
-            self.finished.emit((zip_file,spoiler_log,enemy_log))
-        except Exception as e:
-            self.failed.emit(e)
-
-
-class MultiGenSeedThread(QThread):
-    finished = Signal(object)
-    failed = Signal(Exception)
-
-    def provideData(self,data,rando_settings):
-        self.data=data
-        self.rando_settings = rando_settings
-        self.zip_file = None
-
-    def run(self):
-        try:
-            all_output = generateMultiWorldSeed(self.rando_settings, self.data)
-            self.finished.emit(all_output)
-        except Exception as e:
-            self.failed.emit(e)
 
 
 class TourneySeedDialog(QDialog):
@@ -329,9 +272,9 @@ class KH2RandomizerApp(QMainWindow):
         self.settings = SeedSettings()
         self.custom_cosmetics = CustomCosmetics()
 
-        if not os.path.exists(AUTOSAVE_FOLDER):
-            os.makedirs(AUTOSAVE_FOLDER)
-        auto_settings_save_path = os.path.join(AUTOSAVE_FOLDER, 'auto-save.json')
+        if not os.path.exists(appconfig.AUTOSAVE_FOLDER):
+            os.makedirs(appconfig.AUTOSAVE_FOLDER)
+        auto_settings_save_path = os.path.join(appconfig.AUTOSAVE_FOLDER, 'auto-save.json')
         if os.path.exists(auto_settings_save_path):
             with open(auto_settings_save_path, 'r') as source:
                 try:
@@ -355,12 +298,12 @@ class KH2RandomizerApp(QMainWindow):
         self._configure_menu_bar()
 
         self.preset_json = {}
-        if not os.path.exists(PRESET_FOLDER):
-            os.makedirs(PRESET_FOLDER)
-        for preset_file_name in os.listdir(PRESET_FOLDER):
+        if not os.path.exists(appconfig.PRESET_FOLDER):
+            os.makedirs(appconfig.PRESET_FOLDER)
+        for preset_file_name in os.listdir(appconfig.PRESET_FOLDER):
             preset_name, extension = os.path.splitext(preset_file_name)
             if extension == '.json':
-                with open(os.path.join(PRESET_FOLDER, preset_file_name), 'r') as presetData:
+                with open(os.path.join(appconfig.PRESET_FOLDER, preset_file_name), 'r') as presetData:
                     try:
                         settings_json = json.load(presetData)
                         self.preset_json[preset_name] = settings_json
@@ -474,7 +417,6 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addAction("About", self.showAbout)
 
     def _build_seed_hash_frame(self) -> QFrame:
-        self.hashIconPath = Path(resource_path('static/seed-hash-icons'))
         self.hash_icon_names = []
         self.hash_icon_labels = []
 
@@ -536,7 +478,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def closeEvent(self, e):
         settings_json = self.settings.settings_json(include_private=True)
-        with open(os.path.join(AUTOSAVE_FOLDER, 'auto-save.json'), 'w') as presetData:
+        with open(os.path.join(appconfig.AUTOSAVE_FOLDER, 'auto-save.json'), 'w') as presetData:
             presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
 
         self.custom_cosmetics.write_file()
@@ -672,12 +614,12 @@ class KH2RandomizerApp(QMainWindow):
         self.hash_icon_names.clear()
         for index, icon in enumerate(rando_settings.seedHashIcons):
             self.hash_icon_names.append(icon)
-            self.hash_icon_labels[index].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + '/' + icon + '.png'))
+            self.hash_icon_labels[index].setPixmap(QPixmap(str(hashimage.seed_hash_icon_path(icon))))
 
     def clear_hash_icons(self):
         self.hash_icon_names.clear()
         for i in range(7):
-            self.hash_icon_labels[i].setPixmap(QPixmap(str(self.hashIconPath.absolute()) + "/" + "question-mark.png"))
+            self.hash_icon_labels[i].setPixmap(QPixmap(str(hashimage.seed_hash_icon_path("question-mark"))))
 
     def _copy_hash_to_clipboard(self):
         image_data = hashimage.generate_seed_hash_image(self.hash_icon_names, use_bitmap=True)
@@ -689,7 +631,6 @@ class KH2RandomizerApp(QMainWindow):
                 rando_settings = self.make_rando_settings()
                 dummy_rando = Randomizer(rando_settings,True)
                 split_pc_emu = False
-                split_pc_emu = split_pc_emu or self.settings.get(settingkey.COMMAND_MENU) != "vanilla"
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.CUPS_GIVE_XP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DARK_THORN)
@@ -738,73 +679,32 @@ class KH2RandomizerApp(QMainWindow):
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
             # disable all cosmetics, generate a spoiler log, but don't put it in the zip
-            data = {
-                'platform': platform,
-                'cmdMenuChoice': "vanilla",
-                'customCosmeticsExecutables': [],
-                'tourney': True
-            }
-            self.genTourneySeeds(data)
+            extra_data = ExtraConfigurationData(
+                platform=platform,
+                command_menu_choice=commandmenu.VANILLA,
+                tourney=True,
+                custom_cosmetics_executables=[],
+            )
+            self.genTourneySeeds(extra_data)
         else:
-            data = {
-                'platform': platform,
-                'cmdMenuChoice': self.settings.get(settingkey.COMMAND_MENU),
-                'customCosmeticsExecutables': [custom_file for custom_file in self.custom_cosmetics.external_executables],
-                'tourney': False
-            }
+            extra_data = ExtraConfigurationData(
+                platform=platform,
+                command_menu_choice=self.settings.get(settingkey.COMMAND_MENU),
+                tourney=False,
+                custom_cosmetics_executables=self.custom_cosmetics.collect_custom_files(),
+            )
 
             rando_settings = self.make_rando_settings()
             if rando_settings is not None:
-                self.genSeed(data,rando_settings)
+                worker = GenerateSeedWorker(self, rando_settings, extra_data)
+                worker.generate_seed()
 
         # rando_settings = self.make_rando_settings()
         # self.seedName.setText("")
         # rando_settings2 = self.make_rando_settings()
         # if rando_settings is not None:
-        #     self.genMultiSeed(data,[rando_settings,rando_settings2])
-
-    def downloadSeed(self):
-        last_seed_folder_txt = Path(AUTOSAVE_FOLDER) / 'last_seed_folder.txt'
-        output_file_name = 'randoseed.zip'
-        if last_seed_folder_txt.is_file():
-            last_seed_folder = Path(last_seed_folder_txt.read_text().strip())
-            if last_seed_folder.is_dir():
-                output_file_name = str(last_seed_folder / output_file_name)
-
-        saveFileWidget = QFileDialog()
-        saveFileWidget.setNameFilters(["Zip Seed File (*.zip)"])
-        outfile_name, _ = saveFileWidget.getSaveFileName(self, "Save seed zip", output_file_name, "Zip Seed File (*.zip)")
-        spoiler_outfile = outfile_name
-        enemy_outfile = outfile_name
-        if outfile_name!="":
-            if not outfile_name.endswith(".zip"):
-                outfile_name+=".zip"
-            with open(outfile_name, "wb") as out_zip:
-                out_zip.write(self.zip_file.getbuffer())
-
-            last_seed_folder_txt.write_text(str(Path(outfile_name).parent))
-
-        self.zip_file=None
-        self.spoiler_log_output=None
-        self.enemy_log_output=None
-
-    def handleResult(self,result):
-        self.progress.close()
-        self.progress = None
-        self.zip_file = result[0]
-        self.spoiler_log_output = result[1] if result[1] else "<html>No spoiler log generated</html>"
-        self.enemy_log_output = result[2]
-        self.downloadSeed()
-
-        
-    def handleMultiResult(self,result):
-        self.progress.close()
-        self.progress = None
-        for res0,res1,res2 in result:
-            self.zip_file = res0
-            self.spoiler_log_output = res1 if res1 else "<html>No spoiler log generated</html>"
-            self.enemy_log_output = res2
-            self.downloadSeed()
+        #     worker = GenerateMultiWorldSeedWorker(self, rando_settings2, extra_data)
+        #     worker.generate_seed()
 
     def handleFailure(self, failure: Exception):
         if self.progress is not None:
@@ -817,24 +717,7 @@ class KH2RandomizerApp(QMainWindow):
         if not isinstance(failure,RandomizerExceptions):
             raise failure
 
-    def genSeed(self,data,rando_settings):
-        self.thread = QThread()
-        displayedSeedName = rando_settings.random_seed
-        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","Cancel",0,0,None)
-        self.progress.setWindowTitle("Making your Seed, please wait...")
-        # self.progress.setCancelButton(None)
-        self.progress.setModal(True)
-        self.progress.show()
-
-        self.thread = GenSeedThread()
-        self.thread.provideData(data,rando_settings)
-        self.thread.finished.connect(self.handleResult)
-        self.thread.failed.connect(self.handleFailure)
-        
-        self.progress.canceled.connect(lambda : self.thread.terminate())
-        self.thread.start()
-
-    def genTourneySeeds(self,data):
+    def genTourneySeeds(self, extra_data: ExtraConfigurationData):
         self.tourney_seed_path.mkdir(parents=True, exist_ok=True)
 
         self.tourney_spoilers = TourneySeedSaver(self.tourney_seed_path,self.tourney_name)
@@ -844,34 +727,17 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setText(seedString)
             tourney_rando_settings = self.make_rando_settings()
             if tourney_rando_settings is not None:
-                self.thread = QThread()
                 self.progress = QProgressDialog(f"Creating seed number {seed_number}...","Cancel",0,0,None)
                 self.progress.setWindowTitle("Making your Seed, please wait...")
                 # self.progress.setCancelButton(None)
                 self.progress.setModal(True)
                 self.progress.show()
-                zip_file, spoiler_log, enemy_log = generateSeed(tourney_rando_settings, data)
+                zip_file, spoiler_log, enemy_log = generateSeed(tourney_rando_settings, extra_data)
                 if self.progress:
                     self.progress.close()
                 self.progress = None
                 self.tourney_spoilers.add_seed(self.createSharedString(),tourney_rando_settings,spoiler_log)
         self.tourney_spoilers.save()
-
-    def genMultiSeed(self,data,rando_settings):
-        self.thread = QThread()
-        displayedSeedName = rando_settings[0].random_seed
-        self.progress = QProgressDialog(f"Creating seed with name {displayedSeedName}","Cancel",0,0,None)
-        self.progress.setWindowTitle("Making your Seed, please wait...")
-        # self.progress.setCancelButton(None)
-        self.progress.setModal(True)
-        self.progress.show()
-
-        self.thread = MultiGenSeedThread()
-        self.thread.provideData(data,rando_settings)
-        self.thread.finished.connect(self.handleMultiResult)
-        self.thread.failed.connect(self.handleFailure)
-        self.progress.canceled.connect(lambda : self.thread.terminate())
-        self.thread.start()
 
     def savePreset(self):
         preset_name, ok = QInputDialog.getText(self, 'Make New Preset', 'Enter a name for your preset...')
@@ -882,7 +748,7 @@ class KH2RandomizerApp(QMainWindow):
             settings_json = self.settings.settings_json()
             self.preset_json[preset_name] = settings_json
             self.loadPresetsMenu.addAction(preset_name, lambda: self.usePreset(preset_name))
-            with open(os.path.join(PRESET_FOLDER, preset_name + '.json'), 'w') as presetData:
+            with open(os.path.join(appconfig.PRESET_FOLDER, preset_name + '.json'), 'w') as presetData:
                 presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
 
     def randomPreset(self):
@@ -952,7 +818,7 @@ class KH2RandomizerApp(QMainWindow):
                 self.handleFailure(last_exception)
 
     def openPresetFolder(self):
-        os.startfile(PRESET_FOLDER)
+        os.startfile(appconfig.PRESET_FOLDER)
 
     def usePreset(self, preset_name: str):
         settings_json = self.preset_json[preset_name]

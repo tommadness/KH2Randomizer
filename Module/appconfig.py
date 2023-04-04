@@ -2,6 +2,10 @@ import json
 from pathlib import Path
 
 
+AUTOSAVE_FOLDER = "auto-save"
+PRESET_FOLDER = "presets"
+
+
 def read_app_config() -> dict:
     config_path = Path('randomizer-config.json').absolute()
     if config_path.is_file():
@@ -28,3 +32,7 @@ def remove_app_config(key: str):
     if key in randomizer_config:
         del randomizer_config[key]
         write_app_config(randomizer_config)
+
+
+def auto_save_folder() -> Path:
+    return Path(AUTOSAVE_FOLDER)

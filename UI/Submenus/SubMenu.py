@@ -1,4 +1,3 @@
-import os
 from typing import Optional
 
 from PySide6.QtCore import Qt, QSize
@@ -207,9 +206,6 @@ class KH2Submenu(QWidget):
             print('Expected a MultiSelectTristate for ' + setting_name)
             return
 
-        path = os.path.abspath(__file__)
-        dir_path = os.path.dirname(path)
-
         widgets = []
         selected_keys = self.settings.get(setting_name)
         partial_keys = []
@@ -240,7 +236,7 @@ class KH2Submenu(QWidget):
             bottom_layout = QHBoxLayout()
             bottom_layout.setContentsMargins(4, 0, 4, 0)
             label = QLabel()
-            icon = QIcon(resource_path(dir_path + '/' + setting.choice_icons[choice_key]))
+            icon = QIcon(resource_path(setting.choice_icons[choice_key]))
             pixmap = icon.pixmap(icon.actualSize(QSize(32, 32)))
             label.setPixmap(pixmap)
             bottom_layout.addWidget(label)
@@ -273,15 +269,12 @@ class KH2Submenu(QWidget):
             print('Expected a MultiSelect for ' + setting_name)
             return
 
-        path = os.path.abspath(__file__)
-        dir_path = os.path.dirname(path)
-
         widgets = []
         selected_keys = self.settings.get(setting_name)
         for index, choice_key in enumerate(setting.choice_keys):
             button = QPushButton(setting.choice_values[index])
             button.setIconSize(QSize(36, 36))
-            button.setIcon(QIcon(resource_path(dir_path + '/' + setting.choice_icons[choice_key])))
+            button.setIcon(QIcon(resource_path(setting.choice_icons[choice_key])))
             button.setCheckable(True)
             if choice_key in selected_keys:
                 button.setChecked(True)

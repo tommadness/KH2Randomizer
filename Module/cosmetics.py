@@ -9,7 +9,6 @@ import yaml
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from Module import appconfig, music
-from Module.RandomizerSettings import RandomizerSettings
 
 
 class CustomCosmetics:
@@ -41,6 +40,9 @@ class CustomCosmetics:
                 'external_executables': self.external_executables
             }
             json.dump(raw_json, config_file, indent=4)
+
+    def collect_custom_files(self) -> list[str]:
+        return [custom_file for custom_file in self.external_executables]
 
 
 class CosmeticsMod:
@@ -81,12 +83,12 @@ class CosmeticsMod:
             (custom_music_path / folder).mkdir(exist_ok=True)
 
     @staticmethod
-    def randomize_music(settings: RandomizerSettings) -> Tuple[list[dict], dict[str, str]]:
+    def randomize_music(ui_settings: SeedSettings) -> Tuple[list[dict], dict[str, str]]:
         """
         Randomizes music, returning a list of assets to be added to the seed mod and a dictionary of which song was
         replaced by which replacement.
         """
-        return CosmeticsMod._get_music_assets(settings.ui_settings)
+        return CosmeticsMod._get_music_assets(ui_settings)
 
     @staticmethod
     def get_music_summary(settings: SeedSettings) -> dict[str, int]:
