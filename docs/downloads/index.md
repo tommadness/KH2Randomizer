@@ -4,7 +4,7 @@
 
 * [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
 * [OpenKH Mod Manager](https://github.com/aliosgaming/OpenKh/releases/download/v3.0.0/OpenKH.Mod.Manager.2023.zip)
-* [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest/download/KhTracker2.2.exe)
+* [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest/download/KhTracker2.21.exe)
 * [LiveSplit Load Remover for Randomizer](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/releases)
   ([instructions](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/blob/main/README.md))
 * [.NET Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.13-windows-x64-installer)
