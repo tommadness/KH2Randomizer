@@ -4,9 +4,10 @@ import textwrap
 from PySide6.QtWidgets import QListWidget, QHBoxLayout, QPushButton, QFileDialog, QLabel
 
 from Class import settingkey
-from Class.seedSettings import SeedSettings
+from Class.seedSettings import SeedSettings, ExtraConfigurationData
 from Module.cosmetics import CustomCosmetics, CosmeticsMod
 from UI.Submenus.SubMenu import KH2Submenu
+from UI.worker import CosmeticsZipWorker
 
 
 class CosmeticsMenu(KH2Submenu):
@@ -71,6 +72,17 @@ class CosmeticsMenu(KH2Submenu):
         self.pending_group.addLayout(button_layout)
 
         self.end_group('External Randomization Executables')
+
+        self.start_group()
+        cosmetics_mod_button = QPushButton('Generate Cosmetics-Only Mod (PC)')
+        cosmetics_mod_tooltip = textwrap.dedent('''
+        Generates an OpenKH mod that ONLY randomizes cosmetics. Can be useful if using a seed generated outside of this
+        generator (using Archipelago.gg or otherwise).
+        ''').strip()
+        cosmetics_mod_button.setToolTip(cosmetics_mod_tooltip)
+        cosmetics_mod_button.clicked.connect(self._make_cosmetics_only_mod)
+        self.pending_group.addWidget(cosmetics_mod_button)
+        self.end_group('Cosmetics-Only Mod')
         self.end_column()
 
         self.finalizeMenu()
@@ -137,7 +149,7 @@ class CosmeticsMenu(KH2Submenu):
 
     def _reload_custom_list(self):
         self.custom_list.clear()
-        for file in self.custom_cosmetics.external_executables:
+        for file in self.custom_cosmetics.collect_custom_files():
             self.custom_list.addItem(file)
 
     def _add_custom(self):
@@ -157,3 +169,13 @@ class CosmeticsMenu(KH2Submenu):
         custom_music_path = CosmeticsMod.read_custom_music_path()
         if custom_music_path is not None:
             os.startfile(custom_music_path)
+
+    def _make_cosmetics_only_mod(self):
+        extra_data = ExtraConfigurationData(
+            platform="PC",
+            command_menu_choice=self.settings.get(settingkey.COMMAND_MENU),
+            tourney=False,
+            custom_cosmetics_executables=self.custom_cosmetics.collect_custom_files(),
+        )
+        worker = CosmeticsZipWorker(self, self.settings, extra_data)
+        worker.generate_mod()

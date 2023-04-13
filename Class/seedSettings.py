@@ -2,6 +2,7 @@ import copy
 import random
 import string
 import textwrap
+from dataclasses import dataclass
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
@@ -10,10 +11,8 @@ from Class import settingkey
 from Class.exceptions import SettingsException
 from List.ItemList import Items, itemRarity
 from List.configDict import expCurve, locationType, locationDepth, BattleLevelOption
-from Module import encoding
+from Module import encoding, commandmenu
 from Module.progressionPoints import ProgressionPoints
-from Module.randomCmdMenu import RandomCmdMenu
-
 
 # Characters available to be used for short encoding of certain settings
 single_select_chars = string.digits + string.ascii_letters
@@ -1404,23 +1403,23 @@ _all_settings = [
             locationType.TWTNW.name
         ],[]],
         choice_icons={
-            locationType.Level.name: "icons/worlds/sora.png",
-            locationType.FormLevel.name: "icons/worlds/drives.png",
-            locationType.STT.name: "icons/worlds/simulated_twilight_town.png",
-            locationType.HB.name: "icons/worlds/hollow_bastion.png",
-            locationType.OC.name: "icons/worlds/olympus_coliseum.png",
-            locationType.LoD.name: "icons/worlds/land_of_dragons.png",
-            locationType.PL.name: "icons/worlds/pride_lands.png",
-            locationType.HT.name: "icons/worlds/halloween_town.png",
-            locationType.SP.name: "icons/worlds/space_paranoids.png",
-            locationType.TT.name: "icons/worlds/twilight_town.png",
-            locationType.BC.name: "icons/worlds/beast's_castle.png",
-            locationType.Agrabah.name: "icons/worlds/agrabah.png",
-            locationType.HUNDREDAW.name: "icons/worlds/100_acre_wood.png",
-            locationType.DC.name: "icons/worlds/disney_castle.png",
-            locationType.PR.name: "icons/worlds/port_royal.png",
-            locationType.TWTNW.name: "icons/worlds/the_world_that_never_was.png",
-            locationType.Atlantica.name: "icons/worlds/atlantica.png"
+            locationType.Level.name: "static/icons/worlds/sora.png",
+            locationType.FormLevel.name: "static/icons/worlds/drives.png",
+            locationType.STT.name: "static/icons/worlds/simulated_twilight_town.png",
+            locationType.HB.name: "static/icons/worlds/hollow_bastion.png",
+            locationType.OC.name: "static/icons/worlds/olympus_coliseum.png",
+            locationType.LoD.name: "static/icons/worlds/land_of_dragons.png",
+            locationType.PL.name: "static/icons/worlds/pride_lands.png",
+            locationType.HT.name: "static/icons/worlds/halloween_town.png",
+            locationType.SP.name: "static/icons/worlds/space_paranoids.png",
+            locationType.TT.name: "static/icons/worlds/twilight_town.png",
+            locationType.BC.name: "static/icons/worlds/beast's_castle.png",
+            locationType.Agrabah.name: "static/icons/worlds/agrabah.png",
+            locationType.HUNDREDAW.name: "static/icons/worlds/100_acre_wood.png",
+            locationType.DC.name: "static/icons/worlds/disney_castle.png",
+            locationType.PR.name: "static/icons/worlds/port_royal.png",
+            locationType.TWTNW.name: "static/icons/worlds/the_world_that_never_was.png",
+            locationType.Atlantica.name: "static/icons/worlds/atlantica.png"
         },
         randomizable=True,
         tooltip='''
@@ -1447,10 +1446,10 @@ _all_settings = [
         shared=True,
         default=[locationType.AS.name, locationType.Sephi.name],
         choice_icons={
-            locationType.AS.name: 'icons/bosses/as.png',
-            locationType.DataOrg.name: 'icons/bosses/datas.png',
-            locationType.Sephi.name: 'icons/bosses/sephiroth.png',
-            locationType.LW.name: 'icons/bosses/lingering_will.png'
+            locationType.AS.name: 'static/icons/bosses/as.png',
+            locationType.DataOrg.name: 'static/icons/bosses/datas.png',
+            locationType.Sephi.name: 'static/icons/bosses/sephiroth.png',
+            locationType.LW.name: 'static/icons/bosses/lingering_will.png'
         },
         randomizable=True
     ),
@@ -1470,12 +1469,12 @@ _all_settings = [
         default=[
             locationType.CoR.name,],
         choice_icons={
-            locationType.OCCups.name: 'icons/misc/cups.png',
-            locationType.OCParadoxCup.name: 'icons/misc/paradox_cup.png',
-            locationType.Puzzle.name: 'icons/misc/puzzle.png',
-            locationType.CoR.name: "icons/worlds/cavern_of_remembrance.png",
-            locationType.TTR.name: 'icons/misc/transport.png',
-            locationType.SYNTH.name: 'icons/misc/moogle.png'
+            locationType.OCCups.name: 'static/icons/misc/cups.png',
+            locationType.OCParadoxCup.name: 'static/icons/misc/paradox_cup.png',
+            locationType.Puzzle.name: 'static/icons/misc/puzzle.png',
+            locationType.CoR.name: "static/icons/worlds/cavern_of_remembrance.png",
+            locationType.TTR.name: 'static/icons/misc/transport.png',
+            locationType.SYNTH.name: 'static/icons/misc/moogle.png'
         },
         randomizable=True
     ),
@@ -2050,7 +2049,7 @@ _all_settings = [
     SingleSelect(
         name=settingkey.COMMAND_MENU,
         ui_label='Command Menu',
-        choices=RandomCmdMenu.getOptions(),
+        choices=commandmenu.get_options(),
         shared=False,
         default='vanilla',
         tooltip='''
@@ -2412,3 +2411,10 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
     for r in randomizable_settings:
         real_settings_object.set(r.name,random_choices[r.name])
 
+
+@dataclass(frozen=True)
+class ExtraConfigurationData:
+    platform: str
+    command_menu_choice: str
+    tourney: bool
+    custom_cosmetics_executables: list[str]

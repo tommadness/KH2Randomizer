@@ -407,7 +407,7 @@ kh2_music_list = [
     {
         "filename": "bgm\\music150.win32.scd",
         "title": "Squirming Evil (KH I)",
-        "type": ["Battle", "Battle", "Wild"]
+        "type": ["Boss", "Boss", "Wild"]
     },
     {
         "filename": "bgm\\music151.win32.scd",
@@ -436,8 +436,8 @@ kh2_music_list = [
     },
     {
         "filename": "bgm\\music156.win32.scd",
-        "title": "Guardando nel buio",
-        "type": ["Battle", "Battle", "Wild"]
+        "title": "Guardando nel buio (KH I)",
+        "type": ["Boss", "Boss", "Wild"]
     },
     {
         "filename": "bgm\\music158.win32.scd",

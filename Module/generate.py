@@ -1,18 +1,18 @@
-
-import copy
+import random
+import string
 from typing import List
+
 from Class.exceptions import RandomizerExceptions
+from Class.seedSettings import ExtraConfigurationData
 from Module.RandomizerSettings import RandomizerSettings
-from Module.cosmetics import CosmeticsMod
 from Module.hints import Hints
 from Module.multiworld import MultiWorld, MultiWorldConfig
 from Module.newRandomize import Randomizer
 from Module.seedEvaluation import LocationInformedSeedValidator
 from Module.zipper import SeedZip
-import string,random
 
-def generateSeed(settings: RandomizerSettings,data):
 
+def generateSeed(settings: RandomizerSettings, extra_data: ExtraConfigurationData):
     newSeedValidation = LocationInformedSeedValidator()
     last_error = None
     for attempt in range(50):
@@ -20,7 +20,7 @@ def generateSeed(settings: RandomizerSettings,data):
             randomizer = Randomizer(settings)
             newSeedValidation.validateSeed(settings,randomizer)
             hints = Hints.generateHints(randomizer,settings)
-            zipper = SeedZip(settings,randomizer,hints,data)
+            zipper = SeedZip(settings, randomizer, hints, extra_data)
             return zipper.outputZip, zipper.spoiler_log, zipper.enemy_log
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
@@ -31,7 +31,7 @@ def generateSeed(settings: RandomizerSettings,data):
     raise last_error
 
 
-def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], data):
+def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], extra_data: ExtraConfigurationData):
     newSeedValidation = LocationInformedSeedValidator()
     randomizers = []
     last_error = None
@@ -59,7 +59,7 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], data):
     seed_outputs = []
     for settings,randomizer in zip(settingsSet,randomizers):
         hints = Hints.generateHints(randomizer,settings)
-        zipper = SeedZip(settings,randomizer,hints,data,m.multi_output)
+        zipper = SeedZip(settings, randomizer, hints, extra_data, m.multi_output)
         seed_outputs.append((zipper.outputZip, zipper.spoiler_log, zipper.enemy_log))
 
     return seed_outputs

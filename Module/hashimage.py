@@ -6,22 +6,22 @@ from PIL import Image
 from Module.resources import resource_path
 
 
-def generate_seed_hash_image(icon_names: list[str], use_bitmap: bool = False) -> bytes:
+def seed_hash_icon_path(icon_name: str, use_bitmap: bool = False) -> Path:
+    icon_dir = Path(resource_path("static/icons/seed-hash-icons")).absolute()
+    if use_bitmap:
+        return icon_dir / f"{icon_name}.bmp"
+    else:
+        return icon_dir / f"{icon_name}.png"
+
+
+def generate_seed_hash_image(icon_names: list[str], use_bitmap: bool) -> bytes:
     """
     Generates an image of the seed hash given a list of seed hash icon names. If use_bitmap is True, the image will
     have a black background and be returned as a bitmap. If use_bitmap is False, the image will have a transparent
     background and be returned as a PNG.
     """
 
-    hash_icon_path = Path(resource_path("static/seed-hash-icons")).absolute()
-
-    icon_paths: list[Path] = []
-    if use_bitmap:
-        for icon_name in icon_names:
-            icon_paths.append(hash_icon_path / '{}.bmp'.format(icon_name))
-    else:
-        for icon_name in icon_names:
-            icon_paths.append(hash_icon_path / '{}.png'.format(icon_name))
+    icon_paths: list[Path] = [seed_hash_icon_path(icon_name, use_bitmap) for icon_name in icon_names]
 
     # Adapted from https://stackoverflow.com/a/30228308
     images = [Image.open(x) for x in icon_paths]

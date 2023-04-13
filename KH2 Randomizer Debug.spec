@@ -47,7 +47,7 @@ a = Analysis(
         'UI/**/*.*',
         'UI/*.*',
         'static/spoilerlog.html',
-        'static/seed-hash-icons/*.*',
+        'static/icons/**/*.*',
         'static/puzzle.bin',
         'static/KHMenu.otf',
         'static/as_data_split/*.*',
