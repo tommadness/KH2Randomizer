@@ -465,9 +465,9 @@ class KH2RandomizerApp(QMainWindow):
         self.dailyMenu.addAction("Load Boss/Enemy Seed", self.loadDailySeedBE)
         self.dailyMenu.addAction("Load Hard Boss/Enemy Seed", self.loadHardDailySeedBE)
         menu_bar.addMenu(self.dailyMenu)
-        menu_bar.addAction("Randomize Settings", self.randoRando)
+        self.randomizeSettings = menu_bar.addAction("Randomize Settings", self.randoRando)
 
-        menu_bar.addAction("Tourney Seeds", self.makeTourneySeeds)
+        self.tourneySeeds = menu_bar.addAction("Tourney Seeds", self.makeTourneySeeds)
         
         menu_bar.addMenu(self.config_menu)
 
@@ -1008,10 +1008,21 @@ class KH2RandomizerApp(QMainWindow):
         # clear hash icons when loading a seed from clipboard
         self.clear_hash_icons()
 
+        receipt_msg = "Received seed from clipboard."
         if shared_seed.tourney_gen:
+            receipt_msg = "Received tournament seed from clipboard. Settings other than Cosmetics are now disabled."
+
             self.seedName.setDisabled(True)
             self.seedName.setHidden(True)
             self.spoiler_log.setDisabled(True)
+
+            menu_bar = self.menuBar()
+            menu_bar.removeAction(self.seedMenu.menuAction())
+            menu_bar.removeAction(self.presetMenu.menuAction())
+            menu_bar.removeAction(self.dailyMenu.menuAction())
+            menu_bar.removeAction(self.randomizeSettings)
+            menu_bar.removeAction(self.tourneySeeds)
+
             for w in self.widgets:
                 if not isinstance(w, CosmeticsMenu):
                     w.disable_widgets()
@@ -1033,7 +1044,7 @@ class KH2RandomizerApp(QMainWindow):
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
         else:
-            message = QMessageBox(text="Received seed from clipboard")
+            message = QMessageBox(text=receipt_msg)
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
 
