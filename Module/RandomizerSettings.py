@@ -18,10 +18,16 @@ class RandomizerSettings():
     excludeFrom50 = list(chain([1,3,5,6,8,11,13,16,18,19,21,22,24,26,27,29,31,33,35,37,38,40,42,43,45,47,49],range(51,100)))
     excludeFrom99 = [1,2,3,4,5,6,8,10,11,13,14,16,18,19,21,22,24,26,27,29,30,32,34,35,37,38,40,42,43,45,46,48,50,51,52,54,55,56,57,58,60,61,62,63,64,66,67,68,69,70,71,72,74,75,76,77,78,79,80,81,82,83,84,86,87,88,89,90,91,92,93,94,95,96,97,98]
     
-    def __init__(self, seed_name: str, spoiler_log: bool, ui_version: str, ui_settings: SeedSettings, full_ui_settings):
-
-        self.full_ui_settings = full_ui_settings
+    def __init__(
+            self,
+            seed_name: str,
+            spoiler_log: bool,
+            ui_version: str,
+            ui_settings: SeedSettings,
+            seed_string: str
+    ):
         self.ui_settings = ui_settings
+        self.seed_string = seed_string
         self.crit_mode = ui_settings.get(settingkey.CRITICAL_BONUS_REWARDS)
         self.item_accessibility = ui_settings.get(settingkey.ACCESSIBILITY)
 
