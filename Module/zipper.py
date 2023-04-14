@@ -319,6 +319,7 @@ class SeedZip:
                 if not tourney_gen:
                     mod["title"] += " w/ Spoiler"
                 with open(resource_path("static/spoilerlog.html")) as spoiler_site:
+                    settings_spoiler_json = settings.ui_settings.settings_spoiler_json()
                     html_template = spoiler_site.read().replace("SEED_NAME_STRING",settings.random_seed) \
                                                        .replace("{SEED_STRING}", settings.seed_string) \
                                                        .replace("LEVEL_STATS_JSON",json.dumps(levelStatsDictionary(randomizer.levelStats))) \
@@ -333,7 +334,8 @@ class SeedZip:
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
                                                        .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON)) \
-                                                       .replace("BATTLE_LEVEL_JSON",json.dumps(battle_level_spoiler))
+                                                       .replace("BATTLE_LEVEL_JSON",json.dumps(battle_level_spoiler)) \
+                                                       .replace("{SETTINGS_JSON}", json.dumps(settings_spoiler_json))
                     html_template = html_template.replace("PromiseCharm","Promise Charm")
                     if not tourney_gen:
                         outZip.writestr("spoilerlog.html",html_template)

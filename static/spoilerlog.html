@@ -12,6 +12,7 @@
         depth_data = DEPTH_VALUES_JSON
         boss_enemy_data = BOSS_ENEMY_JSON
         battle_level_data = BATTLE_LEVEL_JSON
+        settings_data = {SETTINGS_JSON}
     </script>
 
 <style>
@@ -253,6 +254,14 @@
             </table>
         </div>
     </div>
+
+    <button class="accordion">Settings</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="settingsTable">
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 
@@ -424,6 +433,29 @@ for (var i=1; i < 100; i++)
     level_html+="</td>"
     table_entry.innerHTML += level_html;
     levelStatTable.appendChild(table_entry);
+}
+
+var settingsTable = document.getElementById("settingsTable");
+for (var settingGroup in settings_data)
+{
+    var header = document.createElement("tr");
+    header.innerHTML += "<th colspan=\"2\">" + settingGroup + "</th>";
+    settingsTable.appendChild(header);
+
+    var group_data = settings_data[settingGroup];
+    for (var settingName in group_data)
+    {
+        var row_entry = document.createElement("tr");
+        var setting_html = "";
+        setting_html += "<td>";
+        setting_html += settingName;
+        setting_html += "</td>"
+        setting_html += "<td>"
+        setting_html += group_data[settingName];
+        setting_html += "</td>"
+        row_entry.innerHTML += setting_html;
+        settingsTable.appendChild(row_entry);
+    }
 }
 
 var acc = document.getElementsByClassName("accordion");

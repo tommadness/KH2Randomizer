@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
 )
 
 import Class.seedSettings
-from Class.seedSettings import MultiSelectTristate, ProgressionChainSelect, SeedSettings, Toggle, IntSpinner, \
+from Class.seedSettings import WorldRandomizationTristate, ProgressionChainSelect, SeedSettings, Toggle, IntSpinner, \
     FloatSpinner, SingleSelect, MultiSelect
 from Module.resources import resource_path
 from UI.Submenus.ProgressionWidgets import ProgressionWidget
@@ -169,7 +169,7 @@ class KH2Submenu(QWidget):
             widget = self.make_combo_box(setting_name)
         elif isinstance(setting, MultiSelect):
             widget = self.make_multi_select_list(setting_name)
-        elif isinstance(setting, MultiSelectTristate):
+        elif isinstance(setting, WorldRandomizationTristate):
             widget = self.make_multi_select_tristate_list(setting_name)
         elif isinstance(setting, ProgressionChainSelect):
             widget = ProgressionWidget(self.settings,setting_name)
@@ -199,11 +199,11 @@ class KH2Submenu(QWidget):
             widget = self.groups_by_id[group_id]
             widget.setVisible(visible)
 
-    def make_multiselect_tristate(self, setting_name: str) -> (MultiSelectTristate, list[QGroupBox]):
+    def make_multiselect_tristate(self, setting_name: str) -> (WorldRandomizationTristate, list[QGroupBox]):
         setting = Class.seedSettings.settings_by_name[setting_name]
 
-        if not isinstance(setting, MultiSelectTristate):
-            print('Expected a MultiSelectTristate for ' + setting_name)
+        if not isinstance(setting, WorldRandomizationTristate):
+            print('Expected a WorldRandomizationTristate for ' + setting_name)
             return
 
         widgets = []
@@ -358,7 +358,7 @@ class KH2Submenu(QWidget):
                 elif isinstance(widget, list):
                     for index, key in enumerate(setting.choice_keys):
                         widget[index].setDisabled(True)
-            elif isinstance(setting, MultiSelectTristate):
+            elif isinstance(setting, WorldRandomizationTristate):
                 if isinstance(widget, list):
                     for index, key in enumerate(setting.choice_keys):
                         widget[index].setDisabled(True)
@@ -387,7 +387,7 @@ class KH2Submenu(QWidget):
                     for index, key in enumerate(setting.choice_keys):
                         selected = key in selected_keys
                         widget[index].setChecked(selected)
-            elif isinstance(setting, MultiSelectTristate):
+            elif isinstance(setting, WorldRandomizationTristate):
                 if isinstance(widget, list):
                     selected_keys = self.settings.get(name)
                     if isinstance(selected_keys[0],list):
@@ -484,7 +484,7 @@ class KH2Submenu(QWidget):
             selected_keys.append(choice_keys[index.row()])
         self.settings.set(setting.name, selected_keys)
 
-    def _update_multi_tristate_list(self, setting: MultiSelectTristate, widget: QListWidget):
+    def _update_multi_tristate_list(self, setting: WorldRandomizationTristate, widget: QListWidget):
         return None
         # choice_keys = setting.choice_keys
         # selected_keys = []
@@ -501,7 +501,7 @@ class KH2Submenu(QWidget):
                 selected_keys.append(choice_keys[index])
         self.settings.set(setting.name, selected_keys)
 
-    def _update_multi_tristate_buttons(self, setting: MultiSelectTristate):
+    def _update_multi_tristate_buttons(self, setting: WorldRandomizationTristate):
         (_, buttons) = self.widgets_and_settings_by_name[setting.name]
         choice_keys = setting.choice_keys
         selected_keys = []
