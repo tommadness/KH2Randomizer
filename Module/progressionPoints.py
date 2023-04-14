@@ -144,6 +144,13 @@ class ProgressionPoints():
                 output[self.gen_to_tracker_location_map[l]] = self.points[l]
         return output
 
+    def settings_spoiler_json(self) -> dict[str, list[int]]:
+        output = {"Hint Thresholds": self.point_thresholds}
+        for location in locationType:
+            if location in self.points:
+                output[locationType(location).value] = self.points[location]
+        return output
+
     @staticmethod
     def _prepend_zeroes(value: str, expected_length: int) -> str:
         difference = expected_length - len(value)
