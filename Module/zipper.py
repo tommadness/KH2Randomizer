@@ -320,6 +320,7 @@ class SeedZip:
                     mod["title"] += " w/ Spoiler"
                 with open(resource_path("static/spoilerlog.html")) as spoiler_site:
                     html_template = spoiler_site.read().replace("SEED_NAME_STRING",settings.random_seed) \
+                                                       .replace("{SEED_STRING}", settings.seed_string) \
                                                        .replace("LEVEL_STATS_JSON",json.dumps(levelStatsDictionary(randomizer.levelStats))) \
                                                        .replace("FORM_EXP_JSON",json.dumps({"Summon": {"multiplier": settings.summon_exp_multiplier, "values": list(accumulate(settings.summon_exp))},
                                                                                             "Valor": {"multiplier": settings.valor_exp_multiplier, "values": list(accumulate(settings.valor_exp))},
@@ -328,7 +329,6 @@ class SeedZip:
                                                                                             "Master": {"multiplier": settings.master_exp_multiplier, "values": list(accumulate(settings.master_exp))},
                                                                                             "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
                                                        .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
-                                                       .replace("SETTINGS_JSON",json.dumps(settings.full_ui_settings)) \
                                                        .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights,LocationInformedSeedValidator().validateSeed(settings, randomizer, False)), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
