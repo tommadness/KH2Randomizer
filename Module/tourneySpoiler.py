@@ -7,28 +7,40 @@ class TourneySeedSaver:
         self.start_html = f"""
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>KH2FM Tourney Seed List - {tourney_name}</title>
-    <script>
-    </script>
-</head>
-<style>
+<head>
+<title>KH2FM Tourney Seed List - {tourney_name}</title>
 <style>
     @font-face {{
         font-family: KHMenu;
         src: url("KHMenu.otf") format("opentype");
     }}
-    :root {{
-        --background: #1f2123;
-    }}
-    *,*::before,*::after {{
-        box-sizing: border-box;
-    }}
-    body{{
+    body {{
         background-color: #31363b;
         color: #ffffff;
+        display: grid;
+        place-items: center;
+    }}
+    .tourney-seed {{
+        background-color: #001e3c;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        padding-left: 32px;
+        padding-right: 32px;
+        padding-bottom: 16px;
+    }}
+    .tourney-seed img {{
+        vertical-align: middle;
+    }}
+    .tourney-seed a {{
+        background-color: #31363b;
+        color: #4dd0e1;
+        margin-left: 32px;
+        padding: 8px 12px;
+        text-decoration: none;
+        vertical-align: middle;
     }}
 </style>
+</head>
 <body>
 """
         self.end_html = f"""
@@ -62,12 +74,14 @@ class TourneySeedSaver:
         with open(self.path_to_save / f"{seed_filename}.html", "w") as outfile:
             outfile.write(spoilers)
 
-        self._add_seed_html()
+        self._add_seed_html(seed_string=seed_string, seed_filename=seed_filename)
 
-    def _add_seed_html(self):
+    def _add_seed_html(self, seed_string: str, seed_filename: str):
         self.seed_htmls.append(f"""
-<h2>Seed {len(self.seed_strings)}</h2>
-<h3>{self.seed_strings[-1]}</h3><br/>
-<img src="{self.seed_names[-1]}.png"><br/>
-<a href="{self.seed_names[-1]}.html">Spoiler Log</a><hr/><br/><br/>
+<div class="tourney-seed">
+    <h2>Seed {len(self.seed_strings)}</h2>
+    <h3>{seed_string}</h3>
+    <img src="{seed_filename}.png">
+    <a href="{seed_filename}.html">Spoiler Log</a>
+</div>
 """)

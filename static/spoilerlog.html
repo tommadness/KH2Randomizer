@@ -10,10 +10,9 @@
         level_data = LEVEL_STATS_JSON
         form_exp_data = FORM_EXP_JSON
         depth_data = DEPTH_VALUES_JSON
-        settings_data = SETTINGS_JSON
         boss_enemy_data = BOSS_ENEMY_JSON
         battle_level_data = BATTLE_LEVEL_JSON
-
+        settings_data = {SETTINGS_JSON}
     </script>
 
 <style>
@@ -21,103 +20,132 @@
         font-family: KHMenu;
         src: url("KHMenu.otf") format("opentype");
     }
-    :root {
-        --background: #1f2123;
-    }
     *,*::before,*::after {
         box-sizing: border-box;
     }
-    body{
+    body {
         background-color: #31363b;
         color: #ffffff;
     }
     .content {
-        background-blend-mode: multiply;
-        background-size: cover;
+        font-family: KHMenu, sans-serif;
         display: grid;
         place-items: center;
     }
-    .table_wrapper{
-        overflow-y:scroll;
-        overflow-x:hidden;
-    }
 
     .styled-table {
-        /* background-color: #31363b; */
         border-collapse: collapse;
-        margin: 0px 0;
-        font-size: 0.8em;
-        font-family: KHMenu, sans-serif;
+        margin: auto;
         min-width: 500px;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
         position: relative;
-    }
-    .styled-table thead tr {
-        background-color: #53575c;
-        color: #4dd0e1;
-        text-align: center;
     }
     .styled-table th,
     .styled-table td {
-        padding: 12px 15px;
-    }
-    .styled-table th {
-        position: sticky;
-        top: 0px;
-        background-color: #53575c;
-        color: #4dd0e1;
-    }
-    .styled-table tbody tr {
-        border-bottom: 1px solid #000000;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-    }
-    .custom-class {
-        border-bottom: 1px solid #000000;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        padding: 12px 16px;
     }
 
-    .styled-table tbody tr:nth-of-type(odd) {
-        background-color: #42474b;
-    }
-
-    .styled-table tbody tr:last-of-type {
-        border-bottom: 2px solid #009879;
-    }
-    .styled-table tbody tr.active-row {
-        font-weight: bold;
-        color: #009879;
-    }
     .accordion {
-        background-color: #1f2123;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-        color: #ffffff;
-        font-size: 1.8em;
         font-family: KHMenu, sans-serif;
+        font-size: 1.5em;
         cursor: pointer;
-        padding: 18px;
+        padding: 16px;
+        margin-top: 4px;
         width: 95%;
         text-align: center;
         border: none;
         outline: none;
         transition: .4s;
-
     }
     .active, .accordion:hover {
         color: #4dd0e1;
     }
+
+    .table-wrapper {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
     .panel {
-        padding: 0 18px;
-        background-color: #31363b;
         overflow: hidden;
         max-height: 0;
+        width: 95%;
         transition: max-height 0.2s ease-out;
     }
+
+    .panel:nth-of-type(5n+1) {
+        background-color: #3c0000;
+    }
+    .panel:nth-of-type(5n+1) .styled-table {
+        box-shadow: 0 0 24px #ff8080;
+    }
+    .accordion:nth-of-type(5n+1), .panel:nth-of-type(5n+1) .styled-table th {
+        background-color: #4d0d0e;
+        color: #ff8080;
+    }
+    .panel:nth-of-type(5n+1) .styled-table tr {
+        border-bottom: 1px solid #ff8080;
+    }
+
+    .panel:nth-of-type(5n+2) {
+        background-color: #503c00;
+    }
+    .panel:nth-of-type(5n+2) .styled-table {
+        box-shadow: 0 0 24px #fff34b;
+    }
+    .accordion:nth-of-type(5n+2), .panel:nth-of-type(5n+2) .styled-table th {
+        background-color: #685901;
+        color: #fff34b;
+    }
+    .panel:nth-of-type(5n+2) .styled-table tr {
+        border-bottom: 1px solid #fff34b;
+    }
+
+    .panel:nth-of-type(5n+3) {
+        background-color: #003214;
+    }
+    .panel:nth-of-type(5n+3) .styled-table {
+        box-shadow: 0 0 24px #31f626;
+    }
+    .accordion:nth-of-type(5n+3), .panel:nth-of-type(5n+3) .styled-table th {
+        background-color: #04641b;
+        color: #31f626;
+    }
+    .panel:nth-of-type(5n+3) .styled-table tr {
+        border-bottom: 1px solid #31f626;
+    }
+
+    .panel:nth-of-type(5n+4) {
+        background-color: #001e3c;
+    }
+    .panel:nth-of-type(5n+4) .styled-table {
+        box-shadow: 0 0 24px #63c6f5;
+    }
+    .accordion:nth-of-type(5n+4), .panel:nth-of-type(5n+4) .styled-table th {
+        background-color: #032169;
+        color: #63c6f5;
+    }
+    .panel:nth-of-type(5n+4) .styled-table tr {
+        border-bottom: 1px solid #63c6f5;
+    }
+
+    .panel:nth-of-type(5n+5) {
+        background-color: #281e3c;
+    }
+    .panel:nth-of-type(5n+5) .styled-table {
+        box-shadow: 0 0 24px #c663f5;
+    }
+    .accordion:nth-of-type(5n+5), .panel:nth-of-type(5n+5) .styled-table th {
+        background-color: #422169;
+        color: #c663f5;
+    }
+    .panel:nth-of-type(5n+5) .styled-table tr {
+        border-bottom: 1px solid #c663f5;
+    }
+
     .accordion:after {
         content: '\02795'; /* Unicode character for "plus" sign (+) */
-        font-size: 1em;
-        color: #777;
+        font-size: 0.75em;
         float: left;
-        margin-left: 5px;
     }
 
     .active:after {
@@ -128,12 +156,59 @@
         overflow-wrap: anywhere;
     }
 
+    .seed-string-table {
+        width: 95%;
+        background-color: #281e3c;
+        margin-bottom: 16px;
+    }
+    .seed-string-table th {
+        background-color: #422169;
+        color: #c663f5;
+    }
+    .seed-string-table th,
+    .seed-string-table td {
+        padding: 12px 16px;
+        overflow-wrap: anywhere;
+    }
 </style>
 </head>
 <body>
 <div class="content" id="all_content">
-    <h1 id="seed_header"></h1>
-    <h3 id="settings-string" class="wrap-long"></h3>
+    <h1 id="seed_header">Randomizer Seed Spoiler Log</h1>
+
+    <table class="seed-string-table">
+        <tr>
+            <th>Seed String</th>
+            <td>{SEED_STRING}</td>
+        </tr>
+    </table>
+
+    <button class="accordion">Sora Item Placement</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="spoilerTable">
+                <tr>
+                    <th>World <input type="text" id="world_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for world.."></th>
+                    <th>Location &lt;Weight&gt; <input type="text" id="location_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for location.."></th>
+                    <th>Item <input type="text" id="item_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for item.."></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">Party Item Placement</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="partyItemTable">
+                <tr>
+                    <th>World <input type="text" id="party_world_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for world.."></th>
+                    <th>Location <input type="text" id="party_location_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for location.."></th>
+                    <th>Item <input type="text" id="party_item_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for item.."></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
     <button class="accordion">Form Experience Data</button>
     <div class="panel">
         <div class="table-wrapper">
@@ -141,6 +216,7 @@
             </table>
         </div>
     </div>
+
     <button class="accordion">World Battle Levels</button>
     <div class="panel">
         <div class="table-wrapper">
@@ -154,6 +230,7 @@
             </table>
         </div>
     </div>
+
     <button class="accordion">Level Experience Data</button>
     <div class="panel">
         <div class="table-wrapper">
@@ -169,6 +246,7 @@
             </table>
         </div>
     </div>
+
     <button class="accordion">Item/Location Weights</button>
     <div class="panel">
         <div class="table-wrapper">
@@ -176,27 +254,11 @@
             </table>
         </div>
     </div>
-    <button class="accordion">Sora Item Placement</button>
+
+    <button class="accordion">Settings</button>
     <div class="panel">
         <div class="table-wrapper">
-            <table class="styled-table" id="spoilerTable">
-                <tr>
-                    <th>World <input type="text" id="world_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for world.."></th>
-                    <th>Location &lt;Weight&gt; <input type="text" id="location_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for location.."></th>
-                    <th>Item <input type="text" id="item_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for item.."></th>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <button class="accordion">Party Item Placement</button>
-    <div class="panel">
-        <div class="table-wrapper">
-            <table class="styled-table" id="partyItemTable">
-                <tr>
-                    <th>World <input type="text" id="party_world_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for world.."></th>
-                    <th>Location <input type="text" id="party_location_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for location.."></th>
-                    <th>Item <input type="text" id="party_item_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for item.."></th>
-                </tr>
+            <table class="styled-table" id="settingsTable">
             </table>
         </div>
     </div>
@@ -214,7 +276,7 @@ if ("BOSSES" in boss_enemy_data)
     all_replaced = boss_enemy_data["BOSSES"];
     for(var i=0;i<all_replaced.length;i++)
     {
-        enemy_table+="<tr class=\"custom-class\"><td>"+all_replaced[i]["original"]+"</td><td>"+all_replaced[i]["new"]+"</td></tr>";
+        enemy_table+="<tr><td>"+all_replaced[i]["original"]+"</td><td>"+all_replaced[i]["new"]+"</td></tr>";
     }
     enemy_table+="</table></div></div>";
     tabs.innerHTML+=enemy_table;
@@ -229,15 +291,12 @@ if ("ENEMIES" in boss_enemy_data)
     all_replaced = boss_enemy_data["ENEMIES"];
     for(var i=0;i<all_replaced.length;i++)
     {
-        enemy_table+="<tr class=\"custom-class\"><td>"+all_replaced[i]["original"]+"</td><td>"+all_replaced[i]["new"]+"</td></tr>";
+        enemy_table+="<tr><td>"+all_replaced[i]["original"]+"</td><td>"+all_replaced[i]["new"]+"</td></tr>";
     }
     enemy_table+="</table></div></div>";
     tabs.innerHTML+=enemy_table;
 }
 
-
-document.getElementById("seed_header").innerText = "Seed name: " + seed_name;
-document.getElementById("settings-string").innerText = "Seed settings: " + settings_data;
 
 function populateWeightTable(in_depth_data,which_table)
 {
@@ -247,43 +306,38 @@ function populateWeightTable(in_depth_data,which_table)
     weight_table.appendChild(weight_header);
 
     var data_row = document.createElement("tr");
-    data_row.className = "custom-class"
     data_row.innerHTML+="<th>Item Type</th>";
     for(var i=0;i<in_depth_data["Common"].length;i++)
-    { 
+    {
         data_row.innerHTML+="<th>"+String(i)+"</th>";
     }
     weight_table.appendChild(data_row);
 
     var data_row = document.createElement("tr");
-    data_row.className = "custom-class"
     data_row.innerHTML+="<td>Common</td>";
     for(var i=0;i<in_depth_data["Common"].length;i++)
-    { 
+    {
         data_row.innerHTML+="<td>"+String(in_depth_data["Common"][i])+"</td>";
     }
     weight_table.appendChild(data_row);
     var data_row = document.createElement("tr");
-    data_row.className = "custom-class"
     data_row.innerHTML+="<td>Uncommon</td>";
     for(var i=0;i<in_depth_data["Uncommon"].length;i++)
-    { 
+    {
         data_row.innerHTML+="<td>"+String(in_depth_data["Uncommon"][i])+"</td>";
     }
     weight_table.appendChild(data_row);
     var data_row = document.createElement("tr");
-    data_row.className = "custom-class"
     data_row.innerHTML+="<td>Rare</td>";
     for(var i=0;i<in_depth_data["Rare"].length;i++)
-    { 
+    {
         data_row.innerHTML+="<td>"+String(in_depth_data["Rare"][i])+"</td>";
     }
     weight_table.appendChild(data_row);
     var data_row = document.createElement("tr");
-    data_row.className = "custom-class"
     data_row.innerHTML+="<td>Mythic</td>";
     for(var i=0;i<in_depth_data["Mythic"].length;i++)
-    { 
+    {
         data_row.innerHTML+="<td>"+String(in_depth_data["Mythic"][i])+"</td>";
     }
     weight_table.appendChild(data_row);
@@ -300,7 +354,6 @@ for(var i=0;i<forms.length;i++)
 {
     form_name = forms[i];
     var form_exp_row = document.createElement("tr");
-    form_exp_row.className = "custom-class"
     var form_exp_string = ""
     form_exp_string+="<td>";
     form_exp_string+=form_name;
@@ -325,7 +378,6 @@ for (var i=0; i < 13; i++)
     var btlv_data = battle_level_data[world_string]
 
     var table_entry = document.createElement("tr");
-    table_entry.className = "custom-class"
     var level_html = "";
     level_html+="<td>"
     level_html+=world_string
@@ -360,7 +412,6 @@ for (var i=1; i < 100; i++)
     }
 
     var table_entry = document.createElement("tr");
-    table_entry.className = "custom-class"
     var level_html = "";
     level_html+="<td>"
     level_html+=String(i)
@@ -382,6 +433,29 @@ for (var i=1; i < 100; i++)
     level_html+="</td>"
     table_entry.innerHTML += level_html;
     levelStatTable.appendChild(table_entry);
+}
+
+var settingsTable = document.getElementById("settingsTable");
+for (var settingGroup in settings_data)
+{
+    var header = document.createElement("tr");
+    header.innerHTML += "<th colspan=\"2\">" + settingGroup + "</th>";
+    settingsTable.appendChild(header);
+
+    var group_data = settings_data[settingGroup];
+    for (var settingName in group_data)
+    {
+        var row_entry = document.createElement("tr");
+        var setting_html = "";
+        setting_html += "<td>";
+        setting_html += settingName;
+        setting_html += "</td>"
+        setting_html += "<td>"
+        setting_html += group_data[settingName];
+        setting_html += "</td>"
+        row_entry.innerHTML += setting_html;
+        settingsTable.appendChild(row_entry);
+    }
 }
 
 var acc = document.getElementsByClassName("accordion");
@@ -415,7 +489,6 @@ function populateTable(container, data)
             for (var i = 0; i < data[world].length; i++)
             {
                 var table_entry = document.createElement("tr");
-                table_entry.className = "custom-class"
                 var world_table_html = "";
                 world_table_html+="<td>"
                 world_table_html+=world
@@ -438,7 +511,6 @@ function populateTable(container, data)
         for (var i = 0; i < data["Level"].length; i++)
         {
             var table_entry = document.createElement("tr");
-            table_entry.className = "custom-class"
             var world_table_html = "";
             world_table_html+="<td>";
             world_table_html+="Levels";
@@ -460,7 +532,6 @@ function populateTable(container, data)
         for (var i = 0; i < data["Form Levels"].length; i++)
         {
             var table_entry = document.createElement("tr");
-            table_entry.className = "custom-class"
             var world_table_html = "";
             world_table_html+="<td>";
             world_table_html+="Levels";
@@ -482,7 +553,6 @@ function populateTable(container, data)
         for (var i = 0; i <  data["Slot"].length; i++)
         {
             var table_entry = document.createElement("tr");
-            table_entry.className = "custom-class"
             var world_table_html = "";
             world_table_html+="<td>";
             world_table_html+="Weapons";

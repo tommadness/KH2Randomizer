@@ -85,7 +85,7 @@ class BtlvViewer():
         else:
             raise BackendException("Invalid battle level setting")
 
-    def get_spoiler(self):
+    def get_spoiler(self) -> dict[locationType, list[int]]:
         output_json = {}
         for world in self.visit_flags:
             output_json[world] = self.get_battle_levels(world)

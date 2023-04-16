@@ -3,6 +3,7 @@ import random
 import string
 import textwrap
 from dataclasses import dataclass
+from enum import Enum
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
@@ -19,20 +20,48 @@ single_select_chars = string.digits + string.ascii_letters
 SHORT_SELECT_LIMIT = len(single_select_chars)
 
 
+def _format_list_for_spoiler(values: list[str]) -> str:
+    if len(values) > 0:
+        return ", ".join(values)
+    else:
+        return "(none)"
+
+
+class SettingGroup(str, Enum):
+    """
+    Serves to provide a rough grouping of settings. Not necessarily meant to designate where things should live in the
+    seed generator UI; rather, meant to give a way for settings to be grouped for things like the spoiler log.
+    """
+
+    LOCATIONS = "Locations"
+    EXP_STATS = "EXP/Stats"
+    STARTING_INVENTORY = "Starting Inventory"
+    HINTS = "Hints"
+    KEYBLADES = "Keyblades"
+    ITEM_POOL = "Item Pool"
+    ITEM_PLACEMENT = "Item Placement"
+    SEED_MODIFIERS = "Seed Modifiers"
+    BOSS_RANDO = "Randomized Bosses"
+    ENEMY_RANDO = "Randomized Enemies"
+    COSMETICS = "Cosmetics"
+
+
 class Setting:
 
     def __init__(
             self,
             name: str,
             setting_type: type,
+            group: SettingGroup,
             ui_label: str,
             shared: bool,
             default,
             tooltip: str,
             standalone_label: str,
-            randomizable=None
+            randomizable
     ):
         self.name = name
+        self.group = group
         self.type = setting_type
         self.ui_label = ui_label
         self.shared = shared
@@ -50,12 +79,16 @@ class Setting:
     def parse_settings_string(self, settings_string: str):
         raise NotImplementedError
 
+    def spoiler_log_entries(self, value) -> dict[str, str]:
+        return {self.standalone_label: f"{value}"}
+
 
 class Toggle(Setting):
 
     def __init__(
             self,
             name: str,
+            group: SettingGroup,
             ui_label: str,
             shared: bool,
             default: bool,
@@ -63,7 +96,7 @@ class Toggle(Setting):
             standalone_label: str = '',
             randomizable=None
     ):
-        super().__init__(name, bool, ui_label, shared, default, tooltip, standalone_label, randomizable)
+        super().__init__(name, bool, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
 
     def settings_string(self, value) -> str:
         return '1' if value else '0'
@@ -77,6 +110,7 @@ class IntSpinner(Setting):
     def __init__(
             self,
             name: str,
+            group: SettingGroup,
             ui_label: str,
             minimum: int,
             maximum: int,
@@ -87,7 +121,7 @@ class IntSpinner(Setting):
             standalone_label: str = '',
             randomizable=None
     ):
-        super().__init__(name, int, ui_label, shared, default, tooltip, standalone_label, randomizable)
+        super().__init__(name, int, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.min = minimum
         self.max = maximum
         self.step = step
@@ -108,6 +142,7 @@ class FloatSpinner(Setting):
     def __init__(
             self,
             name: str,
+            group: SettingGroup,
             ui_label: str,
             minimum: float,
             maximum: float,
@@ -118,7 +153,7 @@ class FloatSpinner(Setting):
             standalone_label: str = '',
             randomizable=None
     ):
-        super().__init__(name, float, ui_label, shared, default, tooltip, standalone_label, randomizable)
+        super().__init__(name, float, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.min = minimum
         self.max = maximum
         self.step = step
@@ -144,15 +179,16 @@ class SingleSelect(Setting):
     def __init__(
             self,
             name: str,
+            group: SettingGroup,
             ui_label: str,
             choices: dict[str, str],
             shared: bool,
             default: str,
             tooltip: str = '',
             standalone_label: str = '',
-            randomizable = None
+            randomizable=None
     ):
-        super().__init__(name, str, ui_label, shared, default, tooltip, standalone_label, randomizable)
+        super().__init__(name, str, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.choices = choices
         self.choice_keys = list(choices.keys())
         self.choice_values = list(choices.values())
@@ -165,11 +201,17 @@ class SingleSelect(Setting):
         index = encoding.r2v(settings_string)
         return self.choice_keys[index]
 
+    def spoiler_log_entries(self, value) -> dict[str, str]:
+        index = self.choice_keys.index(value)
+        return {self.standalone_label: self.choice_values[index]}
+
 
 class ProgressionChainSelect(Setting):
+
     def __init__(
             self,
             name: str,
+            group: SettingGroup,
             ui_label: str,
             shared: bool,
             tooltip: str = '',
@@ -177,16 +219,8 @@ class ProgressionChainSelect(Setting):
             randomizable=None
     ):
         self.progression = ProgressionPoints()
-        super().__init__(
-            name,
-            str,
-            ui_label,
-            shared,
-            self.progression.get_compressed(),
-            tooltip,
-            standalone_label,
-            randomizable
-        )
+        default = self.progression.get_compressed()
+        super().__init__(name, str, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
 
     def settings_string(self, value) -> str:
         self.progression.set_uncompressed(value)
@@ -196,12 +230,16 @@ class ProgressionChainSelect(Setting):
         self.progression.set_uncompressed(settings_string)
         return self.progression.get_compressed()
 
+    def spoiler_log_entries(self, value) -> dict[str, str]:
+        return {self.standalone_label: f"{self.progression.settings_spoiler_json()}"}
+
 
 class MultiSelect(Setting):
 
     def __init__(
             self,
             name: str,
+            group: SettingGroup,
             ui_label: str,
             choices: dict[str, str],
             shared: bool,
@@ -211,7 +249,7 @@ class MultiSelect(Setting):
             standalone_label: str = '',
             randomizable=None
     ):
-        super().__init__(name, str, ui_label, shared, default, tooltip, standalone_label, randomizable)
+        super().__init__(name, str, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.choices = choices
         self.choice_keys = list(choices.keys())
         self.choice_values = list(choices.values())
@@ -243,11 +281,20 @@ class MultiSelect(Setting):
 
         return selected_values
 
+    def spoiler_log_entries(self, value) -> dict[str, str]:
+        selected_values = []
+        for choice_key, choice_value in self.choices.items():
+            if choice_key in value:
+                selected_values.append(choice_value)
+        return {self.standalone_label: _format_list_for_spoiler(selected_values)}
 
-class MultiSelectTristate(Setting):
+
+class WorldRandomizationTristate(Setting):
+
     def __init__(
             self,
             name: str,
+            group: SettingGroup,
             ui_label: str,
             choices: dict[str, str],
             shared: bool,
@@ -257,10 +304,9 @@ class MultiSelectTristate(Setting):
             standalone_label: str = '',
             randomizable=None
     ):
-        super().__init__(name, str, ui_label, shared, default, tooltip, standalone_label, randomizable)
+        super().__init__(name, str, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
         self.choices = choices
         self.choice_keys = list(choices.keys())
-        self.partial_choice_keys = list()
         self.choice_values = list(choices.values())
         self.choice_icons = choice_icons
 
@@ -303,7 +349,25 @@ class MultiSelectTristate(Setting):
                 partial_values.append(choice_key)
 
         return [selected_values,partial_values]
-        
+
+    def spoiler_log_entries(self, value) -> dict[str, str]:
+        randomized_keys, vanilla_keys = value
+        randomized_worlds = []
+        vanilla_worlds = []
+        junk_worlds = []
+        for choice_key, choice_value in self.choices.items():
+            if choice_key in randomized_keys:
+                randomized_worlds.append(choice_value)
+            elif choice_key in vanilla_keys:
+                vanilla_worlds.append(choice_value)
+            else:
+                junk_worlds.append(choice_value)
+        return {
+            "Randomized Worlds": _format_list_for_spoiler(randomized_worlds),
+            "Vanilla Worlds": _format_list_for_spoiler(vanilla_worlds),
+            "Junk Worlds": _format_list_for_spoiler(junk_worlds)
+        }
+
 
 _drive_exp_curve_tooltip_text = textwrap.dedent('''
         Experience curve options, inspired by KH1's experience curves. Midday and Dusk reduce the total experience
@@ -342,6 +406,7 @@ _depth_options_text = textwrap.dedent('''
 _all_settings = [
     SingleSelect(
         name=settingkey.SORA_LEVELS,
+        group=SettingGroup.LOCATIONS,
         ui_label='Max Level Reward',
         choices={
             'Level': 'Level 1',
@@ -356,6 +421,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.SPLIT_LEVELS,
+        group=SettingGroup.LOCATIONS,
         ui_label='Dream Weapon Matters',
         shared=True,
         default=False,
@@ -368,6 +434,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.STATSANITY,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Bonus Rewards as Items (Statsanity)',
         shared=True,
         default=True,
@@ -380,6 +447,7 @@ _all_settings = [
 
     FloatSpinner(
         name=settingkey.SORA_EXP_MULTIPLIER,
+        group=SettingGroup.EXP_STATS,
         ui_label='Sora',
         standalone_label='Sora EXP Multiplier',
         minimum=0.5,
@@ -396,6 +464,7 @@ _all_settings = [
 
     FloatSpinner(
         name=settingkey.VALOR_EXP_MULTIPLIER,
+        group=SettingGroup.EXP_STATS,
         ui_label='Valor',
         standalone_label='Valor EXP Multiplier',
         minimum=1.0,
@@ -409,6 +478,7 @@ _all_settings = [
 
     FloatSpinner(
         name=settingkey.WISDOM_EXP_MULTIPLIER,
+        group=SettingGroup.EXP_STATS,
         ui_label='Wisdom',
         standalone_label='Wisdom EXP Multiplier',
         minimum=1.0,
@@ -422,6 +492,7 @@ _all_settings = [
 
     FloatSpinner(
         name=settingkey.LIMIT_EXP_MULTIPLIER,
+        group=SettingGroup.EXP_STATS,
         ui_label='Limit',
         standalone_label='Limit EXP Multiplier',
         minimum=1.0,
@@ -435,6 +506,7 @@ _all_settings = [
 
     FloatSpinner(
         name=settingkey.MASTER_EXP_MULTIPLIER,
+        group=SettingGroup.EXP_STATS,
         ui_label='Master',
         standalone_label='Master EXP Multiplier',
         minimum=1.0,
@@ -448,6 +520,7 @@ _all_settings = [
 
     FloatSpinner(
         name=settingkey.FINAL_EXP_MULTIPLIER,
+        group=SettingGroup.EXP_STATS,
         ui_label='Final',
         standalone_label='Final EXP Multiplier',
         minimum=1.0,
@@ -461,6 +534,7 @@ _all_settings = [
 
     FloatSpinner(
         name=settingkey.SUMMON_EXP_MULTIPLIER,
+        group=SettingGroup.EXP_STATS,
         ui_label='Summon',
         standalone_label='Summon EXP Multiplier',
         minimum=1.0,
@@ -477,6 +551,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.SORA_EXP_CURVE,
+        group=SettingGroup.EXP_STATS,
         ui_label='Sora',
         standalone_label='Sora EXP Curve',
         choices={
@@ -501,6 +576,7 @@ _all_settings = [
     
     SingleSelect(
         name=settingkey.VALOR_EXP_CURVE,
+        group=SettingGroup.EXP_STATS,
         ui_label='Valor',
         standalone_label='Valor EXP Curve',
         choices={
@@ -516,6 +592,7 @@ _all_settings = [
     
     SingleSelect(
         name=settingkey.WISDOM_EXP_CURVE,
+        group=SettingGroup.EXP_STATS,
         ui_label='Wisdom',
         standalone_label='Wisdom EXP Curve',
         choices={
@@ -531,6 +608,7 @@ _all_settings = [
     
     SingleSelect(
         name=settingkey.LIMIT_EXP_CURVE,
+        group=SettingGroup.EXP_STATS,
         ui_label='Limit',
         standalone_label='Limit EXP Curve',
         choices={
@@ -546,6 +624,7 @@ _all_settings = [
     
     SingleSelect(
         name=settingkey.MASTER_EXP_CURVE,
+        group=SettingGroup.EXP_STATS,
         ui_label='Master',
         standalone_label='Master EXP Curve',
         choices={
@@ -561,6 +640,7 @@ _all_settings = [
     
     SingleSelect(
         name=settingkey.FINAL_EXP_CURVE,
+        group=SettingGroup.EXP_STATS,
         ui_label='Final',
         standalone_label='Final EXP Curve',
         choices={
@@ -576,6 +656,7 @@ _all_settings = [
     
     SingleSelect(
         name=settingkey.SUMMON_EXP_CURVE,
+        group=SettingGroup.EXP_STATS,
         ui_label='Summon',
         standalone_label='Summon EXP Curve',
         choices={
@@ -591,6 +672,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.CRITICAL_BONUS_REWARDS,
+        group=SettingGroup.LOCATIONS,
         ui_label='Critical Bonuses',
         standalone_label='Critical Bonuses in Pool',
         shared=True,
@@ -601,6 +683,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS,
+        group=SettingGroup.LOCATIONS,
         ui_label='Garden of Assemblage',
         standalone_label='Garden of Assemblage in Pool',
         shared=True,
@@ -610,15 +693,17 @@ _all_settings = [
     ),
 
     Toggle(
-       name=settingkey.AUTO_EQUIP_START_ABILITIES,
-       ui_label='Starting Abilities Equipped',
-       shared=True,
-       default=False,
-       tooltip='Start with abilities auto-equipped (except ones from critical bonuses).'
+        name=settingkey.AUTO_EQUIP_START_ABILITIES,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label='Starting Abilities Equipped',
+        shared=True,
+        default=False,
+        tooltip='Start with abilities auto-equipped (except ones from critical bonuses).'
     ),
 
     SingleSelect(
         name=settingkey.STARTING_MOVEMENT,
+        group=SettingGroup.STARTING_INVENTORY,
         ui_label="Growth Ability Starting Level",
         choices={
             'Disabled': 'None',
@@ -651,6 +736,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.STARTING_REPORTS,
+        group=SettingGroup.STARTING_INVENTORY,
         ui_label="Starting Ansem Reports",
         standalone_label='# Starting Ansem Reports',
         minimum=0,
@@ -664,6 +750,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.STARTING_INVENTORY,
+        group=SettingGroup.STARTING_INVENTORY,
         ui_label='Starting Inventory',
         choices={
             '138': 'Scan',
@@ -686,6 +773,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.HINT_SYSTEM,
+        group=SettingGroup.HINTS,
         ui_label="Hint System",
         choices={
             'Disabled': 'Disabled',
@@ -719,6 +807,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.PROGRESSION_HINTS,
+        group=SettingGroup.HINTS,
         ui_label='Progression Hint Mode',
         shared=True,
         default=False,
@@ -730,6 +819,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.PROGRESSION_HINTS_REVEAL_END,
+        group=SettingGroup.HINTS,
         ui_label='Reveal All Hints When Done',
         shared=True,
         default=False,
@@ -741,6 +831,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.PROGRESSION_HINTS_REPORT_BONUS,
+        group=SettingGroup.HINTS,
         ui_label="Progression Report Reward",
         minimum=0,
         maximum=5,
@@ -755,6 +846,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.PROGRESSION_HINTS_COMPLETE_BONUS,
+        group=SettingGroup.HINTS,
         ui_label="Progression World Complete Reward",
         minimum=0,
         maximum=5,
@@ -769,7 +861,9 @@ _all_settings = [
 
     ProgressionChainSelect(
         name=settingkey.PROGRESSION_POINT_SELECT,
+        group=SettingGroup.HINTS,
         ui_label='',
+        standalone_label='Progression Point Values',
         shared=True,
         tooltip='''
         Point values for different checkpoints in worlds.
@@ -779,7 +873,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_PROOF,
+        group=SettingGroup.HINTS,
         ui_label="Proof",
+        standalone_label='Proof Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -790,7 +886,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_FORM,
+        group=SettingGroup.HINTS,
         ui_label="Drive Form",
+        standalone_label='Drive Form Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -801,7 +899,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_MAGIC,
+        group=SettingGroup.HINTS,
         ui_label="Magic",
+        standalone_label='Magic Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -812,7 +912,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_SUMMON,
+        group=SettingGroup.HINTS,
         ui_label="Summon",
+        standalone_label='Summon Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -823,7 +925,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_ABILITY,
+        group=SettingGroup.HINTS,
         ui_label="Second Chance/Once More",
+        standalone_label='Second Chance/Once More Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -834,7 +938,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_PAGE,
+        group=SettingGroup.HINTS,
         ui_label="Torn Page",
+        standalone_label='Torn Page Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -845,7 +951,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_VISIT,
+        group=SettingGroup.HINTS,
         ui_label="Visit Unlock",
+        standalone_label='Visit Unlock Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -856,7 +964,9 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.POINTS_REPORT,
+        group=SettingGroup.HINTS,
         ui_label="Ansem Report",
+        standalone_label='Ansem Report Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -867,7 +977,9 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.POINTS_AUX,
+        group=SettingGroup.HINTS,
         ui_label="Aux. Unlock",
+        standalone_label='Aux. Unlock Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -878,7 +990,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_MAGIC_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Magic Set",
+        standalone_label='Magic Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -889,7 +1003,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_PAGE_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Torn Page Set",
+        standalone_label='Torn Page Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -900,7 +1016,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_POUCHES_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Munny Pouch Set",
+        standalone_label='Munny Pouch Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -911,7 +1029,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_PROOF_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Proof Set",
+        standalone_label='Proof Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -922,7 +1042,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_FORM_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Drive Form Set",
+        standalone_label='Drive Form Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -933,7 +1055,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_SUMMON_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Summon Set",
+        standalone_label='Summon Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -944,7 +1068,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_ABILITY_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Ability Set",
+        standalone_label='Ability Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -954,7 +1080,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_REPORT_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Ansem Report Set",
+        standalone_label='Ansem Report Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -965,7 +1093,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_VISIT_COLLECT,
+        group=SettingGroup.HINTS,
         ui_label="Visit Unlock Set",
+        standalone_label='Visit Unlock Set Bonus Points',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -976,7 +1106,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_BONUS,
+        group=SettingGroup.HINTS,
         ui_label="Bonus Level",
+        standalone_label='Bonus Level Point Value',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -986,7 +1118,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_COMPLETE,
+        group=SettingGroup.HINTS,
         ui_label="World Completion",
+        standalone_label='World Completion Point Value',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -996,7 +1130,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_FORMLV,
+        group=SettingGroup.HINTS,
         ui_label="Form Level",
+        standalone_label='Form Level Point Value',
         minimum=-10,
         maximum=1000,
         step=1,
@@ -1006,7 +1142,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_DEATH,
+        group=SettingGroup.HINTS,
         ui_label="Death Penalty",
+        standalone_label='Death Penalty Point Value',
         minimum=-1000,
         maximum=1000,
         step=1,
@@ -1016,7 +1154,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.POINTS_BOSS_NORMAL,
+        group=SettingGroup.HINTS,
         ui_label="Normal Boss Defeated",
+        standalone_label='Normal Boss Defeated Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -1026,7 +1166,9 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.POINTS_BOSS_AS,
+        group=SettingGroup.HINTS,
         ui_label="Absent Silhouette Defeated",
+        standalone_label='Absent Silhouette Defeated Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -1036,7 +1178,9 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.POINTS_BOSS_DATA,
+        group=SettingGroup.HINTS,
         ui_label="Data Boss Defeated",
+        standalone_label='Data Boss Defeated Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -1046,7 +1190,9 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.POINTS_BOSS_SEPHIROTH,
+        group=SettingGroup.HINTS,
         ui_label="Sephiroth Defeated",
+        standalone_label='Sephiroth Defeated Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -1056,7 +1202,9 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.POINTS_BOSS_TERRA,
+        group=SettingGroup.HINTS,
         ui_label="Lingering Will Defeated",
+        standalone_label='Lingering Will Defeated Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -1066,7 +1214,9 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.POINTS_BOSS_FINAL,
+        group=SettingGroup.HINTS,
         ui_label="Final Xemnas Defeated",
+        standalone_label='Final Xemnas Defeated Point Value',
         minimum=0,
         maximum=1000,
         step=1,
@@ -1076,6 +1226,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Ansem Report Depth',
         choices={
             locationDepth.DataFight.name: 'Superbosses',
@@ -1094,6 +1245,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.PROOF_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Proof Depth',
         choices={
             locationDepth.DataFight.name: 'Superbosses',
@@ -1112,6 +1264,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.STORY_UNLOCK_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Visit Unlock Depth',
         choices={
             locationDepth.DataFight.name: 'Superbosses',
@@ -1130,6 +1283,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.BATTLE_LEVEL_RANDO,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Battle Level Choice',
         choices={option.name: option.value for option in list(BattleLevelOption)},
         shared=True,
@@ -1155,6 +1309,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.BATTLE_LEVEL_OFFSET,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label="Level Offset",
         minimum=-50,
         maximum=100,
@@ -1168,6 +1323,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.BATTLE_LEVEL_RANGE,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label="Level Range",
         minimum=0,
         maximum=50,
@@ -1181,6 +1337,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.YEET_THE_BEAR,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Yeet The Bear Required',
         shared=True,
         default=False,
@@ -1189,6 +1346,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.CHAIN_LOGIC,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Turn On Chain Logic',
         shared=True,
         default=False,
@@ -1197,6 +1355,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.CHAIN_LOGIC_TERRA,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Include Lingering Will in Chain',
         shared=True,
         default=False,
@@ -1205,7 +1364,9 @@ _all_settings = [
 
     Toggle(
         name=settingkey.CHAIN_LOGIC_MIN_TERRA,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Force Late Depth for Proof of Connection',
+        standalone_label='Force Late Depth for Proof of Connection (Chain Logic)',
         shared=True,
         default=False,
         tooltip="Forces the Proof of Connection to be in the last 5 steps of the chain, to give more chances for finding combat tools."
@@ -1213,7 +1374,9 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.CHAIN_LOGIC_LENGTH,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label="Maximum Logic Length",
+        standalone_label='Maximum Logic Chain Length',
         minimum=10,
         maximum=26, # theoretical max
         step=1,
@@ -1224,6 +1387,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.PREVENT_SELF_HINTING,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Remove Self-Hinting Reports',
         shared=True,
         default=False,
@@ -1232,6 +1396,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.ALLOW_PROOF_HINTING,
+        group=SettingGroup.HINTS,
         ui_label='Reports can Reveal Proofs',
         shared=True,
         default=False,
@@ -1240,6 +1405,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.ALLOW_REPORT_HINTING,
+        group=SettingGroup.HINTS,
         ui_label='Reports can Reveal other Reports',
         shared=True,
         default=True,
@@ -1248,6 +1414,7 @@ _all_settings = [
     
     Toggle(
         name=settingkey.SCORE_MODE,
+        group=SettingGroup.HINTS,
         ui_label='Hi-Score Mode',
         shared=True,
         default=False,
@@ -1256,6 +1423,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.HINTABLE_CHECKS,
+        group=SettingGroup.HINTS,
         ui_label='Hintable Items',
         choices={
             'magic': 'Magic',
@@ -1273,6 +1441,7 @@ _all_settings = [
     ),
     MultiSelect(
         name=settingkey.SPOILER_REVEAL_TYPES,
+        group=SettingGroup.HINTS,
         ui_label='Spoiled Items',
         choices={
             'magic': 'Magic',
@@ -1291,6 +1460,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.REVEAL_COMPLETE,
+        group=SettingGroup.HINTS,
         ui_label='Reveal World Completion',
         shared=True,
         default=True,
@@ -1299,6 +1469,7 @@ _all_settings = [
     
     SingleSelect(
         name=settingkey.REPORTS_REVEAL,
+        group=SettingGroup.HINTS,
         ui_label='Report Reveal Mode',
         choices={
             'Disabled': 'Disabled',
@@ -1321,6 +1492,7 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.KEYBLADE_MIN_STAT,
+        group=SettingGroup.KEYBLADES,
         ui_label="Keyblade Min Stat",
         minimum=0,
         maximum=20,
@@ -1333,6 +1505,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.KEYBLADE_MAX_STAT,
+        group=SettingGroup.KEYBLADES,
         ui_label="Keyblade Max Stat",
         minimum=0,
         maximum=20,
@@ -1345,6 +1518,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.KEYBLADE_SUPPORT_ABILITIES,
+        group=SettingGroup.KEYBLADES,
         ui_label='Support Keyblade-Eligible Abilities',
         choices={str(item.Id): item.Name for item in Items.getSupportAbilityList() + Items.getLevelAbilityList()},
         shared=True,
@@ -1354,6 +1528,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.KEYBLADE_ACTION_ABILITIES,
+        group=SettingGroup.KEYBLADES,
         ui_label='Action Keyblade-Eligible Abilities',
         choices={str(item.Id): item.Name for item in Items.getActionAbilityList()},
         shared=True,
@@ -1361,8 +1536,9 @@ _all_settings = [
         tooltip='Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.'
     ),
 
-    MultiSelectTristate(
+    WorldRandomizationTristate(
         name=settingkey.WORLDS_WITH_REWARDS,
+        group=SettingGroup.LOCATIONS,
         ui_label='Worlds with Rewards',
         choices={location.name: location.value for location in [
             locationType.Level,
@@ -1436,6 +1612,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.SUPERBOSSES_WITH_REWARDS,
+        group=SettingGroup.LOCATIONS,
         ui_label='Superbosses with Rewards',
         choices={location.name: location.value for location in [
             locationType.AS,
@@ -1456,6 +1633,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.MISC_LOCATIONS_WITH_REWARDS,
+        group=SettingGroup.LOCATIONS,
         ui_label='Misc Locations with Rewards',
         choices={location.name: location.value for location in [
             locationType.OCCups,
@@ -1481,6 +1659,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.GLASS_CANNON,
+        group=SettingGroup.EXP_STATS,
         ui_label='Glass Cannon',
         shared=True,
         default=False,
@@ -1489,6 +1668,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.JUNK_ITEMS,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Junk Items',
         choices={str(item.Id): item.Name for item in Items.getJunkList(False)},
         shared=True,
@@ -1501,6 +1681,7 @@ _all_settings = [
     
     IntSpinner(
         name=settingkey.SORA_AP,
+        group=SettingGroup.EXP_STATS,
         ui_label="Sora Starting AP",
         minimum=0,
         maximum=150,
@@ -1513,6 +1694,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.DONALD_AP,
+        group=SettingGroup.EXP_STATS,
         ui_label="Donald Starting AP",
         minimum=5,
         maximum=55,
@@ -1525,6 +1707,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.GOOFY_AP,
+        group=SettingGroup.EXP_STATS,
         ui_label="Goofy Starting AP",
         minimum=4,
         maximum=54,
@@ -1537,6 +1720,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.ANTIFORM,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Antiform',
         standalone_label='Obtainable Antiform',
         shared=True,
@@ -1546,6 +1730,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.FIFTY_AP_BOOSTS,
+        group=SettingGroup.ITEM_POOL,
         ui_label='50 AP Boosts',
         shared=True,
         default=True,
@@ -1554,6 +1739,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.REMOVE_DAMAGE_CAP,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Remove Damage Cap',
         shared=True,
         default=False,
@@ -1562,6 +1748,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.CUPS_GIVE_XP,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Cups Give Experience',
         shared=True,
         default=False,
@@ -1570,6 +1757,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.REVENGE_LIMIT_RANDO,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Randomize Revenge Limit Maximum (Beta)',
         shared=True,
         choices={
@@ -1585,6 +1773,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.PARTY_MEMBER_RANDO,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Randomize World Party Members (Beta)',
         shared=True,
         default=False,
@@ -1593,6 +1782,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.AS_DATA_SPLIT,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Split AS/Data Rewards',
         shared=True,
         default=False,
@@ -1604,6 +1794,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.RETRY_DFX,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Retry Data Final Xemnas',
         shared=True,
         default=False,
@@ -1617,6 +1808,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.RETRY_DARK_THORN,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Retry Dark Thorn',
         shared=True,
         default=False,
@@ -1630,6 +1822,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.SKIP_CARPET_ESCAPE,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Skip Magic Carpet Escape',
         shared=True,
         default=False,
@@ -1638,6 +1831,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.PR_MAP_SKIP,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Remove Port Royal Map Select',
         shared=True,
         default=True,
@@ -1646,6 +1840,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.ATLANTICA_TUTORIAL_SKIP,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Skip Atlantica Minigame Tutorial',
         shared=True,
         default=False,
@@ -1654,6 +1849,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.REMOVE_WARDROBE_ANIMATION,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Remove Wardrobe Wakeup Animation',
         shared=True,
         default=False,
@@ -1662,6 +1858,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.REMOVE_CUTSCENES,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Remove Cutscenes',
         shared=True,
         default=False,
@@ -1670,6 +1867,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.COSTUME_RANDO,
+        group=SettingGroup.COSMETICS,
         ui_label='Randomize Character Costumes (Beta)',
         shared=False,
         default=False,
@@ -1678,6 +1876,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.FAST_URNS,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Fast Olympus Coliseum Urns',
         shared=True,
         default=False,
@@ -1687,6 +1886,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.RICH_ENEMIES,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='All Enemies Drop Munny',
         shared=True,
         default=False,
@@ -1696,6 +1896,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.UNLIMITED_MP,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='All Enemies Drop MP Orbs',
         shared=True,
         default=False,
@@ -1705,6 +1906,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.GLOBAL_JACKPOT,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label="Global Jackpots",
         standalone_label='# of Global Jackpots',
         minimum=0,
@@ -1721,6 +1923,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.GLOBAL_LUCKY,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label="Global Lucky Lucky",
         standalone_label='# of Global Lucky Lucky',
         minimum=0,
@@ -1737,6 +1940,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.SHOP_KEYBLADES,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Keyblades',
         standalone_label='Keyblades in Shop',
         shared=True,
@@ -1747,6 +1951,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.SHOP_ELIXIRS,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Elixirs',
         standalone_label='Elixirs in Shop',
         shared=True,
@@ -1757,6 +1962,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.SHOP_RECOVERIES,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Drive Recoveries',
         standalone_label='Drive Recoveries in Shop',
         shared=True,
@@ -1767,6 +1973,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.SHOP_BOOSTS,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Stat Boosts',
         standalone_label='Stat Boosts in Shop',
         shared=True,
@@ -1777,6 +1984,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.SHOP_REPORTS,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Add Ansem Reports To Shop',
         standalone_label='# Ansem Reports in Shop',
         shared=True,
@@ -1790,6 +1998,7 @@ _all_settings = [
 
     IntSpinner(
         name=settingkey.SHOP_UNLOCKS,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Add Visit Unlocks To Shop',
         standalone_label='# Visit Unlocks in Shop',
         shared=True,
@@ -1803,6 +2012,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.TT1_JAILBREAK,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Early Twilight Town 1 Exit',
         shared=True,
         default=False,
@@ -1811,6 +2021,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.ROXAS_ABILITIES_ENABLED,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Roxas Magic/Movement/Trinity',
         shared=True,
         default=False,
@@ -1819,6 +2030,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.DISABLE_FINAL_FORM,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Disable Final Form',
         shared=True,
         default=False,
@@ -1831,6 +2043,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.BLOCK_COR_SKIP,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Block Skipping CoR',
         shared=True,
         default=False,
@@ -1839,6 +2052,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.BLOCK_SHAN_YU_SKIP,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label='Block Skipping Shan-Yu',
         shared=True,
         default=False,
@@ -1847,6 +2061,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.ENABLE_PROMISE_CHARM,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Promise Charm',
         shared=True,
         default=False,
@@ -1859,6 +2074,7 @@ _all_settings = [
 
     MultiSelect(
         name=settingkey.STARTING_STORY_UNLOCKS,
+        group=SettingGroup.STARTING_INVENTORY,
         ui_label='Starting Visit Unlocks',
         choices={
             '74': 'Identity Disk',
@@ -1884,6 +2100,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MAPS_IN_ITEM_POOL,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Maps',
         standalone_label='Maps in Item Pool',
         shared=True,
@@ -1893,6 +2110,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.RECIPES_IN_ITEM_POOL,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Synthesis Recipes',
         standalone_label='Synthesis Recipes in Item Pool',
         shared=True,
@@ -1902,14 +2120,17 @@ _all_settings = [
 
     Toggle(
         name=settingkey.ACCESSORIES_IN_ITEM_POOL,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Accessories',
         standalone_label='Accessories in Item Pool',
         shared=True,
         default=True,
         tooltip="If enabled, all accessories are included in the required item pool.",
     ),
+
     Toggle(
         name=settingkey.ARMOR_IN_ITEM_POOL,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Armor',
         standalone_label='Armor in Item Pool',
         shared=True,
@@ -1919,6 +2140,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.REMOVE_POPUPS,
+        group=SettingGroup.LOCATIONS,
         ui_label='Remove Non-Superboss Popups',
         shared=True,
         default=False,
@@ -1928,6 +2150,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.STORY_UNLOCK_CATEGORY,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Visit Unlock Category',
         choices={
             itemRarity.COMMON : itemRarity.COMMON,
@@ -1949,6 +2172,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.ITEM_PLACEMENT_DIFFICULTY,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Item Placement Difficulty',
         choices={
             'Super Easy': 'Super Easy',
@@ -1973,6 +2197,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.NIGHTMARE_LOGIC,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Extended Item Placement Logic',
         shared=True,
         default=False,
@@ -1982,6 +2207,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.SOFTLOCK_CHECKING,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Softlock Prevention',
         choices={
             'default': 'Regular Rando',
@@ -2003,6 +2229,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.ACCESSIBILITY,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Accessibility',
         standalone_label='Item Accessibility',
         choices={
@@ -2022,6 +2249,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.ABILITY_POOL,
+        group=SettingGroup.ITEM_POOL,
         ui_label='Ability Pool',
         choices={
             'default': 'Default Abilities',
@@ -2048,6 +2276,7 @@ _all_settings = [
 
     SingleSelect(
         name=settingkey.COMMAND_MENU,
+        group=SettingGroup.COSMETICS,
         ui_label='Command Menu',
         choices=commandmenu.get_options(),
         shared=False,
@@ -2067,6 +2296,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_ENABLED_PC,
+        group=SettingGroup.COSMETICS,
         ui_label='Randomize Music',
         shared=False,
         default=False,
@@ -2079,6 +2309,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_USE_CATEGORIES,
+        group=SettingGroup.COSMETICS,
         ui_label='Categorize Songs',
         shared=False,
         default=True,
@@ -2092,6 +2323,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES,
+        group=SettingGroup.COSMETICS,
         ui_label='Allow Duplicate Replacements',
         shared=False,
         default=False,
@@ -2105,6 +2337,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_DMCA_SAFE,
+        group=SettingGroup.COSMETICS,
         ui_label='DMCA Safe',
         shared=False,
         default=False,
@@ -2115,6 +2348,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
+        group=SettingGroup.COSMETICS,
         ui_label='Include KH1 Songs',
         shared=False,
         default=False,
@@ -2128,6 +2362,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH2,
+        group=SettingGroup.COSMETICS,
         ui_label='Include KH2 Songs',
         shared=False,
         default=False,
@@ -2140,6 +2375,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM,
+        group=SettingGroup.COSMETICS,
         ui_label='Include Re:Chain of Memories Songs',
         shared=False,
         default=False,
@@ -2153,6 +2389,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_BBS,
+        group=SettingGroup.COSMETICS,
         ui_label='Include Birth by Sleep Songs',
         shared=False,
         default=False,
@@ -2166,6 +2403,7 @@ _all_settings = [
 
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM,
+        group=SettingGroup.COSMETICS,
         ui_label='Include Custom Songs',
         shared=False,
         default=False,
@@ -2186,11 +2424,16 @@ def _get_boss_enemy_settings():
         if key == 'memory_expansion':
             continue
         config = boss_enemy_config[key]
+
+        enemy_type = config.get("type") == "enemy"
+        group = SettingGroup.ENEMY_RANDO if enemy_type else SettingGroup.BOSS_RANDO
+
         possible_values = config['possible_values']
         if True in possible_values:
             # needs to be a toggle
             ui_widget = Toggle(
                 name=key,
+                group=group,
                 ui_label=config['display_name'],
                 shared=True,
                 default=False,
@@ -2201,13 +2444,14 @@ def _get_boss_enemy_settings():
             choices = {choice: choice for choice in possible_values}
             ui_widget = SingleSelect(
                 name=key,
+                group=group,
                 ui_label=config['display_name'],
                 choices=choices,
                 shared=True,
                 default=possible_values[0],
                 tooltip=config['description']
             )
-        if config.get("type") == "enemy":
+        if enemy_type:
             enemy_settings.append(ui_widget)
         else:
             boss_settings.append(ui_widget)
@@ -2329,6 +2573,13 @@ class SeedSettings:
         filtered_settings = {key: self.get(key) for key in self._filtered_settings(include_private).keys()}
         return filtered_settings
 
+    def settings_spoiler_json(self) -> dict[SettingGroup, dict[str, str]]:
+        result: dict[SettingGroup, dict[str, str]] = {group: {} for group in SettingGroup}
+        for key, setting in self._filtered_settings(include_private=True).items():
+            for label, value in setting.spoiler_log_entries(self.get(key)).items():
+                result[setting.group][label] = value
+        return result
+
     def apply_settings_json(self, settings_json, include_private: bool = False):
         for key, setting in self._filtered_settings(include_private).items():
             # If there's a setting in the JSON for the key, use its value; otherwise, use the default.
@@ -2370,7 +2621,7 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
             # get the current set of values, will allow for some to be removed
             setting_choices[r.name] = [c for c in real_settings_object.get(r.name)]
             multi_selects.append(r.name)
-        elif isinstance(r,MultiSelectTristate): # TODO make this work
+        elif isinstance(r, WorldRandomizationTristate): # TODO make this work
             # get the current set of values, will allow for some to be removed
             setting_choices[r.name] = real_settings_object.get(r.name)
             trimulti_selects.append(r.name)
