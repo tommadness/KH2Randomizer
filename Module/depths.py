@@ -50,6 +50,18 @@ class ItemDepths():
                     parent_edge = location_graph.inc_edges(current_node)[0]
                     parent,_ = location_graph.edge_by_id(parent_edge)
                     current_node = parent
+	elif location_depth is locationDepth.noFirstVisit:
+	    # exact same code of First Visits but opposite depth
+            for node in first_boss_nodes:
+                current_node = node
+                # backtrack on the graph until we can't anymore
+                while location_graph.inc_edges(current_node):
+                    node_locations = location_graph.node_data(current_node).locations
+                    for loc in node_locations:
+                        self.depth_classification[loc] = False
+                    parent_edge = location_graph.inc_edges(current_node)[0]
+                    parent,_ = location_graph.edge_by_id(parent_edge)
+                    current_node = parent
         elif location_depth is locationDepth.SecondVisitOnly:
             def get_children(in_node):
                 children = []
