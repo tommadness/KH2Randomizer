@@ -50,7 +50,7 @@ class ItemDepths():
                     parent_edge = location_graph.inc_edges(current_node)[0]
                     parent,_ = location_graph.edge_by_id(parent_edge)
                     current_node = parent
-	elif location_depth is locationDepth.noFirstVisit:
+        elif location_depth is locationDepth.noFirstVisit:
 	    # exact same code of First Visits but opposite depth
             for node in first_boss_nodes:
                 current_node = node

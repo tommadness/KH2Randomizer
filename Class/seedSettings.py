@@ -1107,6 +1107,7 @@ _all_settings = [
         choices={
             locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
+	    locationDepth.NoFirstVisit.name: 'Non First Visits',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
             locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
