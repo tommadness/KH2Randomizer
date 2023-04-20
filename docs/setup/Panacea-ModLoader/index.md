@@ -12,10 +12,10 @@
 * [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
 * [.NET6 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.13-windows-x64-installer)
 
-## Installing OpenKh and Seed Generator
+## Installing OpenKH Mod Manager and Seed Generator
 1. Install .NET6 Runtime by running the `runtime-desktop-6.0.13-windows-x64-installer` executable you just downloaded
-2. Create a KH2 Rando folder somewhere on your PC (Recommended *not* to be in your games installation folder). This is where you will put all your randomizer tools
-3. Extract OpenKH to this folder 
+2. Create a KH2 Rando folder somewhere on your PC (__This **cannot** be under a Microsoft "OneDrive" directory__). This is where you will put all your randomizer tools
+3. Extract OpenKH Mod Manager to this folder 
 4. Extract the Seed Generator to this Folder (Be sure to extract ALL files from the zip)
 	- It's recommended to give each app its own subfolder to make navigating their files easier (See screenshot)
 
@@ -109,8 +109,9 @@ Installing new mods into the mods manager is easy! Follow these steps to get the
 # *You are now ready to play the KH2 Randomizer!*
 
 __Technical And Stability Notes__
-1. Recommended to set fps limit to **60fps**.
-2. Recommended to run game in windows/borderless windowed mode. Fullscreen is stable but the game can crash if you alt-tab out.
-3. Overlays that hook onto the game process (Steam, RivaTuner, Nvidia Overlay, etc) and recording programs (Obs, Streamlabs, Xsplit) seem to decrease stability when playing rando. It's recommended to disable them, or in the case of recording programs use window/desktop capture, in order to minimize your chances of a crash.
-4. GoA ROM and the Seed Generator will always be compatible with one another. Any other mods beyond that should be compatible as long as they don't overlap on changes. Mods at the top of the list will overwrite mods below them if there's any overlapping files. Feel free to ask in the [Community Discord](https://discord.gg/vKhdwNAmzE) if you aren't sure.
-5. Boss/Enemy Rando is amazing but still a work in progress. Please report any bugs/softlocks/out-of-bounds glitches you encounter to the coresponding Google Form listed in the #bug-reports channels of our Discord. 
+1. As mentioned earlier in the guide, the Mod Manager/Lua doesn't seem to work if the folder is under a "OneDrive" directory. We don't know exactly why but it's a conistent thing between users. Be sure to move your folders and re-run the setup wizards if you installed in a "OneDrive" directory.
+2.. Recommended to set fps limit to **60fps**.
+3. Recommended to run game in windows/borderless windowed mode. Fullscreen is stable but the game can crash if you alt-tab out.
+4. Overlays that hook onto the game process (Steam, RivaTuner, Nvidia Overlay, etc) and recording programs (Obs, Streamlabs, Xsplit) seem to decrease stability when playing rando. It's recommended to disable them, or in the case of recording programs use window/desktop capture, in order to minimize your chances of a crash.
+5. GoA ROM and the Seed Generator will always be compatible with one another. Any other mods beyond that should be compatible as long as they don't overlap on changes. Mods at the top of the list will overwrite mods below them if there's any overlapping files. Feel free to ask in the [Community Discord](https://discord.gg/vKhdwNAmzE) if you aren't sure.
+6. Boss/Enemy Rando is amazing but still a work in progress. Please report any bugs/softlocks/out-of-bounds glitches you encounter to the coresponding Google Form listed in the #bug-reports channels of our Discord. 
