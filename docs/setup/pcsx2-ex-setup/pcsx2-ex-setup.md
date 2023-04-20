@@ -18,6 +18,8 @@ To set up Rando, Extract, Download and/or Install the following:
 
 I prefer to have them saved in a single folder (for this guide, I’ll be placing them in the `C:\KH2FMRando-PS2` folder on my computer for simplicity reasons).
 
+__Do not install PCSX2 or the Mod Manager under a Microsoft "OneDrive" directory. Mods won't load correctly and lua scripts will fail if you do.__
+
 ---
 
 ## Step 1: PCSX2-EX Setup ##
