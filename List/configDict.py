@@ -82,6 +82,7 @@ class itemDifficulty(str,Enum):
 
 class locationDepth(str,Enum):
     FirstVisit = "FirstVisit"
+    NoFirstVisit = "NoFirstVisit"
     SecondVisit = "SecondVisit"
     SecondVisitOnly = "SecondVisitOnly"
     DataFight = "DataFight"
