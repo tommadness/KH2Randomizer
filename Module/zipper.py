@@ -15,7 +15,7 @@ from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
-from List.ChestList import KH2Chest, getChestFileList
+from List.ChestList import KH2Chest, getChestFileList, getChestVisualId
 from Module import hashimage, commandmenu
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
@@ -797,99 +797,26 @@ class SeedZip:
             mod["assets"] += modYml.getChestVisualMod()
             chestList = KH2Chest.getChestList()
             treasures = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.CHEST])
+            treasures = [trsr for trsr in treasures 
+                         if locationType.Puzzle not in trsr.location.LocationTypes 
+                         and locationType.Critical not in trsr.location.LocationTypes 
+                         and locationType.SYNTH not in trsr.location.LocationTypes]
             for trsr in treasures:
-                #pride lands require different chests ids
-                if locationType.PL in trsr.location.LocationTypes:
-                    for chest in chestList:
-                        if chest.LocationId == trsr.location.LocationId:
-                            #get correct chest id for item type
-                            chestTypeId = 830 #default "other" chest visual
-                            if trsr.item.ItemType in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-                                chestTypeId = 831
-                            elif trsr.item.ItemType == itemType.FORM:
-                                chestTypeId = 832
-                            elif trsr.item.ItemType in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-                                chestTypeId = 833
-                            elif trsr.item.ItemType == itemType.TORN_PAGE:
-                                chestTypeId = 834                                    
-                            elif trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
-                                chestTypeId = 835
-                            elif trsr.item.ItemType == itemType.REPORT:
-                                chestTypeId = 2142
-                            elif trsr.item.ItemType == itemType.SUMMON:
-                                chestTypeId = 2143
-                            elif trsr.item.ItemType == itemType.STORYUNLOCK:
-                                chestTypeId = 2235
-                            #open and write file
-                            try:
-                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
-                            except:
-                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
-                            finally:
-                                spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
-                                yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
-                            break
-                #twilight town and STT require different IDs too
-                elif locationType.TT in trsr.location.LocationTypes or locationType.STT in trsr.location.LocationTypes:
-                    for chest in chestList:
-                        if chest.LocationId == trsr.location.LocationId:
-                            #get correct chest id for item type
-                            chestTypeId = 821 #default "other" chest visual
-                            if trsr.item.ItemType in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-                                chestTypeId = 822
-                            elif trsr.item.ItemType == itemType.FORM:
-                                chestTypeId = 823
-                            elif trsr.item.ItemType in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-                                chestTypeId = 824
-                            elif trsr.item.ItemType == itemType.TORN_PAGE:
-                                chestTypeId = 825                                    
-                            elif trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
-                                chestTypeId = 826
-                            elif trsr.item.ItemType == itemType.REPORT:
-                                chestTypeId = 827
-                            elif trsr.item.ItemType == itemType.SUMMON:
-                                chestTypeId = 828
-                            elif trsr.item.ItemType == itemType.STORYUNLOCK:
-                                chestTypeId = 829
-                            #open and write file
-                            try:
-                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
-                            except:
-                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
-                            finally:
-                                spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
-                                yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
-                            break
-                else:
-                    for chest in chestList:
-                        if chest.LocationId == trsr.location.LocationId:
-                            #get correct chest id for item type
-                            chestTypeId = 320 #default "other" chest visual
-                            if trsr.item.ItemType in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-                                chestTypeId = 321
-                            elif trsr.item.ItemType == itemType.FORM:
-                                chestTypeId = 322
-                            elif trsr.item.ItemType in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-                                chestTypeId = 323
-                            elif trsr.item.ItemType == itemType.TORN_PAGE:
-                                chestTypeId = 324                                    
-                            elif trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
-                                chestTypeId = 325
-                            elif trsr.item.ItemType == itemType.REPORT:
-                                chestTypeId = 818
-                            elif trsr.item.ItemType == itemType.SUMMON:
-                                chestTypeId = 819
-                            elif trsr.item.ItemType == itemType.STORYUNLOCK:
-                                chestTypeId = 820
-                            #open and write file
-                            try:
-                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
-                            except:
-                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
-                            finally:
-                                spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
-                                yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
-                            break
+                #i dunno just in case i guess because D/G starting items are labled as free and chests
+                if locationType.Free in trsr.location.LocationTypes and trsr.location.LocationId in range(1,3):
+                    print('party stating item?')
+                    continue
+                #use location id to get chest index and name
+                chest = chestList[trsr.location.LocationId]
+                chestTypeId = getChestVisualId(trsr.location.LocationTypes, trsr.item.ItemType)
+                #open and write file
+                try: #open yml first if it exists
+                    spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
+                except: #open spawn if yml doesn't
+                    spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
+                finally: #edit and save yml
+                    spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
+                    yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
         #filelist huge so get list from the chest class
         fileList = getChestFileList()
         for path in fileList:
