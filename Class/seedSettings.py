@@ -1775,6 +1775,15 @@ _all_settings = [
     ),
 
     Toggle(
+        name=settingkey.CHESTS_MATCH_ITEM,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label='Chest Visuals Match Item Contents',
+        shared=True,
+        default=False,
+        tooltip='Chests are given unique visuals displaying what type of item it contains. EX: Chests containg Magic Elements will be Purple.'
+    ),
+
+    Toggle(
         name=settingkey.PARTY_MEMBER_RANDO,
         group=SettingGroup.SEED_MODIFIERS,
         ui_label='Randomize World Party Members (Beta)',

@@ -15,6 +15,7 @@ from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
+from List.ChestList import KH2Chest, getChestFileList
 from Module import hashimage, commandmenu
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
@@ -299,6 +300,7 @@ class SeedZip:
             self.createWardrobeSkipAssets(settings, mod, outZip)
             self.createDropRateAssets(settings, randomizer, mod, outZip)
             self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
+            self.createChestVisualAssets(settings, randomizer, mod, outZip)
             battle_level_spoiler = self.createBtlvRandoAssets(settings, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
@@ -790,6 +792,120 @@ class SeedZip:
 
             outZip.writestr("modified_synth_reqs.bin",binaryContent)
 
+    def createChestVisualAssets(self, settings, randomizer, mod, outZip):
+        if settings.chests_match_item:
+            mod["assets"] += modYml.getChestVisualMod()
+            chestList = KH2Chest.getChestList()
+            treasures = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.CHEST])
+            for trsr in treasures:
+                #pride lands require different chests ids
+                if locationType.PL in trsr.location.LocationTypes:
+                    for chest in chestList:
+                        if chest.LocationId == trsr.location.LocationId:
+                            #get correct chest id for item type
+                            chestTypeId = 830 #default "other" chest visual
+                            if trsr.item.ItemType in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
+                                chestTypeId = 831
+                            elif trsr.item.ItemType == itemType.FORM:
+                                chestTypeId = 832
+                            elif trsr.item.ItemType in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
+                                chestTypeId = 833
+                            elif trsr.item.ItemType == itemType.TORN_PAGE:
+                                chestTypeId = 834                                    
+                            elif trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
+                                chestTypeId = 835
+                            elif trsr.item.ItemType == itemType.REPORT:
+                                chestTypeId = 2142
+                            elif trsr.item.ItemType == itemType.SUMMON:
+                                chestTypeId = 2143
+                            elif trsr.item.ItemType == itemType.STORYUNLOCK:
+                                chestTypeId = 2235
+                            #open and write file
+                            try:
+                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
+                            except:
+                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
+                            finally:
+                                spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
+                                yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
+                            break
+                #twilight town and STT require different IDs too
+                elif trsr.location.LocationTypes in [locationType.TT, locationType.STT]:
+                    for chest in chestList:
+                        if chest.LocationId == trsr.location.LocationId:
+                            #get correct chest id for item type
+                            chestTypeId = 821 #default "other" chest visual
+                            if trsr.item.ItemType in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
+                                chestTypeId = 822
+                            elif trsr.item.ItemType == itemType.FORM:
+                                chestTypeId = 823
+                            elif trsr.item.ItemType in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
+                                chestTypeId = 824
+                            elif trsr.item.ItemType == itemType.TORN_PAGE:
+                                chestTypeId = 825                                    
+                            elif trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
+                                chestTypeId = 826
+                            elif trsr.item.ItemType == itemType.REPORT:
+                                chestTypeId = 827
+                            elif trsr.item.ItemType == itemType.SUMMON:
+                                chestTypeId = 828
+                            elif trsr.item.ItemType == itemType.STORYUNLOCK:
+                                chestTypeId = 829
+                            #open and write file
+                            try:
+                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
+                            except:
+                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
+                            finally:
+                                spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
+                                yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
+                            break
+                else:
+                    for chest in chestList:
+                        if chest.LocationId == trsr.location.LocationId:
+                            #get correct chest id for item type
+                            chestTypeId = 320 #default "other" chest visual
+                            if trsr.item.ItemType in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
+                                chestTypeId = 321
+                            elif trsr.item.ItemType == itemType.FORM:
+                                chestTypeId = 322
+                            elif trsr.item.ItemType in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
+                                chestTypeId = 323
+                            elif trsr.item.ItemType == itemType.TORN_PAGE:
+                                chestTypeId = 324                                    
+                            elif trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
+                                chestTypeId = 325
+                            elif trsr.item.ItemType == itemType.REPORT:
+                                chestTypeId = 818
+                            elif trsr.item.ItemType == itemType.SUMMON:
+                                chestTypeId = 819
+                            elif trsr.item.ItemType == itemType.STORYUNLOCK:
+                                chestTypeId = 820
+                            #open and write file
+                            try:
+                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
+                            except:
+                                spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
+                            finally:
+                                spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
+                                yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
+                            break
+        #filelist huge so get list from the chest class
+        fileList = getChestFileList()
+        for path in fileList:
+            outZip.write(resource_path('static/chests/ard/'+path+'.yml'), "chest/ard/"+path+'.yml')
+        outZip.write(resource_path('static/chests/remastered/other.dds'), 'chest/remastered/other.dds')
+        outZip.write(resource_path('static/chests/remastered/abilities.dds'), 'chest/remastered/abilities.dds')
+        outZip.write(resource_path('static/chests/remastered/forms.dds'), 'chest/remastered/forms.dds')
+        outZip.write(resource_path('static/chests/remastered/magic.dds'), 'chest/remastered/magic.dds')
+        outZip.write(resource_path('static/chests/remastered/pages.dds'), 'chest/remastered/pages.dds')
+        outZip.write(resource_path('static/chests/remastered/proofs.dds'), 'chest/remastered/proofs.dds')
+        outZip.write(resource_path('static/chests/remastered/reports.dds'), 'chest/remastered/reports.dds')
+        outZip.write(resource_path('static/chests/remastered/summons.dds'), 'chest/remastered/summons.dds')
+        outZip.write(resource_path('static/chests/remastered/unlocks.dds'), 'chest/remastered/unlocks.dds')
+        outZip.write(resource_path('static/chests/ChestObjList.yml'), 'chest/ChestObjList.yml')
+        outZip.write(resource_path('static/chests/F_EX030_LK.mset'), 'chest/F_EX030_LK.mset')
+
     @staticmethod
     def write_music_replacements(replacements: dict[str, str], outZip):
         if len(replacements) > 0:
@@ -1115,7 +1231,7 @@ class SeedZip:
 
         for trsr in treasures:
             self.formattedTrsr[trsr.location.LocationId] = {"ItemId":trsr.item.Id}
-    
+
     def getAssignmentSubset(self,assigned,categories : list[locationCategory]):
         return [assignment for assignment in assigned if any(item is assignment.location.LocationCategory for item in categories)]
 

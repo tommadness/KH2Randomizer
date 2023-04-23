@@ -1,0 +1,51 @@
+- Type: 1
+  Flag: 0
+  Id: 31
+  Teleport:
+    Place: 0
+    Door: 0
+    World: 0
+    Unknown: 0
+  Unk20: 0
+  Unk24: 0
+  Entities:
+  - ObjectId: 821
+    PositionX: 1155
+    PositionY: -14.164560317993164
+    PositionZ: 2350
+    RotationX: 0
+    RotationY: -0.52359879016876221
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 20
+    Argument1: 0
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  - ObjectId: 821
+    PositionX: 1465
+    PositionY: 168.30409240722656
+    PositionZ: -950
+    RotationX: 0
+    RotationY: 2.9146997928619385
+    RotationZ: 0
+    SpawnType: 0
+    SpawnArgument: 0
+    Serial: 126
+    Argument1: 1
+    Argument2: 0
+    ReactionCommand: 0
+    SpawnDelay: 0
+    Command: 0
+    SpawnRange: 0
+    Level: 0
+    Medal: 0
+  EventActivators: []
+  WalkPath: []
+  ReturnParameters: []
+  Signals: []

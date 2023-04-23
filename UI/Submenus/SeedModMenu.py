@@ -30,6 +30,7 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.RETRY_DFX)
         self.add_option(settingkey.RETRY_DARK_THORN)
         self.add_option(settingkey.REMOVE_DAMAGE_CAP)
+        self.add_option(settingkey.CHESTS_MATCH_ITEM)
         self.add_option(settingkey.PARTY_MEMBER_RANDO)
         self.add_option(settingkey.REVENGE_LIMIT_RANDO)
         self.end_group('Other Modifiers')
