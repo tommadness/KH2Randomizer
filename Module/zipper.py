@@ -903,7 +903,7 @@ class SeedZip:
         outZip.write(resource_path('static/chests/remastered/reports.dds'), 'chest/remastered/reports.dds')
         outZip.write(resource_path('static/chests/remastered/summons.dds'), 'chest/remastered/summons.dds')
         outZip.write(resource_path('static/chests/remastered/unlocks.dds'), 'chest/remastered/unlocks.dds')
-        outZip.write(resource_path('static/chests/ChestObjList.yml'), 'chest/ChestObjList.yml')
+        outZip.write(resource_path('static/chests/ChestObjList.script'), 'chest/ChestObjList.yml')
         outZip.write(resource_path('static/chests/F_EX030_LK.mset'), 'chest/F_EX030_LK.mset')
 
     @staticmethod
