@@ -830,7 +830,7 @@ class SeedZip:
                                 yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
                             break
                 #twilight town and STT require different IDs too
-                elif trsr.location.LocationTypes in [locationType.TT, locationType.STT]:
+                elif locationType.TT in trsr.location.LocationTypes or locationType.STT in trsr.location.LocationTypes:
                     for chest in chestList:
                         if chest.LocationId == trsr.location.LocationId:
                             #get correct chest id for item type
