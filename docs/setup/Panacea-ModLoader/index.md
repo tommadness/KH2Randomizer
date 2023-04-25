@@ -1,5 +1,15 @@
 # PC New Setup Guide
 
+Index:
+* [Heads up!](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/#lua-backend-installation)
+* [Downloads](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/#resources-needed)
+* [Installing the Mod Manager & Seed Generator](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/#installing-openkh-mod-manager-and-seed-generator)
+* [Setting up the Mod Manager](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/#how-to-setup-the-mod-manager)
+* [Installing the GoA mod](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/#garden-of-assemblage-mod-installation)
+* [Installing Lua Backend](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/#lua-backend-installation)
+* [Installing a new seed](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/#installing-a-new-seed-to-play)
+* [Stability Notes](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/#you-are-now-ready-to-play-the-kh2-randomizer)
+
 ## Heads up!
 * Feel free to go to the [discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated #help channel where you can find people to assist you if you're facing any difficulties. (P.S. Please be polite)
 * **You must run the game once** before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
