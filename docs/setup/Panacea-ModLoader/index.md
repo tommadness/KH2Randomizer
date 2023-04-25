@@ -1,5 +1,15 @@
 # PC New Setup Guide
 
+Index:
+* [Heads up!](#heads-up)
+* [Downloads](#resources-needed)
+* [Installing the Mod Manager & Seed Generator](#installing-openkh-mod-manager-and-seed-generator)
+* [Setting up the Mod Manager](#how-to-setup-the-mod-manager)
+* [Installing the GoA mod](#garden-of-assemblage-mod-installation)
+* [Installing Lua Backend](#lua-backend-installation)
+* [Installing a new seed](#installing-a-new-seed-to-play)
+* [Stability Notes](#you-are-now-ready-to-play-the-kh2-randomizer)
+
 ## Heads up!
 * Feel free to go to the [discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated #help channel where you can find people to assist you if you're facing any difficulties. (P.S. Please be polite)
 * **You must run the game once** before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
