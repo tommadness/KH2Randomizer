@@ -1,7 +1,7 @@
 # PC New Setup Guide
 
 Index:
-* [Heads up!](#lua-backend-installation)
+* [Heads up!](#heads-up)
 * [Downloads](#resources-needed)
 * [Installing the Mod Manager & Seed Generator](#installing-openkh-mod-manager-and-seed-generator)
 * [Setting up the Mod Manager](#how-to-setup-the-mod-manager)
