@@ -106,7 +106,7 @@ class ItemDepths():
         elif location_depth is locationDepth.DataFight:
             for node in data_nodes:
                 node_locations = location_graph.node_data(node).locations
-                if locationType.DataOrg in node_locations[0].LocationTypes:
+                if any(lt in node_locations[0].LocationTypes for lt in [locationType.DataOrg, locationType.AS, locationType.Sephi, locationType.LW]):
                     self.depth_classification[node_locations[0]] = True
 
     def isValid(self, loc: KH2Location):

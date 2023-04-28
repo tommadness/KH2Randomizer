@@ -49,7 +49,7 @@ class ProgressionPoints():
             "HalloweenTown":[ "Halloween Town Enter", "Candy Cane Lane Fight", "Prison Keeper", "Oogie Boogie", "Lock, Shock, Barrel", "Presents Minigame", "Experiment", "AS Vexen", "Data Vexen" ],
             "PrideLands":[ "Pride Lands Enter", "Talking to Simba", "Hyenas 1", "Scar", "Hyenas 2", "Groundshaker", "Data Saix" ],
             "SpaceParanoids":[ "Space Paranoids Enter", "Screens", "Hostile Program", "Solar Sailer Fight", "MCP", "AS Larxene", "Data Larxene" ],
-            "HundredAcreWood":[ "Pooh's Howse Enter", "Piglet's Howse Enter", "Rabbit's Howse Enter", "Kanga's Howse Enter", "Spooky Cave Enter", "Starry Hill Enter" ],
+            "HundredAcreWood":[ "Pooh's Howse Enter", "Piglet's Howse Complete", "Rabbit's Howse Complete", "Kanga's Howse Complete", "Spooky Cave Complete", "Starry Hill Complete" ],
             "Atlantica":[ "Atlantica Enter", "Ursula's Revenge", "A New Day is Dawning" ],
             "TWTNW":[ "TWTNW Enter", "Roxas", "Xigbar", "Luxord", "Saix", "Xemnas 1", "Data Xemnas" ],
             "CavernofRemembrance":[ "CoR Enter", "First Fight", "Steam Valves", "Second Fight", "Transport to Remembrance" ]

@@ -366,8 +366,7 @@ class Randomizer():
                 i_data = i_data_list[0]
                 if i_data.ItemType not in l.InvalidChecks:
                     allItems.remove(i_data)
-                    if self.assignItem(l,i_data):
-                        invalidLocations.remove(l)
+                    self.smartSoraAssign(l,i_data,invalidLocations)
 
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
@@ -612,8 +611,7 @@ class Randomizer():
                         randomLocation = random.choices(accessible_locations_new,weights)[0]
                         if i_data.ItemType not in randomLocation.InvalidChecks:
                             allItems.remove(i_data)
-                            if self.assignItem(randomLocation,i_data):
-                                validLocations.remove(randomLocation)
+                            if self.smartSoraAssign(randomLocation,i_data,validLocations):
                                 accessible_locations_new.remove(randomLocation)
                             break
 
@@ -628,8 +626,7 @@ class Randomizer():
                 if len(starry_hill_loc_list) == 0:
                     raise GeneratorException("Yeet the Bear setting is set, when 100 acre wood is turned off.")
                 starry_hill_cure = starry_hill_loc_list[0]
-                if self.assignItem(starry_hill_cure,item):
-                    validLocations.remove(starry_hill_cure)
+                self.smartSoraAssign(starry_hill_cure,item,validLocations)
                 continue
 
             weights = local_item_weights_computation(item,validLocations)
@@ -643,22 +640,7 @@ class Randomizer():
                     raise CantAssignItemException(f"Somehow, can't assign an item. If using report depth option that restricts to specific bosses, make sure all worlds with doors in GoA are enabled.")
                 randomLocation = random.choices(validLocations,weights)[0]
                 if item.ItemType not in randomLocation.InvalidChecks:
-                    if self.assignItem(randomLocation,item):
-                        validLocations.remove(randomLocation)
-                        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 389: 
-                            # assign same item to 390
-                            struggle_reward_loc = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==390]
-                            if len(struggle_reward_loc) == 0:
-                                raise GeneratorException("Tried assigning struggle reward, but failed")
-                            self.assignItem(struggle_reward_loc[0],item)
-                            validLocations.remove(struggle_reward_loc[0])
-                        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 390: 
-                            # assign same item to 389
-                            struggle_reward_loc = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==389]
-                            if len(struggle_reward_loc) == 0:
-                                raise GeneratorException("Tried assigning struggle reward, but failed")
-                            self.assignItem(struggle_reward_loc[0],item)
-                            validLocations.remove(struggle_reward_loc[0])
+                    self.smartSoraAssign(randomLocation,item,validLocations)
                     break
                 if count==100:
                     raise CantAssignItemException(f"Trying to assign {item} and failed 100 times in {len([i for i in validLocations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(validLocations)}")
@@ -674,15 +656,16 @@ class Randomizer():
             if j.Id in settings.junk_pool:
                 junkItems.append(j)
 
-        for loc in invalidLocations:
+        while len(invalidLocations):
+            loc = invalidLocations[-1]
             if loc.LocationCategory is not locationCategory.LEVEL or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId not in settings.excludedLevels):
                 junk_item = random.choice(junkItems)
                 #assign another junk item if that location needs another item
-                if not self.assignItem(loc,junk_item):
+                if not self.smartSoraAssign(loc,junk_item,invalidLocations):
                     junk_item = random.choice(junkItems)
-                    self.assignItem(loc,junk_item)
+                    self.smartSoraAssign(loc,junk_item,invalidLocations)
             else:
-                self.assignItem(loc,Items.getNullItem())
+                self.smartSoraAssign(loc,Items.getNullItem(),invalidLocations)
 
     def augmentInvalidChecks(self, allLocations):
         """Add invalid check types to locations."""
@@ -790,6 +773,30 @@ class Randomizer():
         if len(singleStat)!=0:
             raise GeneratorException(f"Leftover stat locations were not assigned. Num remaining {len(singleStat)}")
 
+
+    def smartSoraAssign(self, randomLocation: KH2Location,item: KH2Item, location_pool, remove = True):
+        result = self.assignItem(randomLocation,item)
+        if result and remove:
+            location_pool.remove(randomLocation)
+
+        # does the duplication of the struggle winner/loser checks
+        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 389: 
+            # assign same item to 390
+            struggle_reward_loc = [loc for loc in location_pool if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==390]
+            if len(struggle_reward_loc) == 0:
+                raise GeneratorException("Tried assigning struggle reward, but failed")
+            self.assignItem(struggle_reward_loc[0],item)
+            if remove:
+                location_pool.remove(struggle_reward_loc[0])
+        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 390: 
+            # assign same item to 389
+            struggle_reward_loc = [loc for loc in location_pool if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==389]
+            if len(struggle_reward_loc) == 0:
+                raise GeneratorException("Tried assigning struggle reward, but failed")
+            self.assignItem(struggle_reward_loc[0],item)
+            if remove:
+                location_pool.remove(struggle_reward_loc[0])
+        return result
 
     def assignItem(self,loc: KH2Location,item: KH2Item, character="Sora"):
         """returns True if assigning a second item to a location. Needed for bonuses with two slots"""
