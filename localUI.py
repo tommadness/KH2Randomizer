@@ -737,22 +737,26 @@ class KH2RandomizerApp(QMainWindow):
         self.tourney_seed_path.mkdir(parents=True, exist_ok=True)
 
         self.tourney_spoilers = TourneySeedSaver(self.tourney_seed_path,self.tourney_name)
+        self.progress = QProgressDialog(f"Creating seeds...","Cancel",0,self.num_tourney_seeds,self)
+        self.progress.setMinimumDuration(50)
+        self.progress.setWindowTitle("Making your seeds, please wait...")
+        self.progress.setCancelButton(None)
+        self.progress.setModal(True)
+        self.progress.forceShow()
         for seed_number in range(0,self.num_tourney_seeds):
+            self.progress.setValue(seed_number)
+            self.progress.setLabelText(f"Seed {seed_number+2}") # dialog updates are offset by one seed, so making display correct
+            self.progress.show()
             characters = string.ascii_letters + string.digits
             seedString = (''.join(random.choice(characters) for i in range(30)))
             self.seedName.setText(seedString)
             tourney_rando_settings = self.make_rando_settings()
             if tourney_rando_settings is not None:
-                self.progress = QProgressDialog(f"Creating seed number {seed_number}...","Cancel",0,0,None)
-                self.progress.setWindowTitle("Making your Seed, please wait...")
-                # self.progress.setCancelButton(None)
-                self.progress.setModal(True)
-                self.progress.show()
                 zip_file, spoiler_log, enemy_log = generateSeed(tourney_rando_settings, extra_data)
-                if self.progress:
-                    self.progress.close()
-                self.progress = None
                 self.tourney_spoilers.add_seed(self.createSharedString(),tourney_rando_settings,spoiler_log)
+        if self.progress:
+            self.progress.close()
+        self.progress = None
         self.tourney_spoilers.save()
 
     def savePreset(self):
