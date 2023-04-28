@@ -291,7 +291,7 @@ class Randomizer():
             allItems+=[Items.getPromiseCharm()]
         allLocations = self.master_locations.getAllSoraLocations()
 
-        self.augmentInvalidChecks(allLocations)
+        self.augmentInvalidChecks(allLocations,settings)
 
         if settings.statSanity:
             allItems+=Items.getStatItems()
@@ -667,7 +667,7 @@ class Randomizer():
             else:
                 self.smartSoraAssign(loc,Items.getNullItem(),invalidLocations)
 
-    def augmentInvalidChecks(self, allLocations):
+    def augmentInvalidChecks(self, allLocations, settings: RandomizerSettings):
         """Add invalid check types to locations."""
         for loc in allLocations:
             if loc.LocationCategory in [locationCategory.POPUP, locationCategory.CREATION]:
@@ -692,6 +692,12 @@ class Randomizer():
             if self.report_depths.isValid(loc) and self.proof_depths.isValid(loc):
                 if self.report_depths.very_restricted_locations and self.proof_depths.very_restricted_locations:
                     loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
+
+            if self.proof_depths.isValid(loc) and self.proof_depths.very_restricted_locations:
+                # check if both AS's and datas are enabled, and if this is an AS location, disable that
+                if locationType.AS in settings.enabledLocations and locationType.DataOrg in settings.enabledLocations:
+                    if locationType.AS in loc.LocationTypes:
+                        loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
     
     def assignKeybladeAbilities(self, settings: RandomizerSettings, allAbilities, allItems):
         """Assign abilities to keyblades. """
