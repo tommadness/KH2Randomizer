@@ -1,5 +1,5 @@
 import copy
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import itertools
 
 from Class.exceptions import GeneratorException,CantAssignItemException, SettingsException
@@ -77,14 +77,14 @@ class FormExp():
 
 @dataclass
 class SynthRequirement():
-    item_id: int
+    synth_item: KH2Item
     amount: int
 
 @dataclass
 class SynthesisRecipe():
     location: KH2Location
-    requirements = list[SynthRequirement]
     unlock_rank: int
+    requirements: list[SynthRequirement] = field(default_factory=list)
 
     def __eq__(self, obj):
         return self.location==obj.location
@@ -838,7 +838,7 @@ class Randomizer():
             reqs_list = []
             for i in range(num_reqs):
                 item = picked_items[i]
-                reqs_list.append(SynthRequirement(item_id=item.Id,amount=random.randint(1,3)))
+                reqs_list.append(SynthRequirement(synth_item=item, amount=random.randint(1, 3)))
             recipe.requirements = reqs_list
             self.synthesis_recipes.append(recipe)
 
