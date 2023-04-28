@@ -377,8 +377,7 @@ class KH2RandomizerApp(QMainWindow):
         for key in settings_keys:
             self.settings.observe(key,self.get_num_enabled_locations)
 
-        # make hash update when things change in seed name
-        self.seedName.editingFinished.connect(lambda : self.make_rando_settings())
+        self.seedName.editingFinished.connect(self._seed_name_changed)
 
     def _configure_menu_bar(self):
         menu_bar = self.menuBar()
@@ -583,6 +582,23 @@ class KH2RandomizerApp(QMainWindow):
         self.seedName.setText(new_string)
         if self.num_tourney_seeds>0:
             self.spoiler_log.setChecked(False)
+
+    def _seed_name_changed(self):
+        seed_name_text = self.seedName.text().strip()
+        # If what appears to be a full seed string gets pasted in, go ahead and try to apply it
+        if seed_name_text.startswith(LOCAL_UI_VERSION):
+            try:
+                shared_seed = SharedSeed.from_share_string(
+                    local_generator_version=LOCAL_UI_VERSION,
+                    share_string=seed_name_text
+                )
+                self.apply_shared_seed(shared_seed)
+            except ShareStringException as exception:
+                message = QMessageBox(text=exception.message)
+                message.setWindowTitle("KH2 Seed Generator")
+                message.exec()
+        else:
+            self.make_rando_settings()
 
     def make_rando_settings(self, catch_exception=True):
         if self.num_tourney_seeds>0:
@@ -860,23 +876,23 @@ class KH2RandomizerApp(QMainWindow):
     def receiveSeed(self):
         try:
             share_string = "".join(str(pc.paste()).strip().splitlines())
-            # print(share_string)
             shared_seed = SharedSeed.from_share_string(
                 local_generator_version=LOCAL_UI_VERSION,
                 share_string=share_string
             )
+            self.apply_shared_seed(shared_seed)
         except ShareStringException as exception:
             message = QMessageBox(text=exception.message)
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
-            return
 
+    def apply_shared_seed(self, shared_seed: SharedSeed):
         # clear hash icons when loading a seed from clipboard
         self.clear_hash_icons()
 
-        receipt_msg = "Received seed from clipboard."
+        receipt_msg = "Received seed."
         if shared_seed.tourney_gen:
-            receipt_msg = "Received tournament seed from clipboard. Settings other than Cosmetics are now disabled."
+            receipt_msg = "Received tournament seed. Settings other than Cosmetics are now disabled."
 
             self.seedName.setDisabled(True)
             self.seedName.setHidden(True)
@@ -906,7 +922,7 @@ class KH2RandomizerApp(QMainWindow):
         if post_shared_seed.seed_name != shared_seed.seed_name or post_shared_seed.spoiler_log != shared_seed.spoiler_log or post_shared_seed.settings_string != shared_seed.settings_string:
             print(shared_seed.settings_string)
             print(post_shared_seed.settings_string)
-            message = QMessageBox(text="There was an error getting the correct settings from the clipboard, try restarting the generator and trying again. If that fails, ask for the zip from the sharer.")
+            message = QMessageBox(text="There was an error getting the correct settings, try restarting the generator and trying again. If that fails, ask for the zip from the sharer.")
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
         else:
