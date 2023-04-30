@@ -12,30 +12,30 @@
 |L0rdRaiden|1207.45|3-0| Advanced |
 |BDBonk|1188.15|3-0| Advanced |
 |equations19|1164.46|3-0| Advanced |
-|CJ2123|1252.55|2-1| In progress |
-|Ragnoth|1250.68|2-1| In progress |
-|Megaslim|1250.53|2-1| In progress |
-|VGmaster|1200.21|2-1| In progress |
-|CoreySG9|1138.13|2-1| In progress |
-|Ninten|1122.57|2-1| In progress |
-|CrazyComics|1105.74|2-1| In progress |
-|akashortstack|1089.56|2-1| In progress |
-|Dragonblast1007|1077.63|2-1| In progress |
-|Roromaniac|1072.61|2-1| In progress |
-|Ragna|1072.44|2-1| In progress |
-|JHobz|989.19|2-1| In progress |
-|SonicShadowSilver2|1254.75|1-2| In progress |
-|Metthaios|1237.98|1-2| In progress |
-|Angel_KAL|1032.83|1-2| In progress |
-|WallpeSH|1028.73|1-2| In progress |
-|Atzero|1025.92|1-2| In progress |
-|CapitanBublo|1014.58|1-2| In progress |
-|Cheeko Kyun|1011.58|1-2| In progress |
-|Eldric|986.08|1-2| In progress |
-|Hypodeck|968.91|1-2| In progress |
-|Glow|940.14|1-2| In progress |
-|Alios|919.09|1-2| In progress |
-|DjDiabeatus|900.07|1-2| In progress |
+|Megaslim|1270.10|3-1| Advanced |
+|Ragnoth|1265.44|3-1| Advanced |
+|CoreySG9|1178.37|3-1| Advanced |
+|Ninten|1153.33|3-1| Advanced |
+|Roromaniac|1113.75|3-1| Advanced |
+|Dragonblast1007|1110.51|3-1| Advanced |
+|SonicShadowSilver2|1285.51|2-2| In progress |
+|CJ2123|1212.31|2-2| In progress |
+|VGmaster|1159.07|2-2| In progress |
+|CrazyComics|1074.98|2-2| In progress |
+|WallpeSH|1057.60|2-2| In progress |
+|akashortstack|1056.68|2-2| In progress |
+|Angel_KAL|1056.64|2-2| In progress |
+|Ragna|1052.87|2-2| In progress |
+|Atzero|1048.90|2-2| In progress |
+|CapitanBublo|1043.23|2-2| In progress |
+|Cheeko Kyun|1038.36|2-2| In progress |
+|JHobz|974.42|2-2| In progress |
+|Metthaios|1207.22|1-3| Eliminated |
+|Eldric|957.21|1-3| Eliminated |
+|Hypodeck|940.26|1-3| Eliminated |
+|Glow|913.36|1-3| Eliminated |
+|Alios|895.28|1-3| Eliminated |
+|DjDiabeatus|877.09|1-3| Eliminated |
 |Doomrider|874.19|0-3| Eliminated |
 |danimalforlife|859.17|0-3| Eliminated |
 |chaserdk|856.86|0-3| Eliminated |
