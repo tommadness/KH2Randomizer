@@ -12,24 +12,24 @@
 |L0rdRaiden|1207.45|3-0| Advanced |
 |BDBonk|1188.15|3-0| Advanced |
 |equations19|1164.46|3-0| Advanced |
-|Megaslim|1270.10|3-1| Advanced |
-|Ragnoth|1265.44|3-1| Advanced |
-|CoreySG9|1178.37|3-1| Advanced |
-|Ninten|1153.33|3-1| Advanced |
-|Roromaniac|1113.75|3-1| Advanced |
-|Dragonblast1007|1110.51|3-1| Advanced |
-|SonicShadowSilver2|1285.51|2-2| In progress |
-|CJ2123|1212.31|2-2| In progress |
-|VGmaster|1159.07|2-2| In progress |
-|CrazyComics|1074.98|2-2| In progress |
-|WallpeSH|1057.60|2-2| In progress |
-|akashortstack|1056.68|2-2| In progress |
-|Angel_KAL|1056.64|2-2| In progress |
-|Ragna|1052.87|2-2| In progress |
-|Atzero|1048.90|2-2| In progress |
-|CapitanBublo|1043.23|2-2| In progress |
-|Cheeko Kyun|1038.36|2-2| In progress |
-|JHobz|974.42|2-2| In progress |
+|Ragnoth|1286.75|3-1| Advanced |
+|Megaslim|1265.93|3-1| Advanced |
+|CoreySG9|1239.40|3-1| Advanced |
+|Dragonblast1007|1106.53|3-1| Advanced |
+|Ninten|1104.09|3-1| Advanced |
+|Roromaniac|1088.80|3-1| Advanced |
+|SonicShadowSilver2|1312.17|3-2| Advanced |
+|VGmaster|1178.23|3-2| Advanced |
+|CrazyComics|1105.06|3-2| Advanced |
+|akashortstack|1088.68|3-2| Advanced |
+|Ragna|1085.22|3-2| Advanced |
+|CapitanBublo|1074.87|3-2| Advanced |
+|CJ2123|1185.65|2-3| Eliminated |
+|WallpeSH|1025.25|2-3| Eliminated |
+|Angel_KAL|1024.64|2-3| Eliminated |
+|Atzero|1018.82|2-3| Eliminated |
+|Cheeko Kyun|1006.72|2-3| Eliminated |
+|JHobz|955.26|2-3| Eliminated |
 |Metthaios|1207.22|1-3| Eliminated |
 |Eldric|957.21|1-3| Eliminated |
 |Hypodeck|940.26|1-3| Eliminated |
