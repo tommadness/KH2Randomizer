@@ -393,21 +393,20 @@ class Randomizer():
         if restricted_story:
             invalid_test.append(itemType.STORYUNLOCK)
 
-        # def item_sorter(item1):
-        #     rank_map = {}
-        #     rank_map[itemRarity.COMMON] = 1
-        #     rank_map[itemRarity.UNCOMMON] = 2
-        #     rank_map[itemRarity.RARE] = 3
-        #     rank_map[itemRarity.MYTHIC] = 4
+        def item_sorter(item1):
+            rank_map = {}
+            rank_map[itemRarity.COMMON] = 1
+            rank_map[itemRarity.UNCOMMON] = 1
+            rank_map[itemRarity.RARE] = 1
+            rank_map[itemRarity.MYTHIC] = 2 # put mythic things second, to let proofs get most leeway possible
 
-        #     if item1.ItemType in invalid_test:
-        #         return 5
+            if item1.ItemType in invalid_test:
+                return 3 # put the most restricted things first in the ordering
 
-        #     return rank_map[item1.Rarity]
+            return rank_map[item1.Rarity]
 
-        # random.shuffle(allItems)
-        # if len(invalid_test)>0:
-        #     allItems.sort(reverse=True,key=item_sorter)
+        random.shuffle(allItems)
+        allItems.sort(reverse=True,key=item_sorter)
 
 
 
