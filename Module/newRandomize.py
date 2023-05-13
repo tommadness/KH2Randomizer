@@ -353,7 +353,8 @@ class Randomizer():
         van,nonvan = split_vanilla_abilities()
 
         self.assignKeybladeAbilities(settings, nonvan, allItems)
-        allItems=van+nonvan+allItems
+        valid_junk = self.getNJunk(settings,self.num_valid_locations-self.num_available_items)
+        allItems=van+nonvan+allItems+valid_junk
 
         # vanilla location item assignment
         for l in locations_with_vanilla_items:
@@ -665,6 +666,19 @@ class Randomizer():
                     self.smartSoraAssign(loc,junk_item,invalidLocations)
             else:
                 self.smartSoraAssign(loc,Items.getNullItem(),invalidLocations)
+
+    def getNJunk(self, settings, num_junk_items):
+        """ assign the rest of the locations with "junk" """
+        allJunkItems = Items.getJunkList(False)
+        junkItems = []
+        for j in allJunkItems:
+            if j.Id in settings.junk_pool:
+                junkItems.append(j)
+        junk_items = []
+        for i in range(num_junk_items):
+            junk_items.append(random.choice(junkItems))
+
+        return junk_items
 
     def augmentInvalidChecks(self, allLocations, settings: RandomizerSettings):
         """Add invalid check types to locations."""
