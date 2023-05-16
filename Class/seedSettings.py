@@ -1287,26 +1287,6 @@ _all_settings = [
     ),
 
     SingleSelect(
-        name=settingkey.REPORT_DEPTH,
-        group=SettingGroup.ITEM_PLACEMENT,
-        ui_label='Ansem Report Depth',
-        choices={
-            locationDepth.DataFight.name: 'Superbosses',
-            locationDepth.FirstVisit.name: 'First Visit',
-	        locationDepth.NoFirstVisit.name: 'Non First Visits',
-            locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Superboss',
-            locationDepth.FirstBoss.name: 'First Visit Boss',
-            locationDepth.SecondBoss.name: 'Second Visit Boss',
-            locationDepth.Anywhere.name: "Anywhere"
-        },
-        shared=True,
-        default=locationDepth.SecondVisit.name,
-        tooltip='The set of locations in which Ansem Reports are allowed to be placed.' + _depth_options_text,
-        randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.Anywhere.name]
-    ),
-
-    SingleSelect(
         name=settingkey.PROOF_DEPTH,
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Proof Depth',
@@ -1324,6 +1304,26 @@ _all_settings = [
         default=locationDepth.Anywhere.name,
         tooltip='The set of locations in which Proofs are allowed to be placed.' + _depth_options_text,
         randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+    ),
+
+    SingleSelect(
+        name=settingkey.REPORT_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Ansem Report Depth',
+        choices={
+            locationDepth.DataFight.name: 'Superbosses',
+            locationDepth.FirstVisit.name: 'First Visit',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
+            locationDepth.Anywhere.name: "Anywhere"
+        },
+        shared=True,
+        default=locationDepth.SecondVisit.name,
+        tooltip='The set of locations in which Ansem Reports are allowed to be placed.' + _depth_options_text,
+        randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.Anywhere.name]
     ),
 
     SingleSelect(
@@ -1363,6 +1363,26 @@ _all_settings = [
         shared=True,
         default=locationDepth.Anywhere.name,
         tooltip='The set of locations in which Summons are allowed to be placed.' + _depth_options_text,
+        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+    ),
+
+    SingleSelect(
+        name=settingkey.TORN_PAGE_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Torn Page Depth',
+        choices={
+            locationDepth.DataFight.name: 'Superbosses',
+            locationDepth.FirstVisit.name: 'First Visit',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
+            locationDepth.Anywhere.name: "Anywhere"
+        },
+        shared=True,
+        default=locationDepth.Anywhere.name,
+        tooltip='The set of locations in which Torn Pages are allowed to be placed.' + _depth_options_text,
         randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),
 
@@ -1423,7 +1443,7 @@ _all_settings = [
     Toggle(
         name=settingkey.YEET_THE_BEAR,
         group=SettingGroup.ITEM_PLACEMENT,
-        ui_label='Yeet The Bear Required',
+        ui_label='Proof on Starry Hill',
         shared=True,
         default=False,
         tooltip="Forces the Proof of Nonexistence onto the Starry Hill popup in 100 Acre Wood"
@@ -2358,6 +2378,28 @@ _all_settings = [
         randomizable=False,
         tooltip='''
         Change summons to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
+        each item gets when randomizing.
+         
+        Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items
+        in the harder item placement difficulties.
+        ''',
+    ),
+
+    SingleSelect(
+        name=settingkey.TORN_PAGE_CATEGORY,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Torn Page Category',
+        choices={
+            itemRarity.COMMON : itemRarity.COMMON,
+            itemRarity.UNCOMMON : itemRarity.UNCOMMON,
+            itemRarity.RARE : itemRarity.RARE,
+            itemRarity.MYTHIC : itemRarity.MYTHIC,
+        },
+        shared=True,
+        default=itemRarity.UNCOMMON,
+        randomizable=False,
+        tooltip='''
+        Change torn pages to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
         each item gets when randomizing.
          
         Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items

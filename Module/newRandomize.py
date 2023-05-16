@@ -228,7 +228,15 @@ class Randomizer():
             settings.chosen_random_growths = SeedModifier.random_schmovement(settings.num_random_growths)
             settings.startingItems+=settings.chosen_random_growths
 
-        allItems = [i for i in Items.getItemList(settings.story_unlock_rarity) if i.Id not in settings.startingItems]
+        itemList = Items.getItemList(
+            settings.drive_rarity, 
+            settings.magic_rarity, 
+            settings.proof_rarity, 
+            settings.story_unlock_rarity, 
+            settings.summon_rarity,
+            settings.torn_page_rarity
+        )
+        allItems = [i for i in itemList if i.Id not in settings.startingItems]
         if not settings.pureblood:
             allItems = [i for i in allItems if i.Id!=71]
         if not settings.antiform:
@@ -276,7 +284,7 @@ class Randomizer():
         if not settings.include_armor:
             allItems = [i for i in allItems if i.ItemType != itemType.ARMOR]
 
-        allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + Items.getLevelAbilityList() )
+        allAbilities =  settings.abilityListModifier(Items.getActionAbilityList(), Items.getSupportAbilityList() + Items.getLevelAbilityList(settings.om_sc_rarity) )
         # if there abilities in the starting inventory, remove them from the pool
         removeAbilities = []
         for startItem in settings.startingItems:

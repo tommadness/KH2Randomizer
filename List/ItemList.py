@@ -5,11 +5,18 @@ import itertools
 
 class Items:
     @staticmethod
-    def getItemList(story_unlocking_rarity = itemRarity.UNCOMMON):
+    def getItemList(
+            drive_rarity = itemRarity.UNCOMMON,
+            magic_rarity = itemRarity.UNCOMMON,
+            proof_rarity = itemRarity.UNCOMMON,
+            story_unlocking_rarity = itemRarity.UNCOMMON,
+            summon_rarity = itemRarity.UNCOMMON,
+            torn_page_rarity = itemRarity.UNCOMMON
+        ):
         return [
-            KH2Item(593, "Proof of Connection", itemType.PROOF_OF_CONNECTION, itemRarity.MYTHIC),
-            KH2Item(594, "Proof of Nonexistence", itemType.PROOF, itemRarity.MYTHIC),
-            KH2Item(595, "Proof of Peace", itemType.PROOF_OF_PEACE, itemRarity.MYTHIC),
+            KH2Item(593, "Proof of Connection", itemType.PROOF_OF_CONNECTION, proof_rarity),
+            KH2Item(594, "Proof of Nonexistence", itemType.PROOF, proof_rarity),
+            KH2Item(595, "Proof of Peace", itemType.PROOF_OF_PEACE, proof_rarity),
 
             KH2Item(54, "Battlefields of War (Auron)", itemType.STORYUNLOCK, story_unlocking_rarity),
             KH2Item(55, "Sword of the Ancestor (Mulan)", itemType.STORYUNLOCK, story_unlocking_rarity),
@@ -39,29 +46,29 @@ class Items:
             KH2Item(237, "Secret Ansem's Report 12", itemType.REPORT, itemRarity.UNCOMMON),
             KH2Item(238, "Secret Ansem's Report 13", itemType.REPORT, itemRarity.UNCOMMON),
 
-            KH2Item(21, "Fire Element", itemType.FIRE, itemRarity.MYTHIC),
-            KH2Item(21, "Fire Element", itemType.FIRE, itemRarity.MYTHIC),
-            KH2Item(21, "Fire Element", itemType.FIRE, itemRarity.MYTHIC),
+            KH2Item(21, "Fire Element", itemType.FIRE, magic_rarity),
+            KH2Item(21, "Fire Element", itemType.FIRE, magic_rarity),
+            KH2Item(21, "Fire Element", itemType.FIRE, magic_rarity),
 
-            KH2Item(22, "Blizzard Element", itemType.BLIZZARD, itemRarity.MYTHIC),
-            KH2Item(22, "Blizzard Element", itemType.BLIZZARD, itemRarity.MYTHIC),
-            KH2Item(22, "Blizzard Element", itemType.BLIZZARD, itemRarity.MYTHIC),
+            KH2Item(22, "Blizzard Element", itemType.BLIZZARD, magic_rarity),
+            KH2Item(22, "Blizzard Element", itemType.BLIZZARD, magic_rarity),
+            KH2Item(22, "Blizzard Element", itemType.BLIZZARD, magic_rarity),
 
-            KH2Item(23, "Thunder Element", itemType.THUNDER, itemRarity.MYTHIC),
-            KH2Item(23, "Thunder Element", itemType.THUNDER, itemRarity.MYTHIC),
-            KH2Item(23, "Thunder Element", itemType.THUNDER, itemRarity.MYTHIC),
+            KH2Item(23, "Thunder Element", itemType.THUNDER, magic_rarity),
+            KH2Item(23, "Thunder Element", itemType.THUNDER, magic_rarity),
+            KH2Item(23, "Thunder Element", itemType.THUNDER, magic_rarity),
 
-            KH2Item(24, "Cure Element", itemType.CURE, itemRarity.MYTHIC),
-            KH2Item(24, "Cure Element", itemType.CURE, itemRarity.MYTHIC),
-            KH2Item(24, "Cure Element", itemType.CURE, itemRarity.MYTHIC),
+            KH2Item(24, "Cure Element", itemType.CURE, magic_rarity),
+            KH2Item(24, "Cure Element", itemType.CURE, magic_rarity),
+            KH2Item(24, "Cure Element", itemType.CURE, magic_rarity),
 
-            KH2Item(87, "Magnet Element", itemType.MAGNET, itemRarity.MYTHIC),
-            KH2Item(87, "Magnet Element", itemType.MAGNET, itemRarity.MYTHIC),
-            KH2Item(87, "Magnet Element", itemType.MAGNET, itemRarity.MYTHIC),
+            KH2Item(87, "Magnet Element", itemType.MAGNET, magic_rarity),
+            KH2Item(87, "Magnet Element", itemType.MAGNET, magic_rarity),
+            KH2Item(87, "Magnet Element", itemType.MAGNET, magic_rarity),
 
-            KH2Item(88, "Reflect Element", itemType.REFLECT, itemRarity.MYTHIC),
-            KH2Item(88, "Reflect Element", itemType.REFLECT, itemRarity.MYTHIC),
-            KH2Item(88, "Reflect Element", itemType.REFLECT, itemRarity.MYTHIC),
+            KH2Item(88, "Reflect Element", itemType.REFLECT, magic_rarity),
+            KH2Item(88, "Reflect Element", itemType.REFLECT, magic_rarity),
+            KH2Item(88, "Reflect Element", itemType.REFLECT, magic_rarity),
 
             KH2Item(94, "High Jump",itemType.GROWTH_ABILITY),
             KH2Item(95, "High Jump",itemType.GROWTH_ABILITY, itemRarity.UNCOMMON),
@@ -88,23 +95,23 @@ class Items:
             KH2Item(566, "Dodge Roll",itemType.GROWTH_ABILITY, itemRarity.RARE),
             KH2Item(567, "Dodge Roll",itemType.GROWTH_ABILITY, itemRarity.RARE),
 
-            KH2Item(26, "Valor Form", itemType.FORM, itemRarity.MYTHIC),
-            KH2Item(27, "Wisdom Form", itemType.FORM, itemRarity.MYTHIC),
-            KH2Item(29, "Final Form", itemType.FORM, itemRarity.MYTHIC),
-            KH2Item(31, "Master Form", itemType.FORM, itemRarity.MYTHIC),
-            KH2Item(563, "Limit Form", itemType.FORM, itemRarity.MYTHIC),
+            KH2Item(26, "Valor Form", itemType.FORM, drive_rarity),
+            KH2Item(27, "Wisdom Form", itemType.FORM, drive_rarity),
+            KH2Item(29, "Final Form", itemType.FORM, drive_rarity),
+            KH2Item(31, "Master Form", itemType.FORM, drive_rarity),
+            KH2Item(563, "Limit Form", itemType.FORM, drive_rarity),
             KH2Item(30, "Anti-Form", itemType.KEYITEM, itemRarity.RARE),
 
-            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, itemRarity.MYTHIC),
-            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, itemRarity.MYTHIC),
-            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, itemRarity.MYTHIC),
-            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, itemRarity.MYTHIC),
-            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, itemRarity.MYTHIC),
+            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, torn_page_rarity),
+            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, torn_page_rarity),
+            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, torn_page_rarity),
+            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, torn_page_rarity),
+            KH2Item(32, "Torn Pages",itemType.TORN_PAGE, torn_page_rarity),
 
-            KH2Item(159, "Lamp Charm (Genie)",itemType.SUMMON, itemRarity.MYTHIC),
-            KH2Item(160, "Feather Charm (Peter Pan)", itemType.SUMMON, itemRarity.MYTHIC),
-            KH2Item(25, "Ukulele Charm (Stitch)", itemType.SUMMON, itemRarity.MYTHIC),
-            KH2Item(383, "Baseball Charm (Chicken Little)", itemType.SUMMON, itemRarity.MYTHIC),
+            KH2Item(159, "Lamp Charm (Genie)",itemType.SUMMON, summon_rarity),
+            KH2Item(160, "Feather Charm (Peter Pan)", itemType.SUMMON, summon_rarity),
+            KH2Item(25, "Ukulele Charm (Stitch)", itemType.SUMMON, summon_rarity),
+            KH2Item(383, "Baseball Charm (Chicken Little)", itemType.SUMMON, summon_rarity),
 
             KH2Item(42,"Oathkeeper", itemType.KEYBLADE),
             KH2Item(43,"Oblivion",itemType.KEYBLADE),
@@ -386,7 +393,7 @@ class Items:
         ]
 
     @staticmethod
-    def getLevelAbilityList():
+    def getLevelAbilityList(om_sc_rarity = itemRarity.UNCOMMON):
         return [
             KH2Item(390,"Combo Boost",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
             KH2Item(401,"Experience Boost",itemType.SUPPORT_ABILITY,itemRarity.RARE),
@@ -403,13 +410,13 @@ class Items:
             KH2Item(409,"Blizzard Boost",itemType.SUPPORT_ABILITY),
             KH2Item(540,"Drive Converter",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
             KH2Item(394,"Negative Combo",itemType.SUPPORT_ABILITY,itemRarity.RARE),
-            KH2Item(416,"Once More",itemType.SUPPORT_ABILITY,itemRarity.MYTHIC),
+            KH2Item(416,"Once More",itemType.SUPPORT_ABILITY,om_sc_rarity),
             KH2Item(393,"Finishing Plus",itemType.SUPPORT_ABILITY,itemRarity.RARE),
             KH2Item(410,"Thunder Boost",itemType.SUPPORT_ABILITY),
             KH2Item(414,"Defender",itemType.SUPPORT_ABILITY),
             KH2Item(395,"Berserk Charge",itemType.SUPPORT_ABILITY,itemRarity.UNCOMMON),
             KH2Item(406,"Jackpot",itemType.SUPPORT_ABILITY),
-            KH2Item(415,"Second Chance",itemType.SUPPORT_ABILITY,itemRarity.MYTHIC),
+            KH2Item(415,"Second Chance",itemType.SUPPORT_ABILITY,om_sc_rarity),
             KH2Item(542,"Damage Control",itemType.SUPPORT_ABILITY),
         ]
 

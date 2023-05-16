@@ -88,7 +88,13 @@ class RandomizerSettings():
         self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [int(value) for value in ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.STARTING_REPORTS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.nightmare = ui_settings.get(settingkey.NIGHTMARE_LOGIC)
+        self.drive_rarity = ui_settings.get(settingkey.DRIVE_CATEGORY)
+        self.magic_rarity = ui_settings.get(settingkey.MAGIC_CATEGORY)
+        self.om_sc_rarity = ui_settings.get(settingkey.OM_SC_CATEGORY)
+        self.proof_rarity = ui_settings.get(settingkey.PROOF_CATEGORY)
         self.story_unlock_rarity = ui_settings.get(settingkey.STORY_UNLOCK_CATEGORY)
+        self.summon_rarity = ui_settings.get(settingkey.SUMMON_CATEGORY)
+        self.torn_page_rarity = ui_settings.get(settingkey.TORN_PAGE_CATEGORY)
         self.regular_rando = ui_settings.get(settingkey.SOFTLOCK_CHECKING) in ["default","both"]
         self.reverse_rando = ui_settings.get(settingkey.SOFTLOCK_CHECKING) in ["reverse","both"]
         self.level_stat_pool = SeedModifier.glassCannon if ui_settings.get(settingkey.GLASS_CANNON) else SeedModifier.regularStats

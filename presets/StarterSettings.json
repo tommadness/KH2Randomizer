@@ -220,6 +220,8 @@
     "summon_exp_multiplier": 2.0,
     "superbosses_with_rewards": [],
     "terra": false,
+    "torn_page_category": "Uncommon",
+    "torn_page_depth": "Anywhere",
     "tt1_jailbreak": true,
     "unlimited_mp": false,
     "valor_exp_curve": "MIDDAY",
