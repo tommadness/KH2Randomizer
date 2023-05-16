@@ -18,16 +18,41 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.SOFTLOCK_CHECKING)
         self.add_option(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.add_option(settingkey.NIGHTMARE_LOGIC)
+        self.end_group('General Item Settings')
+
+        self.start_group()
         self.add_option(settingkey.STORY_UNLOCK_CATEGORY)
         self.add_option(settingkey.STORY_UNLOCK_DEPTH)
-        self.end_group('Where Items Can Go')
+        self.end_group('Visit Unlock Restrictions')
+
+        self.start_group()
+        self.add_option(settingkey.MAGIC_CATEGORY)
+        self.add_option(settingkey.MAGIC_DEPTH)
+        self.end_group('Magic Restrictions')
+
+        self.start_group()
+        self.add_option(settingkey.DRIVE_CATEGORY)
+        self.add_option(settingkey.DRIVE_DEPTH)
+        self.end_group('Drive Restrictions')
+
         self.end_column()
 
         self.start_column()
         self.start_group()
         self.add_option(settingkey.YEET_THE_BEAR)
+        self.add_option(settingkey.PROOF_CATEGORY)
         self.add_option(settingkey.PROOF_DEPTH)
         self.end_group('Proof Restrictions')
+
+        self.start_group()
+        self.add_option(settingkey.SUMMON_CATEGORY)
+        self.add_option(settingkey.SUMMON_DEPTH)
+        self.end_group('Summon Restrictions')
+
+        self.start_group()
+        self.add_option(settingkey.OM_SC_CATEGORY)
+        self.add_option(settingkey.OM_SC_DEPTH)
+        self.end_group('OM/SC Restrictions')
         self.end_column()
 
         self.start_column()

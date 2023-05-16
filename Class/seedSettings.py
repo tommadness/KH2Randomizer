@@ -1227,6 +1227,66 @@ _all_settings = [
     ),
 
     SingleSelect(
+        name=settingkey.DRIVE_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Drive Depth',
+        choices={
+            locationDepth.DataFight.name: 'Superbosses',
+            locationDepth.FirstVisit.name: 'First Visit',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
+            locationDepth.Anywhere.name: "Anywhere"
+        },
+        shared=True,
+        default=locationDepth.Anywhere.name,
+        tooltip='The set of locations in which Drives are allowed to be placed.' + _depth_options_text,
+        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+    ),
+
+    SingleSelect(
+        name=settingkey.MAGIC_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Magic Depth',
+        choices={
+            locationDepth.DataFight.name: 'Superbosses',
+            locationDepth.FirstVisit.name: 'First Visit',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
+            locationDepth.Anywhere.name: "Anywhere"
+        },
+        shared=True,
+        default=locationDepth.Anywhere.name,
+        tooltip='The set of locations in which Magics are allowed to be placed.' + _depth_options_text,
+        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+    ),
+
+    SingleSelect(
+        name=settingkey.OM_SC_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='OM/SC Depth',
+        choices={
+            locationDepth.DataFight.name: 'Superbosses',
+            locationDepth.FirstVisit.name: 'First Visit',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
+            locationDepth.Anywhere.name: "Anywhere"
+        },
+        shared=True,
+        default=locationDepth.Anywhere.name,
+        tooltip='The set of locations in which Once More and Second Chance are allowed to be placed.' + _depth_options_text,
+        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+    ),
+
+    SingleSelect(
         name=settingkey.REPORT_DEPTH,
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Ansem Report Depth',
@@ -1283,6 +1343,26 @@ _all_settings = [
         shared=True,
         default=locationDepth.Anywhere.name,
         tooltip='The set of locations in which Visit Unlocks are allowed to be placed.' + _depth_options_text,
+        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+    ),
+
+    SingleSelect(
+        name=settingkey.SUMMON_DEPTH,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Summon Depth',
+        choices={
+            locationDepth.DataFight.name: 'Superbosses',
+            locationDepth.FirstVisit.name: 'First Visit',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
+            locationDepth.SecondVisitOnly.name: 'Second Visit',
+            locationDepth.SecondVisit.name: 'Non-Superboss',
+            locationDepth.FirstBoss.name: 'First Visit Boss',
+            locationDepth.SecondBoss.name: 'Second Visit Boss',
+            locationDepth.Anywhere.name: "Anywhere"
+        },
+        shared=True,
+        default=locationDepth.Anywhere.name,
+        tooltip='The set of locations in which Summons are allowed to be placed.' + _depth_options_text,
         randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
     ),
 
@@ -2154,6 +2234,94 @@ _all_settings = [
     ),
 
     SingleSelect(
+        name=settingkey.DRIVE_CATEGORY,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Drives Category',
+        choices={
+            itemRarity.COMMON : itemRarity.COMMON,
+            itemRarity.UNCOMMON : itemRarity.UNCOMMON,
+            itemRarity.RARE : itemRarity.RARE,
+            itemRarity.MYTHIC : itemRarity.MYTHIC,
+        },
+        shared=True,
+        default=itemRarity.UNCOMMON,
+        randomizable=False,
+        tooltip='''
+        Change drives to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
+        each item gets when randomizing.
+         
+        Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items
+        in the harder item placement difficulties.
+        ''',
+    ),
+
+    SingleSelect(
+        name=settingkey.MAGIC_CATEGORY,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Magic Category',
+        choices={
+            itemRarity.COMMON : itemRarity.COMMON,
+            itemRarity.UNCOMMON : itemRarity.UNCOMMON,
+            itemRarity.RARE : itemRarity.RARE,
+            itemRarity.MYTHIC : itemRarity.MYTHIC,
+        },
+        shared=True,
+        default=itemRarity.UNCOMMON,
+        randomizable=False,
+        tooltip='''
+        Change spells to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
+        each item gets when randomizing.
+         
+        Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items
+        in the harder item placement difficulties.
+        ''',
+    ),
+
+    SingleSelect(
+        name=settingkey.OM_SC_CATEGORY,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='OM/SC Category',
+        choices={
+            itemRarity.COMMON : itemRarity.COMMON,
+            itemRarity.UNCOMMON : itemRarity.UNCOMMON,
+            itemRarity.RARE : itemRarity.RARE,
+            itemRarity.MYTHIC : itemRarity.MYTHIC,
+        },
+        shared=True,
+        default=itemRarity.UNCOMMON,
+        randomizable=False,
+        tooltip='''
+        Change once more and second chance to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
+        each item gets when randomizing.
+         
+        Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items
+        in the harder item placement difficulties.
+        ''',
+    ),
+
+    SingleSelect(
+        name=settingkey.PROOF_CATEGORY,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Proof Category',
+        choices={
+            itemRarity.COMMON : itemRarity.COMMON,
+            itemRarity.UNCOMMON : itemRarity.UNCOMMON,
+            itemRarity.RARE : itemRarity.RARE,
+            itemRarity.MYTHIC : itemRarity.MYTHIC,
+        },
+        shared=True,
+        default=itemRarity.UNCOMMON,
+        randomizable=False,
+        tooltip='''
+        Change proofs to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
+        each item gets when randomizing.
+         
+        Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items
+        in the harder item placement difficulties.
+        ''',
+    ),
+
+    SingleSelect(
         name=settingkey.STORY_UNLOCK_CATEGORY,
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Visit Unlock Category',
@@ -2168,6 +2336,28 @@ _all_settings = [
         randomizable=False,
         tooltip='''
         Change visit unlocks to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
+        each item gets when randomizing.
+         
+        Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items
+        in the harder item placement difficulties.
+        ''',
+    ),
+
+    SingleSelect(
+        name=settingkey.SUMMON_CATEGORY,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label='Summon Category',
+        choices={
+            itemRarity.COMMON : itemRarity.COMMON,
+            itemRarity.UNCOMMON : itemRarity.UNCOMMON,
+            itemRarity.RARE : itemRarity.RARE,
+            itemRarity.MYTHIC : itemRarity.MYTHIC,
+        },
+        shared=True,
+        default=itemRarity.UNCOMMON,
+        randomizable=False,
+        tooltip='''
+        Change summons to have one of the 4 categories (Common,Uncommon,Rare,Mythic) that influence what bias
         each item gets when randomizing.
          
         Setting to Rare or Mythic will make these unlocking items more likely to be locked behind other key items
