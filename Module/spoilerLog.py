@@ -2,7 +2,7 @@ from typing import Optional
 
 from Class.itemClass import KH2Item
 from List.configDict import locationType
-from Module.newRandomize import SynthesisRecipe, ItemAssignment
+from Module.newRandomize import ItemAssignment, SynthesisRecipe, WeaponStats
 from Module.weighting import LocationWeights
 
 
@@ -69,4 +69,25 @@ def synth_recipe_dictionary(assignments: list[ItemAssignment], recipes: list[Syn
             "requirements": ", ".join(requirement_strings)
         })
 
+    return result
+
+
+def weapon_stats_dictionary(
+        sora_assignments: list[ItemAssignment],
+        donald_assignments: list[ItemAssignment],
+        goofy_assignments: list[ItemAssignment],
+        weapons: list[WeaponStats]
+) -> list[dict[str, str]]:
+    all_assignments = sora_assignments + donald_assignments + goofy_assignments
+
+    result: list[dict[str, str]] = []
+    for weapon in weapons:
+        location = weapon.location
+        assignment = next(a for a in all_assignments if a.location == location)
+        result.append({
+            "name": location.Description.partition(" (Slot)")[0],
+            "strength": weapon.strength,
+            "magic": weapon.magic,
+            "item": assignment.item.Name
+        })
     return result

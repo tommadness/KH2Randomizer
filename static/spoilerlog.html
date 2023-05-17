@@ -13,6 +13,7 @@
         boss_enemy_data = BOSS_ENEMY_JSON
         battle_level_data = BATTLE_LEVEL_JSON
         synthesis_recipe_data = {SYNTHESIS_RECIPE_JSON}
+        weapon_stats_data = {WEAPON_STATS_JSON}
         settings_data = {SETTINGS_JSON}
     </script>
 
@@ -222,6 +223,14 @@
         </div>
     </div>
 
+    <button class="accordion">Weapon Statistics</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="weaponStatsTable">
+            </table>
+        </div>
+    </div>
+
     <button class="accordion">Item/Location Weights</button>
     <div class="panel">
         <div class="table-wrapper">
@@ -280,6 +289,27 @@ if ("ENEMIES" in boss_enemy_data)
     tabs.innerHTML+=enemy_table;
 }
 
+
+function populateWeaponStatsTable(in_weapon_stats, which_table)
+{
+    weapon_stats_table = document.getElementById(which_table);
+    var weapon_stats_header = document.createElement("tr");
+    weapon_stats_header.innerHTML += "<th>Weapon</th><th>Strength</th><th>Magic</th><th>Ability</th>";
+    weapon_stats_table.appendChild(weapon_stats_header);
+
+    for (var i = 0; i < in_weapon_stats.length; i++)
+    {
+        var data_row = document.createElement("tr");
+        var weapon = in_weapon_stats[i];
+        data_row.innerHTML += "<td>" + weapon["name"] + "</td>";
+        data_row.innerHTML += "<td>" + weapon["strength"] + "</td>";
+        data_row.innerHTML += "<td>" + weapon["magic"] + "</td>";
+        data_row.innerHTML += "<td>" + weapon["item"] + "</td>";
+        weapon_stats_table.appendChild(data_row);
+    }
+}
+
+populateWeaponStatsTable(weapon_stats_data, "weaponStatsTable");
 
 function populateWeightTable(in_depth_data,which_table)
 {
