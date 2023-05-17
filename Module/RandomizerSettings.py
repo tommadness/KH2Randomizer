@@ -134,8 +134,14 @@ class RandomizerSettings():
         self.reportDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.REPORT_DEPTH)][0]
         # else:
         #     self.reportDepth = locationDepth.Anywhere
+        self.driveDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.DRIVE_DEPTH)][0]
+        self.magicDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.MAGIC_DEPTH)][0]
+        self.omscDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.OM_SC_DEPTH)][0]
         self.proofDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.PROOF_DEPTH)][0]
         self.storyDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.STORY_UNLOCK_DEPTH)][0]
+        self.summonDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.SUMMON_DEPTH)][0]
+        self.tornpageDepth = [l for l in locationDepth if l==ui_settings.get(settingkey.TORN_PAGE_DEPTH)][0]
+        
 
         if ui_settings.get(settingkey.SOFTLOCK_CHECKING) == "both":
             if self.proofDepth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.FirstVisit]:

@@ -103,8 +103,13 @@ class Randomizer():
         self.master_locations = self.regular_locations if settings.regular_rando else self.reverse_locations
         self.location_weights = LocationWeights(settings,self.regular_locations,self.reverse_locations)
         self.report_depths = ItemDepths(settings.reportDepth,self.master_locations)
+        self.drive_depths = ItemDepths(settings.driveDepth,self.master_locations)
+        self.magic_depths = ItemDepths(settings.magicDepth,self.master_locations)
+        self.om_sc_depths = ItemDepths(settings.omscDepth,self.master_locations)
         self.proof_depths = ItemDepths(settings.proofDepth,self.master_locations)
         self.story_depths = ItemDepths(settings.storyDepth,self.master_locations)
+        self.summon_depths = ItemDepths(settings.summonDepth,self.master_locations)
+        self.torn_page_depths = ItemDepths(settings.tornpageDepth,self.master_locations)
         self.yeet_the_bear = settings.yeetTheBear
         self.num_valid_locations = None
         self.num_available_items = None
@@ -377,9 +382,14 @@ class Randomizer():
                     allItems.remove(i_data)
                     self.smartSoraAssign(l,i_data,invalidLocations)
 
+        restricted_drives = self.drive_depths.very_restricted_locations
+        restricted_magics = self.magic_depths.very_restricted_locations
+        restricted_om_sc = self.om_sc_depths.very_restricted_locations
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
         restricted_story = self.story_depths.very_restricted_locations
+        restricted_summons = self.summon_depths.very_restricted_locations
+        restricted_torn_pages = self.torn_page_depths.very_restricted_locations
 
         # leaving this code here for future bug testing. Puts a specific item in a specific location
         # placed_item = False
@@ -401,6 +411,14 @@ class Randomizer():
             invalid_test+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
         if restricted_story:
             invalid_test.append(itemType.STORYUNLOCK)
+        if restricted_magics:
+            invalid_test += [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]
+        if restricted_drives:
+            invalid_test.append(itemType.FORM)
+        if restricted_summons:
+            invalid_test.append(itemType.SUMMON)
+        if restricted_torn_pages:
+            invalid_test.append(itemType.TORN_PAGE)
 
         def item_sorter(item1):
             rank_map = {}
@@ -431,6 +449,15 @@ class Randomizer():
                 weights = [1 if not (any(i_type in loc.InvalidChecks for i_type in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE])) else 0 for loc in location_pool ]
             if restricted_story and item.ItemType is itemType.STORYUNLOCK:
                 weights = [1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0 for loc in location_pool ]
+            if restricted_drives and item.ItemType is itemType.FORM:
+                weights = [1 if itemType.FORM not in loc.InvalidChecks else 0 for loc in location_pool ]
+            magics = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET]
+            if restricted_magics and item.ItemType in magics:
+                weights = [1 if any([magic not in loc.InvalidChecks for magic in magics]) else 0 for loc in location_pool ]
+            if restricted_summons and item.ItemType is itemType.SUMMON:
+                weights = [1 if itemType.SUMMON not in loc.InvalidChecks else 0 for loc in location_pool ]
+            if restricted_torn_pages and item.ItemType is itemType.TORN_PAGE:
+                weights = [1 if itemType.TORN_PAGE not in loc.InvalidChecks else 0 for loc in location_pool ]
             return weights
 
 
@@ -708,6 +735,18 @@ class Randomizer():
 
             if not self.story_depths.isValid(loc):
                 loc.InvalidChecks+=[itemType.STORYUNLOCK]
+
+            if not self.magic_depths.isValid(loc):
+                loc.InvalidChecks+=[itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.REFLECT, itemType.MAGNET]
+            
+            if not self.drive_depths.isValid(loc):
+                loc.InvalidChecks+=[itemType.FORM]
+
+            if not self.summon_depths.isValid(loc):
+                loc.InvalidChecks+=[itemType.SUMMON]
+
+            if not self.torn_page_depths.isValid(loc):
+                loc.InvalidChecks+=[itemType.TORN_PAGE]
 
             # if both reports and proofs are very restricted (only in 13 locations) add extra proof restrictions to allow reports to be assigned
             if self.report_depths.isValid(loc) and self.proof_depths.isValid(loc):
