@@ -38,7 +38,7 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.STORY_UNLOCK_CATEGORY)
         self.add_option(settingkey.SUMMON_CATEGORY)
         self.add_option(settingkey.TORN_PAGE_CATEGORY)
-        self.end_group('Important Check Categories')
+        self.end_group('Important Check Rarities')
         self.end_column()
 
         self.start_column()
