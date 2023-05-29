@@ -59,11 +59,13 @@ class LocationInformedSeedValidator:
                 # this is a synth location, we need to get its recipe to know what locks it logically
                 recipe = get_recipe(loc)
                 recipe_reqs = []
-                for req in recipe.requirements:
-                    synth_item_id = req.synth_item.Id
-                    # now that we know what synth item is in the recipe, we can determine what to add to the logic
-                    recipe_reqs.append(ItemPlacementHelpers.make_synth_requirement(synth_item_id))
-                self.location_requirements[loc]+=recipe_reqs
+                # if we don't have recipes yet, we can't validate that yet
+                if recipe:
+                    for req in recipe.requirements:
+                        synth_item_id = req.synth_item.Id
+                        # now that we know what synth item is in the recipe, we can determine what to add to the logic
+                        recipe_reqs.append(ItemPlacementHelpers.make_synth_requirement(synth_item_id))
+                    self.location_requirements[loc]+=recipe_reqs
 
 
     def validateSeed(self, settings: RandomizerSettings, randomizer: Randomizer, verbose=True):

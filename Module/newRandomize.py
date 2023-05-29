@@ -608,7 +608,10 @@ class Randomizer():
 
                     # try to assign the item multiple times
                     for i in range(5):
-                        randomLocation = random.choices(accessible_locations_new,weights)[0]
+                        if iter == 0: # put the first chain item in the goa
+                            randomLocation = [loc for loc in accessible_locations_new if loc.LocationCategory is locationCategory.CHEST and loc.LocationId==586][0]
+                        else:
+                            randomLocation = random.choices(accessible_locations_new,weights)[0]
                         if i_data.ItemType not in randomLocation.InvalidChecks:
                             allItems.remove(i_data)
                             if self.smartSoraAssign(randomLocation,i_data,validLocations):

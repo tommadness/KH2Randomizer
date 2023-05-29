@@ -213,7 +213,7 @@ class ItemPlacementHelpers():
         synth_req_map = {}
 
         synth_req_map[317]= default_access_lambda # TR access, so free
-        synth_req_map[318]= lambda inv : ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.tron_check(inv) or ItemPlacementHelpers.OC2 
+        synth_req_map[318]= lambda inv : ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.tron_check(inv) or ItemPlacementHelpers.auron_check(inv) 
         synth_req_map[319]= default_access_lambda # AG 1 and 2 both have these, so no requirement needed
         synth_req_map[320]= lambda inv : ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.hb_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.aladdin_check(inv)
         synth_req_map[280]= default_access_lambda # shadows are always available in DC/TR
