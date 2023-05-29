@@ -205,3 +205,48 @@ class ItemPlacementHelpers():
     @staticmethod
     def hb_check(inventory):
         return 369 in inventory # Membership Card
+
+    @staticmethod
+    def make_synth_requirement(synth_item: int):
+        # making lambdas for the different synth items
+        default_access_lambda = lambda inventory : True
+        synth_req_map = {}
+
+        synth_req_map[317]= default_access_lambda # TR access, so free
+        synth_req_map[318]= lambda inv : ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.tron_check(inv) or ItemPlacementHelpers.OC2 
+        synth_req_map[319]= default_access_lambda # AG 1 and 2 both have these, so no requirement needed
+        synth_req_map[320]= lambda inv : ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.hb_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.aladdin_check(inv)
+        synth_req_map[280]= default_access_lambda # shadows are always available in DC/TR
+        synth_req_map[281]= default_access_lambda # LoD1 and 2 both have them
+        synth_req_map[282]= default_access_lambda # BC1 and 2 have them
+        synth_req_map[283]= lambda inv : ItemPlacementHelpers.mulan_check(inv) # PR1 has them, but could be locked out
+        synth_req_map[337]= default_access_lambda # TWTNW has them post Xemnas
+        synth_req_map[338]= default_access_lambda # TWTNW has them post Xemnas
+        synth_req_map[339]= default_access_lambda # TWTNW has them post Xemnas
+        synth_req_map[340]= default_access_lambda # TWTNW has them post Xemnas
+        synth_req_map[378]= lambda inv : ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.aladdin_check(inv) or ItemPlacementHelpers.jack_pr_check(inv) # BC ones can disappear
+        synth_req_map[379]= default_access_lambda # TR is always available
+        synth_req_map[380]= default_access_lambda # AG1 and 2 both have them
+        synth_req_map[381]= default_access_lambda # PL1 and 2 both have them
+        synth_req_map[325]= default_access_lambda #LoD1 and 2 both have them
+        synth_req_map[326]= lambda inv : ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.aladdin_check(inv) # HT and SP ones can become unavailable
+        synth_req_map[327]= lambda inv : ItemPlacementHelpers.hb_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.jack_pr_check(inv) or ItemPlacementHelpers.jack_ht_check(inv) or ItemPlacementHelpers.simba_check(inv) or ItemPlacementHelpers.tron_check(inv)
+        synth_req_map[328]= default_access_lambda # SP1 and 2 both have them
+        synth_req_map[333]= lambda inv : ItemPlacementHelpers.jack_pr_check(inv) or ItemPlacementHelpers.jack_ht_check(inv) # OC1 can be locked out
+        synth_req_map[334]= default_access_lambda # HT1 and 2 have them
+        synth_req_map[335]= default_access_lambda # SP1 and 2 both have them
+        synth_req_map[336]= lambda inv : ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.jack_pr_check(inv) or ItemPlacementHelpers.aladdin_check(inv) or ItemPlacementHelpers.jack_ht_check(inv) or ItemPlacementHelpers.simba_check(inv) or ItemPlacementHelpers.hb_check(inv)
+        synth_req_map[329]= default_access_lambda # BC1 and 2 both have them, also TR
+        synth_req_map[330]= default_access_lambda # AG1 and 2 both have them
+        synth_req_map[331]= default_access_lambda # PL1 and 2 both have them
+        synth_req_map[332]= lambda inv : ItemPlacementHelpers.hb_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.jack_pr_check(inv)
+        synth_req_map[341]= default_access_lambda # TWTNW always has them in Luxord and Saix rooms
+        synth_req_map[342]= default_access_lambda # TWTNW always has them
+        synth_req_map[343]= default_access_lambda #TWTNW always has them
+        synth_req_map[344]= default_access_lambda #TWNTW always has them
+
+        if synth_item in synth_req_map:
+            return synth_req_map[synth_item]
+
+        # default returned lambda, doesnt allow for acquiring the item, failsafe
+        return lambda inventory : False

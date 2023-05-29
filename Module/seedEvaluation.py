@@ -8,6 +8,7 @@ from List.configDict import locationType
 from Module.RandomizerSettings import RandomizerSettings
 from List.NewLocationList import get_all_parent_edge_reqs
 from List.configDict import locationCategory
+from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 from Module.newRandomize import Randomizer
 
@@ -47,20 +48,22 @@ class LocationInformedSeedValidator:
                     else:
                         self.location_requirements[loc] = reqs
 
-        # def get_recipe(loc):
-        #     for r in randomizer.synthesis_recipes:
-        #         if r.location == loc:
-        #             return r
-        #     return None
+        def get_recipe(loc):
+            for r in randomizer.synthesis_recipes:
+                if r.location == loc:
+                    return r
+            return None
 
-        # for loc in self.location_requirements:
-        #     if locationType.SYNTH in loc.LocationTypes:
-        #         # this is a synth location, we need to get its recipe to know what locks it logically
-        #         recipe = get_recipe(loc)
-        #         for req in recipe.requirements:
-        #             synth_item_id = req.item_id
-        #             # now that we know what synth item is in the recipe, we can determine what to add to the logic
-        #             # TODO FINISH
+        for loc in self.location_requirements:
+            if locationType.SYNTH in loc.LocationTypes:
+                # this is a synth location, we need to get its recipe to know what locks it logically
+                recipe = get_recipe(loc)
+                recipe_reqs = []
+                for req in recipe.requirements:
+                    synth_item_id = req.synth_item.Id
+                    # now that we know what synth item is in the recipe, we can determine what to add to the logic
+                    recipe_reqs.append(ItemPlacementHelpers.make_synth_requirement(synth_item_id))
+                self.location_requirements[loc]+=recipe_reqs
 
 
     def validateSeed(self, settings: RandomizerSettings, randomizer: Randomizer, verbose=True):
