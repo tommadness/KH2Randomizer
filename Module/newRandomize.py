@@ -587,6 +587,7 @@ class Randomizer():
                 print(f"{items} unlocked {len(accessible_locations[-1])}")
                 current_inventory += items
             for iter,items in enumerate(locking_items):
+                print(iter)
                 accessible_locations_new = accessible_locations[iter]
                 if len(accessible_locations_new) == 0:
                     raise GeneratorException("Chain logic created a situation where the chain item couldn't be placed")
@@ -607,13 +608,15 @@ class Randomizer():
                     
 
                     # try to assign the item multiple times
-                    for i in range(5):
-                        if iter == 0: # put the first chain item in the goa
-                            randomLocation = [loc for loc in accessible_locations_new if loc.LocationCategory is locationCategory.CHEST and loc.LocationId==586][0]
+                    goa_location_list = [loc for loc in accessible_locations_new if loc.LocationCategory is locationCategory.CHEST and loc.LocationId==586]
+                    for try_i in range(5):
+                        if iter == 0 and len(goa_location_list)>0: # put the first chain item in the goa
+                            randomLocation = goa_location_list[0]
                         else:
                             randomLocation = random.choices(accessible_locations_new,weights)[0]
                         if i_data.ItemType not in randomLocation.InvalidChecks:
                             allItems.remove(i_data)
+                            print(randomLocation)
                             if self.smartSoraAssign(randomLocation,i_data,validLocations):
                                 accessible_locations_new.remove(randomLocation)
                             break
