@@ -71,12 +71,21 @@ class ItemPlacementMenu(KH2Submenu):
 
     def key_item_weights(self):
         placement_difficulty = self.settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
-        _, widget = self.widgets_and_settings_by_name[settingkey.STORY_UNLOCK_CATEGORY]
-        if not self.disable_signal:
-            if placement_difficulty == "Normal":
-                widget.setEnabled(False)
-            else:
-                widget.setEnabled(True)
+        setting_keys = [
+            self.widgets_and_settings_by_name[settingkey.STORY_UNLOCK_CATEGORY],
+            self.widgets_and_settings_by_name[settingkey.DRIVE_CATEGORY],
+            self.widgets_and_settings_by_name[settingkey.MAGIC_CATEGORY],
+            self.widgets_and_settings_by_name[settingkey.OM_SC_CATEGORY],
+            self.widgets_and_settings_by_name[settingkey.PROOF_CATEGORY],
+            self.widgets_and_settings_by_name[settingkey.SUMMON_CATEGORY],
+            self.widgets_and_settings_by_name[settingkey.TORN_PAGE_CATEGORY]
+        ]
+        for _, widget in setting_keys:
+            if not self.disable_signal:
+                if placement_difficulty == "Normal":
+                    widget.setEnabled(False)
+                else:
+                    widget.setEnabled(True)
 
 
     def disable_widgets(self):
