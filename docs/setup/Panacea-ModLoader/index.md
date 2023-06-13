@@ -1,5 +1,15 @@
 # PC New Setup Guide
 
+Index:
+* [Heads up!](#heads-up)
+* [Downloads](#resources-needed)
+* [Installing the Mod Manager & Seed Generator](#installing-openkh-mod-manager-and-seed-generator)
+* [Setting up the Mod Manager](#how-to-setup-the-mod-manager)
+* [Installing Lua Backend](#lua-backend-installation)
+* [Installing the GoA mod](#garden-of-assemblage-mod-installation)
+* [Installing a new seed](#installing-a-new-seed-to-play)
+* [Stability Notes](#you-are-now-ready-to-play-the-kh2-randomizer)
+
 ## Heads up!
 * Feel free to go to the [discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated #help channel where you can find people to assist you if you're facing any difficulties. (P.S. Please be polite)
 * **You must run the game once** before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
@@ -43,6 +53,21 @@
 
 ![Extraction Window](../images/Panacea-ModLoader/Extraction%20Window.png)
 
+## Lua Backend Installation:
+1. Open the seed Generator Program `KH2 Randomizer.exe`
+2. In the top left click on the **"Configure"** tab, then click on **"Luabackend Hook Setup (PC Only)**
+
+![Backend Hook Setup 1](../images/Panacea-ModLoader/Backend%20Hook%20Setup%201.png)
+
+3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"**
+4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"**
+5. Click on **"Check configuration"**
+	* *The status messages below should say "Not Found"*
+
+6. Now click on the **"Download/Install/Configure"** button in the bottom left. You can now close this window.
+
+![Backend Hook Setup 2](../images/Panacea-ModLoader/LuaBackend%20Hook%20Setup%202.gif)
+
 ## Garden of Assemblage Mod Installation:
 Installing new mods into the mods manager is easy! Follow these steps to get the main Garden of Assemblage mod installed:
 
@@ -66,21 +91,6 @@ Installing new mods into the mods manager is easy! Follow these steps to get the
 ![Build Only](../images/Panacea-ModLoader/Build%20Only.png)
 
 * *Note: Newly enabled mods won't show up in game unless you **"Build"** after enabling them*
-
-## Lua Backend Installation:
-1. Open the seed Generator Program `KH2 Randomizer.exe`
-2. In the top left click on the **"Configure"** tab, then click on **"Luabackend Hook Setup (PC Only)**
-
-![Backend Hook Setup 1](../images/Panacea-ModLoader/Backend%20Hook%20Setup%201.png)
-
-3. In this new window click on **"browse"** next to the OpenKh Location, and browse to your openkh folder, then click **"select folder"**
-4. For **"Mod mode"**, click the drop down and select **"Panacea/Mod Loader"**
-5. Click on **"Check configuration"**
-	* *The status messages below should say "Not Found"*
-
-6. Now click on the **"Download/Install/Configure"** button in the bottom left. You can now close this window.
-
-![Backend Hook Setup 2](../images/Panacea-ModLoader/LuaBackend%20Hook%20Setup%202.gif)
 
 ## Installing a new seed to play:
 1. Choose your seed settings in the generator window and then click on **"Generate Seed"** in the bottom right.

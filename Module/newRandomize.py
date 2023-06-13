@@ -1,5 +1,5 @@
 import copy
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import itertools
 
 from Class.exceptions import GeneratorException,CantAssignItemException, SettingsException
@@ -77,14 +77,14 @@ class FormExp():
 
 @dataclass
 class SynthRequirement():
-    item_id: int
+    synth_item: KH2Item
     amount: int
 
 @dataclass
 class SynthesisRecipe():
     location: KH2Location
-    requirements = list[SynthRequirement]
     unlock_rank: int
+    requirements: list[SynthRequirement] = field(default_factory=list)
 
     def __eq__(self, obj):
         return self.location==obj.location
@@ -291,7 +291,7 @@ class Randomizer():
             allItems+=[Items.getPromiseCharm()]
         allLocations = self.master_locations.getAllSoraLocations()
 
-        self.augmentInvalidChecks(allLocations)
+        self.augmentInvalidChecks(allLocations,settings)
 
         if settings.statSanity:
             allItems+=Items.getStatItems()
@@ -353,7 +353,8 @@ class Randomizer():
         van,nonvan = split_vanilla_abilities()
 
         self.assignKeybladeAbilities(settings, nonvan, allItems)
-        allItems=van+nonvan+allItems
+        valid_junk = self.getNJunk(settings,self.num_valid_locations-self.num_available_items)
+        allItems=van+nonvan+allItems+valid_junk
 
         # vanilla location item assignment
         for l in locations_with_vanilla_items:
@@ -366,8 +367,7 @@ class Randomizer():
                 i_data = i_data_list[0]
                 if i_data.ItemType not in l.InvalidChecks:
                     allItems.remove(i_data)
-                    if self.assignItem(l,i_data):
-                        invalidLocations.remove(l)
+                    self.smartSoraAssign(l,i_data,invalidLocations)
 
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
@@ -394,21 +394,20 @@ class Randomizer():
         if restricted_story:
             invalid_test.append(itemType.STORYUNLOCK)
 
-        # def item_sorter(item1):
-        #     rank_map = {}
-        #     rank_map[itemRarity.COMMON] = 1
-        #     rank_map[itemRarity.UNCOMMON] = 2
-        #     rank_map[itemRarity.RARE] = 3
-        #     rank_map[itemRarity.MYTHIC] = 4
+        def item_sorter(item1):
+            rank_map = {}
+            rank_map[itemRarity.COMMON] = 1
+            rank_map[itemRarity.UNCOMMON] = 1
+            rank_map[itemRarity.RARE] = 1
+            rank_map[itemRarity.MYTHIC] = 2 # put mythic things second, to let proofs get most leeway possible
 
-        #     if item1.ItemType in invalid_test:
-        #         return 5
+            if item1.ItemType in invalid_test:
+                return 3 # put the most restricted things first in the ordering
 
-        #     return rank_map[item1.Rarity]
+            return rank_map[item1.Rarity]
 
-        # random.shuffle(allItems)
-        # if len(invalid_test)>0:
-        #     allItems.sort(reverse=True,key=item_sorter)
+        random.shuffle(allItems)
+        allItems.sort(reverse=True,key=item_sorter)
 
 
 
@@ -588,6 +587,7 @@ class Randomizer():
                 print(f"{items} unlocked {len(accessible_locations[-1])}")
                 current_inventory += items
             for iter,items in enumerate(locking_items):
+                print(iter)
                 accessible_locations_new = accessible_locations[iter]
                 if len(accessible_locations_new) == 0:
                     raise GeneratorException("Chain logic created a situation where the chain item couldn't be placed")
@@ -608,12 +608,16 @@ class Randomizer():
                     
 
                     # try to assign the item multiple times
-                    for i in range(5):
-                        randomLocation = random.choices(accessible_locations_new,weights)[0]
+                    goa_location_list = [loc for loc in accessible_locations_new if loc.LocationCategory is locationCategory.CHEST and loc.LocationId==586]
+                    for try_i in range(5):
+                        if iter == 0 and len(goa_location_list)>0: # put the first chain item in the goa
+                            randomLocation = goa_location_list[0]
+                        else:
+                            randomLocation = random.choices(accessible_locations_new,weights)[0]
                         if i_data.ItemType not in randomLocation.InvalidChecks:
                             allItems.remove(i_data)
-                            if self.assignItem(randomLocation,i_data):
-                                validLocations.remove(randomLocation)
+                            print(randomLocation)
+                            if self.smartSoraAssign(randomLocation,i_data,validLocations):
                                 accessible_locations_new.remove(randomLocation)
                             break
 
@@ -628,8 +632,7 @@ class Randomizer():
                 if len(starry_hill_loc_list) == 0:
                     raise GeneratorException("Yeet the Bear setting is set, when 100 acre wood is turned off.")
                 starry_hill_cure = starry_hill_loc_list[0]
-                if self.assignItem(starry_hill_cure,item):
-                    validLocations.remove(starry_hill_cure)
+                self.smartSoraAssign(starry_hill_cure,item,validLocations)
                 continue
 
             weights = local_item_weights_computation(item,validLocations)
@@ -643,22 +646,7 @@ class Randomizer():
                     raise CantAssignItemException(f"Somehow, can't assign an item. If using report depth option that restricts to specific bosses, make sure all worlds with doors in GoA are enabled.")
                 randomLocation = random.choices(validLocations,weights)[0]
                 if item.ItemType not in randomLocation.InvalidChecks:
-                    if self.assignItem(randomLocation,item):
-                        validLocations.remove(randomLocation)
-                        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 389: 
-                            # assign same item to 390
-                            struggle_reward_loc = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==390]
-                            if len(struggle_reward_loc) == 0:
-                                raise GeneratorException("Tried assigning struggle reward, but failed")
-                            self.assignItem(struggle_reward_loc[0],item)
-                            validLocations.remove(struggle_reward_loc[0])
-                        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 390: 
-                            # assign same item to 389
-                            struggle_reward_loc = [loc for loc in validLocations if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==389]
-                            if len(struggle_reward_loc) == 0:
-                                raise GeneratorException("Tried assigning struggle reward, but failed")
-                            self.assignItem(struggle_reward_loc[0],item)
-                            validLocations.remove(struggle_reward_loc[0])
+                    self.smartSoraAssign(randomLocation,item,validLocations)
                     break
                 if count==100:
                     raise CantAssignItemException(f"Trying to assign {item} and failed 100 times in {len([i for i in validLocations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(validLocations)}")
@@ -674,17 +662,31 @@ class Randomizer():
             if j.Id in settings.junk_pool:
                 junkItems.append(j)
 
-        for loc in invalidLocations:
+        while len(invalidLocations):
+            loc = invalidLocations[-1]
             if loc.LocationCategory is not locationCategory.LEVEL or (loc.LocationCategory is locationCategory.LEVEL and loc.LocationId not in settings.excludedLevels):
                 junk_item = random.choice(junkItems)
                 #assign another junk item if that location needs another item
-                if not self.assignItem(loc,junk_item):
+                if not self.smartSoraAssign(loc,junk_item,invalidLocations):
                     junk_item = random.choice(junkItems)
-                    self.assignItem(loc,junk_item)
+                    self.smartSoraAssign(loc,junk_item,invalidLocations)
             else:
-                self.assignItem(loc,Items.getNullItem())
+                self.smartSoraAssign(loc,Items.getNullItem(),invalidLocations)
 
-    def augmentInvalidChecks(self, allLocations):
+    def getNJunk(self, settings, num_junk_items):
+        """ assign the rest of the locations with "junk" """
+        allJunkItems = Items.getJunkList(False)
+        junkItems = []
+        for j in allJunkItems:
+            if j.Id in settings.junk_pool:
+                junkItems.append(j)
+        junk_items = []
+        for i in range(num_junk_items):
+            junk_items.append(random.choice(junkItems))
+
+        return junk_items
+
+    def augmentInvalidChecks(self, allLocations, settings: RandomizerSettings):
         """Add invalid check types to locations."""
         for loc in allLocations:
             if loc.LocationCategory in [locationCategory.POPUP, locationCategory.CREATION]:
@@ -709,6 +711,12 @@ class Randomizer():
             if self.report_depths.isValid(loc) and self.proof_depths.isValid(loc):
                 if self.report_depths.very_restricted_locations and self.proof_depths.very_restricted_locations:
                     loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
+
+            if self.proof_depths.isValid(loc) and self.proof_depths.very_restricted_locations:
+                # check if both AS's and datas are enabled, and if this is an AS location, disable that
+                if locationType.AS in settings.enabledLocations and locationType.DataOrg in settings.enabledLocations:
+                    if locationType.AS in loc.LocationTypes:
+                        loc.InvalidChecks+=[itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE]
     
     def assignKeybladeAbilities(self, settings: RandomizerSettings, allAbilities, allItems):
         """Assign abilities to keyblades. """
@@ -791,6 +799,30 @@ class Randomizer():
             raise GeneratorException(f"Leftover stat locations were not assigned. Num remaining {len(singleStat)}")
 
 
+    def smartSoraAssign(self, randomLocation: KH2Location,item: KH2Item, location_pool, remove = True):
+        result = self.assignItem(randomLocation,item)
+        if result and remove:
+            location_pool.remove(randomLocation)
+
+        # does the duplication of the struggle winner/loser checks
+        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 389: 
+            # assign same item to 390
+            struggle_reward_loc = [loc for loc in location_pool if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==390]
+            if len(struggle_reward_loc) == 0:
+                raise GeneratorException("Tried assigning struggle reward, but failed")
+            self.assignItem(struggle_reward_loc[0],item)
+            if remove:
+                location_pool.remove(struggle_reward_loc[0])
+        if randomLocation.LocationCategory is locationCategory.POPUP and randomLocation.LocationId == 390: 
+            # assign same item to 389
+            struggle_reward_loc = [loc for loc in location_pool if loc.LocationCategory is locationCategory.POPUP and loc.LocationId==389]
+            if len(struggle_reward_loc) == 0:
+                raise GeneratorException("Tried assigning struggle reward, but failed")
+            self.assignItem(struggle_reward_loc[0],item)
+            if remove:
+                location_pool.remove(struggle_reward_loc[0])
+        return result
+
     def assignItem(self,loc: KH2Location,item: KH2Item, character="Sora"):
         """returns True if assigning a second item to a location. Needed for bonuses with two slots"""
         doubleItem = loc.LocationCategory in [locationCategory.DOUBLEBONUS, locationCategory.HYBRIDBONUS]
@@ -831,7 +863,7 @@ class Randomizer():
             reqs_list = []
             for i in range(num_reqs):
                 item = picked_items[i]
-                reqs_list.append(SynthRequirement(item_id=item.Id,amount=random.randint(1,3)))
+                reqs_list.append(SynthRequirement(synth_item=item, amount=random.randint(1, 3)))
             recipe.requirements = reqs_list
             self.synthesis_recipes.append(recipe)
 

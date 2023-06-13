@@ -388,10 +388,10 @@ _drive_exp_multiplier_tooltip_text = textwrap.dedent('''
 _depth_options_text = textwrap.dedent('''
 
         Superbosses - Force onto superbosses only (Data Organization/Absent Silhouette/Sephiroth/Terra).
-        
-        Non First Visits - Cannot be on a first visit (only for the 13 main hub worlds with portals).
-        
+                
         First Visit - Force into a first visit (only for the 13 main hub worlds with portals).
+
+        Non First Visits - Opposite of the first visit depth. Anywhere but the first visit of the 13 portal worlds (can include drives/levels/100 acre).
         
         Second Visit - Force into a second visit (only for the 13 main hub worlds with portals).
         
@@ -1233,6 +1233,7 @@ _all_settings = [
         choices={
             locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
             locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
@@ -1252,7 +1253,7 @@ _all_settings = [
         choices={
             locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
-	    locationDepth.NoFirstVisit.name: 'Non First Visits',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
             locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',
@@ -1272,6 +1273,7 @@ _all_settings = [
         choices={
             locationDepth.DataFight.name: 'Superbosses',
             locationDepth.FirstVisit.name: 'First Visit',
+	        locationDepth.NoFirstVisit.name: 'Non First Visits',
             locationDepth.SecondVisitOnly.name: 'Second Visit',
             locationDepth.SecondVisit.name: 'Non-Superboss',
             locationDepth.FirstBoss.name: 'First Visit Boss',

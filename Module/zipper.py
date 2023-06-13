@@ -25,7 +25,8 @@ from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe
 from Module.resources import resource_path
 from Module.seedEvaluation import LocationInformedSeedValidator
-from Module.spoilerLog import itemSpoilerDictionary, levelStatsDictionary
+from Module.spoilerLog import itemSpoilerDictionary, levelStatsDictionary, synth_recipe_dictionary, \
+    weapon_stats_dictionary
 
 
 def noop(self, *args, **kw):
@@ -155,7 +156,7 @@ class SynthLocation():
         self.recipe = in_recipe
         self.unlock_rank = in_recipe.unlock_rank
         for i in range(len(self.recipe.requirements)):
-            self.addReq(i,self.recipe.requirements[i].item_id,self.recipe.requirements[i].amount)
+            self.addReq(i, self.recipe.requirements[i].synth_item.Id, self.recipe.requirements[i].amount)
 
     def getStartingLocation(self):
         # header bytes + offset to the specific recipe + skip over the recipe bytes
@@ -322,6 +323,13 @@ class SeedZip:
                     mod["title"] += " w/ Spoiler"
                 with open(resource_path("static/spoilerlog.html")) as spoiler_site:
                     settings_spoiler_json = settings.ui_settings.settings_spoiler_json()
+                    synthesis_recipe_spoiler = synth_recipe_dictionary(randomizer.assignedItems, randomizer.synthesis_recipes)
+                    weapon_stats_spoiler = weapon_stats_dictionary(
+                        sora_assignments=randomizer.assignedItems,
+                        donald_assignments=randomizer.assignedDonaldItems,
+                        goofy_assignments=randomizer.assignedGoofyItems,
+                        weapons=randomizer.weaponStats
+                    )
                     html_template = spoiler_site.read().replace("SEED_NAME_STRING",settings.random_seed) \
                                                        .replace("{SEED_STRING}", settings.seed_string) \
                                                        .replace("LEVEL_STATS_JSON",json.dumps(levelStatsDictionary(randomizer.levelStats))) \
@@ -332,11 +340,13 @@ class SeedZip:
                                                                                             "Master": {"multiplier": settings.master_exp_multiplier, "values": list(accumulate(settings.master_exp))},
                                                                                             "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
                                                        .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
-                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems,randomizer.location_weights,LocationInformedSeedValidator().validateSeed(settings, randomizer, False)), indent=4, cls=ItemEncoder)) \
+                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems, randomizer.shop_items, randomizer.location_weights,LocationInformedSeedValidator().validateSeed(settings, randomizer, False)), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
                                                        .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON)) \
                                                        .replace("BATTLE_LEVEL_JSON",json.dumps(battle_level_spoiler)) \
+                                                       .replace("{SYNTHESIS_RECIPE_JSON}", json.dumps(synthesis_recipe_spoiler)) \
+                                                       .replace("{WEAPON_STATS_JSON}", json.dumps(weapon_stats_spoiler)) \
                                                        .replace("{SETTINGS_JSON}", json.dumps(settings_spoiler_json))
                     html_template = html_template.replace("PromiseCharm","Promise Charm")
                     if not tourney_gen:

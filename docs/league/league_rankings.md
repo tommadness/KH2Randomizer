@@ -8,35 +8,35 @@
 
 | Name | ELO | Swiss Record | Status |
 | --- | --: | --: | :-- |
-|CJ2123|1292.74|2-0| In progress |
-|L0rdRaiden|1180.07|2-0| In progress |
-|DoubleADewi|1179.07|2-0| In progress |
-|CoreySG9|1171.34|2-0| In progress |
-|BDBonk|1154.94|2-0| In progress |
-|equations19|1134.43|2-0| In progress |
-|akashortstack|1116.94|2-0| In progress |
-|Dragonblast1007|1107.66|2-0| In progress |
-|SonicShadowSilver2|1292.55|1-1| In progress |
-|Megaslim|1232.48|1-1| In progress |
-|Ragnoth|1212.87|1-1| In progress |
-|VGmaster|1178.31|1-1| In progress |
-|Ninten|1093.38|1-1| In progress |
-|CrazyComics|1074.86|1-1| In progress |
-|Angel_KAL|1066.92|1-1| In progress |
-|WallpeSH|1059.60|1-1| In progress |
-|Atzero|1055.10|1-1| In progress |
-|Ragna|1047.99|1-1| In progress |
-|Roromaniac|1038.52|1-1| In progress |
-|CapitanBublo|1036.49|1-1| In progress |
-|Cheeko Kyun|1029.63|1-1| In progress |
-|Hypodeck|1004.66|1-1| In progress |
-|JHobz|953.43|1-1| In progress |
-|Alios|943.54|1-1| In progress |
-|Metthaios|1227.00|0-2| In progress |
-|Eldric|959.46|0-2| In progress |
-|Glow|909.81|0-2| In progress |
-|chaserdk|887.19|0-2| In progress |
-|danimalforlife|885.79|0-2| In progress |
-|Doomrider|885.17|0-2| In progress |
-|DjDiabeatus|869.52|0-2| In progress |
-|SeriouslySurly|849.84|0-2| In progress |
+|DoubleADewi|1219.26|3-0| Advanced |
+|L0rdRaiden|1207.45|3-0| Advanced |
+|BDBonk|1188.15|3-0| Advanced |
+|equations19|1164.46|3-0| Advanced |
+|Ragnoth|1286.75|3-1| Advanced |
+|Megaslim|1265.93|3-1| Advanced |
+|CoreySG9|1239.40|3-1| Advanced |
+|Dragonblast1007|1106.53|3-1| Advanced |
+|Ninten|1104.09|3-1| Advanced |
+|Roromaniac|1088.80|3-1| Advanced |
+|SonicShadowSilver2|1312.17|3-2| Advanced |
+|VGmaster|1178.23|3-2| Advanced |
+|CrazyComics|1105.06|3-2| Advanced |
+|akashortstack|1088.68|3-2| Advanced |
+|Ragna|1085.22|3-2| Advanced |
+|CapitanBublo|1074.87|3-2| Advanced |
+|CJ2123|1185.65|2-3| Eliminated |
+|WallpeSH|1025.25|2-3| Eliminated |
+|Angel_KAL|1024.64|2-3| Eliminated |
+|Atzero|1018.82|2-3| Eliminated |
+|Cheeko Kyun|1006.72|2-3| Eliminated |
+|JHobz|955.26|2-3| Eliminated |
+|Metthaios|1207.22|1-3| Eliminated |
+|Eldric|957.21|1-3| Eliminated |
+|Hypodeck|940.26|1-3| Eliminated |
+|Glow|913.36|1-3| Eliminated |
+|Alios|895.28|1-3| Eliminated |
+|DjDiabeatus|877.09|1-3| Eliminated |
+|Doomrider|874.19|0-3| Eliminated |
+|danimalforlife|859.17|0-3| Eliminated |
+|chaserdk|856.86|0-3| Eliminated |
+|SeriouslySurly|819.29|0-3| Eliminated |

@@ -80,6 +80,7 @@ class Hints:
         if hintsType != "JSmartee":
             hintsText['world'] = {}
             hintsText['world'][locationType.Critical] = []
+            hintsText['world'][locationType.Free] = []
             for x in hintableWorlds:
                 hintsText['world'][x] = []
             for location,item in locationItems:

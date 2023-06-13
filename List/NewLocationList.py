@@ -170,7 +170,7 @@ class Locations:
         if not self.reverse_rando:
             self.add_edge("Starting","Awakening Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
             self.add_edge("Starting","Heart Puzzle",RequirementEdge(req=ItemPlacementHelpers.need_growths))
-            self.add_edge("Starting","Duality Puzzle",RequirementEdge(req=lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.hb_check(inv)))
+            self.add_edge("Starting","Duality Puzzle",RequirementEdge(req=lambda inv: ItemPlacementHelpers.need_growths(inv)))
             self.add_edge("Starting","Frontier Puzzle",RequirementEdge(req=lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.tt2_check(inv) and ItemPlacementHelpers.hb_check(inv)))
             def daylight_checker(inv):
                 return ItemPlacementHelpers.need_growths(inv) and \
