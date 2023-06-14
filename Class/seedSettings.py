@@ -1779,10 +1779,10 @@ _all_settings = [
     Toggle(
         name=settingkey.CHESTS_MATCH_ITEM,
         group=SettingGroup.SEED_MODIFIERS,
-        ui_label='Chest Visuals Match Item Contents',
+        ui_label='Chest Visuals Match Contents',
         shared=True,
         default=False,
-        tooltip='Chests are given unique visuals displaying what type of item it contains. EX: Chests containg Magic Elements will be Purple.'
+        tooltip='Chests are given unique visuals based on the type of item they contain.'
     ),
 
     Toggle(

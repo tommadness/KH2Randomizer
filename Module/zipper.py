@@ -814,7 +814,7 @@ class SeedZip:
             for trsr in treasures:
                 #i dunno just in case i guess because D/G starting items are labled as free and chests
                 if locationType.Free in trsr.location.LocationTypes and trsr.location.LocationId in range(1,3):
-                    print('party stating item?')
+                    #print('party stating item?')
                     continue
                 #use location id to get chest index and name
                 chest = chestList[trsr.location.LocationId]
