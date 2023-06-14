@@ -5,7 +5,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_MSC
+  ModelName: F_EX030_JNK
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -35,7 +35,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_ABL
+  ModelName: F_EX030_ABL
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -65,7 +65,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_FRM
+  ModelName: F_EX030_FRM
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -95,7 +95,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_MAG
+  ModelName: F_EX030_MAG
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -125,7 +125,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_PAG
+  ModelName: F_EX030_PAG
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -155,7 +155,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_PRF
+  ModelName: F_EX030_REP
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -185,7 +185,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_REP
+  ModelName: F_EX030_STA
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -215,7 +215,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_SMN
+  ModelName: F_EX030_SMN
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -245,7 +245,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_SR_VST
+  ModelName: F_EX030_VST
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -269,15 +269,14 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-#TT Chests
 821:
   ObjectId: 821
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_MSC
-  AnimationName: F_EX030_TT.mset
+  ModelName: F_EX030_WEP
+  AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0
@@ -306,8 +305,8 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_ABL
-  AnimationName: F_EX030_TT.mset
+  ModelName: F_EX040_PRF
+  AnimationName: F_EX040.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0
@@ -330,13 +329,14 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
+#TT Chests
 823:
   ObjectId: 823
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_FRM
+  ModelName: F_EX030_JNK
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -366,7 +366,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_MAG
+  ModelName: F_EX030_ABL
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -396,7 +396,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_PAG
+  ModelName: F_EX030_FRM
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -426,7 +426,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_PRF
+  ModelName: F_EX030_MAG
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -456,7 +456,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_REP
+  ModelName: F_EX030_PAG
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -486,7 +486,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_SMN
+  ModelName: F_EX030_REP
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -516,7 +516,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_TT_VST
+  ModelName: F_EX030_STA
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -540,15 +540,14 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-#LK Chests
 830:
   ObjectId: 830
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_MSC
-  AnimationName: F_EX030_LK.mset
+  ModelName: F_EX030_SMN
+  AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0
@@ -577,8 +576,8 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_ABL
-  AnimationName: F_EX030_LK.mset
+  ModelName: F_EX030_VST
+  AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0
@@ -607,8 +606,8 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_FRM
-  AnimationName: F_EX030_LK.mset
+  ModelName: F_EX030_WEP
+  AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0
@@ -637,8 +636,8 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_MAG
-  AnimationName: F_EX030_LK.mset
+  ModelName: F_EX040_PRF
+  AnimationName: F_EX040_TT.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0
@@ -661,13 +660,14 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
+#LK Chests
 834:
   ObjectId: 834
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_PAG
+  ModelName: F_EX050_JNK
   AnimationName: F_EX030_LK.mset
   Flags: 0
   ObjectTargetType: M
@@ -697,7 +697,67 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_PRF
+  ModelName: F_EX050_ABL
+  AnimationName: F_EX030_LK.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
+2132:
+  ObjectId: 2132
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX050_FRM
+  AnimationName: F_EX030_LK.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
+2133:
+  ObjectId: 2133
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX050_MAG
   AnimationName: F_EX030_LK.mset
   Flags: 0
   ObjectTargetType: M
@@ -727,7 +787,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_REP
+  ModelName: F_EX050_PAG
   AnimationName: F_EX030_LK.mset
   Flags: 0
   ObjectTargetType: M
@@ -757,7 +817,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_SMN
+  ModelName: F_EX050_REP
   AnimationName: F_EX030_LK.mset
   Flags: 0
   ObjectTargetType: M
@@ -787,8 +847,128 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_LK_VST
+  ModelName: F_EX050_STA
   AnimationName: F_EX030_LK.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
+2236:
+  ObjectId: 2236
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX050_SMN
+  AnimationName: F_EX030_LK.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
+2540:
+  ObjectId: 2540
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX050_VST
+  AnimationName: F_EX030_LK.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
+1392:
+  ObjectId: 1392
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX050_WEP
+  AnimationName: F_EX030_LK.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
+1448:
+  ObjectId: 1448
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX060_PRF
+  AnimationName: F_EX040_LK.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0

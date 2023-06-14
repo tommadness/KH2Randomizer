@@ -831,17 +831,21 @@ class SeedZip:
         fileList = getChestFileList()
         for path in fileList:
             outZip.write(resource_path('static/chests/ard/'+path+'.yml'), "chest/ard/"+path+'.yml')
-        outZip.write(resource_path('static/chests/remastered/other.dds'), 'chest/remastered/other.dds')
+        outZip.write(resource_path('static/chests/remastered/trash.dds'), 'chest/remastered/trash.dds')
         outZip.write(resource_path('static/chests/remastered/abilities.dds'), 'chest/remastered/abilities.dds')
         outZip.write(resource_path('static/chests/remastered/forms.dds'), 'chest/remastered/forms.dds')
         outZip.write(resource_path('static/chests/remastered/magic.dds'), 'chest/remastered/magic.dds')
         outZip.write(resource_path('static/chests/remastered/pages.dds'), 'chest/remastered/pages.dds')
-        outZip.write(resource_path('static/chests/remastered/proofs.dds'), 'chest/remastered/proofs.dds')
         outZip.write(resource_path('static/chests/remastered/reports.dds'), 'chest/remastered/reports.dds')
+        outZip.write(resource_path('static/chests/remastered/stats.dds'), 'chest/remastered/stats.dds')
         outZip.write(resource_path('static/chests/remastered/summons.dds'), 'chest/remastered/summons.dds')
         outZip.write(resource_path('static/chests/remastered/unlocks.dds'), 'chest/remastered/unlocks.dds')
+        outZip.write(resource_path('static/chests/remastered/weapons.dds'), 'chest/remastered/weapons.dds')
+        outZip.write(resource_path('static/chests/remastered/proofs_glow.dds'), 'chest/remastered/proofs_glow.dds')
+        outZip.write(resource_path('static/chests/remastered/proofs.dds'), 'chest/remastered/proofs.dds')
         outZip.write(resource_path('static/chests/ChestObjList.script'), 'chest/ChestObjList.yml')
         outZip.write(resource_path('static/chests/F_EX030_LK.mset'), 'chest/F_EX030_LK.mset')
+        outZip.write(resource_path('static/chests/F_EX040_LK.mset'), 'chest/F_EX040_LK.mset')
 
     @staticmethod
     def write_music_replacements(replacements: dict[str, str], outZip):

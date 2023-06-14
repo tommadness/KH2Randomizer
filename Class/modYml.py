@@ -630,25 +630,27 @@ class modYml:
 
         #chest mdlx
         ChestMod.append({
-            "name": "obj/F_EX030_SR_MSC.mdlx",
+            "name": "obj/F_EX030_JNK.mdlx",
             "multi": [
-                    {"name": "obj/F_EX030_SR_ABL.mdlx"},
-                    {"name": "obj/F_EX030_SR_FRM.mdlx"},
-                    {"name": "obj/F_EX030_SR_MAG.mdlx"},
-                    {"name": "obj/F_EX030_SR_PAG.mdlx"},
-                    {"name": "obj/F_EX030_SR_PRF.mdlx"},
-                    {"name": "obj/F_EX030_SR_REP.mdlx"},
-                    {"name": "obj/F_EX030_SR_SMN.mdlx"},
-                    {"name": "obj/F_EX030_SR_VST.mdlx"},
-                    {"name": "obj/F_EX030_TT_MSC.mdlx"},
-                    {"name": "obj/F_EX030_TT_ABL.mdlx"},
-                    {"name": "obj/F_EX030_TT_FRM.mdlx"},
-                    {"name": "obj/F_EX030_TT_MAG.mdlx"},
-                    {"name": "obj/F_EX030_TT_PAG.mdlx"},
-                    {"name": "obj/F_EX030_TT_PRF.mdlx"},
-                    {"name": "obj/F_EX030_TT_REP.mdlx"},
-                    {"name": "obj/F_EX030_TT_SMN.mdlx"},
-                    {"name": "obj/F_EX030_TT_VST.mdlx"},
+                    {"name": "obj/F_EX030_ABL.mdlx"},
+                    {"name": "obj/F_EX030_FRM.mdlx"},
+                    {"name": "obj/F_EX030_MAG.mdlx"},
+                    {"name": "obj/F_EX030_PAG.mdlx"},
+                    {"name": "obj/F_EX030_REP.mdlx"},
+                    {"name": "obj/F_EX030_STA.mdlx"},
+                    {"name": "obj/F_EX030_SMN.mdlx"},
+                    {"name": "obj/F_EX030_VST.mdlx"},
+                    {"name": "obj/F_EX030_WEP.mdlx"},
+                    {"name": "obj/F_EX050_JNK.mdlx"},
+                    {"name": "obj/F_EX050_ABL.mdlx"},
+                    {"name": "obj/F_EX050_FRM.mdlx"},
+                    {"name": "obj/F_EX050_MAG.mdlx"},
+                    {"name": "obj/F_EX050_PAG.mdlx"},
+                    {"name": "obj/F_EX050_REP.mdlx"},
+                    {"name": "obj/F_EX050_STA.mdlx"},
+                    {"name": "obj/F_EX050_SMN.mdlx"},
+                    {"name": "obj/F_EX050_VST.mdlx"},
+                    {"name": "obj/F_EX050_WEP.mdlx"},
                 ],
             "method": "copy",
             "source": [
@@ -659,21 +661,14 @@ class modYml:
                 ],
         })
         ChestMod.append({
-            "name": "obj/F_EX050_LK_MSC.mdlx",
+            "name": "obj/F_EX040_PRF.mdlx",
             "multi": [
-                    {"name": "obj/F_EX050_LK_ABL.mdlx"},
-                    {"name": "obj/F_EX050_LK_FRM.mdlx"},
-                    {"name": "obj/F_EX050_LK_MAG.mdlx"},
-                    {"name": "obj/F_EX050_LK_PAG.mdlx"},
-                    {"name": "obj/F_EX050_LK_PRF.mdlx"},
-                    {"name": "obj/F_EX050_LK_REP.mdlx"},
-                    {"name": "obj/F_EX050_LK_SMN.mdlx"},
-                    {"name": "obj/F_EX050_LK_VST.mdlx"},
+                    {"name": "obj/F_EX060_PRF.mdlx"},
                 ],
             "method": "copy",
             "source": [
                     {
-                        "name": "obj/F_EX030.mdlx",
+                        "name": "obj/F_EX040_EH.mdlx",
                         "type": "internal",
                     }
                 ],
@@ -681,25 +676,27 @@ class modYml:
 
         #chest *.a.us
         ChestMod.append({
-            "name": "obj/F_EX030_SR_MSC.a.us",
+            "name": "obj/F_EX030_JNK.a.us",
             "multi": [
-                    {"name": "obj/F_EX030_SR_ABL.a.us"},
-                    {"name": "obj/F_EX030_SR_FRM.a.us"},
-                    {"name": "obj/F_EX030_SR_MAG.a.us"},
-                    {"name": "obj/F_EX030_SR_PAG.a.us"},
-                    {"name": "obj/F_EX030_SR_PRF.a.us"},
-                    {"name": "obj/F_EX030_SR_REP.a.us"},
-                    {"name": "obj/F_EX030_SR_SMN.a.us"},
-                    {"name": "obj/F_EX030_SR_VST.a.us"},
-                    {"name": "obj/F_EX030_TT_MSC.a.us"},
-                    {"name": "obj/F_EX030_TT_ABL.a.us"},
-                    {"name": "obj/F_EX030_TT_FRM.a.us"},
-                    {"name": "obj/F_EX030_TT_MAG.a.us"},
-                    {"name": "obj/F_EX030_TT_PAG.a.us"},
-                    {"name": "obj/F_EX030_TT_PRF.a.us"},
-                    {"name": "obj/F_EX030_TT_REP.a.us"},
-                    {"name": "obj/F_EX030_TT_SMN.a.us"},
-                    {"name": "obj/F_EX030_TT_VST.a.us"},
+                    {"name": "obj/F_EX030_ABL.a.us"},
+                    {"name": "obj/F_EX030_FRM.a.us"},
+                    {"name": "obj/F_EX030_MAG.a.us"},
+                    {"name": "obj/F_EX030_PAG.a.us"},
+                    {"name": "obj/F_EX030_REP.a.us"},
+                    {"name": "obj/F_EX030_STA.a.us"},
+                    {"name": "obj/F_EX030_SMN.a.us"},
+                    {"name": "obj/F_EX030_VST.a.us"},
+                    {"name": "obj/F_EX030_WEP.a.us"},
+                    {"name": "obj/F_EX050_JNK.a.us"},
+                    {"name": "obj/F_EX050_ABL.a.us"},
+                    {"name": "obj/F_EX050_FRM.a.us"},
+                    {"name": "obj/F_EX050_MAG.a.us"},
+                    {"name": "obj/F_EX050_PAG.a.us"},
+                    {"name": "obj/F_EX050_REP.a.us"},
+                    {"name": "obj/F_EX050_STA.a.us"},
+                    {"name": "obj/F_EX050_SMN.a.us"},
+                    {"name": "obj/F_EX050_VST.a.us"},
+                    {"name": "obj/F_EX050_WEP.a.us"},
                 ],
             "method": "copy",
             "source": [
@@ -710,25 +707,19 @@ class modYml:
                 ],
         })
         ChestMod.append({
-            "name": "obj/F_EX050_LK_MSC.a.us",
+            "name": "obj/F_EX040_PRF.a.us",
             "multi": [
-                    {"name": "obj/F_EX050_LK_ABL.a.us"},
-                    {"name": "obj/F_EX050_LK_FRM.a.us"},
-                    {"name": "obj/F_EX050_LK_MAG.a.us"},
-                    {"name": "obj/F_EX050_LK_PAG.a.us"},
-                    {"name": "obj/F_EX050_LK_PRF.a.us"},
-                    {"name": "obj/F_EX050_LK_REP.a.us"},
-                    {"name": "obj/F_EX050_LK_SMN.a.us"},
-                    {"name": "obj/F_EX050_LK_VST.a.us"},
+                    {"name": "obj/F_EX060_PRF.a.us"},
                 ],
             "method": "copy",
             "source": [
                     {
-                        "name": "obj/F_EX030.a.us",
+                        "name": "obj/F_EX040_EH.a.us",
                         "type": "internal",
                     }
                 ],
         })
+        
         #mset (LK)
         ChestMod.append({
             "name": "obj/F_EX030_LK.mset",
@@ -739,28 +730,35 @@ class modYml:
                     }
                 ],
         })
+        ChestMod.append({
+            "name": "obj/F_EX040_LK.mset",
+            "method": "copy",
+            "source": [
+                    {
+                        "name": "chest/F_EX040_LK.mset",
+                    }
+                ],
+        })
 
         #chest remasterd textures
-        #other
+        #junk
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_MSC.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX030_JNK.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_MSC.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_MSC.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX050_JNK.mdlx/-0.dds"},
             ],
             "method": "copy",
             "source": [
                 {
-                    "name": "chest/remastered/other.dds",
+                    "name": "chest/remastered/trash.dds",
                 }
             ],
         })
         #abilities
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_ABL.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX030_ABL.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_ABL.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_ABL.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX050_ABL.mdlx/-0.dds"},
             ],
             "method": "copy",
             "source": [
@@ -771,10 +769,9 @@ class modYml:
         })
         #forms
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_FRM.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX030_FRM.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_FRM.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_FRM.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX050_FRM.mdlx/-0.dds"},
             ],
             "method": "copy",
             "source": [
@@ -785,10 +782,9 @@ class modYml:
         })
         #magic
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_MAG.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX030_MAG.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_MAG.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_MAG.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX050_MAG.mdlx/-0.dds"},
             ],
             "method": "copy",
             "source": [
@@ -799,10 +795,9 @@ class modYml:
         })
         #pages
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_PAG.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX030_PAG.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_PAG.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_PAG.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX050_PAG.mdlx/-0.dds"},
             ],
             "method": "copy",
             "source": [
@@ -813,10 +808,21 @@ class modYml:
         })
         #proofs
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_PRF.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX040_PRF.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_PRF.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_PRF.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX060_PRF.mdlx/-0.dds"},
+            ],
+            "method": "copy",
+            "source": [
+                {
+                    "name": "chest/remastered/proofs_glow.dds",
+                }
+            ],
+        })
+        ChestMod.append({
+            "name": "remastered/obj/F_EX040_PRF.mdlx/-1.dds",
+            "multi": [
+                {"name": "remastered/obj/F_EX060_PRF.mdlx/-1.dds"},
             ],
             "method": "copy",
             "source": [
@@ -827,10 +833,9 @@ class modYml:
         })
         #reports
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_REP.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX030_REP.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_REP.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_REP.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX050_REP.mdlx/-0.dds"},
             ],
             "method": "copy",
             "source": [
@@ -839,12 +844,24 @@ class modYml:
                 }
             ],
         })
+        #stat ups
+        ChestMod.append({
+            "name": "remastered/obj/F_EX030_STA.mdlx/-0.dds",
+            "multi": [
+                {"name": "remastered/obj/F_EX050_STA.mdlx/-0.dds"},
+            ],
+            "method": "copy",
+            "source": [
+                {
+                    "name": "chest/remastered/stats.dds",
+                }
+            ],
+        })
         #summons
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_SMN.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX030_SMN.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_SMN.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_SMN.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX050_SMN.mdlx/-0.dds"},
             ],
             "method": "copy",
             "source": [
@@ -855,15 +872,27 @@ class modYml:
         })
         #unlocks
         ChestMod.append({
-            "name": "remastered/obj/F_EX030_SR_VST.mdlx/-0.dds",
+            "name": "remastered/obj/F_EX030_VST.mdlx/-0.dds",
             "multi": [
-                {"name": "remastered/obj/F_EX030_TT_VST.mdlx/-0.dds"},
-                {"name": "remastered/obj/F_EX050_LK_VST.mdlx/-0.dds"},
+                {"name": "remastered/obj/F_EX050_VST.mdlx/-0.dds"},
             ],
             "method": "copy",
             "source": [
                 {
                     "name": "chest/remastered/unlocks.dds",
+                }
+            ],
+        })
+        #unlocks
+        ChestMod.append({
+            "name": "remastered/obj/F_EX030_WEP.mdlx/-0.dds",
+            "multi": [
+                {"name": "remastered/obj/F_EX050_WEP.mdlx/-0.dds"},
+            ],
+            "method": "copy",
+            "source": [
+                {
+                    "name": "chest/remastered/weapons.dds",
                 }
             ],
         })

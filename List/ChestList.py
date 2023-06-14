@@ -553,50 +553,60 @@ def getChestFileList():
     return chestFiles
 
 def getChestVisualId(location, item):
+    #Pride Lands needs different IDs
     if locationType.PL in location:
         #get correct chest id for item type
-        chestTypeId = 830 #default "other" chest visual
+        chestTypeId = 834 #default "Junk" chest visual
         if item in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-            chestTypeId = 831
-        elif item == itemType.FORM:
-            chestTypeId = 832
-        elif item in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-            chestTypeId = 833
-        elif item == itemType.TORN_PAGE:
-            chestTypeId = 834                                    
-        elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
             chestTypeId = 835
+        elif item == itemType.FORM:
+            chestTypeId = 2132
+        elif item in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
+            chestTypeId = 2133
+        elif item == itemType.TORN_PAGE:
+            chestTypeId = 2142                                  
         elif item == itemType.REPORT:
-            chestTypeId = 2142
-        elif item == itemType.SUMMON:
             chestTypeId = 2143
-        elif item == itemType.STORYUNLOCK:
+        elif item in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]: #[itemType.GAUGE, itemType.SLOT]:
             chestTypeId = 2235
+        elif item == itemType.SUMMON:
+            chestTypeId = 2236
+        elif item in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]: #== itemType.STORYUNLOCK:
+            chestTypeId = 2540
+        elif item in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF]:
+            chestTypeId = 1392
+        elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
+            chestTypeId = 1448
         return chestTypeId
     #twilight town and STT require different IDs too
     elif locationType.TT in location or locationType.STT in location:
         #get correct chest id for item type
-        chestTypeId = 821 #default "other" chest visual
+        chestTypeId = 823 #default "Junk" chest visual
         if item in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-            chestTypeId = 822
-        elif item == itemType.FORM:
-            chestTypeId = 823
-        elif item in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
             chestTypeId = 824
-        elif item == itemType.TORN_PAGE:
-            chestTypeId = 825                                    
-        elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
+        elif item == itemType.FORM:
+            chestTypeId = 825
+        elif item in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
             chestTypeId = 826
+        elif item == itemType.TORN_PAGE:
+            chestTypeId = 827                                  
         elif item == itemType.REPORT:
-            chestTypeId = 827
-        elif item == itemType.SUMMON:
             chestTypeId = 828
-        elif item == itemType.STORYUNLOCK:
+        elif item in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]:
             chestTypeId = 829
+        elif item == itemType.SUMMON:
+            chestTypeId = 830
+        elif item in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
+            chestTypeId = 831
+        elif item in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF]:
+            chestTypeId = 832
+        elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
+            chestTypeId = 833
         return chestTypeId
+    #default IDs
     else:
         #get correct chest id for item type
-        chestTypeId = 320 #default "other" chest visual
+        chestTypeId = 320 #default "Junk" chest visual
         if item in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
             chestTypeId = 321
         elif item == itemType.FORM:
@@ -604,13 +614,17 @@ def getChestVisualId(location, item):
         elif item in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
             chestTypeId = 323
         elif item == itemType.TORN_PAGE:
-            chestTypeId = 324                                    
-        elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
-            chestTypeId = 325
+            chestTypeId = 324                                  
         elif item == itemType.REPORT:
+            chestTypeId = 325
+        elif item in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]:
             chestTypeId = 818
         elif item == itemType.SUMMON:
             chestTypeId = 819
-        elif item == itemType.STORYUNLOCK:
+        elif item in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
             chestTypeId = 820
+        elif item in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF]:
+            chestTypeId = 821
+        elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
+            chestTypeId = 822
         return chestTypeId

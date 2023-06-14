@@ -60,6 +60,7 @@ a = Analysis(
         'static/KHMenu.otf',
         'static/as_data_split/*.*',
         'static/better_stt/*.*',
+        'static/chests/**/*.*',
         'static/map_skip/*.*',
         'static/wardrobe/*.*',
         'static/*.bar',
