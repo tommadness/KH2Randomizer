@@ -637,7 +637,7 @@
   DrawPriority: 0
   WeaponJoint: 0
   ModelName: F_EX040_PRF
-  AnimationName: F_EX040_TT.mset
+  AnimationName: F_EX040_RX.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0

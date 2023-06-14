@@ -829,8 +829,10 @@ class SeedZip:
                     yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
         #filelist huge so get list from the chest class
         fileList = getChestFileList()
+        #Ards
         for path in fileList:
             outZip.write(resource_path('static/chests/ard/'+path+'.yml'), "chest/ard/"+path+'.yml')
+        #Remasterd Textures
         outZip.write(resource_path('static/chests/remastered/trash.dds'), 'chest/remastered/trash.dds')
         outZip.write(resource_path('static/chests/remastered/abilities.dds'), 'chest/remastered/abilities.dds')
         outZip.write(resource_path('static/chests/remastered/forms.dds'), 'chest/remastered/forms.dds')
@@ -843,9 +845,24 @@ class SeedZip:
         outZip.write(resource_path('static/chests/remastered/weapons.dds'), 'chest/remastered/weapons.dds')
         outZip.write(resource_path('static/chests/remastered/proofs_glow.dds'), 'chest/remastered/proofs_glow.dds')
         outZip.write(resource_path('static/chests/remastered/proofs.dds'), 'chest/remastered/proofs.dds')
+        #Listpatch
         outZip.write(resource_path('static/chests/ChestObjList.script'), 'chest/ChestObjList.yml')
-        outZip.write(resource_path('static/chests/F_EX030_LK.mset'), 'chest/F_EX030_LK.mset')
-        outZip.write(resource_path('static/chests/F_EX040_LK.mset'), 'chest/F_EX040_LK.mset')
+        #MSET
+        outZip.write(resource_path('static/chests/obj/F_EX030_LK.mset'), 'chest/obj/F_EX030_LK.mset')
+        outZip.write(resource_path('static/chests/obj/F_EX040_LK.mset'), 'chest/obj/F_EX040_LK.mset')
+        outZip.write(resource_path('static/chests/obj/F_EX040_RX.mset'), 'chest/obj/F_EX040_RX.mset')
+        #MDLX
+        outZip.write(resource_path('static/chests/obj/F_EX030_JNK.mdlx'), 'chest/obj/F_EX030_JNK.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_ABL.mdlx'), 'chest/obj/F_EX030_ABL.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_FRM.mdlx'), 'chest/obj/F_EX030_FRM.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_MAG.mdlx'), 'chest/obj/F_EX030_MAG.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_PAG.mdlx'), 'chest/obj/F_EX030_PAG.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_REP.mdlx'), 'chest/obj/F_EX030_REP.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_STA.mdlx'), 'chest/obj/F_EX030_STA.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_SMN.mdlx'), 'chest/obj/F_EX030_SMN.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_VST.mdlx'), 'chest/obj/F_EX030_VST.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_WEP.mdlx'), 'chest/obj/F_EX030_WEP.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX040_PRF.mdlx'), 'chest/obj/F_EX040_PRF.mdlx')
 
     @staticmethod
     def write_music_replacements(replacements: dict[str, str], outZip):
