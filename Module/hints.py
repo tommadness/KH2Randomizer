@@ -66,7 +66,8 @@ class Hints:
 
         # start making the hint file
         hintsText = {}
-        if settings.progression_hints:
+        if settings.progression_hints_new != 'Disabled':
+            hintsText["ProgressionType"] = settings.progression_hints_new 
             hintsText["ProgressionSettings"] = settings.progression_hint_settings
             num_progression_worlds = len(hintsText["ProgressionSettings"]["HintCosts"])
         hintsText['hintsType'] = hintsType
@@ -100,7 +101,7 @@ class Hints:
             # importantChecks += [itemType.REPORT]
         
         report_master = [[locationType.Free]]*14
-        if settings.progression_hints:
+        if settings.progression_hints_new == 'Reports':
             report_master = [[locationType.Free]]*19
         found_reports = False
         for location,item in locationItems:
@@ -244,7 +245,7 @@ class Hints:
                     report_master[reportNumber] = [""]
 
 
-            if not settings.progression_hints:
+            if settings.progression_hints_new == 'Disabled':
                 valid_reports = False
                 for iter in range(1,10):
                     report_texts = report_texts[0:13]
@@ -538,7 +539,7 @@ class Hints:
                 raise HintException("Two reports hint the same location. This is an error, try a new seedname.")
                 
  
-            if settings.progression_hints:
+            if settings.progression_hints_new == 'Reports':
                 # get the hinted worlds
                 hinted_worlds = []
                 for reportNumber in range(1,14):
@@ -818,7 +819,7 @@ class Hints:
                     if any(item.Name.replace("Secret Ansem's Report ","") == str(reportNumber) for item in worldChecks[world] ):
                         hintsText["Reports"][reportNumber]["Location"] = world
  
-            if settings.progression_hints:
+            if settings.progression_hints_new == 'Reports':
                 # get the hinted worlds
                 hinted_worlds = []
                 for reportNumber in range(1,14):
