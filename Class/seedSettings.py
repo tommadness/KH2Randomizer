@@ -807,40 +807,16 @@ _all_settings = [
         randomizable=["Shananas","JSmartee","Points","Path","Spoiler"]
     ),
 
-    #Toggle(
-    #    name=settingkey.PROGRESSION_HINTS,
-    #    group=SettingGroup.HINTS,
-    #    ui_label='Progression Hint Mode',
-    #    shared=True,
-    #    default=False,
-    #    tooltip='''
-    #    Instead of Ansem Reports providing the source of hints, world progress unlocks more hints in your tracker.
-    #    ''',
-    #    randomizable=True
-    #),
-
-    SingleSelect(
-        name=settingkey.PROGRESSION_HINTS_NEW,
+    Toggle(
+        name=settingkey.PROGRESSION_HINTS,
         group=SettingGroup.HINTS,
-        ui_label="Progression Hint Mode",
-        choices={
-            'Disabled': 'Disabled',
-            'Reports': 'Replace Reports',
-            'Bosses': 'Randomized Bosses'
-        },
+        ui_label='Progression Hint Mode',
         shared=True,
-        default='Disabled',
+        default=False,
         tooltip='''
-        Which hint system to use. More detailed explanations the hint systems can be found on the website.
-    
-        Disabled - Don't use Progression Hint Mode.
-        
-        Replace Reports - Instead of Ansem Reports providing the source of hints, world progress will unlock more hints in your tracker.
-        
-        Randomized Bosses - Ansem Reports will work as normal and World progress will unlock hints for what a boss has randomized into (Requires Boss randomizer).
-        
+        Instead of Ansem Reports providing the source of hints, world progress unlocks more hints in your tracker.
         ''',
-        randomizable=["Disabled","Reports"]
+        randomizable=True
     ),
 
     Toggle(

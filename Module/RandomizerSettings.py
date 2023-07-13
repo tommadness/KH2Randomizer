@@ -258,12 +258,10 @@ class RandomizerSettings():
                                     "collection_visit":ui_settings.get(settingkey.POINTS_VISIT_COLLECT),
                                     }
 
-        self.progression_hints_new = ui_settings.get(settingkey.PROGRESSION_HINTS_NEW)
+        self.progression_hints = ui_settings.get(settingkey.PROGRESSION_HINTS)
         self.progression_world_complete_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
         self.progression_report_bonus = ui_settings.get(settingkey.PROGRESSION_HINTS_REPORT_BONUS)
         self.progression_reveal_all = ui_settings.get(settingkey.PROGRESSION_HINTS_REVEAL_END)
-        if self.progression_hints_new == "Bosses" and ui_settings.get("boss")=="Disabled":
-            raise SettingsException("Can't use progression hint bosses option without boss randomization.")
 
         self.shop_hintable = self.shop_unlocks or self.shop_reports or locationType.Puzzle in include_list or locationType.SYNTH in include_list
         prog_points = ProgressionPoints()
@@ -291,16 +289,13 @@ class RandomizerSettings():
             self.spoiler_hint_values.append(self.revealMode)
             if self.revealMode == "bossreports" and ui_settings.get("boss")=="Disabled":
                 raise SettingsException("Can't use report hint bosses option without boss randomization.")
-            if self.revealMode == "bossreports" and self.progression_hints_new == "Bosses":
-                raise SettingsException("Can't use report hint bosses option together with progression hint bosses option.")
-
-        if self.hintsType=="Spoiler" and self.revealMode == 'Disabled' and self.progression_hints_new == 'Reports':
+        if self.hintsType=="Spoiler" and self.revealMode == 'Disabled' and self.progression_hints:
             raise SettingsException("Can't use progression hints with full spoiler hints")
 
         self.hiscore_mode = ui_settings.get(settingkey.SCORE_MODE)
 
         self.tracker_includes = []
-        if self.progression_hints_new != 'Disabled':
+        if self.progression_hints:
             self.tracker_includes.append("ProgressionHints")
         if self.level_one:
             self.tracker_includes.append("Level1Mode")

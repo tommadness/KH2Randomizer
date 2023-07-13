@@ -21,7 +21,7 @@ class HintsMenu(KH2Submenu):
         self.start_group()
         self.add_option(settingkey.HINT_SYSTEM)
         self.add_option(settingkey.REPORT_DEPTH)
-        self.add_option(settingkey.PROGRESSION_HINTS_NEW)
+        self.add_option(settingkey.PROGRESSION_HINTS)
         self.add_option(settingkey.PROGRESSION_HINTS_REVEAL_END)
         self.add_option(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
         self.add_option(settingkey.PROGRESSION_HINTS_REPORT_BONUS)
@@ -91,14 +91,10 @@ class HintsMenu(KH2Submenu):
 
         settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
         settings.observe(settingkey.SCORE_MODE, self._hint_system_changed)
-        settings.observe(settingkey.PROGRESSION_HINTS_NEW, self._progression_toggle)
+        settings.observe(settingkey.PROGRESSION_HINTS, self._progression_toggle)
 
     def _progression_toggle(self):
-        #progression_on = self.settings.get(settingkey.PROGRESSION_HINTS)
-        if self.settings.get(settingkey.PROGRESSION_HINTS_NEW) == 'Disabled':
-            progression_on = False
-        else:
-            progression_on = True     
+        progression_on = self.settings.get(settingkey.PROGRESSION_HINTS)
 
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on)
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on)
@@ -108,18 +104,14 @@ class HintsMenu(KH2Submenu):
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)
         score_mode_enabled = hint_system == 'Points' or self.settings.get(settingkey.SCORE_MODE)
-        #progression_points = self.settings.get(settingkey.PROGRESSION_HINTS)
-        if self.settings.get(settingkey.PROGRESSION_HINTS_NEW) == 'Disabled':
-            progression_points = False
-        else:
-            progression_points = True 
+        progression_points = self.settings.get(settingkey.PROGRESSION_HINTS)
 
         if hint_system == 'Disabled':
-            _, widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS_NEW]
-            widget.setCurrentIndex(0)
+            _, widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS]
+            widget.setChecked(False)
 
         # self.set_option_visibility(settingkey.REPORT_DEPTH, visible=hint_system in ['JSmartee', 'Points', 'Path'])
-        self.set_option_visibility(settingkey.PROGRESSION_HINTS_NEW, visible=hint_system != 'Disabled')
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS, visible=hint_system != 'Disabled')
         self.set_option_visibility(settingkey.PREVENT_SELF_HINTING, visible=hint_system in ['JSmartee', 'Points', 'Spoiler'])
         self.set_option_visibility(settingkey.SCORE_MODE, visible=hint_system in ['JSmartee', 'Shananas', 'Spoiler', 'Path'])
         self.set_option_visibility(settingkey.ALLOW_PROOF_HINTING, visible=hint_system == 'Points')
