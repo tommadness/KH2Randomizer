@@ -85,7 +85,7 @@ class RandomizerSettings():
             self.num_random_growths = 3
         self.chosen_random_growths = []
 
-        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [int(value) for value in ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.STARTING_REPORTS)) + ([Items.getTT1Jailbreak().Id] if ui_settings.get(settingkey.TT1_JAILBREAK) else [])
+        self.startingItems = [int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)] + [int(value) for value in ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)] + [starting_level for starting_level in SeedModifier.schmovement(ui_settings.get(settingkey.STARTING_MOVEMENT))] + SeedModifier.library(ui_settings.get(settingkey.STARTING_REPORTS)) + [Items.getTT1Jailbreak().Id]
         self.itemPlacementDifficulty = ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
         self.nightmare = ui_settings.get(settingkey.NIGHTMARE_LOGIC)
         self.story_unlock_rarity = ui_settings.get(settingkey.STORY_UNLOCK_CATEGORY)
@@ -119,7 +119,7 @@ class RandomizerSettings():
 
         self.promiseCharm = ui_settings.get(settingkey.ENABLE_PROMISE_CHARM)
         self.auto_equip_abilities = ui_settings.get(settingkey.AUTO_EQUIP_START_ABILITIES)
-        self.tt1_jailbreak = ui_settings.get(settingkey.TT1_JAILBREAK)
+        self.tt1_jailbreak = True # ui_settings.get(settingkey.TT1_JAILBREAK)
         self.pureblood = True # ui_settings.get(settingkey.PUREBLOOD)
         self.antiform = ui_settings.get(settingkey.ANTIFORM)
         self.fifty_ap = ui_settings.get(settingkey.FIFTY_AP_BOOSTS)

@@ -48,7 +48,7 @@ from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.worker import GenerateSeedWorker
 
-LOCAL_UI_VERSION = '3.0.0-beta-v3'
+LOCAL_UI_VERSION = '3.0.1'
 
 class Logger(object):
     def __init__(self, orig_stream):

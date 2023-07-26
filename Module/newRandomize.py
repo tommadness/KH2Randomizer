@@ -455,6 +455,7 @@ class Randomizer():
             unlocks[locationType.Atlantica] = [[23,23,23],[87,87]]
 
             second_visit_locking_items = [369,54,55,61,60,74,376,59,72,62]
+            flex_logical_locks = [54,55,61,60,74,59,62,26,27,29,31,563] # stuff that we can safely remove the first step from
 
             locking_items = []
             for loc_type in settings.enabledLocations:
@@ -474,6 +475,18 @@ class Randomizer():
             if not settings.chainLogicIncludeTerra:
                 if [593] in locking_items:
                     locking_items.remove([593])
+
+            if len(locking_items) > settings.chainLogicMinLength:
+                # keep the last parts of the chain
+                num_to_remove = min(len(locking_items) - settings.chainLogicMinLength,len(flex_logical_locks))
+
+                random.shuffle(flex_logical_locks)
+                # remove N flex locks from the list
+                for i in range(num_to_remove):
+                    print(locking_items)
+                    print(flex_logical_locks)
+                    locking_items.remove([flex_logical_locks[i]])
+
 
             minimum_terra_depth = len(locking_items)-5 if settings.chainLogicTerraLate else 0
 
@@ -557,7 +570,7 @@ class Randomizer():
             force_obtained = []
             if len(locking_items) > settings.chainLogicMinLength:
                 # keep the last parts of the chain
-                num_to_remove = len(locking_items) - settings.chainLogicMinLength;
+                num_to_remove = len(locking_items) - settings.chainLogicMinLength
                 force_obtained = locking_items[:num_to_remove]
                 locking_items = locking_items[num_to_remove:]
 
@@ -594,7 +607,7 @@ class Randomizer():
                 for i in items:
                     #find item in item list
                     if len(accessible_locations_new) == 0:
-                        break
+                        raise GeneratorException(f"Chain logic couldn't place an item because it ran out of locations.")
                     
                     i_data_list = [it for it in allItems if it.Id==i]
                     if len(i_data_list)==0:

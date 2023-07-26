@@ -179,8 +179,7 @@ class Locations:
                         ItemPlacementHelpers.mulan_check(inv) and \
                         ItemPlacementHelpers.tt3_check(inv) and \
                         ItemPlacementHelpers.jack_pr_check(inv) and \
-                        ItemPlacementHelpers.aladdin_check(inv) and \
-                        ItemPlacementHelpers.jack_ht_check(inv)
+                        ItemPlacementHelpers.aladdin_check(inv)
             def sunset_checker(inv):
                 return ItemPlacementHelpers.need_growths(inv) and \
                         ItemPlacementHelpers.hb_check(inv) and \
@@ -188,7 +187,6 @@ class Locations:
                         ItemPlacementHelpers.tron_check(inv) and \
                         ItemPlacementHelpers.jack_pr_check(inv) and \
                         ItemPlacementHelpers.aladdin_check(inv) and \
-                        ItemPlacementHelpers.jack_ht_check(inv) and \
                         ItemPlacementHelpers.beast_check(inv)
             self.add_edge("Starting","Daylight Puzzle",RequirementEdge(req=daylight_checker))
             self.add_edge("Starting","Sunset Puzzle",RequirementEdge(req=sunset_checker))
