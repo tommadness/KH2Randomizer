@@ -2676,6 +2676,23 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
     for r in randomizable_settings:
         real_settings_object.set(r.name,random_choices[r.name])
 
+def makeKHBRSettings(ui_settings:SeedSettings):
+    
+    enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
+                            'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
+                            'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
+                            'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN),
+                            'remove_cutscenes': ui_settings.get(settingkey.REMOVE_CUTSCENES),
+                            'party_member_rando': ui_settings.get(settingkey.PARTY_MEMBER_RANDO),
+                            'costume_rando': ui_settings.get(settingkey.COSTUME_RANDO),
+                            'revenge_limit_rando': ui_settings.get(settingkey.REVENGE_LIMIT_RANDO)}
+    for setting in boss_settings + enemy_settings:
+        value = ui_settings.get(setting.name)
+        if value is not None:
+            enemy_options[setting.name] = value
+    
+    return enemy_options
+
 
 @dataclass(frozen=True)
 class ExtraConfigurationData:

@@ -5,7 +5,7 @@ from itertools import chain
 
 from Class import seedSettings, settingkey
 from Class.exceptions import SettingsException
-from Class.seedSettings import SeedSettings
+from Class.seedSettings import SeedSettings, makeKHBRSettings
 from List.ItemList import Items
 from List.configDict import expCurve, locationType, itemType, locationDepth
 from List.experienceValues import duskExp, duskFormExp, middayFormExp, vanillaExp, middayExp, vanillaFormExp
@@ -168,18 +168,7 @@ class RandomizerSettings():
         if self.reverse_rando and not self.as_data_split:
             raise SettingsException("Can't run reverse rando without the as/data split code")
 
-        self.enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
-                              'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
-                              'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
-                              'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN),
-                              'remove_cutscenes': ui_settings.get(settingkey.REMOVE_CUTSCENES),
-                              'party_member_rando': ui_settings.get(settingkey.PARTY_MEMBER_RANDO),
-                              'costume_rando': ui_settings.get(settingkey.COSTUME_RANDO),
-                              'revenge_limit_rando': ui_settings.get(settingkey.REVENGE_LIMIT_RANDO)}
-        for setting in seedSettings.boss_settings + seedSettings.enemy_settings:
-            value = ui_settings.get(setting.name)
-            if value is not None:
-                self.enemy_options[setting.name] = value
+        self.enemy_options = makeKHBRSettings(ui_settings)
 
         self.random_seed = seed_name
         self.spoiler_log = spoiler_log

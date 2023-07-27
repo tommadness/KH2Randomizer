@@ -10,7 +10,7 @@ import yaml
 from Class.exceptions import BossEnemyException, GeneratorException
 from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
-from Class.seedSettings import SeedSettings, ExtraConfigurationData
+from Class.seedSettings import SeedSettings, ExtraConfigurationData, makeKHBRSettings
 from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
@@ -827,42 +827,42 @@ class SeedZip:
                 finally: #edit and save yml
                     spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
                     yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
-        #filelist huge so get list from the chest class
-        fileList = getChestFileList()
-        #Ards
-        for path in fileList:
-            outZip.write(resource_path('static/chests/ard/'+path+'.yml'), "chest/ard/"+path+'.yml')
-        #Remasterd Textures
-        outZip.write(resource_path('static/chests/remastered/trash.dds'), 'chest/remastered/trash.dds')
-        outZip.write(resource_path('static/chests/remastered/abilities.dds'), 'chest/remastered/abilities.dds')
-        outZip.write(resource_path('static/chests/remastered/forms.dds'), 'chest/remastered/forms.dds')
-        outZip.write(resource_path('static/chests/remastered/magic.dds'), 'chest/remastered/magic.dds')
-        outZip.write(resource_path('static/chests/remastered/pages.dds'), 'chest/remastered/pages.dds')
-        outZip.write(resource_path('static/chests/remastered/reports.dds'), 'chest/remastered/reports.dds')
-        outZip.write(resource_path('static/chests/remastered/stats.dds'), 'chest/remastered/stats.dds')
-        outZip.write(resource_path('static/chests/remastered/summons.dds'), 'chest/remastered/summons.dds')
-        outZip.write(resource_path('static/chests/remastered/unlocks.dds'), 'chest/remastered/unlocks.dds')
-        outZip.write(resource_path('static/chests/remastered/weapons.dds'), 'chest/remastered/weapons.dds')
-        outZip.write(resource_path('static/chests/remastered/proofs_glow.dds'), 'chest/remastered/proofs_glow.dds')
-        outZip.write(resource_path('static/chests/remastered/proofs.dds'), 'chest/remastered/proofs.dds')
-        #Listpatch
-        outZip.write(resource_path('static/chests/ChestObjList.script'), 'chest/ChestObjList.yml')
-        #MSET
-        outZip.write(resource_path('static/chests/obj/F_EX030_LK.mset'), 'chest/obj/F_EX030_LK.mset')
-        outZip.write(resource_path('static/chests/obj/F_EX040_LK.mset'), 'chest/obj/F_EX040_LK.mset')
-        outZip.write(resource_path('static/chests/obj/F_EX040_RX.mset'), 'chest/obj/F_EX040_RX.mset')
-        #MDLX
-        outZip.write(resource_path('static/chests/obj/F_EX030_JNK.mdlx'), 'chest/obj/F_EX030_JNK.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_ABL.mdlx'), 'chest/obj/F_EX030_ABL.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_FRM.mdlx'), 'chest/obj/F_EX030_FRM.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_MAG.mdlx'), 'chest/obj/F_EX030_MAG.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_PAG.mdlx'), 'chest/obj/F_EX030_PAG.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_REP.mdlx'), 'chest/obj/F_EX030_REP.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_STA.mdlx'), 'chest/obj/F_EX030_STA.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_SMN.mdlx'), 'chest/obj/F_EX030_SMN.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_VST.mdlx'), 'chest/obj/F_EX030_VST.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX030_WEP.mdlx'), 'chest/obj/F_EX030_WEP.mdlx')
-        outZip.write(resource_path('static/chests/obj/F_EX040_PRF.mdlx'), 'chest/obj/F_EX040_PRF.mdlx')
+            #filelist huge so get list from the chest class
+            fileList = getChestFileList()
+            #Ards
+            for path in fileList:
+                outZip.write(resource_path('static/chests/ard/'+path+'.yml'), "chest/ard/"+path+'.yml')
+            #Remasterd Textures
+            outZip.write(resource_path('static/chests/remastered/trash.dds'), 'chest/remastered/trash.dds')
+            outZip.write(resource_path('static/chests/remastered/abilities.dds'), 'chest/remastered/abilities.dds')
+            outZip.write(resource_path('static/chests/remastered/forms.dds'), 'chest/remastered/forms.dds')
+            outZip.write(resource_path('static/chests/remastered/magic.dds'), 'chest/remastered/magic.dds')
+            outZip.write(resource_path('static/chests/remastered/pages.dds'), 'chest/remastered/pages.dds')
+            outZip.write(resource_path('static/chests/remastered/reports.dds'), 'chest/remastered/reports.dds')
+            outZip.write(resource_path('static/chests/remastered/stats.dds'), 'chest/remastered/stats.dds')
+            outZip.write(resource_path('static/chests/remastered/summons.dds'), 'chest/remastered/summons.dds')
+            outZip.write(resource_path('static/chests/remastered/unlocks.dds'), 'chest/remastered/unlocks.dds')
+            outZip.write(resource_path('static/chests/remastered/weapons.dds'), 'chest/remastered/weapons.dds')
+            outZip.write(resource_path('static/chests/remastered/proofs_glow.dds'), 'chest/remastered/proofs_glow.dds')
+            outZip.write(resource_path('static/chests/remastered/proofs.dds'), 'chest/remastered/proofs.dds')
+            #Listpatch
+            outZip.write(resource_path('static/chests/ChestObjList.script'), 'chest/ChestObjList.yml')
+            #MSET
+            outZip.write(resource_path('static/chests/obj/F_EX030_LK.mset'), 'chest/obj/F_EX030_LK.mset')
+            outZip.write(resource_path('static/chests/obj/F_EX040_LK.mset'), 'chest/obj/F_EX040_LK.mset')
+            outZip.write(resource_path('static/chests/obj/F_EX040_RX.mset'), 'chest/obj/F_EX040_RX.mset')
+            #MDLX
+            outZip.write(resource_path('static/chests/obj/F_EX030_JNK.mdlx'), 'chest/obj/F_EX030_JNK.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_ABL.mdlx'), 'chest/obj/F_EX030_ABL.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_FRM.mdlx'), 'chest/obj/F_EX030_FRM.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_MAG.mdlx'), 'chest/obj/F_EX030_MAG.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_PAG.mdlx'), 'chest/obj/F_EX030_PAG.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_REP.mdlx'), 'chest/obj/F_EX030_REP.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_STA.mdlx'), 'chest/obj/F_EX030_STA.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_SMN.mdlx'), 'chest/obj/F_EX030_SMN.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_VST.mdlx'), 'chest/obj/F_EX030_VST.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX030_WEP.mdlx'), 'chest/obj/F_EX030_WEP.mdlx')
+            outZip.write(resource_path('static/chests/obj/F_EX040_PRF.mdlx'), 'chest/obj/F_EX040_PRF.mdlx')
 
     @staticmethod
     def write_music_replacements(replacements: dict[str, str], outZip):
@@ -1223,6 +1223,81 @@ class CosmeticsOnlyZip:
             out_zip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
 
             out_zip.write(resource_path("static/icons/misc/Kingdom Hearts II.png"), "icon.png")
+
+        data.seek(0)
+        self.output_zip = data
+
+
+class BossEnemyOnlyZip:
+
+    def __init__(self, ui_settings: SeedSettings, platform: bool):
+        self.settings = ui_settings
+        self.enemy_options = makeKHBRSettings(self.settings)
+        self.platform = platform
+        self.output_zip: Optional[io.BytesIO] = None
+        self.create_zip()
+
+    def create_zip(self):
+        data = io.BytesIO()
+        with zipfile.ZipFile(data, "w", zipfile.ZIP_DEFLATED) as out_zip:
+            mod = {
+                "title": "Randomized Bosses/Enemies",
+                "description": "Generated by the KH2 Randomizer Seed Generator.",
+                "assets": []
+            }            
+            
+            pc_seed_toggle = (self.platform=="PC")
+
+            def _shouldRunKHBR():
+                if not self.enemy_options.get("boss", False) in [False, "Disabled"]:
+                    return True
+                if not self.enemy_options.get("enemy", False) in [False, "Disabled"]:
+                    return True
+                
+                return False
+
+            enemySpoilers = None
+            enemySpoilersJSON = {}
+            if _shouldRunKHBR():
+                enemySpoilers = None
+                enemySpoilersJSON = {}
+            
+                if pc_seed_toggle:
+                    self.enemy_options["memory_expansion"] = True
+                else:
+                    self.enemy_options["memory_expansion"] = False
+                
+                from khbr.randomizer import Randomizer as khbr
+                enemySpoilers = khbr().generateToZip("kh2", self.enemy_options, mod, out_zip)
+
+                lines = enemySpoilers.split("\n")
+
+                current_key = ""
+                for line in lines:
+                    if '\t' in line:
+                        modded_line = line.replace('\t','')
+                        enemies = modded_line.split(" became ")
+                        # this is adding to the current list
+                        new_entry = {}
+                        new_entry["original"] = enemies[0]
+                        new_entry["new"] = enemies[1]
+                        enemySpoilersJSON[current_key].append(new_entry)
+                    elif line!="":
+                        current_key = line
+                        enemySpoilersJSON[current_key] = []
+                if enemySpoilersJSON:
+                    out_zip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
+                    # for boss_replacement in enemySpoilersJSON["BOSSES"]:
+                    #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
+
+            else:
+                raise GeneratorException("Trying to generate boss/enemy only mod without enabling those settings.")
+
+            print("Passed boss/enemy")
+
+            out_zip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
+            out_zip.write(resource_path("static/icons/misc/Kingdom Hearts II.png"), "icon.png")
+            out_zip.writestr("enemyspoilers.txt", enemySpoilers)
 
         data.seek(0)
         self.output_zip = data

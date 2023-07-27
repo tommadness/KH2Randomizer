@@ -11,7 +11,7 @@ from Class.seedSettings import SeedSettings, ExtraConfigurationData
 from Module import appconfig
 from Module.RandomizerSettings import RandomizerSettings
 from Module.generate import generateSeed, generateMultiWorldSeed
-from Module.zipper import CosmeticsOnlyZip
+from Module.zipper import BossEnemyOnlyZip, CosmeticsOnlyZip
 
 
 def _run_custom_cosmetics_executables(extra_data: ExtraConfigurationData):
@@ -258,3 +258,78 @@ class CosmeticsZipWorker:
                 outfile_name += ".zip"
             with open(outfile_name, "wb") as out_zip:
                 out_zip.write(zip_file.getbuffer())
+
+
+class GenerateBossEnemyZipThread(QThread):
+    finished = Signal(object)
+    failed = Signal(Exception)
+
+    def __init__(self, ui_settings: SeedSettings, platform: bool):
+        super().__init__()
+        self.ui_settings = ui_settings
+        self.platform = platform
+
+    def run(self):
+        try:
+            platform = self.platform
+            zipper = BossEnemyOnlyZip(self.ui_settings, platform)
+            zip_file = zipper.output_zip
+            self.finished.emit(zip_file)
+        except Exception as e:
+            self.failed.emit(e)
+
+
+class BossEnemyZipWorker:
+
+    def __init__(self, parent: QWidget, ui_settings: SeedSettings, platform: bool):
+        self.parent = parent
+        self.ui_settings = ui_settings
+        self.platform = platform
+        self.progress: Optional[QProgressDialog] = None
+        self.thread: Optional[GenerateBossEnemyZipThread] = None
+
+    def generate_mod(self):
+        self.progress = QProgressDialog("Creating boss/enemy-only mod", "Cancel", 0, 0, None)
+        self.progress.setWindowTitle("Please wait...")
+        self.progress.setModal(True)
+        self.progress.show()
+
+        self.thread = GenerateBossEnemyZipThread(self.ui_settings, self.platform)
+        self.thread.finished.connect(self._handle_result)
+        self.thread.failed.connect(self._handle_failure)
+        self.progress.canceled.connect(lambda: self.thread.terminate())
+        self.thread.start()
+
+    def _handle_result(self, zip_file: io.BytesIO):
+        self.progress.close()
+        self.progress = None
+        self._download_zip(zip_file)
+        self.thread = None
+
+    def _handle_failure(self, failure: Exception):
+        if self.progress is not None:
+            self.progress.close()
+        self.progress = None
+
+        message = QMessageBox(text=str(repr(failure)))
+        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        message.setWindowTitle("Boss/Enemy Generation Error")
+        message.exec()
+
+        self.thread = None
+
+    def _download_zip(self, zip_file: io.BytesIO):
+        last_seed_folder_txt = appconfig.auto_save_folder() / 'last_seed_folder.txt'
+        output_file_name = _wrap_in_last_seed_folder_if_possible(last_seed_folder_txt, 'randomized-cosmetics.zip')
+
+        save_widget = QFileDialog()
+        filter_name = "OpenKH Mod (*.zip)"
+        save_widget.setNameFilters([filter_name])
+        outfile_name, _ = save_widget.getSaveFileName(self.parent, "Save boss/enemy mod", output_file_name, filter_name)
+        if outfile_name != "":
+            if not outfile_name.endswith(".zip"):
+                outfile_name += ".zip"
+            with open(outfile_name, "wb") as out_zip:
+                out_zip.write(zip_file.getbuffer())
+
+
