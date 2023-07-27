@@ -161,6 +161,8 @@ class RandomizerSettings():
 
         self.as_data_split = ui_settings.get(settingkey.AS_DATA_SPLIT)
 
+        self.chests_match_item = ui_settings.get(settingkey.CHESTS_MATCH_ITEM)
+
         self.skip_carpet_escape = ui_settings.get(settingkey.SKIP_CARPET_ESCAPE)
 
         if self.reverse_rando and not self.as_data_split:

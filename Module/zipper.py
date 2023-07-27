@@ -15,6 +15,7 @@ from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
+from List.ChestList import KH2Chest, getChestFileList, getChestVisualId
 from Module import hashimage, commandmenu
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
@@ -300,6 +301,7 @@ class SeedZip:
             self.createWardrobeSkipAssets(settings, mod, outZip)
             self.createDropRateAssets(settings, randomizer, mod, outZip)
             self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
+            self.createChestVisualAssets(settings, randomizer, mod, outZip)
             battle_level_spoiler = self.createBtlvRandoAssets(settings, mod, outZip)
 
             outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
@@ -800,6 +802,68 @@ class SeedZip:
 
             outZip.writestr("modified_synth_reqs.bin",binaryContent)
 
+    def createChestVisualAssets(self, settings, randomizer, mod, outZip):
+        if settings.chests_match_item:
+            mod["assets"] += modYml.getChestVisualMod()
+            chestList = KH2Chest.getChestList()
+            treasures = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.CHEST])
+            treasures = [trsr for trsr in treasures 
+                         if locationType.Puzzle not in trsr.location.LocationTypes 
+                         and locationType.Critical not in trsr.location.LocationTypes 
+                         and locationType.SYNTH not in trsr.location.LocationTypes]
+            for trsr in treasures:
+                #i dunno just in case i guess because D/G starting items are labled as free and chests
+                if locationType.Free in trsr.location.LocationTypes and trsr.location.LocationId in range(1,3):
+                    #print('party stating item?')
+                    continue
+                #use location id to get chest index and name
+                chest = chestList[trsr.location.LocationId]
+                chestTypeId = getChestVisualId(trsr.location.LocationTypes, trsr.item.ItemType)
+                #open and write file
+                try: #open yml first if it exists
+                    spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
+                except: #open spawn if yml doesn't
+                    spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
+                finally: #edit and save yml
+                    spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
+                    yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
+        #filelist huge so get list from the chest class
+        fileList = getChestFileList()
+        #Ards
+        for path in fileList:
+            outZip.write(resource_path('static/chests/ard/'+path+'.yml'), "chest/ard/"+path+'.yml')
+        #Remasterd Textures
+        outZip.write(resource_path('static/chests/remastered/trash.dds'), 'chest/remastered/trash.dds')
+        outZip.write(resource_path('static/chests/remastered/abilities.dds'), 'chest/remastered/abilities.dds')
+        outZip.write(resource_path('static/chests/remastered/forms.dds'), 'chest/remastered/forms.dds')
+        outZip.write(resource_path('static/chests/remastered/magic.dds'), 'chest/remastered/magic.dds')
+        outZip.write(resource_path('static/chests/remastered/pages.dds'), 'chest/remastered/pages.dds')
+        outZip.write(resource_path('static/chests/remastered/reports.dds'), 'chest/remastered/reports.dds')
+        outZip.write(resource_path('static/chests/remastered/stats.dds'), 'chest/remastered/stats.dds')
+        outZip.write(resource_path('static/chests/remastered/summons.dds'), 'chest/remastered/summons.dds')
+        outZip.write(resource_path('static/chests/remastered/unlocks.dds'), 'chest/remastered/unlocks.dds')
+        outZip.write(resource_path('static/chests/remastered/weapons.dds'), 'chest/remastered/weapons.dds')
+        outZip.write(resource_path('static/chests/remastered/proofs_glow.dds'), 'chest/remastered/proofs_glow.dds')
+        outZip.write(resource_path('static/chests/remastered/proofs.dds'), 'chest/remastered/proofs.dds')
+        #Listpatch
+        outZip.write(resource_path('static/chests/ChestObjList.script'), 'chest/ChestObjList.yml')
+        #MSET
+        outZip.write(resource_path('static/chests/obj/F_EX030_LK.mset'), 'chest/obj/F_EX030_LK.mset')
+        outZip.write(resource_path('static/chests/obj/F_EX040_LK.mset'), 'chest/obj/F_EX040_LK.mset')
+        outZip.write(resource_path('static/chests/obj/F_EX040_RX.mset'), 'chest/obj/F_EX040_RX.mset')
+        #MDLX
+        outZip.write(resource_path('static/chests/obj/F_EX030_JNK.mdlx'), 'chest/obj/F_EX030_JNK.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_ABL.mdlx'), 'chest/obj/F_EX030_ABL.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_FRM.mdlx'), 'chest/obj/F_EX030_FRM.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_MAG.mdlx'), 'chest/obj/F_EX030_MAG.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_PAG.mdlx'), 'chest/obj/F_EX030_PAG.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_REP.mdlx'), 'chest/obj/F_EX030_REP.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_STA.mdlx'), 'chest/obj/F_EX030_STA.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_SMN.mdlx'), 'chest/obj/F_EX030_SMN.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_VST.mdlx'), 'chest/obj/F_EX030_VST.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX030_WEP.mdlx'), 'chest/obj/F_EX030_WEP.mdlx')
+        outZip.write(resource_path('static/chests/obj/F_EX040_PRF.mdlx'), 'chest/obj/F_EX040_PRF.mdlx')
+
     @staticmethod
     def write_music_replacements(replacements: dict[str, str], outZip):
         if len(replacements) > 0:
@@ -1125,7 +1189,7 @@ class SeedZip:
 
         for trsr in treasures:
             self.formattedTrsr[trsr.location.LocationId] = {"ItemId":trsr.item.Id}
-    
+
     def getAssignmentSubset(self,assigned,categories : list[locationCategory]):
         return [assignment for assignment in assigned if any(item is assignment.location.LocationCategory for item in categories)]
 

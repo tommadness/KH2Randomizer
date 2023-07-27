@@ -1777,6 +1777,15 @@ _all_settings = [
     ),
 
     Toggle(
+        name=settingkey.CHESTS_MATCH_ITEM,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label='Chest Visuals Match Contents',
+        shared=True,
+        default=False,
+        tooltip='Chests are given unique visuals based on the type of item they contain.'
+    ),
+
+    Toggle(
         name=settingkey.PARTY_MEMBER_RANDO,
         group=SettingGroup.SEED_MODIFIERS,
         ui_label='Randomize World Party Members (Beta)',
