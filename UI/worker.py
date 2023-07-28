@@ -320,7 +320,7 @@ class BossEnemyZipWorker:
 
     def _download_zip(self, zip_file: io.BytesIO):
         last_seed_folder_txt = appconfig.auto_save_folder() / 'last_seed_folder.txt'
-        output_file_name = _wrap_in_last_seed_folder_if_possible(last_seed_folder_txt, 'randomized-cosmetics.zip')
+        output_file_name = _wrap_in_last_seed_folder_if_possible(last_seed_folder_txt, 'randomized-bosses-enemies.zip')
 
         save_widget = QFileDialog()
         filter_name = "OpenKH Mod (*.zip)"
