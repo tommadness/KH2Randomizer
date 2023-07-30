@@ -1024,7 +1024,7 @@ class SeedZip:
                     if lvl.location.LocationId == level_number:
                         formExp = [l for l in randomizer.formLevelExp if l == lvl.location][0]
                         self.formattedFmlv[formName].append({
-                            "Ability": lvl.item.Id,
+                            "Ability": lvl.item.Id if index!=0 else 0, # making summon junk items zero
                             "Experience": formExp.experience,
                             "FormId": index,
                             "FormLevel": lvl.location.LocationId,
