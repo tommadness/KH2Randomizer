@@ -339,6 +339,9 @@ class RandomizerSettings():
                 if l.value!="Level": # don't duplicate the level info
                     self.tracker_includes.append(l.value)
 
+        # putting this in the settings object to allow us to turn it off as a safety valve
+        self.dummy_forms = True
+
         self.validateSettings()
 
     def create_full_seed_string(self):

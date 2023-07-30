@@ -10,6 +10,7 @@ import yaml
 from Class.exceptions import BossEnemyException, GeneratorException
 from Class.itemClass import ItemEncoder
 from Class.modYml import modYml
+from Class.newLocationClass import KH2Location
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, makeKHBRSettings
 from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
@@ -190,7 +191,7 @@ class SynthLocation():
 
 class SeedZip:
 
-    def __init__(self, settings: RandomizerSettings, randomizer: Randomizer, hints, extra_data: ExtraConfigurationData, multiworld : MultiWorldOutput = None):
+    def __init__(self, settings: RandomizerSettings, randomizer: Randomizer, hints, extra_data: ExtraConfigurationData, unreachable_locations : list[KH2Location], multiworld : MultiWorldOutput = None):
         self.formattedTrsr = {}
         self.formattedLvup = {"Sora":{}}
         self.formattedBons = {}
@@ -199,6 +200,14 @@ class SeedZip:
         self.formattedPlrp = []
         self.spoiler_log = None
         self.enemy_log = None
+
+        if settings.dummy_forms:
+            # convert the valor and final ids to their dummy values
+            dummy_items = Items.getDummyFormItems()
+            for a in randomizer.assignedItems:
+                for d_item in dummy_items:
+                    if a.item.Name == d_item.Name:
+                        a.item = d_item
 
         self.assignTreasures(randomizer)
         self.assignLevels(settings,randomizer)
@@ -209,11 +218,11 @@ class SeedZip:
         self.assignWeaponStats(randomizer)
         self.assignStartingItems(settings, randomizer)
         for i in range(5):
-            if self.createZip(settings, randomizer, hints, extra_data, multiworld):
+            if self.createZip(settings, randomizer, hints, extra_data, unreachable_locations, multiworld):
                 return
         raise BossEnemyException(f"Boss/enemy module had an unexpected error. Try different a different seed or different settings.")
 
-    def createZip(self, settings: RandomizerSettings, randomizer: Randomizer, hints, extra_data: ExtraConfigurationData, multiworld):
+    def createZip(self, settings: RandomizerSettings, randomizer: Randomizer, hints, extra_data: ExtraConfigurationData, unreachable_locations, multiworld):
         mod = modYml.getDefaultMod()
         sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
 
@@ -340,7 +349,7 @@ class SeedZip:
                                                                                             "Master": {"multiplier": settings.master_exp_multiplier, "values": list(accumulate(settings.master_exp))},
                                                                                             "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
                                                        .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
-                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems, randomizer.shop_items, randomizer.location_weights,LocationInformedSeedValidator().validateSeed(settings, randomizer, False)), indent=4, cls=ItemEncoder)) \
+                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems, randomizer.shop_items, randomizer.location_weights,unreachable_locations), indent=4, cls=ItemEncoder)) \
                                                        .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
                                                        .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
                                                        .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON)) \

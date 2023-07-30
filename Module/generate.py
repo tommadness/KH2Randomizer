@@ -18,9 +18,9 @@ def generateSeed(settings: RandomizerSettings, extra_data: ExtraConfigurationDat
     for attempt in range(50):
         try:
             randomizer = Randomizer(settings)
-            newSeedValidation.validateSeed(settings,randomizer)
+            unreachable_locations = newSeedValidation.validateSeed(settings,randomizer)
             hints = Hints.generateHints(randomizer,settings)
-            zipper = SeedZip(settings, randomizer, hints, extra_data)
+            zipper = SeedZip(settings, randomizer, hints, extra_data,unreachable_locations)
             return zipper.outputZip, zipper.spoiler_log, zipper.enemy_log
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
@@ -34,6 +34,7 @@ def generateSeed(settings: RandomizerSettings, extra_data: ExtraConfigurationDat
 def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], extra_data: ExtraConfigurationData):
     newSeedValidation = LocationInformedSeedValidator()
     randomizers = []
+    unreachables = []
     last_error = None
 
     for player_settings in settingsSet:
@@ -41,8 +42,10 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], extra_data: Ex
             try:
                 last_error = None
                 randomizer = Randomizer(player_settings)
-                newSeedValidation.validateSeed(player_settings,randomizer)
+                unreachable = newSeedValidation.validateSeed(player_settings,randomizer)
                 randomizers.append(randomizer)
+                unreachables.append(unreachable)
+
                 break
             except RandomizerExceptions as e:
                 characters = string.ascii_letters + string.digits
@@ -57,9 +60,9 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], extra_data: Ex
     m = MultiWorld(randomizers,MultiWorldConfig(settingsSet[0]))
 
     seed_outputs = []
-    for settings,randomizer in zip(settingsSet,randomizers):
+    for settings,randomizer,unreachable in zip(settingsSet,randomizers,unreachables):
         hints = Hints.generateHints(randomizer,settings)
-        zipper = SeedZip(settings, randomizer, hints, extra_data, m.multi_output)
+        zipper = SeedZip(settings, randomizer, hints, extra_data, unreachable, m.multi_output)
         seed_outputs.append((zipper.outputZip, zipper.spoiler_log, zipper.enemy_log))
 
     return seed_outputs

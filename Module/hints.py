@@ -63,6 +63,8 @@ class Hints:
             tracker_includes.append("extra_ics")
         if settings.antiform:
             tracker_includes.append("Anti-Form")
+        if settings.dummy_forms:
+            tracker_includes.append("dummy_forms")
 
         # start making the hint file
         hintsText = {}
@@ -74,6 +76,8 @@ class Hints:
         hintsText['settings'] = tracker_includes
         hintsText['checkValue'] = pointHintValues
         hintsText['hintableItems'] = hintedItemValues
+        if settings.dummy_forms:
+            hintsText['dummy_forms'] = True
         hintableWorlds = [locationType.Level,locationType.LoD,locationType.BC,locationType.HB,locationType.TT,locationType.TWTNW,locationType.SP,locationType.Atlantica,locationType.PR,locationType.OC,locationType.Agrabah,locationType.HT,locationType.PL,locationType.DC,locationType.HUNDREDAW,locationType.STT,locationType.FormLevel,"Creations"]
 
         # All hints do the Shananas thing except JSmartee
