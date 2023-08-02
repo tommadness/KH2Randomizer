@@ -6,6 +6,7 @@ import re
 import string
 import sys
 import textwrap
+import zipfile
 from pathlib import Path
 
 import pyperclip as pc
@@ -1011,6 +1012,24 @@ if __name__=="__main__":
     stylesheet = app.styleSheet()
     with open(resource_path('UI/stylesheet.css')) as file:
         app.setStyleSheet(stylesheet + file.read().format(**os.environ))
+
+    
+    progress = QProgressDialog(f"Checking for data files...", "Cancel", 0, 0, None)
+    progress.setWindowTitle("First Time Data Extraction...")
+    progress.setCancelButton(None)
+    progress.setModal(True)
+    progress.show()
+    extracted_data_path = Path("extracted_data/version.txt")
+    data_version = "None"
+    if extracted_data_path.is_file():
+        with open(extracted_data_path.absolute(), "r") as f:
+            data_version = f.read()
+    if data_version != LOCAL_UI_VERSION:
+        # we need to extract the zip
+        path_to_zip = resource_path("extracted_data.zip")
+        with zipfile.ZipFile(path_to_zip,'r') as zip_ref:
+            zip_ref.extractall(".")
+    progress.close()
 
     window.recalculate = True
     try:

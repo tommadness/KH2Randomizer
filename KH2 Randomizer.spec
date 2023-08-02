@@ -68,6 +68,7 @@ a = Analysis(
         'static/*.bin',
         'static/*.json',
         'Module/icon.png',
+        'extracted_data.zip'
        ]) + external_data_recursive([khbrpath+"/**/*.*"]),
     hiddenimports=[],
     hookspath=[],
@@ -112,9 +113,4 @@ if os.path.exists(presetPath):
 
 shutil.copytree('presets', presetPath)
 
-dataPath = '{0}/extracted_data'.format(DISTPATH)
-if os.path.exists(dataPath):
-  shutil.rmtree(dataPath)
-
-shutil.copytree('extracted_data', dataPath)
 shutil.make_archive('Kingdom Hearts II Final Mix Randomizer', 'zip', DISTPATH)
