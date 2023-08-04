@@ -397,18 +397,17 @@ class SeedZip:
             # delete all duplicates
             mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
         
-        # remove duplicate cmd.list
+        # remove duplicate cmd mod
         for a in mod["assets"]:
             if a["name"]=="03system.bin":
-                last_cmd_list_index = None
+                first_cmd_list_index = None
                 delete_asset_indices = []
                 for index, b in enumerate(a["source"]):
                     if b["name"]=="cmd":
-                        if last_cmd_list_index:
-                            delete_asset_indices.append(last_cmd_list_index)
-                            last_cmd_list_index = index
+                        if first_cmd_list_index:
+                            delete_asset_indices.append(index)
                         else:
-                            last_cmd_list_index = index
+                            first_cmd_list_index = index
                 a["source"] = [i for j, i in enumerate(a["source"]) if j not in delete_asset_indices]
 
     def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
@@ -440,24 +439,21 @@ class SeedZip:
     def addCmdListModifications(self,settings,mod,outZip):
         if not settings.roxas_abilities_enabled and not settings.disable_final_form:
             return
-
-        with open(resource_path("static/better_stt/cmd.list"), "rb") as cmdlist:
-            binaryContent = bytearray(cmdlist.read())
-
-            if not settings.roxas_abilities_enabled:
-                # better stt 0x93, vanilla 0xB7
-                binaryContent[0x3345] = 0xB7
-                binaryContent[0x3375] = 0xB7
-                binaryContent[0x33A5] = 0xB7
-            if settings.disable_final_form:
-                # disable final form 0x0A, vanilla 0x5
-                binaryContent[0x234] = 0x0A
-                binaryContent[0x6234] = 0x0A
-            outZip.writestr("better_stt/cmd.list",binaryContent)
+        
+        if settings.roxas_abilities_enabled and not settings.disable_final_form:
+            cmd_yml = "better_stt/CmdList.yml"
+        elif settings.roxas_abilities_enabled and settings.disable_final_form: 
+            cmd_yml = "better_stt/CmdListWDisableFinal.yml"
+        elif not settings.roxas_abilities_enabled and settings.disable_final_form: 
+            cmd_yml = "disable_final_form.yml"
+        else:
+            raise Exception("Trying to get cmd list mod without disabling final or better stt")
+        
+        outZip.write(resource_path("static/"+cmd_yml),cmd_yml)
 
         for x in mod["assets"]:
             if x["name"]=="03system.bin":
-                x["source"]+=modYml.getCmdListMod()
+                x["source"]+=modYml.getCmdListMod(cmd_yml)
                 break
 
 

@@ -524,8 +524,8 @@ class modYml:
                     ]
                 }
 
-    def getCmdListMod():
-        return [{"method":"copy", "name":"cmd", "type":"list", "source":[{"name":"better_stt/cmd.list"}]}]
+    def getCmdListMod(filename):
+        return [{"method":"listpatch", "name":"cmd", "type":"list", "source":[{"name":filename,"type":"cmd"}]}]
 
     def getBtlvMod():
         return [{"method":"copy", "name":"btlv", "type":"list", "source":[{"name":"modified_btlv.bin"}]}]
