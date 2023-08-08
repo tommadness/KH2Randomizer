@@ -41,9 +41,6 @@ class ProgressionDisplayWidget(QDialog):
 
         self.setLayout(box)
 
-    def select_all_presets_from_list(self):
-        for index in range(self.preset_list_widget.count()):
-            self.preset_list_widget.item(index).setSelected(True)
 
 class ProgressionWidget(QWidget):
     def __init__(self, settings, setting_name):
@@ -154,6 +151,8 @@ class ProgressionWidget(QWidget):
 
     def _update_spinboxes(self):
         setting: ProgressionChainSelect = Class.seedSettings.settings_by_name[self.setting_name]
+        for w in self.threshold_values:
+            self.threshold_values[w].setValue(setting.progression.get_point_threshold(w))
         for w in self.world_options:
             for w_cp_index in range(setting.progression.get_num_cp_for_world(w)):
                 self.tier3_selects[w][w_cp_index].setValue(setting.progression.get_cp_for_world(w,w_cp_index))

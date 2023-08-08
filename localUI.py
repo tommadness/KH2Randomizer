@@ -380,6 +380,10 @@ class KH2RandomizerApp(QMainWindow):
 
         self.seedName.editingFinished.connect(self._seed_name_changed)
 
+        # do a sanity update for anything that didn't update
+        for widget in self.widgets:
+            widget.update_widgets()
+
     def _configure_menu_bar(self):
         menu_bar = self.menuBar()
         self.presetMenu = QMenu("Preset")

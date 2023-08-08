@@ -409,6 +409,9 @@ class KH2Submenu(QWidget):
                             vanil.setChecked(True)
                         else:
                             junk.setChecked(True)
+            elif isinstance(setting, ProgressionChainSelect):
+                setting.progression.set_uncompressed(self.settings.get(name))
+                widget._update_spinboxes()
 
     def make_combo_box(self, name: str):
         setting: SingleSelect = Class.seedSettings.settings_by_name[name]
