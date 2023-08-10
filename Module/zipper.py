@@ -383,7 +383,7 @@ class SeedZip:
         return True
 
     def validate_mod_yml(self,mod):
-        for modded_file in ["00battle.bin","03system.bin"]:
+        for modded_file in ["00battle.bin"]:
             first_asset_index = None
             delete_asset_indices = []
             for index,a in enumerate(mod["assets"]):
@@ -396,19 +396,6 @@ class SeedZip:
                         first_asset_index = index
             # delete all duplicates
             mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
-        
-        # remove duplicate cmd mod
-        for a in mod["assets"]:
-            if a["name"]=="03system.bin":
-                first_cmd_list_index = None
-                delete_asset_indices = []
-                for index, b in enumerate(a["source"]):
-                    if b["name"]=="cmd":
-                        if first_cmd_list_index:
-                            delete_asset_indices.append(index)
-                        else:
-                            first_cmd_list_index = index
-                a["source"] = [i for j, i in enumerate(a["source"]) if j not in delete_asset_indices]
 
     def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
         hash_icons = settings.seedHashIcons
