@@ -556,75 +556,75 @@ def getChestVisualId(location, item):
     #Pride Lands needs different IDs
     if locationType.PL in location:
         #get correct chest id for item type
-        chestTypeId = 834 #default "Junk" chest visual
+        chestTypeId = 4040 #default "Junk" chest visual
         if item in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-            chestTypeId = 835
+            chestTypeId = 4041
         elif item == itemType.FORM:
-            chestTypeId = 2132
+            chestTypeId = 4042
         elif item in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-            chestTypeId = 2133
+            chestTypeId = 4043
         elif item == itemType.TORN_PAGE:
-            chestTypeId = 2142                                  
+            chestTypeId = 4044                                  
         elif item == itemType.REPORT:
-            chestTypeId = 2143
+            chestTypeId = 4045
         elif item in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]: #[itemType.GAUGE, itemType.SLOT]:
-            chestTypeId = 2235
+            chestTypeId = 4046
         elif item == itemType.SUMMON:
-            chestTypeId = 2236
+            chestTypeId = 4047
         elif item in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]: #== itemType.STORYUNLOCK:
-            chestTypeId = 2540
+            chestTypeId = 4048
         elif item in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF]:
-            chestTypeId = 1392
+            chestTypeId = 4049
         elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
-            chestTypeId = 1448
+            chestTypeId = 4050
         return chestTypeId
     #twilight town and STT require different IDs too
     elif locationType.TT in location or locationType.STT in location:
         #get correct chest id for item type
-        chestTypeId = 823 #default "Junk" chest visual
+        chestTypeId = 4020 #default "Junk" chest visual
         if item in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-            chestTypeId = 824
+            chestTypeId = 4021
         elif item == itemType.FORM:
-            chestTypeId = 825
+            chestTypeId = 4022
         elif item in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-            chestTypeId = 826
+            chestTypeId = 4023
         elif item == itemType.TORN_PAGE:
-            chestTypeId = 827                                  
+            chestTypeId = 4024                                  
         elif item == itemType.REPORT:
-            chestTypeId = 828
+            chestTypeId = 4025
         elif item in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]:
-            chestTypeId = 829
+            chestTypeId = 4026
         elif item == itemType.SUMMON:
-            chestTypeId = 830
+            chestTypeId = 4027
         elif item in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
-            chestTypeId = 831
+            chestTypeId = 4028
         elif item in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF]:
-            chestTypeId = 832
+            chestTypeId = 4029
         elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
-            chestTypeId = 833
+            chestTypeId = 4030
         return chestTypeId
     #default IDs
     else:
         #get correct chest id for item type
-        chestTypeId = 320 #default "Junk" chest visual
+        chestTypeId = 4000 #default "Junk" chest visual
         if item in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-            chestTypeId = 321
+            chestTypeId = 4001
         elif item == itemType.FORM:
-            chestTypeId = 322
+            chestTypeId = 4002
         elif item in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-            chestTypeId = 323
+            chestTypeId = 4003
         elif item == itemType.TORN_PAGE:
-            chestTypeId = 324                                  
+            chestTypeId = 4004                                  
         elif item == itemType.REPORT:
-            chestTypeId = 325
+            chestTypeId = 4005
         elif item in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]:
-            chestTypeId = 818
+            chestTypeId = 4006
         elif item == itemType.SUMMON:
-            chestTypeId = 819
+            chestTypeId = 4007
         elif item in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
-            chestTypeId = 820
+            chestTypeId = 4008
         elif item in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF]:
-            chestTypeId = 821
+            chestTypeId = 4009
         elif item in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
-            chestTypeId = 822
+            chestTypeId = 4010
         return chestTypeId
