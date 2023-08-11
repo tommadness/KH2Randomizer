@@ -1,6 +1,6 @@
 #SR Chests
-320:
-  ObjectId: 320
+4000:
+  ObjectId: 4000
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -29,8 +29,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-321:
-  ObjectId: 321
+4001:
+  ObjectId: 4001
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -59,8 +59,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-322:
-  ObjectId: 322
+4002:
+  ObjectId: 4002
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -89,8 +89,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-323:
-  ObjectId: 323
+4003:
+  ObjectId: 4003
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -119,8 +119,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-324:
-  ObjectId: 324
+4004:
+  ObjectId: 4004
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -149,8 +149,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-325:
-  ObjectId: 325
+4005:
+  ObjectId: 4005
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -179,8 +179,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-818:
-  ObjectId: 818
+4006:
+  ObjectId: 4006
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -209,8 +209,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-819:
-  ObjectId: 819
+4007:
+  ObjectId: 4007
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -239,8 +239,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-820:
-  ObjectId: 820
+4008:
+  ObjectId: 4008
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -269,8 +269,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-821:
-  ObjectId: 821
+4009:
+  ObjectId: 4009
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -299,8 +299,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-822:
-  ObjectId: 822
+4010:
+  ObjectId: 4010
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -330,8 +330,8 @@
   WallOcclusion: false
   Hift: false
 #TT Chests
-823:
-  ObjectId: 823
+4020:
+  ObjectId: 4020
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -360,8 +360,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-824:
-  ObjectId: 824
+4021:
+  ObjectId: 4021
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -390,8 +390,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-825:
-  ObjectId: 825
+4022:
+  ObjectId: 4022
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -420,8 +420,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-826:
-  ObjectId: 826
+4023:
+  ObjectId: 4023
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -450,8 +450,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-827:
-  ObjectId: 827
+4024:
+  ObjectId: 4024
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -480,8 +480,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-828:
-  ObjectId: 828
+4025:
+  ObjectId: 4025
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -510,8 +510,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-829:
-  ObjectId: 829
+4026:
+  ObjectId: 4026
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -540,8 +540,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-830:
-  ObjectId: 830
+4027:
+  ObjectId: 4027
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -570,8 +570,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-831:
-  ObjectId: 831
+4028:
+  ObjectId: 4028
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -600,8 +600,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-832:
-  ObjectId: 832
+4029:
+  ObjectId: 4029
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -630,8 +630,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-833:
-  ObjectId: 833
+4030:
+  ObjectId: 4030
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -661,8 +661,8 @@
   WallOcclusion: false
   Hift: false
 #LK Chests
-834:
-  ObjectId: 834
+4040:
+  ObjectId: 4040
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -691,8 +691,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-835:
-  ObjectId: 835
+4041:
+  ObjectId: 4041
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -721,8 +721,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-2132:
-  ObjectId: 2132
+4042:
+  ObjectId: 4042
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -751,8 +751,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-2133:
-  ObjectId: 2133
+4043:
+  ObjectId: 4043
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -781,8 +781,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-2142:
-  ObjectId: 2142
+4044:
+  ObjectId: 4044
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -811,8 +811,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-2143:
-  ObjectId: 2143
+4045:
+  ObjectId: 4045
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -841,8 +841,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-2235:
-  ObjectId: 2235
+4046:
+  ObjectId: 4046
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -871,8 +871,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-2236:
-  ObjectId: 2236
+4047:
+  ObjectId: 4047
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -901,8 +901,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-2540:
-  ObjectId: 2540
+4048:
+  ObjectId: 4048
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -931,8 +931,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-1392:
-  ObjectId: 1392
+4049:
+  ObjectId: 4049
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
@@ -961,8 +961,8 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
-1448:
-  ObjectId: 1448
+4050:
+  ObjectId: 4050
   ObjectType: TREASURE
   SubType: 0
   DrawPriority: 0
