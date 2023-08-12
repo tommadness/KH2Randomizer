@@ -31,9 +31,7 @@ Although, for the Randomizer to work, the **Cheats and LuaEngine seettings must 
 
 Afterwards, close up PCSX2-EX, this is the last time that we’ll be opening it manually, as the rest of the setup process will make it so that PCSX2-EX will open automatically.
 
-Copy copy the `F266B00B_X-O_Swap.pnach` file that you downloaded earlier to the cheats folder that was automatically created during the PCSX2-EX installation, located at `Documents/PCSX2`. If you will be playing with the Japanese controls (X to jump/cancel, O to attack/confirm), you can skip this step.
-
-![Copy .pnach file to Cheats folder](./copy-to-cheats-folder.png)
+Copy the `F266B00B_X-O_Swap.pnach` file that you downloaded earlier to the cheats folder that was automatically created during the PCSX2-EX installation, located at `Documents/PCSX2`. If you will be playing with the Japanese controls (X to jump/cancel, O to attack/confirm), you can skip this step.
 
 TL;DR, its:
 1.	Set up PCSX2-EX just like you would set up PCSX2.
