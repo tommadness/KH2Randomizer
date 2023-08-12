@@ -13,13 +13,11 @@ all of them, are open for contributions (small or large).
 * [tommadness/KH2Randomizer](https://github.com/tommadness/KH2Randomizer/tree/2.0)
     * the randomizer seed generator
     * the source Markdown for this website (as mentioned above)
-* [Xeeynamo/OpenKh](https://github.com/Xeeynamo/OpenKh)
+* [OpenKH/OpenKh](https://github.com/OpenKH/OpenKh)
     * the OpenKH Mods Manager
     * several other utility programs used by other tools
 * [KH2FM-Mods-Num/GoA-ROM-Edition](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition)
     * the PC ROM version of the Garden of Assemblage mod
-* [thundrio-kh/khpc-modsmanager-bridge](https://github.com/thundrio-kh/khpc-modsmanager-bridge)
-    * the Mods Manager Bridge program (often called `build_from_mm`)
 * [Sirius902/LuaBackend](https://github.com/Sirius902/LuaBackend)
     * the LuaBackend Hook (allows Lua scripts to be run on the PC Epic Games Store version of the game)
 * [Dee-Ayy/KH2Tracker](https://github.com/Dee-Ayy/KH2Tracker)

@@ -1,117 +1,86 @@
 # Randomized Music
 
-The KH2 Randomizer supports randomizing music from any of the games in KH 1.5/2.5/2.8, as well as your own custom music.
-Below are some basic guidelines for how to set this up.
+The KH2 Randomizer supports randomizing songs from some Kingdom Hearts games, as well as your own custom songs.
 
-### Kingdom Hearts Music
+* [General Options](#general-options)
+* [Kingdom Hearts Songs](#kingdom-hearts-songs)
+* [Custom Songs](#custom-songs)
 
-For Kingdom Hearts 2, this is setup automatically once you have the rest of the randomizer working. For the other games
-in the series, the games need to be extracted into the same folder as the extracted copy of KH2 (instructions for this
-are outside the scope of this page). In the list of music choices, the randomizer will only show the games that you have
-properly extracted.
+## General Options
 
-A mapping of the built in songs used, and what category they are assigned, can be found at the
-top [here](https://github.com/tommadness/KH2Randomizer/blob/master/Module/randomBGM.py).
+### Randomize Music
 
-### Custom Music
+Controls whether music randomization is active.
 
-All your custom music should go in a folder called `custom` which is in the same folder as the rest of your extracted
-games. Each folder within this `custom` folder becomes an option in the list of music choices in the randomizer.
+### DMCA Safe
 
-Organize your custom `.scd` files as you like within different folders for different options of music (making
-custom `.scd` files is outside the scope of this page).
+Check this option to exclude songs from the randomized music pool that are known to have some copyright concerns.
 
-By default, each song is given a music category of `unknown`, but this can be overridden by creating a `config.txt` file
-within a folder (see below).
+### Categorize Songs
 
-A category folder can have subfolders as well, and they will all be added into the same category. The use for this is
-each subfolder can have a different config file, allowing easier control of the categories of different music.
+Controls whether songs are replaced only by other songs in the same category. For example,
+"boss" songs can be replaced by "boss" songs, "cutscene" songs can be replaced by "cutscene" songs, and so on.
 
-Any folder that starts with an _ will be ignored by the randomizer, which can be used to quickly disable groups of songs
-from being included.
+Leaving this option unchecked means any song in the game can be replaced by any song in the randomized music pool.
 
-### Config
+### Allow Duplicate Replacements
 
-A config.txt can have two types of lines (others are ignored).
+Check this option if you don't have enough songs available to replace all the game songs, but you'd like only songs
+from your randomized music pool to be used (even if it means some songs will be re-used).
 
-`category=(unknown|battle|field|boss|title|cutscene)`
+With this option disabled, once the music randomizer runs out of replacement songs, it will not replace any further
+songs from the game, and some songs will remain unchanged.
 
-This is the type of music that will be applied to all the .scd files in this folder (not subfolders).
+## Kingdom Hearts Songs
 
-`<songname.scd>=(unknown|battle|field|boss|title|cutscene)`
+There are options to include songs from some Kingdom Hearts games into the randomized music pool.
 
-In addition, you can add lines to override specific songs to a specific type of music.
+If you haven't yet configured the seed generator to point to your OpenKH folder, these options will be disabled. To
+configure this, choose `Find OpenKH Folder` in the `Configure` menu.
 
-### Categories
+![Find OpenKH Folder](find-openkh-menu.png)
 
-Custom Music doesn't require using categories, but by adding them you can use the separation options 
-(such as `Randomize Field & Battle Music Separately`) to make sure tracks only get randomized to specific areas in the game.
+Each game's option may also be disabled if you haven't extracted that game's data using the setup wizard in OpenKH Mods
+Manager.
 
-A breif description of each category are as follows:
+## Custom Songs
 
-- `field`
-Music to be used for world field themes.
-- `battle`
-Music to be used for world battle themes.
-- `boss`
-Music to be used for boss fight and non world specific battle music (Ex. Tension Rising, Vim & Vigor, ect.).
-This category is teated as `battle` when not using `Randomize Special Battle Music Separately`.
-- `title`
-Music to be used for the Title and Battle Report Dearly Beloved themes.
-This category is teated as `field` when not using `Randomize Dearly Beloved Separately`.
-- `cutscene`
-Music to be used for cutscens.
-This category is teated as `field` when not using `Randomize Cutscene Music Separately`.
-- `unknown`
-Music that can be chosen for any of the above.
+You can use your own `.scd` files as part of the music randomizer. There is an `Include Custom Songs` option that
+controls whether custom songs are included in the randomized music pool.
 
-### Example
+> Creating/obtaining `.scd` files is outside the scope of this page.
 
-Here is an example folder of extracted games and custom music, and then I will explain how the randomizer treats the
-music.
+### Setup
 
-```
-kh_games
-  * kh2
-  * bbs
-  * custom
-    * ffx
-      > Victory Fanfare.scd
-    * oot
-      * overworld
-        > config.txt
-        > Kokiri Forest.scd
-        > Market.scd
-      * dungeon   
-        > config.txt
-        > Middle Boss Battle.scd
-        > Dinosaur Boss Battle.scd
-        > Dodongo's Cavern.scd
-      * _songs 
-        > Song of Time.scd
-        > Song of Storms.scd
-```
+If you haven't chosen a custom music folder yet, you should see a message indicating `Custom music folder not
+configured`. To configure this, choose `Choose Custom Music Folder` in the `Configure` menu.
 
-config.txt of overworld folder
+![Choose Custom Music Folder](choose-custom-music-folder.png)
 
-```
-category=field
-```
+Choose a folder where you will place your custom songs. Once you've done this, the seed generator creates several
+sub-folders within this folder representing various music categories.
 
-config.txt of dungeon folder
+### Basic
 
-```
-category=battle
-Dodongo's Cavern.scd=field
-```
+If you just want all of your songs to be randomized anywhere in the game, place all of your `.scd` files within the
+`wild` folder. You can create additional sub-folders within the `wild` folder for organization of your song files as
+desired.
 
-Explanation:
+### Intermediate
 
-When I open the Cosmetics tab of the randomizer, 4 options will show up for music (`kh2`, `bbs`, `ffx`, `oot`).
+If you'd like to categorize your songs so that certain ones are played for the title screen only, certain ones play only
+during battle, etc., place your `.scd` files into the various folders that represent those categories. You can create
+sub-folders within any of the categories for organization of your song files as desired.
 
-If `ffx` is chosen, the `Victory Fanfare.scd` will be added into the randomization pool with a category of `unknown`.
+> You can look at the `musiclist.json` file in the folder where you installed the seed generator to see which KH2
+> songs belong to each category.
 
-If `oot` is chosen, then the `overworld` and `dungeon` folders will be added into the randomization pool, but
-the `_songs` folder will be ignored. Everything in the `overworld` folder will be given the category of `field`. The two
-boss battle themes in the `dungeon` folder are given a category of `battle`, but the `Dodongo's Cavern.scd` file is
-given a category of `field`.
+### Advanced
+
+If you'd like even more control over music categories, you can create your own additional category folders, and you can
+edit the `musiclist.json` file (located in the folder where you installed the seed generator) to configure the
+category/categories of each song. Songs can be given multiple categories, and a replacement song will be chosen from one
+of those categories. A category can be repeated in the configuration to give a certain category more "weight".
+
+Using this technique, you can get as precise as having a set of custom song options for each world, or even a set of
+custom song options that can replace just one song from the game.

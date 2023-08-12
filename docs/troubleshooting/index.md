@@ -42,31 +42,8 @@ See [Troubleshooting GoA (PC)](#troubleshooting-goa-pc) or [Troubleshooting GoA 
 ### (PCSX2) Why is my game in Japanese?
 
 * Make sure you're opening PCSX2 via the "Build and Run" command in OpenKH Mods Manager and not opening PCSX2 directly
-* Make sure the order of your mods in OpenKH Mods Manager is correct. The correct order (top to bottom) is
-    * Randomizer seed
-    * All-in-One
-    * Language Pack
-
-### Why are my keyblades not randomized? Why are certain Bonus Levels always the same?
-
-The randomizer seed may not be properly applied to the game.
-
-#### PC
-
-Verify that you have done all of the following steps.
-
-* Added the randomizer seed as a mod to OpenKH Mods Manager in the highest priority slot (at the top)
-* Checked the checkbox next to the randomizer seed
-* Run "Build only" in OpenKH Mods Manager
-* Run "patch" or "fast_patch" in the Mod Manager Bridge
-
-#### PCSX2
-
-Make sure the order of your mods in OpenKH Mods Manager is correct. The correct order (top to bottom) is
-
-* Randomizer seed
-* All-in-One
-* Language Pack
+* Make sure the order of your mods in OpenKH Mods Manager is correct. See
+  [Troubleshooting GoA (PCSX2)](#troubleshooting-goa-pcsx2).
 
 ## Troubleshooting GoA (PC)
 
@@ -75,37 +52,16 @@ look similar (but not identical) to this screenshot:
 
 ![Lua console](lua-console.png)
 
-If that window does not appear, it's likely one of two causes.
+If that window does not appear, it's likely the LuaBackend Hook is missing, is in the wrong location, or is an incorrect
+version
+* See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) or the
+  [PC Setup Guide](../setup/Panacea-ModLoader/index.md#lua-backend-installation-) for additional instructions
 
-* The LuaBackend Hook is missing, is in the wrong location, or is an incorrect version
-    * See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional instructions
-
-* Lua scripts are missing or are in the wrong location. Verify that your Lua scripts are placed in the correct folder
-  for KH2 scripts (usually something like `C:\Users\johndoe\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2`).
-
-If the Lua scripts window _does_ appear and you're still having trouble, verify that you have only one Garden of
-Assemblage Lua script. There should only be _one_ of the following scripts in your folder: `GoA Practice.lua`,
-`GoA RAM.lua`, `F266B00B GoA ROM.lua`, `F266B00B GoA Reverse.lua`. It's fine to have other Lua scripts such as soft
-reset, auto-save, quality of life, etc., but only one GoA script should be there at any given time.
-
-You can also try to use the Rando Setup Checker to help verify that you have the correct setup. See
-[Downloads](../downloads/index.md) for a link.
+If the Lua scripts window _does_ appear, and you're still having trouble, verify that you have only one Garden of
+Assemblage Lua script. It's fine to have other Lua scripts such as soft reset, auto-save, etc., but only one GoA script
+should be active at any given time.
 
 ## Troubleshooting GoA (PCSX2)
 
-* Verify that you have "Enable Cheats" checked in the PCSX2 System menu
-
-* Verify that you have the Garden of Assemblage `.pnach` file in the correct cheats folder
-    * The correct folder can be found on the "Plugin/BIOS Selector" screen from the PCSX2 Config menu
-
-![Cheats folder](pcsx2-cheats-location.png)
-
-* Verify that the Garden of Assemblage `.pnach` file name starts with `F266B00B` - this is how PCSX2 knows to link that
-  file up with the version of KH2 used for randomizer
-
-* Verify that you have only one Garden of Assemblage `.pnach` file. There should only be _one_ of the following files in
-  your folder: `F266B00B (Garden of Assemblage Randomizer Build).pnach`,
-  `F266B00B (Garden of Assemblage Practice Build).pnach`
-
-You can also try to use the Rando Setup Checker to help verify that you have the correct setup. See
-[Downloads](../downloads/index.md) for a link.
+Consult the [PCSX2 Setup Guide](../setup/pcsx2-ex-setup/pcsx2-ex-setup.md) and verify you've set everything up
+as described.

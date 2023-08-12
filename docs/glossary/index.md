@@ -16,13 +16,6 @@ Common abbreviations for 100 Acre Wood.
 
 Common short name referring to the 1,000 Heartless fight.
 
-## 5
-
-### 50/50
-
-Refers to a randomizer game with 50 important checks where the player ended up finding all 50 of them. Depending on the
-settings, the numbers could be different.
-
 ## A
 
 ### ABN
@@ -55,14 +48,6 @@ A common abbreviation for the second fight against Armored Xemnas.
 ### BC
 
 A common abbreviation for Beast's Castle.
-
-### bfmm
-
-A common abbreviation for [build_from_mm](#build_from_mm).
-
-### build_from_mm
-
-An alternate name for the [Mod Manager Bridge](#mod-manager-bridge) program.
 
 ## C
 
@@ -149,6 +134,11 @@ See [Hint Systems](../hints/index.md).
 
 See [What are "hinted hints"? Why do they matter?](../hints/index.md#what-are-hinted-hints-why-do-they-matter)
 
+### Hitlist
+
+A win condition for the randomizer that requires the player fulfill certain objectives. See
+[Hitlist](../overview/index.md#hitlist) for more.
+
 ### HT
 
 A common abbreviation for Halloween Town.
@@ -195,11 +185,6 @@ destination.
 As of release 2.1, the randomizer seed generator has a "Remove Port Royal Map Select" option that, when enabled,
 replaces the map location selection screen with simple text options, hopefully preventing the crash altogether.
 
-### Mod Manager Bridge
-
-A program that takes the modifications made by [OpenKH Mods Manager](#openkh-mods-manager) as well as any additional
-patches and applies those changes to the actual KH2 game files.
-
 ## O
 
 ### OC
@@ -214,8 +199,7 @@ A common abbreviation for the Once More ability.
 
 A program from the OpenKH project that can apply modifications to an extracted version of the KH2 game.
 
-This works for both the PCSX2 emulated version of the game as well as the PC Epic Games Store version (though the use
-of [Mod Manager Bridge](#mod-manager-bridge) is also needed in this case).
+This works for both the PCSX2 emulated version of the game as well as the PC Epic Games Store version.
 
 ## P
 
@@ -299,6 +283,25 @@ If the input to the random number generator is the same, then all of the randomi
 the same. If the input changes at all (such as the seed name or even _one_ of the seed settings changing), then the
 randomizations will be completely different.
 
+### Seed Hash
+
+A sequence of images generated and stored along with the seed.
+
+![Seed Hash example](../seed-generator/seed-hash.png)
+
+The seed hash is displayed several places.
+
+* The seed generator itself
+* OpenKH Mods Manager
+* The item tracker
+* The New Game screen in the game itself
+
+The hash can be used for multiple purposes.
+
+* Ensuring the seed you're about to start matches the one you have loaded into the tracker
+* Ensuring all players in a race or co-op format have the same seed
+    * It's common to post a screenshot of the seed hash before a race starts for all racers to compare against
+
 ### Shan-Yu Skip
 
 A technique where the player jumps over the cutscene trigger that begins the Shan-Yu fight in Land of Dragons in order
@@ -354,6 +357,20 @@ A common abbreviation for Twilight Town.
 ### TWTNW
 
 A common abbreviation for The World That Never Was.
+
+## V
+
+### Visit Unlock
+
+Second visits to many worlds are "locked" by the Garden of Assemblage mod utilized by the randomizer. In order to unlock
+the second visits, you will need to obtain certain "visit unlock" items.
+
+A table of which visits are unlocked by which items is below.
+
+![Visit Unlock Table](../seed-generator/locks.png)
+
+> Quick Tip: To make sure the game can update story flags when you collect a visit unlock, you need to trigger a
+> cutscene or enter The World that Never Was. That will update the game, and you can continue to the next visit.
 
 ## W
 
