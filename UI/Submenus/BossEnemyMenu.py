@@ -36,7 +36,7 @@ class BossEnemyMenu(KH2Submenu):
         boss_enemy_mod_button_ps2.setToolTip(boss_enemy_mod_tooltip)
         boss_enemy_mod_button_ps2.clicked.connect(lambda : self._make_boss_enemy_only_mod("PCSX2"))
         self.pending_group.addWidget(boss_enemy_mod_button_ps2)
-        self.end_group('Cosmetics-Only Mod')
+        self.end_group('Boss/Enemy-Only Mod')
 
         self.end_column()
 
