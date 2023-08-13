@@ -3,8 +3,8 @@
 This page includes explanations of some common jargon and abbreviations often used by the KH2 and/or randomizer
 community.
 
-[1](#1) [5](#5) [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [G](#g) [H](#h) [I](#i) [J](#j) [L](#l) [M](#m) [O](#o) [P](#p)
-[R](#r) [S](#s) [T](#t) [W](#w) [Y](#y) [Z](#z)
+[1](#1) [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [G](#g) [H](#h) [I](#i) [J](#j) [L](#l) [M](#m) [O](#o) [P](#p)
+[R](#r) [S](#s) [T](#t) [U](#u) [V](#v) [W](#w) [Y](#y)
 
 ## 1
 
@@ -26,6 +26,12 @@ worlds need to have a blue number next to them in the item tracker to consider t
 ### AG
 
 A common abbreviation for Agrabah.
+
+### Archipelago
+
+A cross-game modification system which randomizes different games, then uses the result to build a single unified
+multiplayer game. Items from one game may be present in another, and you will need your fellow players to find items
+you need in their games to help you complete your own. See [archipelago.gg](https://archipelago.gg/) for more.
 
 ### AS
 
@@ -50,10 +56,6 @@ A common abbreviation for the second fight against Armored Xemnas.
 A common abbreviation for Beast's Castle.
 
 ## C
-
-### Car Key
-
-A nickname for the Fenrir keyblade, due to its appearance.
 
 ### Check
 
@@ -121,6 +123,11 @@ A common abbreviation for [Garden of Assemblage](#garden-of-assemblage).
 
 ## H
 
+### Hades Cup Trophy
+
+An item that, when acquired, allows the player to enter the Olympus Coliseum cups without clearing the otherwise
+required game content to unlock each of the cups.
+
 ### HB
 
 A common abbreviation for Hollow Bastion.
@@ -132,7 +139,7 @@ See [Hint Systems](../hints/index.md).
 
 ### Hinted Hint
 
-See [What are "hinted hints"? Why do they matter?](../hints/index.md#what-are-hinted-hints-why-do-they-matter)
+See [What are "hinted hints"? Why do they matter?](../hints/jsmartee/index.md#what-are-hinted-hints-why-do-they-matter)
 
 ### Hitlist
 
@@ -185,11 +192,25 @@ destination.
 As of release 2.1, the randomizer seed generator has a "Remove Port Royal Map Select" option that, when enabled,
 replaces the map location selection screen with simple text options, hopefully preventing the crash altogether.
 
+### Multiworld
+
+A system where multiple players play randomizer at the same time, and items from one player's game can be found in
+another player's game. KH2 randomizer currently has support for multiworld via [Archipelago](#archipelago).
+
+### Munny Pouch
+
+An item that, when acquired, increases the player's Munny by 5,000. There are usually two of these in the randomized
+item pool.
+
 ## O
 
 ### OC
 
 A common abbreviation for Olympus Coliseum.
+
+### Olympus Stone
+
+An item that, when acquired, allows Sora to use Drive Forms and summons in Olympus Coliseum earlier than normally able.
 
 ### OM
 
@@ -199,7 +220,7 @@ A common abbreviation for the Once More ability.
 
 A program from the OpenKH project that can apply modifications to an extracted version of the KH2 game.
 
-This works for both the PCSX2 emulated version of the game as well as the PC Epic Games Store version.
+This works for both the PCSX2 emulated version of the game and the PC Epic Games Store version.
 
 ## P
 
@@ -358,6 +379,13 @@ A common abbreviation for Twilight Town.
 
 A common abbreviation for The World That Never Was.
 
+## U
+
+### Unknown Disk
+
+An item added to the randomizer that, when acquired, allows access the Heartless Manufactory in Hollow Bastion /
+Radiant Garden earlier than it is normally available.
+
 ## V
 
 ### Visit Unlock
@@ -393,9 +421,3 @@ Though in reality it's the pot that goes flying, this is still often referred to
 Can also refer to a setting in the seed generator that places the Proof of Nonexistence as a reward for "yeeting the
 bear". This setting effectively forces the player to find all Torn Pages as well as the two other Proof items in order
 to unlock the door to final fights.
-
-## Z
-
-### Zebraman
-
-A nickname for Final Xemnas, due to his attire resembling a zebra.
