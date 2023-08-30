@@ -351,7 +351,10 @@ class WorldRandomizationTristate(Setting):
         return [selected_values,partial_values]
 
     def spoiler_log_entries(self, value) -> dict[str, str]:
-        randomized_keys, vanilla_keys = value
+        if isinstance(value,tuple):
+            randomized_keys, vanilla_keys = value
+        else:
+            randomized_keys, vanilla_keys = value, []
         randomized_worlds = []
         vanilla_worlds = []
         junk_worlds = []

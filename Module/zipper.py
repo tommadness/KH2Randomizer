@@ -374,15 +374,63 @@ class SeedZip:
 
             outZip.write(resource_path("Module/icon.png"), "icon.png")
 
-            self.validate_mod_yml(mod)
-
-            outZip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
+            # closing the zip here, validating and adding mod.yml later
             outZip.close()
         data.seek(0)
-        self.outputZip = data
+        new_data = self.validate_mod_yml(mod,data)
+        self.outputZip = new_data
         return True
 
-    def validate_mod_yml(self,mod):
+    def validate_mod_yml(self,mod,in_data):
+        print("Starting mod yml validation")
+        # merge cmd mods if there are two
+        #  first, find all the list patches we are assigning
+        listpatch_files = []
+        listpatch_contents = []
+        for a in mod["assets"]:
+            if a["name"]=="03system.bin":
+                for index, b in enumerate(a["source"]):
+                    if b["name"]=="cmd":
+                        listpatch_files.append(b["source"][0]["name"].replace('\\',"/"))
+        
+        # if there are multiple cmd listpatches, we have to read all the contents to create new file
+        if len(listpatch_files) > 1:
+            with zipfile.ZipFile(in_data, "r") as current_zip:
+                for name in current_zip.namelist():
+                    print(name)
+                print("----")
+                for l_file in listpatch_files:
+                    print(l_file)
+                    path = zipfile.Path(current_zip, at=l_file)
+                    with path.open(encoding='UTF-8') as f:
+                        listpatch_contents+=yaml.safe_load(f)
+                        print(listpatch_contents)
+
+            # remove all instances of 03_system cmd listpatches (we'll add another afterward)
+            num_03system_entries = 0
+            delete_system_indices = []
+            for outer_index, a in enumerate(mod["assets"]):
+                delete_asset_indices = []
+                if a["name"]=="03system.bin":
+                    num_03system_entries+=1
+                    for index, b in enumerate(a["source"]):
+                        if b["name"]=="cmd":
+                            delete_asset_indices.append(index)
+                    a["source"] = [i for j, i in enumerate(a["source"]) if j not in delete_asset_indices]
+                    if len(a["source"])==0:
+                        delete_system_indices.append(outer_index)
+            # assumes that empty 03system lists are only happening from 
+            # listpatches of cmd, and we don't want to remove the only 
+            # instance of this in the yaml, so only remove empty entries 
+            # if they are duplicates
+            if num_03system_entries>1:
+                mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_system_indices]
+            
+            for a in mod["assets"]:
+                if a["name"]=="03system.bin":
+                    a["source"].append({"method":"listpatch","name":"cmd","source":[{"name":"merged_cmd_list.yml","type":"cmd"}],"type":"list"})
+
+
         for modded_file in ["00battle.bin"]:
             first_asset_index = None
             delete_asset_indices = []
@@ -396,6 +444,14 @@ class SeedZip:
                         first_asset_index = index
             # delete all duplicates
             mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
+
+        # now that the mod yml is proper, we want to add any merged files into the zip, along with the mod.yml
+        with zipfile.ZipFile(in_data, "a", zipfile.ZIP_DEFLATED) as current_zip:
+            current_zip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
+            if len(listpatch_contents) > 0:
+                current_zip.writestr("merged_cmd_list.yml", yaml.dump(listpatch_contents, line_break="\r\n"))
+        in_data.seek(0)
+        return in_data
 
     def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
         hash_icons = settings.seedHashIcons
@@ -813,9 +869,9 @@ class SeedZip:
                 chestTypeId = getChestVisualId(trsr.location.LocationTypes, trsr.item.ItemType)
                 #open and write file
                 try: #open yml first if it exists
-                    spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
+                    spawnFile = yaml.safe_load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
                 except: #open spawn if yml doesn't
-                    spawnFile = yaml.load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
+                    spawnFile = yaml.safe_load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
                 finally: #edit and save yml
                     spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
                     yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
