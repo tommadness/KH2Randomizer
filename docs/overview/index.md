@@ -89,6 +89,7 @@ are not limited to:
       those fights are a great place to earn levels for Wisdom Form)
 * The Proof of Peace unlocks the two rewards given by Mushroom XIII. Simply talk to the Mushrooms after obtaining the
   Proof of Peace to obtain the rewards.
+* The Unknown Disk unlocks the Heartless Manufactory early.
 * A loading zone is added in an out-of-bounds area of the Cavern of Remembrance to prevent Sora from falling
   infinitely (effectively softlocking the game).
     * This area of the cavern is used in a technique called "CoR skip" where players clip out-of-bounds in order to
