@@ -18,7 +18,7 @@ Index:
 * Unofficial copies of the game are not supported, it is strongly recommended you buy and install the game directly from the Epic Game Store.
 
 ## Resources Needed:
-* [OpenKH Mod Manager](https://github.com/aliosgaming/OpenKh/releases/download/v3.0.0/OpenKH.Mod.Manager.2023.zip)
+* [OpenKH Mod Manager](https://github.com/aliosgaming/OpenKh/releases/latest/download/OpenKH.Mod.Manager.2023.zip)
 * [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/Kingdom.Hearts.II.Final.Mix.Randomizer.zip)
 * [.NET6 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.13-windows-x64-installer)
 
