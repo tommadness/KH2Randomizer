@@ -477,7 +477,14 @@ class SeedZip:
 
             # delete form msets mod
             mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
-            
+        else:
+            # add multi support for TWTNW NPCs, msg/jp/eh.bar (TODO: remove this when khbr does it on its own)
+            for index,a in enumerate(mod["assets"]):
+                if a["name"] == "msg/jp/eh.bar":
+                    a["multi"].append({"name":"msg/fr/eh.bar"})
+                    a["multi"].append({"name":"msg/gr/eh.bar"})
+                    a["multi"].append({"name":"msg/it/eh.bar"})
+                    a["multi"].append({"name":"msg/sp/eh.bar"})
 
         # now that the mod yml is proper, we want to add any merged files into the zip, along with the mod.yml
         with zipfile.ZipFile(in_data, "a", zipfile.ZIP_DEFLATED) as current_zip:
