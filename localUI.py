@@ -49,7 +49,8 @@ from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.worker import GenerateSeedWorker
 
-LOCAL_UI_VERSION = '3.0.1'
+LOCAL_UI_VERSION = '3.0.3'
+EXTRACTED_DATA_UPDATE_VERSION = "3.0.1" # shouldn't need to update this often
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -1019,22 +1020,22 @@ if __name__=="__main__":
         app.setStyleSheet(stylesheet + file.read().format(**os.environ))
 
     
-    progress = QProgressDialog(f"Checking for data files...", "Cancel", 0, 0, None)
-    progress.setWindowTitle("First Time Data Extraction...")
-    progress.setCancelButton(None)
-    progress.setModal(True)
-    progress.show()
     extracted_data_path = Path("extracted_data/version.txt")
     data_version = "None"
     if extracted_data_path.is_file():
         with open(extracted_data_path.absolute(), "r") as f:
             data_version = f.read()
-    if data_version != LOCAL_UI_VERSION:
+    if data_version != EXTRACTED_DATA_UPDATE_VERSION:
+        progress = QProgressDialog(f"Checking for data files...", "Cancel", 0, 0, None)
+        progress.setWindowTitle("First Time Data Extraction...")
+        progress.setCancelButton(None)
+        progress.setModal(True)
+        progress.show()
         # we need to extract the zip
         path_to_zip = resource_path("extracted_data.zip")
         with zipfile.ZipFile(path_to_zip,'r') as zip_ref:
             zip_ref.extractall(".")
-    progress.close()
+        progress.close()
 
     window.recalculate = True
     try:

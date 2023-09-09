@@ -377,11 +377,11 @@ class SeedZip:
             # closing the zip here, validating and adding mod.yml later
             outZip.close()
         data.seek(0)
-        new_data = self.validate_mod_yml(mod,data)
+        new_data = self.validate_mod_yml(mod,settings,data)
         self.outputZip = new_data
         return True
 
-    def validate_mod_yml(self,mod,in_data):
+    def validate_mod_yml(self,mod,settings,in_data):
         print("Starting mod yml validation")
         # merge cmd mods if there are two
         #  first, find all the list patches we are assigning
@@ -396,11 +396,11 @@ class SeedZip:
         # if there are multiple cmd listpatches, we have to read all the contents to create new file
         if len(listpatch_files) > 1:
             with zipfile.ZipFile(in_data, "r") as current_zip:
-                for name in current_zip.namelist():
-                    print(name)
-                print("----")
+                # for name in current_zip.namelist():
+                #     print(name)
+                # print("----")
                 for l_file in listpatch_files:
-                    print(l_file)
+                    # print(l_file)
                     path = zipfile.Path(current_zip, at=l_file)
                     with path.open(encoding='UTF-8') as f:
                         listpatch_contents+=yaml.safe_load(f)
@@ -444,6 +444,22 @@ class SeedZip:
                         first_asset_index = index
             # delete all duplicates
             mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
+
+        # if we aren't removing damage cap, don't include khbr's enmp mod file (TODO: remove this when khbr listpatches enmp)
+        if not settings.enemy_options.get("remove_damage_cap", False):
+            print("Removing khbr enmp file...")
+            delete_asset_indices = []
+            battle_index = None
+            for index,a in enumerate(mod["assets"]):
+                if a["name"]=="00battle.bin":
+                    battle_index = index
+                    for second_index,b in enumerate(a["source"]):
+                        if b["name"]=="enmp":
+                            delete_asset_indices.append(second_index)
+
+            # delete enmp mod
+            mod["assets"][battle_index]["source"] = [i for j, i in enumerate(mod["assets"][battle_index]["source"]) if j not in delete_asset_indices]
+            
 
         # now that the mod yml is proper, we want to add any merged files into the zip, along with the mod.yml
         with zipfile.ZipFile(in_data, "a", zipfile.ZIP_DEFLATED) as current_zip:
