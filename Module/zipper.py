@@ -460,6 +460,24 @@ class SeedZip:
             # delete enmp mod
             mod["assets"][battle_index]["source"] = [i for j, i in enumerate(mod["assets"][battle_index]["source"]) if j not in delete_asset_indices]
             
+        # if we aren't doing boss or enemy rando, don't include khbr's modded form msets (TODO: remove this when khbr doesn't just add these all the time)
+        if settings.enemy_options.get("boss", False) in [False, "Disabled"] and \
+            settings.enemy_options.get("enemy", False) in [False, "Disabled"]:
+            print("Removing khbr form msets...")
+            offending_msets = ["obj/P_EX100_BTLF.mset",
+                                "obj/P_EX100_HTLF.mset",
+                                "obj/P_EX100_KH1F.mset",
+                                "obj/P_EX100_MAGF.mset",
+                                "obj/P_EX100_TRIF.mset",
+                                "obj/P_EX100_ULTF.mset"]
+            delete_asset_indices = []
+            for index,a in enumerate(mod["assets"]):
+                if a["name"] in offending_msets:
+                    delete_asset_indices.append(index)
+
+            # delete form msets mod
+            mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
+            
 
         # now that the mod yml is proper, we want to add any merged files into the zip, along with the mod.yml
         with zipfile.ZipFile(in_data, "a", zipfile.ZIP_DEFLATED) as current_zip:
