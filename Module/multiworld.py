@@ -1,19 +1,20 @@
 
 import random
 from typing import List
-from Class.newLocationClass import KH2Location
+
 from Class.itemClass import KH2Item
+from Class.newLocationClass import KH2Location
 from List.ItemList import Items
-# from List.configDict import locationCategory, locationDepth, locationType
 from List.configDict import itemType, locationCategory
-from Module.newRandomize import Randomizer, ItemAssignment
 from Module.RandomizerSettings import RandomizerSettings
+from Module.newRandomize import Randomizer, ItemAssignment
+
 
 class MultiWorldConfig():
     def __init__(self,settings: RandomizerSettings):
         self.mixed_item_count = 20
         self.num_players = 2
-        self.item_swaps = [itemType.FIRE,itemType.BLIZZARD,itemType.THUNDER,itemType.CURE,itemType.MAGNET,itemType.REFLECT,itemType.PROMISE_CHARM,itemType.PROOF,itemType.PROOF_OF_PEACE,itemType.PROOF_OF_CONNECTION, itemType.STORYUNLOCK]
+        self.item_swaps = [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT, itemType.PROMISE_CHARM, itemType.PROOF_OF_NONEXISTENCE, itemType.PROOF_OF_PEACE, itemType.PROOF_OF_CONNECTION, itemType.STORYUNLOCK]
         self.location_swaps = [locationCategory.CHEST]
 
 class MultiWorldEntry():
@@ -51,7 +52,7 @@ class MultiWorld():
 
         for seed in seeds:
             self.all_candidate_swaps.append([])
-            for assignment in seed.assignedItems:
+            for assignment in seed.assignments:
                 if assignment.location.LocationCategory in config.location_swaps:
                     if assignment.item is not None and assignment.item.ItemType in config.item_swaps:
                         self.all_candidate_swaps[-1].append(assignment)

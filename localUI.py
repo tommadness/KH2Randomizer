@@ -25,8 +25,7 @@ from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
-from List.configDict import locationType
-from Module import appconfig, hashimage, commandmenu
+from Module import appconfig, hashimage, commandmenu, version
 from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
@@ -35,7 +34,7 @@ from Module.newRandomize import Randomizer
 from Module.resources import resource_path
 from Module.seedshare import SharedSeed, ShareStringException
 from Module.tourneySpoiler import TourneySeedSaver
-from UI.FirstTimeSetup.firsttimesetup import FirstTimeSetup
+from Module.version import LOCAL_UI_VERSION, EXTRACTED_DATA_UPDATE_VERSION
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CosmeticsMenu import CosmeticsMenu
@@ -49,8 +48,6 @@ from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.worker import GenerateSeedWorker
 
-LOCAL_UI_VERSION = '3.1.0-beta'
-EXTRACTED_DATA_UPDATE_VERSION = "3.0.1" # shouldn't need to update this often
 
 class Logger(object):
     def __init__(self, orig_stream):
@@ -167,7 +164,7 @@ class RandomPresetDialog(QDialog):
         for c in self.preset_list:
             self.preset_list_widget.addItem(c)
         box.addWidget(self.preset_list_widget,0,0)
-        
+
         select_all_button = QPushButton("Select All Presets")
         select_all_button.clicked.connect(self.select_all_presets_from_list)
 
@@ -288,7 +285,11 @@ class KH2RandomizerApp(QMainWindow):
         CosmeticsMod.bootstrap_music_list_file()
 
         random.seed(str(datetime.datetime.now()))
-        self.setWindowTitle("KH2 Randomizer Seed Generator ({0})".format(LOCAL_UI_VERSION))
+
+        debug_string = ""
+        if version.debug_mode():
+            debug_string = "DEBUG "
+        self.setWindowTitle(f"KH2 Randomizer Seed Generator ({debug_string}{LOCAL_UI_VERSION})")
         self.setWindowIcon(QIcon(resource_path("Module/icon.png")))
         self.setup = None
         pagelayout = QVBoxLayout()
@@ -330,20 +331,7 @@ class KH2RandomizerApp(QMainWindow):
         self.spoiler_log.setCheckState(Qt.Checked)
         seed_layout.addWidget(self.spoiler_log)
 
-        # self.tourney_gen_toggle = QCheckBox("Tourney Mode")
-        # self.tourney_gen_toggle.setCheckState(Qt.Unchecked)
-        # self.tourney_gen_toggle.setToolTip("Allows tourney organizer to make seeds with spoilers, and share seed strings that disable changing settings, but allow cosmetics.")
-        # seed_layout.addWidget(self.tourney_gen_toggle)
-        
-
-        # self.rando_rando = QCheckBox("Rando Settings (Experimental)")
-        # self.rando_rando.setToolTip(getRandoRandoTooltip())
-        # self.rando_rando.setCheckState(Qt.Unchecked)
-        # seed_layout.addWidget(self.rando_rando)
-
         self.cosmetics_menu = CosmeticsMenu(self.settings, self.custom_cosmetics)
-
-        seed_name_getter = lambda : self.seedName.text()
 
         self.widgets = [
             RewardLocationsMenu(self.settings),
@@ -354,7 +342,7 @@ class KH2RandomizerApp(QMainWindow):
             ItemPoolMenu(self.settings),
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
-            BossEnemyMenu(self.settings,seed_name_getter),
+            BossEnemyMenu(self.settings, seed_name_getter=lambda: self.seedName.text()),
             self.cosmetics_menu,
         ]
 
@@ -653,7 +641,7 @@ class KH2RandomizerApp(QMainWindow):
         if self.recalculate:
             try:
                 rando_settings = self.make_rando_settings()
-                dummy_rando = Randomizer(rando_settings,True)
+                dummy_rando = Randomizer(rando_settings, progress_bar_vis=True)
                 split_pc_emu = False
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.CUPS_GIVE_XP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
@@ -662,8 +650,6 @@ class KH2RandomizerApp(QMainWindow):
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_CUTSCENES)
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_COR_SKIP)
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
-                split_pc_emu = split_pc_emu or (locationType.Puzzle.name in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS))
-                split_pc_emu = split_pc_emu or (locationType.SYNTH.name in self.settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS))
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["boss"] != "Disabled"
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["enemy"] != "Disabled"
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.TT1_JAILBREAK)
@@ -977,12 +963,6 @@ class KH2RandomizerApp(QMainWindow):
         dialog = LuaBackendSetupDialog()
         dialog.exec()
 
-    def firstTimeSetup(self):
-        print("First Time Setup")
-        if self.setup is None:
-            self.setup = FirstTimeSetup()
-            self.setup.show()
-
     def showAbout(self):
         aboutText = '''
 Kingdom Hearts II Final Mix Zip Seed Generator Version {0}<br>
@@ -1021,12 +1001,12 @@ if __name__=="__main__":
     with open(resource_path('UI/stylesheet.css')) as file:
         app.setStyleSheet(stylesheet + file.read().format(**os.environ))
 
-    
+
     extracted_data_path = Path("extracted_data/version.txt")
     data_version = "None"
     if extracted_data_path.is_file():
         with open(extracted_data_path.absolute(), "r") as f:
-            data_version = f.read()
+            data_version = f.read().strip()
     if data_version != EXTRACTED_DATA_UPDATE_VERSION:
         progress = QProgressDialog(f"Checking for data files...", "Cancel", 0, 0, None)
         progress.setWindowTitle("First Time Data Extraction...")
@@ -1070,10 +1050,5 @@ if __name__=="__main__":
 
         center = screen_geometry.center()
         window.move(center.x() - window.width() / 2, center.y() - window.height() / 2)
-
-    #commenting out first time setup for 2.999 version
-    # configPath = Path("rando-config.yml")
-    # if not configPath.is_file() or not os.environ.get("ALWAYS_SETUP") is None:
-    #     window.firstTimeSetup()
 
     sys.exit(app.exec())

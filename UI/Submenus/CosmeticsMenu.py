@@ -13,7 +13,7 @@ from UI.worker import CosmeticsZipWorker
 class CosmeticsMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings, custom_cosmetics: CustomCosmetics):
-        super().__init__(title='Cosmetics', settings=settings, in_layout='horizontal')
+        super().__init__(title='Cosmetics', settings=settings)
 
         self.custom_cosmetics = custom_cosmetics
 

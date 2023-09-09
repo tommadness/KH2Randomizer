@@ -1,15 +1,12 @@
-from PySide6.QtWidgets import QHBoxLayout, QWidget, QPushButton
-
 from Class import settingkey
 from Class.seedSettings import SeedSettings
-from List.ItemList import Items
 from UI.Submenus.SubMenu import KH2Submenu
 
 
 class ItemPlacementMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Item Placement', settings=settings, in_layout='horizontal')
+        super().__init__(title='Item Placement', settings=settings)
         self.disable_signal = False
 
         self.start_column()

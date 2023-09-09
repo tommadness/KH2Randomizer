@@ -40,5 +40,6 @@ hashTextEntries = [
 #    "button-circle",
 ]
 
-def generateHashIcons():
+
+def generate_hash_icons() -> list[str]:
     return random.choices(hashTextEntries, k=7)

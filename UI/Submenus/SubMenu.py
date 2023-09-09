@@ -16,20 +16,15 @@ from UI.Submenus.ProgressionWidgets import ProgressionWidget
 
 class KH2Submenu(QWidget):
 
-    def __init__(self, title: str, in_layout="vertical", settings: SeedSettings = None, seed_name_getter = None):
+    def __init__(self, title: str, settings: SeedSettings):
         super().__init__()
 
         self.title = title
         self.settings = settings
-        self.seed_name_getter = seed_name_getter
         self.widgets_and_settings_by_name = {}
         self.groups_by_id: dict[str, QWidget] = {}
 
-        if in_layout == "vertical":
-            self.menulayout = QVBoxLayout()
-        if in_layout == "horizontal":
-            self.menulayout = QHBoxLayout()
-
+        self.menulayout = QHBoxLayout()
         self.pending_column: Optional[QVBoxLayout] = None
         self.pending_group: Optional[QVBoxLayout] = None
 

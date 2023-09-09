@@ -2,7 +2,7 @@ import json
 import os
 import random
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional
 
 import yaml
 
@@ -83,7 +83,7 @@ class CosmeticsMod:
             (custom_music_path / folder).mkdir(exist_ok=True)
 
     @staticmethod
-    def randomize_music(ui_settings: SeedSettings) -> Tuple[list[dict], dict[str, str]]:
+    def randomize_music(ui_settings: SeedSettings) -> tuple[list[dict], dict[str, str]]:
         """
         Randomizes music, returning a list of assets to be added to the seed mod and a dictionary of which song was
         replaced by which replacement.
@@ -172,7 +172,7 @@ class CosmeticsMod:
         return result
 
     @staticmethod
-    def _get_music_assets(settings: SeedSettings) -> Tuple[list[dict], dict[str, str]]:
+    def _get_music_assets(settings: SeedSettings) -> tuple[list[dict], dict[str, str]]:
         music_rando_enabled = settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
         if not music_rando_enabled:
             return [], {}

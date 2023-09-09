@@ -52,6 +52,7 @@ a = Analysis(
         'static/KHMenu.otf',
         'static/as_data_split/*.*',
         'static/better_stt/*.*',
+        'static/chests/**/*.*',
         'static/map_skip/*.*',
         'static/wardrobe/*.*',
         'static/khbr_override/*.*',
@@ -60,7 +61,7 @@ a = Analysis(
         'static/*.bin',
         'static/*.json',
         'Module/icon.png',
-        'extracted_data/**/*.*',
+        'extracted_data.zip'
     ]) + external_data_recursive([khbrpath+"/**/*.*"]),
     hiddenimports=[],
     hookspath=[],
@@ -104,9 +105,4 @@ presetPath = '{0}/presets'.format(DISTPATH)
 if os.path.exists(presetPath):
   shutil.rmtree(presetPath)
 
-dataPath = '{0}/extracted_data'.format(DISTPATH)
-if os.path.exists(dataPath):
-  shutil.rmtree(dataPath)
-
-shutil.copytree('extracted_data', dataPath)
 shutil.copytree('presets', presetPath)

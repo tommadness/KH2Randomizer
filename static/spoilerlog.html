@@ -3,15 +3,15 @@
     <head>
         <title>KH2FM Randomizer Spoiler Log</title>
     <script>
-        seed_name = "SEED_NAME_STRING"
-        sora_item_data = SORA_ITEM_JSON
-        donald_item_data = DONALD_ITEM_JSON
-        goofy_item_data = GOOFY_ITEM_JSON
-        level_data = LEVEL_STATS_JSON
-        form_exp_data = FORM_EXP_JSON
-        depth_data = DEPTH_VALUES_JSON
-        boss_enemy_data = BOSS_ENEMY_JSON
-        battle_level_data = BATTLE_LEVEL_JSON
+        seed_name = "{SEED_NAME_STRING}"
+        sora_item_data = {SORA_ITEM_JSON}
+        donald_item_data = {DONALD_ITEM_JSON}
+        goofy_item_data = {GOOFY_ITEM_JSON}
+        level_data = {LEVEL_STATS_JSON}
+        form_exp_data = {FORM_EXP_JSON}
+        depth_data = {DEPTH_VALUES_JSON}
+        boss_enemy_data = {BOSS_ENEMY_JSON}
+        battle_level_data = {BATTLE_LEVEL_JSON}
         synthesis_recipe_data = {SYNTHESIS_RECIPE_JSON}
         weapon_stats_data = {WEAPON_STATS_JSON}
         settings_data = {SETTINGS_JSON}
@@ -20,7 +20,7 @@
 <style>
     @font-face {
         font-family: KHMenu;
-        src: url("KHMenu.otf") format("opentype");
+        src: url("misc/KHMenu.otf") format("opentype");
     }
     *,*::before,*::after {
         box-sizing: border-box;
@@ -508,7 +508,28 @@ for(var i = 0; i < acc.length; i++)
 }
 
 
-worlds = ["Garden of Assemblage","Critical Bonuses","Space Paranoids", "Port Royal", "Twilight Town", "Olympus Coliseum", "Halloween Town", "Land of Dragons", "The World That Never Was", "Beast's Castle", "Agrabah", "Pride Lands", "Hollow Bastion", "Disney Castle / Timeless River", "Simulated Twilight Town", "Hundred Acre Wood", "Atlantica", "Shop", "Puzzle", "Synthesis"]
+worlds = [
+    "Garden of Assemblage",
+    "Critical Bonuses",
+    "Simulated Twilight Town",
+    "Twilight Town",
+    "Hollow Bastion",
+    "Land of Dragons",
+    "Beast's Castle",
+    "Olympus Coliseum",
+    "Disney Castle / Timeless River",
+    "Port Royal",
+    "Agrabah",
+    "Halloween Town",
+    "Pride Lands",
+    "Space Paranoids",
+    "The World That Never Was",
+    "Hundred Acre Wood",
+    "Atlantica",
+    "Shop",
+    "Puzzle",
+    "Synthesis"
+];
 
 
 

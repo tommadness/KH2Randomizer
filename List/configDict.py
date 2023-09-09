@@ -1,12 +1,5 @@
 from enum import Enum
 
-miscConfig = {
-    "PromiseCharm": "Promise Charm",
-}
-
-expTypes = ["Sora","Valor","Wisdom","Limit","Master","Final","Summon"]
-
-keybladeAbilities = ["Support","Action"]
 
 class locationType(str, Enum):
     LoD = "Land of Dragons"
@@ -44,7 +37,8 @@ class locationType(str, Enum):
     SYNTH = "Synthesis"
     SHOP = "Shop"
 
-class locationCategory(str,Enum):
+
+class locationCategory(str, Enum):
     CHEST = "Chest"
     POPUP = "Popup"
     CREATION = "Creation"
@@ -61,14 +55,17 @@ class locationCategory(str,Enum):
     FINALLEVEL = "Final Level"
     WEAPONSLOT = "Weapon Slot"
 
+    @staticmethod
+    def bonus_categories():
+        return [
+            locationCategory.DOUBLEBONUS,
+            locationCategory.HYBRIDBONUS,
+            locationCategory.ITEMBONUS,
+            locationCategory.STATBONUS
+        ]
 
-def isFormCheck(loc: locationCategory):
-    return loc in [locationCategory.VALORLEVEL,locationCategory.WISDOMLEVEL,locationCategory.LIMITLEVEL,locationCategory.MASTERLEVEL,locationCategory.FINALLEVEL]
 
-def isStatBonusCheck(loc: locationCategory):
-    return loc in [locationCategory.STATBONUS,locationCategory.HYBRIDBONUS,locationCategory.DOUBLEBONUS]
-
-class itemDifficulty(str,Enum):
+class itemDifficulty(str, Enum):
     SUPEREASY = "Super Easy"
     EASY = "Easy"
     SLIGHTLY_EASY = "Slightly Easy"
@@ -80,26 +77,44 @@ class itemDifficulty(str,Enum):
     NIGHTMARE = "Nightmare"
 
 
-class locationDepth(str,Enum):
-    FirstVisit = "FirstVisit"
-    NoFirstVisit = "NoFirstVisit"
-    SecondVisit = "SecondVisit"
-    SecondVisitOnly = "SecondVisitOnly"
-    DataFight = "DataFight"
-    FirstBoss = "FirstBoss"
-    SecondBoss = "SecondBoss"
+class locationDepth(str, Enum):
     Anywhere = "Anywhere"
+    NonSuperboss = "SecondVisit"  # Keep an old naming for compatibility
+    FirstVisit = "FirstVisit"
+    FirstBoss = "FirstBoss"
+    SecondVisitOnly = "SecondVisitOnly"
+    LastStoryBoss = "SecondBoss"  # Keep an old naming for compatibility
+    Superbosses = "DataFight"  # Keep an old naming for compatibility
+    NoFirstVisit = "NoFirstVisit"
 
 
-class expCurve(str,Enum):
+def location_depth_choices() -> dict[locationDepth, str]:
+    return {
+        locationDepth.Anywhere: "Anywhere",
+        locationDepth.NonSuperboss: 'Non-Superboss',
+        locationDepth.FirstVisit: 'First Visit',
+        locationDepth.FirstBoss: 'First Visit Boss',
+        locationDepth.SecondVisitOnly: 'Second Visit',
+        locationDepth.LastStoryBoss: 'Last Story Boss',
+        locationDepth.Superbosses: 'Superbosses',
+        locationDepth.NoFirstVisit: 'Non First Visits',
+    }
+
+
+class expCurve(str, Enum):
     DAWN = "Dawn"
     MIDDAY = "Midday"
     DUSK = "Dusk"
 
+    @staticmethod
+    def from_name(name: str):
+        return next(c for c in expCurve if c.name == name)
+
+
 class itemType(str, Enum):
     PROOF_OF_CONNECTION = "Proof of Connection"
     PROOF_OF_PEACE = "Proof of Peace"
-    PROOF = "Proof"
+    PROOF_OF_NONEXISTENCE = "Proof of Nonexistence"
     PROMISE_CHARM = "Promise Charm"
     FIRE = "Fire"
     BLIZZARD = "Blizzard"
@@ -136,6 +151,47 @@ class itemType(str, Enum):
     MULTIWORLD = "MultiWorld"
 
 
+class itemRarity(str, Enum):
+    COMMON = "Common"
+    UNCOMMON = "Uncommon"
+    RARE = "Rare"
+    MYTHIC = "Mythic"
+
+
+class SoraLevelOption(str, Enum):
+    LEVEL_1 = 'Level'
+    LEVEL_50 = 'ExcludeFrom50'
+    LEVEL_99 = 'ExcludeFrom99'
+
+
+class StartingMovementOption(str, Enum):
+    DISABLED = 'Disabled'
+    RANDOM_3 = '3Random'
+    RANDOM_5 = 'Random'
+    LEVEL_1 = 'Level_1'
+    LEVEL_2 = 'Level_2'
+    LEVEL_3 = 'Level_3'
+    LEVEL_4 = 'Level_4'
+
+
+class AbilityPoolOption(str, Enum):
+    DEFAULT = 'default'
+    RANDOMIZE = 'randomize'
+    RANDOMIZE_SUPPORT = 'randomize support'
+    RANDOMIZE_STACKABLE = 'randomize stackable'
+
+
+class ItemAccessibilityOption(str, Enum):
+    ALL = 'all'
+    BEATABLE = 'beatable'
+
+
+class SoftlockPreventionOption(str, Enum):
+    DEFAULT = 'default'
+    REVERSE = 'reverse'
+    BOTH = 'both'
+
+
 class BattleLevelOption(str, Enum):
     NORMAL = 'Normal'
     SHUFFLE = 'Shuffle'
@@ -143,3 +199,10 @@ class BattleLevelOption(str, Enum):
     RANDOM_WITHIN_RANGE = 'Within Range of Normal'
     RANDOM_MAX_50 = 'Random (Max 50)'
     SCALE_TO_50 = 'Scale to 50'
+
+
+class LevelUpStatBonus(str, Enum):
+    STRENGTH = "Strength"
+    MAGIC = "Magic"
+    DEFENSE = "Defense"
+    AP = "AP"

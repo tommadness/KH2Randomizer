@@ -1,25 +1,35 @@
-from enum import Enum
-from List.configDict import itemType
-from dataclasses import dataclass
+from List.configDict import itemType, itemRarity
+from dataclasses import dataclass, field
 from json import JSONEncoder
 
-class itemRarity(str, Enum):
-    COMMON = "Common"
-    UNCOMMON = "Uncommon"
-    RARE = "Rare"
-    MYTHIC = "Mythic"
+from List.inventory.item import InventoryItem
 
-@dataclass (frozen=True)
+
+@dataclass(frozen=True)
 class KH2Item:
-    Id: int
-    Name: str
-    ItemType: itemType
+    item: InventoryItem
     Rarity: itemRarity = itemRarity.COMMON
+    Id: int = field(init=False)
+    Name: str = field(init=False)
+    ItemType: itemType = field(init=False)
+
+    def __post_init__(self):
+        # Working around the frozen-ness here to set these
+        object.__setattr__(self, "Id", self.item.id)
+        object.__setattr__(self, "Name", self.item.name)
+        object.__setattr__(self, "ItemType", self.item.type)
+
 
 class ItemEncoder(JSONEncoder):
+
     def default(self, o):
-        return o.__dict__
-
-
-
-
+        # Keep the JSON the same as it was previously even though we changed the structure a bit
+        if isinstance(o, KH2Item):
+            return {
+                "Id": o.Id,
+                "Name": o.Name,
+                "ItemType": o.ItemType,
+                "Rarity": o.Rarity
+            }
+        else:
+            return o.__dict__

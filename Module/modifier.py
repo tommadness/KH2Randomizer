@@ -1,164 +1,162 @@
 import random
+from typing import Callable
 
-class SeedModifier():
+from Class.exceptions import GeneratorException, SettingsException
+from Class.itemClass import KH2Item
+from List.configDict import LevelUpStatBonus, StartingMovementOption, AbilityPoolOption
+from List.inventory import growth, ability
+from List.inventory.growth import GrowthAbility, GrowthType
 
-    def randomAbilityPool(action, support):
-        abilitylist = action + support
-        abilitydict = {i.Name: i for i in abilitylist}
-        possibleabilities = list(set([i.Name for i in abilitylist if i.Name not in ["Second Chance", "Once More"]]))
-        possibleabilities.sort()
-        randomabilitypool = []
-        for _ in range(len(abilitylist)-2):
-            choice = random.choice(possibleabilities)
-            randomabilitypool.append(abilitydict[choice])
+
+class SeedModifier:
+
+    @staticmethod
+    def ability_list_modifier(option: AbilityPoolOption) -> Callable[[list[KH2Item], list[KH2Item]], list[KH2Item]]:
+        if option == AbilityPoolOption.DEFAULT:
+            return SeedModifier.default_ability_pool
+        elif option == AbilityPoolOption.RANDOMIZE:
+            return SeedModifier.random_ability_pool
+        elif option == AbilityPoolOption.RANDOMIZE_SUPPORT:
+            return SeedModifier.random_support_ability_pool
+        elif option == AbilityPoolOption.RANDOMIZE_STACKABLE:
+            return SeedModifier.random_stackable_ability_pool
+        else:
+            raise SettingsException("Invalid ability pool option")
+
+    @staticmethod
+    def default_ability_pool(action: list[KH2Item], support: list[KH2Item]) -> list[KH2Item]:
+        return action + support
+
+    @staticmethod
+    def random_ability_pool(action: list[KH2Item], support: list[KH2Item]) -> list[KH2Item]:
+        randomizable_list = action + support
+        randomizable_dict: dict[str, KH2Item] = {i.Name: i for i in randomizable_list}
+        possible_abilities = list(set(
+            i.Name for i in randomizable_list if i.Name not in [ability.SecondChance.name, ability.OnceMore.name]
+        ))
+        possible_abilities.sort()
+        random_ability_pool = []
+        for _ in range(len(randomizable_list) - 2):
+            choice: str = random.choice(possible_abilities)
+            random_ability_pool.append(randomizable_dict[choice])
             # Limit only 1 of each action ability in the pool, to make it more interesting
             if choice in [i.Name for i in action]:
-                possibleabilities.remove(choice)
+                possible_abilities.remove(choice)
 
         # Make sure there is one OM and one SC so the tracker behaves
-        if "Second Chance" in abilitydict:
-            randomabilitypool.append(abilitydict["Second Chance"])
-            randomabilitypool.append(abilitydict["Once More"])
-        return randomabilitypool
+        random_ability_pool.append(randomizable_dict[ability.SecondChance.name])
+        random_ability_pool.append(randomizable_dict[ability.OnceMore.name])
+        return random_ability_pool
 
-    def randomSupportAbilityPool(action, support):
-        abilitylist = support
-        abilitydict = {i.Name: i for i in abilitylist}
-        possibleabilities = list(set([i.Name for i in abilitylist if i.Name not in ["Second Chance", "Once More"]]))
-        possibleabilities.sort()
-        randomabilitypool = []
-        for _ in range(len(abilitylist)-2):
-            choice = random.choice(possibleabilities)
-            randomabilitypool.append(abilitydict[choice])
-            # Limit only 1 of each action ability in the pool, to make it more interesting
-            if choice in [i.Name for i in action]:
-                possibleabilities.remove(choice)
+    @staticmethod
+    def random_support_ability_pool(action: list[KH2Item], support: list[KH2Item]) -> list[KH2Item]:
+        randomizable_list = support
+        randomizable_dict: dict[str, KH2Item] = {i.Name: i for i in randomizable_list}
+        possible_abilities = list(set(
+            i.Name for i in randomizable_list if i.Name not in [ability.SecondChance.name, ability.OnceMore.name]
+        ))
+        possible_abilities.sort()
+        random_ability_pool = []
+        for _ in range(len(randomizable_list) - 2):
+            choice: str = random.choice(possible_abilities)
+            random_ability_pool.append(randomizable_dict[choice])
 
         # Make sure there is one OM and one SC so the tracker behaves
-        if "Second Chance" in abilitydict:
-            randomabilitypool.append(abilitydict["Second Chance"])
-            randomabilitypool.append(abilitydict["Once More"])
-        return randomabilitypool + action
+        random_ability_pool.append(randomizable_dict[ability.SecondChance.name])
+        random_ability_pool.append(randomizable_dict[ability.OnceMore.name])
+        return random_ability_pool + action
 
-    def randomStackableAbilityPool(action, support):
-        stackable_abilities = ["Combo Plus",
-                                "Air Combo Plus",
-                                "Combo Boost",
-                                "Air Combo Boost",
-                                "Reaction Boost",
-                                "Finishing Plus",
-                                "Negative Combo",
-                                "Berserk Charge",
-                                "Damage Drive",
-                                "Drive Boost",
-                                "Form Boost",
-                                "Summon Boost",
-                                "Experience Boost",
-                                "Draw",
-                                "Jackpot",
-                                "Lucky Lucky",
-                                "Drive Converter",
-                                "Fire Boost",
-                                "Blizzard Boost",
-                                "Thunder Boost",
-                                "Item Boost",
-                                "MP Rage",
-                                "MP Haste",
-                                "MP Hastera",
-                                "MP Hastega",
-                                "Defender",
-                                "Damage Control",
-                                "Combination Boost",
-                                ]
-        abilitylist = support + action
-        abilitydict = {i.Name: i for i in abilitylist}
-        unique_abilities = list(set([i.Name for i in abilitylist]))
+    @staticmethod
+    def random_stackable_ability_pool(action: list[KH2Item], support: list[KH2Item]) -> list[KH2Item]:
+        stackable_abilities = [
+            ability.ComboPlus.name,
+            ability.AirComboPlus.name,
+            ability.ComboBoost.name,
+            ability.AirComboBoost.name,
+            ability.ReactionBoost.name,
+            ability.FinishingPlus.name,
+            ability.NegativeCombo.name,
+            ability.BerserkCharge.name,
+            ability.DamageDrive.name,
+            ability.DriveBoost.name,
+            ability.FormBoost.name,
+            ability.SummonBoost.name,
+            ability.ExperienceBoost.name,
+            ability.Draw.name,
+            ability.Jackpot.name,
+            ability.LuckyLucky.name,
+            ability.DriveConverter.name,
+            ability.FireBoost.name,
+            ability.BlizzardBoost.name,
+            ability.ThunderBoost.name,
+            ability.ItemBoost.name,
+            ability.MpRage.name,
+            ability.MpHaste.name,
+            ability.MpHastera.name,
+            ability.MpHastega.name,
+            ability.Defender.name,
+            ability.DamageControl.name,
+            ability.CombinationBoost.name,
+        ]
+        ability_list = support + action
+        ability_dict: dict[str, KH2Item] = {i.Name: i for i in ability_list}
+        unique_abilities = list(set(i.Name for i in ability_list))
         unique_abilities.sort()
-        randomabilitypool = []
-        for u in unique_abilities:
-            randomabilitypool.append(abilitydict[u])
-        for _ in range(len(abilitylist)-len(unique_abilities)):
+        random_ability_pool = []
+        for unique_ability in unique_abilities:
+            random_ability_pool.append(ability_dict[unique_ability])
+        for _ in range(len(ability_list) - len(unique_abilities)):
             choice = random.choice(stackable_abilities)
-            randomabilitypool.append(abilitydict[choice])
+            random_ability_pool.append(ability_dict[choice])
 
-        return randomabilitypool
+        return random_ability_pool
 
-    def defaultAbilityPool(action, support):
-        return action+support
+    @staticmethod
+    def level_up_stat_pool(glass_cannon: bool) -> list[tuple[LevelUpStatBonus, int]]:
+        if glass_cannon:
+            return [
+                (LevelUpStatBonus.STRENGTH, 2),
+                (LevelUpStatBonus.MAGIC, 2),
+                (LevelUpStatBonus.AP, 2)
+            ]
+        else:
+            return [
+                (LevelUpStatBonus.STRENGTH, 2),
+                (LevelUpStatBonus.MAGIC, 2),
+                (LevelUpStatBonus.DEFENSE, 1),
+                (LevelUpStatBonus.AP, 2)
+            ]
 
-    def glassCannon():
-        return [{"Stat":"Str","Value": 2},{"Stat":"Mag", "Value": 2},{"Stat": "Ap", "Value": 2}]
-    
-    def regularStats():
-        return [{"Stat":"Mag", "Value": 2},{"Stat":"Str","Value": 2},{"Stat":"Def", "Value": 1},{"Stat": "Ap", "Value": 2}]
+    @staticmethod
+    def starting_growth(option: StartingMovementOption) -> list[GrowthAbility]:
+        if option == StartingMovementOption.DISABLED:
+            return []
+        elif option == StartingMovementOption.LEVEL_1:
+            return growth.all_growth_to_level(1)
+        elif option == StartingMovementOption.LEVEL_2:
+            return growth.all_growth_to_level(2)
+        elif option == StartingMovementOption.LEVEL_3:
+            return growth.all_growth_to_level(3)
+        elif option == StartingMovementOption.LEVEL_4:
+            return growth.all_growth_to_level(4)
+        elif option == StartingMovementOption.RANDOM_3:
+            return SeedModifier._random_growth(3)
+        elif option == StartingMovementOption.RANDOM_5:
+            return SeedModifier._random_growth(5)
+        else:
+            raise GeneratorException(f"Unknown option {option}")
 
-    def library(number_reports):
-        reports = [
-                        226,
-                        227,
-                        228,
-                        229,
-                        230,
-                        231,
-                        232,
-                        233,
-                        234,
-                        235,
-                        236,
-                        237,
-                        238
-                    ]
-        return reports[0:number_reports]
+    @staticmethod
+    def _random_growth(num_growth_abilities: int) -> list[GrowthAbility]:
+        options = [growth_ability.growth_type for growth_ability in growth.all_growth()]
+        levels_by_growth_type: dict[GrowthType, int] = {}
+        for chosen_growth_type in random.sample(options, k=num_growth_abilities):
+            if chosen_growth_type in levels_by_growth_type:
+                levels_by_growth_type[chosen_growth_type] = levels_by_growth_type[chosen_growth_type] + 1
+            else:
+                levels_by_growth_type[chosen_growth_type] = 1
 
-    def world_unlocks(enabled):
-        if enabled:
-            return [54,
-                    55,
-                    59,
-                    60,
-                    61,
-                    62,
-                    72,
-                    74,
-                    369,
-                    375,
-                    376]
-        return []
-
-    def schmovement(level_setting):
-        growth_all = {}
-        growth_all[0] =  [] # none
-        growth_all[1] =  [94,98,102,106,564] # level 1
-        growth_all[2] =  [95,99,103,107,565] # level 2
-        growth_all[3] =  [96,100,104,108,566] # level 3
-        growth_all[4] =  [97,101,105,109,567] # level max
-        if level_setting=="Level_1":
-            return growth_all[1]
-        if level_setting=="Level_2":
-            return growth_all[1] + growth_all[2]
-        if level_setting=="Level_3":
-            return growth_all[1] + growth_all[2] + growth_all[3]
-        if level_setting=="Level_4":
-            return growth_all[1] + growth_all[2] + growth_all[3] + growth_all[4]
-        return []
-
-    def random_schmovement(num_growth_abilities):
-        growth_all = {}
-        growth_all[0] =  [] # none
-        growth_all[1] =  [94,98,102,106,564] # level 1
-        growth_all[2] =  [95,99,103,107,565] # level 2
-        growth_all[3] =  [96,100,104,108,566] # level 3
-        growth_all[4] =  [97,101,105,109,567] # level max
         random_growth = []
-        random_levels = [0,0,0,0,0]
-
-        iter = 0
-        while iter < num_growth_abilities:
-            picked = random.randint(0,4)
-            if random_levels[picked]!=4:
-                random_levels[picked]+=1
-                iter+=1
-        #get all the abilities IDs needed for each growth and add them to a list
-        for current in range(5):
-            [random_growth.append(growth_all[i][current]) for i in range(1,random_levels[current]+1)]
+        for growth_type, level in levels_by_growth_type.items():
+            random_growth.extend(growth.growth_to_level(level, growth_type))
         return random_growth

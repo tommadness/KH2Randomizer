@@ -1,4 +1,7 @@
+import shutil
+
 from Module import hashimage
+from Module.resources import resource_path
 
 
 class TourneySeedSaver:
@@ -12,9 +15,10 @@ class TourneySeedSaver:
 <style>
     @font-face {{
         font-family: KHMenu;
-        src: url("KHMenu.otf") format("opentype");
+        src: url("misc/KHMenu.otf") format("opentype");
     }}
     body {{
+        font-family: KHMenu, sans-serif;
         background-color: #31363b;
         color: #ffffff;
         display: grid;
@@ -53,13 +57,17 @@ class TourneySeedSaver:
         self.tourney_name = tourney_name
 
         self.seed_htmls = []
-    
+
     def save(self):
         with open(self.path_to_save / f"{self.tourney_name}.html", "w") as outfile:
             outfile.write(self.start_html)
             for h in self.seed_htmls:
                 outfile.write(h)
             outfile.write(self.end_html)
+
+        misc_dir = self.path_to_save / "misc"
+        misc_dir.mkdir()
+        shutil.copy(resource_path("static/KHMenu.otf"), misc_dir)
 
     def add_seed(self, seed_string, settings, spoilers):
         self.seed_strings.append(seed_string)
