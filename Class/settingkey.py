@@ -107,6 +107,7 @@ RETRY_DFX = 'retry_data_final_xemnas'
 REVEAL_COMPLETE = "reveal_complete"
 REVENGE_LIMIT_RANDO = 'revenge_limit_rando'
 RICH_ENEMIES = 'rich_enemies'
+ROOM_TRANSITION_IMAGES = 'room_transition_images'
 ROXAS_ABILITIES_ENABLED = 'roxas_abilities_enabled'
 SCORE_MODE = 'score_mode'
 SHOP_BOOSTS = 'shop_boosts'

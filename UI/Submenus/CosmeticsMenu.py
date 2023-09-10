@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QListWidget, QHBoxLayout, QPushButton, QFileDialog
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings, ExtraConfigurationData
+from Module import appconfig
 from Module.cosmetics import CustomCosmetics, CosmeticsMod
 from UI.Submenus.SubMenu import KH2Submenu
 from UI.worker import CosmeticsZipWorker
@@ -22,6 +23,10 @@ class CosmeticsMenu(KH2Submenu):
         self.add_option(settingkey.COMMAND_MENU)
         self.add_option(settingkey.COSTUME_RANDO)
         self.end_group('Visuals')
+
+        self.start_group()
+        self.add_option(settingkey.ROOM_TRANSITION_IMAGES)
+        self.end_group("Visuals (PC Panacea Only)")
         self.end_column()
 
         self.start_column()
@@ -96,6 +101,7 @@ class CosmeticsMenu(KH2Submenu):
         settings.observe(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES, self.reload_music_widgets)
 
         self.reload_music_widgets()
+        self.reload_visual_widgets()
         self._reload_custom_list()
         add_button.clicked.connect(self._add_custom)
         remove_button.clicked.connect(self._remove_selected_custom)
@@ -129,7 +135,7 @@ class CosmeticsMenu(KH2Submenu):
             include_recom_widget.setEnabled((extracted_data_path / 'recom').is_dir())
             include_bbs_widget.setEnabled((extracted_data_path / 'bbs').is_dir())
 
-        custom_music_configured = CosmeticsMod.read_custom_music_path() is not None
+        custom_music_configured = appconfig.read_custom_music_path() is not None
         include_custom_widget.setEnabled(custom_music_configured)
         self.no_custom_music.setVisible(music_rando_enabled and not custom_music_configured)
         self.open_custom_music_folder.setVisible(music_rando_enabled and custom_music_configured)
@@ -146,6 +152,10 @@ class CosmeticsMenu(KH2Submenu):
             for category, count in music_summary.items():
                 label_text += '{} : {}\n'.format(category, count)
             return label_text
+
+    def reload_visual_widgets(self):
+        # Not actually doing anything now but keeping it here as a placeholder
+        pass
 
     def _reload_custom_list(self):
         self.custom_list.clear()
@@ -166,7 +176,7 @@ class CosmeticsMenu(KH2Submenu):
             self._reload_custom_list()
 
     def _open_custom_music_folder(self):
-        custom_music_path = CosmeticsMod.read_custom_music_path()
+        custom_music_path = appconfig.read_custom_music_path()
         if custom_music_path is not None:
             os.startfile(custom_music_path)
 
@@ -174,6 +184,7 @@ class CosmeticsMenu(KH2Submenu):
         extra_data = ExtraConfigurationData(
             platform="PC",
             command_menu_choice=self.settings.get(settingkey.COMMAND_MENU),
+            room_transition_choice=self.settings.get(settingkey.ROOM_TRANSITION_IMAGES),
             tourney=False,
             custom_cosmetics_executables=self.custom_cosmetics.collect_custom_files(),
         )

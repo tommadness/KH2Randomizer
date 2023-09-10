@@ -224,6 +224,11 @@ This works for both the PCSX2 emulated version of the game and the PC Epic Games
 
 ## P
 
+### Panacea
+
+A code name for the software that hooks into the Kingdom Hearts games' file loading code to allow game modifications to
+be loaded directly (without needing to patch or otherwise modify the actual game files).
+
 ### PL
 
 A common abbreviation for Pride Lands.

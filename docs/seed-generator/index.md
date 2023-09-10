@@ -87,6 +87,9 @@ This is currently only used for music randomization on the PC version of the gam
 **Choose Custom Music Folder** - Displays a folder chooser allowing you to configure the location of custom music that
 you would like to include in music randomization. See [Randomized Music](../music/index.md) for more information.
 
+**Choose Custom Visuals Folder** - Displays a folder chooser allowing you to configure the location of custom visuals
+that you would like to include in some cosmetic randomization settings.
+
 **Remember Window Size/Position** - If checked, the seed generator application attempts to open at the same size and
 position it was the last time it was closed.
 
@@ -520,6 +523,24 @@ seed generated outside the standard seed generator (using [Archipelago](https://
 **Randomize Character Costumes (Beta)** - If enabled, randomizes the different costumes that Sora/Donald/Goofy switch
 between in the different worlds (i.e. Space Paranoids could now be default Sora, while anywhere default Sora is used
 could be Christmas Town Sora).
+
+### Visuals (PC Panacea Only)
+
+_These options will only work properly when using [Panacea](../glossary/index.md#panacea) for loading mods. Things will
+likely look incorrect if using any of these options when patching the game._
+
+**Room Transition Images** - controls the appearance of the room transition images
+
+* Vanilla - Room transitions will have their normal appearance.
+* Randomize (in-game only) - Chooses a random transition for each world from existing in-game room transition images.
+* Randomize (custom only) - Chooses a random transition for each world from the `room-transition-images` folder
+  contained within your configured Custom Visuals Folder.
+* Randomize (in-game + custom) - Chooses a random transition for each world from both existing in-game transition images
+  and the `room-transition-images` folder contained within your configured Custom Visuals Folder.
+
+> Using custom room transition images requires a Custom Visuals Folder to have been configured using the Configure menu
+> -> Choose Custom Visuals Folder. Place any custom images into a `room-transition-images` folder within your chosen
+> custom visuals folder. Custom images must be in .png format.
 
 ### Music
 

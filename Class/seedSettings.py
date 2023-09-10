@@ -15,7 +15,8 @@ from List.configDict import expCurve, itemRarity, itemDifficulty, locationType, 
     StartingMovementOption, SoraLevelOption, location_depth_choices, ItemAccessibilityOption, SoftlockPreventionOption, \
     AbilityPoolOption
 from List.inventory import ability, misc, proof, storyunlock
-from Module import encoding, commandmenu
+from Module import encoding, field2d
+from Module.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.progressionPoints import ProgressionPoints
 
 # Characters available to be used for short encoding of certain settings
@@ -2304,9 +2305,9 @@ _all_settings = [
         name=settingkey.COMMAND_MENU,
         group=SettingGroup.COSMETICS,
         ui_label='Command Menu',
-        choices=commandmenu.get_options(),
+        choices=CommandMenuRandomizer.command_menu_options(),
         shared=False,
-        default='vanilla',
+        default=field2d.VANILLA,
         tooltip='''
         Controls the appearance of the command menu on-screen.
         
@@ -2317,6 +2318,29 @@ _all_settings = [
         Randomize (all) - Chooses random command menus for each world/location that has a unique command menu.
         
         individual command menu options - Forces all command menus to have the chosen appearance.
+        '''
+    ),
+
+    SingleSelect(
+        name=settingkey.ROOM_TRANSITION_IMAGES,
+        group=SettingGroup.COSMETICS,
+        ui_label='Room Transition Images',
+        choices=RoomTransitionImageRandomizer.room_transition_options(),
+        shared=False,
+        default=field2d.VANILLA,
+        tooltip='''
+        Controls the appearance of the room transition images.
+        
+        Vanilla - Room transitions will have their normal appearance.
+        
+        Randomize (in-game only) - Chooses a random transition for each world from existing in-game room transition
+        images.
+        
+        Randomize (custom only) - Chooses a random transition for each world from the room-transition-images folder
+        contained within your configured Custom Visuals Folder.
+        
+        Randomize (in-game + custom) - Chooses a random transition for each world from both existing in-game transition
+        images and the room-transition-images folder contained within your configured Custom Visuals Folder.
         '''
     ),
 
@@ -2713,5 +2737,6 @@ def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
 class ExtraConfigurationData:
     platform: str
     command_menu_choice: str
+    room_transition_choice: str
     tourney: bool
     custom_cosmetics_executables: list[str]

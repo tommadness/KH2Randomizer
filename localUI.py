@@ -25,7 +25,7 @@ from qt_material import apply_stylesheet
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
-from Module import appconfig, hashimage, commandmenu, version
+from Module import appconfig, hashimage, version, field2d
 from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
@@ -391,6 +391,7 @@ class KH2RandomizerApp(QMainWindow):
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
         self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
         self.config_menu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
+        self.config_menu.addAction('Choose Custom Visuals Folder', self.custom_visuals_folder_getter)
         self.config_menu.addSeparator()
         self.remember_window_position_action = self.config_menu.addAction('Remember Window Size/Position')
         self.remember_window_position_action.setCheckable(True)
@@ -692,7 +693,8 @@ class KH2RandomizerApp(QMainWindow):
             # disable all cosmetics, generate a spoiler log, but don't put it in the zip
             extra_data = ExtraConfigurationData(
                 platform=platform,
-                command_menu_choice=commandmenu.VANILLA,
+                command_menu_choice=field2d.VANILLA,
+                room_transition_choice=field2d.VANILLA,
                 tourney=True,
                 custom_cosmetics_executables=[],
             )
@@ -701,6 +703,7 @@ class KH2RandomizerApp(QMainWindow):
             extra_data = ExtraConfigurationData(
                 platform=platform,
                 command_menu_choice=self.settings.get(settingkey.COMMAND_MENU),
+                room_transition_choice=self.settings.get(settingkey.ROOM_TRANSITION_IMAGES),
                 tourney=False,
                 custom_cosmetics_executables=self.custom_cosmetics.collect_custom_files(),
             )
@@ -942,7 +945,7 @@ class KH2RandomizerApp(QMainWindow):
             message.setWindowTitle('KH2 Seed Generator')
             message.exec()
         else:
-            CosmeticsMod.write_openkh_path(selected_directory)
+            appconfig.write_openkh_path(selected_directory)
 
             self.cosmetics_menu.reload_music_widgets()
 
@@ -954,9 +957,21 @@ class KH2RandomizerApp(QMainWindow):
             return
 
         CosmeticsMod.bootstrap_custom_music_folder(Path(selected_directory))
-        CosmeticsMod.write_custom_music_path(selected_directory)
+        appconfig.write_custom_music_path(selected_directory)
 
         self.cosmetics_menu.reload_music_widgets()
+
+    def custom_visuals_folder_getter(self):
+        save_file_widget = QFileDialog()
+        selected_directory = save_file_widget.getExistingDirectory()
+
+        if selected_directory is None or selected_directory == "":
+            return
+
+        CosmeticsMod.bootstrap_custom_visuals_folder(Path(selected_directory))
+        appconfig.write_custom_visuals_path(selected_directory)
+
+        self.cosmetics_menu.reload_visual_widgets()
 
     @staticmethod
     def show_luabackend_configuration():
