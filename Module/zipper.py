@@ -31,6 +31,7 @@ from Module.resources import resource_path
 from Module.seedmod import SeedModBuilder, ChestVisualAssignment
 from Module.spoilerLog import item_spoiler_dictionary, levelStatsDictionary, synth_recipe_dictionary, \
     weapon_stats_dictionary
+from Module.texture import TextureRecolorizer
 
 
 def noop(self, *args, **kw):
@@ -363,6 +364,9 @@ class SeedZip:
             music_assets, music_replacements = CosmeticsMod.randomize_music(settings.ui_settings)
             mod.mod_yml.add_assets(music_assets)
             _write_music_replacements(music_replacements, out_zip)
+
+            texture_assets = TextureRecolorizer(settings.ui_settings).recolor_textures()
+            mod.mod_yml.add_assets(texture_assets)
 
             out_zip.write(resource_path("Module/icon.png"), "icon.png")
 
@@ -1180,6 +1184,9 @@ class CosmeticsOnlyZip:
             music_assets, music_replacements = CosmeticsMod.randomize_music(self.settings)
             mod.add_assets(music_assets)
             _write_music_replacements(music_replacements, out_zip)
+
+            texture_assets = TextureRecolorizer(self.settings).recolor_textures()
+            mod.add_assets(texture_assets)
 
             mod.write_to_zip_file(out_zip)
 

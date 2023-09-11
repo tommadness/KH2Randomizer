@@ -542,6 +542,12 @@ likely look incorrect if using any of these options when patching the game._
 > -> Choose Custom Visuals Folder. Place any custom images into a `room-transition-images` folder within your chosen
 > custom visuals folder. Custom images must be in .png format.
 
+**Recolor Some Textures** - If enabled, allows for basic recoloring of some of the in-game textures. See
+[Texture Colors](textures/index.md) for more details.
+
+> Recoloring textures requires the OpenKH folder to be set up in the Configure menu, and for KH2 to have been extracted
+> using the OpenKH Mods Manager setup wizard.
+
 ### Music
 
 See the main [Randomized Music](../music/index.md) page for instructions.

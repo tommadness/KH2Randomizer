@@ -1,0 +1,426 @@
+- id: axel
+  name: Axel
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX110.mdlx/-0.dds
+          - remastered/obj/B_EX110_FRIEND.mdlx/-0.dds
+          - remastered/obj/B_EX110_GM.mdlx/-0.dds
+          - remastered/obj/B_EX110_LV99.mdlx/-0.dds
+          - remastered/obj/B_EX110_RTN.mdlx/-0.dds
+          - remastered/obj/B_EX110_SKIRMISH.mdlx/-0.dds
+          - remastered/obj/H_EX520.mdlx/-1.dds
+
+    - colorable_areas:
+        - id: chakrams
+          name: Chakrams
+          hue_start: 310
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/B_EX110.mdlx/-5.dds
+          - remastered/obj/B_EX110_FRIEND.mdlx/-5.dds
+          - remastered/obj/B_EX110_GM.mdlx/-4.dds
+          - remastered/obj/B_EX110_LV99.mdlx/-5.dds
+          - remastered/obj/B_EX110_RTN.mdlx/-5.dds
+          - remastered/obj/B_EX110_SKIRMISH.mdlx/-5.dds
+          - remastered/obj/H_EX520.mdlx/-3.dds
+
+
+- id: fauna
+  name: Fauna
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: dress_hat
+          name: Dress/Hat
+          hue_start: 5
+          hue_end: 165
+      image_groups:
+        - - remastered/obj/N_TT030_RTN.mdlx/-3.dds
+
+        - - remastered/obj/N_TT030_RTN.mdlx/-4.dds
+
+
+- id: flora
+  name: Flora
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: dress_hat
+          name: Dress/Hat
+          hue_start: 350
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/N_TT020_RTN.mdlx/-3.dds
+
+
+- id: fujin
+  name: Fujin
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: top
+          name: Top
+          hue_start: 210
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/N_EX590.mdlx/-5.dds
+          - remastered/obj/N_EX590_RAW_RTN.mdlx/-5.dds
+          - remastered/obj/N_EX590_RTN.mdlx/-5.dds
+
+    - colorable_areas:
+        - id: shorts
+          name: Shorts
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/N_EX590.mdlx/-4.dds
+          - remastered/obj/N_EX590_RAW_RTN.mdlx/-4.dds
+          - remastered/obj/N_EX590_RTN.mdlx/-4.dds
+
+
+- id: hayner
+  name: Hayner
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: pants_1
+          name: Pants 1
+          hue_start: 25
+          hue_end: 75
+        - id: pants_2
+          name: Pants 2
+          hue_start: 85
+          hue_end: 135
+      image_groups:
+        - - remastered/obj/H_EX740.mdlx/-0.dds
+
+        - - remastered/obj/N_EX500_ANGER_RTN.mdlx/-0.dds
+          - remastered/obj/N_EX500_ANGER_RAW_RTN.mdlx/-0.dds
+          - remastered/obj/N_EX500_BTL.mdlx/-0.dds
+          - remastered/obj/N_EX500_MONEY_RTN.mdlx/-0.dds
+          - remastered/obj/N_EX500_RAW_RTN.mdlx/-0.dds
+          - remastered/obj/N_EX500_RTN.mdlx/-0.dds
+
+
+- id: merryweather
+  name: Merryweather
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: dress_hat
+          name: Dress/Hat
+          hue_start: 160
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/N_TT040_RTN.mdlx/-0.dds
+
+        - - remastered/obj/N_TT040_RTN.mdlx/-1.dds
+
+        - - remastered/obj/N_TT040_RTN.mdlx/-2.dds
+
+
+- id: olette
+  name: Olette
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 10
+          hue_end: 55
+          saturation_start: 90
+          saturation_end: 100
+      image_groups:
+        - - remastered/obj/H_EX760.mdlx/-3.dds
+
+        - - remastered/obj/N_EX520_RAW_RTN.mdlx/-4.dds
+
+        - - remastered/obj/N_EX520_RTN.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          hue_start: 5
+          hue_end: 55
+      image_groups:
+        - - remastered/obj/H_EX760.mdlx/-5.dds
+          - remastered/obj/N_EX520_RTN.mdlx/-5.dds
+
+        - - remastered/obj/N_EX520_RAW_RTN.mdlx/-5.dds
+
+
+- id: pence
+  name: Pence
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 340
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/H_EX750.mdlx/-4.dds
+
+        - - remastered/obj/N_EX510_RAW_RTN.mdlx/-2.dds
+          - remastered/obj/N_EX510_RTN.mdlx/-2.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          hue_start: 175
+          hue_end: 225
+      image_groups:
+        - - remastered/obj/H_EX750.mdlx/-5.dds
+          - remastered/obj/N_EX510_RAW_RTN.mdlx/-1.dds
+          - remastered/obj/N_EX510_RTN.mdlx/-1.dds
+
+
+- id: raijin
+  name: Raijin
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 300
+          hue_end: 20
+      image_groups:
+        - - remastered/obj/N_EX580.mdlx/-0.dds
+          - remastered/obj/N_EX580_RAW_RTN.mdlx/-0.dds
+          - remastered/obj/N_EX580_RTN.mdlx/-0.dds
+
+
+- id: roxas
+  name: Roxas
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt_pants
+          name: Shirt/Pants
+          saturation_start: 0
+          saturation_end: 50
+          value_start: 25
+          value_end: 100
+          new_saturation: 50
+          value_offset: -10
+        - id: trim
+          name: Trim
+          hue_start: 0
+          hue_end: 20
+      image_groups:
+        - - remastered/obj/H_EX510.mdlx/-1.dds
+          - remastered/obj/P_EX110.mdlx/-0.dds
+          - remastered/obj/P_EX110_BTLF.mdlx/-0.dds
+
+
+- id: roxas_coat
+  name: Roxas (Coat)
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX390.mdlx/-1.dds
+
+        - - remastered/obj/B_EX390.mdlx/-2.dds
+
+        - - remastered/obj/H_EX650.mdlx/-1.dds
+
+        - - remastered/obj/N_EX820_BTL.mdlx/-1.dds
+
+        - - remastered/obj/N_EX820_BTL.mdlx/-2.dds
+
+        - - remastered/obj/N_EX830.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: oathkeeper
+          name: Oathkeeper
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX390.mdlx/-3.dds
+          - remastered/obj/N_EX820_BTL.mdlx/-3.dds
+
+    - colorable_areas:
+        - id: oblivion
+          name: Oblivion
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX390.mdlx/-4.dds
+          - remastered/obj/N_EX820_BTL.mdlx/-4.dds
+
+
+- id: seifer
+  name: Seifer
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          hue_start: 200
+          hue_end: 230
+          value_start: 40
+          value_end: 100
+          new_saturation: 25
+          value_offset: -25
+        - id: vest
+          name: Vest
+          hue_start: 231
+          hue_end: 280
+      image_groups:
+        - - remastered/obj/H_EX770.mdlx/-3.dds
+          - remastered/obj/N_EX570_BTL.mdlx/-1.dds
+          - remastered/obj/N_EX570_RAW_RTN.mdlx/-1.dds
+          - remastered/obj/N_EX570_RTN.mdlx/-1.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          hue_start: 300
+          hue_end: 355
+      image_groups:
+        - - remastered/obj/H_EX770.mdlx/-4.dds
+          - remastered/obj/N_EX570_BTL.mdlx/-5.dds
+          - remastered/obj/N_EX570_RAW_RTN.mdlx/-5.dds
+          - remastered/obj/N_EX570_RTN.mdlx/-5.dds
+
+
+- id: setzer
+  name: Setzer
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 230
+          hue_end: 290
+      image_groups:
+        - - remastered/obj/N_EX600_BTL.mdlx/-0.dds
+          - remastered/obj/N_EX600_RAW_RTN.mdlx/-0.dds
+          - remastered/obj/N_EX600_RTN.mdlx/-0.dds
+
+        - - remastered/obj/N_EX600_BTL.mdlx/-1.dds
+          - remastered/obj/N_EX600_RAW_RTN.mdlx/-1.dds
+          - remastered/obj/N_EX600_RTN.mdlx/-1.dds
+
+        - - remastered/obj/N_EX600_BTL.mdlx/-5.dds
+          - remastered/obj/N_EX600_RAW_RTN.mdlx/-5.dds
+          - remastered/obj/N_EX600_RTN.mdlx/-5.dds
+
+
+- id: struggle_mc
+  name: Struggle MC
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 80
+          hue_end: 150
+        - id: vest
+          name: Vest
+          hue_start: 35
+          hue_end: 55
+      image_groups:
+        - - remastered/obj/N_EX700_TT_SPO_RAW_RTN.mdlx/-0.dds
+          - remastered/obj/N_EX700_TT_SPO_RW2_RTN.mdlx/-0.dds
+          - remastered/obj/N_EX700_TT_SPONSOR_RTN.mdlx/-0.dds
+
+
+- id: twilight_thorn
+  name: Twilight Thorn
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX100.mdlx/-0.dds
+
+        - - remastered/obj/B_EX100.mdlx/-1.dds
+
+        - - remastered/obj/B_EX100.mdlx/-2.dds
+
+        - - remastered/obj/B_EX100.mdlx/-3.dds
+
+        - - remastered/obj/B_EX100.mdlx/-4.dds
+
+        - - remastered/obj/B_EX100.mdlx/-5.dds
+
+        - - remastered/obj/B_EX100.mdlx/-6.dds
+
+
+- id: vivi
+  name: Vivi
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          hue_start: 130
+          hue_end: 170
+        - id: shirt
+          name: Shirt
+          hue_start: 175
+          hue_end: 225
+      image_groups:
+        - - remastered/obj/N_EX610_BTL.mdlx/-1.dds
+          - remastered/obj/N_EX610_BTL2.mdlx/-1.dds
+          - remastered/obj/N_EX610_RAW_RTN.mdlx/-1.dds
+          - remastered/obj/N_EX610_RTN.mdlx/-1.dds
+
+        - - remastered/obj/N_EX610_BTL.mdlx/-4.dds
+          - remastered/obj/N_EX610_BTL2.mdlx/-4.dds
+          - remastered/obj/N_EX610_RAW_RTN.mdlx/-4.dds
+          - remastered/obj/N_EX610_RTN.mdlx/-4.dds
+
+
+- id: yen_sid
+  name: Yen Sid
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: robe
+          name: Robe
+          hue_start: 205
+          hue_end: 245
+      image_groups:
+        - - remastered/obj/H_TT010.mdlx/-1.dds
+
+        - - remastered/obj/N_TT010_RTN.mdlx/-0.dds
+          - remastered/obj/N_TT010_SIT_RTN.mdlx/-0.dds

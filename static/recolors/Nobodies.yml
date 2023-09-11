@@ -1,0 +1,220 @@
+- id: assassin
+  name: Assassin
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          value_start: 10
+          value_end: 100
+      image_groups:
+        - - remastered/obj/M_EX900.mdlx/-0.dds
+
+
+- id: berserker
+  name: Berserker
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/M_EX940.mdlx/-0.dds
+
+        - - remastered/obj/M_EX940.mdlx/-1.dds
+
+        - - remastered/obj/M_EX940.mdlx/-2.dds
+
+
+- id: bomb_bell
+  name: Bomb Bell
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/EH_G_EX250.mdlx/-0.dds
+
+
+- id: creeper
+  name: Creeper
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          value_start: 10
+          value_end: 100
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/M_EX880.mdlx/-0.dds
+
+
+- id: dancer
+  name: Dancer
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/M_EX930.mdlx/-1.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          hue_start: 330
+          hue_end: 60
+      image_groups:
+        - - remastered/obj/M_EX930.mdlx/-0.dds
+
+
+- id: dragoon
+  name: Dragoon
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/M_EX890.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: accent
+          name: Accent
+          hue_start: 300
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/M_EX890.mdlx/-1.dds
+
+
+- id: dusk
+  name: Dusk
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          value_start: 10
+          value_end: 100
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/H_EX990.mdlx/-0.dds
+          - remastered/obj/M_EX990.mdlx/-0.dds
+          - remastered/obj/M_EX990_RTN.mdlx/-0.dds
+          - remastered/obj/M_EX990_RTN_FIXCOLOR.mdlx/-0.dds
+
+        - - remastered/obj/M_EX990_E_CROWD.mdlx/-0.dds
+
+        - - remastered/obj/M_EX990_ZIPPER_RTN.mdlx/-0.dds
+
+        - - remastered/obj/H_EX990.mdlx/-1.dds
+          - remastered/obj/M_EX990.mdlx/-1.dds
+          - remastered/obj/M_EX990_RTN.mdlx/-1.dds
+          - remastered/obj/M_EX990_RTN_FIXCOLOR.mdlx/-1.dds
+          - remastered/obj/M_EX990_ZIPPER_RTN.mdlx/-1.dds
+
+        - - remastered/obj/H_EX990.mdlx/-2.dds
+
+
+- id: gambler
+  name: Gambler
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 300
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/M_EX950.mdlx/-0.dds
+
+        - - remastered/obj/M_EX950.mdlx/-1.dds
+
+
+- id: samurai
+  name: Samurai
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          value_start: 10
+          value_end: 100
+      image_groups:
+        - - remastered/obj/M_EX910.mdlx/-0.dds
+
+        - - remastered/obj/M_EX910.mdlx/-1.dds
+
+
+- id: sniper
+  name: Sniper
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/M_EX920.mdlx/-1.dds
+
+        - - remastered/obj/M_EX920.mdlx/-2.dds
+
+
+    - colorable_areas:
+        - id: helmet
+          name: Helmet
+          hue_start: 240
+          hue_end: 30
+          saturation_start: 5
+          saturation_end: 100
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/M_EX920.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: weapon
+          name: Weapon
+          hue_start: 150
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/M_EX920.mdlx/-3.dds
+
+
+- id: sorcerer
+  name: Sorcerer
+  tags:
+    - nobody
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/M_EX960.mdlx/-0.dds
+
+        - - remastered/obj/M_EX960.mdlx/-1.dds

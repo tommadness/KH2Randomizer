@@ -38,6 +38,7 @@ from Module.version import LOCAL_UI_VERSION, EXTRACTED_DATA_UPDATE_VERSION
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CosmeticsMenu import CosmeticsMenu
+from UI.Submenus.DevCreateRecolorDialog import DevCreateRecolorDialog
 from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
 from UI.Submenus.ItemPoolMenu import ItemPoolMenu
@@ -392,6 +393,9 @@ class KH2RandomizerApp(QMainWindow):
         self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
         self.config_menu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
         self.config_menu.addAction('Choose Custom Visuals Folder', self.custom_visuals_folder_getter)
+        if version.debug_mode():
+            self.config_menu.addSeparator()
+            self.config_menu.addAction("Create Texture Recolor (Dev Only)", self._dev_create_recolor)
         self.config_menu.addSeparator()
         self.remember_window_position_action = self.config_menu.addAction('Remember Window Size/Position')
         self.remember_window_position_action.setCheckable(True)
@@ -568,7 +572,7 @@ class KH2RandomizerApp(QMainWindow):
             self.tourney_name = tourney_name
 
             self.makeSeed(seed_platform)
-            self.num_tourney_seeds = 0   
+            self.num_tourney_seeds = 0
 
             message = QMessageBox(text=f"Done making seeds")
             message.setWindowTitle("KH2 Seed Generator")
@@ -758,7 +762,7 @@ class KH2RandomizerApp(QMainWindow):
         self.tourney_spoilers.save()
 
     def savePreset(self):
-        preset_name, ok = QInputDialog.getText(self, 'Make New Preset', 'Enter a name for your preset...')
+        preset_name, ok = QInputDialog.getText(self, 'Make New Preset', 'Enter a name for your preset...', QLineEdit.EchoMode.Normal)
         valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
         preset_name = ''.join(c for c in preset_name if c in valid_chars)
         if ok:
@@ -1002,6 +1006,10 @@ Uses the qt-material library for theming.<br>Copyright (c) 2020, GCPDS
         message.setWindowTitle("About")
         message.setWindowIcon(QIcon(resource_path("Module/icon.png")))
         message.exec()
+
+    @staticmethod
+    def _dev_create_recolor():
+        DevCreateRecolorDialog().exec()
 
 
 if __name__=="__main__":

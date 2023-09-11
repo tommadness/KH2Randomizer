@@ -1,9 +1,11 @@
 import copy
+import json
 import random
 import string
 import textwrap
 from dataclasses import dataclass
 from enum import Enum
+from typing import Optional
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
@@ -374,6 +376,28 @@ class WorldRandomizationTristate(Setting):
             "Vanilla Worlds": _format_list_for_spoiler(vanilla_worlds),
             "Junk Worlds": _format_list_for_spoiler(junk_worlds)
         }
+
+
+class TextureRecolorsSetting(Setting):
+
+    def __init__(
+            self,
+            name: str,
+            group: SettingGroup,
+            ui_label: str,
+            shared: bool,
+            default: dict[str, dict[str, str]],
+            tooltip: str = '',
+            standalone_label: str = '',
+            randomizable=None
+    ):
+        super().__init__(name, dict, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
+
+    def settings_string(self, value) -> str:
+        return json.dumps(value)
+
+    def parse_settings_string(self, settings_string: str):
+        return json.loads(settings_string)
 
 
 _drive_exp_curve_tooltip_text = textwrap.dedent('''
@@ -2342,6 +2366,32 @@ _all_settings = [
         Randomize (in-game + custom) - Chooses a random transition for each world from both existing in-game transition
         images and the room-transition-images folder contained within your configured Custom Visuals Folder.
         '''
+    ),
+
+    Toggle(
+        name=settingkey.RECOLOR_TEXTURES,
+        group=SettingGroup.COSMETICS,
+        ui_label='Recolor Some Textures',
+        standalone_label='Recolor Some Textures',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, allows for basic recoloring of some of the in-game textures.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for KH2 to have been extracted using the
+        OpenKH Mods Manager setup wizard.
+        
+        This will cause seeds to take longer to generate (relative to the number of recolored textures), especially at
+        first, since all of the replacement textures need to be generated.
+        '''
+    ),
+
+    TextureRecolorsSetting(
+        name=settingkey.TEXTURE_RECOLOR_SETTINGS,
+        group=SettingGroup.COSMETICS,
+        ui_label='Texture Recolor Settings',
+        shared=False,
+        default={},
     ),
 
     Toggle(

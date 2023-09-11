@@ -54,6 +54,7 @@ a = Analysis(
         'static/better_stt/*.*',
         'static/chests/**/*.*',
         'static/map_skip/*.*',
+        'static/recolors/**/*.yml',
         'static/wardrobe/*.*',
         'static/khbr_override/*.*',
         'static/*.bar',

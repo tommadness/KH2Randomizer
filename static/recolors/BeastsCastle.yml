@@ -1,0 +1,278 @@
+- id: beast
+  name: Beast
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: cape
+          name: Cape
+          hue_start: 245
+          hue_end: 345
+      image_groups:
+        - - remastered/obj/H_BB010.mdlx/-0.dds
+          - remastered/obj/H_BB010_TSURU.mdlx/-0.dds
+          - remastered/obj/P_BB000.mdlx/-1.dds
+          - remastered/obj/P_BB000_BTL.mdlx/-1.dds
+          - remastered/obj/P_BB000_RTN.mdlx/-1.dds
+          - remastered/obj/P_BB000_TSURU.mdlx/-1.dds
+
+        - - remastered/obj/H_BB010.mdlx/-2.dds
+          - remastered/obj/H_BB010_TSURU.mdlx/-2.dds
+
+        - - remastered/obj/P_BB000.mdlx/-0.dds
+          - remastered/obj/P_BB000_BTL.mdlx/-0.dds
+          - remastered/obj/P_BB000_RTN.mdlx/-0.dds
+          - remastered/obj/P_BB000_TSURU.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          hue_start: 165
+          hue_end: 215
+      image_groups:
+        - - remastered/obj/H_BB010.mdlx/-5.dds
+          - remastered/obj/H_BB010_TSURU.mdlx/-5.dds
+
+        - - remastered/obj/P_BB000.mdlx/-8.dds
+          - remastered/obj/P_BB000_BTL.mdlx/-8.dds
+          - remastered/obj/P_BB000_RTN.mdlx/-8.dds
+          - remastered/obj/P_BB000_TSURU.mdlx/-8.dds
+
+
+- id: beast_ball
+  name: Beast (Ball Outfit)
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          hue_start: 230
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/H_BB020_TSURU.mdlx/-2.dds
+
+        - - remastered/obj/N_BB020_RTN.mdlx/-0.dds
+          - remastered/obj/N_BB020_TSURU.mdlx/-0.dds
+
+
+- id: belle
+  name: Belle
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: dress_bow
+          name: Dress/Bow
+          hue_start: 190
+          hue_end: 230
+      image_groups:
+        - - remastered/obj/H_BB030.mdlx/-2.dds
+
+        - - remastered/obj/H_BB030.mdlx/-5.dds
+
+        - - remastered/obj/H_BB030_TSURU.mdlx/-2.dds
+          - remastered/obj/N_BB010_RTN.mdlx/-4.dds
+          - remastered/obj/N_BB010_SIT_RTN.mdlx/-4.dds
+          - remastered/obj/N_BB010_TSURU.mdlx/-4.dds
+
+        - - remastered/obj/H_BB030_TSURU.mdlx/-5.dds
+          - remastered/obj/N_BB010_RTN.mdlx/-7.dds
+          - remastered/obj/N_BB010_SIT_RTN.mdlx/-7.dds
+          - remastered/obj/N_BB010_TSURU.mdlx/-7.dds
+
+
+- id: belle_ball
+  name: Belle (Ball Outfit)
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: dress
+          name: Dress
+          hue_start: 15
+          hue_end: 75
+      image_groups:
+        - - remastered/obj/H_BB040_TSURU.mdlx/-2.dds
+          - remastered/obj/N_BB090_RTN.mdlx/-4.dds
+          - remastered/obj/N_BB090_TSURU.mdlx/-4.dds
+
+
+- id: dark_thorn
+  name: Dark Thorn
+  tags:
+    - heartless
+  recolors:
+    - colorable_areas:
+        - id: accent_1
+          name: Accent 1
+          hue_start: 150
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/B_BB110.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: accent_2
+          name: Accent 2
+          hue_start: 330
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/B_BB110.mdlx/-2.dds
+
+
+- id: lumiere
+  name: Lumiere
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: base
+          name: Base
+          hue_start: 5
+          hue_end: 55
+      image_groups:
+        - - remastered/obj/N_BB060_BTL.mdlx/-2.dds
+          - remastered/obj/N_BB060_RTN.mdlx/-2.dds
+          - remastered/obj/N_BB060_TSURU.mdlx/-2.dds
+
+        - - remastered/obj/N_BB060_BTL.mdlx/-3.dds
+          - remastered/obj/N_BB060_RTN.mdlx/-3.dds
+          - remastered/obj/N_BB060_TSURU.mdlx/-3.dds
+
+
+- id: mrs_potts
+  name: Mrs Potts
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: lid
+          name: Lid
+          hue_start: 265
+          hue_end: 354
+        - id: trim
+          name: Trim
+          hue_start: 355
+          hue_end: 85
+      image_groups:
+        - - remastered/obj/N_BB070_BTL.mdlx/-0.dds
+          - remastered/obj/N_BB070_RTN.mdlx/-0.dds
+          - remastered/obj/N_BB070_TSURU.mdlx/-0.dds
+
+        - - remastered/obj/N_BB070_BTL.mdlx/-1.dds
+          - remastered/obj/N_BB070_RTN.mdlx/-1.dds
+          - remastered/obj/N_BB070_TSURU.mdlx/-1.dds
+
+
+- id: shadowstalker
+  name: Shadowstalker
+  tags:
+    - heartless
+  recolors:
+    - colorable_areas:
+        - id: body
+          name: Body
+          hue_start: 150
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/B_BB120.mdlx/-0.dds
+
+        - - remastered/obj/B_BB120_GM.mdlx/-0.dds
+
+        - - remastered/obj/B_BB120.mdlx/-1.dds
+
+        - - remastered/obj/B_BB120_GM.mdlx/-1.dds
+
+
+- id: thresholder
+  name: Thresholder
+  tags:
+    - heartless
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 180
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/B_BB100.mdlx/-0.dds
+          - remastered/obj/B_BB100_TSURU.mdlx/-2.dds
+
+        - - remastered/obj/B_BB100_GM.mdlx/-0.dds
+
+        - - remastered/obj/B_BB100.mdlx/-1.dds
+          - remastered/obj/B_BB100_TSURU.mdlx/-1.dds
+
+        - - remastered/obj/B_BB100_GM.mdlx/-1.dds
+
+
+- id: wardrobe
+  name: Wardrobe
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 9
+          hue_end: 60
+      image_groups:
+        - - remastered/obj/N_BB080_BTL.mdlx/-0.dds
+          - remastered/obj/N_BB080_RTN.mdlx/-0.dds
+          - remastered/obj/N_BB080_TSURU.mdlx/-0.dds
+
+        - - remastered/obj/N_BB080_TSURU1.mdlx/-0.dds
+
+        - - remastered/obj/N_BB080_BTL.mdlx/-1.dds
+          - remastered/obj/N_BB080_RTN.mdlx/-1.dds
+          - remastered/obj/N_BB080_TSURU1.mdlx/-1.dds
+
+        - - remastered/obj/N_BB080_TSURU.mdlx/-1.dds
+
+        - - remastered/obj/N_BB080_BTL.mdlx/-2.dds
+          - remastered/obj/N_BB080_RTN.mdlx/-2.dds
+          - remastered/obj/N_BB080_TSURU1.mdlx/-2.dds
+
+        - - remastered/obj/N_BB080_TSURU.mdlx/-2.dds
+
+        - - remastered/obj/N_BB080_BTL.mdlx/-3.dds
+          - remastered/obj/N_BB080_RTN.mdlx/-3.dds
+          - remastered/obj/N_BB080_TSURU.mdlx/-3.dds
+          - remastered/obj/N_BB080_TSURU1.mdlx/-3.dds
+
+        - - remastered/obj/N_BB080_BTL.mdlx/-4.dds
+          - remastered/obj/N_BB080_RTN.mdlx/-4.dds
+          - remastered/obj/N_BB080_TSURU.mdlx/-4.dds
+          - remastered/obj/N_BB080_TSURU1.mdlx/-4.dds
+
+
+- id: xaldin
+  name: Xaldin
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX130.mdlx/-4.dds
+          - remastered/obj/B_EX130_LV99.mdlx/-4.dds
+          - remastered/obj/H_EX670.mdlx/-4.dds
+
+        - - remastered/obj/B_EX130_GM.mdlx/-3.dds
+
+    - colorable_areas:
+        - id: lances
+          name: Lances
+          hue_start: 150
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/B_EX130.mdlx/-5.dds
+          - remastered/obj/B_EX130_GM.mdlx/-4.dds
+          - remastered/obj/B_EX130_LV99.mdlx/-5.dds
+          - remastered/obj/H_EX670.mdlx/-1.dds

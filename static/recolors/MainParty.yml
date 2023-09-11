@@ -1,0 +1,247 @@
+- id: donald
+  name: Donald
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: hat_collar
+          name: Hat/Collar
+          hue_start: 180
+          hue_end: 260
+      image_groups:
+        - - remastered/obj/H_ZZ020.mdlx/-0.dds
+
+        - - remastered/obj/H_ZZ020.mdlx/-1.dds
+          - remastered/obj/MENU_FRIEND_1.mdlx/-3.dds
+          - remastered/obj/P_EX020.mdlx/-3.dds
+          - remastered/obj/P_EX020_ANGRY_NPC.mdlx/-4.dds
+          - remastered/obj/P_EX020_NOBG_RTN.mdlx/-3.dds
+          - remastered/obj/P_EX020_RTN.mdlx/-3.dds
+          - remastered/obj/WM_EX020.mdlx/-3.dds
+
+        - - remastered/obj/P_EX020_WM.mdlx/-3.dds
+
+
+- id: goofy
+  name: Goofy
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: hat_pants
+          name: Hat/Pants
+          hue_start: 28
+          hue_end: 52
+      image_groups:
+        - - remastered/obj/H_ZZ030.mdlx/-2.dds
+          - remastered/obj/MENU_FRIEND_2.mdlx/-0.dds
+          - remastered/obj/P_EX030.mdlx/-0.dds
+          - remastered/obj/P_EX030_RTN.mdlx/-0.dds
+
+        - - remastered/obj/P_EX030_NOBG_RTN.mdlx/-0.dds
+          - remastered/obj/P_EX030_WM.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 85
+          hue_end: 95
+      image_groups:
+        - - remastered/obj/H_ZZ030.mdlx/-1.dds
+          - remastered/obj/MENU_FRIEND_2.mdlx/-1.dds
+          - remastered/obj/P_EX030.mdlx/-1.dds
+          - remastered/obj/P_EX030_RTN.mdlx/-1.dds
+
+        - - remastered/obj/P_EX030_NOBG_RTN.mdlx/-1.dds
+          - remastered/obj/P_EX030_WM.mdlx/-1.dds
+
+
+- id: sora
+  name: Sora
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main
+          saturation_start: 0
+          saturation_end: 25
+          value_start: 0
+          value_end: 30
+          new_saturation: 50
+          value_offset: 15
+        - id: belt_shoes
+          name: Belt/Shoes
+          hue_start: 27
+          hue_end: 57
+      image_groups:
+        - - remastered/obj/ACTOR_SORA.mdlx/-0.dds
+          - remastered/obj/ACTOR_SORA_H.mdlx/-3.dds
+          - remastered/obj/AL14_PLAYER.mdlx/-0.dds
+          - remastered/obj/DEAD_BOSS.mdlx/-0.dds
+          - remastered/obj/LAST_ATTACKER.mdlx/-0.dds
+          - remastered/obj/LAST_GIMMICK.mdlx/-0.dds
+          - remastered/obj/LAST_HITMARK.mdlx/-0.dds
+          - remastered/obj/PO06_PLAYER.mdlx/-0.dds
+          - remastered/obj/PO07_PLAYER.mdlx/-0.dds
+          - remastered/obj/PO08_PLAYER.mdlx/-0.dds
+          - remastered/obj/WM_EX100.mdlx/-0.dds
+
+        - - remastered/obj/H_EX500.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100.mdlx/-0.dds
+          - remastered/obj/P_EX100_AL_CARPET.mdlx/-0.dds
+          - remastered/obj/P_EX100_LAST.mdlx/-0.dds
+          - remastered/obj/P_EX100_MEMO.mdlx/-0.dds
+          - remastered/obj/P_EX100_NPC.mdlx/-0.dds
+          - remastered/obj/P_EX100_WM.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: side_accent
+          name: Side Accent
+          hue_start: 0
+          hue_end: 8
+      image_groups:
+        - - remastered/obj/ACTOR_SORA.mdlx/-1.dds
+          - remastered/obj/AL14_PLAYER.mdlx/-1.dds
+          - remastered/obj/DEAD_BOSS.mdlx/-1.dds
+          - remastered/obj/LAST_ATTACKER.mdlx/-1.dds
+          - remastered/obj/LAST_GIMMICK.mdlx/-1.dds
+          - remastered/obj/LAST_HITMARK.mdlx/-1.dds
+          - remastered/obj/PO06_PLAYER.mdlx/-1.dds
+          - remastered/obj/PO07_PLAYER.mdlx/-1.dds
+          - remastered/obj/PO08_PLAYER.mdlx/-1.dds
+          - remastered/obj/WM_EX100.mdlx/-1.dds
+
+        - - remastered/obj/ACTOR_SORA_H.mdlx/-0.dds
+
+        - - remastered/obj/H_EX500.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100.mdlx/-1.dds
+          - remastered/obj/P_EX100_AL_CARPET.mdlx/-1.dds
+          - remastered/obj/P_EX100_LAST.mdlx/-1.dds
+          - remastered/obj/P_EX100_MEMO.mdlx/-1.dds
+          - remastered/obj/P_EX100_NPC.mdlx/-1.dds
+          - remastered/obj/P_EX100_WM.mdlx/-1.dds
+
+
+- id: sora_valor
+  name: Sora (Valor Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 320
+          hue_end: 40
+      image_groups:
+        - - remastered/obj/H_EX500_BTLF.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100_BTLF.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: side_accent
+          name: Side Accent
+          hue_start: 0
+          hue_end: 8
+      image_groups:
+        - - remastered/obj/H_EX500_BTLF.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_BTLF.mdlx/-1.dds
+
+
+- id: sora_wisdom
+  name: Sora (Wisdom Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 150
+          hue_end: 265
+      image_groups:
+        - - remastered/obj/H_EX500_MAGF.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100_MAGF.mdlx/-0.dds
+
+
+- id: sora_limit
+  name: Sora (Limit Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 340
+          hue_end: 8
+        - id: shoes
+          name: Shoes
+          hue_start: 25
+          hue_end: 65
+      image_groups:
+        - - remastered/obj/H_EX500_KH1F.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100_KH1F.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: side_accent
+          name: Side Accent
+          hue_start: 340
+          hue_end: 8
+      image_groups:
+        - - remastered/obj/H_EX500_KH1F.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_KH1F.mdlx/-1.dds
+
+
+- id: sora_master
+  name: Sora (Master Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 5
+          hue_end: 65
+      image_groups:
+        - - remastered/obj/H_EX500_TRIF.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100_TRIF.mdlx/-0.dds
+
+
+- id: sora_final
+  name: Sora (Final Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: trim
+          name: Trim
+          hue_start: 160
+          hue_end: 200
+      image_groups:
+        - - remastered/obj/H_EX500_ULTF.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100_ULTF.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: side_accent
+          name: Side Accent
+          hue_start: 160
+          hue_end: 200
+      image_groups:
+        - - remastered/obj/H_EX500_ULTF.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_ULTF.mdlx/-1.dds

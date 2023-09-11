@@ -2,6 +2,7 @@ altgraph==0.17.2
 bitstring==3.1.9
 future==0.18.2
 khbr==4.0.5
+numpy==1.25.2
 pefile==2021.9.3
 pillow==9.3.0
 pyinstaller==4.5.1
