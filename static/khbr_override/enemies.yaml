@@ -1,0 +1,6278 @@
+Bees ETC PO:
+  enabled: true
+  tags:
+  - other
+  variationof: Bees TT PO
+  enmp_index: 999
+  model: F_PO090_ETC
+  obj_id: 2139
+  size: 0
+  type: enemy
+  variations:
+    Bees ETC PO:
+      vars:
+      - 0
+      - 3
+Bees TT PO:
+  enabled: true
+  tags:
+  - other
+  enmp_index: 999
+  model: F_PO090_TT
+  obj_id: 2138
+  size: 0
+  type: enemy
+  variations:
+    Bees TT PO:
+      vars:
+      - 0
+      - 0
+Aerial Knocker:
+  enabled: true
+  enmp_index: 999
+  isnightmare: true
+  model: M_EX780
+  obj_id: 20
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Aerial Knocker:
+      vars:
+      - 0
+      - 0
+    Aerial Knocker (1 0):
+      vars:
+      - 1
+      - 0
+Aeriel Champ:
+  enabled: true
+  enmp_index: 999
+  model: M_EX780_HB
+  variationof: Aerial Knocker
+  obj_id: 2410
+  size: 0
+  type: enemy
+  variations:
+    Aeriel Champ:
+      vars:
+      - 0
+      - 0
+Aeroplane:
+  enabled: true
+  enmp_index: 999
+  model: M_EX540
+  obj_id: 6
+  sizeTag: memorySmall
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Aeroplane:
+      vars:
+      - 0
+      - 0
+Armored Knight (NM):
+  enabled: true
+  enmp_index: 999
+  variationof: Armored Knight
+  model: M_EX760_NM
+  obj_id: 1845
+  size: 0
+  type: enemy
+  variations:
+    Armored Knight (NM):
+      vars:
+      - 0
+      - 0
+Armored Knight (1K Battle, Disappears):
+  enabled: false
+  enmp_index: 999
+  model: M_EX760_RAW
+  obj_id: 1468
+  size: 0
+  type: enemy
+  variations:
+    Armored Knight (1K Battle, Disappears):
+      vars:
+      - 0
+      - 0
+Bolt Tower (MU):
+  enabled: true
+  variationof: Bolt Tower
+  enmp_index: 999
+  model: M_EX800_MU
+  obj_id: 2238
+  size: 0
+  type: enemy
+  tags:
+  - large
+  variations:
+    Bolt Tower (MU):
+      vars:
+      - 0
+      - 0
+Bolt Tower (RAW):
+  enabled: true
+  variationof: Bolt Tower
+  enmp_index: 999
+  model: M_EX800_RAW
+  replace_as: Bolt Tower
+  obj_id: 1576
+  size: 0
+  type: enemy
+  tags:
+  - large
+  variations:
+    Bolt Tower (RAW):
+      vars:
+      - 0
+      - 0
+Bookmaster:
+  enabled: true
+  enmp_index: 999
+  isnightmare: true
+  model: M_EX530
+  obj_id: 5
+  size: 0
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - ranged
+  - large
+  variations:
+    Bookmaster:
+      vars:
+      - 0
+      - 0
+Bookmaster (TR):
+  enabled: true
+  enmp_index: 999
+  model: M_EX530_TR
+  obj_id: 1835
+  size: 0
+  type: enemy
+  variationof: Bookmaster
+  tags:
+  - ranged
+  - large
+  variations:
+    Bookmaster (TR):
+      vars:
+      - 0
+      - 0
+Bulky Vendor:
+  enabled: true
+  enmp_index: 999
+  model: M_EX590
+  obj_id: 75
+  size: 0
+  tags:
+  - other
+  type: enemy
+  variations:
+    Bulky Vendor (Disappears):
+      vars:
+      - 1
+      - 0
+    Bulky Vendor:
+      vars:
+      - 0
+      - 0
+Bulky Vendor (NM):
+  enabled: true
+  tags:
+  - other
+  enmp_index: 999
+  model: M_EX590_NM
+  obj_id: 2509
+  size: 0
+  type: enemy
+  variationof: Bulky Vendor
+  variations:
+    Bulky Vendor (NM) (Disappears):
+      vars:
+      - 1
+      - 0
+    Bulky Vendor (NM):
+      vars:
+      - 0
+      - 0
+Camo Cannon:
+  enabled: true
+  enmp_index: 999
+  model: M_EX650_HB
+  obj_id: 2407
+  size: 0
+  type: enemy
+  variationof: Cannon Gun
+  tags:
+  - ranged
+  variations:
+    Camo Cannon:
+      vars:
+      - 0
+      - 0
+Cannon Gun WI:
+  enabled: true
+  enmp_index: 999
+  model: M_EX650_TR
+  obj_id: 1832
+  size: 0
+  type: enemy
+  variationof: Cannon Gun
+  tags:
+  - ranged
+  variations:
+    Cannon Gun WI:
+      vars:
+      - 0
+      - 0
+Creeper Plant:
+  enabled: true
+  enmp_index: 999
+  model: M_EX750
+  isnightmare: true
+  obj_id: 125
+  sizeTag: memorySmall
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Creeper Plant:
+      vars:
+      - 0
+      - 0
+Creeper Plant (NM):
+  enabled: true
+  enmp_index: 999
+  model: M_EX750_NM
+  variationof: Creeper Plant
+  obj_id: 1837
+  size: 0
+  type: enemy
+  variations:
+    Creeper Plant (NM):
+      vars:
+      - 0
+      - 0
+Demyx's water form (EH):
+  enabled: false
+  enmp_index: 999
+  model: M_EX880_DANCER_EH
+  obj_id: 2294
+  size: 0
+  type: enemy
+  tags:
+  - nobody
+  variations:
+    Demyx's water form (EH):
+      vars:
+      - 0
+      - 0
+Emerald Blues:
+  enabled: true
+  enmp_index: 999
+  isnightmare: true
+  model: M_EX120
+  obj_id: 72
+  sizeTag: memorySmall
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Emerald Blues:
+      vars:
+      - 0
+      - 0
+Emerald Blues (TR):
+  enabled: true
+  variationof: Emerald Blues
+  enmp_index: 999
+  model: M_EX120_TR
+  obj_id: 1852
+  size: 0
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Emerald Blues (TR):
+      vars:
+      - 0
+      - 0
+Fortuneteller (AL):
+  enabled: true
+  enmp_index: 999
+  isnightmare: true
+  model: M_EX620_AL
+  obj_id: 1760
+  sizeTag: memorySmall
+  type: enemy
+  tags:
+  - al
+  - ranged
+  variations:
+    Fortuneteller (AL):
+      vars:
+      - 4
+      - 0
+    Fortuneteller (AL) (14 20):
+      vars:
+      - 14
+      - 20
+    Fortuneteller (AL) (13 0):
+      vars:
+      - 13
+      - 0
+    Fortuneteller (AL) (10 32):
+      vars:
+      - 10
+      - 32
+    Fortuneteller (AL) (13 32):
+      vars:
+      - 13
+      - 32
+    Fortuneteller (AL) (1 30):
+      vars:
+      - 1
+      - 30
+    Fortuneteller (AL) (6 30):
+      vars:
+      - 6
+      - 30
+    Fortuneteller (AL) (7 0):
+      vars:
+      - 7
+      - 0
+    Fortuneteller (AL) (10 0):
+      vars:
+      - 10
+      - 0
+Gargoyle Knight:
+  enabled: true
+  enmp_index: 999
+  model: M_BB010_SWORD
+  obj_id: 367
+  sizeTag: memorySmall
+  type: enemy
+  isnightmare: true
+  variations:
+    Gargoyle Knight (30 0):
+      vars:
+      - 30
+      - 0
+    Gargoyle Knight (32 0):
+      vars:
+      - 32
+      - 0
+    Gargoyle Knight (34 0):
+      vars:
+      - 34
+      - 0
+    Gargoyle Knight (36 0):
+      vars:
+      - 36
+      - 0
+    Gargoyle Knight:
+      vars:
+      - 0
+      - 0
+Gargoyle Warrior:
+  enabled: true
+  enmp_index: 999
+  model: M_BB010_AX
+  obj_id: 368
+  isnightmare: true
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Gargoyle Warrior (40 0):
+      vars:
+      - 40
+      - 0
+    Gargoyle Warrior (42 0):
+      vars:
+      - 42
+      - 0
+    Gargoyle Warrior (44 0):
+      vars:
+      - 44
+      - 0
+    Gargoyle Warrior (46 0):
+      vars:
+      - 46
+      - 0
+    Gargoyle Warrior:
+      vars:
+      - 0
+      - 0
+Hammer Frame:
+  enabled: true
+  enmp_index: 999
+  model: M_EX560
+  obj_id: 8
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Hammer Frame:
+      vars:
+      - 0
+      - 0
+    Hammer Frame (99 0):
+      vars:
+      - 99
+      - 0
+Hot Rod:
+  enabled: true
+  enmp_index: 999
+  model: M_EX640
+  obj_id: 13
+  sizeTag: memoryLarge
+  type: enemy
+  isnightmare: true
+  tags:
+  - large
+  variations:
+    Hot Rod:
+      vars:
+      - 0
+      - 0
+Large Body WI:
+  enabled: true
+  variationof: Large Body
+  enmp_index: 999
+  model: M_EX050_WI
+  obj_id: 2025
+  size: 0
+  type: enemy
+  tags:
+  - large
+  variations:
+    Large Body WI:
+      vars:
+      - 0
+      - 0
+Neoshadow:
+  enabled: true
+  isnightmare: true
+  enmp_index: 999
+  model: M_EX420
+  obj_id: 120
+  sizeTag: memoryLarge
+  type: enemy
+  variations:
+    Neoshadow:
+      vars:
+      - 0
+      - 0
+    Neoshadow (1 0):
+      vars:
+      - 1
+      - 0
+    Neoshadow (44 0):
+      vars:
+      - 44
+      - 0
+    Neoshadow (99 0):
+      vars:
+      - 99
+      - 0
+Neoshadow (NM):
+  enabled: true
+  variationof: Shadow
+  enmp_index: 999
+  model: M_EX420_NM
+  variationof: Neoshadow
+  obj_id: 1836
+  size: 0
+  type: enemy
+  variations:
+    Neoshadow (NM):
+      vars:
+      - 0
+      - 0
+Rabid Dog:
+  enabled: true
+  enmp_index: 999
+  model: M_EX510
+  obj_id: 3
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Rabid Dog:
+      vars:
+      - 0
+      - 0
+Rapid Thruster (RAW):
+  enabled: true
+  variationof: Rapid Thruster
+  enmp_index: 999
+  model: M_EX660_RAW
+  obj_id: 1368
+  replace_as: Rapid Thruster
+  size: 0
+  type: enemy
+  variations:
+    Rapid Thruster (RAW):
+      vars:
+      - 0
+      - 0
+    Rapid Thruster (RAW) (1 0):
+      vars:
+      - 1
+      - 0
+Reckless:
+  enabled: true
+  enmp_index: 999
+  model: M_EX680_HB
+  obj_id: 2408
+  variationof: Devastator
+  size: 0
+  type: enemy
+  tags:
+  - large
+  - ranged
+  variations:
+    Reckless:
+      vars:
+      - 0
+      - 0
+Scar Ghost:
+  can_be_enemy_override: false # reports this doesn't work well
+  enabled: false # Gives no XP so should not be in pool
+  enmp_index: 999
+  model: B_LK110_PHANTOM
+  obj_id: 2099
+  size: 0
+  type: enemy
+  variations:
+    Scar Ghost:
+      vars:
+      - 0
+      - 0
+Shadow (NM):
+  enabled: true
+  enmp_index: 999
+  model: M_EX020_NM
+  variationof: Shadow
+  obj_id: 1220
+  size: 0
+  type: enemy
+  variations:
+    Shadow (NM):
+      vars:
+      - 0
+      - 0
+Shadow (RAW):
+  enabled: true
+  variationof: Shadow
+  enmp_index: 999
+  model: M_EX020_RAW
+  replace_as: Shadow
+  obj_id: 1365
+  size: 0
+  type: enemy
+  variations:
+    Shadow (RAW):
+      vars:
+      - 0
+      - 0
+    Shadow (RAW) (99 0):
+      vars:
+      - 99
+      - 0
+Shaman:
+  enabled: true
+  enmp_index: 999
+  model: M_EX720
+  obj_id: 19
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Shaman:
+      vars:
+      - 0
+      - 0
+    Shaman (1 0):
+      vars:
+      - 1
+      - 0
+Soldier (TR):
+  enabled: true
+  enmp_index: 999
+  model: M_EX010_TR
+  variationof: Soldier
+  obj_id: 1839
+  size: 0
+  type: enemy
+  variations:
+    Soldier (TR):
+      vars:
+      - 0
+      - 0
+Soldier (WI):
+  enabled: true
+  variationof: Soldier
+  enmp_index: 999
+  model: M_EX010_WI
+  obj_id: 1849
+  size: 0
+  type: enemy
+  variations:
+    Soldier (WI):
+      vars:
+      - 0
+      - 0
+Strafer:
+  enabled: true
+  enmp_index: 999
+  model: M_EX610
+  obj_id: 1114
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Strafer:
+      vars:
+      - 0
+      - 0
+Surveillance Robot (1K Battle) (Disappears):
+  enabled: false
+  enmp_index: 999
+  model: M_EX770_RAW
+  obj_id: 1469
+  size: 0
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Surveillance Robot (1K Battle) (Disappears):
+      vars:
+      - 0
+      - 0
+Surveillance Robot (TR):
+  enabled: true
+  variationof: Surveillance Robot
+  enmp_index: 999
+  model: M_EX770_TR
+  obj_id: 1847
+  size: 0
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Surveillance Robot (TR):
+      vars:
+      - 0
+      - 0
+    Surveillance Robot (TR) (2 0):
+      vars:
+      - 2
+      - 0
+Toy Soldier:
+  enabled: true
+  enmp_index: 999
+  model: M_EX790_CHRISTMAS
+  obj_id: 1776
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - large
+  - ranged
+  variations:
+    Toy Soldier:
+      vars:
+      - 0
+      - 0
+    Toy Soldier (2 0):
+      vars:
+      - 2
+      - 0
+Trick Ghost (NM):
+  enabled: true
+  variationof: Trick Ghost
+  enmp_index: 999
+  model: M_EX500_NM
+  obj_id: 1827
+  size: 0
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Trick Ghost (NM):
+      vars:
+      - 0
+      - 0
+Undead Pirate A:
+  aimods:
+  - name: B_CA020/b_ca.bdscript
+    type: obj
+  enabled: true
+  enmp_index: 999
+  model: B_CA020
+  obj_id: 1107
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - pirate
+  variations:
+    Undead Pirate A:
+      vars:
+      - 0
+      - 0
+    Undead Pirate A (Jumps up):
+      vars:
+      - 11
+      - 0
+    Undead Pirate A (Jumps Forward):
+      vars:
+      - 12
+      - 0
+    Undead Pirate A (90 0):
+      vars:
+      - 90
+      - 0
+    Undead Pirate A (93 0):
+      vars:
+      - 93
+      - 0
+    Undead Pirate A (22 0):
+      vars:
+      - 22
+      - 0
+    Undead Pirate A (24 0):
+      vars:
+      - 24
+      - 0
+    Undead Pirate A (20 0):
+      vars:
+      - 20
+      - 0
+    Undead Pirate A (91 0):
+      vars:
+      - 91
+      - 0
+Undead Pirate B:
+  aimods:
+  - name: B_CA030/b_ca.bdscript
+    type: obj
+  enabled: true
+  enmp_index: 999
+  isnightmare: true
+  model: B_CA030
+  obj_id: 1108
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - pirate
+  variations:
+    Undead Pirate B:
+      vars:
+      - 0
+      - 0
+    Undead Pirate B (90 0):
+      vars:
+      - 90
+      - 0
+    Undead Pirate B (93 0):
+      vars:
+      - 93
+      - 0
+    Undead Pirate B (92 0):
+      vars:
+      - 92
+      - 0
+Undead Pirate C:
+  # for some reason these are not being used
+  # aimods:
+  # - name: B_CA040/b_ca.bdscript
+  #   type: obj
+  # - name: B_CA040_PUB/b_ca.bdscript
+  #   type: obj
+  obj_edits:
+    Flag: 0
+  enabled: true
+  enmp_index: 999
+  model: B_CA040
+  obj_id: 1109
+  sizeTag: memoryLarge
+  type: enemy
+  isnightmare: true
+  tags:
+  - pirate
+  variations:
+    Undead Pirate C:
+      vars:
+      - 0
+      - 0
+    Undead Pirate C (Jumps Down):
+      vars:
+      - 10
+      - 0
+    Undead Pirate C (28 0):
+      vars:
+      - 28
+      - 0
+    Undead Pirate C (91 0):
+      vars:
+      - 91
+      - 0
+    Undead Pirate C (Jumps Up):
+      vars:
+      - 11
+      - 0
+    Undead Pirate C (90 0):
+      vars:
+      - 90
+      - 0
+    Undead Pirate C (13 0):
+      vars:
+      - 13
+      - 0
+    Undead Pirate C (92 0):
+      vars:
+      - 92
+      - 0
+    Undead Pirate C (93 0):
+      vars:
+      - 93
+      - 0
+    Undead Pirate C (12 0):
+      vars:
+      - 12
+      - 0
+    Undead Pirate C (6 0):
+      vars:
+      - 6
+      - 0
+    Undead Pirate C (2 0):
+      vars:
+      - 2
+      - 0
+    Undead Pirate C (8 0):
+      vars:
+      - 8
+      - 0
+    Undead Pirate C (26 0):
+      vars:
+      - 26
+      - 0
+Wight Knight:
+  enabled: true
+  enmp_index: 999
+  model: M_EX200
+  isnightmare: true
+  obj_id: 118
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Wight Knight:
+      vars:
+      - 0
+      - 0
+Vivi (clones):
+  enabled: false # Gives no xp so should not be in pool
+  enmp_index: 999
+  model: N_EX610_BTL2
+  obj_id: 2256
+  size: 0
+  type: enemy
+  variations:
+    Vivi (clones):
+      vars:
+      - 2
+      - 0
+Shadow Roxas:
+  enabled: false
+  enmp_index: 999
+  model: P_EX130
+  obj_id: 1876
+  size: 0
+  type: enemy
+  variations:
+    Shadow Roxas:
+      vars:
+      - 0
+      - 0
+Aerial Viking:
+  enabled: true
+  enmp_index: 203
+  hp: 100
+  level: 99
+  limiter: 13
+  model: M_EX210_HB
+  obj_id: 2413
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - large # TODO not exactly large, but can cause crashes when replacing shadows
+  variations:
+    Aerial Viking:
+      vars:
+      - 0
+      - 0
+Aeroplane WI:
+  enabled: true
+  variationof: Aeroplane
+  enmp_index: 56
+  hp: 100
+  level: 99
+  limiter: 10
+  model: M_EX540_WI
+  obj_id: 1828
+  size: 245100
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Aeroplane WI:
+      vars:
+      - 0
+      - 0
+Air Pirate:
+  enabled: true
+  variationof: Aerial Viking
+  enmp_index: 3
+  hp: 100
+  level: 99
+  tags:
+  - large
+  limiter: 13
+  model: M_EX210
+  obj_id: 74
+  size: 603320
+  type: enemy
+  variations:
+    Air Pirate:
+      vars:
+      - 0
+      - 0
+    Air Pirate (1 0):
+      vars:
+      - 1
+      - 0
+Armor Xemnas I:
+  # aimods: 
+  # - name: B_EX260/b_ex.bdscript
+  #   type: obj
+  # - name: B_EX320/b_ex.bdscript
+  #   type: obj
+  # - name: M_EX880_DANCER_EH/m_ex.bdscript
+  #   type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -150
+  enabled: true
+  enmp_index: 0xA0
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX260
+  gimmick_source:
+  - Final Xemnas
+  obj_id: 2140
+  type: boss
+  variations:
+    Armor Xemnas I:
+      msn: EH24_MS110
+      story_level: 50
+      mickey_source: true
+      final_fight: true
+      program: 71
+      size: 3.82
+      room_size: 12.98
+      adds:
+      - ObjectId: 2116 # ??? B_EX300
+        Serial: 12
+      - ObjectId: 2115 # Xig B_EX290 (x2)
+        Serial: 10
+      - ObjectId: 2115 # Xig B_EX290 (x2)
+        Serial: 11
+      - ObjectId: 2114 # Saix Claymore (x2)
+        Serial: 8
+      - ObjectId: 2114 # Saix Claymore (x2)
+        Serial: 9
+      - ObjectId: 2117 # xaldin B_EX310
+        Serial: 13
+      - ObjectId: 2118 # Axel B_EX320 (x2)
+        Serial: 14
+      - ObjectId: 2118 # Axel B_EX320 (x2)
+        Serial: 14
+      - ObjectId: 2294 # dancers M_EX880_DANCER_EH (x5)
+        SpawnType: 2
+        Serial: 18
+        customUnit:
+          Type: 2
+          Flag: 1
+          Id: 26
+          EventActivators:
+          - Shape: 2
+            Option: 0
+            PositionX: 45.011569976806641
+            PositionY: -100
+            PositionZ: -888.35009765625
+            ScaleX: 54.833000183105469
+            ScaleY: 100
+            ScaleZ: 74.166999816894531
+            RotationX: 0
+            RotationY: -0.081681407988071442
+            RotationZ: 0
+            Flags: 0
+            Type: 0
+            OnBgGroup: 0
+            OffBgGroup: 0
+      - ObjectId: 2294 # dancers M_EX880_DANCER_EH (x5)
+        SpawnType: 2
+        Serial: 19
+        customUnit:
+          Type: 2
+          Flag: 1
+          Id: 26
+          EventActivators:
+          - Shape: 2
+            Option: 0
+            PositionX: 45.011569976806641
+            PositionY: -100
+            PositionZ: -888.35009765625
+            ScaleX: 54.833000183105469
+            ScaleY: 100
+            ScaleZ: 74.166999816894531
+            RotationX: 0
+            RotationY: -0.081681407988071442
+            RotationZ: 0
+            Flags: 0
+            Type: 0
+            OnBgGroup: 0
+            OffBgGroup: 0
+      - ObjectId: 2294 # dancers M_EX880_DANCER_EH (x5)
+        SpawnType: 2
+        Serial: 20
+        customUnit:
+          Type: 2
+          Flag: 1
+          Id: 26
+          EventActivators:
+          - Shape: 2
+            Option: 0
+            PositionX: 45.011569976806641
+            PositionY: -100
+            PositionZ: -888.35009765625
+            ScaleX: 54.833000183105469
+            ScaleY: 100
+            ScaleZ: 74.166999816894531
+            RotationX: 0
+            RotationY: -0.081681407988071442
+            RotationZ: 0
+            Flags: 0
+            Type: 0
+            OnBgGroup: 0
+            OffBgGroup: 0
+      - ObjectId: 2294 # dancers M_EX880_DANCER_EH (x5)
+        SpawnType: 2
+        Serial: 21
+        customUnit:
+          Type: 2
+          Flag: 1
+          Id: 26
+          EventActivators:
+          - Shape: 2
+            Option: 0
+            PositionX: 45.011569976806641
+            PositionY: -100
+            PositionZ: -888.35009765625
+            ScaleX: 54.833000183105469
+            ScaleY: 100
+            ScaleZ: 74.166999816894531
+            RotationX: 0
+            RotationY: -0.081681407988071442
+            RotationZ: 0
+            Flags: 0
+            Type: 0
+            OnBgGroup: 0
+            OffBgGroup: 0
+      - ObjectId: 2294 # dancers M_EX880_DANCER_EH (x5)
+        SpawnType: 2
+        Serial: 22
+        customUnit:
+          Type: 2
+          Flag: 1
+          Id: 26
+          EventActivators:
+          - Shape: 2
+            Option: 0
+            PositionX: 45.011569976806641
+            PositionY: -100
+            PositionZ: -888.35009765625
+            ScaleX: 54.833000183105469
+            ScaleY: 100
+            ScaleZ: 74.166999816894531
+            RotationX: 0
+            RotationY: -0.081681407988071442
+            RotationZ: 0
+            Flags: 0
+            Type: 0
+            OnBgGroup: 0
+            OffBgGroup: 0
+      - ObjectId: 2286 # Luxord card?
+        Serial: 17
+        customUnit:
+          Type: 5
+          Flag: 1
+          Id: 34
+      vars:
+      - 1
+      - 0
+Armor Xemnas II:
+  enabled: true
+  aimods: 
+  - name: B_EX260/b_ex.bdscript
+    type: obj
+  # - name: EH23_MS112/ms_b.bdscript
+  #   type: msn
+    # source: old
+  gimmick_source:
+  - Final Xemnas
+  - Terra
+  - Zexion
+  blacklist_source:
+  - Saix # Report of crash
+  enmp_index: 0xA0
+  tags:
+  - teleport_blocked
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX260
+  obj_id: 2140
+  type: boss
+  variations:
+    Armor Xemnas II:
+      roomData:
+        bossX: 0
+        bossY: 14940
+        bossZ: 4511.38818359375
+      msn: EH23_MS112
+      story_level: 50
+      program: 73
+      #replace_as: Armor Xemnas I
+      final_fight: true
+      size: 1.7
+      room_size: 9.23
+      # subtracts: The subtracts get handled by the roommodedits
+      # - ObjectId: 1766 # building
+      # - ObjectId: 1895 # dragon
+      vars:
+      - 0
+      - 0
+Armored Knight:
+  enabled: true
+  enmp_index: 35
+  hp: 100
+  level: 99
+  limiter: 7
+  model: M_EX760
+  obj_id: 305
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Armored Knight:
+      vars:
+      - 0
+      - 0
+    Armored Knight (90 0):
+      vars:
+      - 90
+      - 0
+Assassin:
+  # aimods: 
+  # - name: M_EX900/m_ex.bdscript
+  #   type: obj
+  enabled: true
+  enmp_index: 44
+  hp: 100
+  level: 99
+  limiter: 10
+  model: M_EX900
+  obj_id: 309
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - nobody
+  replace_as: Dancer # FIXME I'm being lazy need a better fix for the explosion softlock issue
+  variations:
+    Assassin:
+      vars:
+      - 0
+      - 0
+Assault Rider:
+  enabled: true
+  enmp_index: 59
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 20
+  model: M_EX570
+  obj_id: 9
+  sizeTag: memoryLarge
+  tags:
+  - large
+  type: enemy
+  variations:
+    Assault Rider:
+      vars:
+      - 0
+      - 0
+Axel I:
+  roomData:
+    bossX: 82.84268188476562
+    bossY: -90
+    bossZ: 107.84269714355469
+  can_be_enemy: true
+  enabled: true
+  hp: 100
+  level: 99
+  limiter: 0
+  gimmick_source:
+  - Demyx
+  - Final Xemnas
+  - Luxord
+  - Marluxia
+  - Roxas
+  - Sephiroth
+  - Vexen
+  - Xemnas
+  - Zexion
+  tags:
+  - roxas
+  - teleport_blocked
+  model: B_EX110_SKIRMISH
+  msn: TT05_MS404
+  enmp_index: 0x94
+  program: 87
+  outprogram: 87
+  room_size: 9.43
+  size: 2.92
+  obj_id: 2229
+  type: boss
+  story_level: 2
+  variations:
+    Axel I:
+      vars:
+      - 1
+      - 0
+Axel II:
+  aimods: 
+  - name: B_EX110/b_ex.bdscript
+    type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -165
+  tags:
+  - organization
+  - roxas
+  - teleport_blocked
+  - needs_rc
+  gimmick_source:
+  - Cerberus
+  - Grim Reaper I
+  - Scar
+  - Twilight Thorn
+  blacklist_destination:
+  - Jafar
+  blacklist_source:
+  - Demyx
+  - Demyx OC
+  - Final Xemnas
+  - Cerberus
+  - Grim Reaper I
+  - Grim Reaper II
+  - Groundshaker
+  - Hydra
+  - Lexaeus
+  - Luxord
+  - Marluxia
+  - Prison Keeper
+  - Roxas
+  - Saix
+  - Scar
+  - Sephiroth
+  - Shan-Yu
+  - Terra
+  - The Beast
+  - The Experiment
+  - Thresholder
+  - Twilight Thorn
+  - Vexen
+  - Xaldin
+  - Xemnas
+  - Xigbar
+  forced_variations:
+    HE19: Axel II
+    TT20: Axel II
+  enabled: true
+  enmp_index: 0x4E
+  hp: 100
+  level: 99
+  limiter: 34
+  model: B_EX110
+  msn: TT20_MS603
+  program: 137
+  room_size: 3.68
+  size: 3.74
+  obj_id: 81
+  type: boss
+  story_level: 3
+  variations:
+    Axel II:
+      vars:
+      - 0
+      - 0
+Banzai:
+  enabled: false
+  can_be_enemy_override: true
+  enmp_index: 0x5B
+  hp: 100
+  level: 99
+  tags: 
+  - rc_blocked
+  limiter: 0
+  model: B_LK100_10
+  obj_id: 666
+  source_replace_allowed: false
+  type: boss
+  variations:
+    Banzai:
+      program: 51
+      msn: LK02_MS102
+      size: 0.56
+      room_size: 8.2
+      vars:
+      - 0
+      - 0
+    Banzai (1):
+      program: 57
+      msn: LK05_MS201
+      size: 0.56
+      room_size: 8.46
+      vars:
+      - 2
+      - 0
+Barbossa:
+  roomData:
+    bossX: -530.52001953125
+    bossY: -45.31237030029297
+    bossZ: -334.4390869140625
+  aimods: 
+  - name: B_CA010/b_ca.bdscript
+    type: obj
+  gimmick_source:
+  - Hydra
+  - Twilight Thorn
+  blacklist_destination:
+  - Groundshaker
+  - Scar
+  - Xigbar
+  - Zexion
+  adds:
+  - ObjectId: 358 #Illuminator
+    name: Illuminator
+    aimods:
+    - name: B_CA000/b_ca.bdscript
+      type: obj
+  enabled: true
+  enmp_index: 0x63
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_CA010
+  msn: CA10_MS107
+  msn_source_as: WI01_MS101
+  program: 60
+  size: 3.95
+  room_size: 11.84
+  obj_id: 1015
+  type: boss
+  variations:
+    Barbossa:
+      story_level: 20
+      vars:
+      - 0
+      - 0
+Barrel:
+  enabled: false
+  enmp_index: 17
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_NM070_BTL
+  msn: NM10_MS201
+  program: 62
+  size: 1.32
+  room_size: 11.39
+  obj_id: 129
+  source_replace_allowed: false
+  type: boss
+  variations:
+    Barrel:
+      vars:
+      - 0
+      - 0
+Bees (Disappearing):
+  enabled: true
+  tags:
+  - other
+  hp: 100
+  level: 99
+  limiter: 12
+  model: F_PO090
+  obj_id: 1573
+  size: 41084
+  replace_as: Bees TT PO
+  variationof: Bees TT PO
+  type: enemy
+  variations:
+    Bees (Disappearing):
+      vars:
+      - 0
+      - 0
+Beffudler:
+  enabled: true
+  variationof: Hook Bat
+  enmp_index: 201
+  hp: 100
+  level: 99
+  limiter: 8
+  model: M_EX520_HB
+  obj_id: 2404
+  size: 298036
+  type: enemy
+  variations:
+    Beffudler:
+      vars:
+      - 0
+      - 0
+Berserker:
+  enabled: true
+  enmp_index: 48
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 15
+  model: M_EX940
+  obj_id: 313
+  sizeTag: memoryLarge
+  tags:
+  - large
+  - nobody
+  type: enemy
+  variations:
+    Berserker:
+      vars:
+      - 0
+      - 0
+Blizzard Lord:
+  roomData:
+    bossX: 270
+    bossY: 0
+    bossZ: 730
+  can_be_enemy: true
+  enabled: true
+  enmp_index: 0x7B
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_AL100_ICE
+  msn_replace_allowed: false
+  obj_id: 1036
+  size: 2.58
+  gimmick_source:
+  - Sephiroth
+  - Hostile Program
+  - Marluxia
+  blacklist_source:
+  - Sephiroth # Too hard in multi boss fights
+  - Terra # Too hard in multi boss fights
+  - Twilight Thorn
+  - Roxas # crashes a lot
+  - Grim Reaper II
+  - Hydra
+  - Larxene
+  - Marluxia
+  tags:
+  - large
+  type: boss
+  variations:
+    Blizzard Lord:
+      msn: AL03_MS103
+      story_level: 22
+      mickey_source: true
+      program: 59
+      room_size: 10.32
+      roommaxsize: 13.36 # instead of roomsizemultiplier
+      vars:
+      - 0
+      - 0
+    Blizzard Lord (Cups):
+      roomData:
+        bossX: 0
+        bossY: 0
+        bossZ: -550
+      tags:
+      - cups
+      - large
+      msn: HE_COL_8TI_BOSS
+      program: 196
+      room_size: 9.14
+      vars:
+      - 1
+      - 0
+Bolt Tower:
+  enabled: true
+  enmp_index: 38
+  hp: 100
+  level: 99
+  limiter: 1
+  model: M_EX800
+  obj_id: 1575
+  sizeTag: memoryLarge
+  tags:
+  - large
+  type: enemy
+  variations:
+    Bolt Tower:
+      vars:
+      - 0
+      - 0
+    Bolt Tower (1):
+      vars:
+      - 1
+      - 0
+Bolt Tower DC:
+  enabled: true
+  variationof: Bolt Tower
+  enmp_index: 38
+  hp: 100
+  level: 99
+  limiter: 0
+  model: M_EX800_DC
+  obj_id: 2288
+  size: 669940
+  tags:
+  - large
+  type: enemy
+  variations:
+    Bolt Tower DC:
+      vars:
+      - 0
+      - 0
+Cannon Gun:
+  enabled: true
+  enmp_index: 64
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 10
+  model: M_EX650
+  obj_id: 14
+  sizeTag: memorySmall
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Cannon Gun:
+      vars:
+      - 0
+      - 0
+    Cannon Gun (1):
+      vars:
+      - 1
+      - 0
+Cerberus:
+  enabled: true
+  enmp_index: 0x13
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_HE020
+  obj_id: 351
+  size: 3.2
+  type: boss
+  gimmick_source:
+  - Terra
+  blacklist_destination:
+  - Oogie Boogie
+  - The Beast
+  variations:
+    Cerberus:
+      roomData:
+        bossX: -611.3707885742188
+        bossY: 235.92300415039062
+        bossZ: -731.3707885742188
+      msn: HE07_MS103
+      mickey_source: true
+      program: 114
+      story_level: 16
+      room_size: 10.54
+      vars:
+      - 0
+      - 0
+    Cerberus (Cups):
+      roomData:
+        bossX: 0
+        bossY: 0
+        bossZ: -150
+      # tags:
+      # - cups
+      enabled: true
+      program: 196
+      # TODO This was working so maybe commenting the msn_list broke something but cups haven't had too much testing
+      msn: HE_COL_2_10
+      # msn_list:
+      # - program: 194
+      #   msn: HE_COL_2_10
+      #   room_size: 6.19
+      # - program: 196
+      #   msn: HE_COLOSSEUM_8_ONLY
+      #   room_size: 9.14
+      # - program: 190
+      #   msn: HE_COL_2_10
+      #   room_size: 6.19
+      msn_replace_allowed: false
+      vars:
+      - 1
+      - 0
+Cloud:
+  enabled: true
+  enmp_index: 0xBD
+  hp: 100
+  level: 99
+  gimmick_source:
+  - Axel II
+  - Hostile Program
+  - Jafar
+  - The Beast
+  - Xemnas
+  blacklist_destination:
+  - Hades II
+  blacklist_source:
+  - Terra # Too hard in multi-fight arenas - Kayya
+  - Sephiroth # Too hard in multi-fight arenas - Kayya
+  - Armor Xemnas I
+  - Axel II
+  - Barbossa
+  - Cerberus
+  - Grim Reaper II
+  - Hades II
+  - Hydra
+  - Jafar
+  - Larxene
+  - Marluxia
+  - Prison Keeper
+  - Roxas
+  - The Beast
+  - The Experiment
+  - Twilight Thorn
+  - Xaldin
+  - Xemnas
+  - Xigbar
+  limiter: 0
+  model: N_HB550_BTL2
+  pc: 
+    tags: 
+    - disablecamera
+  tags:
+  - cups
+  - cant_invuln
+  msn_replace_allowed: false
+  obj_id: 2297
+  size: 1.9
+  type: boss
+  variations:
+    Cloud:
+      roomData:
+        bossX: 200.6020050048828
+        bossY: -0.0001509865978732705
+        bossZ: -307.20660400390625
+      can_be_enemy_override: true
+      program: 196
+      msn: HE_COL_8_25
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      vars:
+      - 1
+      - 0
+    Cloud (1):
+      roomData:
+        bossX: -200
+        bossY: -0.0001509865978732705
+        bossZ: -400
+      program: 196
+      msn: HE_COL_8_40
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      vars:
+      - 2
+      - 0
+    Cloud (2):
+      roomData:
+        bossX: 200.6020050048828
+        bossY: 0
+        bossZ: -307.20660400390625
+      program: 196
+      msn: HE_COL_8_49
+      room_size: 9.14
+      room_sizemultiplier: 0.25
+      vars:
+      - 3
+      - 0
+Creeper:
+  enabled: true
+  enmp_index: 51
+  hp: 100
+  level: 99
+  limiter: 9
+  model: M_EX880
+  obj_id: 317
+  sizeTag: memorySmall
+  type: enemy
+  tags:
+  - nobody
+  variations:
+    Creeper:
+      vars:
+      - 0
+      - 0
+Crescendo:
+  enabled: true
+  enmp_index: 13
+  hp: 100
+  level: 99
+  limiter: 7
+  model: M_EX740
+  obj_id: 124
+  sizeTag: memoryLarge
+  type: enemy
+  variations:
+    Crescendo:
+      vars:
+      - 0
+      - 0
+Crimson Jazz:
+  enabled: true
+  enmp_index: 2
+  hp: 100
+  level: 99
+  limiter: 17
+  model: M_EX130
+  obj_id: 73
+  sizeTag: memoryLarge
+  isnightmare: true
+  tags:
+  - large
+  - ranged
+  type: enemy
+  variations:
+    Crimson Jazz:
+      vars:
+      - 0
+      - 0
+    Crimson Jazz (1 0):
+      vars:
+      - 1
+      - 0
+    Crimson Jazz (Zipliner):
+      vars:
+      - 20
+      - 0
+Crimson Jazz AL:
+  enabled: true
+  enmp_index: 2
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 17
+  model: M_EX130_AL
+  obj_id: 1888
+  sizeTag: memorySmall
+  tags:
+  - al
+  - ranged
+  type: enemy
+  variations:
+    Crimson Jazz AL (8 1):
+      vars:
+      - 8
+      - 1
+    Crimson Jazz AL (12 0):
+      vars:
+      - 12
+      - 0
+    Crimson Jazz AL:
+      vars:
+      - 4
+      - 0
+Dancer:
+  enabled: true
+  enmp_index: 47
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 15
+  model: M_EX930
+  obj_id: 312
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - nobody
+  variations:
+    Dancer:
+      vars:
+      - 0
+      - 0
+    Dancer (99 0):
+      vars:
+      - 99
+      - 0
+Dark Thorn:
+  aimods: 
+  - name: B_BB110/b_bb.bdscript
+    type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -800
+  enabled: true
+  enmp_index: 0x16
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_BB110
+  msn: BB05_MS104B
+  program: 78
+  size: 4.19
+  room_size: 12.00
+  roommaxsize: 17.03
+  blacklist_source:
+  - Storm Rider # Gets stuck on edges of map
+  obj_id: 354
+  type: boss
+  variations:
+    Dark Thorn:
+      story_level: 13
+      mickey_source: true
+      vars:
+      - 0
+      - 0
+Axel (Data):
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -165
+  tags:
+  - data
+  - organization
+  aimods: 
+  - name: B_EX110_LV99/b_ex.bdscript
+    type: obj
+  enabled: true
+  variationof: Axel II
+  enmp_index: 0xF5
+  hp: 100
+  level: 99
+  limiter: 34
+  model: B_EX110_LV99
+  msn: TT20_MS603_RE
+  program: 213
+  size: 3.74
+  room_size: 3.65
+  obj_id: 2500
+  type: boss
+  variations:
+    Axel (Data):
+      vars:
+      - 0
+      - 0
+Demyx (Data):
+  roomData:
+    bossX: 150
+    bossY: 0
+    bossZ: 300
+  tags:
+  - data
+  - organization
+  aimods: 
+  - name: B_EX120_HB_LV99/b_ex.bdscript
+    type: obj
+  enabled: true
+  variationof: Demyx
+  enmp_index: 0xF0
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX120_HB_LV99
+  msn: HB04_MS403 # TODO DUPLICATE THE MSN
+  program: 114
+  size: 4.07
+  room_size: 10.62
+  obj_id: 2508
+  type: boss
+  variations:
+    Demyx (Data):
+      vars:
+      - 1
+      - 0
+Final Xemnas (Data):
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 1200
+  tags:
+  - data
+  - organization
+  - solo
+  - fix_source_area_settings
+  enabled: true
+  aimods: 
+  - name: B_EX170_LAST_LV99/b_ex.bdscript
+    type: obj
+  variationof: Final Xemnas
+  msn_replace_allowed: false # this might break things
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX170_LAST_LV99
+  msn: EH20_MS113_RE
+  msn_dest_as: WI03_MS104
+  program: 98
+  size: 6.28
+  room_size: 8.94
+  subtracts:
+  - ObjectId: 2258 # electrified sora
+  - ObjectId: 2506 # clone of
+    Argument1: 0
+    Argument2: 0
+  obj_id: 2506
+  type: boss
+  variations:
+    Final Xemnas (Clone) (Data):
+      source_replace_allowed: false
+      enabled: false
+      vars:
+      - 0
+      - 0
+    Final Xemnas (Data):
+      final_fight: false
+      vars:
+      - 1
+      - 0
+Luxord (Data):
+  aimods:
+  - name: B_EX150_LV99/b_ex.bdscript
+    type: obj
+  - name: B_EX210/b_ex.bdscript
+    type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -400
+  tags:
+  - data
+  - organization
+  variationof: Luxord
+  enabled: true
+  enmp_index: 0xF3
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX150_LV99
+  msn: EH14_MS103 # TODO DUPE MSN
+  program: 101
+  size: 4.64
+  room_size: 11.89
+  msn_required: true
+  obj_id: 2504
+  type: boss
+  variations:
+    Luxord (Data):
+      vars:
+      - 0
+      - 0
+Saix (Data):
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 400
+  tags:
+  - data
+  - organization
+  can_be_enemy: false
+  variationof: Saix
+  enabled: true
+  enmp_index: 0xFD
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX160_LV99
+  msn: EH15_MS104 # TODO DUPE MSN
+  program: 102
+  size: 4.55
+  room_size: 10.30
+  msn_required: true
+  obj_id: 2502
+  type: boss
+  variations:
+    Saix (Data):
+      vars:
+      - 0
+      - 0
+Xaldin (Data):
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -400
+  tags:
+  - data
+  - organization
+  enabled: true
+  variationof: Xaldin
+  enmp_index: 0xF6
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX130_LV99
+  msn: BB15_MS203_RE
+  obj_id: 2507
+  size: 3.63
+  program: 97
+  room_size: 9.61
+  type: boss
+  variations:
+    Xaldin (Data):
+      vars:
+      - 0
+      - 0
+Xemnas (Data):
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 1400
+  tags:
+  - data
+  - organization
+  aimods: 
+  - name: B_EX170_LV99/b_ex.bdscript
+    type: obj
+  can_be_enemy: false
+  enabled: true
+  variationof: Xemnas
+  enmp_index: 0xEF
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX170_LV99
+  msn: EH19_MS105
+  obj_id: 2505
+  size: 3.7
+  room_size: 6.16
+  program: 97
+  type: boss
+  variations:
+    Xemnas (Data):
+      vars:
+      - 0
+      - 0
+Xigbar (Data):
+  aimods:
+  - name: B_EX140_LV99/b_ex.bdscript
+    type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 200
+  enabled: true
+  tags:
+  - data
+  - organization
+  - broken_mickey
+  variationof: Xigbar
+  enmp_index: 0xFC
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX140_LV99
+  msn: EH10_MS102
+  obj_id: 2501
+  size: 3.19
+  program: 100
+  room_size: 11.09
+  roommaxsize: 15.37
+  type: boss
+  variations:
+    Xigbar (Data):
+      vars:
+      - 0
+      - 0
+Demyx:
+  roomData:
+    bossX: 150
+    bossY: 0
+    bossZ: 300
+  tags:
+  - organization
+  - no_roxas
+  blacklist_destination:
+  - Axel I
+  - Groundshaker
+  - Scar
+  - Twilight Thorn
+  - Cerberus # he might be starting in the sky causing it not to load the fight properly
+  enabled: true
+  enmp_index: 0x58
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX120_HB
+  msn: HB04_MS403
+  msn_required: true
+  obj_id: 2295
+  size: 4.07
+  room_size: 10.62
+  roommaxsize: 14.90
+  program: 55
+  type: boss
+  variations:
+    Demyx:
+      story_level: 30
+      vars:
+      - 1
+      - 0
+Demyx OC:
+  aimods:
+  - name: HE17_MS105/he17.bdscript
+    type: msn
+  enabled: false
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX120
+  tags:
+  - teleport_blocked
+  - fix_source_area_settings
+  source_replace_allowed: false
+  msn: HE17_MS105
+  obj_id: 795
+  size: 2.74
+  room_size: 9.09
+  program: 123
+  type: boss
+  variations:
+    Demyx OC:
+      story_level: 16
+      vars:
+      - 0
+      - 0
+Demyx's Water Clone:
+  enabled: false
+  model: M_EX880_DANCER
+  obj_id: 1184
+  size: 1342620
+  type: extra
+  variations:
+    Demyx's Water Clone:
+      vars:
+      - 0
+      - 0
+Devastator:
+  enabled: true
+  enmp_index: 65
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 17
+  model: M_EX680
+  obj_id: 16
+  sizeTag: memoryLarge
+  tags:
+  - large
+  - ranged
+  type: enemy
+  variations:
+    Devastator:
+      vars:
+      - 0
+      - 0
+    Devastator (Ranged Start):
+      vars:
+      - 2
+      - 0
+    Devastator (Ranged):
+      vars:
+      - 3
+      - 0
+Dragoon:
+  enabled: true
+  enmp_index: 43
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 17
+  model: M_EX890
+  obj_id: 308
+  sizeTag: memoryLarge
+  tags:
+  - large
+  - nobody
+  type: enemy
+  variations:
+    Dragoon:
+      vars:
+      - 0
+      - 0
+    Dragoon (99 0):
+      vars:
+      - 99
+      - 0
+Driller Mole:
+  enabled: true
+  enmp_index: 67
+  hp: 100
+  level: 99
+  limiter: 9
+  model: M_EX700
+  obj_id: 18
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Driller Mole:
+      vars:
+      - 0
+      - 0
+Driller Mole NM:
+  enabled: true
+  variationof: Driller Mole
+  enmp_index: 67
+  hp: 100
+  level: 99
+  limiter: 9
+  model: M_EX700_NM
+  obj_id: 1833
+  size: 469870
+  type: enemy
+  variations:
+    Driller Mole NM:
+      vars:
+      - 0
+      - 0
+Dusk:
+  enabled: true
+  enmp_index: 40
+  hp: 100
+  level: 99
+  limiter: 13
+  model: M_EX990
+  obj_id: 318
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - nobody
+  variations:
+    Dusk:
+      vars:
+      - 0
+      - 0
+    Dusk (99 0):
+      vars:
+      - 99
+      - 0
+Ed:
+  enabled: false
+  enmp_index: 0x5B
+  hp: 100
+  tags:
+  - rc_blocked
+  level: 99
+  limiter: 0
+  model: B_LK100_20
+  obj_id: 667
+  source_replace_allowed: false
+  type: boss
+  variations:
+    Ed:
+      program: 51
+      world: lk
+      msn: LK02_MS102
+      size: 0.56
+      room_size: 8.2
+      vars:
+      - 0
+      - 0
+    Ed (1):
+      program: 57
+      world: lk
+      msn: LK05_MS201
+      size: 0.56
+      room_size: 8.46
+      vars:
+      - 1
+      - 0
+Emerald Blues NM:
+  enabled: true
+  variationof: Emerald Blues
+  enmp_index: 1
+  model: M_EX120_NM
+  obj_id: 1834
+  size: 109420
+  type: enemy
+  variations:
+    Emerald Blues NM:
+      vars:
+      - 0
+      - 0
+Fat Bandit:
+  enabled: true
+  enmp_index: 52
+  hp: 100
+  level: 99
+  limiter: 13
+  model: M_EX060
+  obj_id: 1
+  sizeTag: memoryLarge
+  tags:
+  - large
+  - ranged
+  type: enemy
+  variations:
+    Fat Bandit:
+      vars:
+      - 0
+      - 0
+    Fat Bandit (1 0):
+      vars:
+      - 1
+      - 0
+    Fat Bandit (Passive):
+      vars:
+      - 0
+      - 1
+Fiery Globe:
+  enabled: true
+  enmp_index: 5
+  hp: 100
+  level: 99
+  limiter: 6
+  model: M_AL020_FIRE
+  obj_id: 76
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Fiery Globe:
+      vars:
+      - 0
+      - 0
+Fiery Globe Treasure Room:
+  enabled: true
+  variationof: Fiery Globe
+  enmp_index: 5
+  hp: 100
+  level: 99
+  limiter: 4
+  model: M_AL020_FIRE_RAW
+  obj_id: 1670
+  size: 732000
+  type: enemy
+  variations:
+    Fiery Globe Treasure Room:
+      vars:
+      - 0
+      - 0
+Final Xemnas:
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 1200
+  aimods: 
+  - name: B_EX170_LAST/b_ex.bdscript
+    type: obj
+  blacklist_destination:
+  - Volcano Lord
+  - Blizzard Lord
+  - Leon
+  - Yuffie
+  - Tifa
+  - Cloud
+  - Pete OC II
+  - Riku # report of Softlock after fight ends
+  - Armor Xemnas I # Dome crash
+  - Armor Xemnas II # Dome crash
+  - Dark Thorn # Memory
+  - Shadow Stalker # Memory
+  - Pete TR # 
+  - Shan-Yu # Memory - ending in limit form
+  - Jafar
+  - Axel I
+  - Hades II
+  - Seifer
+  - Twilight Thorn
+  can_be_enemy: false
+  tags:
+  - solo
+  - organization
+  - fix_source_area_settings
+  - no_roxas
+  enabled: true
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 0
+  model: B_EX170_LAST
+  msn: EH20_MS113
+  msn_replace_allowed: false
+  msn_dest_as: WI03_MS104
+  program: 74
+  size: 6.29
+  room_size: 8.92
+  subtracts:
+  - ObjectId: 2258 # electrified sora
+  adds:
+  - ObjectId: 2079 # clone 
+    Argument1: 0
+    Argument2: 0
+  obj_id: 2079
+  type: boss
+  variations:
+    Final Xemnas:
+      story_level: 50
+      final_fight: true
+      vars:
+      - 1
+      - 0
+    Final Xemnas (Clone):
+      source_replace_allowed: false
+      enabled: false
+      vars:
+      - 0
+      - 0
+Fortuneteller:
+  enabled: true
+  enmp_index: 61
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 20
+  model: M_EX620
+  obj_id: 11
+  sizeTag: memoryLarge
+  tags:
+  - ranged
+  type: enemy
+  variations:
+    Fortuneteller:
+      vars:
+      - 0
+      - 0
+    Fortuneteller (Zipliner):
+      vars:
+      - 20
+      - 0
+Gambler:
+  enabled: true
+  enmp_index: 49
+  hp: 100
+  level: 99
+  limiter: 17
+  model: M_EX950
+  obj_id: 314
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - nobody
+  variations:
+    Gambler:
+      vars:
+      - 0
+      - 0
+    # Gambler (Summons Darkness):
+    #   #TODO I would like these randomized in nightmare mode, but not in normal mode...
+    #   enabled: false
+    #   isnightmare: true
+    #   vars:
+    #   - 1
+    #   - 0
+    Gambler (5 0):
+      vars:
+      - 5
+      - 0
+    Gambler (90 0):
+      vars:
+      - 90
+      - 0
+    Gambler (99 0):
+      vars:
+      - 99
+      - 0
+Giant Sark:
+  enabled: false
+  enmp_index: 0x72
+  hp: 100
+  level: 99
+  limiter: 0
+  source_replace_allowed: false
+  model: N_TR010_BTL_L
+  msn: TR09_MS205
+  size: 1.41
+  program: 59
+  room_size: 10.35
+  msn_replace_allowed: false
+  obj_id: 964
+  type: boss
+  variations:
+    Giant Sark:
+      vars:
+      - 0
+      - 0
+MCP:
+  # aimods:
+  # - name: B_TR020/b_tr.bdscript
+  #   type: obj
+  enabled: false
+  source_replace_allowed: true
+  tags:
+  - needs_teleport
+  - needs_rc
+  whitelist_destination:
+  - Armor Xemnas II
+  - Groundshaker
+  - Final Xemnas
+  - Storm Rider
+  enmp_index: 0x8d
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_TR020
+  msn: TR09_MS205
+  size: 1.41
+  program: 59
+  outprogram: 59
+  room_size: 10.35
+  obj_id: 1762
+  type: boss
+  adds:
+  - ObjectId: 724 # tron, needed for delete RC
+  - ObjectId: 863 # MCP Barrier
+    Serial: 13
+  - ObjectId: 864 # MCP Wall
+    Serial: 15
+    customUnit:
+      Type: 5
+      Flag: 1
+      Id: 80
+  variations:
+    MCP:
+      story_level: 45
+      vars:
+      - 0
+      - 0
+Graveyard NM:
+  enabled: true
+  enmp_index: 139
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 8
+  model: M_EX790_HALLOWEEN_NM
+  obj_id: 1775
+  sizeTag: memoryLarge
+  tags:
+  - large
+  - ranged
+  type: enemy
+  variations:
+    Graveyard NM:
+      vars:
+      - 0
+      - 0
+Grim Reaper I:
+  roomData:
+    bossX: -28.273300170898438
+    bossY: -650.0770263671875
+    bossZ: 1194
+  tags:
+  - teleport_blocked
+  - large
+  enabled: true
+  enmp_index: 0x9A
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_CA050
+  obj_id: 1543
+  type: boss
+  variations:
+    Grim Reaper I:
+      story_level: 37
+      mickey_source: true
+      can_be_enemy: true
+      msn: CA18_MS202
+      program: 85
+      size: 2.35
+      room_size: 12.61
+      vars:
+      - 1
+      - 0
+Grim Reaper II:
+  roomData:
+    bossX: 589.9752197265625
+    bossY: -1.9969710111618042
+    bossZ: -541.83251953125
+  aimods: 
+  - name: B_CA050/b_ca.bdscript
+    type: obj
+  - name: F_CA690_BTL/f_ca.bdscript
+    type: obj
+  # - name: CA01_MS204/ca01.bdscript
+  #   type: msn
+  #   source: old
+  enabled: true
+  msn_source_as: "WI03_MS104"
+  enmp_index: 0x7C
+  hp: 100
+  tags:
+  - needs_rc
+  - no_roxas
+  level: 99
+  blacklist_destination:
+  - Dark Thorn # medals get lost on ground
+  - Shadow Stalker # medals get lost on ground
+  - Axel I
+  - Hercules
+  - Seifer
+  - Twilight Thorn
+  - Armored Xemnas I # medals can get lost
+  - Barbossa # medals can get lost
+  - Grim Reaper I
+  - Oogie Boogie
+  - Pete OC II
+  - Pete TR
+  - Shan-Yu
+  - Jafar
+  - Seifer
+  limiter: 0
+  model: B_CA050
+  obj_id: 1543
+  type: boss
+  variations:
+    Grim Reaper II:
+      story_level: 37
+      enabled: true
+      msn: CA01_MS204
+      program: 54
+      size: 2.58
+      room_size: 12.12
+      requires_msn: true
+      adds:
+      - ObjectId: 1740 # chest
+        dontSub: true # subbing causes crash when msn is still used
+      - ObjectId: 2200 # medallions, try the gambler version
+        dontSub: true # subbing causes crash when msn is still used
+        Medal: 123
+      vars:
+      - 0
+      - 0
+Groundshaker:
+  roomData:
+    bossX: 1224.219970703125
+    bossY: -384
+    bossZ: 4330
+  aimods: 
+  - name: B_LK120/b_lk.bdscript
+    type: obj
+  enabled: false
+  enmp_index: 0x5F
+  hp: 100
+  level: 99
+  gimmick_source:
+  - Marluxia
+  - Sephiroth
+  blacklist_source:
+  - Demyx # Weird fall through floor doesn't start
+  whitelist_destination:
+  - Terra
+  - Armor Xemnas II
+  - Final Xemnas
+  limiter: 0
+  tags:
+  - rc_blocked
+  - teleport_blocked
+  blacklist_source:
+  - Shan-Yu # Reports of tpose from RC causing softlock
+  model: B_LK120
+  msn: LK15_MS202
+  obj_id: 1113
+  size: 4.25
+  room_size: 6.15
+  subtracts:
+  - ObjectId: 1884
+  program: 59
+  type: boss
+  variations:
+    Groundshaker:
+      story_level: 43
+      vars:
+      - 0
+      - 0
+Hades Cups:
+  can_be_enemy: true
+  tags:
+  - cups
+  - rc_blocked # Technically just Hades II but idk
+  - needs_invuln
+  enabled: true
+  enmp_index: 0xB1
+  hp: 100
+  level: 99
+  forced_variations:
+    HE06: Hades I
+  variationof: Hades II
+  limiter: 34
+  model: B_HE030_CLSM
+  msn_replace_allowed: false
+  # This is not his actual msn but is to handle the replaceas
+  msn: HE18_MS108
+  obj_id: 2318
+  size: 3.14
+  type: boss
+  variations:
+    Hades Cups:
+      roomData:
+        bossX: 0
+        bossY: -0.0001509865978732705
+        bossZ: -500
+      enabled: true
+      msn_list:
+      - program: 192
+        msn: HE_COL_4_10
+        room_size: 9.14
+      - program: 196
+        msn: HE_COL_8_30
+        room_size: 9.14
+      vars:
+      - 0
+      - 0
+Hades Escape:
+  aimods:
+  - name: HE05_MS102/he05.bdscript
+    type: msn
+    source: old
+    replacements:
+      obj_id: new_boss.obj_id
+  # source_replace_allowed: false
+  tags:
+  - needs_invuln
+  enabled: true
+  enmp_index: 18
+  hp: 100
+  level: 99
+  limiter: 34
+  model: B_HE030_HE05
+  msn: HE05_MS102
+  msn_replace_allowed: false
+  obj_id: 2066
+  replace_as: Hades Cups
+  variationof: Hades II
+  size: 2.26
+  program: 111
+  room_size: 14.21
+  type: boss
+  variations:
+    Hades Escape:
+      story_level: 16
+      vars:
+      - 0
+      - 0
+Hades I:
+  aimods:
+  - name: HE06_MS101/ms_a.bdscript
+    type: msn
+    source: old
+    replacements:
+      obj_id: new_boss.obj_id
+  tags: 
+  - needs_invuln
+  variationof: Hades II
+  msn_replace_allowed: false
+  enabled: true
+  enmp_index: 18
+  hp: 100
+  level: 99
+  limiter: 34
+  forced_variations:
+    HE06: Hades I
+  model: B_HE030_PART
+  msn: HE06_MS101
+  program: 112
+  obj_id: 349
+  replace_as: Hades Cups
+  type: boss
+  variations:
+    Hades I:
+      story_level: 16
+      vars:
+      - 0
+      - 0
+Hades II:
+  aimods:
+  - name: HE19_MS204/he19.bdscript
+    type: msn
+    source: old
+    replacements:
+      obj_id: new_boss.obj_id
+  forced_variations:
+    HE06: Hades I
+  gimmick_source:
+  - Final Xemnas
+  - Xaldin
+  tags:
+  - needs_invuln
+  - rc_blocked
+  - teleport_blocked # Due to Hades Escape
+  enabled: true
+  enmp_index: 18
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_HE030
+  roommaxsize: 13 # just a random guess
+  obj_id: 350
+  replace_as: Hades Cups
+  size: 3.15
+  type: boss
+  variations:
+    Hades II: # this is not the story fight hades
+      roomData:
+        bossX: 0
+        bossY: -0.0001509865978732705
+        bossZ: -450
+      program: 196
+      msn: HE_COL_8_50
+      room_size: 9.14
+      vars:
+      - 1
+      - 0
+    Hades II (1): # this is the story fight hades
+      roomData:
+        bossX: 0
+        bossY: 0
+        bossZ: -800
+      enabled: true
+      story_level: 39
+      msn_replace_allowed: true
+      program: 202
+      msn: HE19_MS205
+      # msn_list:
+      # - program: 201
+      #   msn: HE19_MS204
+      #   room_size: 8.23
+      #   enabled: false
+      #   msn_replace_allowed: true
+      #   source_replace_allowed: false
+      # - program: 202
+      #   msn: HE19_MS205
+      #   room_size: 10.73
+      vars:
+      - 0
+      - 0
+Hammer Frame WI:
+  enabled: true
+  enmp_index: 58
+  variationof: Hammer Frame
+  hp: 100
+  level: 99
+  limiter: 12
+  model: M_EX560_WI
+  obj_id: 1830
+  size: 535724
+  type: enemy
+  variations:
+    Hammer Frame WI:
+      vars:
+      - 0
+      - 0
+Hayner:
+  roomData: {}
+  aimods: 
+  - name: TT05_MS401/ms_s.bdscript
+    type: msn
+    source: old
+    replacements:
+      obj_id: new_boss.obj_id
+  - name: N_EX500_BTL/n_ex.bdscript
+    type: obj
+  enabled: true
+  gimmick_source:
+  - Hostile Program
+  - Jafar
+  - Luxord
+  - Xaldin
+  - Xemnas
+  - Hydra
+  tags:
+  - needs_invuln
+  - roxas
+  #- sourcemaxhp
+  - onetooneonly
+  - teleport_blocked
+  blacklist_source:
+  - Final Xemnas
+  - Grim Reaper I
+  - Grim Reaper II
+  - Shan-Yu
+  - Xaldin
+  - Xemnas
+  enmp_index: 0x96
+  hp: 100
+  level: 99
+  obj_edits:
+    ObjectType: BOSS
+  limiter: 0
+  model: N_EX500_BTL
+  msn_replace_allowed: false
+  obj_id: 1239
+  size: 0.84
+  type: boss
+  story_level: 2
+  variations:
+    Hayner:
+      # msn_list:
+      # - program: 182
+      #   msn: TT04_MS00
+      #   room_size: 7.61
+      # - program: 84
+      #   msn: TT05_MS401
+      #   room_size: 11.57
+      msn: TT05_MS401
+      program: 84
+      outprogram: 84
+      room_size: 11.57
+      vars:
+      - 0
+      - 0
+Hercules:
+  can_be_enemy: true
+  enabled: true
+  enmp_index: 0xB2
+  hp: 100
+  level: 99
+  limiter: 17
+  model: N_HE010_BTL_CLSM
+  msn_replace_allowed: false
+  obj_id: 2320
+  size: 2.48
+  type: boss
+  gimmick_source:
+  - Hostile Program
+  blacklist_destination:
+  - Hades II
+  tags:
+  - cups
+  - cant_invuln
+  variations:
+    Hercules:
+      roomData:
+        bossX: 0
+        bossY: 0.0001345789059996605
+        bossZ: -300
+      enabled: true
+      msn_list:
+      - program: 191
+        msn: HE_COLOSSEUM_3
+        room_size: 6.19
+      - program: 195
+        msn: HE_COLOSSEUM_7
+        room_size: 6.19
+      vars:
+      - 1
+      - 0
+Hook Bat:
+  enabled: true
+  hp: 100
+  level: 99
+  limiter: 8
+  model: M_EX520
+  isnightmare: true
+  obj_id: 4
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Hook Bat (20 0):
+      vars:
+      - 20
+      - 0
+    Hook Bat:
+      vars:
+      - 0
+      - 0
+Hook Bat AL:
+  enabled: true
+  hp: 100
+  level: 99
+  limiter: 8
+  isnightmare: true
+  model: M_EX520_AL
+  obj_id: 1887
+  sizeTag: memorySmall
+  tags:
+  - al
+  type: enemy
+  variations:
+    Hook Bat AL (3 0):
+      vars:
+      - 3
+      - 0
+    Hook Bat AL (9 0):
+      vars:
+      - 9
+      - 0
+    Hook Bat AL:
+      vars:
+      - 4
+      - 0
+    Hook Bat AL (15 30):
+      vars:
+      - 15
+      - 30
+    Hook Bat AL (1 31):
+      vars:
+      - 1
+      - 31
+    Hook Bat AL (3 30):
+      vars:
+      - 3
+      - 30
+    Hook Bat AL (8 32):
+      vars:
+      - 8
+      - 32
+    Hook Bat AL (13 31):
+      vars:
+      - 13
+      - 31
+    Hook Bat AL (2 0):
+      vars:
+      - 2
+      - 0
+    Hook Bat AL (5 0):
+      vars:
+      - 5
+      - 0
+    Hook Bat AL (6 0):
+      vars:
+      - 6
+      - 0
+    Hook Bat AL (11 0):
+      vars:
+      - 11
+      - 0
+    Hook Bat AL (1 0):
+      vars:
+      - 1
+      - 0
+    Hook Bat AL (10 0):
+      vars:
+      - 10
+      - 0
+    Hook Bat AL (14 0):
+      vars:
+      - 14
+      - 0
+    Hook Bat AL (12 0):
+      vars:
+      - 12
+      - 0
+    Hook Bat AL (13 0):
+      vars:
+      - 13
+      - 0
+    Hook Bat AL (7 0):
+      vars:
+      - 7
+      - 0
+    Hook Bat AL (3 20):
+      vars:
+      - 3
+      - 20
+Hostile Program:
+  aimods:
+  - name: B_TR000/b_tr.bdscript
+    type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 0
+  blacklist_destination:
+  - Oogie Boogie
+  - The Beast
+  - Blizzard Lord
+  - Cloud
+  - Hayner
+  - Hercules
+  - Pete TR
+  - Riku
+  - Setzer
+  - Tifa
+  - Vivi
+  - Volcano Lord
+  - Yuffie
+  enabled: true
+  enmp_index: 0x6A
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_TR000
+  msn: TR04_MS104
+  program: 55
+  world: tr
+  obj_id: 1208
+  size: 2.37
+  room_size: 9.16
+  adds:
+  - ObjectId: 1867 # tr prize
+  type: boss
+  story_level: 28
+  variations:
+    Hostile Program:
+      vars:
+      - 0
+      - 0
+Hot Rod WI:
+  enabled: true
+  variationof: Hot Rod
+  enmp_index: 63
+  hp: 100
+  level: 99
+  limiter: 15
+  model: M_EX640_WI
+  obj_id: 1831
+  size: 871428
+  tags:
+  - large
+  type: enemy
+  variations:
+    Hot Rod WI:
+      vars:
+      - 0
+      - 0
+Hydra:
+  enabled: true
+  aimods: 
+  - name: B_HE110/b_he.bdscript
+    type: obj
+  blacklist_destination:
+  - Xigbar # softlock possible
+  - Axel I
+  - Barbossa
+  - Hayner
+  - Oogie Boogie
+  - Seifer
+  - Setzer
+  - The Beast
+  - Twilight Thorn
+  - Vivi
+  - Hydra
+  - Hayner
+  - Vivi
+  - Setzer
+  - Pete OC II
+  - Pete TR
+  - Jafar
+  enmp_index: 20
+  hp: 100
+  tags:
+  - needs_rc
+  - no_roxas
+  level: 99
+  limiter: 0
+  model: B_HE100
+  unchanged_file_size: true
+  pc:
+    unchanged_file_size: false
+  msn: HE18_MS108
+  obj_id: 352
+  size: 5.7
+  room_size: 12.22 # 10.22 with the adds
+  program: 171
+  adds:
+  - ObjectId: 922 # hydra head
+    Serial: 2
+    customUnit:
+      Type: 5
+      Flag: 1
+      Id: 52
+  - ObjectId: 365 # Meg
+    Serial: 17
+    Argument1: 1
+    # customUnit:
+    #   Type: 5
+    #   Flag: 1
+    #   Id: 52
+  - ObjectId: 801 # yellow orb
+    Argument1: 99
+    SpawnType: 0
+  - ObjectId: 364 # phil
+    Argument1: 1
+  - ObjectId: 363 # pegasus
+
+  type: boss
+  variations:
+    Hydra:
+      story_level: 16
+      mickey_source: true
+      vars:
+      - 0
+      - 0
+Icy Cube:
+  enabled: true
+  enmp_index: 6
+  hp: 100
+  level: 99
+  limiter: 7
+  model: M_AL020_ICEE
+  obj_id: 77
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Icy Cube:
+      vars:
+      - 0
+      - 0
+Icy Cube Treasure Room:
+  enabled: true
+  variationof: Icy Cube
+  enmp_index: 6
+  hp: 100
+  level: 99
+  limiter: 4
+  model: M_AL020_ICEE_RAW
+  obj_id: 1671
+  size: 872152
+  type: enemy
+  variations:
+    Icy Cube Treasure Room:
+      vars:
+      - 0
+      - 0
+Illuminator:
+  enabled: false
+  aimods:
+  - name: B_CA000/b_ca.bdscript
+    type: obj
+  enmp_index: 0x62
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_CA000
+  obj_id: 358
+  source_replace_allowed: false
+  type: boss
+  variations:
+    Illuminator:
+      vars:
+      - 0
+      - 0
+Iron Hammer:
+  enabled: true
+  variationof: Hammer Frame
+  enmp_index: 208
+  hp: 100
+  level: 99
+  limiter: 12
+  model: M_EX560_HB
+  obj_id: 2405
+  size: 537416
+  type: enemy
+  variations:
+    Iron Hammer:
+      vars:
+      - 0
+      - 0
+Jafar:
+  roomData:
+    bossX: 300
+    bossY: -21450
+    bossZ: 500
+  enabled: true
+  blacklist_destination:
+  - Groundshaker # Lion sora can't jump infinitely
+  - Scar
+  gimmick_source:
+  - Lexaeus
+  - Terra
+  - Zexion
+  - Saix
+  whitelist_destination:
+  - Armor Xemnas II
+  - Cerberus
+  - Cloud
+  - Dark Thorn
+  - Final Xemnas
+  - Hades II
+  - Hercules
+  - Hydra
+  - Jafar
+  - Leon
+  - Riku
+  - Roxas
+  - Shadow Stalker
+  - Storm Rider
+  - Tifa
+  - Xemnas
+  - Yuffie
+  source_replace_allowed: true
+  aimods: 
+  - name: B_AL020/b_al.bdscript
+    type: obj
+  cmdmods:
+  - value: 604
+    changes:
+      Flags: Cursor, Land, NoCombo, DisableSkateboard, DisableSora
+  enmp_index: 0x8A
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_AL020
+  msn: AL05_MS203
+  program: 62
+  size: 1.86
+  room_size: 8.19 # Setting down from 11.19 to make Final Xemnas spawn here on PS2, which while untested hopefully works because you lack party members...
+  obj_id: 348
+  type: boss
+  story_level: 40
+  variations:
+    Jafar:
+      vars:
+      - 0
+      - 0
+Lance Soldier:
+  enabled: true
+  enmp_index: 66
+  isnightmare: true
+  hp: 100
+  level: 99
+  limiter: 13
+  model: M_EX690
+  obj_id: 17
+  sizeTag: memoryLarge
+  type: enemy
+  variations:
+    Lance Soldier:
+      vars:
+      - 0
+      - 0
+Lance Warrior:
+  isnightmare: true
+  enabled: true
+  variationof: Lance Soldier
+  enmp_index: 209
+  hp: 100
+  level: 99
+  limiter: 13
+  model: M_EX690_HB
+  obj_id: 2409
+  size: 755608
+  type: enemy
+  variations:
+    Lance Warrior:
+      vars:
+      - 0
+      - 0
+Large Body:
+  enabled: true
+  enmp_index: 34
+  hp: 100
+  level: 99
+  limiter: 15
+  model: M_EX050
+  obj_id: 303
+  sizeTag: memoryLarge
+  tags:
+  - large
+  type: enemy
+  variations:
+    Large Body:
+      vars:
+      - 0
+      - 0
+Larxene:
+  # aimods:
+  # - name: B_EX400/b_ex.bdscript
+  #   type: obj
+  roomData:
+    bossX: -137.8426971435547
+    bossY: 0
+    bossZ: -137.8426971435547
+  tags:
+  - organization
+  - needs_teleport
+  - no_roxas
+  blacklist_destination:
+  - Barbossa
+  - Scar
+  can_be_enemy: false #expensive
+  enabled: true
+  enmp_index: 0xD8
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX400
+  msn: HB33_FM_LAR
+  isnightmare: true
+  program: 143
+  obj_id: 2402
+  size: 5.35
+  room_size: 8.3
+  type: boss
+  unchanged_file_size: true
+  pc:
+    unchanged_file_size: false
+  variations:
+    Larxene:
+      vars:
+      - 0
+      - 0
+    Larxene (Data):
+      tags:
+      - data
+      - organization
+      - needs_teleport
+      enabled: true
+      msn: HB33_FM_LAR
+      program: 148
+      vars:
+      - 0
+      - 1
+Leon:
+  enabled: true
+  enmp_index: 0xB4
+  hp: 100
+  level: 99
+  gimmick_source:
+  - Axel II
+  - Jafar
+  - The Beast
+  - Xemnas
+  - Hostile Program
+  blacklist_destination:
+  - Hades II
+  blacklist_source:
+  - Hostile Program
+  - Terra # Too hard in multi-fight arenas - Kayya
+  - Sephiroth # Too hard in multi-fight arenas - Kayya
+  - Armor Xemnas I
+  - Axel II
+  - Barbossa
+  - Cerberus
+  - Grim Reaper II
+  - Hades II
+  - Hydra
+  - Jafar
+  - Larxene
+  - Marluxia
+  - Prison Keeper
+  - Roxas
+  - The Beast
+  - The Experiment
+  - Twilight Thorn
+  - Xaldin
+  - Xemnas
+  - Xigbar
+  limiter: 0
+  pc: 
+    tags: 
+    - disablecamera
+  model: N_HB530_BTL2
+  msn_replace_allowed: false
+  obj_id: 2296
+  size: 1.67
+  type: boss
+  tags:
+  - cups
+  - cant_invuln
+  variations:
+    Leon:
+      roomData:
+        bossX: -200
+        bossY: 0
+        bossZ: -200
+      can_be_enemy: true
+      program: 189
+      msn: HE_COL_1_10
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      vars:
+      - 1
+      - 0
+    Leon (1):
+      roomData:
+        bossX: 200
+        bossY: -0.0001509865978732705
+        bossZ: -400
+      program: 196
+      msn: HE_COL_8_40
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      vars:
+      - 3
+      - 0
+    Leon (2):
+      roomData:
+        bossX: -349.39801025390625
+        bossY: 0
+        bossZ: -207.20660400390625
+      program: 196
+      msn: HE_COL_8_49
+      room_size: 9.14
+      room_sizemultiplier: 0.25
+      vars:
+      - 4
+      - 0
+    Leon (3):
+      roomData:
+        bossX: -200
+        bossY: 0
+        bossZ: -200
+      program: 193
+      msn: HE_COL_5_10
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      vars:
+      - 2
+      - 0
+Lexaeus:
+  roomData:
+    bossX: -137.8426971435547
+    bossY: 0
+    bossZ: -137.8426971435547
+  aimods: 
+  - name: N_CM020_BTL/n_cm.bdscript
+    type: obj
+  tags:
+  - organization
+  - no_roxas
+  enabled: true
+  enmp_index: 0xD6
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_CM020_BTL
+  msn: HB33_FM_LEX
+  program: 142
+  room_size: 8.36
+  isnightmare: true
+  msn_required: true
+  obj_id: 2357
+  size: 5
+  type: boss
+  unchanged_file_size: true
+  pc:
+    unchanged_file_size: false
+  blacklist_destination:
+  - Axel II
+  - Pete TR
+  - Cerberus
+  - Hades II
+  - Jafar
+  - Oogie Boogie
+  - The Beast
+  variations:
+    Lexaeus:
+      vars:
+      - 0
+      - 0
+    Lexaeus (Data):
+      tags:
+      - data
+      - organization
+      enabled: true
+      msn: HB33_FM_LEX
+      program: 147
+      vars:
+      - 0
+      - 1
+Living Bone:
+  enabled: true
+  enmp_index: 7
+  hp: 100
+  level: 99
+  limiter: 17
+  model: M_EX670
+  isnightmare: true
+  obj_id: 15
+  sizeTag: memoryLarge
+  tags:
+  - large
+  type: enemy
+  variations:
+    Living Bone:
+      vars:
+      - 0
+      - 0
+    Living Bone (Headless with Necromancer):
+      tags:
+      - ranged
+      - large
+      vars:
+      - 1
+      - 0
+    Living Bone (Necromancer):
+      tags:
+      - ranged
+      - large
+      vars:
+      - 2
+      - 0
+Lock:
+  can_be_enemy_override: true
+  enabled: false
+  enmp_index: 0x0F
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_NM050_BTL
+  msn: NM10_MS201
+  program: 62
+  size: 0.92
+  room_size: 11.39
+  obj_id: 127
+  source_replace_allowed: false
+  type: boss
+  variations:
+    Lock:
+      vars:
+      - 0
+      - 0
+Luna Bandit:
+  enabled: true
+  enmp_index: 62
+  hp: 100
+  level: 99
+  limiter: 15
+  model: M_EX630
+  obj_id: 12
+  sizeTag: memoryLarge
+  type: enemy
+  variations:
+    Luna Bandit:
+      vars:
+      - 0
+      - 0
+    Luna Bandit (1 0):
+      vars:
+      - 1
+      - 0
+Luxord:
+  aimods:
+  - name: B_EX150/b_ex.bdscript
+    type: obj
+  - name: B_EX210/b_ex.bdscript
+    type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -400
+  gimmick_source:
+  - Zexion
+  blacklist_destination:
+  - Axel I
+  - Twilight Thorn
+  tags:
+  - organization
+  - solo
+  - needs_rc
+  - no_roxas
+  enabled: true
+  enmp_index: 0x59
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX150
+  msn: EH14_MS103
+  msn_required: true
+  obj_id: 1528
+  size: 4.67
+  room_size: 7.25
+  program: 58
+  adds:
+  - ObjectId: 2224 # ???
+  type: boss
+  variations:
+    Luxord:
+      story_level: 50
+      vars:
+      - 0
+      - 0
+Mad Ride:
+  enabled: true
+  variationof: Hot Rod
+  enmp_index: 211
+  hp: 100
+  level: 99
+  limiter: 15
+  model: M_EX640_HB
+  obj_id: 2406
+  size: 871788
+  tags:
+  - large
+  type: enemy
+  variations:
+    Mad Ride:
+      vars:
+      - 0
+      - 0
+Magic Phantom:
+  enabled: true
+  enmp_index: 207
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 15
+  model: M_EX500_HB
+  obj_id: 2403
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Magic Phantom:
+      vars:
+      - 0
+      - 0
+Magnum Loader:
+  enabled: true
+  enmp_index: 10
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 10
+  model: M_EX600
+  obj_id: 121
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Magnum Loader:
+      vars:
+      - 0
+      - 0
+Marluxia:
+  aimods:
+  - name: N_CM000_BTL/n_cm.bdscript
+    type: obj
+  roomData:
+    bossX: -127.84259796142578
+    bossY: 0
+    bossZ: -127.8427963256836
+  tags:
+  - organization
+  - broken_mickey
+  - needs_rc
+  - no_roxas
+  blacklist_destination:
+  - Axel I
+  - Twilight Thorn
+  enabled: true
+  enmp_index: 0xD7
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_CM000_BTL
+  msn: HB38_FM_MAR
+  isnightmare: true
+  obj_id: 2339
+  size: 4.57
+  room_size: 7.96
+  program: 145
+  type: boss
+  unchanged_file_size: true
+  pc:
+    unchanged_file_size: false
+  variations:
+    Marluxia:
+      vars:
+      - 0
+      - 0
+    Marluxia (Data):
+      tags:
+      - data
+      - organization
+      enabled: true
+      msn: HB38_FM_MAR
+      program: 150
+      vars:
+      - 0
+      - 1
+Minute Bomb:
+  aimods:
+  - name: M_EX550/m_ex.bdscript
+    type: obj
+  enabled: true
+  enmp_index: 57
+  hp: 100
+  level: 99
+  limiter: 9
+  model: M_EX550
+  obj_id: 7
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Minute Bomb:
+      vars:
+      - 0
+      - 0
+    Minute Bomb (99 0):
+      vars:
+      - 99
+      - 0
+Minute Bomb WI:
+  aimods:
+  - name: M_EX550_WI/m_ex.bdscript # Can use the OG Minute Bomb ai mod instead of making 2
+    type: obj
+  enabled: true
+  variationof: Minute Bomb
+  enmp_index: 57
+  hp: 100
+  level: 99
+  limiter: 9
+  model: M_EX550_WI
+  obj_id: 1829
+  size: 400712
+  type: enemy
+  variations:
+    Minute Bomb WI:
+      vars:
+      - 0
+      - 0
+Morning Star:
+  enabled: true
+  enmp_index: 11
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 15
+  model: M_EX710
+  obj_id: 122
+  sizeTag: memoryLarge
+  tags:
+  - large
+  type: enemy
+  variations:
+    Morning Star:
+      vars:
+      - 0
+      - 0
+    Morning Star (99 0):
+      vars:
+      - 99
+      - 0
+Necromancer:
+  enabled: true
+  variationof: Shaman
+  enmp_index: 210
+  hp: 100
+  level: 99
+  limiter: 13
+  model: M_EX720_HB
+  obj_id: 2411
+  size: 698584
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Necromancer:
+      vars:
+      - 0
+      - 0
+Nightwalker:
+  enabled: true
+  enmp_index: 60
+  hp: 100
+  level: 99
+  limiter: 15
+  model: M_EX580
+  obj_id: 10
+  sizeTag: memoryLarge
+  type: enemy
+  variations:
+    Nightwalker:
+      vars:
+      - 0
+      - 0
+Bomb Bell A:
+  enabled: true
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 1
+  model: EH_G_EX250
+  obj_id: 2202
+  source_replace_allowed: false
+  sizeTag: memorySmall
+  type: enemy
+  tags:
+  - al
+  variations:
+    Bomb Bell A:
+      vars:
+      - 0
+      - 0
+Oogie Boogie:
+  roomData:
+    bossX: -507.0552062988281
+    bossY: -150
+    bossZ: -1572.740966796875
+  enabled: false
+  enmp_index: 0x4B
+  aimods: 
+  - name: B_NM000/b_nm.bdscript
+    type: obj
+  tags:
+  - teleport_blocked
+  hp: 100
+  gimmick_source:
+  - Cerberus
+  - Hostile Program
+  - Hydra
+  - Sephiroth
+  - Terra
+  - Zexion
+  level: 99
+  limiter: 0
+  model: B_NM000
+  msn: NM09_MS104
+  obj_id: 126
+  program: 55
+  size: 4.79 # 2.79 when accounting for the adds
+  unchanged_file_size: true # Not 100% sure this will work
+  pc:
+    unchanged_file_size: false
+  room_size: 12.41
+  subtracts:
+  - ObjectId: 1003 # present box
+    Serial: 26
+    customUnit:
+      Type: 1
+      Id: 97
+  - ObjectId: 1604 # oogies punch
+    Serial: 21
+    customUnit:
+      Type: 1
+      Id: 85
+  - ObjectId: 969 # ???
+    Serial: 19
+    Argument: 1
+  - ObjectId: 969 # ???
+    Serial: 20
+    Argument: 2
+  - ObjectId: 966 # Oogie spikes
+    Serial: 24
+  - ObjectId: 928 # ???
+    Serial: 36
+  type: boss
+  story_level: 24
+  variations:
+    Oogie Boogie:
+      vars:
+      - 1
+      - 0
+Past Pete:
+  roomData:
+    bossX: -402.96490478515625
+    bossY: -137.9427947998047
+    bossZ: -444.0494079589844
+  can_be_enemy: true
+  enabled: true
+  enmp_index: 0x71
+  tags:
+  - teleport_blocked
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_WI010_BTL_VS
+  msn: WI01_MS101
+  obj_id: 1607
+  size: 0.43
+  room_size: 11.16
+  program: 58
+  type: boss
+  variations:
+    Past Pete:
+      story_level: 19
+      vars:
+      - 1
+      - 0
+Pete Cups:
+  roomData:
+    bossX: 0
+    bossY: -0.0001509865978732705
+    bossZ: -250
+  can_be_enemy_override: true
+  enabled: true
+  tags:
+  - cups
+  enmp_index: 0xB3
+  hp: 100
+  level: 99
+  limiter: 20
+  model: N_EX760_BTL_CLSM
+  msn: HE_COL_8TI_BOSS
+  variationof: Pete TR
+  msn_replace_allowed: false
+  obj_id: 2319
+  size: 1.57
+  program: 196
+  type: boss
+  variations:
+    Pete Cups:
+      vars:
+      - 0
+      - 0
+Pete OC I:
+  enabled: false
+  enmp_index: 0x1A
+  hp: 100
+  level: 99
+  limiter: 20
+  model: N_EX760_BTL_MEGARA
+  msn: HE08_MS106
+  obj_id: 1723
+  source_replace_allowed: false
+  size: 1.57
+  program: 115
+  room_size: 10.48
+  type: boss
+  variations:
+    Pete OC I:
+      vars:
+      - 0
+      - 0
+Pete OC II:
+  aimods:
+  - name: N_EX760_BTL_HERCULES/n_ex.bdscript
+    type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -400
+  enabled: true
+  enmp_index: 0x1A
+  hp: 100
+  level: 99
+  limiter: 20
+  model: N_EX760_BTL_HERCULES
+  msn: HE08_MS107
+  #replace_as: Pete Cups # Causes crash when Pete does a finger gun to the sky (directing nonexistent enemies?)
+  msn_replace_allowed: false
+  obj_id: 1724
+  size: 1.57
+  variationof: Pete TR
+  room_size: 13.53
+  program: 116
+  type: boss
+  roommaxsize: 16.11
+  adds:
+  - ObjectId: 1878 # Empty Unit 1
+    PositionX: -100
+    PositionY: -1000
+    PositionZ: -250
+    Serial: 52
+    customUnit:
+      Type: 5
+      Flag: 1
+      Id: 70
+      Teleport:
+        Place: 0
+        Door: 0
+        World: 0
+        Unknown: 0
+      EventActivators: []
+      ReturnParameters: []
+  variations:
+    Pete OC II:
+      story_level: 16
+      vars:
+      - 0
+      - 0
+Pete TR:
+  roomData:
+    bossX: -272.6265869140625
+    bossY: 0
+    bossZ: 746.9041748046875
+  enabled: true
+  aimods:
+  - name: N_EX760_BTL/n_ex.bdscript
+    type: obj
+  pc: 
+    source_replace_allowed: true # TODO supposedly demyx super crashes here on ps2 and most bosses cause crashes here
+  source_replace_allowed: false
+  msn_replace_allowed: false # This is due soley to Pete OC II
+  hp: 100
+  gimmick_source:
+  - Hostile Program
+  - Marluxia
+  - Twilight Thorn
+  - Xaldin
+  - Zexion
+  forced_variations:
+    EH24: Pete Cups
+    CA10: Pete Cups
+    EH20: Pete Cups
+    LK15: Pete Cups
+    HE19: Pete Cups # the spreadsheet does not reflect this
+    HE06: Pete Cups
+    HE05: Pete Cups
+    WI01: Pete Cups
+    WI03: Pete Cups
+    EH21: Pete Cups
+    EH15: Pete Cups
+    TR09: Pete Cups
+    LK14: Pete Cups
+    BB11: Pete Cups
+  blacklist_destination:
+  - Cloud
+  - Tifa
+  - Leon
+  - Yuffie
+  blacklist_source:
+  - Cloud
+  - Grim Reaper II
+  - Hercules
+  - Hydra
+  - Larxene
+  - Leon
+  - Marluxia
+  - Roxas
+  - Terra
+  - Tifa
+  - Twilight Thorn
+  - Xaldin
+  - Yuffie
+  - Zexion
+  level: 99
+  limiter: 20
+  model: N_EX760_BTL
+  msn: WI03_MS104
+  obj_id: 359
+  adds:
+  - ObjectId: -1 # Empty Unit 1
+    customUnit:
+      Type: 4
+      Flag: 1
+      Id: 244
+      Teleport:
+        Place: 92
+        Door: 0
+        World: 0
+        Unknown: 0
+      EventActivators:
+      - Shape: 1
+        Option: 0
+        PositionX: -508.90249633789062
+        PositionY: -300
+        PositionZ: 525.50341796875
+        ScaleX: 286.08859252929688
+        ScaleY: 400
+        ScaleZ: 273.35345458984375
+        RotationX: 0
+        RotationY: -0.18849574029445648
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+      ReturnParameters:
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+  - ObjectId: -1 # Empty Unit 2
+    customUnit:
+      Type: 4
+      Flag: 1
+      Id: 245
+      Teleport:
+        Place: 93
+        Door: 0
+        World: 0
+        Unknown: 0
+      EventActivators:
+      - Shape: 1
+        Option: 0
+        PositionX: 690.76788330078125
+        PositionY: -300
+        PositionZ: 72.229660034179688
+        ScaleX: 269.2049560546875
+        ScaleY: 400
+        ScaleZ: 459.30096435546875
+        RotationX: 0
+        RotationY: 0.36696508526802063
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+      ReturnParameters:
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+  - ObjectId: -1 # Empty Unit 3
+    customUnit:
+      Type: 4
+      Flag: 1
+      Id: 246
+      Teleport:
+        Place: 94
+        Door: 0
+        World: 0
+        Unknown: 0
+      EventActivators:
+      - Shape: 1
+        Option: 0
+        PositionX: -300.2421875
+        PositionY: -300
+        PositionZ: -590.82379150390625
+        ScaleX: 261.31048583984375
+        ScaleY: 400
+        ScaleZ: 266.0386962890625
+        RotationX: 0
+        RotationY: -0.18849574029445648
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+      ReturnParameters:
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+      - Id: 0
+        Type: 0
+        Rate: 0
+        EntryType: 0
+        Argument04: 0
+        Argument08: 0
+        Argument0c: 0
+  - ObjectId: 1758 # cannon tower
+    PositionX: -300
+    PositionZ: -600
+    SpawnType: 2
+    Serial: 101
+    Argument1: 1
+    Argument2: 3
+    customUnit:
+      Type: 2
+      Flag: 1
+      Id: 247
+      EventActivators:
+      - Shape: 2
+        Option: 0
+        PositionX: 1242.9849853515625
+        PositionY: -300
+        PositionZ: 1462.8909912109375
+        ScaleX: 398.71649169921875
+        ScaleY: 400
+        ScaleZ: 599.67999267578125
+        RotationX: 0
+        RotationY: 0.1808859258890152
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+  - ObjectId: 1758 # cannon tower
+    PositionX: -300
+    PositionZ: 540
+    SpawnType: 2
+    Serial: 102
+    Argument1: 1
+    Argument2: 1
+    customUnit:
+      Type: 2
+      Flag: 1
+      Id: 247
+      EventActivators:
+      - Shape: 2
+        Option: 0
+        PositionX: 1242.9849853515625
+        PositionY: -300
+        PositionZ: 1462.8909912109375
+        ScaleX: 398.71649169921875
+        ScaleY: 400
+        ScaleZ: 599.67999267578125
+        RotationX: 0
+        RotationY: 0.1808859258890152
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+  - ObjectId: 1758 # cannon tower
+    PositionX: 690
+    PositionZ: 150
+    SpawnType: 2
+    Serial: 103
+    Argument1: 1
+    Argument2: 2
+    customUnit:
+      Type: 2
+      Flag: 1
+      Id: 247
+      EventActivators:
+      - Shape: 2
+        Option: 0
+        PositionX: 1242.9849853515625
+        PositionY: -300
+        PositionZ: 1462.8909912109375
+        ScaleX: 398.71649169921875
+        ScaleY: 400
+        ScaleZ: 599.67999267578125
+        RotationX: 0
+        RotationY: 0.1808859258890152
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+  - ObjectId: 1759 # building sites platform
+    SpawnType: 3
+    Serial: 104
+    Argument1: 1
+    customUnit:
+      Type: 5
+      Flag: 1
+      Id: 254
+  - ObjectId: 1612 # burning building
+    SpawnType: 3
+    Serial: 105
+    Argument1: 1
+    customUnit:
+      Type: 5
+      Flag: 1
+      Id: 254
+  - ObjectId: 758 # ???
+    SpawnType: 3
+    Serial: 106
+    Argument1: 1
+    customUnit:
+      Type: 5
+      Flag: 1
+      Id: 254
+  size: 3.68
+  room_size: 12.16
+  program: 53
+  type: boss
+  variations:
+    Pete TR:
+      story_level: 19
+      vars:
+      - 4
+      - 0
+Prison Keeper:
+  roomData:
+    bossX: 416.09521484375
+    bossY: -204.1072998046875
+    bossZ: -923.3510131835938
+  can_be_enemy: true
+  enabled: true
+  gimmick_source:
+  - Jafar
+  tags:
+  - teleport_blocked
+  enmp_index: 0x77
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_NM100
+  msn: NM03_MS103
+  obj_id: 1486
+  size: 3.87
+  room_size: 9.21
+  program: 52
+  type: boss
+  variations:
+    Prison Keeper:
+      story_level: 24
+      vars:
+      - 0
+      - 0
+Rapid Thruster:
+  enabled: true
+  enmp_index: 37
+  hp: 100
+  level: 99
+  limiter: 7
+  model: M_EX660
+  obj_id: 304
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Rapid Thruster (Zipliner):
+      vars:
+      - 20
+      - 0
+    Rapid Thruster:
+      vars:
+      - 0
+      - 0
+    Rapid Thruster (90 0):
+      vars:
+      - 90
+      - 0
+    Rapid Thruster (1 0):
+      vars:
+      - 1
+      - 0
+Rapid Thruster AL:
+  enabled: true
+  enmp_index: 37
+  hp: 100
+  level: 99
+  limiter: 7
+  model: M_EX660_AL
+  obj_id: 1889
+  sizeTag: memorySmall
+  tags:
+  - al
+  type: enemy
+  variations:
+    Rapid Thruster AL (12 0):
+      vars:
+      - 12
+      - 0
+    Rapid Thruster AL (13 0):
+      vars:
+      - 13
+      - 0
+    Rapid Thruster AL:
+      vars:
+      - 4
+      - 0
+    Rapid Thruster AL (9 0):
+      vars:
+      - 9
+      - 0
+    Rapid Thruster AL (14 30):
+      vars:
+      - 14
+      - 30
+    Rapid Thruster AL (8 30):
+      vars:
+      - 8
+      - 30
+    Rapid Thruster AL (4 30):
+      vars:
+      - 4
+      - 30
+    Rapid Thruster AL (12 32):
+      vars:
+      - 12
+      - 32
+    Rapid Thruster AL (6 31):
+      vars:
+      - 6
+      - 31
+    Rapid Thruster AL (10 31):
+      vars:
+      - 10
+      - 31
+    Rapid Thruster AL (2 32):
+      vars:
+      - 2
+      - 32
+    Rapid Thruster AL (2 0):
+      vars:
+      - 2
+      - 0
+    Rapid Thruster AL (7 0):
+      vars:
+      - 7
+      - 0
+    Rapid Thruster AL (14 0):
+      vars:
+      - 14
+      - 0
+    Rapid Thruster AL (11 0):
+      vars:
+      - 11
+      - 0
+    Rapid Thruster AL (5 0):
+      vars:
+      - 5
+      - 0
+    Rapid Thruster AL (6 0):
+      vars:
+      - 6
+      - 0
+    Rapid Thruster AL (12 17):
+      vars:
+      - 12
+      - 17
+    Rapid Thruster AL (1 0):
+      vars:
+      - 1
+      - 0
+    Rapid Thruster AL (3 0):
+      vars:
+      - 3
+      - 0
+Rapid Thruster WI:
+  enabled: true
+  variationof: Rapid Thruster
+  enmp_index: 37
+  hp: 100
+  level: 99
+  limiter: 7
+  model: M_EX500_NM
+  obj_id: 1843
+  size: 1020248
+  type: enemy
+  variations:
+    Rapid Thruster WI:
+      vars:
+      - 0
+      - 0
+Riku:
+  roomData:
+    bossX: 601
+    bossY: -7.750160217285156
+    bossZ: -480.6151123046875
+  can_be_enemy: true
+  aimods: 
+  - name: N_EX940_BTL/n_ex.bdscript
+    type: obj
+  - name: MU07_MS201/mu07.bdscript
+    type: msn
+    source: old
+    replacements:
+      obj_id: new_boss.obj_id
+  enabled: true
+  enmp_index: 0x82
+  blacklist_source:
+  - Zexion
+  gimmick_source:
+  - Hostile Program
+  - Xemnas
+  - Zexion
+  tags:
+  - solo
+  - needs_invuln
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_EX940_BTL
+  msn: MU07_MS201
+  msn_replace_allowed: false
+  obj_id: 1596
+  size: 1.22
+  program: 76
+  room_size: 8.62
+  type: boss
+  variations:
+    Riku:
+      story_level: 35
+      vars:
+      - 0
+      - 0
+Roxas:
+  aimods:
+  - name: B_EX390/b_ex.bdscript
+    type: obj
+  roomData:
+    bossX: 0.0001049073034664616
+    bossY: 0.028669970110058784
+    bossZ: -170
+  tags:
+  - organization
+  - solo
+  - fix_source_area_settings
+  - no_roxas
+  gimmick_source:
+  - Zexion
+  blacklist_destination:
+  - Axel I
+  - Hades II
+  - Twilight Thorn
+  can_be_enemy: false #expensive
+  enabled: true
+  enmp_index: 0xD5
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX390
+  msn: EH21_MS101
+  isnightmare: true
+  obj_id: 2385
+  program: 65
+  size: 5.85
+  room_size: 5.83
+  type: boss
+  variations:
+    Roxas:
+      story_level: 50
+      msn: EH21_MS101
+      vars:
+      - 0
+      - 0
+    Roxas (Data):
+      roomData:
+        bossX: 0.0001049073034664616
+        bossY: 0.028669970110058784
+        bossZ: -170
+      tags:
+      - data
+      - organization
+      - solo
+      enabled: true
+      msn: EH21_MS101
+      program: 99
+      vars:
+      - 0
+      - 1
+Runemaster:
+  enabled: true
+  enmp_index: 206
+  hp: 100
+  isnightmare: true
+  variationof: Bookmaster
+  level: 99
+  limiter: 10
+  model: M_EX530_HB
+  obj_id: 2414
+  sizeTag: memoryLarge
+  tags:
+  - large
+  - ranged
+  type: enemy
+  variations:
+    Runemaster:
+      vars:
+      - 0
+      - 0
+Saix:
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 400
+  tags:
+  - organization
+  - needs_rc
+  - no_roxas
+  blacklist_destination:
+  - Axel I
+  - Twilight Thorn
+  can_be_enemy: false
+  enabled: true
+  enmp_index: 0x86
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX160
+  msn: EH15_MS104
+  program: 56
+  size: 4.54
+  room_size: 10.30
+  msn_required: true
+  obj_id: 1737
+  type: boss
+  variations:
+    Saix:
+      story_level: 50
+      vars:
+      - 0
+      - 0
+Samurai:
+  enabled: true
+  enmp_index: 45
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 20
+  model: M_EX910
+  obj_id: 310
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - nobody
+  variations:
+    Samurai:
+      vars:
+      - 0
+      - 0
+    Samurai (99 0):
+      vars:
+      - 99
+      - 0
+Sark:
+  roomData:
+    bossX: -847.7211303710938
+    bossY: 0
+    bossZ: -2353.952880859375
+  can_be_enemy: true
+  enabled: true
+  tags:
+  - teleport_blocked
+  isnightmare: true
+  enmp_index: 0x64
+  hp: 100
+  level: 99
+  limiter: 25
+  model: N_TR010_BTL
+  msn: TR09_MS204
+  obj_id: 862
+  size: 1.22
+  room_size: 9.9
+  program: 58
+  outprogram: 58
+  type: boss
+  variations:
+    Sark:
+      story_level: 45
+      vars:
+      - 0
+      - 0
+Scar:
+  roomData:
+    bossX: 1200
+    bossY: 5.199999809265137
+    bossZ: 250.00010681152344
+  can_be_enemy: true
+  isnightmare: true
+  aimods: 
+  - name: B_LK110/b_lk.bdscript
+    type: obj
+  enabled: true
+  enmp_index: 0x5E
+  tags:
+  - rc_blocked
+  gimmick_source:
+  - Demyx
+  - Marluxia
+  - Sephiroth
+  blacklist_source:
+  - Shan-Yu # Reports of tpose from RC causing softlock
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_LK110
+  msn: LK14_MS103
+  obj_id: 668
+  size: 1.63
+  room_size: 6.34
+  program: 55
+  type: boss
+  variations:
+    Scar:
+      story_level: 43
+      vars:
+      - 0
+      - 0
+Seifer:
+  obj_edits:
+    ObjectType: BOSS
+  aimods:
+  - name: TT04_MS107/tt04_ms107.bdscript
+    source: old
+    type: msn
+    replacements:
+      obj_id: new_boss.obj_id
+  enabled: true
+  enmp_index: 0x87
+  blacklist_source:
+  - The Beast
+  gimmick_source:
+  - Final Xemnas
+  - Luxord
+  - Vexen
+  - Xaldin
+  tags:
+  - needs_invuln
+  - roxas
+  #- sourcemaxhp
+  - teleport_blocked
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_EX570_BTL
+  obj_id: 1656
+  msn_replace_allowed: false
+  size: 0.98
+  type: boss
+  story_level: 1
+  variations:
+    Seifer:
+      program: 180
+      msn: TT03_MS400
+      room_size: 6.3
+      vars:
+      - 3
+      - 0
+    Seifer (1):
+      roomData:
+        bossX: -212.1320037841797
+        bossY: 0
+        bossZ: 212.1320037841797
+      msn: TT04_MS107
+      replace_as: Seifer
+      msn_replace_allowed: false 
+      program: 77
+      room_size: 7.2
+      vars:
+      - 1
+      - 0
+    Seifer (2):
+      roomData:
+        bossX: -601.0407104492188
+        bossY: 0
+        bossZ: 601.040771484375
+      msn: TT04_MS108
+      replace_as: Seifer
+      msn_replace_allowed: true
+      source_replace_allowed: false # breaks of fade to white
+      program: 78
+      room_size: 7.77
+      vars:
+      - 2
+      - 0
+    Seifer (3):
+      roomData:
+        bossX: -194.31300354003906
+        bossY: 10.000100135803223
+        bossZ: 3.5454869270324707
+      replace_as: Seifer #TODO one of these is struggle, others allowed
+      msn: TT04_MS500
+      program: 181
+      room_size: 6.10
+      vars:
+      - 4
+      - 0
+    Seifer (4):
+      roomData:
+        bossX: -200
+        bossY: 9.999889373779297
+        bossZ: 0
+      replace_as: Seifer
+      msn: TT04_MS02
+      program: 184
+      room_size: 7.91
+      vars:
+      - 5
+      - 0
+Sephiroth:
+  roomData:
+    bossX: -324.8489990234375
+    bossY: 0
+    bossZ: 1533.1300048828125
+  tags:
+  - sephiroth
+  - solo 
+  - no_roxas
+  can_be_enemy: true
+  enabled: true
+  enmp_index: 0x8C
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 0
+  model: N_HB630
+  msn: HB01_MS601
+  obj_id: 2230
+  size: 3.89
+  program: 75
+  room_size: 6.57
+  type: boss
+  gimmick_source:
+  - Zexion
+  blacklist_destination:
+  - Twilight Thorn
+  - Axel I
+  - Axel II
+  - Armor Xemnas II # TELEPORTING
+  - Groundshaker
+  - Oogie Boogie
+  - Scar
+  - The Beast
+  variations:
+    Sephiroth:
+      vars:
+      - 0
+      - 0
+Setzer:
+  aimods:
+  - name: N_EX600_BTL/n_ex.bdscript 
+    type: obj
+  - name: TT05_MS405/ms_s.bdscript
+    type: msn
+    source: old
+    replacements:
+      obj_id: new_boss.obj_id
+  enabled: true
+  enmp_index: 0x9E
+  gimmick_source:
+  - Hostile Program
+  - Jafar
+  - Luxord
+  - Xaldin
+  - Xemnas
+  - Hydra
+  tags:
+  - needs_invuln
+  - roxas
+  #- sourcemaxhp
+  - onetooneonly
+  - teleport_blocked
+  blacklist_source:
+  - Final Xemnas
+  - Grim Reaper I
+  - Grim Reaper II
+  - Shan-Yu
+  - Xaldin
+  - Xemnas
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_EX600_BTL
+  obj_edits:
+    ObjectType: BOSS
+  obj_id: 2095
+  msn_replace_allowed: false
+  size: 1.35
+  type: boss
+  story_level: 2
+  variations:
+    Setzer:
+      # msn_list:
+      # - program: 183
+      #   msn: TT04_MS01
+      #   room_size: 6.68
+      # - program: 88
+      #   msn: TT05_MS405
+      #   room_size: 11.56
+      msn: TT05_MS405
+      room_size: 6.68
+      program: 88
+      vars:
+      - 0
+      - 0
+Shadow:
+  enabled: true
+  enmp_index: 33
+  hp: 100
+  level: 99
+  limiter: 8
+  model: M_EX020
+  obj_id: 302
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Shadow:
+      vars:
+      - 0
+      - 0
+    Shadow (1 0):
+      vars:
+      - 1
+      - 0
+    Shadow (Aggressive):
+      vars:
+      - 99
+      - 0
+Shadow Stalker:
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -800
+  enabled: false
+  enmp_index: 0x17
+  tags:
+  - teleport_blocked
+  - needs_rc
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_BB120
+  msn: BB05_MS104A
+  obj_id: 355
+  size: 4.28
+  #I feel like this is probably off
+  room_size: 13.52
+  roommaxsize: 16.10
+  program: 78
+  adds:
+  - ObjectId: 713 # windows
+  - ObjectId: 646 # ground trap
+  - ObjectId: 645 # columns
+  - ObjectId: 644 # chandelier
+    Serial: 24
+    PositionY: -1500
+  - ObjectId: 799 # ???
+    Serial: 17
+  type: boss
+  variations:
+    Shadow Stalker:
+      story_level: 13
+      mickey_source: true
+      vars:
+      - 0
+      - 0
+Shadow WI:
+  enabled: true
+  variationof: Shadow
+  enmp_index: 33
+  hp: 100
+  level: 99
+  limiter: 8
+  model: M_EX020_WI
+  obj_id: 1840
+  size: 477686
+  type: enemy
+  variations:
+    Shadow WI:
+      vars:
+      - 0
+      - 0
+Shan-Yu:
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 1300
+  can_be_enemy: true
+  enabled: true
+  enmp_index: 0x47
+  hp: 100
+  tags:
+  - no_roxas
+  blacklist_destination:
+  - Axel I
+  - Seifer
+  - Twilight Thorn
+  level: 99
+  limiter: 34
+  model: B_MU100
+  msn: MU09_MS108
+  msn_dest_as: WI03_MS104 # to remove the door gui
+  unchanged_file_size: true
+  pc:
+    unchanged_file_size: false
+  obj_id: 21
+  size: 4.64
+  room_size: 10.15
+  roommaxsize: 14.35
+  program: 75
+  adds:
+  - ObjectId: 22 # Hayabusa
+  subtracts:
+  - ObjectId: 10 # nightwalkers
+  - ObjectId: 733 # Door most likely
+  type: boss
+  variations:
+    Shan-Yu:
+      story_level: 10
+      mickey_source: true
+      vars:
+      - 0
+      - 0
+Shenzie:
+  enabled: false
+  enmp_index: 0x5B
+  tags:
+  - rc_blocked
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_LK100_00
+  obj_id: 665
+  source_replace_allowed: false
+  size: 799588
+  type: boss
+  variations:
+    Shenzie:
+      program: 51
+      world: lk
+      msn: LK02_MS102
+      size: 0.56
+      room_size: 8.2
+      vars:
+      - 0
+      - 0
+    Shenzie (1):
+      program: 57
+      world: lk
+      msn: LK05_MS201
+      size: 0.96
+      room_size: 8.46
+      vars:
+      - 3
+      - 0
+Shock:
+  enabled: false
+  enmp_index: 0x10
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_NM060_BTL
+  msn: NM10_MS201
+  program: 62
+  size: 1.3
+  room_size: 11.39
+  obj_id: 128
+  source_replace_allowed: false
+  size: 977672
+  type: boss
+  variations:
+    Shock:
+      vars:
+      - 0
+      - 0
+Silver Rock:
+  enabled: true
+  hp: 100
+  level: 99
+  limiter: 8
+  model: M_EX110
+  obj_id: 71
+  sizeTag: memorySmall
+  isnightmare: true
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Silver Rock:
+      vars:
+      - 0
+      - 0
+    Silver Rock (1 0):
+      vars:
+      - 1
+      - 0
+Sniper:
+  enabled: true
+  enmp_index: 46
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 15
+  model: M_EX920
+  obj_id: 311
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - ranged
+  - large
+  - nobody
+  variations:
+    Sniper:
+      vars:
+      - 0
+      - 0
+Soldier:
+  enabled: true
+  enmp_index: 32
+  hp: 100
+  level: 99
+  limiter: 12
+  model: M_EX010
+  obj_id: 301
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Soldier:
+      vars:
+      - 0
+      - 0
+    Soldier (1 0):
+      vars:
+      - 1
+      - 0
+    Soldier (99 0):
+      vars:
+      - 99
+      - 0
+Soldier NM:
+  enabled: true
+  variationof: Soldier
+  variationof: Soldier
+  enmp_index: 32
+  hp: 100
+  level: 99
+  limiter: 12
+  model: M_EX010_NM
+  obj_id: 1838
+  size: 787284
+  type: enemy
+  variations:
+    Soldier NM:
+      vars:
+      - 0
+      - 0
+Sorcerer:
+  enabled: true
+  enmp_index: 50
+  hp: 100
+  level: 99
+  limiter: 34
+  model: M_EX870
+  obj_id: 316
+  sizeTag: memoryLarge
+  tags:
+  - large
+  - ranged
+  - nobody
+  type: enemy
+  variations:
+    Sorcerer:
+      vars:
+      - 0
+      - 0
+Spring Metal:
+  enabled: true
+  variationof: Emerald Blues
+  enmp_index: 205
+  hp: 100
+  level: 99
+  limiter: 9
+  model: M_EX120_HB
+  obj_id: 2412
+  size: 186364
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Spring Metal:
+      vars:
+      - 0
+      - 0
+Storm Rider:
+  # TODO when radius is a thing figure out how to stop him wandering OOB
+  # aimods:
+  # - name: B_MU120/b_mu.bdscript
+  #   type: obj
+  blacklist_destination:
+  - Demyx
+  - Jafar
+  - Luxord
+  - Cerberus
+  enabled: false
+  tags:
+  - needs_teleport
+  enmp_index: 0x19
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_MU120
+  msn: MU08_MS204
+  obj_id: 357
+  size: 3.03
+  program: 79
+  room_size: 9.27
+  adds:
+  - ObjectId: 721 # barrier?
+    Serial: 94
+    Argument1: 1
+    customUnit:
+      Type: 1
+      Id: 187
+  - ObjectId: 721
+    Serial: 95
+    Argument2: 2
+    customUnit:
+      Type: 1
+      Id: 187
+  - ObjectId: 1111 # Wind
+    SpawnType: 2
+    SpawnArgument: 1
+    Serial: 89
+    SpawnRange: 300
+    customUnit:
+      Type: 2
+      Id: 97
+      EventActivators:
+      - Shape: 0
+        Option: 0
+        PositionX: 0
+        PositionY: -490
+        PositionZ: -0
+        ScaleX: 3250
+        ScaleY: 500
+        ScaleZ: 2150
+        RotationX: 0
+        RotationY: 0
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+  - ObjectId: 1111 # Wind
+    SpawnType: 2
+    SpawnArgument: 2
+    Serial: 109
+    SpawnRange: 1500
+    customUnit: 
+      Type: 2
+      Id: 97
+      EventActivators:
+      - Shape: 0
+        Option: 0
+        PositionX: 0
+        PositionY: -490
+        PositionZ: -0
+        ScaleX: 3250
+        ScaleY: 500
+        ScaleZ: 2150
+        RotationX: 0
+        RotationY: 0
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+  - ObjectId: 1111 # Wind
+    SpawnType: 2
+    SpawnArgument: 2
+    Serial: 110
+    SpawnRange: 1500
+    customUnit:
+      Type: 2
+      Id: 97
+      EventActivators:
+      - Shape: 0
+        Option: 0
+        PositionX: 0
+        PositionY: -490
+        PositionZ: -0
+        ScaleX: 3250
+        ScaleY: 500
+        ScaleZ: 2150
+        RotationX: 0
+        RotationY: 0
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+  - ObjectId: 1111 # Wind
+    SpawnType: 2
+    SpawnArgument: 1
+    Serial: 114
+    SpawnRange: 1000
+    customUnit:
+      Type: 2
+      Id: 98
+      EventActivators:
+      - Shape: 0
+        Option: 0
+        PositionX: 0
+        PositionY: -490
+        PositionZ: -0
+        ScaleX: 3250
+        ScaleY: 500
+        ScaleZ: 2150
+        RotationX: 0
+        RotationY: 0
+        RotationZ: 0
+        Flags: 0
+        Type: 0
+        OnBgGroup: 0
+        OffBgGroup: 0
+  type: boss
+  variations:
+    Storm Rider:
+      mickey_source: true
+      story_level: 35
+      vars:
+      - 0
+      - 0
+  whitelist_destination:
+  - Armor Xemnas II
+  - Groundshaker
+  - Hydra
+  # - Luxord #Room is way too small for Storm Rider, which can potentially cause it to fall through the floor
+  - Final Xemnas
+  - Dark Thorn
+  - Oogie Boogie
+  - MCP
+  - Shadow Stalker
+  - Jafar
+  - Storm Rider
+  # - Cerberus #Room is way too small for Storm Rider, which can potentially cause it to fall through the floor
+  # - Terra
+Strafer RAW:
+  enabled: true
+  variationof: Strafer
+  enmp_index: 94
+  hp: 100
+  level: 99
+  limiter: 10
+  model: M_EX610_RAW
+  obj_id: 1875
+  size: 363704
+  type: enemy
+  variations:
+    Strafer RAW (0 10):
+      vars:
+      - 0
+      - 10
+    Strafer RAW:
+      vars:
+      - 0
+      - 0
+Surveillance Robot:
+  enabled: true
+  enmp_index: 36
+  hp: 100
+  level: 99
+  limiter: 10
+  model: M_EX770
+  obj_id: 306
+  sizeTag: memorySmall
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Surveillance Robot:
+      vars:
+      - 0
+      - 0
+Terra:
+  # aimods:
+  # - name: B_EX420/b_ex.bdscript
+  #   type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 100
+  can_be_enemy: false #expensive
+  tags:
+  - terra
+  - no_roxas
+  enabled: true
+  enmp_index: 0xF4
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 0
+  model: B_EX420
+  msn: DC07_FM_NAZO
+  obj_id: 2415
+  size: 5.38
+  room_size: 8.6
+  program: 73
+  type: boss
+  blacklist_destination:
+  - Hostile Program # Report of getting stuck in bike loop
+  - Armor Xemnas II
+  - Axel I
+  - Cerberus
+  - Groundshaker
+  - Hades II
+  - Jafar
+  - Oogie Boogie
+  - Scar
+  - The Beast
+  - Twilight Thorn
+  variations:
+    Terra:
+      vars:
+      - 0
+      - 0
+The Beast:
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -600
+  # aimods: 
+  # - name: P_BB000_BTL/p_bb.bdscript
+  #   type: obj
+  blacklist_destination:
+  - Hayner
+  - Vivi
+  - Setzer # orbs only drop from RC - limit required
+  gimmick_source:
+  - Cerberus
+  - Hostile Program
+  - Hydra
+  - Lexaeus
+  - Sephiroth
+  - Terra
+  - Twilight Thorn
+  - Zexion
+  tags: 
+  - needs_rc
+  - no_roxas
+  enabled: true
+  enmp_index: 0x49
+  hp: 100
+  level: 99
+  limiter: 0
+  model: P_BB000_BTL
+  msn: BB03_MS103
+  obj_id: 718
+  size: 2.57
+  program: 69
+  room_size: 12.07
+  roommaxsize: 15.00
+  adds:
+  - ObjectId: 31 # cogsworth
+    dontSub: false # he can mess up other important RCs
+  type: boss
+  variations:
+    The Beast:
+      story_level: 13
+      vars:
+      - 0
+      - 0
+The Experiment:
+  aimods:
+  - name: B_NM110_HEAD/b_nm.bdscript
+    type: obj
+  - name: B_NM110_L_ARM/b_nm.bdscript
+    type: obj
+  - name: B_NM110_R_ARM/b_nm.bdscript
+    type: obj
+  roomData:
+    bossX: -810.4044189453125
+    bossY: 4.720623016357422
+    bossZ: 894.3668212890625
+  tags:
+  - no_roxas
+  enabled: true
+  enmp_index: 0x78
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_NM110
+  msn: NM07_MS204
+  obj_id: 1488
+  size: 3.82
+  room_size: 11.7
+  program: 64
+  blacklist_destination:
+  - Pete OC II # takes too much time and memory?
+  type: boss
+  # these might need to be adds or something different
+  # I'm also not including them in the size calculation, which might be wrong
+  # i am including in the room_size calc
+  subtracts:
+  - ObjectId: 1808 # Head
+  - ObjectId: 1809 # Left Hand
+  - ObjectId: 1810 # Right Hand
+  variations:
+    The Experiment:
+      story_level: 41
+      vars:
+      - 0
+      - 0
+Thresholder:
+  aimods:
+  - name: B_BB130/b_bb.bdscript
+    type: obj
+  enabled: true
+  enmp_index: 0x4A
+  hp: 100
+  level: 99
+  limiter: 25
+  model: B_BB100
+  msn: BB11_MS102
+  tags:
+  - needs_rc
+  - no_roxas
+  blacklist_destination:
+  - Blizzard Lord # These all spawn above ground causing issues
+  - Volcano Lord
+  - Shadow Stalker
+  - Hostile Program # for some reason possessor gets stuck in movement
+  obj_id: 353
+  size: 2.17
+  room_size: 12.13
+  roommaxsize: 14.71
+  adds:
+  - ObjectId: 356 # possessor
+  program: 72
+  type: boss
+  variations:
+    Thresholder:
+      story_level: 13
+      mickey_source: true
+      vars:
+      - 0
+      - 0
+Tifa:
+  enabled: true
+  enmp_index: 0xB6
+  hp: 100
+  level: 99
+  gimmick_source:
+  - Axel II
+  - Jafar
+  - The Beast
+  - Xemnas
+  - Hostile Program
+  blacklist_destination:
+  - Hades II
+  blacklist_source:
+  - Terra # Too hard in multi-fight arenas - Kayya
+  - Sephiroth # Too hard in multi-fight arenas - Kayya
+  - Armor Xemnas I
+  - Axel II
+  - Barbossa
+  - Cerberus
+  - Grim Reaper II
+  - Hades II
+  - Hydra
+  - Jafar
+  - Larxene
+  - Marluxia
+  - Prison Keeper
+  - Roxas
+  - The Beast
+  - The Experiment
+  - Twilight Thorn
+  - Xaldin
+  - Xemnas
+  - Xigbar
+  limiter: 0
+  model: N_HB570_BTL2
+  msn_replace_allowed: false
+  msn_source_as: "WI03_MS104"
+  obj_id: 2298
+  pc: 
+    tags: 
+    - disablecamera
+  tags:
+  - cups
+  - cant_invuln
+  size: 1.32
+  type: boss
+  variations:
+    Tifa:
+      roomData:
+        bossX: 200
+        bossY: -0.0001807889057090506
+        bossZ: -300
+      program: 196
+      msn: HE_COL_8_10
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      can_be_enemy_override: true
+      vars:
+      - 1
+      - 0
+    Tifa (1):
+      roomData:
+        bossX: -149.3979949951172
+        bossY: -0.0001509865978732705
+        bossZ: -307.20660400390625
+      program: 196
+      msn: HE_COL_8_25
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      vars:
+      - 2
+      - 0
+    Tifa (2):
+      roomData:
+        bossX: -149.3979949951172
+        bossY: 0
+        bossZ: -307.20660400390625
+      program: 196
+      msn: HE_COL_8_49
+      room_size: 9.14
+      room_sizemultiplier: 0.25
+      vars:
+      - 3
+      - 0
+Tornado Step:
+  enabled: true
+  enmp_index: 12
+  hp: 100
+  level: 99
+  limiter: 10
+  model: M_EX730
+  obj_id: 123
+  sizeTag: memorySmall
+  type: enemy
+  variations:
+    Tornado Step:
+      vars:
+      - 0
+      - 0
+Toy Soldier NM:
+  enabled: true
+  hp: 100
+  variationof: Toy Soldier
+  level: 99
+  limiter: 9
+  model: M_EX790_CHRISTMAS_NM
+  obj_id: 1777
+  size: 614828
+  tags:
+  - large
+  - ranged
+  type: enemy
+  variations:
+    Toy Soldier NM:
+      vars:
+      - 0
+      - 0
+Trick Ghost:
+  enabled: true
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 15
+  model: M_EX500
+  obj_id: 2
+  sizeTag: memoryLarge
+  type: enemy
+  tags:
+  - ranged
+  variations:
+    Trick Ghost:
+      vars:
+      - 0
+      - 0
+Twilight Thorn:
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 800
+  # aimods:
+  # - name: B_EX100/b_ex.bdscript
+  #   type: obj
+  enabled: true
+  enmp_index: 0x56
+  gimmick_source:
+  - Demyx
+  - Final Xemnas
+  - Luxord
+  - Marluxia
+  - Roxas
+  - Sephiroth
+  - Vexen
+  - Xemnas
+  tags:
+  - roxas
+  - teleport_blocked
+  - needs_teleport # TODO complicated aimod to fix, I'm halfway there
+  - needs_rc
+  blacklist_destination:
+  - Barbossa
+  - The Beast
+  - Twilight Thorn
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX100
+  msn: TT34_MS304
+  obj_id: 307
+  size: 4.91
+  room_size: 3.93
+  program: 157
+  type: boss
+  story_level: 2
+  variations:
+    Twilight Thorn:
+      vars:
+      - 0
+      - 0
+Vexen:
+  roomData:
+    bossX: -13.29675006866455
+    bossY: -1.3492799997329712
+    bossZ: -1892.85400390625
+  tags:
+  - organization
+  - teleport_blocked
+  blacklist_destination:
+  - Axel I
+  - Hades II
+  - Twilight Thorn
+  enabled: true
+  enmp_index: 0xC8
+  hp: 100
+  level: 99
+  limiter: 0
+  model: N_CM040_BTL
+  msn_required: true
+  obj_id: 2355
+  size: 6.22
+  room_size: 8.97
+  type: boss
+  unchanged_file_size: true
+  pc:
+    unchanged_file_size: false
+  variations:
+    Vexen (Data):
+      tags:
+      - data
+      - organization
+      - teleport_blocked
+      enabled: true
+      program: 146
+      msn: HB32_FM_VEX
+      vars:
+      - 1
+      - 1
+    Vexen:
+      program: 115
+      msn: HB32_FM_VEX
+      vars:
+      - 1
+      - 0
+Vivi:
+  roomData:
+    bossX: -150
+    bossY: -90
+    bossZ: 0
+  aimods:
+  - name: N_EX610_BTL/n_ex.bdscript
+    type: obj
+  - name: TT05_MS402/ms_s.bdscript
+    type: msn
+    source: old
+    replacements:
+      obj_id: new_boss.obj_id
+  enabled: true
+  enmp_index: 0x9D
+  tags:
+  - roxas
+  #- sourcemaxhp
+  - onetooneonly
+  - needs_invuln
+  - teleport_blocked
+  gimmick_source:
+  - Hostile Program
+  - Jafar
+  - Luxord
+  - Xaldin
+  - Xemnas
+  - Hydra
+  blacklist_source:
+  - Final Xemnas
+  - Grim Reaper I
+  - Grim Reaper II
+  - Shan-Yu
+  - Xaldin
+  - Xemnas
+  hp: 100
+  level: 99
+  limiter: 1
+  model: N_EX610_BTL
+  msn: TT05_MS402
+  obj_edits:
+    ObjectType: BOSS
+  msn_replace_allowed: false
+  obj_id: 2156
+  size: 1.02
+  room_size: 11.57
+  program: 85
+  type: boss
+  story_level: 2
+  variations:
+    Vivi:
+      vars:
+      - 1
+      - 0
+Volcano Lord:
+  can_be_enemy: true
+  enabled: true
+  enmp_index: 0x7A
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_AL100_FIRE
+  msn_replace_allowed: false
+  obj_id: 1035
+  size: 2.23
+  gimmick_source: 
+  - Hostile Program
+  - Marluxia
+  - Sephiroth
+  blacklist_source:
+  - Sephiroth # Too hard in multi boss fights
+  - Terra # Too hard in multi boss fights
+  - Twilight Thorn
+  - Roxas # crashes a lot
+  - Grim Reaper II
+  - Hydra
+  - Larxene
+  - Marluxia
+  tags:
+  - large
+  type: boss
+  variations:
+    Volcano Lord:
+      msn: AL03_MS103
+      story_level: 22
+      mickey_source: true
+      program: 59
+      room_size: 10.32
+      roommaxsize: 13.36 # instead of roomsize multiplier I went and manually figured it out
+      vars:
+      - 0
+      - 0
+    Volcano Lord (Cups):
+      roomData:
+        bossX: 0
+        bossY: 0
+        bossZ: -150
+      tags:
+      - cups
+      - large
+      msn: HE_COL_8_5
+      program: 196
+      room_size: 9.14
+      vars:
+      - 1
+      - 0
+Wight Knight NM:
+  enabled: true
+  variationof: Wight Knight
+  enmp_index: 8
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 12
+  model: M_EX200_NM
+  obj_id: 119
+  size: 554888
+  type: enemy
+  variations:
+    Wight Knight NM:
+      vars:
+      - 0
+      - 0
+Xaldin:
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: -400
+  tags:
+  - organization
+  - needs_rc
+  - mickey_source
+  enabled: true
+  blacklist_source:
+  - xigbar
+  blacklist_destination:
+  - Axel I
+  - Seifer
+  - Twilight Thorn
+  enmp_index: 0x57
+  hp: 100
+  level: 99
+  limiter: 0
+  isnightmare: true
+  model: B_EX130
+  msn: BB15_MS203
+  obj_id: 997
+  size: 3.83
+  program: 82
+  room_size: 9.61
+  type: boss
+  variations:
+    Xaldin:
+      mickey_source: true
+      story_level: 36
+      vars:
+      - 0
+      - 0
+Xemnas:
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 1400
+  tags:
+  - organization
+  - solo
+  - teleport_blocked
+  - no_roxas
+  aimods:
+  - name: B_EX170/b_ex.bdscript
+    type: obj
+  gimmick_source:
+  - Zexion
+  blacklist_destination:
+  - Axel I
+  - Riku
+  - Twilight Thorn
+  can_be_enemy: false
+  enabled: true
+  #enmp_index: 0x5A  Final Xemnas has same ENMP index so it's problematic to scale Xemnas
+  hp: 100
+  isnightmare: true
+  level: 99
+  limiter: 0
+  model: B_EX170
+  msn: EH19_MS105
+  obj_id: 1606
+  size: 3.7
+  room_size: 6.16
+  program: 59
+  type: boss
+  variations:
+    Xemnas:
+      story_level: 50
+      vars:
+      - 0
+      - 0
+Xigbar:
+  aimods:
+  - name: B_EX140/b_ex.bdscript
+    type: obj
+  roomData:
+    bossX: 0
+    bossY: 0
+    bossZ: 200
+  gimmick_source:
+  - Hydra
+  - Barbossa
+  blacklist_destination:
+  - Pete OC II
+  - The Beast
+  - Armor Xemnas II
+  - Demyx OC
+  - Grim Reaper I
+  - Jafar
+  - Seifer
+  - Axel I
+  - Twilight Thorn
+  enabled: true
+  tags:
+  - organization
+  - broken_mickey
+  - cant_invuln
+  - no_roxas
+  enmp_index: 0x85
+  hp: 100
+  level: 99
+  limiter: 0
+  isnightmare: true
+  model: B_EX140
+  msn: EH10_MS102
+  obj_id: 1570
+  size: 3.19
+  program: 57
+  room_size: 11.18
+  roommaxsize: 15.37
+  type: boss
+  variations:
+    Xigbar:
+      story_level: 50
+      vars:
+      - 0
+      - 0
+Yuffie:
+  enabled: true
+  isnightmare: true
+  enmp_index: 0xB7
+  hp: 100
+  level: 99
+  gimmick_source:
+  - Axel II
+  - Jafar
+  - The Beast
+  - Xemnas
+  - Hostile Program
+  blacklist_source:
+  - Terra # Too hard in multi-fight arenas - Kayya
+  - Sephiroth # Too hard in multi-fight arenas - Kayya
+  - Armor Xemnas I
+  - Axel II
+  - Barbossa
+  - Cerberus
+  - Grim Reaper II
+  - Hades II
+  - Hydra
+  - Jafar
+  - Larxene
+  - Marluxia
+  - Prison Keeper
+  - Roxas
+  - The Beast
+  - The Experiment
+  - Twilight Thorn
+  - Xaldin
+  - Xemnas
+  - Xigbar
+  blacklist_destination:
+  - Hades II
+  limiter: 0
+  model: N_HB580_BTL2
+  msn_replace_allowed: false
+  obj_id: 2299
+  pc: 
+    tags: 
+    - disablecamera
+  tags:
+  - cups
+  - cant_invuln
+  size: 0.95
+  type: boss
+  variations:
+    Yuffie:
+      roomData:
+        bossX: 200
+        bossY: 0
+        bossZ: -200
+      can_be_enemy_override: true
+      program: 189
+      msn: HE_COL_1_10
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      vars:
+      - 1
+      - 0
+    Yuffie (1):
+      roomData:
+        bossX: -200
+        bossY: -0.0001807889057090506
+        bossZ: -300
+      program: 196
+      msn: HE_COL_8_10
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      size: 0.95
+      vars:
+      - 3
+      - 0
+    Yuffie (2):
+      roomData:
+        bossX: 400.60198974609375
+        bossY: 0
+        bossZ: -207.20660400390625
+      program: 196
+      msn: HE_COL_8_49
+      room_size: 9.14
+      room_sizemultiplier: 0.25
+      vars:
+      - 4
+      - 0
+    Yuffie (3):
+      roomData:
+        bossX: 200
+        bossY: 0
+        bossZ: -200
+      program: 193
+      msn: HE_COL_5_10
+      room_size: 9.14
+      room_sizemultiplier: 0.5
+      vars:
+      - 2
+      - 0
+Zexion:
+  aimods: 
+  - name: B_EX370/b_ex.bdscript
+    type: obj
+  # - name: B_EX380/b_ex.bdscript
+  #   type: obj
+  # - name: B_EX410/b_ex.bdscript
+  #   type: obj
+  roomData:
+    bossX: 150
+    bossY: 0
+    bossZ: 300
+  tags:
+  - organization
+  - needs_rc
+  - no_roxas
+  enabled: true
+  hp: 100
+  level: 99
+  limiter: 0
+  model: B_EX370
+  obj_id: 2427
+  size: 4.44
+  room_size: 9.14
+  type: boss
+  gimmick_source:
+  - Barbossa
+  blacklist_destination:
+  - Roxas
+  - Xigbar # Transition to small square is a softlock
+  - Armor Xemnas II
+  - Jafar
+  - Luxord
+  - Oogie Boogie
+  - Sephiroth
+  - The Beast
+  - Xemnas
+  - Axel II
+  - Blizzard Lord
+  - Cloud
+  - Hercules
+  - Leon
+  - Tifa
+  - Volcano Lord
+  - Yuffie
+  variations:
+    Zexion:
+      program: 151
+      msn: HB34_FM_ZEX
+      vars:
+      - 0
+      - 0
+    Zexion (Data):
+      tags:
+      - data
+      - organization
+      - needs_rc
+      enabled: true
+      program: 152
+      msn: HB34_FM_ZEX
+      vars:
+      - 0
+      - 1
