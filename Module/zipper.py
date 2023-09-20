@@ -189,6 +189,63 @@ class SynthLocation():
         self.requirements[req_number] = (req_item,req_amount)
 
 
+def invoke_khbr(enemy_options, mod, outZip):
+    """A function that mimics the call to generateToZip in khbr. Splitting this out to allow for granular control of khbr's boss placement"""
+    from khbr.randomizer import Randomizer as khbr
+    from khbr.KH2.EnemyManager import EnemyManager
+    from khbr.textutils import create_spoiler_text
+    import os
+
+    khbr_randomizer = khbr()
+
+    # get kh2's data
+    game_data = khbr_randomizer._get_game('kh2')
+
+    # make a new enemy manager with custom jsons
+    game_data.enemy_manager = EnemyManager(resource_path("static/khbr_override/"))
+
+
+    ###  DEBUG: updating records
+    full_records = game_data.enemy_manager.create_enemy_records(ispc=False)
+    name = "full_enemy_records.json"
+    json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
+
+    full_records = game_data.enemy_manager.create_enemy_records(ispc=True)
+    name = "full_enemy_records_pc.json"
+    json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
+
+
+    ### DEBUGGING
+    valid_boss_replacements = {}
+    boss_list = game_data.enemy_manager.get_boss_list(enemy_options)
+    for _,source_boss in boss_list.items():
+        valid_boss_replacements[source_boss["name"]] = []
+    for _,source_boss in boss_list.items():
+        for __,dest_boss in boss_list.items():
+            if source_boss["name"]!=dest_boss["name"]:
+                if not EnemyManager.isReplacementBlocked(source_boss,dest_boss):
+                    valid_boss_replacements[dest_boss["name"]].append(source_boss["name"])
+    
+    with open("valid_boss_replacements.json","w") as f:
+        f.write(json.dumps(valid_boss_replacements))
+
+    # make sure the options are formatted properly
+    khbr_randomizer._validate_options(khbr_randomizer.get_options_cli(game_data),enemy_options)
+
+    # actually perform the randomization
+    randomization = game_data.perform_randomization(enemy_options)
+
+    # add the assets to the zip and mod yml
+    assets = game_data.generate_files(randomization=randomization,outzip=outZip)
+    mod["assets"] += assets
+
+    # create the spoiler log
+    return create_spoiler_text(game_data.spoilers)
+
+    ### Backup old way
+    # enemySpoilers = khbr().generateToZip("kh2", enemy_options, mod, outZip)
+    # return enemySpoilers
+
 class SeedZip:
 
     def __init__(self, settings: RandomizerSettings, randomizer: Randomizer, hints, extra_data: ExtraConfigurationData, unreachable_locations : list[KH2Location], multiworld : MultiWorldOutput = None):
@@ -271,8 +328,7 @@ class SeedZip:
                 else:
                     settings.enemy_options["memory_expansion"] = False
                 
-                from khbr.randomizer import Randomizer as khbr
-                enemySpoilers = khbr().generateToZip("kh2", settings.enemy_options, mod, outZip)
+                enemySpoilers = invoke_khbr(settings.enemy_options, mod, outZip)
 
                 lines = enemySpoilers.split("\n")
 
@@ -1356,8 +1412,7 @@ class BossEnemyOnlyZip:
                 else:
                     self.enemy_options["memory_expansion"] = False
                 
-                from khbr.randomizer import Randomizer as khbr
-                enemySpoilers = khbr().generateToZip("kh2", self.enemy_options, mod, out_zip)
+                enemySpoilers = invoke_khbr(self.enemy_options, mod, out_zip)
 
                 lines = enemySpoilers.split("\n")
 

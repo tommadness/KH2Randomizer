@@ -63,6 +63,7 @@ a = Analysis(
         'static/chests/**/*.*',
         'static/map_skip/*.*',
         'static/wardrobe/*.*',
+        'static/khbr_override/*.*',
         'static/*.bar',
         'static/*.script',
         'static/*.bin',
