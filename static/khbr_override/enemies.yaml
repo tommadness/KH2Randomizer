@@ -2658,6 +2658,8 @@ Grim Reaper II:
   - Shan-Yu
   - Jafar
   - Seifer
+  - Thresholder
+  - Final Xemnas # UI Doesn't show up?
   limiter: 0
   model: B_CA050
   obj_id: 1543
@@ -2916,7 +2918,6 @@ Hayner:
   - Luxord
   - Xaldin
   - Xemnas
-  - Hydra
   tags:
   - needs_invuln
   - roxas
@@ -3178,11 +3179,10 @@ Hydra:
   - Setzer
   - The Beast
   - Twilight Thorn
+  - Vivi # crashes on victory
+  - Hayner # crashes on victory
   - Vivi
-  - Hydra
-  - Hayner
-  - Vivi
-  - Setzer
+  - Setzer # crashes on victory
   - Pete OC II
   - Pete TR
   - Jafar
@@ -3418,6 +3418,8 @@ Larxene:
   blacklist_destination:
   - Barbossa
   - Scar
+  - Riku
+  - Thresholder # Can not reappear after a teleport
   can_be_enemy: false #expensive
   enabled: true
   enmp_index: 0xD8
@@ -3685,6 +3687,7 @@ Luxord:
   blacklist_destination:
   - Axel I
   - Twilight Thorn
+  - Jafar # Die transformation crashes
   tags:
   - organization
   - solo
@@ -4102,6 +4105,7 @@ Pete OC II:
       - 0
       - 0
 Pete TR:
+  enmp_index: 128
   roomData:
     bossX: -272.6265869140625
     bossY: 0
@@ -4136,6 +4140,7 @@ Pete TR:
     TR09: Pete Cups
     LK14: Pete Cups
     BB11: Pete Cups
+    TT34: Pete Cups
   blacklist_destination:
   - Cloud
   - Tifa
@@ -4646,6 +4651,9 @@ Roxas:
   - Axel I
   - Hades II
   - Twilight Thorn
+  - Hayner # crash on win
+  - Setzer
+  - Vivi
   can_be_enemy: false #expensive
   enabled: true
   enmp_index: 0xD5
@@ -4804,6 +4812,8 @@ Scar:
   - Sephiroth
   blacklist_source:
   - Shan-Yu # Reports of tpose from RC causing softlock
+  blacklist_destination:
+  - Cerberus # Crash on Fire DM
   hp: 100
   level: 99
   limiter: 0
@@ -4967,7 +4977,6 @@ Setzer:
   - Luxord
   - Xaldin
   - Xemnas
-  - Hydra
   tags:
   - needs_invuln
   - roxas
@@ -5540,6 +5549,8 @@ The Beast:
   - Hayner
   - Vivi
   - Setzer # orbs only drop from RC - limit required
+  - Axel I
+  - Twilight Thorn
   gimmick_source:
   - Cerberus
   - Hostile Program
@@ -5601,6 +5612,7 @@ The Experiment:
   program: 64
   blacklist_destination:
   - Pete OC II # takes too much time and memory?
+  - Axel I # Proactive ban due to RC?
   type: boss
   # these might need to be adds or something different
   # I'm also not including them in the size calculation, which might be wrong
@@ -5634,6 +5646,8 @@ Thresholder:
   - Volcano Lord
   - Shadow Stalker
   - Hostile Program # for some reason possessor gets stuck in movement
+  - Axel I
+  - Twilight Thorn
   obj_id: 353
   size: 2.17
   room_size: 12.13
@@ -5899,7 +5913,6 @@ Vivi:
   - Luxord
   - Xaldin
   - Xemnas
-  - Hydra
   blacklist_source:
   - Final Xemnas
   - Grim Reaper I
@@ -6051,7 +6064,7 @@ Xemnas:
   - Twilight Thorn
   can_be_enemy: false
   enabled: true
-  #enmp_index: 0x5A  Final Xemnas has same ENMP index so it's problematic to scale Xemnas
+  enmp_index: 90 #  Final Xemnas has same ENMP index so it's problematic to scale Xemnas
   hp: 100
   isnightmare: true
   level: 99
@@ -6214,6 +6227,7 @@ Yuffie:
       - 2
       - 0
 Zexion:
+  enmp_index: 217
   aimods: 
   - name: B_EX370/b_ex.bdscript
     type: obj

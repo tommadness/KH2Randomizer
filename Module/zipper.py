@@ -205,14 +205,14 @@ def invoke_khbr(enemy_options, mod, outZip):
     game_data.enemy_manager = EnemyManager(resource_path("static/khbr_override/"))
 
 
-    ###  DEBUG: updating records
-    full_records = game_data.enemy_manager.create_enemy_records(ispc=False)
-    name = "full_enemy_records.json"
-    json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
+    # ###  DEBUG: updating records
+    # full_records = game_data.enemy_manager.create_enemy_records(ispc=False)
+    # name = "full_enemy_records.json"
+    # json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
 
-    full_records = game_data.enemy_manager.create_enemy_records(ispc=True)
-    name = "full_enemy_records_pc.json"
-    json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
+    # full_records = game_data.enemy_manager.create_enemy_records(ispc=True)
+    # name = "full_enemy_records_pc.json"
+    # json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
 
 
     ### DEBUGGING
@@ -225,9 +225,8 @@ def invoke_khbr(enemy_options, mod, outZip):
             if source_boss["name"]!=dest_boss["name"]:
                 if not EnemyManager.isReplacementBlocked(source_boss,dest_boss):
                     valid_boss_replacements[dest_boss["name"]].append(source_boss["name"])
-    
     with open("valid_boss_replacements.json","w") as f:
-        f.write(json.dumps(valid_boss_replacements))
+        json.dump(valid_boss_replacements, f, indent=4)
 
     # make sure the options are formatted properly
     khbr_randomizer._validate_options(khbr_randomizer.get_options_cli(game_data),enemy_options)
