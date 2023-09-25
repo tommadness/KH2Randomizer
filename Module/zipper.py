@@ -500,46 +500,46 @@ class SeedZip:
             # delete all duplicates
             mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
 
-        # if we aren't removing damage cap, don't include khbr's enmp mod file (TODO: remove this when khbr listpatches enmp)
-        if not settings.enemy_options.get("remove_damage_cap", False):
-            print("Removing khbr enmp file...")
-            delete_asset_indices = []
-            battle_index = None
-            for index,a in enumerate(mod["assets"]):
-                if a["name"]=="00battle.bin":
-                    battle_index = index
-                    for second_index,b in enumerate(a["source"]):
-                        if b["name"]=="enmp":
-                            delete_asset_indices.append(second_index)
+        # # if we aren't removing damage cap, don't include khbr's enmp mod file (TODO: remove this when khbr listpatches enmp)
+        # if not settings.enemy_options.get("remove_damage_cap", False):
+        #     print("Removing khbr enmp file...")
+        #     delete_asset_indices = []
+        #     battle_index = None
+        #     for index,a in enumerate(mod["assets"]):
+        #         if a["name"]=="00battle.bin":
+        #             battle_index = index
+        #             for second_index,b in enumerate(a["source"]):
+        #                 if b["name"]=="enmp":
+        #                     delete_asset_indices.append(second_index)
 
-            # delete enmp mod
-            mod["assets"][battle_index]["source"] = [i for j, i in enumerate(mod["assets"][battle_index]["source"]) if j not in delete_asset_indices]
+        #     # delete enmp mod
+        #     mod["assets"][battle_index]["source"] = [i for j, i in enumerate(mod["assets"][battle_index]["source"]) if j not in delete_asset_indices]
             
-        # if we aren't doing boss or enemy rando, don't include khbr's modded form msets (TODO: remove this when khbr doesn't just add these all the time)
-        if settings.enemy_options.get("boss", False) in [False, "Disabled"] and \
-            settings.enemy_options.get("enemy", False) in [False, "Disabled"]:
-            print("Removing khbr form msets...")
-            offending_msets = ["obj/P_EX100_BTLF.mset",
-                                "obj/P_EX100_HTLF.mset",
-                                "obj/P_EX100_KH1F.mset",
-                                "obj/P_EX100_MAGF.mset",
-                                "obj/P_EX100_TRIF.mset",
-                                "obj/P_EX100_ULTF.mset"]
-            delete_asset_indices = []
-            for index,a in enumerate(mod["assets"]):
-                if a["name"] in offending_msets:
-                    delete_asset_indices.append(index)
+        # # if we aren't doing boss or enemy rando, don't include khbr's modded form msets (TODO: remove this when khbr doesn't just add these all the time)
+        # if settings.enemy_options.get("boss", False) in [False, "Disabled"] and \
+        #     settings.enemy_options.get("enemy", False) in [False, "Disabled"]:
+        #     print("Removing khbr form msets...")
+        #     offending_msets = ["obj/P_EX100_BTLF.mset",
+        #                         "obj/P_EX100_HTLF.mset",
+        #                         "obj/P_EX100_KH1F.mset",
+        #                         "obj/P_EX100_MAGF.mset",
+        #                         "obj/P_EX100_TRIF.mset",
+        #                         "obj/P_EX100_ULTF.mset"]
+        #     delete_asset_indices = []
+        #     for index,a in enumerate(mod["assets"]):
+        #         if a["name"] in offending_msets:
+        #             delete_asset_indices.append(index)
 
-            # delete form msets mod
-            mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
-        else:
-            # add multi support for TWTNW NPCs, msg/jp/eh.bar (TODO: remove this when khbr does it on its own)
-            for index,a in enumerate(mod["assets"]):
-                if a["name"] == "msg/jp/eh.bar":
-                    a["multi"].append({"name":"msg/fr/eh.bar"})
-                    a["multi"].append({"name":"msg/gr/eh.bar"})
-                    a["multi"].append({"name":"msg/it/eh.bar"})
-                    a["multi"].append({"name":"msg/sp/eh.bar"})
+        #     # delete form msets mod
+        #     mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
+        # else:
+        # add multi support for TWTNW NPCs, msg/jp/eh.bar (TODO: remove this when khbr does it on its own)
+        for index,a in enumerate(mod["assets"]):
+            if a["name"] == "msg/jp/eh.bar":
+                a["multi"].append({"name":"msg/fr/eh.bar"})
+                a["multi"].append({"name":"msg/gr/eh.bar"})
+                a["multi"].append({"name":"msg/it/eh.bar"})
+                a["multi"].append({"name":"msg/sp/eh.bar"})
 
         # now that the mod yml is proper, we want to add any merged files into the zip, along with the mod.yml
         with zipfile.ZipFile(in_data, "a", zipfile.ZIP_DEFLATED) as current_zip:
