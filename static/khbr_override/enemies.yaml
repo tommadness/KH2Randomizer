@@ -964,6 +964,10 @@ Armor Xemnas I:
     bossY: 0
     bossZ: -150
   enabled: true
+  blacklist_source:
+  - Demyx (Data)
+  - Hydra
+  - Data Xigbar
   enmp_index: 0xA0
   hp: 100
   level: 99
@@ -1283,19 +1287,26 @@ Axel II:
   - Jafar
   blacklist_source:
   - Demyx
+  - Demyx (Data)
   - Demyx OC
   - Final Xemnas
+  - Final Xemnas (Data)
   - Cerberus
   - Grim Reaper I
   - Grim Reaper II
   - Groundshaker
   - Hydra
   - Lexaeus
+  - Lexaeus (Data)
   - Luxord
+  - Luxord (Data)
   - Marluxia
+  - Marluxia (Data)
   - Prison Keeper
   - Roxas
+  - Roxas (Data)
   - Saix
+  - Saix (Data)
   - Scar
   - Sephiroth
   - Shan-Yu
@@ -1308,6 +1319,10 @@ Axel II:
   - Xaldin
   - Xemnas
   - Xigbar
+  - Vexen (Data)
+  - Xaldin (Data)
+  - Xemnas (Data)
+  - Xigbar (Data)
   forced_variations:
     HE19: Axel II
     TT20: Axel II
@@ -1604,6 +1619,7 @@ Cerberus:
   blacklist_destination:
   - Oogie Boogie
   - The Beast
+  - Scar
   variations:
     Cerberus:
       roomData:
@@ -2128,6 +2144,8 @@ Demyx:
   - Scar
   - Twilight Thorn
   - Cerberus # he might be starting in the sky causing it not to load the fight properly
+  - Luxord
+  - Prison Keeper
   enabled: true
   enmp_index: 0x58
   hp: 100
@@ -2415,6 +2433,7 @@ Final Xemnas:
   - Hades II
   - Seifer
   - Twilight Thorn
+  - Xigbar
   can_be_enemy: false
   tags:
   - solo
@@ -2649,7 +2668,7 @@ Grim Reaper II:
   - Hercules
   - Seifer
   - Twilight Thorn
-  - Armored Xemnas I # medals can get lost
+  - Armor Xemnas I # medals can get lost
   - Barbossa # medals can get lost
   - Grim Reaper I
   - Oogie Boogie
@@ -2657,7 +2676,7 @@ Grim Reaper II:
   - Pete TR
   - Shan-Yu
   - Jafar
-  - Seifer
+  - Sephiroth
   - Thresholder
   - Final Xemnas # UI Doesn't show up?
   limiter: 0
@@ -2773,6 +2792,9 @@ Hades Escape:
   tags:
   - needs_invuln
   enabled: true
+  blacklist_source:
+  - Final Xemnas
+  - Final Xemnas (Data)
   enmp_index: 18
   hp: 100
   level: 99
@@ -2805,6 +2827,9 @@ Hades I:
   variationof: Hades II
   msn_replace_allowed: false
   enabled: true
+  blacklist_source:
+  - Final Xemnas
+  - Final Xemnas (Data)
   enmp_index: 18
   hp: 100
   level: 99
@@ -2835,6 +2860,9 @@ Hades II:
   gimmick_source:
   - Final Xemnas
   - Xaldin
+  blacklist_source:
+  - Final Xemnas
+  - Final Xemnas (Data)
   tags:
   - needs_invuln
   - rc_blocked
@@ -2931,6 +2959,26 @@ Hayner:
   - Shan-Yu
   - Xaldin
   - Xemnas
+  - Final Xemnas (Data)
+  - Xaldin (Data)
+  - Xemnas (Data)
+  - Larxene (Data)
+  - Luxord (Data)
+  - Xigbar (Data)
+  - Lexaeus (Data)
+  - Saix (Data)
+  - Demyx (Data)
+  - Marluxia (Data)
+  - Roxas (Data)
+  - Vexen (Data)
+  - Marluxia
+  - Pete TR
+  - Prison Keeper
+  - Scar
+  - Sephiroth
+  - Terra
+  - The Experiment
+  - Thresholder
   enmp_index: 0x96
   hp: 100
   level: 99
@@ -3302,6 +3350,40 @@ Jafar:
     bossY: -21450
     bossZ: 500
   enabled: true
+  blacklist_source:
+  - Axel II
+  - Demyx
+  - Demyx (Data)
+  - Final Xemnas
+  - Final Xemnas (Data)
+  - Grim Reaper II
+  - Hydra
+  - Larxene
+  - Larxene (Data)
+  - Luxord
+  - Luxord (Data)
+  - Marluxia
+  - Marluxia (Data)
+  - Pete TR
+  - Saix
+  - Saix (Data)
+  - Seifer
+  - Seifer (1)
+  - Seifer (2)
+  - Seifer (3)
+  - Seifer (4)
+  - Sephiroth
+  - Setzer
+  - Storm Rider
+  - Terra
+  - The Experiment
+  - Twilight Thorn
+  - Vivi
+  - Xaldin
+  - Xaldin (Data)
+  - Xemnas (Data)
+  - Zexion
+  - Zexion (Data)
   blacklist_destination:
   - Groundshaker # Lion sora can't jump infinitely
   - Scar
@@ -3420,6 +3502,8 @@ Larxene:
   - Scar
   - Riku
   - Thresholder # Can not reappear after a teleport
+  - Armor Xemnas I
+  - Grim Reaper II
   can_be_enemy: false #expensive
   enabled: true
   enmp_index: 0xD8
@@ -3688,6 +3772,7 @@ Luxord:
   - Axel I
   - Twilight Thorn
   - Jafar # Die transformation crashes
+  - Vexen
   tags:
   - organization
   - solo
@@ -3782,6 +3867,7 @@ Marluxia:
   blacklist_destination:
   - Axel I
   - Twilight Thorn
+  - Final Xemnas
   enabled: true
   enmp_index: 0xD7
   hp: 100
@@ -4146,6 +4232,9 @@ Pete TR:
   - Tifa
   - Leon
   - Yuffie
+  - Final Xemnas
+  - Xigbar
+  - Sephiroth
   blacklist_source:
   - Cloud
   - Grim Reaper II
@@ -4608,6 +4697,8 @@ Riku:
   enmp_index: 0x82
   blacklist_source:
   - Zexion
+  - Terra
+  - Sephiroth
   gimmick_source:
   - Hostile Program
   - Xemnas
@@ -4955,6 +5046,7 @@ Sephiroth:
   - Oogie Boogie
   - Scar
   - The Beast
+  - Final Xemnas
   variations:
     Sephiroth:
       vars:
@@ -5545,6 +5637,12 @@ The Beast:
   # aimods: 
   # - name: P_BB000_BTL/p_bb.bdscript
   #   type: obj
+  blacklist_source:
+  - Final Xemnas
+  - Final Xemnas (Data)
+  - Grim Reaper II
+  - Larxene
+  - Larxene (Data)
   blacklist_destination:
   - Hayner
   - Vivi
@@ -5920,6 +6018,23 @@ Vivi:
   - Shan-Yu
   - Xaldin
   - Xemnas
+  - Final Xemnas (Data)
+  - Xaldin (Data)
+  - Xemnas (Data)
+  - Larxene (Data)
+  - Luxord (Data)
+  - Xigbar (Data)
+  - Lexaeus (Data)
+  - Saix (Data)
+  - Demyx (Data)
+  - Marluxia (Data)
+  - Roxas (Data)
+  - Vexen (Data)
+  - Marluxia
+  - Sephiroth
+  - Terra
+  - The Experiment
+  - Thresholder
   hp: 100
   level: 99
   limiter: 1

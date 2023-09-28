@@ -6970,6 +6970,11 @@
             "bossZ": -150
         },
         "enabled": true,
+        "blacklist_source": [
+            "Demyx (Data)",
+            "Hydra",
+            "Data Xigbar"
+        ],
         "enmp_index": 160,
         "hp": 100,
         "level": 99,
@@ -7004,7 +7009,6 @@
         "can_be_enemy_override": false,
         "sizeTag": null,
         "roommaxsize": null,
-        "blacklist_source": [],
         "blacklist_destination": [],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -7027,13 +7031,10 @@
             "Dark Thorn",
             "Demyx",
             "Grim Reaper I",
-            "Grim Reaper II",
             "Hades II",
             "Hayner",
             "Hercules",
             "Hostile Program",
-            "Hydra",
-            "Larxene",
             "Leon",
             "Lexaeus",
             "Luxord",
@@ -7575,19 +7576,26 @@
         ],
         "blacklist_source": [
             "Demyx",
+            "Demyx (Data)",
             "Demyx OC",
             "Final Xemnas",
+            "Final Xemnas (Data)",
             "Cerberus",
             "Grim Reaper I",
             "Grim Reaper II",
             "Groundshaker",
             "Hydra",
             "Lexaeus",
+            "Lexaeus (Data)",
             "Luxord",
+            "Luxord (Data)",
             "Marluxia",
+            "Marluxia (Data)",
             "Prison Keeper",
             "Roxas",
+            "Roxas (Data)",
             "Saix",
+            "Saix (Data)",
             "Scar",
             "Sephiroth",
             "Shan-Yu",
@@ -7599,7 +7607,11 @@
             "Vexen",
             "Xaldin",
             "Xemnas",
-            "Xigbar"
+            "Xigbar",
+            "Vexen (Data)",
+            "Xaldin (Data)",
+            "Xemnas (Data)",
+            "Xigbar (Data)"
         ],
         "forced_variations": {
             "HE19": "Axel II",
@@ -8720,7 +8732,8 @@
         ],
         "blacklist_destination": [
             "Oogie Boogie",
-            "The Beast"
+            "The Beast",
+            "Scar"
         ],
         "variations": [
             "Cerberus",
@@ -8836,7 +8849,8 @@
         ],
         "blacklist_destination": [
             "Oogie Boogie",
-            "The Beast"
+            "The Beast",
+            "Scar"
         ],
         "variations": [
             "Cerberus",
@@ -10025,19 +10039,26 @@
         "roommaxsize": null,
         "blacklist_source": [
             "Demyx",
+            "Demyx (Data)",
             "Demyx OC",
             "Final Xemnas",
+            "Final Xemnas (Data)",
             "Cerberus",
             "Grim Reaper I",
             "Grim Reaper II",
             "Groundshaker",
             "Hydra",
             "Lexaeus",
+            "Lexaeus (Data)",
             "Luxord",
+            "Luxord (Data)",
             "Marluxia",
+            "Marluxia (Data)",
             "Prison Keeper",
             "Roxas",
+            "Roxas (Data)",
             "Saix",
+            "Saix (Data)",
             "Scar",
             "Sephiroth",
             "Shan-Yu",
@@ -10049,7 +10070,11 @@
             "Vexen",
             "Xaldin",
             "Xemnas",
-            "Xigbar"
+            "Xigbar",
+            "Vexen (Data)",
+            "Xaldin (Data)",
+            "Xemnas (Data)",
+            "Xigbar (Data)"
         ],
         "blacklist_destination": [
             "Jafar"
@@ -10128,7 +10153,9 @@
             "Groundshaker",
             "Scar",
             "Twilight Thorn",
-            "Cerberus"
+            "Cerberus",
+            "Luxord",
+            "Prison Keeper"
         ],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -10313,7 +10340,8 @@
             "Axel I",
             "Hades II",
             "Seifer",
-            "Twilight Thorn"
+            "Twilight Thorn",
+            "Xigbar"
         ],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -10398,7 +10426,8 @@
         "blacklist_destination": [
             "Axel I",
             "Twilight Thorn",
-            "Jafar"
+            "Jafar",
+            "Vexen"
         ],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -10736,7 +10765,9 @@
             "Groundshaker",
             "Scar",
             "Twilight Thorn",
-            "Cerberus"
+            "Cerberus",
+            "Luxord",
+            "Prison Keeper"
         ],
         "enabled": true,
         "enmp_index": 88,
@@ -12069,7 +12100,8 @@
             "Axel I",
             "Hades II",
             "Seifer",
-            "Twilight Thorn"
+            "Twilight Thorn",
+            "Xigbar"
         ],
         "can_be_enemy": false,
         "tags": [
@@ -12156,16 +12188,13 @@
             "Jafar",
             "Larxene",
             "Leon",
-            "Marluxia",
             "Past Pete",
-            "Pete TR",
             "Prison Keeper",
             "Riku",
             "Roxas",
             "Sark",
             "Scar",
             "Seifer",
-            "Sephiroth",
             "Setzer",
             "Shan-Yu",
             "Terra",
@@ -12221,7 +12250,8 @@
             "Axel I",
             "Hades II",
             "Seifer",
-            "Twilight Thorn"
+            "Twilight Thorn",
+            "Xigbar"
         ],
         "can_be_enemy": false,
         "tags": [
@@ -13096,7 +13126,7 @@
             "Hercules",
             "Seifer",
             "Twilight Thorn",
-            "Armored Xemnas I",
+            "Armor Xemnas I",
             "Barbossa",
             "Grim Reaper I",
             "Oogie Boogie",
@@ -13104,7 +13134,7 @@
             "Pete TR",
             "Shan-Yu",
             "Jafar",
-            "Seifer",
+            "Sephiroth",
             "Thresholder",
             "Final Xemnas"
         ],
@@ -13165,7 +13195,6 @@
             "Hercules",
             "Hostile Program",
             "Hydra",
-            "Larxene",
             "Leon",
             "Lexaeus",
             "Luxord",
@@ -13395,7 +13424,10 @@
         "sizeTag": null,
         "room_size": 9.14,
         "roommaxsize": 13,
-        "blacklist_source": [],
+        "blacklist_source": [
+            "Final Xemnas",
+            "Final Xemnas (Data)"
+        ],
         "blacklist_destination": [],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -13430,6 +13462,10 @@
             "needs_invuln"
         ],
         "enabled": true,
+        "blacklist_source": [
+            "Final Xemnas",
+            "Final Xemnas (Data)"
+        ],
         "enmp_index": 18,
         "hp": 100,
         "level": 99,
@@ -13469,7 +13505,6 @@
         "can_be_enemy_override": false,
         "sizeTag": null,
         "roommaxsize": 13,
-        "blacklist_source": [],
         "blacklist_destination": [],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -13510,6 +13545,10 @@
         "variationof": "Hades II",
         "msn_replace_allowed": false,
         "enabled": true,
+        "blacklist_source": [
+            "Final Xemnas",
+            "Final Xemnas (Data)"
+        ],
         "enmp_index": 18,
         "hp": 100,
         "level": 99,
@@ -13547,7 +13586,6 @@
         "sizeTag": null,
         "room_size": 9.14,
         "roommaxsize": 13,
-        "blacklist_source": [],
         "blacklist_destination": [],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -13596,6 +13634,10 @@
             "Final Xemnas",
             "Xaldin"
         ],
+        "blacklist_source": [
+            "Final Xemnas",
+            "Final Xemnas (Data)"
+        ],
         "tags": [
             "needs_invuln",
             "rc_blocked",
@@ -13637,7 +13679,6 @@
         "can_be_enemy": false,
         "can_be_enemy_override": false,
         "sizeTag": null,
-        "blacklist_source": [],
         "blacklist_destination": [],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -13713,6 +13754,10 @@
             "Final Xemnas",
             "Xaldin"
         ],
+        "blacklist_source": [
+            "Final Xemnas",
+            "Final Xemnas (Data)"
+        ],
         "tags": [
             "needs_invuln",
             "rc_blocked",
@@ -13748,7 +13793,6 @@
         "can_be_enemy_override": false,
         "sizeTag": null,
         "room_size": 0,
-        "blacklist_source": [],
         "blacklist_destination": [],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -13864,7 +13908,27 @@
             "Grim Reaper II",
             "Shan-Yu",
             "Xaldin",
-            "Xemnas"
+            "Xemnas",
+            "Final Xemnas (Data)",
+            "Xaldin (Data)",
+            "Xemnas (Data)",
+            "Larxene (Data)",
+            "Luxord (Data)",
+            "Xigbar (Data)",
+            "Lexaeus (Data)",
+            "Saix (Data)",
+            "Demyx (Data)",
+            "Marluxia (Data)",
+            "Roxas (Data)",
+            "Vexen (Data)",
+            "Marluxia",
+            "Pete TR",
+            "Prison Keeper",
+            "Scar",
+            "Sephiroth",
+            "Terra",
+            "The Experiment",
+            "Thresholder"
         ],
         "enmp_index": 150,
         "hp": 100,
@@ -13923,19 +13987,11 @@
             "Dark Thorn",
             "Hades II",
             "Hayner",
-            "Marluxia",
             "Past Pete",
-            "Pete TR",
-            "Prison Keeper",
             "Riku",
             "Sark",
-            "Scar",
             "Seifer",
-            "Sephiroth",
             "Setzer",
-            "Terra",
-            "The Experiment",
-            "Thresholder",
             "Vivi",
             "Volcano Lord",
             "Zexion"
@@ -16293,6 +16349,41 @@
             "bossZ": 500
         },
         "enabled": true,
+        "blacklist_source": [
+            "Axel II",
+            "Demyx",
+            "Demyx (Data)",
+            "Final Xemnas",
+            "Final Xemnas (Data)",
+            "Grim Reaper II",
+            "Hydra",
+            "Larxene",
+            "Larxene (Data)",
+            "Luxord",
+            "Luxord (Data)",
+            "Marluxia",
+            "Marluxia (Data)",
+            "Pete TR",
+            "Saix",
+            "Saix (Data)",
+            "Seifer",
+            "Seifer (1)",
+            "Seifer (2)",
+            "Seifer (3)",
+            "Seifer (4)",
+            "Sephiroth",
+            "Setzer",
+            "Storm Rider",
+            "Terra",
+            "The Experiment",
+            "Twilight Thorn",
+            "Vivi",
+            "Xaldin",
+            "Xaldin (Data)",
+            "Xemnas (Data)",
+            "Zexion",
+            "Zexion (Data)"
+        ],
         "blacklist_destination": [
             "Groundshaker",
             "Scar"
@@ -16372,7 +16463,6 @@
         "can_be_enemy_override": false,
         "sizeTag": null,
         "roommaxsize": null,
-        "blacklist_source": [],
         "whitelist_source": [],
         "adds": [],
         "sp_ids": [],
@@ -16391,37 +16481,25 @@
             "Cerberus",
             "Cloud",
             "Dark Thorn",
-            "Demyx",
             "Grim Reaper I",
             "Hades II",
             "Hayner",
             "Hercules",
             "Hostile Program",
             "Jafar",
-            "Larxene",
             "Leon",
-            "Marluxia",
             "Past Pete",
-            "Pete TR",
             "Prison Keeper",
             "Riku",
             "Roxas",
-            "Saix",
             "Sark",
             "Scar",
-            "Seifer",
-            "Sephiroth",
-            "Setzer",
             "Shan-Yu",
             "The Beast",
-            "The Experiment",
             "Thresholder",
             "Tifa",
-            "Twilight Thorn",
             "Vexen",
-            "Vivi",
             "Volcano Lord",
-            "Xaldin",
             "Xemnas",
             "Yuffie"
         ]
@@ -16628,7 +16706,9 @@
             "Barbossa",
             "Scar",
             "Riku",
-            "Thresholder"
+            "Thresholder",
+            "Armor Xemnas I",
+            "Grim Reaper II"
         ],
         "can_be_enemy": false,
         "enabled": true,
@@ -16759,7 +16839,9 @@
             "Barbossa",
             "Scar",
             "Riku",
-            "Thresholder"
+            "Thresholder",
+            "Armor Xemnas I",
+            "Grim Reaper II"
         ],
         "can_be_enemy": false,
         "enmp_index": 216,
@@ -17874,7 +17956,8 @@
         "blacklist_destination": [
             "Axel I",
             "Twilight Thorn",
-            "Jafar"
+            "Jafar",
+            "Vexen"
         ],
         "tags": [
             "organization",
@@ -17944,7 +18027,6 @@
             "Cerberus",
             "Cloud",
             "Dark Thorn",
-            "Demyx",
             "Final Xemnas",
             "Grim Reaper I",
             "Grim Reaper II",
@@ -18192,7 +18274,8 @@
         ],
         "blacklist_destination": [
             "Axel I",
-            "Twilight Thorn"
+            "Twilight Thorn",
+            "Final Xemnas"
         ],
         "enabled": true,
         "enmp_index": 215,
@@ -18325,7 +18408,8 @@
         },
         "blacklist_destination": [
             "Axel I",
-            "Twilight Thorn"
+            "Twilight Thorn",
+            "Final Xemnas"
         ],
         "enmp_index": 215,
         "hp": 100,
@@ -19246,7 +19330,10 @@
             "Cloud",
             "Tifa",
             "Leon",
-            "Yuffie"
+            "Yuffie",
+            "Final Xemnas",
+            "Xigbar",
+            "Sephiroth"
         ],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -19763,7 +19850,10 @@
             "Cloud",
             "Tifa",
             "Leon",
-            "Yuffie"
+            "Yuffie",
+            "Final Xemnas",
+            "Xigbar",
+            "Sephiroth"
         ],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -19832,7 +19922,10 @@
             "Cloud",
             "Tifa",
             "Leon",
-            "Yuffie"
+            "Yuffie",
+            "Final Xemnas",
+            "Xigbar",
+            "Sephiroth"
         ],
         "blacklist_source": [
             "Cloud",
@@ -20320,7 +20413,6 @@
             "Cerberus",
             "Cloud",
             "Dark Thorn",
-            "Demyx",
             "Final Xemnas",
             "Grim Reaper I",
             "Grim Reaper II",
@@ -22278,7 +22370,9 @@
         "enabled": true,
         "enmp_index": 130,
         "blacklist_source": [
-            "Zexion"
+            "Zexion",
+            "Terra",
+            "Sephiroth"
         ],
         "gimmick_source": [
             "Hostile Program",
@@ -22357,10 +22451,8 @@
             "Sark",
             "Scar",
             "Seifer",
-            "Sephiroth",
             "Setzer",
             "Shan-Yu",
-            "Terra",
             "The Beast",
             "The Experiment",
             "Thresholder",
@@ -23093,7 +23185,6 @@
             "Armor Xemnas II",
             "Axel I",
             "Blizzard Lord",
-            "Cerberus",
             "Cloud",
             "Dark Thorn",
             "Final Xemnas",
@@ -23634,7 +23725,8 @@
             "Groundshaker",
             "Oogie Boogie",
             "Scar",
-            "The Beast"
+            "The Beast",
+            "Final Xemnas"
         ],
         "variations": [
             "Sephiroth"
@@ -23684,7 +23776,6 @@
             "Demyx",
             "Final Xemnas",
             "Grim Reaper I",
-            "Grim Reaper II",
             "Hades II",
             "Hayner",
             "Hercules",
@@ -23696,7 +23787,6 @@
             "Luxord",
             "Marluxia",
             "Past Pete",
-            "Pete TR",
             "Prison Keeper",
             "Riku",
             "Roxas",
@@ -25693,6 +25783,13 @@
             "bossY": 0,
             "bossZ": -600
         },
+        "blacklist_source": [
+            "Final Xemnas",
+            "Final Xemnas (Data)",
+            "Grim Reaper II",
+            "Larxene",
+            "Larxene (Data)"
+        ],
         "blacklist_destination": [
             "Hayner",
             "Vivi",
@@ -25757,7 +25854,6 @@
         "can_be_enemy": false,
         "can_be_enemy_override": false,
         "sizeTag": null,
-        "blacklist_source": [],
         "whitelist_source": [],
         "whitelist_destination": [],
         "sp_ids": [],
@@ -25777,13 +25873,10 @@
             "Cloud",
             "Dark Thorn",
             "Demyx",
-            "Final Xemnas",
             "Grim Reaper I",
-            "Grim Reaper II",
             "Hades II",
             "Hayner",
             "Hercules",
-            "Larxene",
             "Leon",
             "Luxord",
             "Marluxia",
@@ -26883,7 +26976,6 @@
             "Hydra",
             "Leon",
             "Lexaeus",
-            "Luxord",
             "Marluxia",
             "Past Pete",
             "Pete TR",
@@ -26958,7 +27050,24 @@
             "Grim Reaper II",
             "Shan-Yu",
             "Xaldin",
-            "Xemnas"
+            "Xemnas",
+            "Final Xemnas (Data)",
+            "Xaldin (Data)",
+            "Xemnas (Data)",
+            "Larxene (Data)",
+            "Luxord (Data)",
+            "Xigbar (Data)",
+            "Lexaeus (Data)",
+            "Saix (Data)",
+            "Demyx (Data)",
+            "Marluxia (Data)",
+            "Roxas (Data)",
+            "Vexen (Data)",
+            "Marluxia",
+            "Sephiroth",
+            "Terra",
+            "The Experiment",
+            "Thresholder"
         ],
         "hp": 100,
         "level": 99,
@@ -27019,7 +27128,6 @@
             "Dark Thorn",
             "Hades II",
             "Hayner",
-            "Marluxia",
             "Past Pete",
             "Pete TR",
             "Prison Keeper",
@@ -27027,11 +27135,7 @@
             "Sark",
             "Scar",
             "Seifer",
-            "Sephiroth",
             "Setzer",
-            "Terra",
-            "The Experiment",
-            "Thresholder",
             "Vivi",
             "Volcano Lord",
             "Zexion"
@@ -27637,7 +27741,6 @@
             "Cloud",
             "Dark Thorn",
             "Demyx",
-            "Final Xemnas",
             "Grim Reaper I",
             "Grim Reaper II",
             "Hades II",
@@ -27650,7 +27753,6 @@
             "Luxord",
             "Marluxia",
             "Past Pete",
-            "Pete TR",
             "Prison Keeper",
             "Riku",
             "Roxas",

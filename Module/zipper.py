@@ -204,15 +204,14 @@ def invoke_khbr(enemy_options, mod, outZip):
     # make a new enemy manager with custom jsons
     game_data.enemy_manager = EnemyManager(resource_path("static/khbr_override/"))
 
+    ###  DEBUG: updating records
+    full_records = game_data.enemy_manager.create_enemy_records(ispc=False)
+    name = "full_enemy_records.json"
+    json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
 
-    # ###  DEBUG: updating records
-    # full_records = game_data.enemy_manager.create_enemy_records(ispc=False)
-    # name = "full_enemy_records.json"
-    # json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
-
-    # full_records = game_data.enemy_manager.create_enemy_records(ispc=True)
-    # name = "full_enemy_records_pc.json"
-    # json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
+    full_records = game_data.enemy_manager.create_enemy_records(ispc=True)
+    name = "full_enemy_records_pc.json"
+    json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
 
 
     ### DEBUGGING
@@ -224,7 +223,7 @@ def invoke_khbr(enemy_options, mod, outZip):
         for __,dest_boss in boss_list.items():
             if source_boss["name"]!=dest_boss["name"]:
                 if not EnemyManager.isReplacementBlocked(source_boss,dest_boss):
-                    valid_boss_replacements[dest_boss["name"]].append(source_boss["name"])
+                    valid_boss_replacements[source_boss["name"]].append(dest_boss["name"])
     with open("valid_boss_replacements.json","w") as f:
         json.dump(valid_boss_replacements, f, indent=4)
 
@@ -459,7 +458,7 @@ class SeedZip:
                     path = zipfile.Path(current_zip, at=l_file)
                     with path.open(encoding='UTF-8') as f:
                         listpatch_contents+=yaml.safe_load(f)
-                        print(listpatch_contents)
+                        # print(listpatch_contents)
 
             # remove all instances of 03_system cmd listpatches (we'll add another afterward)
             num_03system_entries = 0
