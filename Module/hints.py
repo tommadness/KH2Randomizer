@@ -823,6 +823,9 @@ class Hints:
                         hintsText["Reports"][reportNumber]["Location"] = world
  
             if settings.progression_hints:
+                # TODO: Make this more general in refactor
+                if settings.revealMode=="bossreports":
+                    hintsText['ProgressionType'] = "Bosses"
                 # get the hinted worlds
                 hinted_worlds = []
                 for reportNumber in range(1,14):
