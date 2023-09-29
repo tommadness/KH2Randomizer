@@ -13928,7 +13928,8 @@
             "Sephiroth",
             "Terra",
             "The Experiment",
-            "Thresholder"
+            "Thresholder",
+            "Setzer"
         ],
         "enmp_index": 150,
         "hp": 100,
@@ -13991,7 +13992,6 @@
             "Riku",
             "Sark",
             "Seifer",
-            "Setzer",
             "Vivi",
             "Volcano Lord",
             "Zexion"
@@ -16710,6 +16710,9 @@
             "Armor Xemnas I",
             "Grim Reaper II"
         ],
+        "blacklist_source": [
+            "Grim Reaper II"
+        ],
         "can_be_enemy": false,
         "enabled": true,
         "enmp_index": 216,
@@ -16753,7 +16756,6 @@
         "can_be_enemy_override": false,
         "sizeTag": null,
         "roommaxsize": null,
-        "blacklist_source": [],
         "whitelist_source": [],
         "whitelist_destination": [],
         "adds": [],
@@ -16777,7 +16779,6 @@
             "Demyx",
             "Final Xemnas",
             "Grim Reaper I",
-            "Grim Reaper II",
             "Hades II",
             "Hayner",
             "Hercules",
@@ -16843,6 +16844,9 @@
             "Armor Xemnas I",
             "Grim Reaper II"
         ],
+        "blacklist_source": [
+            "Grim Reaper II"
+        ],
         "can_be_enemy": false,
         "enmp_index": 216,
         "hp": 100,
@@ -16881,7 +16885,6 @@
         "can_be_enemy_override": false,
         "sizeTag": null,
         "roommaxsize": null,
-        "blacklist_source": [],
         "whitelist_source": [],
         "whitelist_destination": [],
         "adds": [],

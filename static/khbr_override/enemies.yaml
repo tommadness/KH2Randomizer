@@ -2979,6 +2979,7 @@ Hayner:
   - Terra
   - The Experiment
   - Thresholder
+  - Setzer
   enmp_index: 0x96
   hp: 100
   level: 99
@@ -3503,6 +3504,8 @@ Larxene:
   - Riku
   - Thresholder # Can not reappear after a teleport
   - Armor Xemnas I
+  - Grim Reaper II
+  blacklist_source:
   - Grim Reaper II
   can_be_enemy: false #expensive
   enabled: true
