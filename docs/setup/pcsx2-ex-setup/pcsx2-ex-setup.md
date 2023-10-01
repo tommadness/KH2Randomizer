@@ -8,7 +8,7 @@ This guide will help you set up Randomizer Mod for the PCSX2-EX (PS2 Emulator) v
 
 To set up Rando, Extract, Download and/or Install the following:
 
-- [Custom Build of OpenKH Mod Manager](https://github.com/aliosgaming/OpenKh/releases/latest/download/OpenKH.Mod.Manager.2023.zip)
+- [Custom Build of OpenKH Mod Manager](https://github.com/aliosgaming/OpenKh/releases/latest/download/OpenKH.Mod.Manager.zip)
     - OpenKH Pre-requisite: [.NET Desktop Runtime 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime)
 - A copy of KINGDOM HEARTS II FINAL MIX+, ripped in an ISO format. (will not be provided here for legal reasons)
 - [PCSX2-EX](https://cdn.discordapp.com/attachments/803658031749267517/1066421486652497950/PCSX2-EX.v3.10.0.zip) (edit the downloaded archive: remove the “, attachment” bit on the extension file)
