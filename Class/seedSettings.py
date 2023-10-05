@@ -2679,9 +2679,10 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
     for r in randomizable_settings:
         real_settings_object.set(r.name,random_choices[r.name])
 
-def makeKHBRSettings(ui_settings:SeedSettings):
+def makeKHBRSettings(seed_name,ui_settings:SeedSettings):
     
-    enemy_options = {'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
+    enemy_options = {'seed_name':seed_name,
+                        'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
                             'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
                             'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
                             'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN),

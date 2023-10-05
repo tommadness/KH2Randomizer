@@ -5,6 +5,7 @@ import zipfile
 from itertools import accumulate
 from typing import Optional
 
+import random
 import yaml
 
 from Class.exceptions import BossEnemyException, GeneratorException
@@ -194,6 +195,9 @@ def invoke_khbr(enemy_options, mod, outZip):
     from khbr.randomizer import Randomizer as khbr
     from khbr.KH2.EnemyManager import EnemyManager
     from khbr.textutils import create_spoiler_text
+
+    random.seed(str(enemy_options)) # seed boss/enemy with enemy options, which should include the seed name
+    del enemy_options["seed_name"] #remove it so khbr doesn't complain
 
     khbr_randomizer = khbr()
 
@@ -1373,9 +1377,9 @@ class CosmeticsOnlyZip:
 
 class BossEnemyOnlyZip:
 
-    def __init__(self, ui_settings: SeedSettings, platform: bool):
+    def __init__(self, seed_name: str, ui_settings: SeedSettings, platform: bool):
         self.settings = ui_settings
-        self.enemy_options = makeKHBRSettings(self.settings)
+        self.enemy_options = makeKHBRSettings(seed_name,self.settings)
         self.platform = platform
         self.output_zip: Optional[io.BytesIO] = None
         self.create_zip()

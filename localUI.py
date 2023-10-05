@@ -343,6 +343,8 @@ class KH2RandomizerApp(QMainWindow):
 
         self.cosmetics_menu = CosmeticsMenu(self.settings, self.custom_cosmetics)
 
+        seed_name_getter = lambda : self.seedName.text()
+
         self.widgets = [
             RewardLocationsMenu(self.settings),
             SoraMenu(self.settings),
@@ -352,7 +354,7 @@ class KH2RandomizerApp(QMainWindow):
             ItemPoolMenu(self.settings),
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
-            BossEnemyMenu(self.settings),
+            BossEnemyMenu(self.settings,seed_name_getter),
             self.cosmetics_menu,
         ]
 

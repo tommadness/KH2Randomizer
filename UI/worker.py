@@ -264,15 +264,16 @@ class GenerateBossEnemyZipThread(QThread):
     finished = Signal(object)
     failed = Signal(Exception)
 
-    def __init__(self, ui_settings: SeedSettings, platform: bool):
+    def __init__(self, seed_name: str, ui_settings: SeedSettings, platform: bool):
         super().__init__()
         self.ui_settings = ui_settings
         self.platform = platform
+        self.seed_name = seed_name
 
     def run(self):
         try:
             platform = self.platform
-            zipper = BossEnemyOnlyZip(self.ui_settings, platform)
+            zipper = BossEnemyOnlyZip(self.seed_name,self.ui_settings, platform)
             zip_file = zipper.output_zip
             self.finished.emit(zip_file)
         except Exception as e:
@@ -281,10 +282,11 @@ class GenerateBossEnemyZipThread(QThread):
 
 class BossEnemyZipWorker:
 
-    def __init__(self, parent: QWidget, ui_settings: SeedSettings, platform: bool):
+    def __init__(self, parent: QWidget, seed_name: str, ui_settings: SeedSettings, platform: bool):
         self.parent = parent
         self.ui_settings = ui_settings
         self.platform = platform
+        self.seed_name = seed_name
         self.progress: Optional[QProgressDialog] = None
         self.thread: Optional[GenerateBossEnemyZipThread] = None
 
@@ -294,7 +296,7 @@ class BossEnemyZipWorker:
         self.progress.setModal(True)
         self.progress.show()
 
-        self.thread = GenerateBossEnemyZipThread(self.ui_settings, self.platform)
+        self.thread = GenerateBossEnemyZipThread(self.seed_name, self.ui_settings, self.platform)
         self.thread.finished.connect(self._handle_result)
         self.thread.failed.connect(self._handle_failure)
         self.progress.canceled.connect(lambda: self.thread.terminate())

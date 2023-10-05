@@ -168,7 +168,7 @@ class RandomizerSettings():
         if self.reverse_rando and not self.as_data_split:
             raise SettingsException("Can't run reverse rando without the as/data split code")
 
-        self.enemy_options = makeKHBRSettings(ui_settings)
+        self.enemy_options = makeKHBRSettings(seed_name,ui_settings)
 
         self.random_seed = seed_name
         self.spoiler_log = spoiler_log

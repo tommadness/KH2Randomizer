@@ -8,8 +8,8 @@ from UI.worker import BossEnemyZipWorker
 
 class BossEnemyMenu(KH2Submenu):
 
-    def __init__(self, settings: SeedSettings):
-        super().__init__(title='Boss/Enemy', settings=settings, in_layout='horizontal')
+    def __init__(self, settings: SeedSettings, seed_name_getter):
+        super().__init__(title='Boss/Enemy', settings=settings, in_layout='horizontal', seed_name_getter=seed_name_getter)
 
         self.start_column()
         self.start_group()
@@ -43,5 +43,5 @@ class BossEnemyMenu(KH2Submenu):
         self.finalizeMenu()
 
     def _make_boss_enemy_only_mod(self,platform):
-        worker = BossEnemyZipWorker(self, self.settings, platform)
+        worker = BossEnemyZipWorker(self, self.seed_name_getter(), self.settings, platform)
         worker.generate_mod()
