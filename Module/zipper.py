@@ -963,7 +963,7 @@ class SeedZip:
                 if locationType.Free in trsr.location.LocationTypes and trsr.location.LocationId in range(1,3):
                     #print('party stating item?')
                     continue
-                if trsr.location.LocationId == "315" and trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]
+                if trsr.location.LocationId == "315" and trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
                     # if this chest in STT Station of Serenity is a proof, it can't be big since it's a tutorial chest
                     continue
                 #use location id to get chest index and name
