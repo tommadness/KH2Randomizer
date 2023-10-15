@@ -1,0 +1,50 @@
+# Notes:
+# - Marluxia has some texture orders changed by GoA ROM so can't currently recolor him
+# - Tough to do Minnie's bow because of the mouth/tongue being in the same texture and a similar color
+
+- id: lingering_will
+  name: Lingering Will
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: armor_gold
+          name: Armor (Gold)
+          hue_start: 21
+          hue_end: 70
+        - id: armor_red
+          name: Armor (Red)
+          hue_start: 350
+          hue_end: 20
+      image_groups:
+        - - remastered/obj/B_EX420.mdlx/-0.dds
+
+        - - remastered/obj/B_EX420.mdlx/-1.dds
+
+    - colorable_areas:
+        - id: keyblade
+          name: Keyblade
+          hue_start: 20
+          hue_end: 70
+        - id: keyblade_accent
+          name: Keyblade (Accent)
+          hue_start: 155
+          hue_end: 205
+      image_groups:
+        - - remastered/obj/B_EX420.mdlx/-2.dds
+
+
+- id: minnie
+  name: Minnie
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: dress
+          name: Dress
+          hue_start: 340
+          hue_end: 20
+      image_groups:
+        - - remastered/obj/H_DC010.mdlx/-1.dds
+          - remastered/obj/N_DC010_BTL.mdlx/-4.dds
+          - remastered/obj/N_DC010_RTN.mdlx/-4.dds

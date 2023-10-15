@@ -1,0 +1,72 @@
+# Notes:
+# - Final Xemnas being black/white is tough to recolor because there are "darker white areas" and "lighter black areas"
+
+- id: riku
+  name: Riku
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          hue_start: 234
+          hue_end: 274
+      image_groups:
+        - - remastered/obj/P_EH000.mdlx/-0.dds
+          - remastered/obj/P_EH000_LAST.mdlx/-0.dds
+          - remastered/obj/P_EH000_RTN.mdlx/-0.dds
+          - remastered/obj/H_EX710.mdlx/-3.dds
+
+    - colorable_areas:
+        - id: shoes_vest
+          name: Shoes/Vest
+          hue_start: 30
+          hue_end: 70
+      image_groups:
+        - - remastered/obj/P_EH000.mdlx/-1.dds
+          - remastered/obj/P_EH000_LAST.mdlx/-1.dds
+          - remastered/obj/P_EH000_RTN.mdlx/-1.dds
+          - remastered/obj/H_EX710.mdlx/-4.dds
+
+
+- id: xemnas_armored
+  name: Xemnas (Armored)
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: armor
+          name: Armor
+          hue_start: 121
+          hue_end: 360
+        - id: crown
+          name: crown
+          hue_start: 50
+          hue_end: 120
+      image_groups:
+        - - remastered/obj/B_EX260.mdlx/-1.dds
+
+        - - remastered/obj/B_EX260.mdlx/-2.dds
+
+
+- id: xemnas_black_coat
+  name: Xemnas (Black Coat)
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX170.mdlx/-1.dds
+          - remastered/obj/B_EX170_LV99.mdlx/-1.dds
+          - remastered/obj/B_EX170_RTN.mdlx/-1.dds
+
+        - - remastered/obj/B_EX170.mdlx/-2.dds
+          - remastered/obj/B_EX170_LV99.mdlx/-2.dds
+          - remastered/obj/B_EX170_RTN.mdlx/-2.dds

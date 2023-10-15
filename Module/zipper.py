@@ -1,61 +1,123 @@
 import base64
 import io
 import json
-import zipfile
 from itertools import accumulate
-from typing import Optional
+from typing import Optional, Any
+from zipfile import ZipFile, ZIP_DEFLATED
 
 import random
 import yaml
 
-from Class.exceptions import BossEnemyException, GeneratorException
+from Class.exceptions import GeneratorException
 from Class.itemClass import ItemEncoder
-from Class.modYml import modYml
 from Class.newLocationClass import KH2Location
+from Class.openkhmod import ModYml
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, makeKHBRSettings
+from List import ChestList
 from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
-from List.ChestList import KH2Chest, getChestFileList, getChestVisualId
-from Module import hashimage, commandmenu
+from List.inventory import bonus
+from List.location import simulatedtwilighttown as stt
+from Module import hashimage
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
 from Module.cosmetics import CosmeticsMod
 from Module.hints import Hints
 from Module.multiworld import MultiWorldOutput
-from Module.newRandomize import Randomizer, SynthesisRecipe
+from Module.newRandomize import Randomizer, SynthesisRecipe, ItemAssignment
 from Module.resources import resource_path
-from Module.seedEvaluation import LocationInformedSeedValidator
-from Module.spoilerLog import itemSpoilerDictionary, levelStatsDictionary, synth_recipe_dictionary, \
+from Module.seedmod import SeedModBuilder, ChestVisualAssignment
+from Module.spoilerLog import item_spoiler_dictionary, levelStatsDictionary, synth_recipe_dictionary, \
     weapon_stats_dictionary
+from Module.texture import TextureRecolorizer
 
 
 def noop(self, *args, **kw):
     pass
 
 
-def number_to_bytes(item):
+def number_to_bytes(item) -> tuple[int, int]:
     # for byte1, find the most significant bits from the item Id
-    itemByte1 = item>>8
+    item_byte1 = item >> 8
     # for byte0, isolate the least significant bits from the item Id
-    itemByte0 = item & 0x00FF
-    return itemByte0,itemByte1
+    item_byte0 = item & 0x00FF
+    return item_byte0, item_byte1
 
-def bytes_to_number(byte0, byte1=0):
-    return int(byte0)+int(byte1<<8)
 
-class SynthList():
-    def __init__(self,offset,bytes):
+def bytes_to_number(byte0, byte1=0) -> int:
+    return int(byte0) + int(byte1 << 8)
+
+
+def _assignment_subset(assigned: list[ItemAssignment], categories: list[locationCategory]) -> list[ItemAssignment]:
+    return [assignment for assignment in assigned if
+            any(item is assignment.location.LocationCategory for item in categories)]
+
+
+def _assignment_subset_from_type(assigned: list[ItemAssignment], types: list[locationType]) -> list[ItemAssignment]:
+    return [assignment for assignment in assigned if any(item in assignment.location.LocationTypes for item in types)]
+
+
+def _write_music_replacements(replacements: dict[str, str], out_zip: ZipFile):
+    if len(replacements) > 0:
+        music_replacements_string = ''
+        for original, replacement in replacements.items():
+            music_replacements_string += '[{}] was replaced by [{}]\n'.format(original, replacement)
+        out_zip.writestr('music-replacement-list.txt', music_replacements_string)
+
+
+def _run_khbr(
+        platform: str,
+        enemy_options: dict,
+        mod_yml: ModYml,
+        out_zip: ZipFile
+) -> tuple[Optional[str], dict[str, list]]:
+    if platform == "PC":
+        enemy_options["memory_expansion"] = True
+    else:
+        enemy_options["memory_expansion"] = False
+
+    enemy_spoilers = _invoke_khbr_with_overrides(enemy_options, mod_yml.data, out_zip)
+
+    lines = enemy_spoilers.split("\n")
+
+    current_key = ""
+    enemy_spoilers_json = {}
+    for line in lines:
+        if '\t' in line:
+            modded_line = line.replace('\t', '')
+            enemies = modded_line.split(" became ")
+            # this is adding to the current list
+            new_entry = {
+                "original": enemies[0],
+                "new": enemies[1]
+            }
+            enemy_spoilers_json[current_key].append(new_entry)
+        elif line != "":
+            current_key = line
+            enemy_spoilers_json[current_key] = []
+    if enemy_spoilers_json:
+        out_zip.writestr("enemies.rando",
+                         base64.b64encode(json.dumps(enemy_spoilers_json).encode('utf-8')).decode('utf-8'))
+        # for boss_replacement in enemy_spoilers_json["BOSSES"]:
+        #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
+
+    return enemy_spoilers, enemy_spoilers_json
+
+
+class SynthList:
+
+    def __init__(self, offset: int, binary: bytearray):
         self.offset = offset
-        self.id = bytes_to_number(bytes[0],bytes[1])
-        self.reward = bytes_to_number(bytes[2],bytes[3])
-        self.reward_type = bytes_to_number(bytes[4])
-        self.material_type = bytes_to_number(bytes[5])
-        self.material_rank = bytes_to_number(bytes[6])
-        self.condition_type = bytes_to_number(bytes[7])
-        self.count_needed = bytes_to_number(bytes[8],bytes[9])
-        self.unlock_event_shop = bytes_to_number(bytes[10],bytes[11])
+        self.id = bytes_to_number(binary[0], binary[1])
+        self.reward = bytes_to_number(binary[2], binary[3])
+        self.reward_type = bytes_to_number(binary[4])
+        self.material_type = bytes_to_number(binary[5])
+        self.material_rank = bytes_to_number(binary[6])
+        self.condition_type = bytes_to_number(binary[7])
+        self.count_needed = bytes_to_number(binary[8], binary[9])
+        self.unlock_event_shop = bytes_to_number(binary[10], binary[11])
 
     def __str__(self):
         if self.reward_type == 1:
@@ -64,142 +126,90 @@ class SynthList():
             return ""
 
 
-class DropRates():
-    def __init__(self,offset,bytes):
+class DropRates:
+
+    def __init__(self, offset: int, binary: bytearray):
         self.offset = offset
-        self.id = bytes_to_number(bytes[0],bytes[1])
-        self.small_hp = bytes_to_number(bytes[2])
-        self.big_hp = bytes_to_number(bytes[3])
-        self.big_munny = bytes_to_number(bytes[4])
-        self.medium_munny = bytes_to_number(bytes[5])
-        self.small_munny = bytes_to_number(bytes[6])
-        self.small_mp = bytes_to_number(bytes[7])
-        self.big_mp = bytes_to_number(bytes[8])
-        self.small_drive = bytes_to_number(bytes[9])
-        self.big_drive = bytes_to_number(bytes[10])
-        self.item1 = bytes_to_number(bytes[12],bytes[13])
-        self.item1_chance = bytes_to_number(bytes[14],bytes[15])
-        self.item2 = bytes_to_number(bytes[16],bytes[17])
-        self.item2_chance = bytes_to_number(bytes[18],bytes[19])
-        self.item3 = bytes_to_number(bytes[20],bytes[21])
-        self.item3_chance = bytes_to_number(bytes[22],bytes[23])
-
-    def to_yaml(self):
-        data = {}
-        data["Id"] = self.id
-        data["SmallHpOrbs"] = self.small_hp
-        data["BigHpOrbs"] = self.big_hp
-        data["BigMoneyOrbs"] = self.big_munny
-        data["MediumMoneyOrbs"] = self.medium_munny
-        data["SmallMoneyOrbs"] = self.small_munny
-        data["SmallMpOrbs"] = self.small_mp
-        data["BigMpOrbs"] = self.big_mp
-        data["SmallDriveOrbs"] = self.small_drive
-        data["BigDriveOrbs"] = self.big_drive
-        data["Item1"] = self.item1
-        data["Item1Percentage"] = self.item1_chance
-        data["Item2"] = self.item2
-        data["Item2Percentage"] = self.item2_chance
-        data["Item3"] = self.item3
-        data["Item3Percentage"] = self.item3_chance
-        return data
-
-    def write(self,binary_data):
-        id_bytes = number_to_bytes(self.id)
-        binary_data[self.offset] = id_bytes[0]
-        binary_data[self.offset+1] = id_bytes[1]
-        binary_data[self.offset+2] = number_to_bytes(self.small_hp)[0]
-        binary_data[self.offset+3] = number_to_bytes(self.big_hp)[0]
-        binary_data[self.offset+4] = number_to_bytes(self.big_munny)[0]
-        binary_data[self.offset+5] = number_to_bytes(self.medium_munny)[0]
-        binary_data[self.offset+6] = number_to_bytes(self.small_munny)[0]
-        binary_data[self.offset+7] = number_to_bytes(self.small_mp)[0]
-        binary_data[self.offset+8] = number_to_bytes(self.big_mp)[0]
-        binary_data[self.offset+9] = number_to_bytes(self.small_drive)[0]
-        binary_data[self.offset+10] = number_to_bytes(self.big_drive)[0]
-        
-        item1_bytes = number_to_bytes(self.item1)
-        binary_data[self.offset+12] = item1_bytes[0]
-        binary_data[self.offset+13] = item1_bytes[1]
-        item1_chances_bytes = number_to_bytes(self.item1_chance)
-        binary_data[self.offset+14] = item1_chances_bytes[0]
-        binary_data[self.offset+15] = item1_chances_bytes[1]
-        
-        item2_bytes = number_to_bytes(self.item2)
-        binary_data[self.offset+16] = item2_bytes[0]
-        binary_data[self.offset+17] = item2_bytes[1]
-        item2_chances_bytes = number_to_bytes(self.item2_chance)
-        binary_data[self.offset+18] = item2_chances_bytes[0]
-        binary_data[self.offset+19] = item2_chances_bytes[1]
-        
-        item3_bytes = number_to_bytes(self.item3)
-        binary_data[self.offset+20] = item3_bytes[0]
-        binary_data[self.offset+21] = item3_bytes[1]
-        item3_chances_bytes = number_to_bytes(self.item3_chance)
-        binary_data[self.offset+22] = item3_chances_bytes[0]
-        binary_data[self.offset+23] = item3_chances_bytes[1]
+        self.id = bytes_to_number(binary[0], binary[1])
+        self.small_hp = bytes_to_number(binary[2])
+        self.big_hp = bytes_to_number(binary[3])
+        self.big_munny = bytes_to_number(binary[4])
+        self.medium_munny = bytes_to_number(binary[5])
+        self.small_munny = bytes_to_number(binary[6])
+        self.small_mp = bytes_to_number(binary[7])
+        self.big_mp = bytes_to_number(binary[8])
+        self.small_drive = bytes_to_number(binary[9])
+        self.big_drive = bytes_to_number(binary[10])
+        self.item1 = bytes_to_number(binary[12], binary[13])
+        self.item1_chance = bytes_to_number(binary[14], binary[15])
+        self.item2 = bytes_to_number(binary[16], binary[17])
+        self.item2_chance = bytes_to_number(binary[18], binary[19])
+        self.item3 = bytes_to_number(binary[20], binary[21])
+        self.item3_chance = bytes_to_number(binary[22], binary[23])
 
     def __str__(self):
-        if True: #self.item1_chance and self.id not in id_to_enemy_name:
+        if True:  # self.item1_chance and self.id not in id_to_enemy_name:
             dummy = ""
             return f"{self.id} {(id_to_enemy_name[self.id] if self.id in id_to_enemy_name else dummy)} \n HP ({self.small_hp},{self.big_hp}) \n MP ({self.small_mp},{self.big_mp}) \n Munny ({self.small_munny},{self.medium_munny},{self.big_munny}) \n Orbs ({self.small_drive},{self.big_drive}) Items: \n--- {self.item1} ({self.item1_chance/1.0}%)\n--- {self.item2} ({self.item2_chance/1.0}%)\n--- {self.item3} ({self.item3_chance/1.0}%)"
-        elif self.id in id_to_enemy_name:
-            return f"{self.id} {id_to_enemy_name[self.id]}"
-        else:
-            return ""
+        # elif self.id in id_to_enemy_name:
+        #     return f"{self.id} {id_to_enemy_name[self.id]}"
+        # else:
+        #     return ""
 
 
+class SynthLocation:
 
-class SynthLocation():
-    def __init__(self, loc, item, in_recipe: SynthesisRecipe):
+    def __init__(self, loc: int, item: int, in_recipe: SynthesisRecipe):
         self.location = loc
         self.item = item
-        self.requirements = [(0,0)]*6
-        self.recipe = in_recipe
+        self.requirements = [(0, 0)] * 6
         self.unlock_rank = in_recipe.unlock_rank
-        for i in range(len(self.recipe.requirements)):
-            self.addReq(i, self.recipe.requirements[i].synth_item.Id, self.recipe.requirements[i].amount)
+        for i, recipe_requirement in enumerate(in_recipe.requirements):
+            self.requirements[i] = (recipe_requirement.synth_item.Id, recipe_requirement.amount)
 
-    def getStartingLocation(self):
+    def get_starting_location(self) -> int:
         # header bytes + offset to the specific recipe + skip over the recipe bytes
-        return 16+self.location*32+2
+        return 16 + self.location * 32 + 2
 
-    def getBytes(self):
-        bytes = []
-        bytes = [self.unlock_rank,0] # unlock condition/rank
-        item_byte0,item_byte1 = number_to_bytes(self.item)
+    def get_bytes(self) -> list[int]:
+        binary = [self.unlock_rank, 0]  # unlock condition/rank
+        item_byte0, item_byte1 = number_to_bytes(self.item)
         # add the item for this recipe
-        bytes.append(item_byte0)
-        bytes.append(item_byte1)
+        binary.append(item_byte0)
+        binary.append(item_byte1)
         # add the item as the upgraded version
-        bytes.append(item_byte0)
-        bytes.append(item_byte1)
+        binary.append(item_byte0)
+        binary.append(item_byte1)
 
         for req in self.requirements:
-            item_byte0,item_byte1 = number_to_bytes(req[0])
+            item_byte0, item_byte1 = number_to_bytes(req[0])
             # add the item as an ingredient
-            bytes.append(item_byte0)
-            bytes.append(item_byte1)
-            item_byte0,item_byte1 = number_to_bytes(req[1])
+            binary.append(item_byte0)
+            binary.append(item_byte1)
+            item_byte0, item_byte1 = number_to_bytes(req[1])
             # add the amount of that ingredient
-            bytes.append(item_byte0)
-            bytes.append(item_byte1)
-        return bytes
-
-    def addReq(self,req_number,req_item,req_amount):
-        self.requirements[req_number] = (req_item,req_amount)
+            binary.append(item_byte0)
+            binary.append(item_byte1)
+        return binary
 
 
-def invoke_khbr(enemy_options, mod, outZip):
-    """A function that mimics the call to generateToZip in khbr. Splitting this out to allow for granular control of khbr's boss placement"""
-    from khbr.randomizer import Randomizer as khbr
+# (output zip, spoiler log, enemy log)
+SeedZipResult = tuple[io.BytesIO, Optional[str], Optional[str]]
+
+
+def _invoke_khbr_with_overrides(enemy_options: dict, mod: dict[str, Any], out_zip: ZipFile):
+    """
+    A function that mimics the call to generateToZip in khbr. Splitting this out to allow for granular control of
+    khbr's boss placement.
+    """
+    from khbr.randomizer import Randomizer as BossEnemyRandomizer
     from khbr.KH2.EnemyManager import EnemyManager
     from khbr.textutils import create_spoiler_text
 
-    random.seed(str(enemy_options)) # seed boss/enemy with enemy options, which should include the seed name
-    del enemy_options["seed_name"] #remove it so khbr doesn't complain
+    random.seed(str(enemy_options))  # seed boss/enemy with enemy options, which should include the seed name
+    del enemy_options["seed_name"]  # remove it so khbr doesn't complain
 
-    khbr_randomizer = khbr()
+    khbr_randomizer = BossEnemyRandomizer()
 
     # get kh2's data
     game_data = khbr_randomizer._get_game('kh2')
@@ -238,8 +248,8 @@ def invoke_khbr(enemy_options, mod, outZip):
     randomization = game_data.perform_randomization(enemy_options)
 
     # add the assets to the zip and mod yml
-    assets = game_data.generate_files(randomization=randomization,outzip=outZip)
-    mod["assets"] += assets
+    assets = game_data.generate_files(randomization=randomization, outzip=out_zip)
+    mod["assets"].extend(assets)
 
     # create the spoiler log
     return create_spoiler_text(game_data.spoilers)
@@ -250,315 +260,229 @@ def invoke_khbr(enemy_options, mod, outZip):
 
 class SeedZip:
 
-    def __init__(self, settings: RandomizerSettings, randomizer: Randomizer, hints, extra_data: ExtraConfigurationData, unreachable_locations : list[KH2Location], multiworld : MultiWorldOutput = None):
-        self.formattedTrsr = {}
-        self.formattedLvup = {"Sora":{}}
-        self.formattedBons = {}
-        self.formattedFmlv = {}
-        self.formattedItem = {"Stats":[]}
-        self.formattedPlrp = []
-        self.spoiler_log = None
-        self.enemy_log = None
+    def __init__(
+            self,
+            settings: RandomizerSettings,
+            randomizer: Randomizer,
+            hints: Optional[Any],
+            extra_data: ExtraConfigurationData,
+            unreachable_locations: list[KH2Location],
+            multiworld: Optional[MultiWorldOutput] = None
+    ):
+        self.settings = settings
+        self.randomizer = randomizer
+        self.hints = hints
+        self.extra_data = extra_data
+        self.unreachable_locations = unreachable_locations
+        self.multiworld = multiworld
 
-        if settings.dummy_forms:
-            # convert the valor and final ids to their dummy values
-            dummy_items = Items.getDummyFormItems()
-            for a in randomizer.assignedItems:
-                for d_item in dummy_items:
-                    if a.item.Name == d_item.Name:
-                        a.item = d_item
+    def create_zip(self) -> SeedZipResult:
+        settings = self.settings
+        spoiler_log = settings.spoiler_log
+        extra_data = self.extra_data
+        tourney_gen = extra_data.tourney
 
-        self.assignTreasures(randomizer)
-        self.assignLevels(settings,randomizer)
-        self.assignSoraBonuses(randomizer)
-        self.assignDonaldBonuses(randomizer)
-        self.assignGoofyBonuses(randomizer)
-        self.assignFormLevels(randomizer)
-        self.assignWeaponStats(randomizer)
-        self.assignStartingItems(settings, randomizer)
-        for i in range(5):
-            if self.createZip(settings, randomizer, hints, extra_data, unreachable_locations, multiworld):
-                return
-        raise BossEnemyException(f"Boss/enemy module had an unexpected error. Try different a different seed or different settings.")
+        title = "Randomizer Seed"
+        if spoiler_log and not tourney_gen:
+            title += " w/ Spoiler"
 
-    def createZip(self, settings: RandomizerSettings, randomizer: Randomizer, hints, extra_data: ExtraConfigurationData, unreachable_locations, multiworld):
-        mod = modYml.getDefaultMod()
-        sys = modYml.getSysYAML(settings.seedHashIcons,settings.crit_mode)
-
-        data = io.BytesIO()
-        with zipfile.ZipFile(data, "w", zipfile.ZIP_DEFLATED) as outZip:
+        zip_data = io.BytesIO()
+        spoiler_log_output: Optional[str] = None
+        enemy_log_output: Optional[str] = None
+        with ZipFile(zip_data, "w", ZIP_DEFLATED) as out_zip:
             yaml.emitter.Emitter.process_tag = noop
 
-            platform = extra_data.platform
-            tourney_gen = extra_data.tourney
-            
-            pc_seed_toggle = (platform=="PC")
+            mod = SeedModBuilder(title, out_zip)
+            mod.add_base_assets()
+            mod.add_base_messages(settings.seedHashIcons, settings.crit_mode)
 
+            if settings.dummy_forms:
+                # convert the valor and final ids to their dummy values
+                for a in self.randomizer.assignments:
+                    for dummy_form_item in Items.getDummyFormItems():
+                        if a.item.Name == dummy_form_item.Name:
+                            a.item = dummy_form_item
 
-            def _shouldRunKHBR():
-                if not settings.enemy_options.get("boss", False) in [False, "Disabled"]:
-                    return True
-                if not settings.enemy_options.get("enemy", False) in [False, "Disabled"]:
-                    return True
-                if settings.enemy_options.get("remove_damage_cap", False):
-                    return True
-                if settings.enemy_options.get("cups_give_xp", False):
-                    return True
-                if settings.enemy_options.get("retry_data_final_xemnas", False):
-                    return True
-                if settings.enemy_options.get("retry_dark_thorn", False):
-                    return True
-                if settings.enemy_options.get("costume_rando", False):
-                    return True
-                if settings.enemy_options.get("party_rando", False):
-                    return True
-                if not settings.enemy_options.get("remove_cutscenes", False) in [False, "Disabled"]:
-                    return True
-                if not settings.enemy_options.get("revenge_limit_rando", False) in [False, "Vanilla"]:
-                    return True
-                
-                return False
+            self.assign_treasures(mod)
+            self.assign_levels(mod)
+            self.assign_bonuses(mod)
+            self.assign_form_levels(mod)
+            self.assign_weapon_stats(mod)
+            self.assign_starting_items(mod)
 
-            enemySpoilers = None
-            enemySpoilersJSON = {}
-            if _shouldRunKHBR():
-                enemySpoilers = None
-                enemySpoilersJSON = {}
-            
-                if platform == "PC":
-                    settings.enemy_options["memory_expansion"] = True
-                else:
-                    settings.enemy_options["memory_expansion"] = False
-                
-                enemySpoilers = invoke_khbr(settings.enemy_options, mod, outZip)
+            enemy_spoilers, enemy_spoilers_json = self.run_khbr_if_needed(mod, out_zip)
 
-                lines = enemySpoilers.split("\n")
+            if self.multiworld:
+                out_zip.writestr("multiworld.multi", json.dumps(self.multiworld()))
 
-                current_key = ""
-                for line in lines:
-                    if '\t' in line:
-                        modded_line = line.replace('\t','')
-                        enemies = modded_line.split(" became ")
-                        # this is adding to the current list
-                        new_entry = {}
-                        new_entry["original"] = enemies[0]
-                        new_entry["new"] = enemies[1]
-                        enemySpoilersJSON[current_key].append(new_entry)
-                    elif line!="":
-                        current_key = line
-                        enemySpoilersJSON[current_key] = []
-                if enemySpoilersJSON:
-                    outZip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
-                    # for boss_replacement in enemySpoilersJSON["BOSSES"]:
-                    #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
+            self.generate_seed_hash_image(out_zip)
+            self.create_puzzle_assets(mod)
+            self.create_synth_assets(mod)
+            if settings.as_data_split:
+                mod.write_as_data_split_assets()
+            if settings.skip_carpet_escape:
+                mod.write_skip_carpet_escape_assets()
+            if settings.pr_map_skip:
+                mod.write_map_skip_assets()
+            if settings.block_cor_skip:
+                mod.write_block_cor_skip_assets()
+            if settings.block_shan_yu_skip:
+                mod.write_block_shan_yu_skip_assets()
+            if settings.atlantica_skip:
+                mod.write_atlantica_tutorial_skip_assets()
+            if settings.wardrobe_skip:
+                mod.write_wardrobe_skip_assets()
+            self.create_drop_rate_assets(mod)
+            self.create_shop_rando_assets(mod)
+            self.create_chest_visual_assets(mod)
+            battle_level_spoiler = self.create_battle_level_rando_assets(mod)
 
-            print("Passed boss/enemy")
-
-            if multiworld:
-                outZip.writestr("multiworld.multi", json.dumps(multiworld()))
-
-            self.generate_seed_hash_image(settings, outZip)
-            self.createPuzzleAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
-            self.createSynthAssets(settings, randomizer, mod, outZip, pc_seed_toggle)
-            self.createASDataAssets(settings, mod, outZip)
-            self.createSkipCarpetAssets(settings, mod, outZip)
-            self.createMapSkipAssets(settings, mod, outZip)
-            self.createBlockingSkipAssets(settings, mod, outZip)
-            self.createAtlanticaSkipAssets(settings, mod, outZip)
-            self.createWardrobeSkipAssets(settings, mod, outZip)
-            self.createDropRateAssets(settings, randomizer, mod, outZip)
-            self.createShopRandoAssets(settings, randomizer, mod, outZip, sys)
-            self.createChestVisualAssets(settings, randomizer, mod, outZip)
-            battle_level_spoiler = self.createBtlvRandoAssets(settings, mod, outZip)
-
-            outZip.writestr("TrsrList.yml", yaml.dump(self.formattedTrsr, line_break="\r\n"))
-            outZip.writestr("BonsList.yml", yaml.dump(self.formattedBons, line_break="\r\n"))
-            outZip.writestr("LvupList.yml", yaml.dump(self.formattedLvup, line_break="\r\n"))
-            outZip.writestr("FmlvList.yml", yaml.dump(self.formattedFmlv, line_break="\r\n"))
-            outZip.writestr("ItemList.yml", yaml.dump(self.formattedItem, line_break="\r\n"))
-            outZip.writestr("PlrpList.yml", yaml.dump(self.formattedPlrp, line_break="\r\n"))
-            outZip.writestr("sys.yml", yaml.dump(sys, line_break="\r\n"))
-
+            hints = self.hints
             if hints is not None:
-                Hints.writeHints(hints, "HintFile", outZip)
+                Hints.write_hints(hints, out_zip)
 
-            self.createBetterSTTAssets(settings, mod, outZip)
-            self.addCmdListModifications(settings, mod, outZip)
-            
-            if settings.spoiler_log or tourney_gen:
+            if settings.roxas_abilities_enabled:
+                boss_enabled = not settings.enemy_options.get("boss", False) in [False, "Disabled"]
+                mod.write_better_stt_assets(boss_enabled)
+
+            self.add_cmd_list_modifications(mod)
+
+            if spoiler_log or tourney_gen:
+                # For a tourney seed, generate the spoiler log to return to the caller but don't include it in the zip
+                spoiler_log_output = self.generate_spoiler_html(enemy_spoilers_json, battle_level_spoiler)
                 if not tourney_gen:
-                    mod["title"] += " w/ Spoiler"
-                with open(resource_path("static/spoilerlog.html")) as spoiler_site:
-                    settings_spoiler_json = settings.ui_settings.settings_spoiler_json()
-                    synthesis_recipe_spoiler = synth_recipe_dictionary(randomizer.assignedItems, randomizer.synthesis_recipes)
-                    weapon_stats_spoiler = weapon_stats_dictionary(
-                        sora_assignments=randomizer.assignedItems,
-                        donald_assignments=randomizer.assignedDonaldItems,
-                        goofy_assignments=randomizer.assignedGoofyItems,
-                        weapons=randomizer.weaponStats
-                    )
-                    html_template = spoiler_site.read().replace("SEED_NAME_STRING",settings.random_seed) \
-                                                       .replace("{SEED_STRING}", settings.seed_string) \
-                                                       .replace("LEVEL_STATS_JSON",json.dumps(levelStatsDictionary(randomizer.levelStats))) \
-                                                       .replace("FORM_EXP_JSON",json.dumps({"Summon": {"multiplier": settings.summon_exp_multiplier, "values": list(accumulate(settings.summon_exp))},
-                                                                                            "Valor": {"multiplier": settings.valor_exp_multiplier, "values": list(accumulate(settings.valor_exp))},
-                                                                                            "Wisdom": {"multiplier": settings.wisdom_exp_multiplier, "values": list(accumulate(settings.wisdom_exp))},
-                                                                                            "Limit": {"multiplier": settings.limit_exp_multiplier, "values": list(accumulate(settings.limit_exp))},
-                                                                                            "Master": {"multiplier": settings.master_exp_multiplier, "values": list(accumulate(settings.master_exp))},
-                                                                                            "Final": {"multiplier": settings.final_exp_multiplier, "values": list(accumulate(settings.final_exp))},})) \
-                                                       .replace("DEPTH_VALUES_JSON",json.dumps(randomizer.location_weights.weights)) \
-                                                       .replace("SORA_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedItems, randomizer.shop_items, randomizer.location_weights,unreachable_locations), indent=4, cls=ItemEncoder)) \
-                                                       .replace("DONALD_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedDonaldItems), indent=4, cls=ItemEncoder))\
-                                                       .replace("GOOFY_ITEM_JSON",json.dumps(itemSpoilerDictionary(randomizer.assignedGoofyItems), indent=4, cls=ItemEncoder))\
-                                                       .replace("BOSS_ENEMY_JSON",json.dumps(enemySpoilersJSON)) \
-                                                       .replace("BATTLE_LEVEL_JSON",json.dumps(battle_level_spoiler)) \
-                                                       .replace("{SYNTHESIS_RECIPE_JSON}", json.dumps(synthesis_recipe_spoiler)) \
-                                                       .replace("{WEAPON_STATS_JSON}", json.dumps(weapon_stats_spoiler)) \
-                                                       .replace("{SETTINGS_JSON}", json.dumps(settings_spoiler_json))
-                    html_template = html_template.replace("PromiseCharm","Promise Charm")
-                    if not tourney_gen:
-                        outZip.writestr("spoilerlog.html",html_template)
-                    self.spoiler_log = html_template
-                    self.enemy_log = enemySpoilers
-                    outZip.write(resource_path("static/KHMenu.otf"), "KHMenu.otf")
-                if enemySpoilers and not tourney_gen:
-                    outZip.writestr("enemyspoilers.txt", enemySpoilers)
+                    out_zip.writestr("spoilerlog.html", spoiler_log_output)
+                    out_zip.write(resource_path("static/KHMenu.otf"), "misc/KHMenu.otf")
 
-            mod["assets"] += commandmenu.randomize_command_menus(extra_data.command_menu_choice)
+                # For a tourney seed, return the enemy log to the caller but don't include it in the zip
+                enemy_log_output = enemy_spoilers
+                if enemy_spoilers and not tourney_gen:
+                    out_zip.writestr("enemyspoilers.txt", enemy_spoilers)
+
+            mod.mod_yml.add_assets(CosmeticsMod.randomize_field2d(extra_data))
 
             music_assets, music_replacements = CosmeticsMod.randomize_music(settings.ui_settings)
-            mod["assets"] += music_assets
-            self.write_music_replacements(music_replacements, outZip)
+            mod.mod_yml.add_assets(music_assets)
+            _write_music_replacements(music_replacements, out_zip)
 
-            outZip.write(resource_path("Module/icon.png"), "icon.png")
+            texture_assets = TextureRecolorizer(settings.ui_settings).recolor_textures()
+            mod.mod_yml.add_assets(texture_assets)
 
-            # closing the zip here, validating and adding mod.yml later
-            outZip.close()
-        data.seek(0)
-        new_data = self.validate_mod_yml(mod,settings,data)
-        self.outputZip = new_data
-        return True
+            out_zip.write(resource_path("Module/icon.png"), "icon.png")
 
-    def validate_mod_yml(self,mod,settings,in_data):
-        print("Starting mod yml validation")
-        # merge cmd mods if there are two
-        #  first, find all the list patches we are assigning
-        listpatch_files = []
-        listpatch_contents = []
-        for a in mod["assets"]:
-            if a["name"]=="03system.bin":
-                for index, b in enumerate(a["source"]):
-                    if b["name"]=="cmd":
-                        listpatch_files.append(b["source"][0]["name"].replace('\\',"/"))
-        
-        # if there are multiple cmd listpatches, we have to read all the contents to create new file
-        if len(listpatch_files) > 1:
-            with zipfile.ZipFile(in_data, "r") as current_zip:
-                # for name in current_zip.namelist():
-                #     print(name)
-                # print("----")
-                for l_file in listpatch_files:
-                    # print(l_file)
-                    path = zipfile.Path(current_zip, at=l_file)
-                    with path.open(encoding='UTF-8') as f:
-                        listpatch_contents+=yaml.safe_load(f)
-                        # print(listpatch_contents)
+            mod.write_mod_ymls(include_main_mod_yml=False)  # We'll add the main mod.yml after the validation
+            out_zip.close()
+        zip_data.seek(0)
 
-            # remove all instances of 03_system cmd listpatches (we'll add another afterward)
-            num_03system_entries = 0
-            delete_system_indices = []
-            for outer_index, a in enumerate(mod["assets"]):
-                delete_asset_indices = []
-                if a["name"]=="03system.bin":
-                    num_03system_entries+=1
-                    for index, b in enumerate(a["source"]):
-                        if b["name"]=="cmd":
-                            delete_asset_indices.append(index)
-                    a["source"] = [i for j, i in enumerate(a["source"]) if j not in delete_asset_indices]
-                    if len(a["source"])==0:
-                        delete_system_indices.append(outer_index)
-            # assumes that empty 03system lists are only happening from 
-            # listpatches of cmd, and we don't want to remove the only 
-            # instance of this in the yaml, so only remove empty entries 
-            # if they are duplicates
-            if num_03system_entries>1:
-                mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_system_indices]
-            
-            for a in mod["assets"]:
-                if a["name"]=="03system.bin":
-                    a["source"].append({"method":"listpatch","name":"cmd","source":[{"name":"merged_cmd_list.yml","type":"cmd"}],"type":"list"})
+        new_data = mod.validate_and_write_mod_yml(zip_data, settings)
 
+        return new_data, spoiler_log_output, enemy_log_output
 
-        for modded_file in ["00battle.bin"]:
-            first_asset_index = None
-            delete_asset_indices = []
-            for index,a in enumerate(mod["assets"]):
-                if a["name"]==modded_file:
-                    if first_asset_index:
-                        delete_asset_indices.append(index)
-                        # add these sources into this group
-                        mod["assets"][first_asset_index]["source"]+=a["source"]
-                    else:
-                        first_asset_index = index
-            # delete all duplicates
-            mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
+    def run_khbr_if_needed(self, mod: SeedModBuilder, out_zip: ZipFile) -> tuple[Optional[str], dict[str, list]]:
+        enemy_options = self.settings.enemy_options
 
-        # # if we aren't removing damage cap, don't include khbr's enmp mod file (TODO: remove this when khbr listpatches enmp)
-        # if not settings.enemy_options.get("remove_damage_cap", False):
-        #     print("Removing khbr enmp file...")
-        #     delete_asset_indices = []
-        #     battle_index = None
-        #     for index,a in enumerate(mod["assets"]):
-        #         if a["name"]=="00battle.bin":
-        #             battle_index = index
-        #             for second_index,b in enumerate(a["source"]):
-        #                 if b["name"]=="enmp":
-        #                     delete_asset_indices.append(second_index)
+        def _should_run_khbr() -> bool:
+            if not enemy_options.get("boss", False) in [False, "Disabled"]:
+                return True
+            if not enemy_options.get("enemy", False) in [False, "Disabled"]:
+                return True
+            if enemy_options.get("remove_damage_cap", False):
+                return True
+            if enemy_options.get("cups_give_xp", False):
+                return True
+            if enemy_options.get("retry_data_final_xemnas", False):
+                return True
+            if enemy_options.get("retry_dark_thorn", False):
+                return True
+            if enemy_options.get("costume_rando", False):
+                return True
+            if enemy_options.get("party_rando", False):
+                return True
+            if not enemy_options.get("remove_cutscenes", False) in [False, "Disabled"]:
+                return True
+            if not enemy_options.get("revenge_limit_rando", False) in [False, "Vanilla"]:
+                return True
 
-        #     # delete enmp mod
-        #     mod["assets"][battle_index]["source"] = [i for j, i in enumerate(mod["assets"][battle_index]["source"]) if j not in delete_asset_indices]
-            
-        # # if we aren't doing boss or enemy rando, don't include khbr's modded form msets (TODO: remove this when khbr doesn't just add these all the time)
-        # if settings.enemy_options.get("boss", False) in [False, "Disabled"] and \
-        #     settings.enemy_options.get("enemy", False) in [False, "Disabled"]:
-        #     print("Removing khbr form msets...")
-        #     offending_msets = ["obj/P_EX100_BTLF.mset",
-        #                         "obj/P_EX100_HTLF.mset",
-        #                         "obj/P_EX100_KH1F.mset",
-        #                         "obj/P_EX100_MAGF.mset",
-        #                         "obj/P_EX100_TRIF.mset",
-        #                         "obj/P_EX100_ULTF.mset"]
-        #     delete_asset_indices = []
-        #     for index,a in enumerate(mod["assets"]):
-        #         if a["name"] in offending_msets:
-        #             delete_asset_indices.append(index)
+            return False
 
-        #     # delete form msets mod
-        #     mod["assets"] = [i for j, i in enumerate(mod["assets"]) if j not in delete_asset_indices]
-        # else:
-        # add multi support for TWTNW NPCs, msg/jp/eh.bar (TODO: remove this when khbr does it on its own)
-        for index,a in enumerate(mod["assets"]):
-            if a["name"] == "msg/jp/eh.bar":
-                a["multi"].append({"name":"msg/fr/eh.bar"})
-                a["multi"].append({"name":"msg/gr/eh.bar"})
-                a["multi"].append({"name":"msg/it/eh.bar"})
-                a["multi"].append({"name":"msg/sp/eh.bar"})
+        if _should_run_khbr():
+            return _run_khbr(self.extra_data.platform, enemy_options, mod.mod_yml, out_zip)
+        else:
+            return None, {}
 
-        # now that the mod yml is proper, we want to add any merged files into the zip, along with the mod.yml
-        with zipfile.ZipFile(in_data, "a", zipfile.ZIP_DEFLATED) as current_zip:
-            current_zip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
-            if len(listpatch_contents) > 0:
-                current_zip.writestr("merged_cmd_list.yml", yaml.dump(listpatch_contents, line_break="\r\n"))
-        in_data.seek(0)
-        return in_data
+    def generate_spoiler_html(self, enemy_spoilers_json, battle_level_spoiler) -> str:
+        settings = self.settings
+        randomizer = self.randomizer
 
-    def generate_seed_hash_image(self, settings: RandomizerSettings, out_zip: zipfile.ZipFile):
-        hash_icons = settings.seedHashIcons
+        exp_multipliers_json = {
+            "Summon": {
+                "multiplier": settings.summon_exp_multiplier,
+                "values": list(accumulate(settings.summon_exp()))
+            },
+            "Valor": {
+                "multiplier": settings.valor_exp_multiplier,
+                "values": list(accumulate(settings.valor_exp()))
+            },
+            "Wisdom": {
+                "multiplier": settings.wisdom_exp_multiplier,
+                "values": list(accumulate(settings.wisdom_exp()))
+            },
+            "Limit": {
+                "multiplier": settings.limit_exp_multiplier,
+                "values": list(accumulate(settings.limit_exp()))
+            },
+            "Master": {
+                "multiplier": settings.master_exp_multiplier,
+                "values": list(accumulate(settings.master_exp()))
+            },
+            "Final": {
+                "multiplier": settings.final_exp_multiplier,
+                "values": list(accumulate(settings.final_exp()))
+            },
+        }
+        sora_items_json = item_spoiler_dictionary(
+            item_assignments=randomizer.assignments,
+            starting_inventory_ids=randomizer.starting_item_ids,
+            shop_items=randomizer.shop_items,
+            weights=randomizer.location_weights,
+            unreachable_locations=self.unreachable_locations
+        )
+        donald_items_json = item_spoiler_dictionary(randomizer.donald_assignments)
+        goofy_items_json = item_spoiler_dictionary(randomizer.goofy_assignments)
+        synthesis_recipe_json = synth_recipe_dictionary(randomizer.assignments, randomizer.synthesis_recipes)
+        settings_spoiler_json = self.settings.ui_settings.settings_spoiler_json()
+        weapon_stats_spoiler = weapon_stats_dictionary(
+            sora_assignments=randomizer.assignments,
+            donald_assignments=randomizer.donald_assignments,
+            goofy_assignments=randomizer.goofy_assignments,
+            weapons=randomizer.weapon_stats
+        )
+
+        with open(resource_path("static/spoilerlog.html")) as spoiler_site:
+            return spoiler_site.read() \
+                .replace("{SEED_NAME_STRING}", settings.random_seed) \
+                .replace("{SEED_STRING}", settings.seed_string) \
+                .replace("{LEVEL_STATS_JSON}", json.dumps(levelStatsDictionary(randomizer.level_stats))) \
+                .replace("{FORM_EXP_JSON}", json.dumps(exp_multipliers_json)) \
+                .replace("{DEPTH_VALUES_JSON}", json.dumps(randomizer.location_weights.weights)) \
+                .replace("{SORA_ITEM_JSON}", json.dumps(sora_items_json, indent=4, cls=ItemEncoder)) \
+                .replace("{DONALD_ITEM_JSON}", json.dumps(donald_items_json, indent=4, cls=ItemEncoder)) \
+                .replace("{GOOFY_ITEM_JSON}", json.dumps(goofy_items_json, indent=4, cls=ItemEncoder)) \
+                .replace("{BOSS_ENEMY_JSON}", json.dumps(enemy_spoilers_json)) \
+                .replace("{BATTLE_LEVEL_JSON}", json.dumps(battle_level_spoiler)) \
+                .replace("{SYNTHESIS_RECIPE_JSON}", json.dumps(synthesis_recipe_json)) \
+                .replace("{WEAPON_STATS_JSON}", json.dumps(weapon_stats_spoiler)) \
+                .replace("{SETTINGS_JSON}", json.dumps(settings_spoiler_json)) \
+                .replace("PromiseCharm", "Promise Charm")
+
+    def generate_seed_hash_image(self, out_zip: ZipFile):
+        hash_icons = self.settings.seedHashIcons
         image_data = hashimage.generate_seed_hash_image(hash_icons, use_bitmap=False)
         out_zip.writestr('preview.png', image_data)
         out_zip.writestr('misc/randoseed-hash-icons.csv', ','.join(hash_icons))
 
-    def createBtlvRandoAssets(self, settings, mod, outZip):
+    def create_battle_level_rando_assets(self, mod: SeedModBuilder) -> dict[locationType, list[int]]:
+        settings = self.settings
         btlv_option_name = settings.battle_level_rando
 
         btlv = BtlvViewer()
@@ -571,276 +495,231 @@ class SeedZip:
                 (btlv_option_name == BattleLevelOption.OFFSET.name and settings.battle_level_offset == 0) or \
                 (btlv_option_name == BattleLevelOption.RANDOM_WITHIN_RANGE.name and settings.battle_level_range == 0):
             return btlv.get_spoiler()
-        for x in mod["assets"]:
-            if x["name"]=="00battle.bin":
-                x["source"]+=modYml.getBtlvMod()
-                break
-        btlv.write_modifications(outZip)
+
+        modified_battle_level_binary = btlv.write_modifications()
+        mod.write_battle_level_assets(modified_battle_level_binary)
+
         return btlv.get_spoiler()
 
-    def addCmdListModifications(self,settings,mod,outZip):
-        if not settings.roxas_abilities_enabled and not settings.disable_final_form:
-            return
-        
+    def add_cmd_list_modifications(self, mod: SeedModBuilder):
+        settings = self.settings
         if settings.roxas_abilities_enabled and not settings.disable_final_form:
             cmd_yml = "better_stt/CmdList.yml"
-        elif settings.roxas_abilities_enabled and settings.disable_final_form: 
+        elif settings.roxas_abilities_enabled and settings.disable_final_form:
             cmd_yml = "better_stt/CmdListWDisableFinal.yml"
-        elif not settings.roxas_abilities_enabled and settings.disable_final_form: 
+        elif not settings.roxas_abilities_enabled and settings.disable_final_form:
             cmd_yml = "disable_final_form.yml"
-        else:
-            raise Exception("Trying to get cmd list mod without disabling final or better stt")
-        
-        outZip.write(resource_path("static/"+cmd_yml),cmd_yml)
+        else:  # Roxas abilities not enabled and final form not disabled - nothing to do
+            return
+        mod.write_cmd_list_modifications(modified_cmd_list_yml=cmd_yml)
 
-        for x in mod["assets"]:
-            if x["name"]=="03system.bin":
-                x["source"]+=modYml.getCmdListMod(cmd_yml)
-                break
-
-
-    def createASDataAssets(self,settings,mod,outZip):
-        if settings.as_data_split:
-            mod["assets"] += modYml.getASDataMod()
-            outZip.write(resource_path("static/as_data_split/hb32evt.script"), "asdata/hb32evt.script")
-            outZip.write(resource_path("static/as_data_split/hb33evt.script"), "asdata/hb33evt.script")
-            outZip.write(resource_path("static/as_data_split/hb34evt.script"), "asdata/hb34evt.script")
-            outZip.write(resource_path("static/as_data_split/hb38evt.script"), "asdata/hb38evt.script")
-
-    def createBetterSTTAssets(self,settings,mod,outZip):
-        boss_enabled = not settings.enemy_options.get("boss", False) in [False, "Disabled"]
-        if settings.roxas_abilities_enabled:
-            mod["assets"] += modYml.getBetterSTTMod(boss_enabled)
-            outZip.write(resource_path("static/better_stt/trinity_zz.bar"), "better_stt/trinity_zz.bar")
-            outZip.write(resource_path("static/better_stt/B_EX100.mset"), "better_stt/B_EX100.mset")
-            outZip.write(resource_path("static/better_stt/F_TT010.mset"), "better_stt/F_TT010.mset")
-            outZip.write(resource_path("static/better_stt/P_EX110.mset"), "better_stt/P_EX110.mset")
-            outZip.write(resource_path("static/better_stt/W_EX010_RX.mset"), "better_stt/W_EX010_RX.mset")
-            # outZip.write(resource_path("static/better_stt/ObjList_Better_STT.yml"), "better_stt/ObjList_Better_STT.yml")
-            if boss_enabled:
-                outZip.write(resource_path("static/better_stt/B_EX100_SR.mset"), "better_stt/B_EX100_SR.mset")
-    
-    def createSkipCarpetAssets(self,settings,mod,outZip):
-        if settings.skip_carpet_escape:
-            mod["assets"] += [modYml.getSkipCarpetEscapeMod()]
-            outZip.write(resource_path("static/skip_carpet_escape.script"), "skip_carpet_escape.script")
-
-    def createAtlanticaSkipAssets(self,settings,mod,outZip):
-        if settings.atlantica_skip:
-            mod["assets"] += [modYml.getAtlanticaTutorialSkipMod()]
-            outZip.write(resource_path("static/atlantica_skip.script"), "atlantica_skip.script")
-
-    def createWardrobeSkipAssets(self,settings,mod,outZip):
-        if settings.wardrobe_skip:
-            mod["assets"] += [modYml.getWardrobeSkipMod()]
-            outZip.write(resource_path("static/wardrobe/N_BB080_BTL.mset"), "wardrobe_skip.mset")
-
-    def createBlockingSkipAssets(self,settings,mod,outZip):
-        if settings.block_cor_skip:
-            mod["assets"] += [modYml.getBlockCorSkipMod()]
-            outZip.write(resource_path("static/disable_cor_skip.script"), "disable_cor_skip.script")
-        if settings.block_shan_yu_skip:
-            mod["assets"] += [modYml.getBlockShanYuSkipMod()]
-            outZip.write(resource_path("static/disable_shan_yu_skip.script"), "disable_shan_yu_skip.script")
-
-    def createMapSkipAssets(self,settings,mod,outZip):
-        if settings.pr_map_skip:
-            mod["assets"] += modYml.getMapSkipMod()
-            outZip.write(resource_path("static/map_skip/ca.yml"), "map_skip/ca.yml")
-            outZip.write(resource_path("static/map_skip/libretto-ca.bar"), "map_skip/libretto-ca.bar")
-
-
-    def createPuzzleAssets(self, settings, randomizer, mod, outZip, pc_toggle):
-        if locationType.Puzzle not in settings.disabledLocations:
-            mod["assets"] += [modYml.getPuzzleMod(pc_toggle)]
-            assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
+    def create_puzzle_assets(self, mod: SeedModBuilder):
+        if locationType.Puzzle not in self.settings.disabledLocations:
+            assigned_puzzles = _assignment_subset_from_type(self.randomizer.assignments, [locationType.Puzzle])
             with open(resource_path("static/puzzle.bin"), "rb") as puzzleBar:
-                binaryContent = bytearray(puzzleBar.read())
-                for puzz in assignedPuzzles:
-                    byte0 = 20+puzz.location.LocationId*16
-                    byte1 = 20+puzz.location.LocationId*16+1
+                modified_puzzle_binary = bytearray(puzzleBar.read())
+                for puzz in assigned_puzzles:
+                    byte0 = 20 + puzz.location.LocationId * 16
+                    byte1 = 20 + puzz.location.LocationId * 16 + 1
                     item = puzz.item.Id
-                        
-                    itemByte0, itemByte1 = number_to_bytes(item)
-                    binaryContent[byte0] = itemByte0
-                    binaryContent[byte1] = itemByte1
-                outZip.writestr("modified_puzzle.bin",binaryContent)
 
-                
-    def createDropRateAssets(self, settings, randomizer, mod, outZip):
+                    item_byte_0, item_byte_1 = number_to_bytes(item)
+                    modified_puzzle_binary[byte0] = item_byte_0
+                    modified_puzzle_binary[byte1] = item_byte_1
+                mod.write_puzzle_assets(modified_puzzle_binary)
+
+    def create_drop_rate_assets(self, mod: SeedModBuilder):
+        settings = self.settings
         global_jackpot = settings.global_jackpot
         global_lucky_lucky = settings.global_lucky
         fast_urns = settings.fast_urns
         rich_enemies = settings.rich_enemies
         near_unlimited_mp = settings.unlimited_mp
 
-        if global_jackpot>0 or global_lucky_lucky>0 or fast_urns or rich_enemies or near_unlimited_mp:
-            for x in mod["assets"]:
-                if x["name"]=="00battle.bin":
-                    x["source"].append(modYml.getDropModList())
-                    break
+        if global_jackpot > 0 or global_lucky_lucky > 0 or fast_urns or rich_enemies or near_unlimited_mp:
             all_drops = {}
             testing = []
-            with open(resource_path("static/drops.bin"), "rb") as dropsbar:
-                binaryContent = bytearray(dropsbar.read())
-                for i in range(0,184):
-                    start_index = 8+24*i
-                    rate = DropRates(start_index,binaryContent[start_index:start_index+24])
+            with open(resource_path("static/drops.bin"), "rb") as drops_bar:
+                drops_binary = bytearray(drops_bar.read())
+                for i in range(0, 184):
+                    start_index = 8 + 24 * i
+                    rate = DropRates(start_index, drops_binary[start_index:start_index + 24])
                     all_drops[rate.id] = rate
 
                     if rate.id not in id_to_enemy_name:
                         testing.append(rate.id)
 
-
-            spawnable_enemy_ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,15,17,18,22,23,24,25,26,27,28,29,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,63,64,65,66,69,73,87,88,89,96,112,171,172,173,174,175,176,177,178,179,180,181,182]
-            urn_ids = [70,71]
-            stt_enemies = [119,120,121,130,145]
-            struggles = [122,131,132]
+            spawnable_enemy_ids = [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 18, 22, 23, 24, 25, 26, 27, 28, 29,
+                30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
+                63, 64, 65, 66, 69, 73, 87, 88, 89, 96,
+                112, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182
+            ]
+            urn_ids = [70, 71]
+            stt_enemies = [119, 120, 121, 130, 145]
+            struggles = [122, 131, 132]
 
             modded_ids = []
 
-            if rich_enemies: 
+            if rich_enemies:
                 for drop in all_drops.values():
                     if drop.id in spawnable_enemy_ids:
                         modded_ids.append(drop.id)
-                        drop.medium_munny = max(drop.medium_munny,2)
-                        drop.small_munny = max(drop.small_munny,2)
-            if near_unlimited_mp: 
+                        drop.medium_munny = max(drop.medium_munny, 2)
+                        drop.small_munny = max(drop.small_munny, 2)
+            if near_unlimited_mp:
                 for drop in all_drops.values():
                     if drop.id in spawnable_enemy_ids:
                         modded_ids.append(drop.id)
-                        drop.big_mp = max(drop.big_mp,5)
-                        drop.small_mp = max(drop.small_mp,5)
+                        drop.big_mp = max(drop.big_mp, 5)
+                        drop.small_mp = max(drop.small_mp, 5)
 
-            if global_lucky_lucky > 0: 
+            if global_lucky_lucky > 0:
                 for drop in all_drops.values():
                     if drop.item1 != 0:
                         modded_ids.append(drop.id)
-                        drop.item1_chance = min(drop.item1_chance + (drop.item1_chance//2)*global_lucky_lucky,100)
+                        drop.item1_chance = min(drop.item1_chance + (drop.item1_chance // 2) * global_lucky_lucky, 100)
                     if drop.item2 != 0:
                         modded_ids.append(drop.id)
-                        drop.item2_chance = min(drop.item2_chance + (drop.item2_chance//2)*global_lucky_lucky,100)
+                        drop.item2_chance = min(drop.item2_chance + (drop.item2_chance // 2) * global_lucky_lucky, 100)
                     if drop.item3 != 0:
                         modded_ids.append(drop.id)
-                        drop.item3_chance = min(drop.item3_chance + (drop.item3_chance//2)*global_lucky_lucky,100)
-            if global_jackpot > 0: 
+                        drop.item3_chance = min(drop.item3_chance + (drop.item3_chance // 2) * global_lucky_lucky, 100)
+            if global_jackpot > 0:
                 for drop in all_drops.values():
                     modded_ids.append(drop.id)
-                    drop.small_hp = min(drop.small_hp + (drop.small_hp//2)*global_jackpot,64)
-                    drop.big_hp = min(drop.big_hp + (drop.big_hp//2)*global_jackpot,64)
-                    drop.big_munny = min(drop.big_munny + (drop.big_munny//2)*global_jackpot,64)
-                    drop.medium_munny = min(drop.medium_munny + (drop.medium_munny//2)*global_jackpot,64)
-                    drop.small_munny = min(drop.small_munny + (drop.small_munny//2)*global_jackpot,64)
-                    drop.small_mp = min(drop.small_mp + (drop.small_mp//2)*global_jackpot,64)
-                    drop.big_mp = min(drop.big_mp + (drop.big_mp//2)*global_jackpot,64)
-                    drop.small_drive = min(drop.small_drive + (drop.small_drive//2)*global_jackpot,64)
-                    drop.big_drive = min(drop.big_drive + (drop.big_drive//2)*global_jackpot,64)
+                    drop.small_hp = min(drop.small_hp + (drop.small_hp // 2) * global_jackpot, 64)
+                    drop.big_hp = min(drop.big_hp + (drop.big_hp // 2) * global_jackpot, 64)
+                    drop.big_munny = min(drop.big_munny + (drop.big_munny // 2) * global_jackpot, 64)
+                    drop.medium_munny = min(drop.medium_munny + (drop.medium_munny // 2) * global_jackpot, 64)
+                    drop.small_munny = min(drop.small_munny + (drop.small_munny // 2) * global_jackpot, 64)
+                    drop.small_mp = min(drop.small_mp + (drop.small_mp // 2) * global_jackpot, 64)
+                    drop.big_mp = min(drop.big_mp + (drop.big_mp // 2) * global_jackpot, 64)
+                    drop.small_drive = min(drop.small_drive + (drop.small_drive // 2) * global_jackpot, 64)
+                    drop.big_drive = min(drop.big_drive + (drop.big_drive // 2) * global_jackpot, 64)
 
             if fast_urns:
                 for u in urn_ids:
                     modded_ids.append(u)
                     all_drops[u].big_hp = 64
 
-            modded_drops_data = []
             for drop in all_drops.values():
                 if drop.id in modded_ids:
-                    modded_drops_data.append(drop.to_yaml())
+                    mod.prize_table.add_prize(
+                        identifier=drop.id,
+                        small_hp_orbs=drop.small_hp,
+                        big_hp_orbs=drop.big_hp,
+                        big_money_orbs=drop.big_munny,
+                        medium_money_orbs=drop.medium_munny,
+                        small_money_orbs=drop.small_munny,
+                        small_mp_orbs=drop.small_mp,
+                        big_mp_orbs=drop.big_mp,
+                        small_drive_orbs=drop.small_drive,
+                        big_drive_orbs=drop.big_drive,
+                        item_1=drop.item1,
+                        item_1_percentage=drop.item1_chance,
+                        item_2=drop.item2,
+                        item_2_percentage=drop.item2_chance,
+                        item_3=drop.item3,
+                        item_3_percentage=drop.item3_chance,
+                    )
 
-            # write changes
-            outZip.writestr("przt.yml", yaml.dump(modded_drops_data, line_break="\r\n"))
-            # with open(resource_path("static/drops.bin"), "rb") as dropsbar:
-            #     binaryContent = bytearray(dropsbar.read())
-            #     for drop in all_drops:
-            #         all_drops[drop].write(binaryContent)
-            #     outZip.writestr("modified_drops.bin",binaryContent)
-
-    def createShopRandoAssets(self, settings, randomizer, mod, outZip, sys):
-        if len(randomizer.shop_items)>0:
-            for x in mod["assets"]:
-                if x["name"]=="03system.bin":
-                    x["source"].append(modYml.getShopMod())
-                    break
-
+    def create_shop_rando_assets(self, mod: SeedModBuilder):
+        shop_items = self.randomizer.shop_items
+        if len(shop_items) > 0:
             items_for_shop = []
-            keyblade_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.KEYBLADE]
-            report_item_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.REPORT]
-            story_unlock_ids = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.STORYUNLOCK]
-            consumables = [i.Id for i in randomizer.shop_items if i.ItemType==itemType.ITEM]
-            
-            remaining_items = [i.Id for i in randomizer.shop_items if i.Id not in keyblade_item_ids+report_item_ids+story_unlock_ids+consumables]
+            keyblade_item_ids = [i.Id for i in shop_items if i.ItemType == itemType.KEYBLADE]
+            report_item_ids = [i.Id for i in shop_items if i.ItemType == itemType.REPORT]
+            story_unlock_ids = [i.Id for i in shop_items if i.ItemType == itemType.STORYUNLOCK]
+            consumable_ids = [i.Id for i in shop_items if i.ItemType == itemType.ITEM]
+            used_ids = keyblade_item_ids + report_item_ids + story_unlock_ids + consumable_ids
+            remaining_items = [i.Id for i in shop_items if i.Id not in used_ids]
 
-            if len(keyblade_item_ids)>0: 
-                for i in keyblade_item_ids:
-                    items_for_shop.append((i,400))
+            if len(keyblade_item_ids) > 0:
+                for keyblade_id in keyblade_item_ids:
+                    items_for_shop.append((keyblade_id, 400))
 
-            if len(report_item_ids)>0:
-                for i in report_item_ids:
-                    items_for_shop.append((i,75*(i-225)))
-                for i in range(13):
-                    sys.append({"id":46778-32768+i*2,"en":f"Ansem Report {i+1}"})
+            if len(report_item_ids) > 0:
+                for report_id in report_item_ids:
+                    items_for_shop.append((report_id, 75 * (report_id - 225)))
+                for report_number in range(13):
+                    short_name = f"Ansem Report {report_number + 1}"
+                    mod.messages.add_message(message_id=46778 - 32768 + report_number * 2, en=short_name)
 
-            if len(story_unlock_ids)>0:
-                for i in story_unlock_ids:
-                    items_for_shop.append((i,500))
-            
-            if len(consumables)>0:
-                consumable_price_map = {4:400,7:600,274:400,275:600,276:250,277:250,278:250,279:250}
-                for i in consumables:
-                    if i in consumable_price_map:
-                        items_for_shop.append((i,consumable_price_map[i]))
+            if len(story_unlock_ids) > 0:
+                for story_unlock_id in story_unlock_ids:
+                    items_for_shop.append((story_unlock_id, 500))
+
+            if len(consumable_ids) > 0:
+                consumable_price_map = {4: 400, 7: 600, 274: 400, 275: 600, 276: 250, 277: 250, 278: 250, 279: 250}
+                for consumable_id in consumable_ids:
+                    if consumable_id in consumable_price_map:
+                        items_for_shop.append((consumable_id, consumable_price_map[consumable_id]))
                     else:
-                        items_for_shop.append((i,700))
+                        items_for_shop.append((consumable_id, 700))
 
-            if len(remaining_items)>0:
-                raise GeneratorException(f"Trying to put items in the shop that weren't expected: {len(remaining_items)}")
+            if len(remaining_items) > 0:
+                raise GeneratorException(f"Trying to put unexpected items in the shop: {len(remaining_items)}")
                 # price_map = {itemRarity.COMMON:100,itemRarity.UNCOMMON:300, itemRarity.RARE:500, itemRarity.MYTHIC:1000}
                 # for i in remaining_items:
                 #     items_for_shop.append((i.Id,price_map[i.Rarity]))
-        
 
-            with open(resource_path("static/full_items.json"), "r") as itemjson:
-                all_item_jsons = json.loads(itemjson.read())
-                self.formattedItem["Items"] = []
-                for x,price in items_for_shop:
+            with open(resource_path("static/full_items.json"), "r") as item_json:
+                all_item_jsons = json.loads(item_json.read())
+                for item_id, price in items_for_shop:
                     item_json = None
                     for y in all_item_jsons["Items"]:
-                        if y["Id"]==x:
+                        if y["Id"] == item_id:
                             item_json = y
                             break
-                    item_json["ShopBuy"]=price
-                    self.formattedItem["Items"].append(item_json)
+                    item_json["ShopBuy"] = price
+                    mod.items.add_item(
+                        item_id=item_json["Id"],
+                        item_type=item_json["Type"],
+                        flag_0=item_json["Flag0"],
+                        flag_1=item_json["Flag1"],
+                        rank=item_json["Rank"],
+                        stat_entry=item_json["StatEntry"],
+                        name=item_json["Name"],
+                        description=item_json["Description"],
+                        shop_buy=item_json["ShopBuy"],
+                        shop_sell=item_json["ShopSell"],
+                        command=item_json["Command"],
+                        slot=item_json["Slot"],
+                        picture=item_json["Picture"],
+                        icon_1=item_json["Icon1"],
+                        icon_2=item_json["Icon2"],
+                    )
 
+            with open(resource_path("static/shop.bin"), "rb") as shop_bar:
+                modified_shop_binary = bytearray(shop_bar.read())
 
-            with open(resource_path("static/shop.bin"), "rb") as shopbar:
-                binaryContent = bytearray(shopbar.read())
+                byte0, byte1 = number_to_bytes(80 + len(items_for_shop))
+                modified_shop_binary[10] = byte0
+                modified_shop_binary[11] = byte1
 
-                byte0,byte1 = number_to_bytes(80+len(items_for_shop))
-                binaryContent[10] = byte0
-                binaryContent[11] = byte1
-
-                byte0,byte1 = number_to_bytes(len(items_for_shop))
+                byte0, byte1 = number_to_bytes(len(items_for_shop))
 
                 # inventory 752
-                binaryContent[754] = byte0
-                binaryContent[755] = byte1
-                byte0,byte1 = number_to_bytes(984)
-                binaryContent[756] = byte0
-                binaryContent[757] = byte1
+                modified_shop_binary[754] = byte0
+                modified_shop_binary[755] = byte1
+                byte0, byte1 = number_to_bytes(984)
+                modified_shop_binary[756] = byte0
+                modified_shop_binary[757] = byte1
 
+                valid_start = bytes_to_number(modified_shop_binary[12], modified_shop_binary[13])
+                for asset in range(len(items_for_shop)):
+                    product_index = 984 + 2 * asset
+                    valid_item_index = valid_start + (60 + asset) * 2
+                    byte0, byte1 = number_to_bytes(items_for_shop[asset][0])
+                    modified_shop_binary[product_index] = byte0
+                    modified_shop_binary[product_index + 1] = byte1
+                    modified_shop_binary[valid_item_index] = byte0
+                    modified_shop_binary[valid_item_index + 1] = byte1
 
-                valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
-                for x in range(len(items_for_shop)):
-                    product_index = 984+2*x
-                    valid_item_index = valid_start + (60+x)*2
-                    byte0,byte1 = number_to_bytes(items_for_shop[x][0])
-                    binaryContent[product_index] = byte0
-                    binaryContent[product_index+1] = byte1
-                    binaryContent[valid_item_index] = byte0
-                    binaryContent[valid_item_index+1] = byte1
-                
-                outZip.writestr("modified_shop.bin",binaryContent)
+                mod.write_shop_assets(modified_shop_binary)
 
-                ### code below prints out the shop information in relevant format
+                # ## code below prints out the shop information in relevant format
 
                 # print(f"file type: {bytes_to_number(binaryContent[4],binaryContent[5])}")
                 # shop_list_count = bytes_to_number(binaryContent[6],binaryContent[7])
@@ -851,7 +730,7 @@ class SeedZip:
                 # print(f"product entry count: {product_list_count}")
                 # valid_start = bytes_to_number(binaryContent[12],binaryContent[13])
                 # print(f"valid items offset: {valid_start}")
-                
+
                 # shop_start = 16
                 # print("Shop Entries")
                 # for x in range(shop_list_count):
@@ -885,48 +764,47 @@ class SeedZip:
                 #     if item_id!=0:
                 #         print(f"---- Valid Item (Item Id):  {item_id}")
 
-    def createSynthAssets(self, settings, randomizer, mod, outZip, pc_toggle):
-        if locationType.SYNTH in settings.disabledLocations:
+    def create_synth_assets(self, mod: SeedModBuilder):
+        if locationType.SYNTH in self.settings.disabledLocations:
             return
-        
-        assignedSynth = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.SYNTH])
+
+        randomizer = self.randomizer
+        assigned_synth = _assignment_subset_from_type(randomizer.assignments, [locationType.SYNTH])
 
         synth_items = []
-        for assignment in assignedSynth:
-            synth_items.append(SynthLocation(assignment.location.LocationId,assignment.item.Id,[r for r in randomizer.synthesis_recipes if r.location==assignment.location][0]))
+        for assignment in assigned_synth:
+            synth_items.append(SynthLocation(
+                assignment.location.LocationId,
+                assignment.item.Id,
+                [r for r in randomizer.synthesis_recipes if r.location == assignment.location][0]
+            ))
 
-        # if locationType.Puzzle not in settings.disabledLocations:
-        mod["assets"] += [modYml.getSynthMod(pc_toggle)]
-        # assignedPuzzles = self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Puzzle])
-        with open(resource_path("static/synthesis.bin"), "rb") as synthbar:
-            binaryContent = bytearray(synthbar.read())
+        with open(resource_path("static/synthesis.bin"), "rb") as recipes_bar:
+            modified_recipes_binary = bytearray(recipes_bar.read())
             for synth_loc in synth_items:
+                starting_byte = synth_loc.get_starting_location()
+                data = synth_loc.get_bytes()
 
-                starting_byte = synth_loc.getStartingLocation()
-                data = synth_loc.getBytes()
+                for i, item in enumerate(data):
+                    modified_recipes_binary[starting_byte + i] = 0xFF & item
 
-                for iter,item in enumerate(data):
-                    binaryContent[starting_byte+iter] = 0xFF & item
-        
-            outZip.writestr("modified_synth.bin",binaryContent)
-
-        with open(resource_path("static/synthesis_reqs.bin"), "rb") as synthbar:
-            binaryContent = bytearray(synthbar.read())
+        with open(resource_path("static/synthesis_reqs.bin"), "rb") as requirements_bar:
+            modified_requirements_binary = bytearray(requirements_bar.read())
 
             # uncomment to see some data about the synth lists
-            # index=16
-            # while index+12<len(binaryContent):
-            #     print(SynthList(index,binaryContent[index:]))
-            #     index+=12
+            # index = 16
+            # while index + 12 < len(modified_requirements_binary):
+            #     print(SynthList(index, modified_requirements_binary[index:]))
+            #     index += 12
 
             # 3/6 free dev 8,9 bytes from offset index
             free_dev1 = number_to_bytes(3)
             free_dev2 = number_to_bytes(6)
-            binaryContent[36] = free_dev1[0]
-            binaryContent[37] = free_dev1[1]
-            binaryContent[72] = free_dev2[0]
-            binaryContent[73] = free_dev2[1]
-            
+            modified_requirements_binary[36] = free_dev1[0]
+            modified_requirements_binary[37] = free_dev1[1]
+            modified_requirements_binary[72] = free_dev2[0]
+            modified_requirements_binary[73] = free_dev2[1]
+
             # 1,3 ori+ version, 
             # free_dev1 = number_to_bytes(1)
             # free_dev2 = number_to_bytes(3)
@@ -947,363 +825,315 @@ class SeedZip:
             #     binaryContent[start_index+i*12+8] = new_required_items[0]
             #     binaryContent[start_index+i*12+9] = new_required_items[1]
 
-            outZip.writestr("modified_synth_reqs.bin",binaryContent)
+        mod.write_synth_assets(modified_recipes_binary, modified_requirements_binary)
 
-    def createChestVisualAssets(self, settings, randomizer, mod, outZip):
-        if settings.chests_match_item:
-            mod["assets"] += modYml.getChestVisualMod()
-            chestList = KH2Chest.getChestList()
-            treasures = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.CHEST])
-            treasures = [trsr for trsr in treasures 
-                         if locationType.Puzzle not in trsr.location.LocationTypes 
-                         and locationType.Critical not in trsr.location.LocationTypes 
-                         and locationType.SYNTH not in trsr.location.LocationTypes]
-            for trsr in treasures:
-                #i dunno just in case i guess because D/G starting items are labled as free and chests
-                if locationType.Free in trsr.location.LocationTypes and trsr.location.LocationId in range(1,3):
-                    #print('party stating item?')
-                    continue
-                if trsr.location.LocationId == "315" and trsr.item.ItemType in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF, itemType.PROMISE_CHARM]:
-                    # if this chest in STT Station of Serenity is a proof, it can't be big since it's a tutorial chest
-                    continue
-                #use location id to get chest index and name
-                chest = chestList[trsr.location.LocationId]
-                chestTypeId = getChestVisualId(trsr.location.LocationTypes, trsr.item.ItemType)
-                #open and write file
-                try: #open yml first if it exists
-                    spawnFile = yaml.safe_load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml')))
-                except: #open spawn if yml doesn't
-                    spawnFile = yaml.safe_load(open(resource_path('static/chests/ard/'+chest.SpawnName+'.spawn')))
-                finally: #edit and save yml
-                    spawnFile[0]["Entities"][chest.ChestIndex]["ObjectId"] = chestTypeId
-                    yaml.dump(spawnFile,open(resource_path('static/chests/ard/'+chest.SpawnName+'.yml'),"w"), default_flow_style=False)
-            #filelist huge so get list from the chest class
-            fileList = getChestFileList()
-            #Ards
-            for path in fileList:
-                outZip.write(resource_path('static/chests/ard/'+path+'.yml'), "chest/ard/"+path+'.yml')
-            #Remasterd Textures
-            outZip.write(resource_path('static/chests/remastered/trash.dds'), 'chest/remastered/trash.dds')
-            outZip.write(resource_path('static/chests/remastered/abilities.dds'), 'chest/remastered/abilities.dds')
-            outZip.write(resource_path('static/chests/remastered/forms.dds'), 'chest/remastered/forms.dds')
-            outZip.write(resource_path('static/chests/remastered/magic.dds'), 'chest/remastered/magic.dds')
-            outZip.write(resource_path('static/chests/remastered/pages.dds'), 'chest/remastered/pages.dds')
-            outZip.write(resource_path('static/chests/remastered/reports.dds'), 'chest/remastered/reports.dds')
-            outZip.write(resource_path('static/chests/remastered/stats.dds'), 'chest/remastered/stats.dds')
-            outZip.write(resource_path('static/chests/remastered/summons.dds'), 'chest/remastered/summons.dds')
-            outZip.write(resource_path('static/chests/remastered/unlocks.dds'), 'chest/remastered/unlocks.dds')
-            outZip.write(resource_path('static/chests/remastered/weapons.dds'), 'chest/remastered/weapons.dds')
-            outZip.write(resource_path('static/chests/remastered/proofs_glow.dds'), 'chest/remastered/proofs_glow.dds')
-            outZip.write(resource_path('static/chests/remastered/proofs.dds'), 'chest/remastered/proofs.dds')
-            #Listpatch
-            outZip.write(resource_path('static/chests/ChestObjList.script'), 'chest/ChestObjList.yml')
-            #MSET
-            outZip.write(resource_path('static/chests/obj/F_EX030_LK.mset'), 'chest/obj/F_EX030_LK.mset')
-            outZip.write(resource_path('static/chests/obj/F_EX040_LK.mset'), 'chest/obj/F_EX040_LK.mset')
-            outZip.write(resource_path('static/chests/obj/F_EX040_RX.mset'), 'chest/obj/F_EX040_RX.mset')
-            #MDLX
-            outZip.write(resource_path('static/chests/obj/F_EX030_JNK.mdlx'), 'chest/obj/F_EX030_JNK.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_ABL.mdlx'), 'chest/obj/F_EX030_ABL.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_FRM.mdlx'), 'chest/obj/F_EX030_FRM.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_MAG.mdlx'), 'chest/obj/F_EX030_MAG.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_PAG.mdlx'), 'chest/obj/F_EX030_PAG.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_REP.mdlx'), 'chest/obj/F_EX030_REP.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_STA.mdlx'), 'chest/obj/F_EX030_STA.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_SMN.mdlx'), 'chest/obj/F_EX030_SMN.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_VST.mdlx'), 'chest/obj/F_EX030_VST.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX030_WEP.mdlx'), 'chest/obj/F_EX030_WEP.mdlx')
-            outZip.write(resource_path('static/chests/obj/F_EX040_PRF.mdlx'), 'chest/obj/F_EX040_PRF.mdlx')
+    def create_chest_visual_assets(self, mod: SeedModBuilder):
+        if not self.settings.chests_match_item:
+            return
 
-    @staticmethod
-    def write_music_replacements(replacements: dict[str, str], outZip):
-        if len(replacements) > 0:
-            music_replacements_string = ''
-            for original, replacement in replacements.items():
-                music_replacements_string += '[{}] was replaced by [{}]\n'.format(original, replacement)
-            outZip.writestr('music-replacement-list.txt', music_replacements_string)
+        chest_item_assignments = _assignment_subset(self.randomizer.assignments, [locationCategory.CHEST])
+        chest_item_assignments = [trsr for trsr in chest_item_assignments
+                     if locationType.Puzzle not in trsr.location.LocationTypes
+                     and locationType.Critical not in trsr.location.LocationTypes
+                     and locationType.SYNTH not in trsr.location.LocationTypes]
 
-    def assignStartingItems(self, settings, randomizer):
-        def padItems(itemList):
-            while(len(itemList)<32):
-                itemList.append(0)
+        chests_by_location_id = ChestList.chests_by_location_id()
+        chest_visual_assignments: list[ChestVisualAssignment] = []
+        for chest_item_assignment in chest_item_assignments:
+            location = chest_item_assignment.location
+            location_types = location.LocationTypes
 
-        masterItemList = Items.getItemList() + Items.getActionAbilityList() + Items.getSupportAbilityList() + [Items.getTT1Jailbreak()] + [Items.getPromiseCharm()]
-        reports = [i.Id for i in masterItemList if i.ItemType==itemType.REPORT]
-        story_unlocks = [i.Id for i in masterItemList if i.ItemType==itemType.STORYUNLOCK]
+            item = chest_item_assignment.item
+            item_type = item.ItemType
+
+            # Just in case because D/G starting items are labeled as free and chests
+            if locationType.Free in location_types and location.LocationId in range(1, 3):
+                # print('party stating item?')
+                continue
+            if location.name() == stt.CheckLocation.StationOfSerenityPotion and item_type in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF_OF_NONEXISTENCE, itemType.PROMISE_CHARM]:
+                # if this chest in STT Station of Serenity is a proof, it can't be big since it's a tutorial chest
+                continue
+
+            # use location id to get chest index and name
+            chest = chests_by_location_id[location.LocationId]
+            chest_visual_id = ChestList.chest_visual_id(location_types, item_type)
+            chest_visual_assignments.append(
+                ChestVisualAssignment(chest.ChestIndex, chest.spawn_file_path(), chest_visual_id)
+            )
+
+        mod.write_chest_visuals_assets(chest_visual_assignments)
+
+    def assign_starting_items(self, mod: SeedModBuilder):
+        def pad_items(item_list):
+            while len(item_list) < 32:
+                item_list.append(0)
+
+        settings = self.settings
+        randomizer = self.randomizer
+        master_item_list = Items.getItemList() + Items.getActionAbilityList() + Items.getSupportAbilityList() + [Items.getTT1Jailbreak()] + [Items.getPromiseCharm()]
+        reports = [i.Id for i in master_item_list if i.ItemType == itemType.REPORT]
+        story_unlocks = [i.Id for i in master_item_list if i.ItemType == itemType.STORYUNLOCK]
         donald_goofy_handled_items = reports+story_unlocks
-        sora_abilities = [i.Id for i in masterItemList if (i.ItemType==itemType.GROWTH_ABILITY or i.ItemType==itemType.ACTION_ABILITY or i.ItemType==itemType.SUPPORT_ABILITY)]
+        sora_abilities = [i.Id for i in master_item_list if (i.ItemType == itemType.GROWTH_ABILITY or i.ItemType == itemType.ACTION_ABILITY or i.ItemType == itemType.SUPPORT_ABILITY)]
 
-        riku_handled = [i.Id for i in masterItemList if i.Id not in donald_goofy_handled_items and i.Id not in sora_abilities]
+        riku_handled = [i.Id for i in master_item_list if i.Id not in donald_goofy_handled_items and i.Id not in sora_abilities]
 
-        donaldStartingItems = [1+0x8000,3+0x8000]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedDonaldItems,[locationType.Free])] + [i for i in settings.startingItems if i in reports]
-        padItems(donaldStartingItems)
-        self.formattedPlrp.append({
-            "Character": 2, # Donald Starting Items
-            "Id": 0,
-            "Hp": 20,
-            "Mp": 100,
-            "Ap": settings.donald_ap-5,
-            "ArmorSlotMax": 1,
-            "AccessorySlotMax": 2,
-            "ItemSlotMax": 2,
-            "Items": donaldStartingItems,
-            "Padding": [0] * 52
-        })
+        donald_starting_items = [1 + 0x8000, 3 + 0x8000] + [l.item.Id for l in _assignment_subset_from_type(randomizer.donald_assignments, [locationType.Free])] + [i for i in randomizer.starting_item_ids if i in reports]
+        pad_items(donald_starting_items)
+        mod.player_params.add_player(
+            character_id=2,  # Donald Starting Items
+            identifier=0,
+            hp=20,
+            mp=100,
+            ap=settings.donald_ap - 5,
+            armor_slot_max=1,
+            accessory_slot_max=2,
+            item_slot_max=2,
+            items=donald_starting_items,
+            padding=[0] * 52
+        )
 
-        goofyStartingItems = [1+0x8000,1+0x8000,1+0x8000,]+[l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedGoofyItems,[locationType.Free])] + [i for i in settings.startingItems if i in story_unlocks]
-        padItems(goofyStartingItems)
-        self.formattedPlrp.append({
-            "Character": 3, # Goofy Starting Items
-            "Id": 0,
-            "Hp": 20,
-            "Mp": 100,
-            "Ap": settings.goofy_ap-4,
-            "ArmorSlotMax": 2,
-            "AccessorySlotMax": 1,
-            "ItemSlotMax": 3,
-            "Items": goofyStartingItems,
-            "Padding": [0] * 52
-        })
+        goofy_starting_items = [1 + 0x8000, 1 + 0x8000, 1 + 0x8000, ] + [l.item.Id for l in _assignment_subset_from_type(randomizer.goofy_assignments, [locationType.Free])] + [i for i in randomizer.starting_item_ids if i in story_unlocks]
+        pad_items(goofy_starting_items)
+        mod.player_params.add_player(
+            character_id=3,  # Goofy Starting Items
+            identifier=0,
+            hp=20,
+            mp=100,
+            ap=settings.goofy_ap - 4,
+            armor_slot_max=2,
+            accessory_slot_max=1,
+            item_slot_max=3,
+            items=goofy_starting_items,
+            padding=[0] * 52
+        )
 
-        rikuStartingItems = [i+0x8000 for i in [1,1,1,1,3,3,438,436,187,208,411,422,414,415,416]] + [417,419] + [i for i in settings.startingItems if i in riku_handled]
-        padItems(rikuStartingItems)
-        self.formattedPlrp.append({
-            "Character": 13, # Riku Starting Items
-            "Id": 0,
-            "Hp": 20,
-            "Mp": 100,
-            "Ap": settings.goofy_ap-4,
-            "ArmorSlotMax": 2,
-            "AccessorySlotMax": 1,
-            "ItemSlotMax": 6,
-            "Items": rikuStartingItems,
-            "Padding": [0] * 52
-        })
+        riku_starting_items = [i + 0x8000 for i in [1, 1, 1, 1, 3, 3, 438, 436, 187, 208, 411, 422, 414, 415, 416]] + [417, 419] + [i for i in randomizer.starting_item_ids if i in riku_handled]
+        pad_items(riku_starting_items)
+        mod.player_params.add_player(
+            character_id=13,  # Riku Starting Items
+            identifier=0,
+            hp=20,
+            mp=100,
+            ap=settings.goofy_ap - 4,
+            armor_slot_max=2,
+            accessory_slot_max=1,
+            item_slot_max=6,
+            items=riku_starting_items,
+            padding=[0] * 52
+        )
 
         ability_equip = 0x8000 if settings.auto_equip_abilities else 0
 
-        soraStartingItems = [l.item.Id for l in self.getAssignmentSubsetFromType(randomizer.assignedItems,[locationType.Critical])] + \
-                            [i+ability_equip for i in settings.startingItems if i in sora_abilities]
-        padItems(soraStartingItems)
-        self.formattedPlrp.append({
-            "Character": 1, # Sora Starting Items (Crit)
-            "Id": 7, # crit difficulty
-            "Hp": 20,
-            "Mp": 100,
-            "Ap": settings.sora_ap,
-            "ArmorSlotMax": 1,
-            "AccessorySlotMax": 1,
-            "ItemSlotMax": 3,
-            "Items": soraStartingItems[:7],
-            "Padding": [0] * 52
-        })
+        sora_starting_items = [l.item.Id for l in _assignment_subset_from_type(randomizer.assignments, [locationType.Critical])] + \
+                              [i + ability_equip for i in randomizer.starting_item_ids if i in sora_abilities]
+        pad_items(sora_starting_items)
+        mod.player_params.add_player(
+            character_id=1,  # Sora Starting Items (Crit)
+            identifier=7,  # crit difficulty
+            hp=20,
+            mp=100,
+            ap=settings.sora_ap,
+            armor_slot_max=1,
+            accessory_slot_max=1,
+            item_slot_max=3,
+            items=sora_starting_items[:7],
+            padding=[0] * 52
+        )
 
-        lionSoraItems = [32930, 32930, 32931, 32931, 33288, 33289, 33290, 33294]
-        padItems(lionSoraItems)
-        self.formattedPlrp.append({
-            "Character": 135, # Lion Dash on Lion Sora
-            "Id": 0,
-            "Hp": 0,
-            "Mp": 0,
-            "Ap": 0,
-            "ArmorSlotMax": 0,
-            "AccessorySlotMax": 0,
-            "ItemSlotMax": 0,
-            "Items": lionSoraItems,
-            "Padding": [0] * 52
-        })
-        
-        self.formattedPlrp.append({
-            "Character": 1, # Sora Starting Items (Non Crit)
-            "Id": 0,
-            "Hp": 20,
-            "Mp": 100,
-            "Ap": settings.sora_ap,
-            "ArmorSlotMax": 1,
-            "AccessorySlotMax": 1,
-            "ItemSlotMax": 3,
-            "Items": soraStartingItems[7:],
-            "Padding": [0] * 52
-        })
+        lion_sora_items = [32930, 32930, 32931, 32931, 33288, 33289, 33290, 33294]
+        pad_items(lion_sora_items)
+        mod.player_params.add_player(
+            character_id=135,  # Lion Dash on Lion Sora
+            identifier=0,
+            hp=0,
+            mp=0,
+            ap=0,
+            armor_slot_max=0,
+            accessory_slot_max=0,
+            item_slot_max=0,
+            items=lion_sora_items,
+            padding=[0] * 52
+        )
 
+        mod.player_params.add_player(
+            character_id=1,  # Sora Starting Items (Non Crit)
+            identifier=0,
+            hp=20,
+            mp=100,
+            ap=settings.sora_ap,
+            armor_slot_max=1,
+            accessory_slot_max=1,
+            item_slot_max=3,
+            items=sora_starting_items[7:],
+            padding=[0] * 52
+        )
 
-    def assignWeaponStats(self, randomizer):
-        weapons = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.WEAPONSLOT]) + \
-            self.getAssignmentSubset(randomizer.assignedDonaldItems,[locationCategory.WEAPONSLOT]) + \
-            self.getAssignmentSubset(randomizer.assignedGoofyItems,[locationCategory.WEAPONSLOT])
-        
+    def assign_weapon_stats(self, mod: SeedModBuilder):
+        randomizer = self.randomizer
+        weapons = []
+        weapons.extend(_assignment_subset(randomizer.assignments, [locationCategory.WEAPONSLOT]))
+        weapons.extend(_assignment_subset(randomizer.donald_assignments, [locationCategory.WEAPONSLOT]))
+        weapons.extend(_assignment_subset(randomizer.goofy_assignments, [locationCategory.WEAPONSLOT]))
+
         for weapon in weapons:
-            weaponStats = [stat for stat in randomizer.weaponStats if stat.location==weapon.location][0]
-            self.formattedItem["Stats"].append({
-                "Id": weapon.location.LocationId,
-                "Attack": weaponStats.strength,
-                "Magic": weaponStats.magic,
-                "Defense": 0,
-                "Ability": weapon.item.Id,
-                "AbilityPoints": 0,
-                "Unknown08": 100,
-                "FireResistance": 100,
-                "IceResistance": 100,
-                "LightningResistance": 100,
-                "DarkResistance": 100,
-                "Unknown0d": 100,
-                "GeneralResistance": 100,
-                "Unknown": 0
-            })
+            weapon_stats = next(stat for stat in randomizer.weapon_stats if stat.location == weapon.location)
+            mod.items.add_stats(
+                location_id=weapon.location.LocationId,
+                attack=weapon_stats.strength,
+                magic=weapon_stats.magic,
+                defense=0,
+                ability=weapon.item.Id,
+                ability_points=0,
+                unknown_08=100,
+                fire_resistance=100,
+                ice_resistance=100,
+                lightning_resistance=100,
+                dark_resistance=100,
+                unknown_0d=100,
+                general_resistance=100,
+                unknown=0
+            )
 
-
-
-
-    def assignFormLevels(self, randomizer):
-        formDict = {0:"Summon", 1:"Valor",2:"Wisdom",3:"Limit",4:"Master",5:"Final"}
-        for index,levelType in enumerate([locationCategory.SUMMONLEVEL,locationCategory.VALORLEVEL,locationCategory.WISDOMLEVEL,locationCategory.LIMITLEVEL,locationCategory.MASTERLEVEL,locationCategory.FINALLEVEL]):
-            levels = self.getAssignmentSubset(randomizer.assignedItems,[levelType])
-            formName = formDict[index]
-            self.formattedFmlv[formName] = []
-            for level_number in range(1,8):
+    def assign_form_levels(self, mod: SeedModBuilder):
+        form_dict = {0: "Summon", 1: "Valor", 2: "Wisdom", 3: "Limit", 4: "Master", 5: "Final"}
+        form_category_list = [
+            locationCategory.SUMMONLEVEL,
+            locationCategory.VALORLEVEL,
+            locationCategory.WISDOMLEVEL,
+            locationCategory.LIMITLEVEL,
+            locationCategory.MASTERLEVEL,
+            locationCategory.FINALLEVEL
+        ]
+        for index, levelType in enumerate(form_category_list):
+            levels = _assignment_subset(self.randomizer.assignments, [levelType])
+            form_name = form_dict[index]
+            for level_number in range(1, 8):
                 for lvl in levels:
                     if lvl.location.LocationId == level_number:
-                        formExp = [l for l in randomizer.formLevelExp if l == lvl.location][0]
-                        self.formattedFmlv[formName].append({
-                            "Ability": lvl.item.Id if index!=0 else 0, # making summon junk items zero
-                            "Experience": formExp.experience,
-                            "FormId": index,
-                            "FormLevel": lvl.location.LocationId,
-                            "GrowthAbilityLevel": 0,
-                        })
+                        form_exp = next(exp for exp in self.randomizer.form_level_exp if exp == lvl.location)
+                        mod.form_levels.add_form_level(
+                            form_name=form_name,
+                            form_id=index,
+                            form_level=lvl.location.LocationId,
+                            ability=lvl.item.Id if index != 0 else 0,  # making summon junk items zero
+                            experience=form_exp.experience,
+                            growth_ability_level=0,
+                        )
 
-    def assignGoofyBonuses(self, randomizer):
-        goofyBonuses = self.getAssignmentSubset(randomizer.assignedGoofyItems,[locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS,locationCategory.ITEMBONUS,locationCategory.STATBONUS])
-        for bon in goofyBonuses:
-            if not bon.location.LocationId in self.formattedBons.keys():
-                self.formattedBons[bon.location.LocationId] = {}
-            charId = 3 # Goofy id
-            charName = "Goofy"
-            item1 = 0
-            item2 = 0
+    def assign_bonuses(self, mod: SeedModBuilder):
+        self._assign_sora_bonuses(mod, self.randomizer.assignments)
+        self._assign_party_bonuses(mod, 2, "Donald", self.randomizer.donald_assignments)
+        self._assign_party_bonuses(mod, 3, "Goofy", self.randomizer.goofy_assignments)
+
+    @staticmethod
+    def _assign_party_bonuses(
+            mod: SeedModBuilder,
+            character_id: int,
+            character_name: str,
+            assigned_items: list[ItemAssignment]
+    ):
+        for bon in _assignment_subset(assigned_items, locationCategory.bonus_categories()):
             item1 = bon.item.Id
+            item2 = 0
             if bon.item2 is not None:
                 item2 = bon.item2.Id
-            self.formattedBons[bon.location.LocationId][charName] = {
-                "RewardId": bon.location.LocationId,
-                "CharacterId": charId,
-                "HpIncrease": 0,
-                "MpIncrease": 0,
-                "DriveGaugeUpgrade": 0,
-                "ItemSlotUpgrade": 0,
-                "AccessorySlotUpgrade": 0,
-                "ArmorSlotUpgrade": 0,
-                "BonusItem1": item1,
-                "BonusItem2": item2,
-                "Padding": 0
-            }
+            mod.bonuses.add_bonus(
+                reward_id=bon.location.LocationId,
+                character_id=character_id,
+                character_name=character_name,
+                hp_increase=0,
+                mp_increase=0,
+                drive_gauge_increase=0,
+                item_slot_upgrade=0,
+                accessory_slot_upgrade=0,
+                armor_slot_upgrade=0,
+                bonus_item_1=item1,
+                bonus_item_2=item2,
+                padding=0
+            )
 
-    def assignDonaldBonuses(self, randomizer):
-        donaldBonuses = self.getAssignmentSubset(randomizer.assignedDonaldItems,[locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS,locationCategory.ITEMBONUS,locationCategory.STATBONUS])
-        for bon in donaldBonuses:
-            if not bon.location.LocationId in self.formattedBons.keys():
-                self.formattedBons[bon.location.LocationId] = {}
-            charId = 2 # Donald id
-            charName = "Donald"
-            item1 = 0
-            item2 = 0
-            item1 = bon.item.Id
-            if bon.item2 is not None:
-                item2 = bon.item2.Id
-            self.formattedBons[bon.location.LocationId][charName] = {
-                "RewardId": bon.location.LocationId,
-                "CharacterId": charId,
-                "HpIncrease": 0,
-                "MpIncrease": 0,
-                "DriveGaugeUpgrade": 0,
-                "ItemSlotUpgrade": 0,
-                "AccessorySlotUpgrade": 0,
-                "ArmorSlotUpgrade": 0,
-                "BonusItem1": item1,
-                "BonusItem2": item2,
-                "Padding": 0
-            }
-
-    def assignSoraBonuses(self, randomizer):
-        soraBonuses = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.DOUBLEBONUS,locationCategory.HYBRIDBONUS,locationCategory.ITEMBONUS,locationCategory.STATBONUS])
-        for bon in soraBonuses:
-            if not bon.location.LocationId in self.formattedBons.keys():
-                self.formattedBons[bon.location.LocationId] = {}
-            charId = 1 # Sora id
-            charName = "Sora"
+    @staticmethod
+    def _assign_sora_bonuses(mod: SeedModBuilder, assigned_items: list[ItemAssignment]):
+        for bon in _assignment_subset(assigned_items, locationCategory.bonus_categories()):
+            character_id = 1  # Sora id
+            character_name = "Sora"
             if locationType.STT in bon.location.LocationTypes:
-                charId = 14 # roxas id
-                charName = "Roxas"
+                character_id = 14  # Roxas id
+                character_name = "Roxas"
 
-            #determine if assigned item is a stat bonus, and if so, use the bonuses native stat update
-            hpIncrease = 0
-            mpIncrease = 0
-            driveIncrease = 0
-            itemIncrease = 0
-            accessoryIncrease = 0
-            armorIncrease = 0
-            item1 = 0
-            item2 = 0
-            if bon.item.ItemType == itemType.SLOT or bon.item.ItemType == itemType.GAUGE:
-                if bon.item.Id == 470: # HP increase
-                    hpIncrease+=5
-                if bon.item.Id == 471: # MP increase
-                    mpIncrease+=10
-                if bon.item.Id == 472: # Drive increase
-                    driveIncrease+=1
-                if bon.item.Id == 473: # Armor increase
-                    armorIncrease+=1
-                if bon.item.Id == 474: # Accessory increase
-                    accessoryIncrease+=1
-                if bon.item.Id == 463: # Item increase
-                    itemIncrease+=1
+            # determine if assigned item is a stat bonus, and if so, use the bonuses native stat update
+            hp_increase = 0
+            mp_increase = 0
+            drive_increase = 0
+            item_slot_increase = 0
+            accessory_slot_increase = 0
+            armor_slot_increase = 0
+            bonus_item_1 = 0
+            bonus_item_2 = 0
+
+            assigned_item_1 = bon.item.item
+            if assigned_item_1 == bonus.MaxHpUp:
+                hp_increase += 5
+            elif assigned_item_1 == bonus.MaxMpUp:
+                mp_increase += 10
+            elif assigned_item_1 == bonus.DriveGaugeUp:
+                drive_increase += 1
+            elif assigned_item_1 == bonus.ArmorSlotUp:
+                armor_slot_increase += 1
+            elif assigned_item_1 == bonus.AccessorySlotUp:
+                accessory_slot_increase += 1
+            elif assigned_item_1 == bonus.ItemSlotUp:
+                item_slot_increase += 1
             else:
-                item1 = bon.item.Id
-            if bon.item2 is not None and (bon.item2.ItemType==itemType.SLOT or bon.item2.ItemType == itemType.GAUGE):
-                if bon.item2.Id == 470: # HP increase
-                    hpIncrease+=5
-                if bon.item2.Id == 471: # MP increase
-                    mpIncrease+=10
-                if bon.item2.Id == 472: # Drive increase
-                    driveIncrease+=1
-                if bon.item2.Id == 473: # Armor increase
-                    armorIncrease+=1
-                if bon.item2.Id == 474: # Accessory increase
-                    accessoryIncrease+=1
-                if bon.item2.Id == 463: # Item increase
-                    itemIncrease+=1
-            elif bon.item2 is not None:
-                item2 = bon.item2.Id
+                bonus_item_1 = assigned_item_1.id
 
+            if bon.item2 is not None:
+                assigned_item_2 = bon.item2.item
+                if assigned_item_2 == bonus.MaxHpUp:
+                    hp_increase += 5
+                elif assigned_item_2 == bonus.MaxMpUp:
+                    mp_increase += 10
+                elif assigned_item_2 == bonus.DriveGaugeUp:
+                    drive_increase += 1
+                elif assigned_item_2 == bonus.ArmorSlotUp:
+                    armor_slot_increase += 1
+                elif assigned_item_2 == bonus.AccessorySlotUp:
+                    accessory_slot_increase += 1
+                elif assigned_item_2 == bonus.ItemSlotUp:
+                    item_slot_increase += 1
+                else:
+                    bonus_item_2 = assigned_item_2.id
 
-            self.formattedBons[bon.location.LocationId][charName] = {
-                "RewardId": bon.location.LocationId,
-                "CharacterId": charId,
-                "HpIncrease": hpIncrease,
-                "MpIncrease": mpIncrease,
-                "DriveGaugeUpgrade": driveIncrease,
-                "ItemSlotUpgrade": itemIncrease,
-                "AccessorySlotUpgrade": accessoryIncrease,
-                "ArmorSlotUpgrade": armorIncrease,
-                "BonusItem1": item1,
-                "BonusItem2": item2,
-                "Padding": 0
-            }
+            mod.bonuses.add_bonus(
+                reward_id=bon.location.LocationId,
+                character_id=character_id,
+                character_name=character_name,
+                hp_increase=hp_increase,
+                mp_increase=mp_increase,
+                drive_gauge_increase=drive_increase,
+                item_slot_upgrade=item_slot_increase,
+                accessory_slot_upgrade=accessory_slot_increase,
+                armor_slot_upgrade=armor_slot_increase,
+                bonus_item_1=bonus_item_1,
+                bonus_item_2=bonus_item_2,
+                padding=0
+            )
 
-
-
-    def assignLevels(self, settings: RandomizerSettings, randomizer):
-        levels = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.LEVEL])
+    def assign_levels(self, mod: SeedModBuilder):
+        settings = self.settings
+        levels = _assignment_subset(self.randomizer.assignments, [locationCategory.LEVEL])
+        level_checks = settings.max_level_checks
 
         # get the triple of items for each level
         items_for_sword_level = {}
         offsets = DreamWeaponOffsets()
-        for sword_level in range(1,100):
+        for sword_level in range(1, 100):
             sword_item = 0
             shield_item = 0
             staff_item = 0
-            shield_level = offsets.get_item_lookup_for_shield(settings.level_checks,sword_level) if settings.split_levels else sword_level
-            staff_level = offsets.get_item_lookup_for_staff(settings.level_checks,sword_level) if settings.split_levels else sword_level
+            shield_level = offsets.get_item_lookup_for_shield(level_checks, sword_level) if settings.split_levels else sword_level
+            staff_level = offsets.get_item_lookup_for_staff(level_checks, sword_level) if settings.split_levels else sword_level
             for lvup in levels:
                 if lvup.location.LocationId == sword_level:
                     sword_item = lvup.item.Id
@@ -1311,40 +1141,31 @@ class SeedZip:
                     shield_item = lvup.item.Id
                 if lvup.location.LocationId == staff_level:
                     staff_item = lvup.item.Id
-            items_for_sword_level[sword_level] = (sword_item,shield_item,staff_item)
-
+            items_for_sword_level[sword_level] = (sword_item, shield_item, staff_item)
 
         for lvup in levels:
-            levelStats = [lv for lv in randomizer.levelStats if lv.location==lvup.location][0]
-            item_id = items_for_sword_level[lvup.location.LocationId]
-            self.formattedLvup["Sora"][lvup.location.LocationId] = {
-                "Exp": levelStats.experience,
-                "Strength": levelStats.strength,
-                "Magic": levelStats.magic,
-                "Defense": levelStats.defense,
-                "Ap": levelStats.ap,
-                "SwordAbility": item_id[0],
-                "ShieldAbility": item_id[1],
-                "StaffAbility": item_id[2],
-                "Padding": 0,
-                "Character": "Sora",
-                "Level": lvup.location.LocationId
-            }
+            level_stats = next(lv for lv in self.randomizer.level_stats if lv.location == lvup.location)
+            level = lvup.location.LocationId
+            item_id = items_for_sword_level[level]
+            mod.level_ups.add_sora_level(
+                level=level,
+                experience=level_stats.experience,
+                strength=level_stats.strength,
+                magic=level_stats.magic,
+                defense=level_stats.defense,
+                ap=level_stats.ap,
+                sword_ability=item_id[0],
+                shield_ability=item_id[1],
+                staff_ability=item_id[2],
+                padding=0
+            )
 
-
-
-    def assignTreasures(self, randomizer):
-        treasures = self.getAssignmentSubset(randomizer.assignedItems,[locationCategory.POPUP,locationCategory.CHEST])
+    def assign_treasures(self, mod: SeedModBuilder):
+        treasures = _assignment_subset(self.randomizer.assignments, [locationCategory.POPUP, locationCategory.CHEST])
         treasures = [trsr for trsr in treasures if locationType.Puzzle not in trsr.location.LocationTypes and locationType.Critical not in trsr.location.LocationTypes and locationType.SYNTH not in trsr.location.LocationTypes]
 
         for trsr in treasures:
-            self.formattedTrsr[trsr.location.LocationId] = {"ItemId":trsr.item.Id}
-
-    def getAssignmentSubset(self,assigned,categories : list[locationCategory]):
-        return [assignment for assignment in assigned if any(item is assignment.location.LocationCategory for item in categories)]
-
-    def getAssignmentSubsetFromType(self,assigned,types):
-        return [assignment for assignment in assigned if any(item in assignment.location.LocationTypes for item in types)]
+            mod.treasures.add_treasure(location_id=trsr.location.LocationId, item_id=trsr.item.Id)
 
 
 class CosmeticsOnlyZip:
@@ -1352,101 +1173,57 @@ class CosmeticsOnlyZip:
     def __init__(self, ui_settings: SeedSettings, extra_data: ExtraConfigurationData):
         self.settings = ui_settings
         self.extra_data = extra_data
-        self.output_zip: Optional[io.BytesIO] = None
-        self.create_zip()
 
-    def create_zip(self):
+    def create_zip(self) -> io.BytesIO:
         data = io.BytesIO()
-        with zipfile.ZipFile(data, "w", zipfile.ZIP_DEFLATED) as out_zip:
-            mod = {
-                "title": "Randomized Cosmetics",
-                "description": "Generated by the KH2 Randomizer Seed Generator.",
-                "assets": []
-            }
+        with ZipFile(data, "w", ZIP_DEFLATED) as out_zip:
+            mod = ModYml("Randomized Cosmetics", description="Generated by the KH2 Randomizer Seed Generator.")
 
-            mod["assets"].extend(commandmenu.randomize_command_menus(self.extra_data.command_menu_choice))
+            mod.add_assets(CosmeticsMod.randomize_field2d(self.extra_data))
 
             music_assets, music_replacements = CosmeticsMod.randomize_music(self.settings)
-            mod["assets"].extend(music_assets)
-            SeedZip.write_music_replacements(music_replacements, out_zip)
+            mod.add_assets(music_assets)
+            _write_music_replacements(music_replacements, out_zip)
 
-            out_zip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
+            texture_assets = TextureRecolorizer(self.settings).recolor_textures()
+            mod.add_assets(texture_assets)
+
+            mod.write_to_zip_file(out_zip)
 
             out_zip.write(resource_path("static/icons/misc/Kingdom Hearts II.png"), "icon.png")
 
         data.seek(0)
-        self.output_zip = data
+        return data
 
 
 class BossEnemyOnlyZip:
 
-    def __init__(self, seed_name: str, ui_settings: SeedSettings, platform: bool):
+    def __init__(self, seed_name: str, ui_settings: SeedSettings, platform: str):
         self.settings = ui_settings
-        self.enemy_options = makeKHBRSettings(seed_name,self.settings)
+        self.enemy_options = makeKHBRSettings(seed_name, self.settings)
         self.platform = platform
-        self.output_zip: Optional[io.BytesIO] = None
-        self.create_zip()
 
-    def create_zip(self):
+    def create_zip(self) -> io.BytesIO:
+        def _should_run_khbr():
+            if not self.enemy_options.get("boss", False) in [False, "Disabled"]:
+                return True
+            if not self.enemy_options.get("enemy", False) in [False, "Disabled"]:
+                return True
+            return False
+
+        if not _should_run_khbr():
+            raise GeneratorException("Trying to generate boss/enemy only mod without enabling those settings.")
+
         data = io.BytesIO()
-        with zipfile.ZipFile(data, "w", zipfile.ZIP_DEFLATED) as out_zip:
-            mod = {
-                "title": "Randomized Bosses/Enemies",
-                "description": "Generated by the KH2 Randomizer Seed Generator.",
-                "assets": []
-            }            
-            
-            pc_seed_toggle = (self.platform=="PC")
+        with ZipFile(data, "w", ZIP_DEFLATED) as out_zip:
+            mod = ModYml("Randomized Bosses/Enemies", description="Generated by the KH2 Randomizer Seed Generator.")
 
-            def _shouldRunKHBR():
-                if not self.enemy_options.get("boss", False) in [False, "Disabled"]:
-                    return True
-                if not self.enemy_options.get("enemy", False) in [False, "Disabled"]:
-                    return True
-                
-                return False
+            enemy_spoilers, _ = _run_khbr(self.platform, self.enemy_options, mod, out_zip)
 
-            enemySpoilers = None
-            enemySpoilersJSON = {}
-            if _shouldRunKHBR():
-                enemySpoilers = None
-                enemySpoilersJSON = {}
-            
-                if pc_seed_toggle:
-                    self.enemy_options["memory_expansion"] = True
-                else:
-                    self.enemy_options["memory_expansion"] = False
-                
-                enemySpoilers = invoke_khbr(self.enemy_options, mod, out_zip)
+            mod.write_to_zip_file(out_zip)
 
-                lines = enemySpoilers.split("\n")
-
-                current_key = ""
-                for line in lines:
-                    if '\t' in line:
-                        modded_line = line.replace('\t','')
-                        enemies = modded_line.split(" became ")
-                        # this is adding to the current list
-                        new_entry = {}
-                        new_entry["original"] = enemies[0]
-                        new_entry["new"] = enemies[1]
-                        enemySpoilersJSON[current_key].append(new_entry)
-                    elif line!="":
-                        current_key = line
-                        enemySpoilersJSON[current_key] = []
-                if enemySpoilersJSON:
-                    out_zip.writestr("enemies.rando", base64.b64encode(json.dumps(enemySpoilersJSON).encode('utf-8')).decode('utf-8'))
-                    # for boss_replacement in enemySpoilersJSON["BOSSES"]:
-                    #     print(f"{boss_replacement['original']} {boss_replacement['new']}")
-
-            else:
-                raise GeneratorException("Trying to generate boss/enemy only mod without enabling those settings.")
-
-            print("Passed boss/enemy")
-
-            out_zip.writestr("mod.yml", yaml.dump(mod, line_break="\r\n"))
             out_zip.write(resource_path("static/icons/misc/Kingdom Hearts II.png"), "icon.png")
-            out_zip.writestr("enemyspoilers.txt", enemySpoilers)
+            out_zip.writestr("enemyspoilers.txt", enemy_spoilers)
 
-        data.seek(0)
-        self.output_zip = data
+            data.seek(0)
+            return data

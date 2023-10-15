@@ -1,30 +1,35 @@
-from Class.seedSettings import SeedSettings
-from Module.newRandomize import RandomizerSettings,Randomizer
 import unittest
+
+from Class.seedSettings import SeedSettings
+from Module.newRandomize import RandomizerSettings, Randomizer
 
 
 class Tests(unittest.TestCase):
-    def test_constructingRandomizer(self):
-        settings = RandomizerSettings("test_name",True,"version",SeedSettings(), "")
-        randomizer = Randomizer(settings)
-        self.assertEqual(len(randomizer.assignedItems),671)
-        self.assertEqual(len(randomizer.assignedDonaldItems),31)
-        self.assertEqual(len(randomizer.assignedGoofyItems),32)
-        self.assertEqual(len(randomizer.weaponStats),60)
-        self.assertEqual(len(randomizer.levelStats),99)
-        self.assertEqual(randomizer.levelStats[0].experience,27)
-        self.assertEqual(randomizer.levelStats[-1].experience,1917052)
-        self.assertGreater(randomizer.levelStats[-1].strength,2)
-        self.assertGreater(randomizer.levelStats[-1].magic,6)
-        self.assertGreater(randomizer.levelStats[-1].defense,2)
-        self.assertGreater(randomizer.levelStats[-1].ap,0)
 
-        num_str_increase = (randomizer.levelStats[-1].strength-2)//2
-        num_mag_increase = (randomizer.levelStats[-1].magic-6)//2
-        num_def_increase = (randomizer.levelStats[-1].defense-2)
-        num_ap_increase = (randomizer.levelStats[-1].ap)//2
-        self.assertEqual(num_str_increase+num_mag_increase+num_def_increase+num_ap_increase,173)
-        self.assertEqual(len(randomizer.formLevelExp),42)
-        
+    def test_constructingRandomizer(self):
+        seed_settings = SeedSettings()
+        settings = RandomizerSettings("test_name", True, "version", seed_settings, "")
+        randomizer = Randomizer(settings)
+
+        self.assertEqual(702, len(randomizer.assignments))
+        self.assertEqual(31, len(randomizer.donald_assignments))
+        self.assertEqual(32, len(randomizer.goofy_assignments))
+        self.assertEqual(61, len(randomizer.weapon_stats))
+        self.assertEqual(99, len(randomizer.level_stats))
+        self.assertEqual(20, randomizer.level_stats[0].experience)
+        self.assertEqual(1437789, randomizer.level_stats[-1].experience)
+        self.assertLessEqual(2, randomizer.level_stats[-1].strength)
+        self.assertLessEqual(6, randomizer.level_stats[-1].magic)
+        self.assertLessEqual(2, randomizer.level_stats[-1].defense)
+        self.assertLessEqual(0, randomizer.level_stats[-1].ap)
+
+        num_str_increase = (randomizer.level_stats[-1].strength - 2) // 2
+        num_mag_increase = (randomizer.level_stats[-1].magic - 6) // 2
+        num_def_increase = (randomizer.level_stats[-1].defense - 2)
+        num_ap_increase = (randomizer.level_stats[-1].ap) // 2
+        self.assertEqual(173, num_str_increase + num_mag_increase + num_def_increase + num_ap_increase)
+        self.assertEqual(42, len(randomizer.form_level_exp))
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,0 +1,234 @@
+- id: auron
+  name: Auron
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          hue_start: 0
+          hue_end: 20
+      image_groups:
+        - - remastered/obj/H_HE030.mdlx/-0.dds
+
+        - - remastered/obj/P_HE000.mdlx/-0.dds
+          - remastered/obj/P_HE000_BTL.mdlx/-0.dds
+          - remastered/obj/P_HE000_NPC_QSATO.mdlx/-0.dds
+          - remastered/obj/P_HE000_RTN.mdlx/-0.dds
+
+
+- id: hades
+  name: Hades
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: normal
+          name: Normal
+          hue_start: 160
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/B_HE030.mdlx/-0.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-0.dds
+          - remastered/obj/B_HE030_GM.mdlx/-0.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-0.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-0.dds
+          - remastered/obj/B_HE030_PART.mdlx/-0.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-0.dds
+
+        - - remastered/obj/B_HE030.mdlx/-1.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-4.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-1.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-1.dds
+          - remastered/obj/B_HE030_PART.mdlx/-1.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-1.dds
+
+        - - remastered/obj/B_HE030.mdlx/-2.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-2.dds
+          - remastered/obj/B_HE030_GM.mdlx/-1.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-2.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-2.dds
+          - remastered/obj/B_HE030_PART.mdlx/-2.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-2.dds
+
+        - - remastered/obj/B_HE030.mdlx/-3.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-3.dds
+          - remastered/obj/B_HE030_GM.mdlx/-2.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-3.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-3.dds
+          - remastered/obj/B_HE030_PART.mdlx/-3.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-3.dds
+
+        - - remastered/obj/B_HE030.mdlx/-4.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-1.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-4.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-4.dds
+          - remastered/obj/B_HE030_PART.mdlx/-4.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-4.dds
+
+        - - remastered/obj/B_HE030_GM.mdlx/-3.dds
+
+        - - remastered/obj/H_HE040.mdlx/-0.dds
+
+        - - remastered/obj/H_HE040.mdlx/-1.dds
+
+        - - remastered/obj/H_HE040.mdlx/-2.dds
+
+    - colorable_areas:
+        - id: angry
+          name: Angry
+          hue_start: 320
+          hue_end: 50
+      image_groups:
+        - - remastered/obj/B_HE030.mdlx/-5.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-5.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-5.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-5.dds
+          - remastered/obj/B_HE030_PART.mdlx/-5.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-5.dds
+
+        - - remastered/obj/B_HE030.mdlx/-6.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-6.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-6.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-6.dds
+          - remastered/obj/B_HE030_PART.mdlx/-6.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-6.dds
+
+        - - remastered/obj/B_HE030.mdlx/-7.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-7.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-7.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-7.dds
+          - remastered/obj/B_HE030_PART.mdlx/-7.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-7.dds
+
+        - - remastered/obj/B_HE030.mdlx/-8.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-8.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-8.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-8.dds
+          - remastered/obj/B_HE030_PART.mdlx/-8.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-8.dds
+
+        - - remastered/obj/B_HE030.mdlx/-9.dds
+          - remastered/obj/B_HE030_CLSM.mdlx/-9.dds
+          - remastered/obj/B_HE030_HE05.mdlx/-9.dds
+          - remastered/obj/B_HE030_NPC_QSATO.mdlx/-9.dds
+          - remastered/obj/B_HE030_PART.mdlx/-9.dds
+          - remastered/obj/B_HE030_RTN.mdlx/-9.dds
+
+        - - remastered/obj/H_HE040.mdlx/-3.dds
+
+        - - remastered/obj/H_HE040.mdlx/-4.dds
+
+        - - remastered/obj/H_HE040.mdlx/-5.dds
+
+
+- id: hercules
+  name: Hercules
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: cape
+          name: Cape
+          hue_start: 220
+          hue_end: 260
+      image_groups:
+        - - remastered/obj/H_HE010.mdlx/-5.dds
+          - remastered/obj/H_HE010_GOD.mdlx/-5.dds
+          - remastered/obj/H_HE010_WEAK.mdlx/-5.dds
+
+        - - remastered/obj/N_HE010_BTL.mdlx/-4.dds
+          - remastered/obj/N_HE010_BTL_CLSM.mdlx/-4.dds
+
+        - - remastered/obj/N_HE010_GM1.mdlx/-3.dds
+
+        - - remastered/obj/N_HE010_GM2.mdlx/-3.dds
+          - remastered/obj/N_HE010_ISHI_1.mdlx/-9.dds
+
+        - - remastered/obj/N_HE010_ISHI_1.mdlx/-4.dds
+
+        - - remastered/obj/N_HE010_RTN.mdlx/-4.dds
+
+        - - remastered/obj/N_HE010_SIT_RTN.mdlx/-4.dds
+
+
+- id: megara
+  name: Megara
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: dress
+          name: Dress
+          hue_start: 320
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/H_HE020.mdlx/-0.dds
+          - remastered/obj/N_HE030_BTL.mdlx/-4.dds
+          - remastered/obj/N_HE030_BTL_DEF.mdlx/-4.dds
+          - remastered/obj/N_HE030_RTN.mdlx/-4.dds
+
+
+- id: pain
+  name: Pain
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 300
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/N_HE050_RTN.mdlx/-0.dds
+
+        - - remastered/obj/N_HE050_RTN.mdlx/-1.dds
+
+        - - remastered/obj/N_HE050_RTN.mdlx/-2.dds
+
+
+- id: panic
+  name: Panic
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 160
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/N_HE060_RTN.mdlx/-0.dds
+
+        - - remastered/obj/N_HE060_RTN.mdlx/-1.dds
+
+
+- id: zexion
+  name: Zexion
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX370.mdlx/-0.dds
+          - remastered/obj/N_CM030.mdlx/-0.dds
+          - remastered/obj/N_CM030_BTL.mdlx/-0.dds
+
+        - - remastered/obj/H_CM030.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: book
+          name: Book
+          value_start: 0
+          value_end: 30
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX370.mdlx/-7.dds

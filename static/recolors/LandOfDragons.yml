@@ -1,0 +1,196 @@
+- id: emperor
+  name: Emperor
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: outfit_main
+          name: Outfit (Main)
+          hue_start: 20
+          hue_end: 90
+        - id: outfit_main
+          name: Outfit (Trim)
+          hue_start: 300
+          hue_end: 19
+      image_groups:
+        - - remastered/obj/N_MU050_RTN.mdlx/-0.dds
+          - remastered/obj/N_MU050_QSATO.mdlx/-0.dds
+
+
+- id: mulan
+  name: Mulan
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: outfit_main
+          name: Outfit (Main)
+          hue_start: 10
+          hue_end: 80
+          saturation_start: 0
+          saturation_end: 50
+        - id: outfit_trim
+          name: Outfit (Trim)
+          hue_start: 60
+          hue_end: 180
+      image_groups:
+        - - remastered/obj/H_MU020.mdlx/-1.dds
+          - remastered/obj/P_MU000.mdlx/-4.dds
+          - remastered/obj/P_MU000_RTN.mdlx/-4.dds
+
+        - - remastered/obj/H_MU020.mdlx/-2.dds
+          - remastered/obj/P_MU000.mdlx/-3.dds
+          - remastered/obj/P_MU000_RTN.mdlx/-3.dds
+
+
+- id: ping
+  name: Ping
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          hue_start: 125
+          hue_end: 155
+      image_groups:
+        - - remastered/obj/H_MU030.mdlx/-1.dds
+
+        - - remastered/obj/H_MU030.mdlx/-2.dds
+          - remastered/obj/P_MU010.mdlx/-0.dds
+          - remastered/obj/P_MU010_RTN.mdlx/-0.dds
+
+        - - remastered/obj/P_MU010.mdlx/-1.dds
+          - remastered/obj/P_MU010_RTN.mdlx/-1.dds
+
+
+- id: riku_hooded
+  name: Riku (Hooded)
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/N_EX940_BTL.mdlx/-0.dds
+
+
+- id: shan_yu
+  name: Shan-Yu
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat_accent
+          name: Coat (Accent Color)
+          hue_start: 25
+          hue_end: 200
+      image_groups:
+        - - remastered/obj/B_MU100.mdlx/-3.dds
+
+        - - remastered/obj/B_MU100_GM.mdlx/-2.dds
+          - remastered/obj/B_MU100_HOOD.mdlx/-3.dds
+          - remastered/obj/B_MU100_RTN.mdlx/-3.dds
+
+        - - remastered/obj/H_MU050.mdlx/-4.dds
+          - remastered/obj/H_MU050_HOOD.mdlx/-4.dds
+
+
+- id: shang
+  name: Shang
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: cape
+          name: Cape
+          hue_start: 350
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/H_MU010.mdlx/-2.dds
+
+        - - remastered/obj/H_MU010.mdlx/-5.dds
+
+        - - remastered/obj/N_MU010_QSATO.mdlx/-2.dds
+          - remastered/obj/N_MU010_QSATO_2.mdlx/-2.dds
+          - remastered/obj/N_MU010_RTN.mdlx/-2.dds
+
+
+- id: storm_rider
+  name: Storm Rider
+  tags:
+    - heartless
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 300
+          hue_end: 90
+      image_groups:
+        - - remastered/obj/B_MU120.mdlx/-0.dds
+          - remastered/obj/B_MU120_GM.mdlx/-0.dds
+
+        - - remastered/obj/B_MU120.mdlx/-1.dds
+          - remastered/obj/B_MU120_GM.mdlx/-1.dds
+
+        - - remastered/obj/B_MU120.mdlx/-2.dds
+          - remastered/obj/B_MU120_GM.mdlx/-2.dds
+
+        - - remastered/obj/B_MU120.mdlx/-3.dds
+          - remastered/obj/B_MU120_GM.mdlx/-3.dds
+
+        - - remastered/obj/B_MU120.mdlx/-4.dds
+          - remastered/obj/B_MU120_GM.mdlx/-4.dds
+
+        - - remastered/obj/B_MU120.mdlx/-5.dds
+          - remastered/obj/B_MU120_GM.mdlx/-5.dds
+
+
+- id: xigbar
+  name: Xigbar
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX140.mdlx/-0.dds
+          - remastered/obj/B_EX140_GM.mdlx/-0.dds
+          - remastered/obj/B_EX140_LV99.mdlx/-0.dds
+          - remastered/obj/H_EX570.mdlx/-1.dds
+
+        - - remastered/obj/B_EX140.mdlx/-1.dds
+          - remastered/obj/B_EX140_GM.mdlx/-1.dds
+          - remastered/obj/B_EX140_LV99.mdlx/-1.dds
+          - remastered/obj/H_EX570.mdlx/-5.dds
+
+        - - remastered/obj/B_EX140.mdlx/-2.dds
+          - remastered/obj/B_EX140_GM.mdlx/-2.dds
+          - remastered/obj/B_EX140_LV99.mdlx/-2.dds
+          - remastered/obj/H_EX570.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: weapon_main
+          name: Weapon (Main Color)
+          hue_start: 76
+          hue_end: 360
+        - id: weapon_accent
+          name: Weapon (Accent)
+          hue_start: 0
+          hue_end: 75
+      image_groups:
+        - - remastered/obj/B_EX140.mdlx/-7.dds
+          - remastered/obj/B_EX140_LV99.mdlx/-7.dds
+          - remastered/obj/H_EX570.mdlx/-2.dds

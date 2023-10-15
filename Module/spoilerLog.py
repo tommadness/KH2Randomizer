@@ -1,26 +1,54 @@
 from typing import Optional
 
 from Class.itemClass import KH2Item
+from List.ItemList import Items
 from List.configDict import locationType
+from List.inventory import misc
 from Module.newRandomize import ItemAssignment, SynthesisRecipe, WeaponStats
 from Module.weighting import LocationWeights
 
 
+def item_spoiler_dictionary(
+        item_assignments: list[ItemAssignment],
+        starting_inventory_ids: Optional[list[int]] = None,
+        shop_items: Optional[list[KH2Item]] = None,
+        weights: LocationWeights = None,
+        unreachable_locations=None
+) -> dict[locationType, list[tuple[str, KH2Item]]]:
+    # (depth for sort purposes, location id for sort purposes, spoiler log string, item)
+    out_dict: dict[locationType, list[tuple[int, int, str, KH2Item]]] = {}
 
-def itemSpoilerDictionary(locationItems, shop_items: Optional[list[KH2Item]] = None, weights: LocationWeights = None, unreachable_locations = None):
-    outDict = {}
+    item_lookup = Items.sora_lookup_table()
+    if starting_inventory_ids is not None:
+        item_spoiler = []
+        for index, starting_item_id in enumerate(starting_inventory_ids):
+            item = item_lookup.get(starting_item_id)
+            if item is not None:
+                item_spoiler.append((0, index, "Sora Starting Item", item))
+            else:
+                print(f"Could not find item with id {starting_item_id} to add to the spoiler log")
+        if len(item_spoiler) > 0:
+            out_dict[locationType.Free] = item_spoiler
 
     if shop_items is not None:
         shop_spoiler = []
         for shop_item in shop_items:
-            shop_spoiler.append(("Moogle Shop", shop_item))
+            shop_spoiler.append((0, 0, "Moogle Shop", shop_item))
         if len(shop_spoiler) > 0:
-            outDict[locationType.SHOP] = shop_spoiler
+            out_dict[locationType.SHOP] = shop_spoiler
 
-    for assignment in locationItems:
+    for assignment in item_assignments:
         location = assignment.location
+        loc_id = location.LocationId
+
+        sort_depth = 0
         if weights and location in weights.location_depths:
-            added_string = f" <{weights.getDepth(location)}>"
+            depth = weights.get_depth(location)
+            added_string = f" <{depth}>"
+            if isinstance(depth, int):
+                sort_depth = depth
+            elif isinstance(depth, tuple):
+                sort_depth = depth[0]
         else:
             added_string = ""
 
@@ -29,16 +57,27 @@ def itemSpoilerDictionary(locationItems, shop_items: Optional[list[KH2Item]] = N
         else:
             prepend_string = ""
 
+        spoiler_string = prepend_string + location.Description + added_string
 
-        item = assignment.item
-        item2 = assignment.item2
-        if not location.LocationTypes == []:
-            if not location.LocationTypes[0] in outDict.keys():
-                outDict[location.LocationTypes[0]] = []
-            outDict[location.LocationTypes[0]].append((prepend_string+location.Description+added_string,item))
-            if item2 is not None:
-                outDict[location.LocationTypes[0]].append((prepend_string+location.Description+added_string,item2))
-    return outDict
+        if len(location.LocationTypes) > 0:
+            location_type = location.LocationTypes[0]
+            if location_type not in out_dict:
+                out_dict[location_type] = []
+            if assignment.item.item != misc.NullItem:
+                out_dict[location_type].append((sort_depth, loc_id, spoiler_string, assignment.item))
+            if assignment.item2 is not None:
+                out_dict[location_type].append((sort_depth, loc_id, spoiler_string, assignment.item2))
+
+    result_dict: dict[locationType, list[tuple[str, KH2Item]]] = {}
+    for location_type, entries in out_dict.items():
+        # Sort first by the location ID (this will be the tiebreaker)
+        entries.sort(key=lambda entry: entry[1])
+        # Now sort by the depth
+        entries.sort(key=lambda entry: entry[0])
+        result_dict[location_type] = [(entry[2], entry[3]) for entry in entries]
+
+    return result_dict
+
 
 def levelStatsDictionary(level_stats):
     outDict = {}

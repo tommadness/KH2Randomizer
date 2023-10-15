@@ -9,19 +9,19 @@ from Module.hints import Hints
 from Module.multiworld import MultiWorld, MultiWorldConfig
 from Module.newRandomize import Randomizer
 from Module.seedEvaluation import LocationInformedSeedValidator
-from Module.zipper import SeedZip
+from Module.zipper import SeedZip, SeedZipResult
 
 
-def generateSeed(settings: RandomizerSettings, extra_data: ExtraConfigurationData):
+def generateSeed(settings: RandomizerSettings, extra_data: ExtraConfigurationData) -> SeedZipResult:
     newSeedValidation = LocationInformedSeedValidator()
     last_error = None
     for attempt in range(50):
         try:
             randomizer = Randomizer(settings)
-            unreachable_locations = newSeedValidation.validateSeed(settings,randomizer)
-            hints = Hints.generateHints(randomizer,settings)
-            zipper = SeedZip(settings, randomizer, hints, extra_data,unreachable_locations)
-            return zipper.outputZip, zipper.spoiler_log, zipper.enemy_log
+            unreachable_locations = newSeedValidation.validate_seed(settings, randomizer)
+            hints = Hints.generate_hints(randomizer, settings)
+            zipper = SeedZip(settings, randomizer, hints, extra_data, unreachable_locations)
+            return zipper.create_zip()
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
             settings.random_seed = (''.join(random.choice(characters) for i in range(30)))
@@ -31,7 +31,7 @@ def generateSeed(settings: RandomizerSettings, extra_data: ExtraConfigurationDat
     raise last_error
 
 
-def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], extra_data: ExtraConfigurationData):
+def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], extra_data: ExtraConfigurationData) -> list[SeedZipResult]:
     newSeedValidation = LocationInformedSeedValidator()
     randomizers = []
     unreachables = []
@@ -42,7 +42,7 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], extra_data: Ex
             try:
                 last_error = None
                 randomizer = Randomizer(player_settings)
-                unreachable = newSeedValidation.validateSeed(player_settings,randomizer)
+                unreachable = newSeedValidation.validate_seed(player_settings, randomizer)
                 randomizers.append(randomizer)
                 unreachables.append(unreachable)
 
@@ -57,14 +57,12 @@ def generateMultiWorldSeed(settingsSet: List[RandomizerSettings], extra_data: Ex
             raise last_error
 
     # each individual randomization is done and valid, now we can mix the item pools
-    m = MultiWorld(randomizers,MultiWorldConfig(settingsSet[0]))
+    m = MultiWorld(randomizers, MultiWorldConfig(settingsSet[0]))
 
-    seed_outputs = []
-    for settings,randomizer,unreachable in zip(settingsSet,randomizers,unreachables):
-        hints = Hints.generateHints(randomizer,settings)
+    seed_outputs: list[SeedZipResult] = []
+    for settings, randomizer, unreachable in zip(settingsSet, randomizers, unreachables):
+        hints = Hints.generate_hints(randomizer, settings)
         zipper = SeedZip(settings, randomizer, hints, extra_data, unreachable, m.multi_output)
-        seed_outputs.append((zipper.outputZip, zipper.spoiler_log, zipper.enemy_log))
+        seed_outputs.append(zipper.create_zip())
 
     return seed_outputs
-        
-

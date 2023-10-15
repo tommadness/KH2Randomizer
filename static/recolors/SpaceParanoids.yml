@@ -1,0 +1,364 @@
+- id: donald_sp
+  name: Donald (Space Paranoids)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 140
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/H_ZZ020_TR.mdlx/-0.dds
+          - remastered/obj/P_EX020_TR.mdlx/-0.dds
+          - remastered/obj/P_EX020_TR_RTN.mdlx/-0.dds
+
+        - - remastered/obj/H_ZZ020_TR.mdlx/-1.dds
+          - remastered/obj/P_EX020_TR.mdlx/-1.dds
+          - remastered/obj/P_EX020_TR_RTN.mdlx/-1.dds
+
+        - - remastered/obj/H_ZZ020_TR.mdlx/-2.dds
+          - remastered/obj/P_EX020_TR.mdlx/-4.dds
+          - remastered/obj/P_EX020_TR_RTN.mdlx/-4.dds
+
+        - - remastered/obj/H_ZZ020_TR.mdlx/-3.dds
+          - remastered/obj/P_EX020_TR.mdlx/-5.dds
+          - remastered/obj/P_EX020_TR_RTN.mdlx/-5.dds
+
+        - - remastered/obj/H_ZZ020_TR.mdlx/-4.dds
+
+        - - remastered/obj/H_ZZ020_TR.mdlx/-5.dds
+
+        - - remastered/obj/P_EX020_TR.mdlx/-2.dds
+          - remastered/obj/P_EX020_TR_RTN.mdlx/-2.dds
+
+        - - remastered/obj/P_EX020_TR.mdlx/-3.dds
+          - remastered/obj/P_EX020_TR_RTN.mdlx/-3.dds
+
+
+- id: goofy_sp
+  name: Goofy (Space Paranoids)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 140
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/H_ZZ030_TR.mdlx/-1.dds
+          - remastered/obj/P_EX030_TR.mdlx/-0.dds
+          - remastered/obj/P_EX030_TR_RTN.mdlx/-0.dds
+
+        - - remastered/obj/H_ZZ030_TR.mdlx/-2.dds
+
+        - - remastered/obj/P_EX030_TR.mdlx/-1.dds
+          - remastered/obj/P_EX030_TR_RTN.mdlx/-1.dds
+
+        - - remastered/obj/H_ZZ030_TR.mdlx/-3.dds
+
+        - - remastered/obj/P_EX030_TR.mdlx/-2.dds
+          - remastered/obj/P_EX030_TR_RTN.mdlx/-2.dds
+
+
+- id: larxene
+  name: Larxene
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX400.mdlx/-0.dds
+          - remastered/obj/N_CM010.mdlx/-0.dds
+          - remastered/obj/N_CM010_BTL.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: weapon_main
+          name: Weapon (Main Color)
+          hue_start: 0
+          hue_end: 90
+        - id: weapon_accent
+          name: Weapon (Accent)
+          hue_start: 91
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/B_EX400.mdlx/-5.dds
+          - remastered/obj/N_CM010.mdlx/-5.dds
+          - remastered/obj/N_CM010_BTL.mdlx/-5.dds
+
+
+- id: hostile_program
+  name: Hostile Program
+  tags:
+    - heartless
+  recolors:
+    - colorable_areas:
+        - id: body
+          name: Body
+          hue_start: 180
+          hue_end: 300
+        - id: glow
+          name: Glow
+          hue_start: 301
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/B_TR000.mdlx/-0.dds
+
+        - - remastered/obj/B_TR000_GM.mdlx/-0.dds
+
+        - - remastered/obj/B_TR000.mdlx/-1.dds
+
+        - - remastered/obj/B_TR000_GM.mdlx/-1.dds
+
+        - - remastered/obj/B_TR000.mdlx/-2.dds
+
+        - - remastered/obj/B_TR000_GM.mdlx/-2.dds
+
+        - - remastered/obj/B_TR000.mdlx/-3.dds
+
+        - - remastered/obj/B_TR000_GM.mdlx/-3.dds
+
+        - - remastered/obj/B_TR000.mdlx/-4.dds
+          - remastered/obj/B_TR000_GM.mdlx/-4.dds
+
+
+- id: mcp
+  name: MCP
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 340
+          hue_end: 60
+      image_groups:
+        - - remastered/obj/B_TR020.mdlx/-0.dds
+
+        - - remastered/obj/B_TR020.mdlx/-1.dds
+
+
+- id: sark
+  name: Sark
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 350
+          hue_end: 20
+      image_groups:
+        - - remastered/obj/N_TR010_BTL.mdlx/-0.dds
+          - remastered/obj/N_TR010_BTL_L.mdlx/-0.dds
+          - remastered/obj/N_TR010_TSURU.mdlx/-0.dds
+
+        - - remastered/obj/N_TR010_BTL.mdlx/-1.dds
+          - remastered/obj/N_TR010_BTL_L.mdlx/-1.dds
+          - remastered/obj/N_TR010_TSURU.mdlx/-1.dds
+
+        - - remastered/obj/N_TR010_BTL.mdlx/-2.dds
+          - remastered/obj/N_TR010_BTL_L.mdlx/-2.dds
+          - remastered/obj/N_TR010_TSURU.mdlx/-2.dds
+
+        - - remastered/obj/N_TR010_BTL.mdlx/-3.dds
+          - remastered/obj/N_TR010_BTL_L.mdlx/-3.dds
+          - remastered/obj/N_TR010_TSURU.mdlx/-3.dds
+
+        - - remastered/obj/N_TR010_BTL.mdlx/-4.dds
+          - remastered/obj/N_TR010_BTL_L.mdlx/-4.dds
+          - remastered/obj/N_TR010_TSURU.mdlx/-4.dds
+
+        - - remastered/obj/N_TR010_BTL_L.mdlx/-5.dds
+
+
+- id: sora_sp
+  name: Sora (Space Paranoids)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 140
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/H_EX500_TR.mdlx/-2.dds
+          - remastered/obj/P_EX100_TR.mdlx/-1.dds
+
+        - - remastered/obj/H_EX500_TR.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100_TR.mdlx/-0.dds
+
+        - - remastered/obj/H_EX500_TR.mdlx/-4.dds
+
+        - - remastered/obj/H_EX500_TR.mdlx/-5.dds
+
+        - - remastered/obj/P_EX100_TR.mdlx/-2.dds
+
+        - - remastered/obj/P_EX100_TR.mdlx/-4.dds
+
+
+- id: sora_sp_valor
+  name: Sora (Space Paranoids Valor Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 330
+          hue_end: 10
+      image_groups:
+        - - remastered/obj/H_EX500_TR_BTLF.mdlx/-2.dds
+          - remastered/obj/P_EX100_TR_BTLF.mdlx/-1.dds
+
+        - - remastered/obj/H_EX500_TR_BTLF.mdlx/-3.dds
+
+        - - remastered/obj/H_EX500_TR_BTLF.mdlx/-4.dds
+
+        - - remastered/obj/H_EX500_TR_BTLF.mdlx/-5.dds
+
+        - - remastered/obj/P_EX100_TR_BTLF.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_TR_BTLF.mdlx/-2.dds
+
+        - - remastered/obj/P_EX100_TR_BTLF.mdlx/-4.dds
+
+
+- id: sora_sp_wisdom
+  name: Sora (Space Paranoids Wisdom Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 230
+          hue_end: 270
+      image_groups:
+        - - remastered/obj/H_EX500_TR_MAGF.mdlx/-2.dds
+          - remastered/obj/P_EX100_TR_MAGF.mdlx/-1.dds
+
+        - - remastered/obj/H_EX500_TR_MAGF.mdlx/-3.dds
+
+        - - remastered/obj/H_EX500_TR_MAGF.mdlx/-4.dds
+
+        - - remastered/obj/P_EX100_TR_MAGF.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_TR_MAGF.mdlx/-2.dds
+
+        - - remastered/obj/P_EX100_TR_MAGF.mdlx/-4.dds
+
+
+- id: sora_sp_limit
+  name: Sora (Space Paranoids Limit Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 350
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/H_EX500_TR_KH1F.mdlx/-2.dds
+          - remastered/obj/P_EX100_TR_KH1F.mdlx/-1.dds
+
+        - - remastered/obj/H_EX500_TR_KH1F.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100_TR_KH1F.mdlx/-0.dds
+
+
+- id: sora_sp_master
+  name: Sora (Space Paranoids Master Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 30
+          hue_end: 70
+      image_groups:
+        - - remastered/obj/H_EX500_TR_TRIF.mdlx/-2.dds
+          - remastered/obj/P_EX100_TR_TRIF.mdlx/-1.dds
+
+        - - remastered/obj/H_EX500_TR_TRIF.mdlx/-3.dds
+
+        - - remastered/obj/H_EX500_TR_TRIF.mdlx/-4.dds
+
+        - - remastered/obj/H_EX500_TR_TRIF.mdlx/-5.dds
+
+        - - remastered/obj/P_EX100_TR_TRIF.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_TR_TRIF.mdlx/-2.dds
+
+        - - remastered/obj/P_EX100_TR_TRIF.mdlx/-4.dds
+
+
+- id: sora_sp_final
+  name: Sora (Space Paranoids Final Form)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/H_EX500_TR_ULTF.mdlx/-3.dds
+
+        - - remastered/obj/P_EX100_TR_ULTF.mdlx/-0.dds
+
+        - - remastered/obj/H_EX500_TR_ULTF.mdlx/-2.dds
+          - remastered/obj/P_EX100_TR_ULTF.mdlx/-1.dds
+
+
+- id: tron
+  name: Tron
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: glow
+          name: Glow
+          hue_start: 140
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/H_TR010.mdlx/-1.dds
+          - remastered/obj/H_TR010_TSURU.mdlx/-1.dds
+          - remastered/obj/P_TR000.mdlx/-0.dds
+          - remastered/obj/P_TR000_RTN.mdlx/-0.dds
+          - remastered/obj/P_TR000_TSURU.mdlx/-0.dds
+
+        - - remastered/obj/H_TR010.mdlx/-2.dds
+          - remastered/obj/H_TR010_TSURU.mdlx/-2.dds
+          - remastered/obj/P_TR000.mdlx/-3.dds
+          - remastered/obj/P_TR000_RTN.mdlx/-3.dds
+          - remastered/obj/P_TR000_TSURU.mdlx/-3.dds
+
+        - - remastered/obj/H_TR010.mdlx/-4.dds
+          - remastered/obj/H_TR010_TSURU.mdlx/-4.dds
+
+        - - remastered/obj/P_TR000.mdlx/-4.dds
+          - remastered/obj/P_TR000_RTN.mdlx/-4.dds
+          - remastered/obj/P_TR000_TSURU.mdlx/-4.dds

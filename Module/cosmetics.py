@@ -2,13 +2,15 @@ import json
 import os
 import random
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional
 
 import yaml
 
 from Class import settingkey
-from Class.seedSettings import SeedSettings
+from Class.openkhmod import Asset
+from Class.seedSettings import SeedSettings, ExtraConfigurationData
 from Module import appconfig, music
+from Module.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 
 
 class CustomCosmetics:
@@ -50,7 +52,7 @@ class CosmeticsMod:
     @staticmethod
     def extracted_data_path() -> Optional[Path]:
         """Returns the path to extracted game data"""
-        openkh_path = CosmeticsMod.read_openkh_path()
+        openkh_path = appconfig.read_openkh_path()
         if openkh_path is None:
             return None
 
@@ -83,7 +85,7 @@ class CosmeticsMod:
             (custom_music_path / folder).mkdir(exist_ok=True)
 
     @staticmethod
-    def randomize_music(ui_settings: SeedSettings) -> Tuple[list[dict], dict[str, str]]:
+    def randomize_music(ui_settings: SeedSettings) -> tuple[list[dict], dict[str, str]]:
         """
         Randomizes music, returning a list of assets to be added to the seed mod and a dictionary of which song was
         replaced by which replacement.
@@ -105,7 +107,7 @@ class CosmeticsMod:
         dmca_safe = settings.get(settingkey.MUSIC_RANDO_PC_DMCA_SAFE)
 
         if settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM):
-            custom_music_path = CosmeticsMod.read_custom_music_path()
+            custom_music_path = appconfig.read_custom_music_path()
             if custom_music_path is not None:
                 for child in [str(category_file).lower() for category_file in os.listdir(custom_music_path)]:
                     child_path = custom_music_path / child
@@ -172,7 +174,7 @@ class CosmeticsMod:
         return result
 
     @staticmethod
-    def _get_music_assets(settings: SeedSettings) -> Tuple[list[dict], dict[str, str]]:
+    def _get_music_assets(settings: SeedSettings) -> tuple[list[dict], dict[str, str]]:
         music_rando_enabled = settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
         if not music_rando_enabled:
             return [], {}
@@ -236,27 +238,15 @@ class CosmeticsMod:
         return assets, replacements
 
     @staticmethod
-    def read_openkh_path() -> Optional[Path]:
-        randomizer_config = appconfig.read_app_config()
-        openkh_path = Path(randomizer_config.get('openkh_folder', 'to-nowhere'))
-        if openkh_path.is_dir():
-            return openkh_path
-        else:
-            return None
+    def bootstrap_custom_visuals_folder(custom_visuals_path: Path):
+        """Creates folders for each of the default custom visuals categories."""
+        for folder in ["room-transition-images"]:
+            (custom_visuals_path / folder).mkdir(exist_ok=True)
 
     @staticmethod
-    def write_openkh_path(selected_directory):
-        appconfig.update_app_config('openkh_folder', selected_directory)
-
-    @staticmethod
-    def read_custom_music_path() -> Optional[Path]:
-        randomizer_config = appconfig.read_app_config()
-        custom_music_path = Path(randomizer_config.get('custom_music_folder', 'to-nowhere'))
-        if custom_music_path.is_dir():
-            return custom_music_path
-        else:
-            return None
-
-    @staticmethod
-    def write_custom_music_path(selected_directory):
-        appconfig.update_app_config('custom_music_folder', selected_directory)
+    def randomize_field2d(extra_data: ExtraConfigurationData) -> list[Asset]:
+        """Randomizes various field2d entries, returning a list of assets to be added to a mod."""
+        assets: list[Asset] = []
+        assets.extend(CommandMenuRandomizer(extra_data.command_menu_choice).randomize_command_menus())
+        assets.extend(RoomTransitionImageRandomizer(extra_data.room_transition_choice).randomize_room_transitions())
+        return assets

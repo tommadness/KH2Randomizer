@@ -1,14 +1,14 @@
-from ctypes import alignment
-from PySide6.QtWidgets import QHBoxLayout, QWidget, QPushButton,QSizePolicy
+from PySide6.QtWidgets import QHBoxLayout, QWidget, QPushButton
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
 
+
 class StartingMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Starting Inventory', settings=settings, in_layout='horizontal')
+        super().__init__(title='Starting Inventory', settings=settings)
 
         self.start_column()
         self.start_group()

@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (QPushButton,QHBoxLayout,QWidget)
 class KeybladeMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Keyblades', settings=settings, in_layout='horizontal')
+        super().__init__(title='Keyblades', settings=settings)
 
         self.start_column()
         self.start_group()

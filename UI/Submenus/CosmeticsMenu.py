@@ -5,15 +5,17 @@ from PySide6.QtWidgets import QListWidget, QHBoxLayout, QPushButton, QFileDialog
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings, ExtraConfigurationData
+from Module import appconfig
 from Module.cosmetics import CustomCosmetics, CosmeticsMod
 from UI.Submenus.SubMenu import KH2Submenu
+from UI.Submenus.TextureRecolorSettingsDialog import TextureRecolorSettingsDialog
 from UI.worker import CosmeticsZipWorker
 
 
 class CosmeticsMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings, custom_cosmetics: CustomCosmetics):
-        super().__init__(title='Cosmetics', settings=settings, in_layout='horizontal')
+        super().__init__(title='Cosmetics', settings=settings)
 
         self.custom_cosmetics = custom_cosmetics
 
@@ -22,6 +24,17 @@ class CosmeticsMenu(KH2Submenu):
         self.add_option(settingkey.COMMAND_MENU)
         self.add_option(settingkey.COSTUME_RANDO)
         self.end_group('Visuals')
+
+        self.start_group()
+        self.add_option(settingkey.ROOM_TRANSITION_IMAGES)
+
+        self.add_option(settingkey.RECOLOR_TEXTURES)
+
+        self.configure_recolors = QPushButton("Texture Recolor Settings")
+        self.configure_recolors.clicked.connect(self._configure_recolors)
+        self.pending_group.addWidget(self.configure_recolors)
+
+        self.end_group("Visuals (PC Panacea Only)")
         self.end_column()
 
         self.start_column()
@@ -86,6 +99,8 @@ class CosmeticsMenu(KH2Submenu):
         self.end_column()
 
         self.finalizeMenu()
+
+        settings.observe(settingkey.RECOLOR_TEXTURES, self._recolor_enabled_changed)
         settings.observe(settingkey.MUSIC_RANDO_ENABLED_PC, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_KH1, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2, self.reload_music_widgets)
@@ -96,11 +111,13 @@ class CosmeticsMenu(KH2Submenu):
         settings.observe(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES, self.reload_music_widgets)
 
         self.reload_music_widgets()
+        self.reload_visual_widgets()
         self._reload_custom_list()
         add_button.clicked.connect(self._add_custom)
         remove_button.clicked.connect(self._remove_selected_custom)
 
     def reload_music_widgets(self):
+        _, recolor_textures_widget = self.widgets_and_settings_by_name[settingkey.RECOLOR_TEXTURES]
         _, include_kh1_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_KH1]
         _, include_kh2_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_KH2]
         _, include_recom_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM]
@@ -119,17 +136,22 @@ class CosmeticsMenu(KH2Submenu):
 
         extracted_data_path = CosmeticsMod.extracted_data_path()
         if extracted_data_path is None:
+            recolor_textures_widget.setEnabled(False)
+            self.configure_recolors.setEnabled(False)
             include_kh1_widget.setEnabled(False)
             include_kh2_widget.setEnabled(False)
             include_recom_widget.setEnabled(False)
             include_bbs_widget.setEnabled(False)
         else:
+            kh2_is_dir = (extracted_data_path / 'kh2').is_dir()
+            recolor_textures_widget.setEnabled(kh2_is_dir)
+            self.configure_recolors.setEnabled(kh2_is_dir)
             include_kh1_widget.setEnabled((extracted_data_path / 'kh1').is_dir())
-            include_kh2_widget.setEnabled((extracted_data_path / 'kh2').is_dir())
+            include_kh2_widget.setEnabled(kh2_is_dir)
             include_recom_widget.setEnabled((extracted_data_path / 'recom').is_dir())
             include_bbs_widget.setEnabled((extracted_data_path / 'bbs').is_dir())
 
-        custom_music_configured = CosmeticsMod.read_custom_music_path() is not None
+        custom_music_configured = appconfig.read_custom_music_path() is not None
         include_custom_widget.setEnabled(custom_music_configured)
         self.no_custom_music.setVisible(music_rando_enabled and not custom_music_configured)
         self.open_custom_music_folder.setVisible(music_rando_enabled and custom_music_configured)
@@ -146,6 +168,10 @@ class CosmeticsMenu(KH2Submenu):
             for category, count in music_summary.items():
                 label_text += '{} : {}\n'.format(category, count)
             return label_text
+
+    def reload_visual_widgets(self):
+        # Not actually doing anything now but keeping it here as a placeholder
+        pass
 
     def _reload_custom_list(self):
         self.custom_list.clear()
@@ -165,8 +191,18 @@ class CosmeticsMenu(KH2Submenu):
             self.custom_cosmetics.remove_at_index(index)
             self._reload_custom_list()
 
+    def _recolor_enabled_changed(self):
+        if self.settings.get(settingkey.RECOLOR_TEXTURES):
+            self.configure_recolors.setVisible(True)
+        else:
+            self.configure_recolors.setVisible(False)
+
+    def _configure_recolors(self):
+        dialog = TextureRecolorSettingsDialog(self.settings)
+        dialog.exec()
+
     def _open_custom_music_folder(self):
-        custom_music_path = CosmeticsMod.read_custom_music_path()
+        custom_music_path = appconfig.read_custom_music_path()
         if custom_music_path is not None:
             os.startfile(custom_music_path)
 
@@ -174,6 +210,7 @@ class CosmeticsMenu(KH2Submenu):
         extra_data = ExtraConfigurationData(
             platform="PC",
             command_menu_choice=self.settings.get(settingkey.COMMAND_MENU),
+            room_transition_choice=self.settings.get(settingkey.ROOM_TRANSITION_IMAGES),
             tourney=False,
             custom_cosmetics_executables=self.custom_cosmetics.collect_custom_files(),
         )

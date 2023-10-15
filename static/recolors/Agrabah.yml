@@ -1,0 +1,197 @@
+- id: abu
+  name: Abu
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: hat
+          name: Hat
+          hue_start: 215
+          hue_end: 275
+        - id: vest
+          name: Vest
+          hue_start: 315
+          hue_end: 15
+          saturation_start: 70
+          saturation_end: 100
+      image_groups:
+        - - remastered/obj/N_AL030_RTN.mdlx/-0.dds
+          - remastered/obj/N_AL090_BTL.mdlx/-0.dds
+
+
+- id: aladdin
+  name: Aladdin
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          hue_start: 276
+          hue_end: 296
+      image_groups:
+        - - remastered/obj/H_AL010_MATSU.mdlx/-2.dds
+          - remastered/obj/P_AL000.mdlx/-3.dds
+          - remastered/obj/P_AL000_RTN.mdlx/-3.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          saturation_start: 0
+          saturation_end: 50
+          value_start: 40
+          value_end: 100
+          new_saturation: 50
+          value_offset: -25
+      image_groups:
+        - - remastered/obj/H_AL010_MATSU.mdlx/-3.dds
+          - remastered/obj/P_AL000.mdlx/-4.dds
+          - remastered/obj/P_AL000_RTN.mdlx/-4.dds
+
+
+- id: carpet
+  name: Carpet
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 200
+          hue_end: 280
+        - id: trim
+          name: Trim
+          hue_start: 21
+          hue_end: 55
+      image_groups:
+        - - remastered/obj/AL14_CARPET.mdlx/-1.dds
+          - remastered/obj/N_AL010_BTL.mdlx/-1.dds
+          - remastered/obj/N_AL010_MATSU.mdlx/-1.dds
+          - remastered/obj/N_AL010_RTN.mdlx/-1.dds
+
+        - - remastered/obj/AL14_CARPET.mdlx/-0.dds
+          - remastered/obj/N_AL010_BTL.mdlx/-0.dds
+          - remastered/obj/N_AL010_MATSU.mdlx/-0.dds
+          - remastered/obj/N_AL010_RTN.mdlx/-0.dds
+
+
+- id: iago
+  name: Iago
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 330
+          hue_end: 30
+        - id: trim
+          name: Trim
+          hue_start: 180
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/N_AL020_RTN.mdlx/-0.dds
+
+
+- id: jafar
+  name: Jafar
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: cape
+          name: Cape
+          hue_start: 350
+          hue_end: 20
+      image_groups:
+        - - remastered/obj/H_AL020_MATSU.mdlx/-2.dds
+          - remastered/obj/N_AL070_MATSU.mdlx/-2.dds
+
+
+- id: jafar_genie
+  name: Jafar (Genie)
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 350
+          hue_end: 25
+      image_groups:
+        - - remastered/obj/B_AL020.mdlx/-0.dds
+
+        - - remastered/obj/B_AL020.mdlx/-2.dds
+
+        - - remastered/obj/B_AL020.mdlx/-3.dds
+
+        - - remastered/obj/B_AL020.mdlx/-4.dds
+
+        - - remastered/obj/B_AL020.mdlx/-5.dds
+
+
+- id: jasmine
+  name: Jasmine
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          hue_start: 160
+          hue_end: 200
+      image_groups:
+        - - remastered/obj/H_AL040.mdlx/-3.dds
+          - remastered/obj/N_AL040_RTN.mdlx/-5.dds
+
+        - - remastered/obj/H_AL040.mdlx/-4.dds
+          - remastered/obj/N_AL040_RTN.mdlx/-4.dds
+
+
+- id: lexaeus
+  name: Lexaeus
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/H_CM020.mdlx/-3.dds
+
+        - - remastered/obj/N_CM020.mdlx/-1.dds
+          - remastered/obj/N_CM020_BTL.mdlx/-1.dds
+
+    - colorable_areas:
+        - id: weapon_red
+          name: Weapon (Red Areas)
+          hue_start: 350
+          hue_end: 20
+        - id: weapon_yellow
+          name: Weapon (Yellow Areas)
+          hue_start: 21
+          hue_end: 100
+      image_groups:
+        - - remastered/obj/H_CM020.mdlx/-2.dds
+          - remastered/obj/N_CM020.mdlx/-5.dds
+
+        - - remastered/obj/N_CM020_BTL.mdlx/-5.dds
+
+
+- id: peddler
+  name: Peddler
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          hue_start: 180
+          hue_end: 250
+      image_groups:
+        - - remastered/obj/N_AL080_RTN.mdlx/-3.dds

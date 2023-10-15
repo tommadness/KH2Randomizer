@@ -94,13 +94,13 @@ class BtlvViewer():
     def get_battle_levels(self, world: locationType):
         list_ret = [self._interpret_flags(x) for x in self.visit_flags[world]]
         return list_ret
-        
-    def write_modifications(self, outZip):
+
+    def write_modifications(self) -> bytearray:
         for x in range(20):
-            offset = 8+32*x
-            for y in range(8,32):
-                self.binaryContent[offset+y] = number_to_bytes(self.flags[x][y-8])[0]
-        outZip.writestr("modified_btlv.bin",self.binaryContent)
+            offset = 8 + 32 * x
+            for y in range(8, 32):
+                self.binaryContent[offset + y] = number_to_bytes(self.flags[x][y - 8])[0]
+        return self.binaryContent
 
     def _interpret_flags(self, flags_entry):
         battle_level_sum = 0

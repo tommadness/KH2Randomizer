@@ -1,0 +1,129 @@
+- id: chicken_little
+  name: Chicken Little
+  tags:
+    - character
+    - summon
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 55
+          hue_end: 95
+      image_groups:
+        - - remastered/obj/P_EX350.mdlx/-0.dds
+
+
+- id: genie
+  name: Genie
+  tags:
+    - character
+    - summon
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 190
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/H_AL030.mdlx/-0.dds
+
+        - - remastered/obj/N_AL050_MATSU.mdlx/-3.dds
+
+        - - remastered/obj/H_AL030.mdlx/-1.dds
+
+        - - remastered/obj/N_AL050_MATSU.mdlx/-6.dds
+
+        - - remastered/obj/H_AL030.mdlx/-2.dds
+
+        - - remastered/obj/N_AL050_MATSU.mdlx/-0.dds
+
+        - - remastered/obj/H_AL030.mdlx/-3.dds
+
+        - - remastered/obj/N_AL050_MATSU.mdlx/-5.dds
+
+        - - remastered/obj/H_AL030.mdlx/-4.dds
+
+        - - remastered/obj/N_AL050_MATSU.mdlx/-1.dds
+
+        - - remastered/obj/P_AL010.mdlx/-3.dds
+
+        - - remastered/obj/H_AL030.mdlx/-6.dds
+
+        - - remastered/obj/N_AL050_MATSU.mdlx/-2.dds
+
+        - - remastered/obj/P_AL010.mdlx/-4.dds
+
+        - - remastered/obj/N_AL050_MATSU.mdlx/-7.dds
+
+        - - remastered/obj/P_AL010.mdlx/-2.dds
+
+    - colorable_areas:
+        - id: valor
+          name: Valor Genie
+          hue_start: 350
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/P_AL010.mdlx/-1.dds
+
+    - colorable_areas:
+        - id: wisdom
+          name: Wisdom Genie
+          hue_start: 190
+          hue_end: 230
+      image_groups:
+        - - remastered/obj/P_AL010.mdlx/-9.dds
+
+    - colorable_areas:
+        - id: master
+          name: Master Genie
+          hue_start: 10
+          hue_end: 90
+      image_groups:
+        - - remastered/obj/P_AL010.mdlx/-10.dds
+
+
+- id: peter_pan
+  name: Peter Pan
+  tags:
+    - character
+    - summon
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          hue_start: 83
+          hue_end: 167
+      image_groups:
+        - - remastered/obj/P_EX330.mdlx/-0.dds
+
+        - - remastered/obj/P_EX330.mdlx/-1.dds
+
+        - - remastered/obj/P_EX330.mdlx/-5.dds
+
+
+- id: stitch
+  name: Stitch
+  tags:
+    - character
+    - summon
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 165
+          hue_end: 235
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.mdlx/-0.dds
+          - remastered/obj/N_HB040_TSURU.mdlx/-0.dds
+
+        - - remastered/obj/N_HB040_BTL.mdlx/-1.dds
+          - remastered/obj/N_HB040_TSURU.mdlx/-1.dds
+
+    - colorable_areas:
+        - id: ukulele
+          name: Ukulele
+          hue_start: 355
+          hue_end: 75
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.mdlx/-2.dds
+          - remastered/obj/N_HB040_TSURU.mdlx/-2.dds

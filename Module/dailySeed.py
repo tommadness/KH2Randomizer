@@ -2,10 +2,8 @@ import random
 from collections import namedtuple
 
 from Class import settingkey
-from Class.itemClass import itemRarity
 from Class.seedSettings import SeedSettings
-from List.ItemList import Items
-from List.configDict import BattleLevelOption, expCurve, locationDepth, locationType
+from List.configDict import BattleLevelOption, expCurve, itemRarity, locationDepth, locationType
 
 DailyModifier = namedtuple('DailyModifier', ['local_modifier', 'initMod', 'name', 'description', 'categories'])
 
@@ -183,9 +181,9 @@ dailyModifiers = [
                 ),
     DailyModifier(name="Proofs on Bosses",
                 initMod=None,
-                description="Proofs will be on the last non-data boss of a world.",
+                description="Proofs will be on the last non-superboss of a world.",
                 categories={'proof'},
-                local_modifier=lambda settings: settings.set(settingkey.PROOF_DEPTH,locationDepth.SecondBoss.name)
+                local_modifier=lambda settings: settings.set(settingkey.PROOF_DEPTH, locationDepth.LastStoryBoss.name)
                 ),
     DailyModifier(name="Biased Checks Early",
                 initMod=None,

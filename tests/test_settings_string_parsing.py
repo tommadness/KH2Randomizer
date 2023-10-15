@@ -1,18 +1,28 @@
 import unittest
 
-from Class.seedSettings import Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect, SeedSettings, _all_settings
+from Class.seedSettings import Toggle, IntSpinner, FloatSpinner, SingleSelect, MultiSelect, SeedSettings, \
+    SettingGroup, settings_by_name
 
 
 class Tests(unittest.TestCase):
 
     def test_toggle(self):
-        setting = Toggle(name='Test', ui_label='Test', shared=True, default=False)
+        setting = Toggle(name='Test', group=SettingGroup.EXP_STATS, ui_label='Test', shared=True, default=False)
 
         self.assertEqual(True, setting.parse_settings_string(setting.settings_string(True)))
         self.assertEqual(False, setting.parse_settings_string(setting.settings_string(False)))
 
     def test_int_spinner(self):
-        setting = IntSpinner(name='Test', ui_label='Test', minimum=5, maximum=750, step=1, shared=True, default=500)
+        setting = IntSpinner(
+            name='Test',
+            group=SettingGroup.EXP_STATS,
+            ui_label='Test',
+            minimum=5,
+            maximum=750,
+            step=1,
+            shared=True,
+            default=500
+        )
 
         self.assertEqual(5, setting.parse_settings_string(setting.settings_string(5)))
         self.assertEqual(299, setting.parse_settings_string(setting.settings_string(299)))
@@ -21,6 +31,7 @@ class Tests(unittest.TestCase):
     def test_float_spinner(self):
         setting = FloatSpinner(
             name='Test',
+            group=SettingGroup.EXP_STATS,
             ui_label='Test',
             minimum=3.0,
             maximum=180.5,
@@ -36,6 +47,7 @@ class Tests(unittest.TestCase):
     def test_single_select(self):
         setting = SingleSelect(
             name='Test',
+            group=SettingGroup.EXP_STATS,
             ui_label='Test',
             choices={'key' + str(i): 'value' + str(i) for i in range(1000)},
             shared=True,
@@ -49,6 +61,7 @@ class Tests(unittest.TestCase):
     def test_multi_select(self):
         setting = MultiSelect(
             name='Test',
+            group=SettingGroup.EXP_STATS,
             ui_label='Test',
             choices={'key' + str(i): 'value' + str(i) for i in range(1000)},
             shared=True,
@@ -68,7 +81,7 @@ class Tests(unittest.TestCase):
 
     def test_full_string_toggles_all_true(self):
         toggle_setting_names = []
-        for setting in _all_settings:
+        for setting in settings_by_name.values():
             if isinstance(setting, Toggle):
                 toggle_setting_names.append(setting.name)
 
@@ -88,7 +101,7 @@ class Tests(unittest.TestCase):
 
     def test_full_string_toggles_all_false(self):
         toggle_setting_names = []
-        for setting in _all_settings:
+        for setting in settings_by_name.values():
             if isinstance(setting, Toggle):
                 toggle_setting_names.append(setting.name)
 

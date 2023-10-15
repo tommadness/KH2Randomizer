@@ -6,7 +6,7 @@ from UI.Submenus.SubMenu import KH2Submenu
 class SoraMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='EXP/Stats', settings=settings, in_layout='horizontal')
+        super().__init__(title='EXP/Stats', settings=settings)
 
         self.start_column()
         self.start_group()

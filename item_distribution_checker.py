@@ -2,10 +2,10 @@ import random
 import string
 from Class import settingkey
 from Class.exceptions import RandomizerExceptions
-from Class.itemClass import KH2Item, itemRarity
+from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
 from Class.seedSettings import SeedSettings
-from List.configDict import itemDifficulty, locationCategory
+from List.configDict import itemDifficulty, itemRarity, locationCategory
 from Module.newRandomize import RandomizerSettings,Randomizer
 from Module.seedEvaluation import LocationInformedSeedValidator
 
@@ -21,7 +21,7 @@ def make_rando_seed(difficulty,seed_name):
     while True:
         try:
             randomizer = Randomizer(settings)
-            result = newSeedValidation.validateSeed(settings,randomizer)
+            result = newSeedValidation.validate_seed(settings, randomizer)
             break
         except RandomizerExceptions as e:
             characters = string.ascii_letters + string.digits
@@ -36,7 +36,7 @@ def make_rando_seed(difficulty,seed_name):
     item_depths[itemRarity.RARE] = []
     item_depths[itemRarity.MYTHIC] = []
 
-    for assignment in randomizer.assignedItems:
+    for assignment in randomizer.assignments:
         loc: KH2Location = assignment.location
         item : KH2Item = assignment.item
         item2 : KH2Item = assignment.item2

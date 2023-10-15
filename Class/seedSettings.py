@@ -1,18 +1,24 @@
 import copy
+import json
 import random
 import string
 import textwrap
 from dataclasses import dataclass
 from enum import Enum
+from typing import Optional
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
 from Class.exceptions import SettingsException
-from List.ItemList import Items, itemRarity
-from List.configDict import expCurve, locationType, locationDepth, BattleLevelOption
-from Module import encoding, commandmenu
+from List.ItemList import Items
+from List.configDict import expCurve, itemRarity, itemDifficulty, locationType, locationDepth, BattleLevelOption, \
+    StartingMovementOption, SoraLevelOption, location_depth_choices, ItemAccessibilityOption, SoftlockPreventionOption, \
+    AbilityPoolOption
+from List.inventory import ability, misc, proof, storyunlock
+from Module import encoding, field2d
+from Module.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.progressionPoints import ProgressionPoints
 
 # Characters available to be used for short encoding of certain settings
@@ -372,6 +378,28 @@ class WorldRandomizationTristate(Setting):
         }
 
 
+class TextureRecolorsSetting(Setting):
+
+    def __init__(
+            self,
+            name: str,
+            group: SettingGroup,
+            ui_label: str,
+            shared: bool,
+            default: dict[str, dict[str, str]],
+            tooltip: str = '',
+            standalone_label: str = '',
+            randomizable=None
+    ):
+        super().__init__(name, dict, group, ui_label, shared, default, tooltip, standalone_label, randomizable)
+
+    def settings_string(self, value) -> str:
+        return json.dumps(value)
+
+    def parse_settings_string(self, settings_string: str):
+        return json.loads(settings_string)
+
+
 _drive_exp_curve_tooltip_text = textwrap.dedent('''
         Experience curve options, inspired by KH1's experience curves. Midday and Dusk reduce the total experience
         needed to get to Level 7, but levels 2-4 require more experience to compensate.
@@ -390,22 +418,22 @@ _drive_exp_multiplier_tooltip_text = textwrap.dedent('''
 
 _depth_options_text = textwrap.dedent('''
 
-        Superbosses - Force onto superbosses only (Data Organization/Absent Silhouette/Sephiroth/Terra).
-                
-        First Visit - Force into a first visit (only for the 13 main hub worlds with portals).
+        Anywhere - No restriction.
 
-        Non First Visits - Opposite of the first visit depth. Anywhere but the first visit of the 13 portal worlds (can include drives/levels/100 acre).
-        
-        Second Visit - Force into a second visit (only for the 13 main hub worlds with portals).
-        
         Non-Superboss - Cannot be on a superboss (Data Organization/Absent Silhouette/Sephiroth/Terra).
         All other locations are possible.
         
+        First Visit - Force into a first visit (only for the 13 main hub worlds with portals).
+        
         First Visit Boss - Force onto the first visit boss of a world (only for the 13 main hub worlds with portals).
         
-        Second Visit Boss - Force onto the last boss of a world (only for the 13 main hub worlds with portals).
+        Second Visit - Force into a second visit (only for the 13 main hub worlds with portals).
         
-        Anywhere - No restriction.
+        Last Story Boss - Force onto the last boss of a world (only for the 13 main hub worlds with portals).
+        
+        Superbosses - Force onto superbosses only (Data Organization/Absent Silhouette/Sephiroth/Terra).
+        
+        Non First Visits - Opposite of the first visit depth. Anywhere but the first visit of the 13 portal worlds (can include drives/levels/100 acre).
 ''')
 
 _all_settings = [
@@ -414,12 +442,12 @@ _all_settings = [
         group=SettingGroup.LOCATIONS,
         ui_label='Max Level Reward',
         choices={
-            'Level': 'Level 1',
-            'ExcludeFrom50': 'Level 50',
-            'ExcludeFrom99': 'Level 99'
+            SoraLevelOption.LEVEL_1: 'Level 1',
+            SoraLevelOption.LEVEL_50: 'Level 50',
+            SoraLevelOption.LEVEL_99: 'Level 99'
         },
         shared=True,
-        default='ExcludeFrom50',
+        default=SoraLevelOption.LEVEL_50,
         randomizable=True,
         tooltip="Maximum Level for randomized rewards."
     ),
@@ -711,13 +739,13 @@ _all_settings = [
         group=SettingGroup.STARTING_INVENTORY,
         ui_label="Growth Ability Starting Level",
         choices={
-            'Disabled': 'None',
-            '3Random': '3 Random',
-            'Random': '5 Random',
-            'Level_1': 'Level 1',
-            'Level_2': 'Level 2',
-            'Level_3': 'Level 3',
-            'Level_4': 'Max'
+            StartingMovementOption.DISABLED: 'None',
+            StartingMovementOption.RANDOM_3: '3 Random',
+            StartingMovementOption.RANDOM_5: '5 Random',
+            StartingMovementOption.LEVEL_1: 'Level 1',
+            StartingMovementOption.LEVEL_2: 'Level 2',
+            StartingMovementOption.LEVEL_3: 'Level 3',
+            StartingMovementOption.LEVEL_4: 'Max'
         },
         shared=True,
         default='Level_1',
@@ -736,7 +764,15 @@ _all_settings = [
         
         Max - Start with the maximum level of all growth abilities.
         ''',
-        randomizable=["Disabled","3Random","Random","Level_1","Level_2","Level_3","Level_4"]
+        randomizable=[
+            StartingMovementOption.DISABLED,
+            StartingMovementOption.RANDOM_3,
+            StartingMovementOption.RANDOM_5,
+            StartingMovementOption.LEVEL_1,
+            StartingMovementOption.LEVEL_2,
+            StartingMovementOption.LEVEL_3,
+            StartingMovementOption.LEVEL_4,
+        ]
     ),
 
     IntSpinner(
@@ -758,18 +794,19 @@ _all_settings = [
         group=SettingGroup.STARTING_INVENTORY,
         ui_label='Starting Inventory',
         choices={
-            '138': 'Scan',
-            '404': 'No Experience',
-            '158': 'Aerial Recovery',
-            '82': 'Guard',
-            '393': 'Finishing Plus',
-            '537': 'Hades Cup Trophy',
-            '370': 'Olympus Stone',
-            '462': 'Unknown Disk',
-            '593': 'Proof of Connection',
-            '594': 'Proof of Nonexistence',
-            '595': 'Proof of Peace',
-            '524': 'Promise Charm',
+            str(ability.Scan.id): ability.Scan.name,
+            str(ability.NoExperience.id): ability.NoExperience.name,
+            str(ability.AerialRecovery.id): ability.AerialRecovery.name,
+            str(ability.Guard.id): ability.Guard.name,
+            str(ability.FinishingPlus.id): ability.FinishingPlus.name,
+            str(misc.HadesCupTrophy.id): misc.HadesCupTrophy.name,
+            str(misc.OlympusStone.id): misc.OlympusStone.name,
+            str(misc.UnknownDisk.id): misc.UnknownDisk.name,
+            str(proof.ProofOfConnection.id): proof.ProofOfConnection.name,
+            str(proof.ProofOfNonexistence.id): proof.ProofOfNonexistence.name,
+            str(proof.ProofOfPeace.id): proof.ProofOfPeace.name,
+            # TODO: misc.PromiseCharm.name is "PromiseCharm", need to see if that matters before committing to change
+            str(misc.PromiseCharm.id): 'Promise Charm',
         },
         shared=True,
         default=[],
@@ -1233,60 +1270,49 @@ _all_settings = [
         name=settingkey.REPORT_DEPTH,
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Ansem Report Depth',
-        choices={
-            locationDepth.DataFight.name: 'Superbosses',
-            locationDepth.FirstVisit.name: 'First Visit',
-	        locationDepth.NoFirstVisit.name: 'Non First Visits',
-            locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Superboss',
-            locationDepth.FirstBoss.name: 'First Visit Boss',
-            locationDepth.SecondBoss.name: 'Second Visit Boss',
-            locationDepth.Anywhere.name: "Anywhere"
-        },
+        choices=location_depth_choices(),
         shared=True,
-        default=locationDepth.SecondVisit.name,
+        default=locationDepth.NonSuperboss,
         tooltip='The set of locations in which Ansem Reports are allowed to be placed.' + _depth_options_text,
-        randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.Anywhere.name]
+        randomizable=[
+            locationDepth.SecondVisitOnly,
+            locationDepth.NonSuperboss,
+            locationDepth.FirstBoss,
+            locationDepth.Anywhere
+        ]
     ),
 
     SingleSelect(
         name=settingkey.PROOF_DEPTH,
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Proof Depth',
-        choices={
-            locationDepth.DataFight.name: 'Superbosses',
-            locationDepth.FirstVisit.name: 'First Visit',
-	        locationDepth.NoFirstVisit.name: 'Non First Visits',
-            locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Superboss',
-            locationDepth.FirstBoss.name: 'First Visit Boss',
-            locationDepth.SecondBoss.name: 'Second Visit Boss',
-            locationDepth.Anywhere.name: "Anywhere"
-        },
+        choices=location_depth_choices(),
         shared=True,
-        default=locationDepth.Anywhere.name,
+        default=locationDepth.Anywhere,
         tooltip='The set of locations in which Proofs are allowed to be placed.' + _depth_options_text,
-        randomizable=[locationDepth.SecondVisitOnly.name, locationDepth.SecondVisit.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+        randomizable=[
+            locationDepth.SecondVisitOnly,
+            locationDepth.NonSuperboss,
+            locationDepth.LastStoryBoss,
+            locationDepth.Anywhere
+        ]
     ),
 
     SingleSelect(
         name=settingkey.STORY_UNLOCK_DEPTH,
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Visit Unlock Depth',
-        choices={
-            locationDepth.DataFight.name: 'Superbosses',
-            locationDepth.FirstVisit.name: 'First Visit',
-	        locationDepth.NoFirstVisit.name: 'Non First Visits',
-            locationDepth.SecondVisitOnly.name: 'Second Visit',
-            locationDepth.SecondVisit.name: 'Non-Superboss',
-            locationDepth.FirstBoss.name: 'First Visit Boss',
-            locationDepth.SecondBoss.name: 'Second Visit Boss',
-            locationDepth.Anywhere.name: "Anywhere"
-        },
+        choices=location_depth_choices(),
         shared=True,
-        default=locationDepth.Anywhere.name,
+        default=locationDepth.Anywhere,
         tooltip='The set of locations in which Visit Unlocks are allowed to be placed.' + _depth_options_text,
-        randomizable=[locationDepth.FirstVisit.name, locationDepth.SecondVisit.name, locationDepth.FirstBoss.name, locationDepth.SecondBoss.name, locationDepth.Anywhere.name]
+        randomizable=[
+            locationDepth.FirstVisit,
+            locationDepth.NonSuperboss,
+            locationDepth.FirstBoss,
+            locationDepth.LastStoryBoss,
+            locationDepth.Anywhere
+        ]
     ),
 
     SingleSelect(
@@ -1585,7 +1611,7 @@ _all_settings = [
             locationType.DC.name,
             locationType.PR.name,
             locationType.TWTNW.name
-        ],[]],
+        ], []],
         choice_icons={
             locationType.Level.name: "static/icons/worlds/sora.png",
             locationType.FormLevel.name: "static/icons/worlds/drives.png",
@@ -1652,8 +1678,7 @@ _all_settings = [
             locationType.SYNTH
         ]},
         shared=True,
-        default=[
-            locationType.CoR.name,],
+        default=[locationType.CoR.name],
         choice_icons={
             locationType.OCCups.name: 'static/icons/misc/cups.png',
             locationType.OCParadoxCup.name: 'static/icons/misc/paradox_cup.png',
@@ -2028,15 +2053,6 @@ _all_settings = [
     ),
 
     Toggle(
-        name=settingkey.TT1_JAILBREAK,
-        group=SettingGroup.SEED_MODIFIERS,
-        ui_label='Early Twilight Town 1 Exit',
-        shared=True,
-        default=False,
-        tooltip='Allows the use of save points to leave Twilight Town 1 anytime.'
-    ),
-
-    Toggle(
         name=settingkey.ROXAS_ABILITIES_ENABLED,
         group=SettingGroup.SEED_MODIFIERS,
         ui_label='Roxas Magic/Movement/Trinity',
@@ -2094,20 +2110,32 @@ _all_settings = [
         group=SettingGroup.STARTING_INVENTORY,
         ui_label='Starting Visit Unlocks',
         choices={
-            '74': 'Identity Disk',
-            '62': 'Skill and Crossbones',
-            '376': 'Picture',
-            '375': 'Ice Cream',
-            '54': 'Battlefields of War',
-            '60': 'Bone Fist',
-            '55': 'Sword of the Ancestor',
-            '59': "Beast's Claw",
-            '72': 'Scimitar',
-            '61': 'Proud Fang',
-            '369': 'Membership Card',
+           str(storyunlock.IdentityDisk.id): 'Identity Disk',
+           str(storyunlock.SkillAndCrossbones.id): 'Skill and Crossbones',
+           str(storyunlock.Picture.id): 'Picture',
+           str(storyunlock.IceCream.id): 'Ice Cream',
+           str(storyunlock.BattlefieldsOfWar.id): 'Battlefields of War',
+           str(storyunlock.BoneFist.id): 'Bone Fist',
+           str(storyunlock.SwordOfTheAncestor.id): 'Sword of the Ancestor',
+           str(storyunlock.BeastsClaw.id): "Beast's Claw",
+           str(storyunlock.Scimitar.id): 'Scimitar',
+           str(storyunlock.ProudFang.id): 'Proud Fang',
+           str(storyunlock.MembershipCard.id): 'Membership Card',
         },
         shared=True,
-        default=['74','62','376','375','54','60','55','59','72','61','369'],
+        default=[
+            str(storyunlock.IdentityDisk.id),
+            str(storyunlock.SkillAndCrossbones.id),
+            str(storyunlock.Picture.id),
+            str(storyunlock.IceCream.id),
+            str(storyunlock.BattlefieldsOfWar.id),
+            str(storyunlock.BoneFist.id),
+            str(storyunlock.SwordOfTheAncestor.id),
+            str(storyunlock.BeastsClaw.id),
+            str(storyunlock.Scimitar.id),
+            str(storyunlock.ProudFang.id),
+            str(storyunlock.MembershipCard.id)
+        ],
         tooltip='''
         Start with the selected visit unlocks already obtained.
         Each of these items unlocks a second (or third) visit of a particular world.
@@ -2170,10 +2198,10 @@ _all_settings = [
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Visit Unlock Category',
         choices={
-            itemRarity.COMMON : itemRarity.COMMON,
-            itemRarity.UNCOMMON : itemRarity.UNCOMMON,
-            itemRarity.RARE : itemRarity.RARE,
-            itemRarity.MYTHIC : itemRarity.MYTHIC,
+            itemRarity.COMMON: itemRarity.COMMON,
+            itemRarity.UNCOMMON: itemRarity.UNCOMMON,
+            itemRarity.RARE: itemRarity.RARE,
+            itemRarity.MYTHIC: itemRarity.MYTHIC,
         },
         shared=True,
         default=itemRarity.UNCOMMON,
@@ -2192,19 +2220,25 @@ _all_settings = [
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Item Placement Difficulty',
         choices={
-            'Super Easy': 'Super Easy',
-            'Easy': 'Easy',
-            'Slightly Easy': 'Slightly Easy',
-            'Normal': 'Normal',
-            'Slightly Hard': 'Slightly Hard',
-            'Hard': 'Hard',
-            'Very Hard': 'Very Hard',
-            'Insane': 'Insane',
-            'Nightmare': 'Nightmare'
+            itemDifficulty.SUPEREASY: 'Super Easy',
+            itemDifficulty.EASY: 'Easy',
+            itemDifficulty.SLIGHTLY_EASY: 'Slightly Easy',
+            itemDifficulty.NORMAL: 'Normal',
+            itemDifficulty.SLIGHTLY_HARD: 'Slightly Hard',
+            itemDifficulty.HARD: 'Hard',
+            itemDifficulty.VERYHARD: 'Very Hard',
+            itemDifficulty.INSANE: 'Insane',
+            itemDifficulty.NIGHTMARE: 'Nightmare'
         },
         shared=True,
         default='Normal',
-        randomizable=["Easy","Slightly Easy","Normal","Slightly Hard","Hard"],
+        randomizable=[
+            itemDifficulty.EASY,
+            itemDifficulty.SLIGHTLY_EASY,
+            itemDifficulty.NORMAL,
+            itemDifficulty.SLIGHTLY_HARD,
+            itemDifficulty.HARD
+        ],
         tooltip='''
         Bias the placement of items based on how difficult/easy you would like the seed to be. 
         Items have 4 categories (Common, Uncommon, Rare, Mythic) that influence what bias each item gets when placing those items. 
@@ -2227,12 +2261,12 @@ _all_settings = [
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label='Softlock Prevention',
         choices={
-            'default': 'Regular Rando',
-            'reverse': 'Reverse Rando',
-            'both': 'Satisfy Regular & Reverse'
+            SoftlockPreventionOption.DEFAULT: 'Regular Rando',
+            SoftlockPreventionOption.REVERSE: 'Reverse Rando',
+            SoftlockPreventionOption.BOTH: 'Satisfy Regular & Reverse'
         },
         shared=True,
-        default="default",
+        default=SoftlockPreventionOption.DEFAULT,
         tooltip='''
         What type of rando are you playing?
         
@@ -2250,11 +2284,11 @@ _all_settings = [
         ui_label='Accessibility',
         standalone_label='Item Accessibility',
         choices={
-            'all': '100% Locations',
-            'beatable': 'Beatable',
+            ItemAccessibilityOption.ALL: '100% Locations',
+            ItemAccessibilityOption.BEATABLE: 'Beatable',
         },
         shared=True,
-        default="all",
+        default=ItemAccessibilityOption.ALL,
         tooltip='''
         How accessible locations need to be for the seed to be "completable".
         
@@ -2269,13 +2303,13 @@ _all_settings = [
         group=SettingGroup.ITEM_POOL,
         ui_label='Ability Pool',
         choices={
-            'default': 'Default Abilities',
-            'randomize': 'Randomize Ability Pool',
-            'randomize support': 'Randomize Support Ability Pool',
-            'randomize stackable': 'Randomize Stackable Abilities'
+            AbilityPoolOption.DEFAULT: 'Default Abilities',
+            AbilityPoolOption.RANDOMIZE: 'Randomize Ability Pool',
+            AbilityPoolOption.RANDOMIZE_SUPPORT: 'Randomize Support Ability Pool',
+            AbilityPoolOption.RANDOMIZE_STACKABLE: 'Randomize Stackable Abilities'
         },
         shared=True,
-        default='default',
+        default=AbilityPoolOption.DEFAULT,
         tooltip='''
         Configures the ability pool randomization.
     
@@ -2295,9 +2329,9 @@ _all_settings = [
         name=settingkey.COMMAND_MENU,
         group=SettingGroup.COSMETICS,
         ui_label='Command Menu',
-        choices=commandmenu.get_options(),
+        choices=CommandMenuRandomizer.command_menu_options(),
         shared=False,
-        default='vanilla',
+        default=field2d.VANILLA,
         tooltip='''
         Controls the appearance of the command menu on-screen.
         
@@ -2309,6 +2343,55 @@ _all_settings = [
         
         individual command menu options - Forces all command menus to have the chosen appearance.
         '''
+    ),
+
+    SingleSelect(
+        name=settingkey.ROOM_TRANSITION_IMAGES,
+        group=SettingGroup.COSMETICS,
+        ui_label='Room Transition Images',
+        choices=RoomTransitionImageRandomizer.room_transition_options(),
+        shared=False,
+        default=field2d.VANILLA,
+        tooltip='''
+        Controls the appearance of the room transition images.
+        
+        Vanilla - Room transitions will have their normal appearance.
+        
+        Randomize (in-game only) - Chooses a random transition for each world from existing in-game room transition
+        images.
+        
+        Randomize (custom only) - Chooses a random transition for each world from the room-transition-images folder
+        contained within your configured Custom Visuals Folder.
+        
+        Randomize (in-game + custom) - Chooses a random transition for each world from both existing in-game transition
+        images and the room-transition-images folder contained within your configured Custom Visuals Folder.
+        '''
+    ),
+
+    Toggle(
+        name=settingkey.RECOLOR_TEXTURES,
+        group=SettingGroup.COSMETICS,
+        ui_label='Recolor Some Textures',
+        standalone_label='Recolor Some Textures',
+        shared=False,
+        default=False,
+        tooltip='''
+        If enabled, allows for basic recoloring of some of the in-game textures.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for KH2 to have been extracted using the
+        OpenKH Mods Manager setup wizard.
+        
+        This will cause seeds to take longer to generate (relative to the number of recolored textures), especially at
+        first, since all of the replacement textures need to be generated.
+        '''
+    ),
+
+    TextureRecolorsSetting(
+        name=settingkey.TEXTURE_RECOLOR_SETTINGS,
+        group=SettingGroup.COSMETICS,
+        ui_label='Texture Recolor Settings',
+        shared=False,
+        default={},
     ),
 
     Toggle(
@@ -2679,17 +2762,19 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
     for r in randomizable_settings:
         real_settings_object.set(r.name,random_choices[r.name])
 
-def makeKHBRSettings(seed_name,ui_settings:SeedSettings):
-    
-    enemy_options = {'seed_name':seed_name,
-                        'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
-                            'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
-                            'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
-                            'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN),
-                            'remove_cutscenes': ui_settings.get(settingkey.REMOVE_CUTSCENES),
-                            'party_member_rando': ui_settings.get(settingkey.PARTY_MEMBER_RANDO),
-                            'costume_rando': ui_settings.get(settingkey.COSTUME_RANDO),
-                            'revenge_limit_rando': ui_settings.get(settingkey.REVENGE_LIMIT_RANDO)}
+
+def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
+    enemy_options = {
+        'seed_name': seed_name,
+        'remove_damage_cap': ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
+        'cups_give_xp': ui_settings.get(settingkey.CUPS_GIVE_XP),
+        'retry_data_final_xemnas': ui_settings.get(settingkey.RETRY_DFX),
+        'retry_dark_thorn': ui_settings.get(settingkey.RETRY_DARK_THORN),
+        'remove_cutscenes': ui_settings.get(settingkey.REMOVE_CUTSCENES),
+        'party_member_rando': ui_settings.get(settingkey.PARTY_MEMBER_RANDO),
+        'costume_rando': ui_settings.get(settingkey.COSTUME_RANDO),
+        'revenge_limit_rando': ui_settings.get(settingkey.REVENGE_LIMIT_RANDO)
+    }
     for setting in boss_settings + enemy_settings:
         value = ui_settings.get(setting.name)
         if value is not None:
@@ -2702,5 +2787,6 @@ def makeKHBRSettings(seed_name,ui_settings:SeedSettings):
 class ExtraConfigurationData:
     platform: str
     command_menu_choice: str
+    room_transition_choice: str
     tourney: bool
     custom_cosmetics_executables: list[str]

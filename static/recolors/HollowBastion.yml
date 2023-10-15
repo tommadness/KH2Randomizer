@@ -1,0 +1,294 @@
+- id: aerith
+  name: Aerith
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: dress_bow
+          name: Dress/Bow
+          hue_start: 340
+          hue_end: 10
+      image_groups:
+        - - remastered/obj/N_HB560_RTN.mdlx/-3.dds
+
+
+- id: cid
+  name: Cid
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          saturation_start: 0
+          saturation_end: 30
+          value_start: 40
+          value_end: 100
+          new_saturation: 50
+          value_offset: -25
+        - id: pants
+          name: Pants
+          hue_start: 220
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/N_HB540_RTN.mdlx/-3.dds
+          - remastered/obj/N_HB540_SIT_RTN.mdlx/-3.dds
+
+
+- id: cloud
+  name: Cloud
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt_pants
+          name: Shirt/Pants
+          hue_start: 200
+          hue_end: 280
+          saturation_start: 0
+          saturation_end: 45
+          value_start: 0
+          value_end: 30
+          new_saturation: 50
+          value_offset: 10
+      image_groups:
+        - - remastered/obj/H_HB550.mdlx/-3.dds
+          - remastered/obj/N_HB550_BOSS.mdlx/-4.dds
+          - remastered/obj/N_HB550_BTL.mdlx/-4.dds
+          - remastered/obj/N_HB550_BTL2.mdlx/-4.dds
+          - remastered/obj/N_HB550_RTN.mdlx/-4.dds
+          - remastered/obj/N_HB550_STAND_RTN.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: covering
+          name: Covering
+          saturation_start: 0
+          saturation_end: 30
+          value_start: 0
+          value_end: 20
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/H_HB550.mdlx/-2.dds
+          - remastered/obj/N_HB550_BOSS.mdlx/-3.dds
+          - remastered/obj/N_HB550_BTL.mdlx/-3.dds
+          - remastered/obj/N_HB550_BTL2.mdlx/-3.dds
+          - remastered/obj/N_HB550_RTN.mdlx/-3.dds
+          - remastered/obj/N_HB550_STAND_RTN.mdlx/-3.dds
+
+
+- id: demyx
+  name: Demyx
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX120.mdlx/-0.dds
+          - remastered/obj/B_EX120_GM.mdlx/-0.dds
+          - remastered/obj/B_EX120_HB.mdlx/-0.dds
+          - remastered/obj/B_EX120_HB_LV99.mdlx/-0.dds
+
+        - - remastered/obj/H_EX580.mdlx/-4.dds
+
+        - - remastered/obj/H_EX580.mdlx/-5.dds
+
+    - colorable_areas:
+        - id: sitar_blue
+          name: Sitar (Blue Parts)
+          hue_start: 180
+          hue_end: 300
+        - id: sitar_gold
+          name: Sitar (Gold Parts)
+          hue_start: 50
+          hue_end: 150
+      image_groups:
+        - - remastered/obj/B_EX120.mdlx/-5.dds
+          - remastered/obj/B_EX120_GM.mdlx/-3.dds
+          - remastered/obj/B_EX120_HB.mdlx/-5.dds
+          - remastered/obj/B_EX120_HB_LV99.mdlx/-5.dds
+          - remastered/obj/H_EX580.mdlx/-2.dds
+
+
+- id: leon
+  name: Leon
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: vest_pants
+          name: Vest/Pants
+          saturation_start: 0
+          saturation_end: 30
+          value_start: 0
+          value_end: 35
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/H_HB530.mdlx/-2.dds
+          - remastered/obj/N_HB530_RTN.mdlx/-6.dds
+
+        - - remastered/obj/N_HB530_BOSS.mdlx/-6.dds
+          - remastered/obj/N_HB530_BTL.mdlx/-6.dds
+          - remastered/obj/N_HB530_BTL2.mdlx/-6.dds
+
+
+- id: merlin
+  name: Merlin
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: robe
+          name: Robe
+          hue_start: 205
+          hue_end: 245
+      image_groups:
+        - - remastered/obj/N_HB030_RTN.mdlx/-2.dds
+          - remastered/obj/N_HB030_TSURU.mdlx/-2.dds
+
+
+- id: paine
+  name: Paine
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          saturation_start: 0
+          saturation_end: 40
+          value_start: 0
+          value_end: 40
+          new_saturation: 50
+          value_offset: 5
+      image_groups:
+        - - remastered/obj/N_HB620_RTN.mdlx/-0.dds
+
+
+- id: rikku
+  name: Rikku
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: accent
+          name: Accent
+          hue_start: 180
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/N_HB610_RTN.mdlx/-3.dds
+
+
+- id: scrooge
+  name: Scrooge
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          hue_start: 195
+          hue_end: 230
+      image_groups:
+        - - remastered/obj/N_HB010_RTN.mdlx/-2.dds
+
+
+- id: sephiroth
+  name: Sephiroth
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: trim
+          name: Trim
+          hue_start: 230
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/N_HB590_BTL.mdlx/-3.dds
+          - remastered/obj/N_HB590_GM.mdlx/-3.dds
+          - remastered/obj/N_HB590_RTN.mdlx/-3.dds
+          - remastered/obj/N_HB630.mdlx/-3.dds
+
+    - colorable_areas:
+        - id: wings
+          name: Wings
+          hue_start: 180
+          hue_end: 240
+      image_groups:
+        - - remastered/obj/N_HB590_BTL.mdlx/-4.dds
+          - remastered/obj/N_HB590_GM.mdlx/-4.dds
+          - remastered/obj/N_HB590_RTN.mdlx/-4.dds
+          - remastered/obj/N_HB630.mdlx/-4.dds
+
+
+- id: tifa
+  name: Tifa
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          saturation_start: 0
+          saturation_end: 10
+          value_start: 0
+          value_end: 30
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/N_HB570_BOSS.mdlx/-4.dds
+          - remastered/obj/N_HB570_BTL.mdlx/-4.dds
+          - remastered/obj/N_HB570_BTL2.mdlx/-4.dds
+          - remastered/obj/N_HB570_RTN.mdlx/-4.dds
+
+
+- id: yuffie
+  name: Yuffie
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          saturation_start: 0
+          saturation_end: 15
+          value_start: 0
+          value_end: 45
+          new_saturation: 50
+          value_offset: 5
+        - id: shorts_boots
+          name: Shorts/Boots
+          hue_start: 20
+          hue_end: 50
+          saturation_start: 0
+          saturation_end: 75
+          value_start: 0
+          value_end: 65
+          new_saturation: 50
+          value_offset: 5
+      image_groups:
+        - - remastered/obj/N_HB580_BOSS.mdlx/-0.dds
+          - remastered/obj/N_HB580_BTL.mdlx/-0.dds
+          - remastered/obj/N_HB580_BTL2.mdlx/-0.dds
+          - remastered/obj/N_HB580_RTN.mdlx/-0.dds
+
+
+- id: yuna
+  name: Yuna
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: skirt_shoes
+          name: Skirt/Shoes
+          hue_start: 180
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/N_HB600_RTN.mdlx/-1.dds

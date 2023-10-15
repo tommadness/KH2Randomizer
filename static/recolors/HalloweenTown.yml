@@ -1,0 +1,239 @@
+# Notes:
+# - Looks like maybe the GoA messes with Oogie's textures order so can't currently recolor Oogie
+
+- id: barrel
+  name: Barrel
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 250
+          hue_end: 300
+      image_groups:
+        - - remastered/obj/N_NM070_BTL.mdlx/-0.dds
+          - remastered/obj/N_NM070_BTL_2.mdlx/-0.dds
+          - remastered/obj/N_NM070_BTL_TOY.mdlx/-0.dds
+          - remastered/obj/N_NM070_RTN.mdlx/-0.dds
+
+        - - remastered/obj/N_NM070_BTL.mdlx/-1.dds
+          - remastered/obj/N_NM070_BTL_2.mdlx/-1.dds
+          - remastered/obj/N_NM070_BTL_TOY.mdlx/-1.dds
+          - remastered/obj/N_NM070_RTN.mdlx/-1.dds
+
+
+- id: donald_ct
+  name: Donald (Christmas Town)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: hat
+          name: Hat
+          hue_start: 180
+          hue_end: 360
+          saturation_start: 25
+          saturation_end: 100
+      image_groups:
+        - - remastered/obj/P_EX020_XM.mdlx/-0.dds
+          - remastered/obj/P_EX020_XM_RTN.mdlx/-0.dds
+
+
+- id: goofy_ct
+  name: Goofy (Christmas Town)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          hue_start: 270
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/P_EX030_XM.mdlx/-1.dds
+          - remastered/obj/P_EX030_XM_RTN.mdlx/-1.dds
+
+
+- id: experiment
+  name: Experiment
+  tags:
+    - heartless
+  recolors:
+    - colorable_areas:
+        - id: body
+          name: Body
+          hue_start: 180
+          hue_end: 270
+        - id: accent
+          name: Accent
+          hue_start: 30
+          hue_end: 120
+      image_groups:
+        - - remastered/obj/B_NM110.mdlx/-2.dds
+          - remastered/obj/B_NM110_HEAD.mdlx/-2.dds
+          - remastered/obj/B_NM110_L_ARM.mdlx/-2.dds
+          - remastered/obj/B_NM110_R_ARM.mdlx/-2.dds
+
+        - - remastered/obj/B_NM110_GM.mdlx/-2.dds
+
+        - - remastered/obj/B_NM110.mdlx/-5.dds
+          - remastered/obj/B_NM110_GM.mdlx/-5.dds
+          - remastered/obj/B_NM110_HEAD.mdlx/-5.dds
+          - remastered/obj/B_NM110_L_ARM.mdlx/-5.dds
+          - remastered/obj/B_NM110_R_ARM.mdlx/-5.dds
+
+        - - remastered/obj/B_NM110.mdlx/-6.dds
+          - remastered/obj/B_NM110_HEAD.mdlx/-6.dds
+          - remastered/obj/B_NM110_L_ARM.mdlx/-6.dds
+          - remastered/obj/B_NM110_R_ARM.mdlx/-6.dds
+
+        - - remastered/obj/B_NM110_GM.mdlx/-6.dds
+
+
+- id: jack_ht
+  name: Jack Skellington
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/H_NM000.mdlx/-1.dds
+
+        - - remastered/obj/P_NM000.mdlx/-1.dds
+          - remastered/obj/P_NM000_RTN.mdlx/-1.dds
+
+
+- id: jack_ht_santa
+  name: Jack Skellington (Santa)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          hue_start: 320
+          hue_end: 60
+      image_groups:
+        - - remastered/obj/H_NM020.mdlx/-0.dds
+
+        - - remastered/obj/P_NM000_SANTA.mdlx/-0.dds
+
+        - - remastered/obj/P_NM000_SANTA_RTN.mdlx/-0.dds
+
+        - - remastered/obj/H_NM020.mdlx/-1.dds
+
+        - - remastered/obj/P_NM000_SANTA.mdlx/-2.dds
+
+        - - remastered/obj/P_NM000_SANTA_RTN.mdlx/-2.dds
+
+
+- id: lock
+  name: Lock
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 300
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/N_NM050_BTL.mdlx/-0.dds
+          - remastered/obj/N_NM050_BTL_2.mdlx/-0.dds
+          - remastered/obj/N_NM050_BTL_TOY.mdlx/-0.dds
+          - remastered/obj/N_NM050_RTN.mdlx/-0.dds
+
+        - - remastered/obj/N_NM050_BTL.mdlx/-2.dds
+          - remastered/obj/N_NM050_BTL_2.mdlx/-2.dds
+          - remastered/obj/N_NM050_BTL_TOY.mdlx/-2.dds
+          - remastered/obj/N_NM050_RTN.mdlx/-2.dds
+
+
+- id: santa
+  name: Santa
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: outfit
+          name: Outfit
+          hue_start: 350
+          hue_end: 10
+      image_groups:
+        - - remastered/obj/N_NM090_RTN.mdlx/-4.dds
+
+
+- id: shock
+  name: Shock
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 230
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/N_NM060_BTL.mdlx/-0.dds
+          - remastered/obj/N_NM060_BTL_2.mdlx/-0.dds
+          - remastered/obj/N_NM060_BTL_TOY.mdlx/-0.dds
+          - remastered/obj/N_NM060_RTN.mdlx/-0.dds
+
+
+- id: sora_ht
+  name: Sora (Halloween Town)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: headgear
+          name: Headgear
+          hue_start: 0
+          hue_end: 60
+      image_groups:
+        - - remastered/obj/P_EX100_NM.mdlx/-8.dds
+
+        - - remastered/obj/H_EX500_NM.mdlx/-2.dds
+          - remastered/obj/H_EX501.mdlx/-2.dds
+
+
+- id: vexen
+  name: Vexen
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/H_CM040.mdlx/-0.dds
+          - remastered/obj/N_CM040.mdlx/-0.dds
+          - remastered/obj/N_CM040_BTL.mdlx/-0.dds
+
+
+        - - remastered/obj/N_CM040_GM.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: shield
+          name: Shield
+          hue_start: 150
+          hue_end: 250
+      image_groups:
+        - - remastered/obj/H_CM040.mdlx/-4.dds
+          - remastered/obj/N_CM040.mdlx/-5.dds
+          - remastered/obj/N_CM040_BTL.mdlx/-5.dds
+
+        - - remastered/obj/N_CM040_GM.mdlx/-4.dds

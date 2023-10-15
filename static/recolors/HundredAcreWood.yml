@@ -1,0 +1,55 @@
+- id: piglet
+  name: Piglet
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 335
+          hue_end: 355
+      image_groups:
+        - - remastered/obj/N_PO030_AIR_RTN.mdlx/-0.dds
+          - remastered/obj/N_PO030_BTL.mdlx/-0.dds
+          - remastered/obj/N_PO030_RTN.mdlx/-0.dds
+
+
+- id: pooh
+  name: Pooh
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 330
+          hue_end: 50
+      image_groups:
+        - - remastered/obj/H_PO010.mdlx/-1.dds
+
+        - - remastered/obj/N_PO010_BTL.mdlx/-2.dds
+          - remastered/obj/N_PO010_RTN.mdlx/-2.dds
+          - remastered/obj/N_PO010_SIT_RTN.mdlx/-2.dds
+
+        - - remastered/obj/PO06_N_PO010.mdlx/-2.dds
+          - remastered/obj/PO07_N_PO010.mdlx/-2.dds
+          - remastered/obj/PO08_N_PO010.mdlx/-2.dds
+
+
+- id: roo
+  name: Roo
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          hue_start: 205
+          hue_end: 245
+      image_groups:
+        - - remastered/obj/N_PO070_BTL.mdlx/-3.dds
+          - remastered/obj/N_PO070_RTN.mdlx/-3.dds
+
+        - - remastered/obj/N_PO100_RTN.mdlx/-2.dds
+
+        - - remastered/obj/PO08_N_PO070.mdlx/-3.dds

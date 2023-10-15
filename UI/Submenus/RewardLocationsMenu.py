@@ -6,7 +6,7 @@ from UI.Submenus.SubMenu import KH2Submenu
 class RewardLocationsMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Locations', settings=settings, in_layout='horizontal')
+        super().__init__(title='Locations', settings=settings)
         self.disable_signal = False
         self.start_column()
         self.start_group()

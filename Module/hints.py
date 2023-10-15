@@ -1,31 +1,44 @@
+import base64
 import copy
+import json
+import random
+from itertools import permutations, chain
+from zipfile import ZipFile
+
 from Class.exceptions import HintException
-from List.ItemList import Items
-from List.configDict import itemType, locationType
-import base64, json, random
-from itertools import permutations,chain
-
+from Class.itemClass import KH2Item
+from Class.newLocationClass import KH2Location
+from List.configDict import itemType, locationType, locationCategory
+from List.inventory import ability, form, magic, misc, storyunlock, summon, proof
+from List.location import simulatedtwilighttown as stt
+from Module import version
 from Module.RandomizerSettings import RandomizerSettings
-from Module.newRandomize import Randomizer
+from Module.newRandomize import Randomizer, ItemAssignment
 
-from List.NewLocationList import Locations
 
 class Hints:
-    def convertItemAssignmentToTuple(itemAssignment,shop_items):
-        locationItems = []
-        for assignment in itemAssignment:
-            if assignment.location.LocationId != 390:
-                locationItems.append((assignment.location,assignment.item))
+
+    @staticmethod
+    def convert_item_assignment_to_tuple(
+            item_assignment: list[ItemAssignment],
+            shop_items: list[KH2Item]
+    ) -> list[tuple[KH2Location, KH2Item]]:
+        location_items: list[tuple[KH2Location, KH2Item]] = []
+        for assignment in item_assignment:
+            location = assignment.location
+            if location.name() != stt.CheckLocation.StruggleLoserMedal:
+                location_items.append((location, assignment.item))
                 if assignment.item2 is not None:
-                    locationItems.append((assignment.location,assignment.item2))
+                    location_items.append((location, assignment.item2))
 
-        for i in shop_items:
-            locationItems.append((Locations.ShopLocation(),i))
-            
-    
-        return locationItems
+        fake_shop_location = KH2Location(999, "Shop Item", locationCategory.CREATION, [locationType.SHOP])
+        for shop_item in shop_items:
+            location_items.append((fake_shop_location, shop_item))
 
-    def generateHints(randomizer: Randomizer, settings: RandomizerSettings):
+        return location_items
+
+    @staticmethod
+    def generate_hints(randomizer: Randomizer, settings: RandomizerSettings):
         hintsType = settings.hintsType
         if hintsType=="Disabled":
             return None
@@ -43,8 +56,8 @@ class Hints:
             if l in excludeList:
                 excludeList.remove(l)
 
-        locationItems = randomizer.assignedItems
-        locationItems = Hints.convertItemAssignmentToTuple(locationItems,randomizer.shop_items)
+        locationItems = randomizer.assignments
+        locationItems = Hints.convert_item_assignment_to_tuple(locationItems, randomizer.shop_items)
 
         preventSelfHinting = settings.prevent_self_hinting
         allowProofHinting = settings.allow_proof_hinting
@@ -123,23 +136,61 @@ class Hints:
 
         if hintsType == "Path":
             world_to_vanilla_ICs = {}
-            world_to_vanilla_ICs[locationType.Level] = [415,416]
-            world_to_vanilla_ICs[locationType.FormLevel] = [26,27,29,31,563]
-            world_to_vanilla_ICs[locationType.Atlantica] = [22]
-            world_to_vanilla_ICs[locationType.TWTNW] = [87]
-            world_to_vanilla_ICs[locationType.PR] = [87,160,62]
-            world_to_vanilla_ICs[locationType.DC] = [32,88,27]
-            world_to_vanilla_ICs[locationType.HUNDREDAW] = [24,32]
-            world_to_vanilla_ICs[locationType.Agrabah] = [159,21,32,72]
-            world_to_vanilla_ICs[locationType.BC] = [24,88,59]
-            world_to_vanilla_ICs[locationType.TT] = [26,563,375,376]
-            world_to_vanilla_ICs[locationType.SP] = [88,74]
-            world_to_vanilla_ICs[locationType.HT] = [87,60]
-            world_to_vanilla_ICs[locationType.PL] = [32,21,23,61]
-            world_to_vanilla_ICs[locationType.LoD] = [23,32,55]
-            world_to_vanilla_ICs[locationType.OC] = [23,54]
-            world_to_vanilla_ICs[locationType.HB] = [21,22,383,25,31,24,32,369]
-            world_to_vanilla_ICs[locationType.STT] = [26,563]
+            world_to_vanilla_ICs[locationType.Level] = [ability.SecondChance.id, ability.OnceMore.id]
+            world_to_vanilla_ICs[locationType.FormLevel] = [
+               form.ValorForm.id,
+               form.WisdomForm.id,
+               form.FinalForm.id,
+               form.MasterForm.id,
+               form.LimitForm.id
+            ]
+            world_to_vanilla_ICs[locationType.Atlantica] = [magic.Blizzard.id]
+            world_to_vanilla_ICs[locationType.TWTNW] = [magic.Magnet.id]
+            world_to_vanilla_ICs[locationType.PR] = [
+                magic.Magnet.id,
+                summon.FeatherCharm.id,
+                storyunlock.SkillAndCrossbones.id
+            ]
+            world_to_vanilla_ICs[locationType.DC] = [misc.TornPages.id, magic.Reflect.id, form.WisdomForm.id]
+            world_to_vanilla_ICs[locationType.HUNDREDAW] = [magic.Cure.id, misc.TornPages.id]
+            world_to_vanilla_ICs[locationType.Agrabah] = [
+                summon.LampCharm.id,
+                magic.Fire.id,
+                misc.TornPages.id,
+                storyunlock.Scimitar.id
+            ]
+            world_to_vanilla_ICs[locationType.BC] = [magic.Cure.id, magic.Reflect.id, storyunlock.BeastsClaw.id]
+            world_to_vanilla_ICs[locationType.TT] = [
+                form.ValorForm.id,
+                form.LimitForm.id,
+                storyunlock.IceCream.id,
+                storyunlock.Picture.id
+            ]
+            world_to_vanilla_ICs[locationType.SP] = [magic.Reflect.id, storyunlock.IdentityDisk.id]
+            world_to_vanilla_ICs[locationType.HT] = [magic.Magnet.id, storyunlock.BoneFist.id]
+            world_to_vanilla_ICs[locationType.PL] = [
+                misc.TornPages.id,
+                magic.Fire.id,
+                magic.Thunder.id,
+                storyunlock.ProudFang.id
+            ]
+            world_to_vanilla_ICs[locationType.LoD] = [
+                magic.Thunder.id,
+                misc.TornPages.id,
+                storyunlock.SwordOfTheAncestor.id
+            ]
+            world_to_vanilla_ICs[locationType.OC] = [magic.Thunder.id, storyunlock.BattlefieldsOfWar.id]
+            world_to_vanilla_ICs[locationType.HB] = [
+                magic.Fire.id,
+                magic.Blizzard.id,
+                summon.BaseballCharm.id,
+                summon.UkuleleCharm.id,
+                form.MasterForm.id,
+                magic.Cure.id,
+                misc.TornPages.id,
+                storyunlock.MembershipCard.id
+            ]
+            world_to_vanilla_ICs[locationType.STT] = [form.ValorForm.id, form.LimitForm.id]
             world_to_vanilla_ICs["Creations"] = []
             world_to_vanilla_ICs[locationType.Critical] = []
             world_to_vanilla_ICs[locationType.Free] = []
@@ -168,12 +219,12 @@ class Hints:
                     world_of_location = location.LocationTypes[0]        
                     if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
-                    if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]:
+                    if item.ItemType in proof.proof_item_types():
                         if item.ItemType is itemType.PROOF_OF_CONNECTION:
                             proof_of_connection_world = world_of_location
                         elif item.ItemType is itemType.PROOF_OF_PEACE:
                             proof_of_peace_world = world_of_location
-                        elif item.ItemType is itemType.PROOF:
+                        elif item.ItemType is itemType.PROOF_OF_NONEXISTENCE:
                             proof_of_nonexistence_world = world_of_location
                     elif item.ItemType not in [itemType.KEYITEM, itemType.REPORT, itemType.PROMISE_CHARM, itemType.OCSTONE, itemType.TROPHY, itemType.MANUFACTORYUNLOCK, itemType.MUNNY_POUCH]:
                         # this item could have come from any world from this list
@@ -326,13 +377,13 @@ class Hints:
                     if world_of_location == locationType.Puzzle or world_of_location == locationType.SYNTH  or world_of_location == locationType.SHOP:
                         world_of_location = "Creations"
                     worldChecks[world_of_location].append(item)
-                    if item.ItemType in [itemType.PROOF, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE]:
+                    if item.ItemType in proof.proof_item_types():
                         if not world_of_location in worldsToHint:
                             if item.ItemType is itemType.PROOF_OF_CONNECTION:
                                 proof_of_connection_index = len(worldsToHint)
                             elif item.ItemType is itemType.PROOF_OF_PEACE:
                                 proof_of_peace_index = len(worldsToHint)
-                            elif item.ItemType is itemType.PROOF:
+                            elif item.ItemType is itemType.PROOF_OF_NONEXISTENCE:
                                 proof_of_nonexistence_index = len(worldsToHint)
                             worldsToHint.append(world_of_location)
                         else:
@@ -340,7 +391,7 @@ class Hints:
                                 proof_of_connection_index = worldsToHint.index(world_of_location)
                             elif item.ItemType is itemType.PROOF_OF_PEACE:
                                 proof_of_peace_index = worldsToHint.index(world_of_location)
-                            elif item.ItemType is itemType.PROOF:
+                            elif item.ItemType is itemType.PROOF_OF_NONEXISTENCE:
                                 proof_of_nonexistence_index = worldsToHint.index(world_of_location)
             for location,item in locationItems:
                 world_of_location = location.LocationTypes[0]
@@ -381,18 +432,19 @@ class Hints:
             mag_thun_need_hints = (locationType.Atlantica in worldsToHint)
 
             # following the priority of Proofs > Story Unlocks > Forms > Pages > Thunders > Magnets > Proof Reports
-            
-            story_unlock_ids = {locationType.OC : [54],
-                                locationType.LoD : [55],
-                                locationType.BC : [59],
-                                locationType.HT : [60],
-                                locationType.PL : [61],
-                                locationType.PR : [62],
-                                locationType.Agrabah : [72],
-                                locationType.HB : [369],
-                                locationType.SP : [74],
-                                locationType.TT : [375, 376]
-                                }
+
+            story_unlock_ids = {
+                locationType.OC: [storyunlock.BattlefieldsOfWar.id],
+                locationType.LoD: [storyunlock.SwordOfTheAncestor.id],
+                locationType.BC: [storyunlock.BeastsClaw.id],
+                locationType.HT: [storyunlock.BoneFist.id],
+                locationType.PL: [storyunlock.ProudFang.id],
+                locationType.PR: [storyunlock.SkillAndCrossbones.id],
+                locationType.Agrabah: [storyunlock.Scimitar.id],
+                locationType.HB: [storyunlock.MembershipCard.id],
+                locationType.SP: [storyunlock.IdentityDisk.id],
+                locationType.TT: [storyunlock.IceCream.id, storyunlock.Picture.id]
+            }
             story_unlocks_for_proofs = []
             for world in hintableWorlds:
                 if world in story_unlock_ids:
@@ -579,7 +631,7 @@ class Hints:
                 if world_of_location == locationType.WeaponSlot or world_of_location == locationType.Free or world_of_location == locationType.Critical:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
-                    if item.ItemType not in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.REPORT] or (item.ItemType in [itemType.PROOF,itemType.PROOF_OF_CONNECTION,itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM] and allowProofHinting) or (item.ItemType in [itemType.REPORT] and allowReportHinting):
+                    if item.ItemType not in [itemType.PROOF_OF_NONEXISTENCE, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM, itemType.REPORT] or (item.ItemType in [itemType.PROOF_OF_NONEXISTENCE, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM] and allowProofHinting) or (item.ItemType in [itemType.REPORT] and allowReportHinting):
                         hintable_item_count+=1 
                     worldChecks[world_of_location].append(item)
                     worldChecksEdit[world_of_location].append(item)
@@ -631,7 +683,7 @@ class Hints:
                     reportRepetition = reportRepetition + 1
 
                 #should we hint proofs?
-                if randomItem.ItemType in [itemType.PROOF,itemType.PROOF_OF_PEACE,itemType.PROOF_OF_CONNECTION, itemType.PROMISE_CHARM]:
+                if randomItem.ItemType in [itemType.PROOF_OF_NONEXISTENCE, itemType.PROOF_OF_PEACE, itemType.PROOF_OF_CONNECTION, itemType.PROMISE_CHARM]:
                     if not allowProofHinting:
                         worldChecksEdit[randomWorld].remove(randomItem)
                         reportsList.append(reportNumber)
@@ -706,7 +758,7 @@ class Hints:
             IC_Types["page"] = [itemType.TORN_PAGE]
             IC_Types["summon"] = [itemType.SUMMON]
             IC_Types["ability"] = ["Second Chance","Once More"]
-            IC_Types["proof"] = [itemType.PROOF,itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM]
+            IC_Types["proof"] = [itemType.PROOF_OF_NONEXISTENCE, itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROMISE_CHARM]
             IC_Types["form"] = [itemType.FORM,"Anti-Form"]
             IC_Types["other"] = ["Hades Cup Trophy","Unknown Disk","Olympus Stone"]
             IC_Types["report"] = [itemType.REPORT]
@@ -853,6 +905,9 @@ class Hints:
 
         return hintsText
 
-    def writeHints(hintsText,seedName,outZip):
-        #outZip.writestr("{seedName}_DebugHints.json".format(seedName = seedName), json.dumps(hintsText).encode('utf-8'))
-        outZip.writestr("{seedName}.Hints".format(seedName = seedName), base64.b64encode(json.dumps(hintsText).encode('utf-8')).decode('utf-8'))
+    @staticmethod
+    def write_hints(hint_data, out_zip: ZipFile):
+        json_bytes = json.dumps(hint_data).encode('utf-8')
+        if version.debug_mode():
+            out_zip.writestr("HintFile_DebugHints.json", json_bytes)
+        out_zip.writestr("HintFile.Hints", base64.b64encode(json_bytes).decode('utf-8'))

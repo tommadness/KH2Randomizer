@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QRadioButton, QScrollArea
+    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QRadioButton, QScrollArea, QLayout
 )
 
 import Class.seedSettings
@@ -13,44 +13,40 @@ from Class.seedSettings import WorldRandomizationTristate, ProgressionChainSelec
 from Module.resources import resource_path
 from UI.Submenus.ProgressionWidgets import ProgressionWidget
 
+header_styles = [
+    'background: #4d0d0e; color: #ff8080;',  # reds
+    'background: #685901; color: #fff34b;',  # yellows
+    'background: #04641b; color: #31f626;',  # greens
+    'background: #032169; color: #63c6f5;',  # blues
+    'background: #422169; color: #c663f5;',  # purples
+]
+frame_styles = [
+    'background: #3c0000;',  # reds
+    'background: #503c00;',  # yellows
+    'background: #003214;',  # greens
+    'background: #001e3c;',  # blues
+    'background: #281e3c;',  # purples
+]
+
 
 class KH2Submenu(QWidget):
 
-    def __init__(self, title: str, in_layout="vertical", settings: SeedSettings = None, seed_name_getter = None):
+    def __init__(self, title: str, settings: SeedSettings):
         super().__init__()
 
         self.title = title
         self.settings = settings
-        self.seed_name_getter = seed_name_getter
         self.widgets_and_settings_by_name = {}
         self.groups_by_id: dict[str, QWidget] = {}
 
-        if in_layout == "vertical":
-            self.menulayout = QVBoxLayout()
-        if in_layout == "horizontal":
-            self.menulayout = QHBoxLayout()
-
+        self.menulayout = QHBoxLayout()
         self.pending_column: Optional[QVBoxLayout] = None
         self.pending_group: Optional[QVBoxLayout] = None
 
         self.tristate_groups = {}
         self.tristate_backgrounds = {}
 
-        self.header_styles = [
-            'background: #4d0d0e; color: #ff8080;',  # reds
-            'background: #685901; color: #fff34b;',  # yellows
-            'background: #04641b; color: #31f626;',  # greens
-            'background: #032169; color: #63c6f5;',  # blues
-            'background: #422169; color: #c663f5;',  # purples
-        ]
-        self.frame_styles = [
-            'background: #3c0000;',  # reds
-            'background: #503c00;',  # yellows
-            'background: #003214;',  # greens
-            'background: #001e3c;',  # blues
-            'background: #281e3c;',  # purples
-        ]
-        self.next_header_style = len(title) % len(self.header_styles)
+        self.next_header_style = len(title) % len(header_styles)
 
     def start_column(self):
         self.pending_column = QVBoxLayout()
@@ -70,30 +66,13 @@ class KH2Submenu(QWidget):
         self.pending_group.setContentsMargins(8, 0, 8, 0)
 
     def end_group(self, title='', group_id=''):
+        header_style_choice = self.next_header_style % len(header_styles)
+        self.next_header_style = self.next_header_style + 1
+
         group = QVBoxLayout()
         group.setContentsMargins(0, 0, 0, 0)
 
-        header_style_choice = self.next_header_style % len(self.header_styles)
-        self.next_header_style = self.next_header_style + 1
-
-        if title != '':
-            title_label = QLabel(title)
-            title_label.setContentsMargins(8, 8, 8, 8)
-            title_label.setProperty('cssClass', 'groupHeader')
-            title_label.setStyleSheet(self.header_styles[header_style_choice])
-            group.addWidget(title_label)
-
-        group.addLayout(self.pending_group)
-
-        frame = QFrame()
-        if title == '':
-            frame.setContentsMargins(0, 8, 0, 8)
-        else:
-            frame.setContentsMargins(0, 0, 0, 8)
-        frame.setProperty('cssClass', 'settingsFrame')
-        frame_style = self.frame_styles[header_style_choice]
-        frame.setStyleSheet('QFrame[cssClass~="settingsFrame"], QWidget[cssClass~="layoutWidget"], QLabel, QCheckBox {' + frame_style + '}')
-        frame.setLayout(group)
+        frame = self.make_styled_frame(self.pending_group, header_style_choice=header_style_choice, title=title)
 
         self.pending_column.addWidget(frame)
         self.pending_group = None
@@ -101,11 +80,40 @@ class KH2Submenu(QWidget):
         if group_id != '':
             self.groups_by_id[group_id] = frame
 
-    def _add_option_widget(self, label_text: str, tooltip: str, option):
+    def add_labeled_widget(self, widget: QWidget, label_text: str, tooltip: str = ""):
         label = QLabel(label_text)
         if tooltip != '':
             label.setToolTip(tooltip)
+        else:
+            widget_tooltip = widget.toolTip()
+            if widget_tooltip != '':
+                label.setToolTip(widget_tooltip)
 
+        if self.pending_column:
+            layout = QHBoxLayout()
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.addWidget(label)
+            layout.addWidget(widget, alignment=Qt.AlignRight)
+
+            layout_widget = QWidget()
+            layout_widget.setProperty('cssClass', 'layoutWidget')
+            layout_widget.setLayout(layout)
+            if self.pending_group:
+                self.pending_group.addWidget(layout_widget)
+            else:
+                self.pending_column.addWidget(layout_widget)
+        else:
+            layout = QHBoxLayout()
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.addWidget(label, stretch=1)
+            layout.addWidget(widget, stretch=2, alignment=Qt.AlignLeft)
+
+            layout_widget = QWidget()
+            layout_widget.setProperty('cssClass', 'layoutWidget')
+            layout_widget.setLayout(layout)
+            self.menulayout.addWidget(layout_widget)
+
+    def _add_option_widget(self, label_text: str, tooltip: str, option):
         if self.pending_column:
             if isinstance(option, QCheckBox):
                 option.setText(label_text)
@@ -134,28 +142,9 @@ class KH2Submenu(QWidget):
                 else:
                     self.pending_column.addWidget(layout_widget)
             else:
-                layout = QHBoxLayout()
-                layout.setContentsMargins(0, 0, 0, 0)
-                layout.addWidget(label)
-                layout.addWidget(option, alignment=Qt.AlignRight)
-
-                layout_widget = QWidget()
-                layout_widget.setProperty('cssClass', 'layoutWidget')
-                layout_widget.setLayout(layout)
-                if self.pending_group:
-                    self.pending_group.addWidget(layout_widget)
-                else:
-                    self.pending_column.addWidget(layout_widget)
+                self.add_labeled_widget(option, label_text=label_text, tooltip=tooltip)
         else:
-            layout = QHBoxLayout()
-            layout.setContentsMargins(0, 0, 0, 0)
-            layout.addWidget(label, stretch=1)
-            layout.addWidget(option, stretch=2, alignment=Qt.AlignLeft)
-
-            layout_widget = QWidget()
-            layout_widget.setProperty('cssClass', 'layoutWidget')
-            layout_widget.setLayout(layout)
-            self.menulayout.addWidget(layout_widget)
+            self.add_labeled_widget(option, label_text=label_text, tooltip=tooltip)
 
     def add_option(self, setting_name: str):
         setting = Class.seedSettings.settings_by_name[setting_name]
@@ -413,6 +402,32 @@ class KH2Submenu(QWidget):
             elif isinstance(setting, ProgressionChainSelect):
                 setting.progression.set_uncompressed(self.settings.get(name))
                 widget._update_spinboxes()
+
+    @staticmethod
+    def make_styled_frame(layout: QLayout, header_style_choice: int, title: str = "") -> QFrame:
+        group = QVBoxLayout()
+        group.setContentsMargins(0, 0, 0, 0)
+
+        if title != '':
+            title_label = QLabel(title)
+            title_label.setContentsMargins(8, 8, 8, 8)
+            title_label.setProperty('cssClass', 'groupHeader')
+            title_label.setStyleSheet(header_styles[header_style_choice])
+            group.addWidget(title_label)
+
+        group.addLayout(layout)
+
+        frame = QFrame()
+        if title == '':
+            frame.setContentsMargins(0, 8, 0, 8)
+        else:
+            frame.setContentsMargins(0, 0, 0, 8)
+        frame.setProperty('cssClass', 'settingsFrame')
+        frame_style = frame_styles[header_style_choice]
+        frame.setStyleSheet('QFrame[cssClass~="settingsFrame"], QWidget[cssClass~="layoutWidget"], QLabel, QCheckBox {' + frame_style + '}')
+        frame.setLayout(group)
+
+        return frame
 
     def make_combo_box(self, name: str):
         setting: SingleSelect = Class.seedSettings.settings_by_name[name]

@@ -1,113 +1,92 @@
-
+from Class.exceptions import SettingsException
 from Class.newLocationClass import KH2Location
-from List.configDict import locationCategory, locationDepth, locationType
 from List.NewLocationList import Locations
+from List.configDict import locationCategory, locationDepth
 
-class ItemDepths():
-    def __init__(self, location_depth: locationDepth, locations:Locations):
-        location_graph = locations.location_graph
-        self.depth_classification = {}
-        self.very_restricted_locations = location_depth in [locationDepth.FirstBoss,locationDepth.SecondBoss,locationDepth.DataFight]
 
-        # first boss - default to no, enable the first bosses
-        # first visit - default to no, enable before and including first boss
-        # second boss - default to no, enable second boss check
-        # second visit - default to yes, disable datas
-        # datas - default to no, set datas to yes
-        # anywhere, set all to yes
-        if location_depth in [locationDepth.FirstBoss,locationDepth.FirstVisit,locationDepth.SecondBoss,locationDepth.DataFight,locationDepth.SecondVisitOnly]:
-            for l in locations.getAllSoraLocations():
-                self.depth_classification[l] = False
-        else:
-            for l in locations.getAllSoraLocations():
-                self.depth_classification[l] = True
+class ItemDepths:
 
-        first_boss_nodes = locations.first_boss_nodes
-        second_boss_nodes = locations.second_boss_nodes
-        data_nodes = locations.data_nodes
+    def __init__(self, location_depth: locationDepth, locations: Locations):
+        self.location_depth = location_depth
+        self.depth_classification: dict[KH2Location, bool] = {}
+        self.very_restricted_locations = location_depth in [
+            locationDepth.FirstBoss,
+            locationDepth.LastStoryBoss,
+            locationDepth.Superbosses
+        ]
 
-        if location_depth is locationDepth.FirstBoss:
-            for node in first_boss_nodes:
-                node_locations = location_graph.node_data(node).locations
-                # try to find a popup location
-                found_location = False
-                for loc in node_locations:
-                    if loc.LocationCategory is locationCategory.POPUP:
-                        self.depth_classification[loc] = True
-                        found_location = True
-                        break
-                # if no popup at first boss location, just prefer the first location in that node
-                if not found_location:
-                    self.depth_classification[node_locations[0]] = True
+        if location_depth is locationDepth.Anywhere:
+            self._set_all_initial_values(locations, True)
         elif location_depth is locationDepth.FirstVisit:
-            for node in first_boss_nodes:
-                current_node = node
-                # backtrack on the graph until we can't anymore
-                while location_graph.inc_edges(current_node):
-                    node_locations = location_graph.node_data(current_node).locations
-                    for loc in node_locations:
-                        self.depth_classification[loc] = True
-                    parent_edge = location_graph.inc_edges(current_node)[0]
-                    parent,_ = location_graph.edge_by_id(parent_edge)
-                    current_node = parent
-        elif location_depth is locationDepth.NoFirstVisit:
-	    # exact same code of First Visits but opposite depth
-            for node in first_boss_nodes:
-                current_node = node
-                # backtrack on the graph until we can't anymore
-                while location_graph.inc_edges(current_node):
-                    node_locations = location_graph.node_data(current_node).locations
-                    for loc in node_locations:
-                        self.depth_classification[loc] = False
-                    parent_edge = location_graph.inc_edges(current_node)[0]
-                    parent,_ = location_graph.edge_by_id(parent_edge)
-                    current_node = parent
+            self._apply_first_visit(locations)
+        elif location_depth is locationDepth.NonSuperboss:
+            self._apply_non_superboss(locations)
+        elif location_depth is locationDepth.FirstBoss:
+            self._apply_boss_depth(locations, locations.first_boss_nodes)
         elif location_depth is locationDepth.SecondVisitOnly:
-            def get_children(in_node):
-                children = []
-                out_edges = location_graph.out_edges(in_node)
-                for out_edge_i in out_edges:
-                    _,child = location_graph.edge_by_id(out_edge_i)
-                    children.append(child)
-                return children
-            for node in first_boss_nodes:
-                current_node = node
-                # get all child nodes
-                child_nodes = get_children(current_node)
-                index = 0
-                while index < len(child_nodes):
-                    current_node = child_nodes[index]
-                    index+=1
-                    child_nodes+=get_children(current_node)
-                for child in child_nodes:
-                    if child not in data_nodes:
-                        node_locations = location_graph.node_data(child).locations
-                        for loc in node_locations:
-                            self.depth_classification[loc] = True
+            self._apply_second_visit_only(locations)
+        elif location_depth is locationDepth.LastStoryBoss:
+            self._apply_boss_depth(locations, locations.last_story_boss_nodes)
+        elif location_depth is locationDepth.Superbosses:
+            self._apply_boss_depth(locations, locations.superboss_nodes)
+        elif location_depth is locationDepth.NoFirstVisit:
+            self._apply_non_first_visit(locations)
+        else:
+            raise SettingsException(f"Invalid location depth {location_depth}")
 
-        elif location_depth is locationDepth.SecondBoss:
-            for node in second_boss_nodes:
-                node_locations = location_graph.node_data(node).locations
-                # try to find a popup location
-                found_location = False
-                for loc in node_locations:
-                    if loc.LocationCategory is locationCategory.POPUP:
-                        self.depth_classification[loc] = True
-                        found_location = True
-                        break
-                # if no popup at first boss location, just prefer the first location in that node
-                if not found_location:
-                    self.depth_classification[node_locations[0]] = True
-        elif location_depth is locationDepth.SecondVisit:
-            for node in data_nodes:
-                node_locations = location_graph.node_data(node).locations
-                for n_l in node_locations:
-                    self.depth_classification[n_l] = False
-        elif location_depth is locationDepth.DataFight:
-            for node in data_nodes:
-                node_locations = location_graph.node_data(node).locations
-                if any(lt in node_locations[0].LocationTypes for lt in [locationType.DataOrg, locationType.AS, locationType.Sephi, locationType.LW]):
-                    self.depth_classification[node_locations[0]] = True
+    def is_valid(self, location: KH2Location):
+        return self.depth_classification[location]
 
-    def isValid(self, loc: KH2Location):
-        return self.depth_classification[loc]
+    def _set_all_initial_values(self, locations: Locations, classification: bool):
+        """ Marks all locations with the given classification initially. """
+        for location in locations.all_locations():
+            self.depth_classification[location] = classification
+
+    def _apply_boss_depth(self, locations: Locations, boss_node_ids: list[str]):
+        """
+        Marks all nodes invalid, then marks _exactly one_ location valid in each of the given boss nodes.
+        This by design in any of the boss depth modes to try to spread the items out more evenly among the bosses.
+        """
+        self._set_all_initial_values(locations, False)
+        for node_id in boss_node_ids:
+            preferred_location = self.preferred_boss_location(locations.locations_for_node(node_id))
+            self.depth_classification[preferred_location] = True
+
+    def _apply_first_visit(self, locations: Locations):
+        # Default to no, enable before and including first boss
+        self._set_all_initial_values(locations, False)
+        for first_boss_node in locations.first_boss_nodes:
+            for location in locations.locations_before(first_boss_node, include_self=True):
+                self.depth_classification[location] = True
+
+    def _apply_non_superboss(self, locations: Locations):
+        # Default to yes, disable superbosses
+        self._set_all_initial_values(locations, True)
+        for superboss_node in locations.superboss_nodes:
+            for location in locations.locations_for_node(superboss_node):
+                self.depth_classification[location] = False
+
+    def _apply_second_visit_only(self, locations: Locations):
+        # Default to no, enable all after first boss (excluding superbosses)
+        self._set_all_initial_values(locations, False)
+        for first_boss_node in locations.first_boss_nodes:
+            # In worlds where the first boss is the same as the last story boss, there is effectively no "second visit"
+            if first_boss_node in locations.last_story_boss_nodes:
+                continue
+            for after_node in locations.node_ids_after(first_boss_node, include_self=False):
+                if after_node not in locations.superboss_nodes:
+                    for location in locations.locations_for_node(after_node):
+                        self.depth_classification[location] = True
+
+    def _apply_non_first_visit(self, locations: Locations):
+        # Default to yes, disable before and including first boss
+        self._set_all_initial_values(locations, True)
+        for first_boss_node in locations.first_boss_nodes:
+            for location in locations.locations_before(first_boss_node, include_self=True):
+                self.depth_classification[location] = False
+
+    @staticmethod
+    def preferred_boss_location(locations: list[KH2Location]) -> KH2Location:
+        # Try to find a popup location. If no popups, just prefer the first location.
+        popup = next((loc for loc in locations if loc.LocationCategory is locationCategory.POPUP), None)
+        return popup if popup is not None else locations[0]

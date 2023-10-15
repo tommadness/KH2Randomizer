@@ -1,0 +1,87 @@
+- id: donald_pl
+  name: Donald (Pride Lands)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: hat_body
+          name: Hat/Body
+          hue_start: 185
+          hue_end: 215
+      image_groups:
+        - - remastered/obj/P_LK020.mdlx/-0.dds
+          - remastered/obj/P_LK020_RTN.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: wingtips
+          name: Wingtips
+          hue_start: 205
+          hue_end: 235
+      image_groups:
+        - - remastered/obj/P_LK020.mdlx/-1.dds
+          - remastered/obj/P_LK020_RTN.mdlx/-1.dds
+
+
+- id: goofy_pl
+  name: Goofy (Pride Lands)
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shell
+          name: Shell
+          hue_start: 5
+          hue_end: 85
+      image_groups:
+        - - remastered/obj/P_LK030.mdlx/-0.dds
+          - remastered/obj/P_LK030_RTN.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: hat
+          name: Hat
+          hue_start: 55
+          hue_end: 85
+      image_groups:
+        - - remastered/obj/P_LK030.mdlx/-1.dds
+          - remastered/obj/P_LK030_RTN.mdlx/-1.dds
+
+
+- id: saix
+  name: Saix
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: coat
+          name: Coat
+          value_start: 0
+          value_end: 75
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/B_EX160.mdlx/-0.dds
+          - remastered/obj/B_EX160_GM.mdlx/-0.dds
+          - remastered/obj/B_EX160_LV99.mdlx/-0.dds
+          - remastered/obj/H_EX680.mdlx/-2.dds
+
+        - - remastered/obj/B_EX160.mdlx/-1.dds
+          - remastered/obj/B_EX160_GM.mdlx/-1.dds
+          - remastered/obj/B_EX160_LV99.mdlx/-1.dds
+          - remastered/obj/H_EX680.mdlx/-3.dds
+
+    - colorable_areas:
+        - id: claymore_main
+          name: Claymore (Main Color)
+          hue_start: 121
+          hue_end: 300
+        - id: claymore_accent
+          name: Claymore (Accent)
+          hue_start: 0
+          hue_end: 120
+      image_groups:
+        - - remastered/obj/B_EX160.mdlx/-8.dds
+          - remastered/obj/B_EX160_GM.mdlx/-8.dds
+          - remastered/obj/B_EX160_LV99.mdlx/-8.dds
+          - remastered/obj/H_EX680.mdlx/-0.dds
