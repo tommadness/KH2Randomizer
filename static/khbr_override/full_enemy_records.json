@@ -7558,6 +7558,7 @@
             "Luxord (Data)",
             "Marluxia",
             "Marluxia (Data)",
+            "Pete TR",
             "Prison Keeper",
             "Roxas",
             "Roxas (Data)",
@@ -7646,7 +7647,6 @@
             "Hostile Program",
             "Leon",
             "Past Pete",
-            "Pete TR",
             "Riku",
             "Sark",
             "Seifer",
@@ -9968,6 +9968,7 @@
             "Luxord (Data)",
             "Marluxia",
             "Marluxia (Data)",
+            "Pete TR",
             "Prison Keeper",
             "Roxas",
             "Roxas (Data)",
@@ -10644,7 +10645,10 @@
             "Jafar",
             "Seifer",
             "Axel I",
-            "Twilight Thorn"
+            "Twilight Thorn",
+            "Blizzard Lord",
+            "Volcano Lord",
+            "Pete TR"
         ],
         "whitelist_source": [],
         "whitelist_destination": [],
@@ -12109,8 +12113,7 @@
             "Xaldin",
             "Xemnas",
             "Xigbar",
-            "Yuffie",
-            "Zexion"
+            "Yuffie"
         ]
     },
     "Final Xemnas (Clone)": {
@@ -13740,6 +13743,7 @@
             "Shan-Yu",
             "Xaldin",
             "Xemnas",
+            "Axel II",
             "Final Xemnas (Data)",
             "Xaldin (Data)",
             "Xemnas (Data)",
@@ -27199,7 +27203,10 @@
             "Jafar",
             "Seifer",
             "Axel I",
-            "Twilight Thorn"
+            "Twilight Thorn",
+            "Blizzard Lord",
+            "Volcano Lord",
+            "Pete TR"
         ],
         "enabled": true,
         "tags": [
@@ -27782,7 +27789,8 @@
             "Leon",
             "Tifa",
             "Volcano Lord",
-            "Yuffie"
+            "Yuffie",
+            "Final Xemnas"
         ],
         "variations": [
             "Zexion",
@@ -27924,7 +27932,8 @@
             "Leon",
             "Tifa",
             "Volcano Lord",
-            "Yuffie"
+            "Yuffie",
+            "Final Xemnas"
         ],
         "variations": [
             "Zexion",

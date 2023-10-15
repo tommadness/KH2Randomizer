@@ -1302,6 +1302,7 @@ Axel II:
   - Luxord (Data)
   - Marluxia
   - Marluxia (Data)
+  - Pete TR
   - Prison Keeper
   - Roxas
   - Roxas (Data)
@@ -1515,6 +1516,7 @@ Blizzard Lord:
   - Hydra
   - Larxene
   - Marluxia
+  - Pete TR
   tags:
   - large
   type: boss
@@ -2959,6 +2961,7 @@ Hayner:
   - Shan-Yu
   - Xaldin
   - Xemnas
+  - Axel II
   - Final Xemnas (Data)
   - Xaldin (Data)
   - Xemnas (Data)
@@ -5085,6 +5088,7 @@ Setzer:
   - Shan-Yu
   - Xaldin
   - Xemnas
+  - Axel (Data)
   hp: 100
   level: 99
   limiter: 0
@@ -6081,6 +6085,7 @@ Volcano Lord:
   - Hydra
   - Larxene
   - Marluxia
+  - Pete TR
   tags:
   - large
   type: boss
@@ -6221,6 +6226,9 @@ Xigbar:
   - Seifer
   - Axel I
   - Twilight Thorn
+  - Blizzard Lord
+  - Volcano Lord
+  - Pete TR
   enabled: true
   tags:
   - organization
@@ -6390,6 +6398,7 @@ Zexion:
   - Tifa
   - Volcano Lord
   - Yuffie
+  - Final Xemnas
   variations:
     Zexion:
       program: 151
