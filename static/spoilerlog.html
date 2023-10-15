@@ -2,232 +2,668 @@
 <html lang="en">
     <head>
         <title>KH2FM Randomizer Spoiler Log</title>
-<script>
-        spoiler_data = SPOILER_JSON_FROM_SEED
-    </script>
-
-
-        <style>
-            :root {
-                --background: rgba(0,214,170,.85);
-            }
-            *,*::before,*::after {
-                box-sizing: border-box;
-            }
-            .content {
-                height: 95hv;
-                background-blend-mode: multiply;
-                background-size: cover;
-                display: grid;
-                place-items: center;
-            }
-            .table_wrapper{
-                height:95vh;
-                overflow-y:scroll;
-                overflow-x:hidden;
-            }
-
-            .styled-table {
-                border-collapse: collapse;
-                margin: 0px 0;
-                font-size: 0.8em;
-                font-family: sans-serif;
-                min-width: 500px;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-                position: relative;
-            }
-            .styled-table thead tr {
-                background-color: #009879;
-                color: #ffffff;
-                text-align: center;
-            }
-            .styled-table th,
-            .styled-table td {
-                padding: 12px 15px;
-            }
-            .styled-table th {
-                position: sticky;
-                top: 0px;
-                background-color: #bee3db;
-            }
-            .styled-table tbody tr {
-                border-bottom: 1px solid #dddddd;
-            }
-
-            .styled-table tbody tr:nth-of-type(odd) {
-                background-color: #f3f3f3;
-            }
-
-            .styled-table tbody tr:last-of-type {
-                border-bottom: 2px solid #009879;
-            }
-            .styled-table tbody tr.active-row {
-                font-weight: bold;
-                color: #009879;
-            }
-
-        </style>
-    </head>
-    <body>
-        <div class="content">
-            <div class="table-wrapper">
-                <table class="styled-table" id="spoilerTable">
-                    <tr>
-                        <th>World <input type="text" id="world_search" onkeyup="tableFilter()" placeholder="Search for world.."></th>
-                        <th>Location <input type="text" id="location_search" onkeyup="tableFilter()" placeholder="Search for location.."></th>
-                        <th>Item <input type="text" id="item_search" onkeyup="tableFilter()" placeholder="Search for item.."></th>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </body>
-
     <script>
-        worlds = ["Garden of Assemblage","Critical Bonuses","Space Paranoids", "Port Royal", "Twilight Town", "Olympus Coliseum", "Halloween Town", "Land of Dragons", "The World That Never Was", "Beast's Castle", "Agrabah", "Pride Lands", "Hollow Bastion", "Disney Castle / Timeless River", "Simulated Twilight Town", "Hundred Acre Wood", "Atlantica", "Puzzle"]
-
-        var mainContainer = document.getElementById("spoilerTable");
-        for(var j = 0; j < worlds.length; j++)
-        {
-            var world = worlds[j]
-            if(world in spoiler_data)
-            {
-                for (var i = 0; i < spoiler_data[world].length; i++)
-                {
-                    var table_entry = document.createElement("tr");
-                    var world_table_html = "";
-                    world_table_html+="<td>"
-                    world_table_html+=world
-                    world_table_html+="</td>"
-                    var item_data = spoiler_data[world][i]
-                    world_table_html+="<td>"
-                    world_table_html+=item_data[0]
-                    world_table_html+="</td>"
-                    world_table_html+="<td>"
-                    world_table_html+=item_data[1]["Name"]
-                    world_table_html+="</td>"
-                    table_entry.innerHTML += world_table_html;
-                    mainContainer.appendChild(table_entry);
-                }
-            }
-        }
-
-        if ("Level" in spoiler_data)
-        {
-            for (var i = 0; i < spoiler_data["Level"].length; i++)
-            {
-                var table_entry = document.createElement("tr");
-                var world_table_html = "";
-                world_table_html+="<td>";
-                world_table_html+="Levels";
-                world_table_html+="</td>";
-                var level_data = spoiler_data["Level"][i];
-                world_table_html+="<td>";
-                world_table_html+=level_data[0];
-                world_table_html+="</td>";
-                world_table_html+="<td>";
-                world_table_html+=level_data[1]["Name"];
-                world_table_html+="</td>";
-                table_entry.innerHTML += world_table_html;
-                mainContainer.appendChild(table_entry);
-            }
-        }
-
-        if ("Form Levels" in spoiler_data)
-        {
-            for (var i = 0; i < spoiler_data["Form Levels"].length; i++)
-            {
-                var table_entry = document.createElement("tr");
-                var world_table_html = "";
-                world_table_html+="<td>";
-                world_table_html+="Levels";
-                world_table_html+="</td>";
-                var level_data = spoiler_data["Form Levels"][i]
-                world_table_html+="<td>";
-                world_table_html+=level_data[0];
-                world_table_html+="</td>";
-                world_table_html+="<td>";
-                world_table_html+=level_data[1]["Name"];
-                world_table_html+="</td>";
-                table_entry.innerHTML += world_table_html;
-                mainContainer.appendChild(table_entry);
-            }
-        }
-
-        if ("Weapons" in spoiler_data)
-        {
-            for (var i = 0; i <  spoiler_data["Weapons"].length; i++)
-            {
-                var table_entry = document.createElement("tr");
-                var world_table_html = "";
-                world_table_html+="<td>";
-                world_table_html+="Weapons";
-                world_table_html+="</td>";
-                var weapon = spoiler_data["Weapons"][i]
-                world_table_html+="<td>";
-                world_table_html+=weapon[0];
-                world_table_html+="</td>";
-                world_table_html+="<td>";
-                world_table_html+=weapon[1];
-                world_table_html+="</td>";
-                table_entry.innerHTML += world_table_html;
-                mainContainer.appendChild(table_entry);
-            }
-        }
-
-        function tableFilter()
-        {
-            var input, world_filter, location_filter, item_filter, table, tr, td1, td2, td3, i, txtValue1, txtValue2, txtValue3;
-            input = document.getElementById("world_search");
-            world_filter = input.value.toUpperCase();
-            input = document.getElementById("location_search");
-            location_filter = input.value.toUpperCase();
-            input = document.getElementById("item_search");
-            item_filter = input.value.toUpperCase();
-
-            table = document.getElementById("spoilerTable");
-            tr = table.getElementsByTagName("tr");
-
-
-            for(var i=1; i<tr.length; i++)
-            {
-                td1 = tr[i].getElementsByTagName("td")[0];
-                td2 = tr[i].getElementsByTagName("td")[1];
-                td3 = tr[i].getElementsByTagName("td")[2];
-
-                var found = false;
-
-                txtValue1 = txtValue2 = txtValue3 = "";
-
-                if(td1)
-                {
-                    txtValue1 = td1.textContent || td1.innerText;
-                }
-                if(td2)
-                {
-                    txtValue2 = td2.textContent || td2.innerText;
-                }
-                if(td3)
-                {
-                    txtValue3 = td3.textContent || td3.innerText;
-                }
-
-                if (txtValue1.toUpperCase().indexOf(world_filter) > -1 && txtValue2.toUpperCase().indexOf(location_filter) > -1 && txtValue3.toUpperCase().indexOf(item_filter) > -1)
-                {
-                    found = true;
-                }
-
-                if (found)
-                {
-                    tr[i].style.display = "";
-                }
-                else
-                {
-                    tr[i].style.display = "none";
-                }
-
-            }
-
-        }
-
+        seed_name = "SEED_NAME_STRING"
+        sora_item_data = SORA_ITEM_JSON
+        donald_item_data = DONALD_ITEM_JSON
+        goofy_item_data = GOOFY_ITEM_JSON
+        level_data = LEVEL_STATS_JSON
+        form_exp_data = FORM_EXP_JSON
+        depth_data = DEPTH_VALUES_JSON
+        boss_enemy_data = BOSS_ENEMY_JSON
+        battle_level_data = BATTLE_LEVEL_JSON
+        synthesis_recipe_data = {SYNTHESIS_RECIPE_JSON}
+        weapon_stats_data = {WEAPON_STATS_JSON}
+        settings_data = {SETTINGS_JSON}
     </script>
+
+<style>
+    @font-face {
+        font-family: KHMenu;
+        src: url("KHMenu.otf") format("opentype");
+    }
+    *,*::before,*::after {
+        box-sizing: border-box;
+    }
+    body {
+        background-color: #31363b;
+        color: #ffffff;
+    }
+    .content {
+        font-family: KHMenu, sans-serif;
+        display: grid;
+        place-items: center;
+    }
+
+    .styled-table {
+        border-collapse: collapse;
+        margin: auto;
+        min-width: 500px;
+        position: relative;
+    }
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 16px;
+    }
+    .styled-table tr {
+        background-color: #2a2f33;
+        border-bottom: 1px solid #6a7580;
+    }
+
+    .accordion {
+        font-family: KHMenu, sans-serif;
+        font-size: 1.5em;
+        cursor: pointer;
+        padding: 16px;
+        margin-top: 4px;
+        width: 95%;
+        text-align: center;
+        border: none;
+        outline: none;
+        transition: .4s;
+    }
+    .active, .accordion:hover {
+        color: #4dd0e1;
+    }
+
+    .table-wrapper {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .panel {
+        overflow: hidden;
+        max-height: 0;
+        width: 95%;
+        transition: max-height 0.2s ease-out;
+    }
+
+    .panel:nth-of-type(5n+1) .styled-table {
+        box-shadow: 0 0 24px #ff8080;
+    }
+    .accordion:nth-of-type(5n+1), .panel:nth-of-type(5n+1) .styled-table th {
+        background-color: #4d0d0e;
+        color: #ff8080;
+    }
+
+    .panel:nth-of-type(5n+2) .styled-table {
+        box-shadow: 0 0 24px #fff34b;
+    }
+    .accordion:nth-of-type(5n+2), .panel:nth-of-type(5n+2) .styled-table th {
+        background-color: #685901;
+        color: #fff34b;
+    }
+
+    .panel:nth-of-type(5n+3) .styled-table {
+        box-shadow: 0 0 24px #31f626;
+    }
+    .accordion:nth-of-type(5n+3), .panel:nth-of-type(5n+3) .styled-table th {
+        background-color: #04641b;
+        color: #31f626;
+    }
+
+    .panel:nth-of-type(5n+4) .styled-table {
+        box-shadow: 0 0 24px #63c6f5;
+    }
+    .accordion:nth-of-type(5n+4), .panel:nth-of-type(5n+4) .styled-table th {
+        background-color: #032169;
+        color: #63c6f5;
+    }
+
+    .panel:nth-of-type(5n+5) .styled-table {
+        box-shadow: 0 0 24px #c663f5;
+    }
+    .accordion:nth-of-type(5n+5), .panel:nth-of-type(5n+5) .styled-table th {
+        background-color: #422169;
+        color: #c663f5;
+    }
+
+    .accordion:after {
+        content: '\02795'; /* Unicode character for "plus" sign (+) */
+        font-size: 0.75em;
+        float: left;
+    }
+
+    .active:after {
+        content: "\2796"; /* Unicode character for "minus" sign (-) */
+    }
+
+    .wrap-long {
+        overflow-wrap: anywhere;
+    }
+
+    .seed-string-table {
+        width: 95%;
+        background-color: #281e3c;
+        margin-bottom: 16px;
+    }
+    .seed-string-table th {
+        background-color: #422169;
+        color: #c663f5;
+    }
+    .seed-string-table th,
+    .seed-string-table td {
+        padding: 12px 16px;
+        overflow-wrap: anywhere;
+    }
+</style>
+</head>
+<body>
+<div class="content" id="all_content">
+    <h1 id="seed_header">Randomizer Seed Spoiler Log</h1>
+
+    <table class="seed-string-table">
+        <tr>
+            <th>Seed String</th>
+            <td>{SEED_STRING}</td>
+        </tr>
+    </table>
+
+    <button class="accordion">Sora Item Placement</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="spoilerTable">
+                <tr>
+                    <th>World <input type="text" id="world_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for world.."></th>
+                    <th>Location &lt;Weight&gt; <input type="text" id="location_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for location.."></th>
+                    <th>Item <input type="text" id="item_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for item.."></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">Party Item Placement</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="partyItemTable">
+                <tr>
+                    <th>World <input type="text" id="party_world_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for world.."></th>
+                    <th>Location <input type="text" id="party_location_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for location.."></th>
+                    <th>Item <input type="text" id="party_item_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for item.."></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">Form Experience Data</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="formExpTable">
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">World Battle Levels</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="btlvTable">
+                <tr>
+                    <th>World</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">Level Experience Data</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="expTable">
+                <tr>
+                    <th>Level</th>
+                    <th>Experience</th>
+                    <th>Strength</th>
+                    <th>Magic</th>
+                    <th>Defense</th>
+                    <th>AP</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">Weapon Statistics</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="weaponStatsTable">
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">Item/Location Weights</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="weightTable">
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">Synthesis Recipes</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="recipeTable">
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion">Settings</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="settingsTable">
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+if ("BOSSES" in boss_enemy_data)
+{
+    tabs = document.getElementById("all_content");
+    //make a bosses tab
+    var enemy_table = "<button class=\"accordion\">Boss Replacements</button><div class=\"panel\"><div class=\"table-wrapper\"><table class=\"styled-table\">"
+    enemy_table+="<tr><th>Original Boss</th><th>New Boss</th></tr>";
+
+    all_replaced = boss_enemy_data["BOSSES"];
+    for(var i=0;i<all_replaced.length;i++)
+    {
+        enemy_table+="<tr><td>"+all_replaced[i]["original"]+"</td><td>"+all_replaced[i]["new"]+"</td></tr>";
+    }
+    enemy_table+="</table></div></div>";
+    tabs.innerHTML+=enemy_table;
+}
+if ("ENEMIES" in boss_enemy_data)
+{
+    tabs = document.getElementById("all_content");
+    //make an enemies tab
+    var enemy_table = "<button class=\"accordion\">Enemy Replacements</button><div class=\"panel\"><div class=\"table-wrapper\"><table class=\"styled-table\">"
+    enemy_table+="<tr><th>Original Enemy</th><th>New Enemy</th></tr>";
+
+    all_replaced = boss_enemy_data["ENEMIES"];
+    for(var i=0;i<all_replaced.length;i++)
+    {
+        enemy_table+="<tr><td>"+all_replaced[i]["original"]+"</td><td>"+all_replaced[i]["new"]+"</td></tr>";
+    }
+    enemy_table+="</table></div></div>";
+    tabs.innerHTML+=enemy_table;
+}
+
+
+function populateWeaponStatsTable(in_weapon_stats, which_table)
+{
+    weapon_stats_table = document.getElementById(which_table);
+    var weapon_stats_header = document.createElement("tr");
+    weapon_stats_header.innerHTML += "<th>Weapon</th><th>Strength</th><th>Magic</th><th>Ability</th>";
+    weapon_stats_table.appendChild(weapon_stats_header);
+
+    for (var i = 0; i < in_weapon_stats.length; i++)
+    {
+        var data_row = document.createElement("tr");
+        var weapon = in_weapon_stats[i];
+        data_row.innerHTML += "<td>" + weapon["name"] + "</td>";
+        data_row.innerHTML += "<td>" + weapon["strength"] + "</td>";
+        data_row.innerHTML += "<td>" + weapon["magic"] + "</td>";
+        data_row.innerHTML += "<td>" + weapon["item"] + "</td>";
+        weapon_stats_table.appendChild(data_row);
+    }
+}
+
+populateWeaponStatsTable(weapon_stats_data, "weaponStatsTable");
+
+function populateWeightTable(in_depth_data,which_table)
+{
+    weight_table = document.getElementById(which_table);
+    var weight_header = document.createElement("tr");
+    weight_header.innerHTML+="<th></th><th colspan=\""+String(in_depth_data["Common"].length)+"\">Location Weights</th>";
+    weight_table.appendChild(weight_header);
+
+    var data_row = document.createElement("tr");
+    data_row.innerHTML+="<th>Item Type</th>";
+    for(var i=0;i<in_depth_data["Common"].length;i++)
+    {
+        data_row.innerHTML+="<th>"+String(i)+"</th>";
+    }
+    weight_table.appendChild(data_row);
+
+    var data_row = document.createElement("tr");
+    data_row.innerHTML+="<td>Common</td>";
+    for(var i=0;i<in_depth_data["Common"].length;i++)
+    {
+        data_row.innerHTML+="<td>"+String(in_depth_data["Common"][i])+"</td>";
+    }
+    weight_table.appendChild(data_row);
+    var data_row = document.createElement("tr");
+    data_row.innerHTML+="<td>Uncommon</td>";
+    for(var i=0;i<in_depth_data["Uncommon"].length;i++)
+    {
+        data_row.innerHTML+="<td>"+String(in_depth_data["Uncommon"][i])+"</td>";
+    }
+    weight_table.appendChild(data_row);
+    var data_row = document.createElement("tr");
+    data_row.innerHTML+="<td>Rare</td>";
+    for(var i=0;i<in_depth_data["Rare"].length;i++)
+    {
+        data_row.innerHTML+="<td>"+String(in_depth_data["Rare"][i])+"</td>";
+    }
+    weight_table.appendChild(data_row);
+    var data_row = document.createElement("tr");
+    data_row.innerHTML+="<td>Mythic</td>";
+    for(var i=0;i<in_depth_data["Mythic"].length;i++)
+    {
+        data_row.innerHTML+="<td>"+String(in_depth_data["Mythic"][i])+"</td>";
+    }
+    weight_table.appendChild(data_row);
+}
+
+populateWeightTable(depth_data,"weightTable");
+
+function populateSynthRecipeTable(in_recipe_data, which_table)
+{
+    recipe_table = document.getElementById(which_table);
+    var recipe_header = document.createElement("tr");
+    recipe_header.innerHTML += "<th>Recipe</th><th>Item</th><th>Materials</th>";
+    recipe_table.appendChild(recipe_header);
+
+    for (var i = 0; i < in_recipe_data.length; i++)
+    {
+        var data_row = document.createElement("tr");
+        var recipe = in_recipe_data[i];
+        data_row.innerHTML += "<td>" + recipe["location"] + "</td>";
+        data_row.innerHTML += "<td>" + recipe["item"] + "</td>";
+        data_row.innerHTML += "<td>" + recipe["requirements"] + "</td>";
+        recipe_table.appendChild(data_row);
+    }
+}
+
+populateSynthRecipeTable(synthesis_recipe_data, "recipeTable");
+
+var formExpTable = document.getElementById("formExpTable");
+var form_header = document.createElement("tr");
+form_header.innerHTML+="<th>Form</th><th>Exp Multiplier</th><th>Level 2</th><th>Level 3</th><th>Level 4</th><th>Level 5</th><th>Level 6</th><th>Level 7</th>";
+formExpTable.appendChild(form_header);
+forms = ["Summon","Valor","Wisdom","Limit","Master","Final"];
+for(var i=0;i<forms.length;i++)
+{
+    form_name = forms[i];
+    var form_exp_row = document.createElement("tr");
+    var form_exp_string = ""
+    form_exp_string+="<td>";
+    form_exp_string+=form_name;
+    form_exp_string+="</td><td>";
+    form_exp_string+=String(form_exp_data[form_name]["multiplier"]);
+    for(var j=0;j<6;j++)
+    {
+        form_exp_string+="</td><td>";
+        form_exp_string+=String(form_exp_data[form_name]["values"][j]);
+    }
+    form_exp_string+="</td>";
+    form_exp_row.innerHTML+=form_exp_string;
+    formExpTable.appendChild(form_exp_row);
+}
+
+btlvWorlds = ["Simulated Twilight Town", "Twilight Town", "Space Paranoids", "Port Royal", "Olympus Coliseum", "Halloween Town", "Land of Dragons", "The World That Never Was", "Beast's Castle", "Agrabah", "Pride Lands", "Hollow Bastion", "Disney Castle / Timeless River"]
+btlvWorlds.sort()
+var btlvTableDisplay = document.getElementById("btlvTable");
+for (var i=0; i < 13; i++)
+{
+    var world_string = btlvWorlds[i]
+    var btlv_data = battle_level_data[world_string]
+
+    var table_entry = document.createElement("tr");
+    var level_html = "";
+    level_html+="<td>"
+    level_html+=world_string
+    level_html+="</td>"
+
+    data_length = Object.keys(btlv_data).length
+
+    for(var j=0;j<data_length;j++)
+    {
+        level_html+="<td>"
+        level_html+=btlv_data[j]
+        level_html+="</td>"
+    }
+    for(var j=data_length;j<3;j++)
+    {
+        level_html+="<td>"
+        level_html+="</td>"
+    }
+    table_entry.innerHTML += level_html;
+    btlvTableDisplay.appendChild(table_entry);
+}
+
+var levelStatTable = document.getElementById("expTable");
+for (var i=1; i < 100; i++)
+{
+    var level_string = "Level "+String(i)
+    var level_entry = level_data[level_string]
+    var experience_value = "0";
+    if (i!=1)
+    {
+        experience_value = level_data["Level "+String(i-1)]["experience"]
+    }
+
+    var table_entry = document.createElement("tr");
+    var level_html = "";
+    level_html+="<td>"
+    level_html+=String(i)
+    level_html+="</td>"
+    level_html+="<td>"
+    level_html+=experience_value
+    level_html+="</td>"
+    level_html+="<td>"
+    level_html+=level_entry["strength"]
+    level_html+="</td>"
+    level_html+="<td>"
+    level_html+=level_entry["magic"]
+    level_html+="</td>"
+    level_html+="<td>"
+    level_html+=level_entry["defense"]
+    level_html+="</td>"
+    level_html+="<td>"
+    level_html+=level_entry["ap"]
+    level_html+="</td>"
+    table_entry.innerHTML += level_html;
+    levelStatTable.appendChild(table_entry);
+}
+
+var settingsTable = document.getElementById("settingsTable");
+for (var settingGroup in settings_data)
+{
+    var header = document.createElement("tr");
+    header.innerHTML += "<th colspan=\"2\">" + settingGroup + "</th>";
+    settingsTable.appendChild(header);
+
+    var group_data = settings_data[settingGroup];
+    for (var settingName in group_data)
+    {
+        var row_entry = document.createElement("tr");
+        var setting_html = "";
+        setting_html += "<td>";
+        setting_html += settingName;
+        setting_html += "</td>"
+        setting_html += "<td>"
+        setting_html += group_data[settingName];
+        setting_html += "</td>"
+        row_entry.innerHTML += setting_html;
+        settingsTable.appendChild(row_entry);
+    }
+}
+
+var acc = document.getElementsByClassName("accordion");
+for(var i = 0; i < acc.length; i++)
+{
+    acc[i].addEventListener("click",function(){
+        this.classList.toggle("active");
+
+        var panel = this.nextElementSibling;
+        if(panel.style.maxHeight){
+            panel.style.maxHeight = null;
+        }
+        else{
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+    });
+}
+
+
+worlds = ["Garden of Assemblage","Critical Bonuses","Space Paranoids", "Port Royal", "Twilight Town", "Olympus Coliseum", "Halloween Town", "Land of Dragons", "The World That Never Was", "Beast's Castle", "Agrabah", "Pride Lands", "Hollow Bastion", "Disney Castle / Timeless River", "Simulated Twilight Town", "Hundred Acre Wood", "Atlantica", "Shop", "Puzzle", "Synthesis"]
+
+
+
+function populateTable(container, data)
+{
+    for(var j = 0; j < worlds.length; j++)
+    {
+        var world = worlds[j]
+        if(world in data)
+        {
+            for (var i = 0; i < data[world].length; i++)
+            {
+                var table_entry = document.createElement("tr");
+                var world_table_html = "";
+                world_table_html+="<td>"
+                world_table_html+=world
+                world_table_html+="</td>"
+                var item_data = data[world][i]
+                world_table_html+="<td>"
+                world_table_html+=item_data[0]
+                world_table_html+="</td>"
+                world_table_html+="<td>"
+                world_table_html+=item_data[1]["Name"] + " (" +item_data[1]["Rarity"] + ")";
+                world_table_html+="</td>"
+                table_entry.innerHTML += world_table_html;
+                container.appendChild(table_entry);
+            }
+        }
+    }
+
+    if ("Level" in data)
+    {
+        for (var i = 0; i < data["Level"].length; i++)
+        {
+            var table_entry = document.createElement("tr");
+            var world_table_html = "";
+            world_table_html+="<td>";
+            world_table_html+="Levels";
+            world_table_html+="</td>";
+            var level_data = data["Level"][i];
+            world_table_html+="<td>";
+            world_table_html+=level_data[0];
+            world_table_html+="</td>";
+            world_table_html+="<td>";
+            world_table_html+=level_data[1]["Name"] + " (" +level_data[1]["Rarity"] + ")";
+            world_table_html+="</td>";
+            table_entry.innerHTML += world_table_html;
+            container.appendChild(table_entry);
+        }
+    }
+
+    if ("Form Levels" in data)
+    {
+        for (var i = 0; i < data["Form Levels"].length; i++)
+        {
+            var table_entry = document.createElement("tr");
+            var world_table_html = "";
+            world_table_html+="<td>";
+            world_table_html+="Levels";
+            world_table_html+="</td>";
+            var level_data = data["Form Levels"][i]
+            world_table_html+="<td>";
+            world_table_html+=level_data[0];
+            world_table_html+="</td>";
+            world_table_html+="<td>";
+            world_table_html+=level_data[1]["Name"] + " (" +level_data[1]["Rarity"] + ")";
+            world_table_html+="</td>";
+            table_entry.innerHTML += world_table_html;
+            container.appendChild(table_entry);
+        }
+    }
+
+    if ("Slot" in data)
+    {
+        for (var i = 0; i <  data["Slot"].length; i++)
+        {
+            var table_entry = document.createElement("tr");
+            var world_table_html = "";
+            world_table_html+="<td>";
+            world_table_html+="Weapons";
+            world_table_html+="</td>";
+            var weapon = data["Slot"][i]
+            world_table_html+="<td>";
+            world_table_html+=weapon[0];
+            world_table_html+="</td>";
+            world_table_html+="<td>";
+            world_table_html+=weapon[1]["Name"] + " (" +weapon[1]["Rarity"] + ")";
+            world_table_html+="</td>";
+            table_entry.innerHTML += world_table_html;
+            container.appendChild(table_entry);
+        }
+    }
+}
+
+
+var mainContainer = document.getElementById("spoilerTable");
+var partyTable = document.getElementById("partyItemTable");
+populateTable(mainContainer,sora_item_data)
+populateTable(partyTable,donald_item_data)
+populateTable(partyTable,goofy_item_data)
+
+function tableFilter(world_elem,location_elem,item_elem,table_to_search)
+{
+    var input, world_filter, location_filter, item_filter, table, tr, td1, td2, td3, i, txtValue1, txtValue2, txtValue3;
+    input = document.getElementById(world_elem);
+    world_filter = input.value.toUpperCase();
+    input = document.getElementById(location_elem);
+    location_filter = input.value.toUpperCase();
+    input = document.getElementById(item_elem);
+    item_filter = input.value.toUpperCase();
+
+    table = document.getElementById(table_to_search);
+    tr = table.getElementsByTagName("tr");
+
+
+    for(var i=1; i<tr.length; i++)
+    {
+        td1 = tr[i].getElementsByTagName("td")[0];
+        td2 = tr[i].getElementsByTagName("td")[1];
+        td3 = tr[i].getElementsByTagName("td")[2];
+
+        var found = false;
+
+        txtValue1 = txtValue2 = txtValue3 = "";
+
+        if(td1)
+        {
+            txtValue1 = td1.textContent || td1.innerText;
+        }
+        if(td2)
+        {
+            txtValue2 = td2.textContent || td2.innerText;
+        }
+        if(td3)
+        {
+            txtValue3 = td3.textContent || td3.innerText;
+        }
+
+        if (txtValue1.toUpperCase().indexOf(world_filter) > -1 && txtValue2.toUpperCase().indexOf(location_filter) > -1 && txtValue3.toUpperCase().indexOf(item_filter) > -1)
+        {
+            found = true;
+        }
+
+        if (found)
+        {
+            tr[i].style.display = "";
+        }
+        else
+        {
+            tr[i].style.display = "none";
+        }
+
+    }
+
+}
+
+</script>
 </html>

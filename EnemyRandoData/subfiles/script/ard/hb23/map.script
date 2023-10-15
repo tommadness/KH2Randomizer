@@ -1,9 +1,0 @@
-Program 0x00
-MapVisibility 0x0007f809 0x00000000
-Spawn "m_00"
-Spawn "m_10"
-Spawn "m_11"
-Spawn "m_50"
-Spawn "m_51"
-Spawn "m_52"
-Spawn "m_70"

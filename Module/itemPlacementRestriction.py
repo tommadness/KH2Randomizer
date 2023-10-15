@@ -1,20 +1,111 @@
 from collections import namedtuple
 
-RestrictedConfig = namedtuple("RestrictedConfig","treasures bonuses forms puzzles")
+class ItemPlacementHelpers():
+    def __init__(self):
+        pass
 
-class ItemPlacementRestriction():
-    def __init__(self,mode,nightmare=False):
-        need_fire_blizzard_thunder = lambda inventory : (21 in inventory and 22 in inventory and 23 in inventory)
-        need_1_magnet = lambda inventory : (inventory.count(87)>=1)
-        need_2_magnets = lambda inventory : (inventory.count(87)>=2)
-        need_2_magnets_all_thunders = lambda inventory : (inventory.count(87)>=2 and inventory.count(23)==3)
+    @staticmethod
+    def need_fire_blizzard_thunder(inventory):
+        return 21 in inventory and 22 in inventory and 23 in inventory
+
+    @staticmethod
+    def need_1_magnet(inventory):
+        return inventory.count(87)>=1
+
+    @staticmethod
+    def need_2_magnet(inventory):
+        return inventory.count(87)>=2
+
+    @staticmethod
+    def need_3_thunders(inventory):
+        return inventory.count(23)==3
+
+    @staticmethod
+    def need_growths(inventory):
         count_high_jumps = lambda inventory : ((94 in inventory) + (95 in inventory) + (96 in inventory) + (97 in inventory))
         count_quick_runs = lambda inventory : ((98 in inventory) + (99 in inventory) + (100 in inventory) + (101 in inventory))
         count_aerial_dodges = lambda inventory : ((102 in inventory) + (103 in inventory) + (104 in inventory) + (105 in inventory))
         count_glides = lambda inventory : ((106 in inventory) + (107 in inventory) + (108 in inventory) + (109 in inventory))
-        need_growths = lambda inventory : (count_high_jumps(inventory)>=3 and count_quick_runs(inventory)>=3 and count_aerial_dodges(inventory)>=3 and count_glides(inventory)>=3)
-        need_proof_connection = lambda inventory : (593 in inventory)
-        need_proof_peace = lambda inventory : (595 in inventory)
+        return count_high_jumps(inventory)>=3 and count_quick_runs(inventory)>=3 and count_aerial_dodges(inventory)>=3 and count_glides(inventory)>=3
+
+    @staticmethod
+    def need_proof_connection(inventory):
+        return 593 in inventory
+
+    @staticmethod
+    def need_proof_peace(inventory):
+        return 595 in inventory
+
+
+    @staticmethod
+    def count_forms(inventory):
+        has_valor = lambda inventory : (26 in inventory)
+        has_wisdom = lambda inventory : (27 in inventory)
+        has_limit = lambda inventory : (563 in inventory)
+        has_master = lambda inventory : (31 in inventory)
+        has_final = lambda inventory : (29 in inventory)
+        return (has_valor(inventory) + has_wisdom(inventory) + has_limit(inventory) + has_master(inventory) + has_final(inventory))
+
+    @staticmethod
+    def need_forms(inventory):
+        return ItemPlacementHelpers.count_forms(inventory)==5
+
+    @staticmethod
+    def need_summons(inventory):
+        return (159 in inventory) and (160 in inventory) and (25 in inventory) and (383 in inventory)
+
+    @staticmethod
+    def need_1_page(inventory):
+        count_pages = lambda inventory : inventory.count(32)
+        return count_pages(inventory) >= 1
+        
+    @staticmethod
+    def need_2_pages(inventory):
+        count_pages = lambda inventory : inventory.count(32)
+        return count_pages(inventory) >= 2
+
+    @staticmethod
+    def need_3_pages(inventory):
+        count_pages = lambda inventory : inventory.count(32)
+        return count_pages(inventory) >= 3
+
+    @staticmethod
+    def need_4_pages(inventory):
+        count_pages = lambda inventory : inventory.count(32)
+        return count_pages(inventory) >= 4
+
+    @staticmethod
+    def need_5_pages(inventory):
+        count_pages = lambda inventory : inventory.count(32)
+        return count_pages(inventory) == 5
+
+    @staticmethod
+    def need_proofs(inventory):
+        return (593 in inventory) and (594 in inventory) and (595 in inventory)
+
+        
+    @staticmethod
+    def make_form_lambda(form_id,form_level):
+        has_valor = lambda inventory : (26 in inventory)
+        has_wisdom = lambda inventory : (27 in inventory)
+        has_limit = lambda inventory : (563 in inventory)
+        has_master = lambda inventory : (31 in inventory)
+        has_final = lambda inventory : (29 in inventory)
+        if form_id=="Valor":
+            return lambda inventory : has_valor(inventory) and ItemPlacementHelpers.count_forms(inventory)>=form_level-2
+        if form_id=="Wisdom":
+            return lambda inventory : has_wisdom(inventory) and ItemPlacementHelpers.count_forms(inventory)>=form_level-2
+        if form_id=="Limit":
+            return lambda inventory : has_limit(inventory) and ItemPlacementHelpers.count_forms(inventory)>=form_level-2
+        if form_id=="Master":
+            return lambda inventory : has_master(inventory) and ItemPlacementHelpers.count_forms(inventory)>=form_level-2
+        if form_id=="Final":
+            return lambda inventory : has_final(inventory) and ItemPlacementHelpers.count_forms(inventory)>=form_level-2
+
+        return lambda inventory : False
+
+    @staticmethod
+    def make_form_lambda_nightmare(form_id,form_level):
         has_valor = lambda inventory : (26 in inventory)
         has_wisdom = lambda inventory : (27 in inventory)
         has_limit = lambda inventory : (563 in inventory)
@@ -25,180 +116,137 @@ class ItemPlacementRestriction():
         has_auto_limit = lambda inventory : (568 in inventory)
         has_auto_master = lambda inventory : (387 in inventory)
         has_auto_final = lambda inventory : (388 in inventory)
-        count_forms = lambda inventory : (has_valor(inventory) + has_wisdom(inventory) + has_limit(inventory) + has_master(inventory) + has_final(inventory))
         count_auto_forms = lambda inventory : (has_auto_valor(inventory) + has_auto_wisdom(inventory) + has_auto_limit(inventory) + has_auto_master(inventory) )
-        need_forms  = lambda inventory : (count_forms(inventory)==5)
-        need_summons = lambda inventory : (( 159 in inventory) and ( 160 in inventory) and ( 25 in inventory) and ( 383 in inventory))
-        need_forms_and_summons = lambda inventory : (need_forms(inventory) and need_summons(inventory))
-        count_pages = lambda inventory : inventory.count(32)
-        need_1_page = lambda inventory : count_pages(inventory) >= 1
-        need_2_pages = lambda inventory : count_pages(inventory) >= 2
-        need_3_pages = lambda inventory : count_pages(inventory) >= 3
-        need_4_pages = lambda inventory : count_pages(inventory) >= 4
-        need_5_pages = lambda inventory : count_pages(inventory) == 5
+        final_possible_but_not_obtained = lambda inventory : (has_valor(inventory) or has_wisdom(inventory) or has_limit(inventory) or has_master(inventory) or count_auto_forms(inventory)>=1) and not has_final(inventory)
+        form_level_obtainable = lambda inventory : ItemPlacementHelpers.count_forms(inventory) + (1 if final_possible_but_not_obtained(inventory) else 0) + 2
 
-        if mode=="Reverse":
-            print("Reverse Rando Restrictions")
-            restricted_treasures = [([34,486,303,545,550,250,251,35,36,137,138,487,37,502,503,300],need_fire_blizzard_thunder),
-                                    ([287],need_1_magnet),
-                                    ([367],need_2_magnets_all_thunders),
-                                    ([587,591],need_proof_connection),
-                                    ([560],need_forms),
-                                    ([518],need_forms_and_summons),
-                                    ([313,97,98], need_5_pages),
-                                    ([103,104,105], need_4_pages),
-                                    ([100,101,314], need_3_pages),
-                                    ([106,107,108], need_2_pages),
-                                    ([110,111,112,113,115,116,284,485], need_1_page)]
-            restricted_bonuses = [([15,37,42,46],need_fire_blizzard_thunder)]
-        else: #regular seed restrictions
-            restricted_treasures = [([34,486,303,545,550],need_fire_blizzard_thunder),
-                                    ([287],need_2_magnets),
-                                    ([279,538],need_2_magnets_all_thunders),
-                                    ([562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582],need_growths),
-                                    ([587,591],need_proof_connection),
-                                    ([588,589],need_proof_peace),
-                                    ([560],need_forms),
-                                    ([518],need_forms_and_summons),
-                                    ([103,104,105], need_1_page),
-                                    ([100,101,314], need_2_pages),
-                                    ([106,107,108], need_3_pages),
-                                    ([110,111,112,113,115,116,284,485], need_4_pages),
-                                    ([285,539,312,94], need_5_pages)]
+        if form_id=="Valor":
+            return lambda inventory : (has_valor(inventory) or has_auto_valor(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Wisdom":
+            return lambda inventory : (has_wisdom(inventory) or has_auto_wisdom(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Limit":
+            return lambda inventory : (has_limit(inventory) or has_auto_limit(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Master":
+            return lambda inventory : (has_master(inventory) or has_auto_master(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Final":
+            have_final_form = lambda inventory : final_possible_but_not_obtained(inventory) or has_final(inventory)
+            if form_level==2:
+                return lambda inventory : have_final_form(inventory) or has_auto_final(inventory)
+            else:
+                return lambda inventory : have_final_form(inventory) and form_level_obtainable(inventory)>=form_level
 
-            restricted_bonuses = [([15],need_fire_blizzard_thunder)]
+        return lambda inventory : False
 
+    @staticmethod
+    def make_form_lambda_nightmare_no_final(form_id,form_level):
+        has_valor = lambda inventory : (26 in inventory)
+        has_wisdom = lambda inventory : (27 in inventory)
+        has_limit = lambda inventory : (563 in inventory)
+        has_master = lambda inventory : (31 in inventory)
+        has_final = lambda inventory : (29 in inventory)
+        has_auto_valor = lambda inventory : (385 in inventory)
+        has_auto_wisdom = lambda inventory : (386 in inventory)
+        has_auto_limit = lambda inventory : (568 in inventory)
+        has_auto_master = lambda inventory : (387 in inventory)
+        has_auto_final = lambda inventory : (388 in inventory)
+        final_possible_but_not_obtained = lambda inventory : False
+        form_level_obtainable = lambda inventory : ItemPlacementHelpers.count_forms(inventory) + (1 if final_possible_but_not_obtained(inventory) else 0) + 2
 
-        def make_form_lambda(form_id,form_level):
-            if form_id==1:
-                return lambda inventory : has_valor(inventory) and count_forms(inventory)>=form_level-2
-            if form_id==2:
-                return lambda inventory : has_wisdom(inventory) and count_forms(inventory)>=form_level-2
-            if form_id==3:
-                return lambda inventory : has_limit(inventory) and count_forms(inventory)>=form_level-2
-            if form_id==4:
-                return lambda inventory : has_master(inventory) and count_forms(inventory)>=form_level-2
-            if form_id==5:
-                return lambda inventory : has_final(inventory) and count_forms(inventory)>=form_level-2
+        if form_id=="Valor":
+            return lambda inventory : (has_valor(inventory) or has_auto_valor(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Wisdom":
+            return lambda inventory : (has_wisdom(inventory) or has_auto_wisdom(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Limit":
+            return lambda inventory : (has_limit(inventory) or has_auto_limit(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Master":
+            return lambda inventory : (has_master(inventory) or has_auto_master(inventory) ) and form_level_obtainable(inventory)>=form_level
+        if form_id=="Final":
+            have_final_form = lambda inventory : final_possible_but_not_obtained(inventory) or has_final(inventory)
+            if form_level==2:
+                return lambda inventory : have_final_form(inventory) or has_auto_final(inventory)
+            else:
+                return lambda inventory : have_final_form(inventory) and form_level_obtainable(inventory)>=form_level
 
-            return lambda inventory : False
+        return lambda inventory : False
 
-        def make_form_lambda_nightmare(form_id,form_level):
-            final_possible_but_not_obtained = lambda inventory : (has_valor(inventory) or has_wisdom(inventory) or has_limit(inventory) or has_master(inventory) or count_auto_forms(inventory)>=1) and not has_final(inventory)
-            form_level_obtainable = lambda inventory : count_forms(inventory) + (1 if final_possible_but_not_obtained(inventory) else 0) + 2
+    @staticmethod
+    def auron_check(inventory):
+        return 54 in inventory
+    @staticmethod
+    def mulan_check(inventory):
+        return 55 in inventory
+    @staticmethod
+    def beast_check(inventory):
+        return 59 in inventory
+    @staticmethod
+    def jack_ht_check(inventory):
+        return 60 in inventory
+    @staticmethod
+    def simba_check(inventory):
+        return 61 in inventory
+    @staticmethod
+    def jack_pr_check(inventory):
+        return 62 in inventory
+    @staticmethod
+    def aladdin_check(inventory):
+        return 72 in inventory
+    @staticmethod
+    def riku_check(inventory):
+        return 73 in inventory
+    @staticmethod
+    def tron_check(inventory):
+        return 74 in inventory
+    @staticmethod
+    def tt2_check(inventory):
+        return 376 in inventory # Picture
+    @staticmethod
+    def tt3_check(inventory):
+        return 376 in inventory and 375 in inventory # Picture and Ice Cream
+    @staticmethod
+    def hb_check(inventory):
+        return 369 in inventory # Membership Card
 
-            if form_id==1:
-                return lambda inventory : (has_valor(inventory) or has_auto_valor(inventory) ) and form_level_obtainable(inventory)>=form_level
-            if form_id==2:
-                return lambda inventory : (has_wisdom(inventory) or has_auto_wisdom(inventory) ) and form_level_obtainable(inventory)>=form_level
-            if form_id==3:
-                return lambda inventory : (has_limit(inventory) or has_auto_limit(inventory) ) and form_level_obtainable(inventory)>=form_level
-            if form_id==4:
-                return lambda inventory : (has_master(inventory) or has_auto_master(inventory) ) and form_level_obtainable(inventory)>=form_level
-            if form_id==5:
-                have_final_form = lambda inventory : final_possible_but_not_obtained(inventory) or has_final(inventory)
-                if form_level==2:
-                    return lambda inventory : have_final_form(inventory) or has_auto_final(inventory)
-                else:
-                    return lambda inventory : have_final_form(inventory) and form_level_obtainable(inventory)>=form_level
+    @staticmethod
+    def make_synth_requirement(synth_item: int):
+        # making lambdas for the different synth items
+        default_access_lambda = lambda inventory : True
+        synth_req_map = {}
 
-            return lambda inventory : False
+        synth_req_map[317]= default_access_lambda # TR access, so free
+        synth_req_map[318]= lambda inv : ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.tron_check(inv) or ItemPlacementHelpers.auron_check(inv) 
+        synth_req_map[319]= default_access_lambda # AG 1 and 2 both have these, so no requirement needed
+        synth_req_map[320]= lambda inv : ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.hb_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.aladdin_check(inv)
+        synth_req_map[280]= default_access_lambda # shadows are always available in DC/TR
+        synth_req_map[281]= default_access_lambda # LoD1 and 2 both have them
+        synth_req_map[282]= default_access_lambda # BC1 and 2 have them
+        synth_req_map[283]= lambda inv : ItemPlacementHelpers.mulan_check(inv) # PR1 has them, but could be locked out
+        synth_req_map[337]= default_access_lambda # TWTNW has them post Xemnas
+        synth_req_map[338]= default_access_lambda # TWTNW has them post Xemnas
+        synth_req_map[339]= default_access_lambda # TWTNW has them post Xemnas
+        synth_req_map[340]= default_access_lambda # TWTNW has them post Xemnas
+        synth_req_map[378]= lambda inv : ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.aladdin_check(inv) or ItemPlacementHelpers.jack_pr_check(inv) # BC ones can disappear
+        synth_req_map[379]= default_access_lambda # TR is always available
+        synth_req_map[380]= default_access_lambda # AG1 and 2 both have them
+        synth_req_map[381]= default_access_lambda # PL1 and 2 both have them
+        synth_req_map[325]= default_access_lambda #LoD1 and 2 both have them
+        synth_req_map[326]= lambda inv : ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.aladdin_check(inv) # HT and SP ones can become unavailable
+        synth_req_map[327]= lambda inv : ItemPlacementHelpers.hb_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.jack_pr_check(inv) or ItemPlacementHelpers.jack_ht_check(inv) or ItemPlacementHelpers.simba_check(inv) or ItemPlacementHelpers.tron_check(inv)
+        synth_req_map[328]= default_access_lambda # SP1 and 2 both have them
+        synth_req_map[333]= lambda inv : ItemPlacementHelpers.jack_pr_check(inv) or ItemPlacementHelpers.jack_ht_check(inv) # OC1 can be locked out
+        synth_req_map[334]= default_access_lambda # HT1 and 2 have them
+        synth_req_map[335]= default_access_lambda # SP1 and 2 both have them
+        synth_req_map[336]= lambda inv : ItemPlacementHelpers.mulan_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.jack_pr_check(inv) or ItemPlacementHelpers.aladdin_check(inv) or ItemPlacementHelpers.jack_ht_check(inv) or ItemPlacementHelpers.simba_check(inv) or ItemPlacementHelpers.hb_check(inv)
+        synth_req_map[329]= default_access_lambda # BC1 and 2 both have them, also TR
+        synth_req_map[330]= default_access_lambda # AG1 and 2 both have them
+        synth_req_map[331]= default_access_lambda # PL1 and 2 both have them
+        synth_req_map[332]= lambda inv : ItemPlacementHelpers.hb_check(inv) or ItemPlacementHelpers.beast_check(inv) or ItemPlacementHelpers.auron_check(inv) or ItemPlacementHelpers.jack_pr_check(inv)
+        synth_req_map[341]= default_access_lambda # TWTNW always has them in Luxord and Saix rooms
+        synth_req_map[342]= default_access_lambda # TWTNW always has them
+        synth_req_map[343]= default_access_lambda #TWTNW always has them
+        synth_req_map[344]= default_access_lambda #TWNTW always has them
 
-        if not nightmare:
-            restricted_forms = [(1,2,make_form_lambda(1,2)),
-                                (1,3,make_form_lambda(1,3)),
-                                (1,4,make_form_lambda(1,4)),
-                                (1,5,make_form_lambda(1,5)),
-                                (1,6,make_form_lambda(1,6)),
-                                (1,7,make_form_lambda(1,7)),
-                                (2,2,make_form_lambda(2,2)),
-                                (2,3,make_form_lambda(2,3)),
-                                (2,4,make_form_lambda(2,4)),
-                                (2,5,make_form_lambda(2,5)),
-                                (2,6,make_form_lambda(2,6)),
-                                (2,7,make_form_lambda(2,7)),
-                                (3,2,make_form_lambda(3,2)),
-                                (3,3,make_form_lambda(3,3)),
-                                (3,4,make_form_lambda(3,4)),
-                                (3,5,make_form_lambda(3,5)),
-                                (3,6,make_form_lambda(3,6)),
-                                (3,7,make_form_lambda(3,7)),
-                                (4,2,make_form_lambda(4,2)),
-                                (4,3,make_form_lambda(4,3)),
-                                (4,4,make_form_lambda(4,4)),
-                                (4,5,make_form_lambda(4,5)),
-                                (4,6,make_form_lambda(4,6)),
-                                (4,7,make_form_lambda(4,7)),
-                                (5,2,make_form_lambda(5,2)),
-                                (5,3,make_form_lambda(5,3)),
-                                (5,4,make_form_lambda(5,4)),
-                                (5,5,make_form_lambda(5,5)),
-                                (5,6,make_form_lambda(5,6)),
-                                (5,7,make_form_lambda(5,7))]
-        else:
-            restricted_forms = [(1,2,make_form_lambda_nightmare(1,2)),
-                            (1,3,make_form_lambda_nightmare(1,3)),
-                            (1,4,make_form_lambda_nightmare(1,4)),
-                            (1,5,make_form_lambda_nightmare(1,5)),
-                            (1,6,make_form_lambda_nightmare(1,6)),
-                            (1,7,make_form_lambda_nightmare(1,7)),
-                            (2,2,make_form_lambda_nightmare(2,2)),
-                            (2,3,make_form_lambda_nightmare(2,3)),
-                            (2,4,make_form_lambda_nightmare(2,4)),
-                            (2,5,make_form_lambda_nightmare(2,5)),
-                            (2,6,make_form_lambda_nightmare(2,6)),
-                            (2,7,make_form_lambda_nightmare(2,7)),
-                            (3,2,make_form_lambda_nightmare(3,2)),
-                            (3,3,make_form_lambda_nightmare(3,3)),
-                            (3,4,make_form_lambda_nightmare(3,4)),
-                            (3,5,make_form_lambda_nightmare(3,5)),
-                            (3,6,make_form_lambda_nightmare(3,6)),
-                            (3,7,make_form_lambda_nightmare(3,7)),
-                            (4,2,make_form_lambda_nightmare(4,2)),
-                            (4,3,make_form_lambda_nightmare(4,3)),
-                            (4,4,make_form_lambda_nightmare(4,4)),
-                            (4,5,make_form_lambda_nightmare(4,5)),
-                            (4,6,make_form_lambda_nightmare(4,6)),
-                            (4,7,make_form_lambda_nightmare(4,7)),
-                            (5,2,make_form_lambda_nightmare(5,2)),
-                            (5,3,make_form_lambda_nightmare(5,3)),
-                            (5,4,make_form_lambda_nightmare(5,4)),
-                            (5,5,make_form_lambda_nightmare(5,5)),
-                            (5,6,make_form_lambda_nightmare(5,6)),
-                            (5,7,make_form_lambda_nightmare(5,7))]
+        if synth_item in synth_req_map:
+            return synth_req_map[synth_item]
 
-
-        restricted_puzzles = [(1,need_growths),
-                              (2,need_growths),
-                              (3,need_growths),
-                              (4,lambda inventory : need_growths(inventory) and need_5_pages(inventory)),
-                              (5,need_growths)]
-
-        def treasure_restriction(location_id):
-            for loc_list,condition in restricted_treasures:
-                if location_id in loc_list:
-                    return condition
-            return lambda inventory: True
-        def bonus_restriction(location_id):
-            for loc_list,condition in restricted_bonuses:
-                if location_id in loc_list:
-                    return condition
-            return lambda inventory: True
-        def form_restriction(form_id,form_level):
-            for f_id,f_level,condition in restricted_forms:
-                if f_id == form_id and f_level==form_level:
-                    return condition
-            return lambda inventory: True
-        def puzzle_restriction(puzzle_id):
-            for p_id,condition in restricted_puzzles:
-                if p_id == puzzle_id :
-                    return condition
-            return lambda inventory: True
-
-        self.treasure_restriction_function = treasure_restriction
-        self.bonus_restriction_function = bonus_restriction
-        self.form_restriction_function = form_restriction
-        self.puzzle_restriction_function = puzzle_restriction
-
-    def get_restriction_functions(self):
-        return RestrictedConfig(self.treasure_restriction_function,self.bonus_restriction_function,self.form_restriction_function,self.puzzle_restriction_function)
+        # default returned lambda, doesnt allow for acquiring the item, failsafe
+        return lambda inventory : False

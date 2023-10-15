@@ -1,9 +1,0 @@
-Program 0x58
-Party W_FRIEND
-Spawn "b_99"
-
-Program 0x4B
-Progress 0x4844
-Party W_FRIEND
-Mission 0x112 "EH27_MS106"
-Spawn "b_99"

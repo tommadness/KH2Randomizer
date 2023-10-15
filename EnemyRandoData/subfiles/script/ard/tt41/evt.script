@@ -1,6 +1,0 @@
-Program 0xBA
-Bgm 110 110
-AreaSettings 7 -1
-	SetUnk05 0x3
-	SetJump Type 1 World TT Area 14 Entrance 0 LocalSet 0 FadeType 16385
-	SetPartyMenu 0

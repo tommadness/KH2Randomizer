@@ -1,8 +1,0 @@
-Program 0x00
-
-
-Program 0x01
-AreaSettings 161 -1
-	SetUnk05 0x1
-	SetJump Type 2 World HB Area 0 Entrance 0 LocalSet 153 FadeType 1
-	SetPartyMenu 0

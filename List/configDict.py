@@ -33,17 +33,68 @@ class locationType(str, Enum):
     Mush13 = "Mushroom 13"
     DataOrg = "Data Organization XIII"
     FormLevel =  "Form Levels"
+    Level = "Level"
+    FormLevel1 = "Level1Form"
+    SummonLevel = "SummonLevel"
     Free = "Garden of Assemblage"
     Critical = "Critical Bonuses"
     Puzzle = "Puzzle"
+    WeaponSlot = "Slot"
+    TTR = "Transport to Remembrance"
+    SYNTH = "Synthesis"
+    SHOP = "Shop"
+
+class locationCategory(str,Enum):
+    CHEST = "Chest"
+    POPUP = "Popup"
+    CREATION = "Creation"
+    ITEMBONUS = "Item Bonus"
+    STATBONUS = "Stat Bonus"
+    HYBRIDBONUS = "Item and Stat Bonus"
+    DOUBLEBONUS = "Double Stat Bonus"
+    LEVEL = "Level"
+    SUMMONLEVEL = "Summon Level"
+    VALORLEVEL = "Valor Level"
+    WISDOMLEVEL = "Wisdom Level"
+    LIMITLEVEL = "Limit Level"
+    MASTERLEVEL = "Master Level"
+    FINALLEVEL = "Final Level"
+    WEAPONSLOT = "Weapon Slot"
+
+
+def isFormCheck(loc: locationCategory):
+    return loc in [locationCategory.VALORLEVEL,locationCategory.WISDOMLEVEL,locationCategory.LIMITLEVEL,locationCategory.MASTERLEVEL,locationCategory.FINALLEVEL]
+
+def isStatBonusCheck(loc: locationCategory):
+    return loc in [locationCategory.STATBONUS,locationCategory.HYBRIDBONUS,locationCategory.DOUBLEBONUS]
+
+class itemDifficulty(str,Enum):
+    SUPEREASY = "Super Easy"
+    EASY = "Easy"
+    SLIGHTLY_EASY = "Slightly Easy"
+    NORMAL = "Normal"
+    SLIGHTLY_HARD = "Slightly Hard"
+    HARD = "Hard"
+    VERYHARD = "Very Hard"
+    INSANE = "Insane"
+    NIGHTMARE = "Nightmare"
+
 
 class locationDepth(str,Enum):
     FirstVisit = "FirstVisit"
+    NoFirstVisit = "NoFirstVisit"
     SecondVisit = "SecondVisit"
+    SecondVisitOnly = "SecondVisitOnly"
     DataFight = "DataFight"
     FirstBoss = "FirstBoss"
     SecondBoss = "SecondBoss"
+    Anywhere = "Anywhere"
 
+
+class expCurve(str,Enum):
+    DAWN = "Dawn"
+    MIDDAY = "Midday"
+    DUSK = "Dusk"
 
 class itemType(str, Enum):
     PROOF_OF_CONNECTION = "Proof of Connection"
@@ -74,8 +125,21 @@ class itemType(str, Enum):
     SUMMON = "Summon"
     REPORT = "Report"
     KEYITEM = "KeyItem"
+    STORYUNLOCK= "Story Unlock"
     MUNNY_POUCH = "Munny Pouch"
-    MEMBERSHIPCARD = "Membership Card"
+    MANUFACTORYUNLOCK = "Manufactory Unlock"
     TROPHY = "OC Trophy"
-    JUNK = "Junk"
-    
+    OCSTONE = "Olympus Stone"
+    GAUGE = "Gauge Up"
+    SLOT = "Slot Up"
+    SYNTH = "SYNTH"
+    MULTIWORLD = "MultiWorld"
+
+
+class BattleLevelOption(str, Enum):
+    NORMAL = 'Normal'
+    SHUFFLE = 'Shuffle'
+    OFFSET = 'Offset'
+    RANDOM_WITHIN_RANGE = 'Within Range of Normal'
+    RANDOM_MAX_50 = 'Random (Max 50)'
+    SCALE_TO_50 = 'Scale to 50'

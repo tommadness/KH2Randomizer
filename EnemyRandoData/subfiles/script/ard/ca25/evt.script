@@ -1,9 +1,0 @@
-Program 0x53
-Party W_FRIEND
-AreaSettings 0 -1
-	SetProgressFlag 0x4010
-	SetMember 1
-	SetUnk05 0x1
-	SetEvent "112" Type 2
-	SetJump Type 2 World CA Area 0 Entrance 0 LocalSet 61 FadeType 1
-	SetPartyMenu 2
