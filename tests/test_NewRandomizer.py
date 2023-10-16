@@ -6,7 +6,7 @@ from Module.newRandomize import RandomizerSettings, Randomizer
 
 class Tests(unittest.TestCase):
 
-    def test_constructingRandomizer(self):
+    def test_randomizer_quantities(self):
         seed_settings = SeedSettings()
         settings = RandomizerSettings("test_name", True, "version", seed_settings, "")
         randomizer = Randomizer(settings)

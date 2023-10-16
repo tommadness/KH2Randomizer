@@ -488,7 +488,7 @@ def chest_visual_id(location_types: list[locationType], item_type: itemType) -> 
             chest_type_id = 4027
         elif item_type in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
             chest_type_id = 4028
-        elif item_type in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF]:
+        elif item_type in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF, itemType.ACCESSORY, itemType.ARMOR]:
             chest_type_id = 4029
         elif item_type in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF_OF_NONEXISTENCE, itemType.PROMISE_CHARM]:
             chest_type_id = 4030
