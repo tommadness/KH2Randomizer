@@ -443,78 +443,31 @@ def chests_by_location_id() -> dict[int, KH2Chest]:
 
 
 def chest_visual_id(location_types: list[locationType], item_type: itemType) -> int:
-    # Pride Lands needs different IDs
+    chest_type_id = 4000
+    # world determinations
     if locationType.PL in location_types:
-        # get correct chest id for item type
-        chest_type_id = 4040  # default "Junk" chest visual
-        if item_type in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-            chest_type_id = 4041
-        elif item_type == itemType.FORM:
-            chest_type_id = 4042
-        elif item_type in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-            chest_type_id = 4043
-        elif item_type == itemType.TORN_PAGE:
-            chest_type_id = 4044
-        elif item_type == itemType.REPORT:
-            chest_type_id = 4045
-        elif item_type in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]:  # [itemType.GAUGE, itemType.SLOT]:
-            chest_type_id = 4046
-        elif item_type == itemType.SUMMON:
-            chest_type_id = 4047
-        elif item_type in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:  # == itemType.STORYUNLOCK:
-            chest_type_id = 4048
-        elif item_type in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF, itemType.ACCESSORY, itemType.ARMOR]:
-            chest_type_id = 4049
-        elif item_type in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF_OF_NONEXISTENCE, itemType.PROMISE_CHARM]:
-            chest_type_id = 4050
-        return chest_type_id
-    # twilight town and STT require different IDs too
+        chest_type_id += 40
     elif locationType.TT in location_types or locationType.STT in location_types:
-        # get correct chest id for item type
-        chest_type_id = 4020  # default "Junk" chest visual
-        if item_type in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-            chest_type_id = 4021
-        elif item_type == itemType.FORM:
-            chest_type_id = 4022
-        elif item_type in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-            chest_type_id = 4023
-        elif item_type == itemType.TORN_PAGE:
-            chest_type_id = 4024
-        elif item_type == itemType.REPORT:
-            chest_type_id = 4025
-        elif item_type in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]:
-            chest_type_id = 4026
-        elif item_type == itemType.SUMMON:
-            chest_type_id = 4027
-        elif item_type in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
-            chest_type_id = 4028
-        elif item_type in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF, itemType.ACCESSORY, itemType.ARMOR]:
-            chest_type_id = 4029
-        elif item_type in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF_OF_NONEXISTENCE, itemType.PROMISE_CHARM]:
-            chest_type_id = 4030
-        return chest_type_id
-    # default IDs
-    else:
-        # get correct chest id for item type
-        chest_type_id = 4000  # default "Junk" chest visual
-        if item_type in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
-            chest_type_id = 4001
-        elif item_type == itemType.FORM:
-            chest_type_id = 4002
-        elif item_type in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
-            chest_type_id = 4003
-        elif item_type == itemType.TORN_PAGE:
-            chest_type_id = 4004
-        elif item_type == itemType.REPORT:
-            chest_type_id = 4005
-        elif item_type in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]:
-            chest_type_id = 4006
-        elif item_type == itemType.SUMMON:
-            chest_type_id = 4007
-        elif item_type in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
-            chest_type_id = 4008
-        elif item_type in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF, itemType.ACCESSORY, itemType.ARMOR]:
-            chest_type_id = 4009
-        elif item_type in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF_OF_NONEXISTENCE, itemType.PROMISE_CHARM]:
-            chest_type_id = 4010
-        return chest_type_id
+        chest_type_id += 20
+    # item type adds a dynamic offset
+    if item_type in [itemType.GROWTH_ABILITY, itemType.ACTION_ABILITY, itemType.SUPPORT_ABILITY]:
+        chest_type_id += 1
+    elif item_type == itemType.FORM:
+        chest_type_id += 2
+    elif item_type in [itemType.FIRE, itemType.BLIZZARD, itemType.THUNDER, itemType.CURE, itemType.MAGNET, itemType.REFLECT]:
+        chest_type_id += 3
+    elif item_type == itemType.TORN_PAGE:
+        chest_type_id += 4
+    elif item_type == itemType.REPORT:
+        chest_type_id += 5
+    elif item_type in [itemType.GAUGE, itemType.SLOT, itemType.MUNNY_POUCH]:
+        chest_type_id += 6
+    elif item_type == itemType.SUMMON:
+        chest_type_id += 7
+    elif item_type in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
+        chest_type_id += 8
+    elif item_type in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF, itemType.ACCESSORY, itemType.ARMOR]:
+        chest_type_id += 9
+    elif item_type in [itemType.PROOF_OF_CONNECTION, itemType.PROOF_OF_PEACE, itemType.PROOF_OF_NONEXISTENCE, itemType.PROMISE_CHARM]:
+        chest_type_id += 10
+    return chest_type_id
