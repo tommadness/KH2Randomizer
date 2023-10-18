@@ -4,13 +4,17 @@ from UI.Submenus.SubMenu import KH2Submenu
 
 
 class SoraMenu(KH2Submenu):
-
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='EXP/Stats', settings=settings)
+        super().__init__(title="EXP/Stats", settings=settings)
 
         self.start_column()
         self.start_group()
-        self.add_option(settingkey.GLASS_CANNON)
+        self.add_option(settingkey.SORA_STR_RATE)
+        self.add_option(settingkey.SORA_MAG_RATE)
+        self.add_option(settingkey.SORA_DEF_RATE)
+        self.add_option(settingkey.SORA_AP_RATE)
+        self.end_group()
+        self.start_group()
         self.add_option(settingkey.SORA_AP)
         self.add_option(settingkey.DONALD_AP)
         self.add_option(settingkey.GOOFY_AP)
@@ -26,7 +30,7 @@ class SoraMenu(KH2Submenu):
         self.add_option(settingkey.MASTER_EXP_MULTIPLIER)
         self.add_option(settingkey.FINAL_EXP_MULTIPLIER)
         self.add_option(settingkey.SUMMON_EXP_MULTIPLIER)
-        self.end_group('Experience Multipliers')
+        self.end_group("Experience Multipliers")
         self.end_column()
 
         self.start_column()
@@ -38,7 +42,7 @@ class SoraMenu(KH2Submenu):
         self.add_option(settingkey.MASTER_EXP_CURVE)
         self.add_option(settingkey.FINAL_EXP_CURVE)
         self.add_option(settingkey.SUMMON_EXP_CURVE)
-        self.end_group('Experience Curves')
+        self.end_group("Experience Curves")
         self.end_column()
 
         self.finalizeMenu()

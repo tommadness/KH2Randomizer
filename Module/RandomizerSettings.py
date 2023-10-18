@@ -244,7 +244,10 @@ class RandomizerSettings:
         ]
 
         self.level_stat_pool = SeedModifier.level_up_stat_pool_weighted(
-            def_rate=0 if ui_settings.get(settingkey.GLASS_CANNON) else 25
+            str_rate=ui_settings.get(settingkey.SORA_STR_RATE),
+            mag_rate=ui_settings.get(settingkey.SORA_MAG_RATE),
+            def_rate=ui_settings.get(settingkey.SORA_DEF_RATE),
+            ap_rate=ui_settings.get(settingkey.SORA_AP_RATE),
         )
 
         self.junk_pool: list[int] = [
