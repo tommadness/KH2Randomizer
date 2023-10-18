@@ -146,7 +146,12 @@ class SeedModifier:
 
     @staticmethod
     def level_up_stat_pool_weighted() -> list[tuple[LevelUpStatBonus, int]]:
-        return None
+        return [
+            (LevelUpStatBonus.STRENGTH, 2, 25),
+            (LevelUpStatBonus.MAGIC, 2, 25),
+            (LevelUpStatBonus.DEFENSE, 1, 25),
+            (LevelUpStatBonus.AP, 2, 25),
+        ]
         if glass_cannon:
             return [
                 (LevelUpStatBonus.STRENGTH, 2),

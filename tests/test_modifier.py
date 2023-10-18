@@ -105,14 +105,22 @@ class Tests(unittest.TestCase):
 
     def test_level_up_stat_pool_weighted_default(self):
         pool = SeedModifier.level_up_stat_pool_weighted()
-        bonuses = [bonus for bonus, _ in pool]
-        expected = [
+        bonuses = [bonus for bonus, _, _ in pool]
+        weights = [weight for _, _, weight in pool]
+        expected_bonuses = [
             LevelUpStatBonus.STRENGTH,
             LevelUpStatBonus.MAGIC,
             LevelUpStatBonus.DEFENSE,
             LevelUpStatBonus.AP,
         ]
-        self.assertCountEqual(expected, bonuses)
+        expected_weights = [
+            25,
+            25,
+            25,
+            25,
+        ]
+        self.assertCountEqual(expected_bonuses, bonuses)
+        self.assertCountEqual(expected_weights, weights)
 
     def test_movement_disabled(self):
         growths = SeedModifier.starting_growth(StartingMovementOption.DISABLED)
