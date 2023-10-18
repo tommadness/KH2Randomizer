@@ -122,6 +122,23 @@ class Tests(unittest.TestCase):
         self.assertCountEqual(expected_bonuses, bonuses)
         self.assertCountEqual(expected_weights, weights)
 
+    def test_level_up_stat_pool_weighted_glass_cannon(self):
+        pool = SeedModifier.level_up_stat_pool_weighted(def_rate=0)
+        bonuses = [bonus for bonus, _, _ in pool]
+        weights = [weight for _, _, weight in pool]
+        expected_bonuses = [
+            LevelUpStatBonus.STRENGTH,
+            LevelUpStatBonus.MAGIC,
+            LevelUpStatBonus.AP,
+        ]
+        expected_weights = [
+            34,
+            33,
+            33,
+        ]
+        self.assertCountEqual(expected_bonuses, bonuses)
+        self.assertCountEqual(expected_weights, weights)
+
     def test_movement_disabled(self):
         growths = SeedModifier.starting_growth(StartingMovementOption.DISABLED)
         self.assertEqual(0, len(growths))

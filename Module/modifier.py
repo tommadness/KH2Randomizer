@@ -145,26 +145,40 @@ class SeedModifier:
             ]
 
     @staticmethod
-    def level_up_stat_pool_weighted() -> list[tuple[LevelUpStatBonus, int]]:
-        return [
-            (LevelUpStatBonus.STRENGTH, 2, 25),
-            (LevelUpStatBonus.MAGIC, 2, 25),
-            (LevelUpStatBonus.DEFENSE, 1, 25),
-            (LevelUpStatBonus.AP, 2, 25),
+    def level_up_stat_pool_weighted(
+        str_rate: int = 25,
+        mag_rate: int = 25,
+        def_rate: int = 25,
+        ap_rate: int = 25,
+    ) -> list[tuple[LevelUpStatBonus, int, int]]:
+        valid_stat_list = [
+            (LevelUpStatBonus.STRENGTH, 2, str_rate),
+            (LevelUpStatBonus.MAGIC, 2, mag_rate),
+            (LevelUpStatBonus.DEFENSE, 1, def_rate),
+            (LevelUpStatBonus.AP, 2, ap_rate),
         ]
-        if glass_cannon:
-            return [
-                (LevelUpStatBonus.STRENGTH, 2),
-                (LevelUpStatBonus.MAGIC, 2),
-                (LevelUpStatBonus.AP, 2),
-            ]
-        else:
-            return [
-                (LevelUpStatBonus.STRENGTH, 2),
-                (LevelUpStatBonus.MAGIC, 2),
-                (LevelUpStatBonus.DEFENSE, 1),
-                (LevelUpStatBonus.AP, 2),
-            ]
+        # remove any stats with zero weight
+        valid_stat_list = [
+            stat_config for stat_config in valid_stat_list if stat_config[2] > 0
+        ]
+        # rescale the weights to sum to 100
+        total_sum = sum([stat_config[2] for stat_config in valid_stat_list])
+        valid_stat_list = [
+            (stat_config[0], stat_config[1], 100 * (stat_config[2] // total_sum))
+            for stat_config in valid_stat_list
+        ]
+        new_total_sum = sum([stat_config[2] for stat_config in valid_stat_list])
+        diff_adjustment = 0
+        while new_total_sum + diff_adjustment < 100:
+            old_tuple = valid_stat_list[diff_adjustment % len(valid_stat_list)]
+            valid_stat_list[diff_adjustment % len(valid_stat_list)] = (
+                old_tuple[0],
+                old_tuple[1],
+                old_tuple[2] + 1,
+            )
+            diff_adjustment += 1
+
+        return valid_stat_list
 
     @staticmethod
     def starting_growth(option: StartingMovementOption) -> list[GrowthAbility]:
