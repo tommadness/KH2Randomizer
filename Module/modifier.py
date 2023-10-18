@@ -155,7 +155,7 @@ class SeedModifier:
         # rescale the weights to sum to 100
         total_sum = sum([stat_config[2] for stat_config in valid_stat_list])
         valid_stat_list = [
-            (stat_config[0], stat_config[1], 100 * (stat_config[2] // total_sum))
+            (stat_config[0], stat_config[1], (100 * stat_config[2]) // total_sum)
             for stat_config in valid_stat_list
         ]
         new_total_sum = sum([stat_config[2] for stat_config in valid_stat_list])
