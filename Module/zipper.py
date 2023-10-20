@@ -360,7 +360,6 @@ class SeedZip:
             hints = self.hints
             if hints is not None:
                 Hints.write_hints(hints, out_zip)
-                Hints.write_hint_text(hints, mod)
 
             if settings.roxas_abilities_enabled:
                 boss_enabled = not settings.enemy_options.get("boss", False) in [

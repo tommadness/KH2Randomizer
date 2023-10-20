@@ -1175,17 +1175,17 @@ class Hints:
         out_zip.writestr("HintFile.Hints", base64.b64encode(json_bytes).decode("utf-8"))
 
     @staticmethod
-    def convert_string_to_unicode(string: str):
-        return "Hint: " + "".join(
-            r"\u{:04X}".format(ord(chr)) for chr in textwrap.fill(string, width=30)
-        )
-
-    @staticmethod
     def write_hint_text(hint_data, mod: SeedModBuilder):
+        def convert_string_to_unicode(string: str):
+            return "".join(
+                r"\u{:04X}".format(ord(chr)) for chr in textwrap.fill(string, width=30)
+            )
+
         for report_number in range(0, 13):
-            report_text = Hints.convert_string_to_unicode(
-                hint_data["Reports"][report_number + 1]["Text"]
-            )
-            mod.journal_txt.add_message(
-                message_id=14052 + report_number * 2, en=report_text
-            )
+            if "JournalText" in hint_data["Reports"][report_number + 1]:
+                report_text = convert_string_to_unicode(
+                    hint_data["Reports"][report_number + 1]["JournalText"]
+                )
+                mod.journal_txt.add_message(
+                    message_id=14052 + report_number * 2, en=report_text
+                )

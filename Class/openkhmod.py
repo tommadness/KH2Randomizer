@@ -2,7 +2,7 @@ from copy import deepcopy
 from typing import Any, Optional, Iterator
 from zipfile import ZipFile
 
-import yaml
+import yaml, re
 
 Asset = dict[str, Any]
 
@@ -13,9 +13,9 @@ def write_yaml_to_zip_file(zip_file: ZipFile, name: str, data, sort_keys: bool):
 
 def write_unicode_yaml_to_zip_file(zip_file: ZipFile, name: str, data, sort_keys: bool):
     yaml_string = yaml.dump(data, line_break="\r\n", sort_keys=sort_keys)
-    yaml_string = yaml_string.replace(
-        "'", '"'
-    )  # replace single quotes with double quotes
+    yaml_string = re.sub(
+        r"en: ([a-zA-Z0-9\\]+)", r'en: "\1"', yaml_string
+    )  # surround text of the journal with double quotes to allow for automatic unicode conversion
     zip_file.writestr(name, yaml_string)
 
 
