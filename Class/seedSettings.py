@@ -1564,6 +1564,29 @@ _all_settings = [
         """,
         randomizable=None,
     ),
+    SingleSelect(
+        name=settingkey.JOURNAL_HINTS_ABILITIES,
+        group=SettingGroup.HINTS,
+        ui_label="Hint Abilities in Journal Reports",
+        choices={
+            "Off": "Off",
+            "world": "World of Ability",
+            "exact": "Specific Location of Ability",
+        },
+        shared=True,
+        default="Off",
+        tooltip="""
+        Changes in-game report text in the journal to information about useful abilities that can be found
+
+        Off - Setting is off
+        
+        World of Ability - You'll get information about what world certain abilities can be found in
+
+        Specific Location of Ability - You'll get exact information about the location of the abilities
+
+        """,
+        randomizable=None,
+    ),
     IntSpinner(
         name=settingkey.KEYBLADE_MIN_STAT,
         group=SettingGroup.KEYBLADES,

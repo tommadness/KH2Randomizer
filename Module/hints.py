@@ -49,9 +49,13 @@ class Hints:
         for report_num in range(1, 14):
             journal_data[report_num] = ""
         # find any settings relating to journal hints
-        independent_hints = True
-        independent_hint_specific = False
-        dependent_hints = False
+        independent_hints = settings.journal_hints != "Off"
+        independent_hint_specific = settings.journal_hints == "exact"
+        dependent_hints = True
+        # if dependent hints, depending on hint system, write a tracker-like message to data
+        if dependent_hints:
+            pass
+
         # if independent hints, need to make "useful" query on the randomized locations and items
         Hints.independent_journal_hints(
             location_item_data,
@@ -60,9 +64,6 @@ class Hints:
             independent_hint_specific,
         )
 
-        # if dependent hints, depending on hint system, write a tracker-like message to data
-        if dependent_hints:
-            pass
         # add journal text to hintsText structure
         for report_num in range(1, 14):
             hintData["Reports"][report_num]["JournalText"] = journal_data[report_num]
@@ -1291,7 +1292,7 @@ class Hints:
 
         for report_number in range(0, 13):
             if "JournalText" in hint_data["Reports"][report_number + 1]:
-                print(hint_data["Reports"][report_number + 1]["JournalText"])
+                # print(hint_data["Reports"][report_number + 1]["JournalText"])
                 report_text = convert_string_to_unicode(
                     hint_data["Reports"][report_number + 1]["JournalText"]
                 )
