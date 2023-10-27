@@ -40,6 +40,116 @@ class Hints:
         return location_items
 
     @staticmethod
+    def generator_journal_hints(
+        location_item_data: list[tuple[KH2Location, KH2Item]],
+        settings: RandomizerSettings,
+        hintData,
+    ):
+        journal_data = {}
+        for report_num in range(1, 14):
+            journal_data[report_num] = ""
+        # find any settings relating to journal hints
+        independent_hints = True
+        independent_hint_specific = False
+        dependent_hints = False
+        # if independent hints, need to make "useful" query on the randomized locations and items
+        Hints.independent_journal_hints(
+            location_item_data,
+            journal_data,
+            independent_hints,
+            independent_hint_specific,
+        )
+
+        # if dependent hints, depending on hint system, write a tracker-like message to data
+        if dependent_hints:
+            pass
+        # add journal text to hintsText structure
+        for report_num in range(1, 14):
+            hintData["Reports"][report_num]["JournalText"] = journal_data[report_num]
+
+    @staticmethod
+    def independent_journal_hints(
+        location_item_data: list[tuple[KH2Location, KH2Item]],
+        journal_data,
+        independent_hints,
+        independent_hint_specific,
+    ):
+        if independent_hints:
+            all_possible_independent_hints = []
+            # find the items
+            items_to_find = [
+                ability.ComboMaster,
+                ability.FinishingPlus,
+                ability.ExperienceBoost,
+                ability.BerserkCharge,
+                ability.HorizontalSlash,
+                ability.Slapshot,
+                ability.FinishingLeap,
+                ability.FlashStep,
+                ability.SlideDash,
+                ability.GuardBreak,
+                ability.Explosion,
+                ability.AerialSpiral,
+                ability.AerialDive,
+                ability.MagnetBurst,
+                ability.AutoValor,
+                ability.AutoWisdom,
+                ability.AutoLimitForm,
+                ability.AutoMaster,
+                ability.AutoFinal,
+                ability.TrinityLimit,
+                ability.NegativeCombo,
+            ]
+            hintableWorlds = [
+                locationType.Level,
+                locationType.LoD,
+                locationType.BC,
+                locationType.HB,
+                locationType.TT,
+                locationType.TWTNW,
+                locationType.SP,
+                locationType.Atlantica,
+                locationType.PR,
+                locationType.OC,
+                locationType.Agrabah,
+                locationType.HT,
+                locationType.PL,
+                locationType.DC,
+                locationType.HUNDREDAW,
+                locationType.STT,
+                locationType.FormLevel,
+            ]
+            for loc_data, item_data in location_item_data:
+                if item_data.item in items_to_find:
+                    # if ability is on keyblade, just say the keyblade for now
+                    if independent_hint_specific:
+                        # hint the specific location
+                        all_possible_independent_hints.append(
+                            f"{item_data.Name} is in {loc_data.Description}"
+                        )
+                    else:
+                        # hint the world only
+                        hintable_worlds_of_location = [
+                            l for l in loc_data.LocationTypes if l in hintableWorlds
+                        ]
+                        if len(hintable_worlds_of_location) == 0:
+                            # TODO fix keyblades with abilities
+                            print("Hey, something borked")
+                        else:
+                            all_possible_independent_hints.append(
+                                f"{item_data.Name} is in {hintable_worlds_of_location[0].value}"
+                            )
+
+            # at this point, we should have all our hint text, just need to assign to each report
+            report_index = 0
+            while len(all_possible_independent_hints):
+                journal_data[report_index + 1] += (
+                    all_possible_independent_hints[-1] + "\n\n"
+                )
+                report_index = (report_index + 1) % 13
+                all_possible_independent_hints.pop()
+
+    @staticmethod
     def generate_hints(randomizer: Randomizer, settings: RandomizerSettings):
         hintsType = settings.hintsType
         if hintsType == "Disabled":
@@ -1162,9 +1272,7 @@ class Hints:
                     raise RuntimeError(
                         f"Report {reportNumber} has location written as {hintsText['Reports'][reportNumber]['Location']} but the actual location is {report_master[reportNumber]}"
                     )
-
-        # print(json.dumps(hintsText).encode('utf-8'))
-
+        Hints.generator_journal_hints(locationItems, settings, hintsText)
         return hintsText
 
     @staticmethod
@@ -1183,6 +1291,7 @@ class Hints:
 
         for report_number in range(0, 13):
             if "JournalText" in hint_data["Reports"][report_number + 1]:
+                print(hint_data["Reports"][report_number + 1]["JournalText"])
                 report_text = convert_string_to_unicode(
                     hint_data["Reports"][report_number + 1]["JournalText"]
                 )
