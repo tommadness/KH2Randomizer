@@ -9,7 +9,7 @@ from zipfile import ZipFile
 from Class.exceptions import HintException
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
-from List.configDict import itemType, locationType, locationCategory
+from List.configDict import itemType, locationType, locationCategory, HintType
 from List.inventory import ability, form, magic, misc, storyunlock, summon, proof
 from List.location import simulatedtwilighttown as stt
 from Module import version
@@ -51,10 +51,6 @@ class Hints:
         # find any settings relating to journal hints
         independent_hints = settings.journal_hints != "Off"
         independent_hint_specific = settings.journal_hints == "exact"
-        dependent_hints = True
-        # if dependent hints, depending on hint system, write a tracker-like message to data
-        if dependent_hints:
-            pass
 
         # if independent hints, need to make "useful" query on the randomized locations and items
         Hints.independent_journal_hints(
@@ -126,7 +122,7 @@ class Hints:
                     if independent_hint_specific:
                         # hint the specific location
                         all_possible_independent_hints.append(
-                            f"{item_data.Name} is in {loc_data.Description}"
+                            f"{item_data.Name} is in {loc_data.Description}."
                         )
                     else:
                         # hint the world only
@@ -153,8 +149,6 @@ class Hints:
     @staticmethod
     def generate_hints(randomizer: Randomizer, settings: RandomizerSettings):
         hintsType = settings.hintsType
-        if hintsType == "Disabled":
-            return None
 
         excludeList = copy.deepcopy(settings.disabledLocations)
         if locationType.HB in excludeList and (
@@ -179,6 +173,15 @@ class Hints:
         locationItems = Hints.convert_item_assignment_to_tuple(
             locationItems, randomizer.shop_items
         )
+
+        if hintsType == HintType.DISABLED:
+            hintsText = {}
+            hintsText["hintsType"] = hintsType
+            hintsText["Reports"] = {}
+            for report_num in range(1, 14):
+                hintsText["Reports"][report_num] = {}
+            Hints.generator_journal_hints(locationItems, settings, hintsText)
+            return hintsText
 
         preventSelfHinting = settings.prevent_self_hinting
         allowProofHinting = settings.allow_proof_hinting
@@ -241,7 +244,7 @@ class Hints:
         ]
 
         # All hints do the Shananas thing except JSmartee
-        if hintsType != "JSmartee":
+        if hintsType != HintType.JSMARTEE:
             hintsText["world"] = {}
             hintsText["world"][locationType.Critical] = []
             hintsText["world"][locationType.Free] = []
@@ -265,7 +268,7 @@ class Hints:
                         # hintsText['world'][world_of_location] = []
                     hintsText["world"][world_of_location].append(item.Name)
 
-        if hintsType != "Shananas":
+        if hintsType != HintType.SHANANAS:
             hintsText["Reports"] = {}
             # importantChecks += [itemType.REPORT]
 
@@ -286,7 +289,7 @@ class Hints:
                 else:
                     report_master[reportNumber] = location.LocationTypes
 
-        if hintsType == "Path":
+        if hintsType == HintType.PATH:
             world_to_vanilla_ICs = {}
             world_to_vanilla_ICs[locationType.Level] = [
                 ability.SecondChance.id,
@@ -585,7 +588,7 @@ class Hints:
                         "Location": report_location,
                     }
 
-        if hintsType == "JSmartee":
+        if hintsType == HintType.JSMARTEE:
             proof_of_connection_index = None
             proof_of_peace_index = None
             proof_of_nonexistence_index = None
@@ -887,7 +890,7 @@ class Hints:
                         "Count": len(worldChecks[unhinted_worlds[reportNumber - 14]]),
                     }
 
-        if hintsType == "Points":
+        if hintsType == HintType.POINTS:
             reportRestrictions = [[] for x in range(13)]
             reportsList = list(range(1, 14))
             reportRepetition = 0
@@ -1060,7 +1063,7 @@ class Hints:
                     reportNumber
                 ][0]
 
-        if hintsType == "Spoiler":
+        if hintsType == HintType.SPOILER:
             hintsText["reveal"] = spoilerHintValues
             worldsToHint = []
             reportRestrictions = [[], [], [], [], [], [], [], [], [], [], [], [], []]
@@ -1255,7 +1258,7 @@ class Hints:
 
         # report validation for some hint systems
         if (
-            hintsType in ["Points", "JSmartee", "Spoiler"]
+            hintsType in [HintType.POINTS, HintType.JSMARTEE, HintType.SPOILER]
             and found_reports
             and "report" in hintedItemValues
         ):
@@ -1278,24 +1281,76 @@ class Hints:
 
     @staticmethod
     def write_hints(hint_data, out_zip: ZipFile):
-        json_bytes = json.dumps(hint_data).encode("utf-8")
-        if version.debug_mode():
-            out_zip.writestr("HintFile_DebugHints.json", json_bytes)
-        out_zip.writestr("HintFile.Hints", base64.b64encode(json_bytes).decode("utf-8"))
+        if hint_data["hintsType"] != HintType.DISABLED:
+            json_bytes = json.dumps(hint_data).encode("utf-8")
+            if version.debug_mode():
+                out_zip.writestr("HintFile_DebugHints.json", json_bytes)
+            out_zip.writestr(
+                "HintFile.Hints", base64.b64encode(json_bytes).decode("utf-8")
+            )
 
     @staticmethod
     def write_hint_text(hint_data, mod: SeedModBuilder):
-        def convert_string_to_unicode(string: str):
-            return "".join(
-                r"\u{:04X}".format(ord(chr)) for chr in textwrap.fill(string, width=30)
+        def convert_string_to_unicode(string: str, newlines: int = 0):
+            return (
+                "".join(
+                    r"\u{:04X}".format(ord(chr))
+                    for chr in textwrap.fill(string, width=30)
+                )
+                + "NEWLINE" * newlines
             )
 
+        print(hint_data)
+
         for report_number in range(0, 13):
+            report_text = ""
+
+            if "Location" in hint_data["Reports"][report_number + 1]:
+                location_name = hint_data["Reports"][report_number + 1]["Location"]
+                if location_name == "":
+                    location_name = "Sora's pocket"
+                location_text = f"This report was found in {location_name}."
+                report_text += convert_string_to_unicode(location_text, newlines=2)
+
+            hint_text = []
+            if "ProgressionSettings" in hint_data:
+                if hint_data["hintsType"] == HintType.POINTS:
+                    hint_text.append(
+                        f"{hint_data['Reports'][report_number + 1]['World']} has {hint_data['Reports'][report_number + 1]['check']}."
+                    )
+            else:
+                if hint_data["hintsType"] == HintType.JSMARTEE:
+                    hint_text.append(
+                        f"{hint_data['Reports'][report_number + 1]['World']} has {hint_data['Reports'][report_number + 1]['Count']} important checks."
+                    )
+                if hint_data["hintsType"] == HintType.PATH:
+                    hint_text.append(hint_data["Reports"][report_number + 1]["Text"])
+                if hint_data["hintsType"] == HintType.POINTS:
+                    hint_text.append(
+                        f"{hint_data['Reports'][report_number + 1]['World']} has {hint_data['Reports'][report_number + 1]['check']}."
+                    )
+                if hint_data["hintsType"] == HintType.SPOILER:
+                    hint_text.append(
+                        f"{hint_data['Reports'][report_number + 1]['World']} has:"
+                    )
+                    for c in hint_data["world"][
+                        hint_data["Reports"][report_number + 1]["World"]
+                    ]:
+                        hint_text.append(c)
+            for hint_text_instance in hint_text:
+                report_text += convert_string_to_unicode(hint_text_instance, newlines=1)
+            report_text += convert_string_to_unicode("", newlines=1)
+
             if "JournalText" in hint_data["Reports"][report_number + 1]:
-                # print(hint_data["Reports"][report_number + 1]["JournalText"])
-                report_text = convert_string_to_unicode(
-                    hint_data["Reports"][report_number + 1]["JournalText"]
-                )
-                mod.journal_txt.add_message(
-                    message_id=14052 + report_number * 2, en=report_text
-                )
+                journal_text = hint_data["Reports"][report_number + 1]["JournalText"]
+                report_text += convert_string_to_unicode(journal_text, newlines=2)
+
+            if report_number < 10:
+                report_message_id = 14052 + report_number * 2
+            else:  # for some god awful reason, report 11-13 aren't contiguous with 1-10
+                report_message_id = 14255 + (report_number - 10) * 2
+
+            mod.journal_txt.add_message(
+                message_id=report_message_id,
+                en=report_text,
+            )

@@ -14,6 +14,7 @@ from Class import settingkey
 from Class.exceptions import SettingsException
 from List.ItemList import Items
 from List.configDict import (
+    HintType,
     expCurve,
     itemRarity,
     itemDifficulty,
@@ -889,15 +890,15 @@ _all_settings = [
         group=SettingGroup.HINTS,
         ui_label="Hint System",
         choices={
-            "Disabled": "Disabled",
-            "Shananas": "Shananas",
-            "JSmartee": "JSmartee",
-            "Points": "Points",
-            "Path": "Path",
-            "Spoiler": "Spoiler",
+            HintType.DISABLED: "Disabled",
+            HintType.SHANANAS: "Shananas",
+            HintType.JSMARTEE: "JSmartee",
+            HintType.POINTS: "Points",
+            HintType.PATH: "Path",
+            HintType.SPOILER: "Spoiler",
         },
         shared=True,
-        default="Shananas",
+        default=HintType.SHANANAS,
         tooltip="""
         Which hint system to use. More detailed explanations the hint systems can be found on the website.
     
@@ -915,7 +916,13 @@ _all_settings = [
         
         Spoiler - Reveal "Important Check" locations in a world at the start of a seed.
         """,
-        randomizable=["Shananas", "JSmartee", "Points", "Path", "Spoiler"],
+        randomizable=[
+            HintType.SHANANAS,
+            HintType.JSMARTEE,
+            HintType.POINTS,
+            HintType.PATH,
+            HintType.SPOILER,
+        ],
     ),
     Toggle(
         name=settingkey.PROGRESSION_HINTS,

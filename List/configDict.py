@@ -25,7 +25,7 @@ class locationType(str, Enum):
     LW = "Lingering Will (Terra)"
     Mush13 = "Mushroom 13"
     DataOrg = "Data Organization XIII"
-    FormLevel =  "Form Levels"
+    FormLevel = "Form Levels"
     Level = "Level"
     FormLevel1 = "Level1Form"
     SummonLevel = "SummonLevel"
@@ -61,7 +61,7 @@ class locationCategory(str, Enum):
             locationCategory.DOUBLEBONUS,
             locationCategory.HYBRIDBONUS,
             locationCategory.ITEMBONUS,
-            locationCategory.STATBONUS
+            locationCategory.STATBONUS,
         ]
 
 
@@ -91,13 +91,13 @@ class locationDepth(str, Enum):
 def location_depth_choices() -> dict[locationDepth, str]:
     return {
         locationDepth.Anywhere: "Anywhere",
-        locationDepth.NonSuperboss: 'Non-Superboss',
-        locationDepth.FirstVisit: 'First Visit',
-        locationDepth.FirstBoss: 'First Visit Boss',
-        locationDepth.SecondVisitOnly: 'Second Visit',
-        locationDepth.LastStoryBoss: 'Last Story Boss',
-        locationDepth.Superbosses: 'Superbosses',
-        locationDepth.NoFirstVisit: 'Non First Visits',
+        locationDepth.NonSuperboss: "Non-Superboss",
+        locationDepth.FirstVisit: "First Visit",
+        locationDepth.FirstBoss: "First Visit Boss",
+        locationDepth.SecondVisitOnly: "Second Visit",
+        locationDepth.LastStoryBoss: "Last Story Boss",
+        locationDepth.Superbosses: "Superbosses",
+        locationDepth.NoFirstVisit: "Non First Visits",
     }
 
 
@@ -140,7 +140,7 @@ class itemType(str, Enum):
     SUMMON = "Summon"
     REPORT = "Report"
     KEYITEM = "KeyItem"
-    STORYUNLOCK= "Story Unlock"
+    STORYUNLOCK = "Story Unlock"
     MUNNY_POUCH = "Munny Pouch"
     MANUFACTORYUNLOCK = "Manufactory Unlock"
     TROPHY = "OC Trophy"
@@ -159,46 +159,46 @@ class itemRarity(str, Enum):
 
 
 class SoraLevelOption(str, Enum):
-    LEVEL_1 = 'Level'
-    LEVEL_50 = 'ExcludeFrom50'
-    LEVEL_99 = 'ExcludeFrom99'
+    LEVEL_1 = "Level"
+    LEVEL_50 = "ExcludeFrom50"
+    LEVEL_99 = "ExcludeFrom99"
 
 
 class StartingMovementOption(str, Enum):
-    DISABLED = 'Disabled'
-    RANDOM_3 = '3Random'
-    RANDOM_5 = 'Random'
-    LEVEL_1 = 'Level_1'
-    LEVEL_2 = 'Level_2'
-    LEVEL_3 = 'Level_3'
-    LEVEL_4 = 'Level_4'
+    DISABLED = "Disabled"
+    RANDOM_3 = "3Random"
+    RANDOM_5 = "Random"
+    LEVEL_1 = "Level_1"
+    LEVEL_2 = "Level_2"
+    LEVEL_3 = "Level_3"
+    LEVEL_4 = "Level_4"
 
 
 class AbilityPoolOption(str, Enum):
-    DEFAULT = 'default'
-    RANDOMIZE = 'randomize'
-    RANDOMIZE_SUPPORT = 'randomize support'
-    RANDOMIZE_STACKABLE = 'randomize stackable'
+    DEFAULT = "default"
+    RANDOMIZE = "randomize"
+    RANDOMIZE_SUPPORT = "randomize support"
+    RANDOMIZE_STACKABLE = "randomize stackable"
 
 
 class ItemAccessibilityOption(str, Enum):
-    ALL = 'all'
-    BEATABLE = 'beatable'
+    ALL = "all"
+    BEATABLE = "beatable"
 
 
 class SoftlockPreventionOption(str, Enum):
-    DEFAULT = 'default'
-    REVERSE = 'reverse'
-    BOTH = 'both'
+    DEFAULT = "default"
+    REVERSE = "reverse"
+    BOTH = "both"
 
 
 class BattleLevelOption(str, Enum):
-    NORMAL = 'Normal'
-    SHUFFLE = 'Shuffle'
-    OFFSET = 'Offset'
-    RANDOM_WITHIN_RANGE = 'Within Range of Normal'
-    RANDOM_MAX_50 = 'Random (Max 50)'
-    SCALE_TO_50 = 'Scale to 50'
+    NORMAL = "Normal"
+    SHUFFLE = "Shuffle"
+    OFFSET = "Offset"
+    RANDOM_WITHIN_RANGE = "Within Range of Normal"
+    RANDOM_MAX_50 = "Random (Max 50)"
+    SCALE_TO_50 = "Scale to 50"
 
 
 class LevelUpStatBonus(str, Enum):
@@ -206,3 +206,12 @@ class LevelUpStatBonus(str, Enum):
     MAGIC = "Magic"
     DEFENSE = "Defense"
     AP = "AP"
+
+
+class HintType(str, Enum):
+    DISABLED = "Disabled"
+    JSMARTEE = "JSmartee"
+    SHANANAS = "Shananas"
+    PATH = "Path"
+    POINTS = "Points"
+    SPOILER = "Spoiler"

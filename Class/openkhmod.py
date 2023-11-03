@@ -16,6 +16,7 @@ def write_unicode_yaml_to_zip_file(zip_file: ZipFile, name: str, data, sort_keys
     yaml_string = re.sub(
         r"en: ([a-zA-Z0-9\\]+)", r'en: "\1"', yaml_string
     )  # surround text of the journal with double quotes to allow for automatic unicode conversion
+    yaml_string = yaml_string.replace("NEWLINE", "\\n")
     zip_file.writestr(name, yaml_string)
 
 
