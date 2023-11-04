@@ -13,6 +13,7 @@ from List.ItemList import Items
 from List.configDict import itemType, locationType, locationCategory, HintType
 from List.inventory import ability, form, magic, misc, storyunlock, summon, proof
 from List.location import simulatedtwilighttown as stt
+from List.location import weaponslot
 from Module import version
 from Module.RandomizerSettings import RandomizerSettings
 from Module.newRandomize import Randomizer, ItemAssignment
@@ -118,38 +119,76 @@ class Hints:
                 locationType.FormLevel,
             ]
             for loc_data, item_data in location_item_data:
-                ending_text = "."
                 if item_data.item in items_to_find:
                     # if ability is on keyblade, recursively check location of keyblade
-                    if "(Slot)" in loc_data.Description:
+                    if locationCategory.WEAPONSLOT in loc_data.LocationCategory:
+                        special_key_to_location = {}
+                        special_key_to_location[
+                            weaponslot.LocationId.KingdomKeyD
+                        ] = "Valor Form"
+                        special_key_to_location[
+                            weaponslot.LocationId.AlphaWeapon
+                        ] = "Master Form"
+                        special_key_to_location[
+                            weaponslot.LocationId.OmegaWeapon
+                        ] = "Final Form"
+                        special_key_to_location[
+                            weaponslot.LocationId.KingdomKey
+                        ] = "Sora"
                         keyblade_item = Items.weaponslot_id_to_keyblade_item(
                             loc_data.LocationId
                         )
                         # find the location of the keyblade
-                        key_location = [
-                            key_loc
-                            for key_loc, key_item in location_item_data
-                            if key_item.Name == keyblade_item.name
-                        ][0]
-                        loc_data = key_location
-                        ending_text = f" on {keyblade_item.name}."
-                    if independent_hint_specific:
-                        # hint the specific location
-                        all_possible_independent_hints.append(
-                            f"{item_data.Name} is in {loc_data.Description}{ending_text}"
-                        )
-                    else:
-                        # hint the world only
-                        hintable_worlds_of_location = [
-                            l for l in loc_data.LocationTypes if l in hintableWorlds
-                        ]
-                        if len(hintable_worlds_of_location) == 0:
-                            # TODO fix keyblades with abilities
-                            print("Hey, something borked")
+                        keyblade_location_data = None
+                        if (
+                            keyblade_item is None
+                            and loc_data.LocationId in special_key_to_location
+                        ):
+                            key_location = special_key_to_location[loc_data.LocationId]
+                            ending_text = f"'s Key."
                         else:
+                            keyblade_location_data = [
+                                key_loc
+                                for key_loc, key_item in location_item_data
+                                if key_item.Name == keyblade_item.name
+                            ][0]
+                            key_location = keyblade_location_data.Description
+                            ending_text = f" on {keyblade_item.name}."
+                        if independent_hint_specific:
+                            # hint the specific location
                             all_possible_independent_hints.append(
-                                f"{item_data.Name} is in {hintable_worlds_of_location[0].value}{ending_text}"
+                                f"{item_data.Name} is in {key_location}{ending_text}"
                             )
+                        else:
+                            # hint the world only
+                            hintable_worlds_of_location = [
+                                l for l in loc_data.LocationTypes if l in hintableWorlds
+                            ]
+                            if len(hintable_worlds_of_location) == 0:
+                                hintable_worlds_of_location = [keyblade_location_data]
+                            else:
+                                all_possible_independent_hints.append(
+                                    f"{item_data.Name} is in {hintable_worlds_of_location[0].value}{ending_text}"
+                                )
+                    else:
+                        if independent_hint_specific:
+                            # hint the specific location
+                            all_possible_independent_hints.append(
+                                f"{item_data.Name} is in {loc_data.Description}."
+                            )
+                        else:
+                            # hint the world only
+                            hintable_worlds_of_location = [
+                                l for l in loc_data.LocationTypes if l in hintableWorlds
+                            ]
+                            if len(hintable_worlds_of_location) == 0:
+                                raise HintException(
+                                    "No world to journal hint for ability"
+                                )
+                            else:
+                                all_possible_independent_hints.append(
+                                    f"{item_data.Name} is in {hintable_worlds_of_location[0].value}."
+                                )
 
             # at this point, we should have all our hint text, just need to assign to each report
             report_index = 0
