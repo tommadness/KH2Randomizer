@@ -25,7 +25,7 @@ from Module import hashimage
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
 from Module.cosmetics import CosmeticsMod
-from Module.hints import Hints
+from Module.hints import Hints, HintData
 from Module.knockbackTypes import KnockbackTypes
 from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe, ItemAssignment
@@ -286,7 +286,7 @@ class SeedZip:
         self,
         settings: RandomizerSettings,
         randomizer: Randomizer,
-        hints: Optional[Any],
+        hints: HintData,
         extra_data: ExtraConfigurationData,
         unreachable_locations: list[KH2Location],
         multiworld: Optional[MultiWorldOutput] = None,
@@ -358,11 +358,12 @@ class SeedZip:
             self.create_shop_rando_assets(mod)
             self.create_chest_visual_assets(mod)
             battle_level_spoiler = self.create_battle_level_rando_assets(mod)
+            journal_hints_spoiler: dict[str, str] = {}
 
             hints = self.hints
             if hints is not None:
                 Hints.write_hints(hints, out_zip)
-                Hints.write_hint_text(hints, mod)
+                Hints.write_hint_text(hints, mod, journal_hints_spoiler)
 
             if settings.roxas_abilities_enabled:
                 boss_enabled = not settings.enemy_options.get("boss", False) in [
@@ -376,7 +377,7 @@ class SeedZip:
             if spoiler_log or tourney_gen:
                 # For a tourney seed, generate the spoiler log to return to the caller but don't include it in the zip
                 spoiler_log_output = self.generate_spoiler_html(
-                    enemy_spoilers_json, battle_level_spoiler
+                    enemy_spoilers_json, battle_level_spoiler, journal_hints_spoiler
                 )
                 if not tourney_gen:
                     out_zip.writestr("spoilerlog.html", spoiler_log_output)
@@ -449,7 +450,12 @@ class SeedZip:
         else:
             return None, {}
 
-    def generate_spoiler_html(self, enemy_spoilers_json, battle_level_spoiler) -> str:
+    def generate_spoiler_html(
+            self,
+            enemy_spoilers_json,
+            battle_level_spoiler,
+            journal_hints_spoiler: dict[str, str]
+    ) -> str:
         settings = self.settings
         randomizer = self.randomizer
 
@@ -529,6 +535,7 @@ class SeedZip:
                 .replace("{BATTLE_LEVEL_JSON}", json.dumps(battle_level_spoiler))
                 .replace("{SYNTHESIS_RECIPE_JSON}", json.dumps(synthesis_recipe_json))
                 .replace("{WEAPON_STATS_JSON}", json.dumps(weapon_stats_spoiler))
+                .replace("{JOURNAL_HINTS_JSON}", json.dumps(journal_hints_spoiler))
                 .replace("{SETTINGS_JSON}", json.dumps(settings_spoiler_json))
                 .replace("PromiseCharm", "Promise Charm")
             )

@@ -14,6 +14,7 @@
         battle_level_data = {BATTLE_LEVEL_JSON}
         synthesis_recipe_data = {SYNTHESIS_RECIPE_JSON}
         weapon_stats_data = {WEAPON_STATS_JSON}
+        journal_hints_data = {JOURNAL_HINTS_JSON}
         settings_data = {SETTINGS_JSON}
     </script>
 
@@ -247,6 +248,14 @@
         </div>
     </div>
 
+    <button class="accordion">Ansem Report Hints</button>
+    <div class="panel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="journalHintsTable">
+            </table>
+        </div>
+    </div>
+
     <button class="accordion">Settings</button>
     <div class="panel">
         <div class="table-wrapper">
@@ -466,6 +475,24 @@ for (var i=1; i < 100; i++)
     level_html+="</td>"
     table_entry.innerHTML += level_html;
     levelStatTable.appendChild(table_entry);
+}
+
+var journalHintsTable = document.getElementById("journalHintsTable");
+var journalHintsHeader = document.createElement("tr");
+journalHintsHeader.innerHTML+="<th>Report</th><th>Text</th>";
+journalHintsTable.appendChild(journalHintsHeader);
+for (var reportNumber in journal_hints_data)
+{
+    var rowEntry = document.createElement("tr");
+    var journalHtml = "";
+    journalHtml += "<td>";
+    journalHtml += reportNumber;
+    journalHtml += "</td>"
+    journalHtml += "<td><pre>"
+    journalHtml += journal_hints_data[reportNumber];
+    journalHtml += "</pre></td>"
+    rowEntry.innerHTML += journalHtml;
+    journalHintsTable.appendChild(rowEntry);
 }
 
 var settingsTable = document.getElementById("settingsTable");
