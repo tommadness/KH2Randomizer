@@ -9,6 +9,7 @@ from zipfile import ZipFile
 from Class.exceptions import HintException
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
+from List.ItemList import Items
 from List.configDict import itemType, locationType, locationCategory, HintType
 from List.inventory import ability, form, magic, misc, storyunlock, summon, proof
 from List.location import simulatedtwilighttown as stt
@@ -117,12 +118,25 @@ class Hints:
                 locationType.FormLevel,
             ]
             for loc_data, item_data in location_item_data:
+                ending_text = "."
                 if item_data.item in items_to_find:
-                    # if ability is on keyblade, just say the keyblade for now
+                    # if ability is on keyblade, recursively check location of keyblade
+                    if "(Slot)" in loc_data.Description:
+                        keyblade_item = Items.weaponslot_id_to_keyblade_item(
+                            loc_data.LocationId
+                        )
+                        # find the location of the keyblade
+                        key_location = [
+                            key_loc
+                            for key_loc, key_item in location_item_data
+                            if key_item.Name == keyblade_item.name
+                        ][0]
+                        loc_data = key_location
+                        ending_text = f" on {keyblade_item.name}."
                     if independent_hint_specific:
                         # hint the specific location
                         all_possible_independent_hints.append(
-                            f"{item_data.Name} is in {loc_data.Description}."
+                            f"{item_data.Name} is in {loc_data.Description}{ending_text}"
                         )
                     else:
                         # hint the world only
@@ -134,7 +148,7 @@ class Hints:
                             print("Hey, something borked")
                         else:
                             all_possible_independent_hints.append(
-                                f"{item_data.Name} is in {hintable_worlds_of_location[0].value}"
+                                f"{item_data.Name} is in {hintable_worlds_of_location[0].value}{ending_text}"
                             )
 
             # at this point, we should have all our hint text, just need to assign to each report
