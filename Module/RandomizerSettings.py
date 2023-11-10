@@ -557,52 +557,19 @@ class RandomizerSettings:
         if self.hiscore_mode:
             self.tracker_includes.append("ScoreMode")
 
-        hintable_checks_list = ui_settings.get(settingkey.HINTABLE_CHECKS)
-
         if (
             self.hintsType in ["JSmartee", "Path"]
-            and "proof" not in hintable_checks_list
+            and "proof" not in self.hintable_check_types
         ):
             raise SettingsException(
                 "Jsmartee and Path hints really need proofs hintable."
             )
         self.important_checks = []
-
-        if "magic" in hintable_checks_list:
-            self.important_checks += [
-                itemType.FIRE,
-                itemType.BLIZZARD,
-                itemType.THUNDER,
-                itemType.CURE,
-                itemType.REFLECT,
-                itemType.MAGNET,
-            ]
-        if "proof" in hintable_checks_list:
-            self.important_checks += [
-                itemType.PROOF_OF_NONEXISTENCE,
-                itemType.PROOF_OF_CONNECTION,
-                itemType.PROOF_OF_PEACE,
-                itemType.PROMISE_CHARM,
-            ]
-        if "form" in hintable_checks_list:
-            self.important_checks += [itemType.FORM, "Anti-Form"]
-        if "page" in hintable_checks_list:
-            self.important_checks += [itemType.TORN_PAGE]
-        if "report" in hintable_checks_list:
-            self.important_checks += [itemType.REPORT]
-        if "summon" in hintable_checks_list:
-            self.important_checks += [itemType.SUMMON]
-        if "visit" in hintable_checks_list:
-            self.important_checks += [itemType.STORYUNLOCK]
-        if "ability" in hintable_checks_list:
-            self.important_checks += ["Second Chance", "Once More"]
-        if "other" in hintable_checks_list:
-            self.important_checks += [
-                itemType.TROPHY,
-                itemType.MANUFACTORYUNLOCK,
-                itemType.OCSTONE,
-                itemType.MUNNY_POUCH,
-            ]
+        self.spoiler_reveal_checks = []
+        self.populate_check_type_list(self.hintable_check_types, self.important_checks)
+        self.populate_check_type_list(
+            self.spoiler_hint_values, self.spoiler_reveal_checks
+        )
 
         for check_type in [
             "magic",
@@ -615,7 +582,7 @@ class RandomizerSettings:
             "other",
             "report",
         ]:
-            if check_type not in hintable_checks_list:
+            if check_type not in self.hintable_check_types:
                 self.point_hint_values[check_type] = 0
 
         # making tracker includes use all worlds and
@@ -631,6 +598,43 @@ class RandomizerSettings:
         self.dummy_forms = True
 
         self.validateSettings()
+
+    def populate_check_type_list(self, hintable_checks_list, check_list):
+        if "magic" in hintable_checks_list:
+            check_list += [
+                itemType.FIRE,
+                itemType.BLIZZARD,
+                itemType.THUNDER,
+                itemType.CURE,
+                itemType.REFLECT,
+                itemType.MAGNET,
+            ]
+        if "proof" in hintable_checks_list:
+            check_list += [
+                itemType.PROOF_OF_NONEXISTENCE,
+                itemType.PROOF_OF_CONNECTION,
+                itemType.PROOF_OF_PEACE,
+                itemType.PROMISE_CHARM,
+            ]
+        if "form" in hintable_checks_list:
+            check_list += [itemType.FORM, "Anti-Form"]
+        if "page" in hintable_checks_list:
+            check_list += [itemType.TORN_PAGE]
+        if "report" in hintable_checks_list:
+            check_list += [itemType.REPORT]
+        if "summon" in hintable_checks_list:
+            check_list += [itemType.SUMMON]
+        if "visit" in hintable_checks_list:
+            check_list += [itemType.STORYUNLOCK]
+        if "ability" in hintable_checks_list:
+            check_list += ["Second Chance", "Once More"]
+        if "other" in hintable_checks_list:
+            check_list += [
+                itemType.TROPHY,
+                itemType.MANUFACTORYUNLOCK,
+                itemType.OCSTONE,
+                itemType.MUNNY_POUCH,
+            ]
 
     def create_full_seed_string(self):
         seed_string_from_all_inputs = (

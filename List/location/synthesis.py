@@ -19,30 +19,30 @@ def synth_recipe(recipe: int) -> KH2Location:
         LocationId=recipe - 1,
         Description=f"Synth Recipe {recipe}",
         LocationCategory=locationCategory.CREATION,
-        LocationTypes=[locationType.SYNTH],
-        InvalidChecks=[itemType.RECIPE, itemType.REPORT]
+        LocationTypes=[locationType.SYNTH, locationType.Creations],
+        InvalidChecks=[itemType.RECIPE, itemType.REPORT],
     )
 
 
 def make_graph(graph: LocationGraphBuilder):
-    free_dev_1 = graph.add_location(NodeId.FreeDev1, [
-        synth_recipe(recipe) for recipe in range(1, 6)
-    ])
-    free_dev_1_part_2 = graph.add_location(NodeId.FreeDev1Part2, [
-        synth_recipe(recipe) for recipe in range(6, 11)
-    ])
-    free_dev_1_part_3 = graph.add_location(NodeId.FreeDev1Part3, [
-        synth_recipe(recipe) for recipe in range(11, 16)
-    ])
-    free_dev_2 = graph.add_location(NodeId.FreeDev2, [
-        synth_recipe(recipe) for recipe in range(16, 21)
-    ])
-    free_dev_2_part_2 = graph.add_location(NodeId.FreeDev2Part2, [
-        synth_recipe(recipe) for recipe in range(21, 26)
-    ])
-    free_dev_2_part_3 = graph.add_location(NodeId.FreeDev2Part3, [
-        synth_recipe(recipe) for recipe in range(26, 31)
-    ])
+    free_dev_1 = graph.add_location(
+        NodeId.FreeDev1, [synth_recipe(recipe) for recipe in range(1, 6)]
+    )
+    free_dev_1_part_2 = graph.add_location(
+        NodeId.FreeDev1Part2, [synth_recipe(recipe) for recipe in range(6, 11)]
+    )
+    free_dev_1_part_3 = graph.add_location(
+        NodeId.FreeDev1Part3, [synth_recipe(recipe) for recipe in range(11, 16)]
+    )
+    free_dev_2 = graph.add_location(
+        NodeId.FreeDev2, [synth_recipe(recipe) for recipe in range(16, 21)]
+    )
+    free_dev_2_part_2 = graph.add_location(
+        NodeId.FreeDev2Part2, [synth_recipe(recipe) for recipe in range(21, 26)]
+    )
+    free_dev_2_part_3 = graph.add_location(
+        NodeId.FreeDev2Part3, [synth_recipe(recipe) for recipe in range(26, 31)]
+    )
 
     graph.add_edge(START_NODE, free_dev_1)
     graph.add_edge(free_dev_1, free_dev_1_part_2)

@@ -36,6 +36,7 @@ class locationType(str, Enum):
     TTR = "Transport to Remembrance"
     SYNTH = "Synthesis"
     SHOP = "Shop"
+    Creations = "Creations"
 
 
 class locationCategory(str, Enum):

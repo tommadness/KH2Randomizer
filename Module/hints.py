@@ -12,35 +12,23 @@ from Class.newLocationClass import KH2Location
 from List.ItemList import Items
 from List.configDict import itemType, locationType, locationCategory, HintType
 from List.inventory import ability, form, magic, misc, storyunlock, summon, proof
-from List.location import simulatedtwilighttown as stt
 from List.location import weaponslot
 from Module import version
+from Module.Hints.HintOutput import HintOutput
+from Module.Hints.HintUtils import (
+    CommonTrackerInfo,
+    HintUtils,
+    JsmarteeHintData,
+    PathHintData,
+    PointHintData,
+    WorldItems,
+)
 from Module.RandomizerSettings import RandomizerSettings
-from Module.newRandomize import Randomizer, ItemAssignment
+from Module.newRandomize import Randomizer
 from Module.seedmod import SeedModBuilder
 
 
 class Hints:
-    @staticmethod
-    def convert_item_assignment_to_tuple(
-        item_assignment: list[ItemAssignment], shop_items: list[KH2Item]
-    ) -> list[tuple[KH2Location, KH2Item]]:
-        location_items: list[tuple[KH2Location, KH2Item]] = []
-        for assignment in item_assignment:
-            location = assignment.location
-            if location.name() != stt.CheckLocation.StruggleLoserMedal:
-                location_items.append((location, assignment.item))
-                if assignment.item2 is not None:
-                    location_items.append((location, assignment.item2))
-
-        fake_shop_location = KH2Location(
-            999, "Shop Item", locationCategory.CREATION, [locationType.SHOP]
-        )
-        for shop_item in shop_items:
-            location_items.append((fake_shop_location, shop_item))
-
-        return location_items
-
     @staticmethod
     def generator_journal_hints(
         location_item_data: list[tuple[KH2Location, KH2Item]],
@@ -63,6 +51,10 @@ class Hints:
         )
 
         # add journal text to hintsText structure
+        if "Reports" not in hintData:
+            hintData["Reports"] = {}
+            for report_num in range(1, 14):
+                hintData["Reports"][report_num] = {}
         for report_num in range(1, 14):
             hintData["Reports"][report_num]["JournalText"] = journal_data[report_num]
 
@@ -77,6 +69,7 @@ class Hints:
             all_possible_independent_hints = []
             # find the items
             items_to_find = [
+                ability.Scan,
                 ability.ComboMaster,
                 ability.FinishingPlus,
                 ability.ExperienceBoost,
@@ -203,38 +196,19 @@ class Hints:
     def generate_hints(randomizer: Randomizer, settings: RandomizerSettings):
         hintsType = settings.hintsType
 
-        excludeList = copy.deepcopy(settings.disabledLocations)
-        if locationType.HB in excludeList and (
-            locationType.TTR not in excludeList or locationType.CoR not in excludeList
-        ):
-            excludeList.remove(locationType.HB)
-        if locationType.OC in excludeList and (locationType.OCCups not in excludeList):
-            excludeList.remove(locationType.OC)
+        excludeList = HintUtils.update_disabled_worlds_on_tracker(settings)
 
-        if (
-            locationType.SYNTH in excludeList
-            and locationType.Puzzle in excludeList
-            and not settings.shop_hintable
-        ):
-            excludeList.append("Creations")
-
-        for l in settings.vanillaLocations:
-            if l in excludeList:
-                excludeList.remove(l)
-
-        locationItems = randomizer.assignments
-        locationItems = Hints.convert_item_assignment_to_tuple(
-            locationItems, randomizer.shop_items
+        locationItems = HintUtils.convert_item_assignment_to_tuple(
+            randomizer.assignments, randomizer.shop_items
         )
 
         if hintsType == HintType.DISABLED:
-            hintsText = {}
-            hintsText["hintsType"] = hintsType
-            hintsText["Reports"] = {}
-            for report_num in range(1, 14):
-                hintsText["Reports"][report_num] = {}
-            Hints.generator_journal_hints(locationItems, settings, hintsText)
-            return hintsText
+            hint_output = HintOutput()
+            hint_output.hintsText["hintsType"] = hintsType
+            Hints.generator_journal_hints(
+                locationItems, settings, hint_output.hintsText
+            )
+            return hint_output.hintsText
 
         preventSelfHinting = settings.prevent_self_hinting
         allowProofHinting = settings.allow_proof_hinting
@@ -264,17 +238,21 @@ class Hints:
             tracker_includes.append("dummy_forms")
 
         # start making the hint file
-        hintsText = {}
+        hint_output = HintOutput()
         if settings.progression_hints:
-            hintsText["ProgressionSettings"] = settings.progression_hint_settings
-            num_progression_worlds = len(hintsText["ProgressionSettings"]["HintCosts"])
-        hintsText["hintsType"] = hintsType
-        hintsText["generatorVersion"] = settings.ui_version
-        hintsText["settings"] = tracker_includes
-        hintsText["checkValue"] = pointHintValues
-        hintsText["hintableItems"] = hintedItemValues
+            hint_output.hintsText[
+                "ProgressionSettings"
+            ] = settings.progression_hint_settings
+            num_progression_worlds = len(
+                hint_output.hintsText["ProgressionSettings"]["HintCosts"]
+            )
+        hint_output.hintsText["hintsType"] = hintsType
+        hint_output.hintsText["generatorVersion"] = settings.ui_version
+        hint_output.hintsText["settings"] = tracker_includes
+        hint_output.hintsText["checkValue"] = pointHintValues
+        hint_output.hintsText["hintableItems"] = hintedItemValues
         if settings.dummy_forms:
-            hintsText["dummy_forms"] = True
+            hint_output.hintsText["dummy_forms"] = True
         hintableWorlds = [
             locationType.Level,
             locationType.LoD,
@@ -298,31 +276,27 @@ class Hints:
 
         # All hints do the Shananas thing except JSmartee
         if hintsType != HintType.JSMARTEE:
-            hintsText["world"] = {}
-            hintsText["world"][locationType.Critical] = []
-            hintsText["world"][locationType.Free] = []
+            hint_output.hintsText["world"] = {}
+            hint_output.hintsText["world"][locationType.Critical] = []
+            hint_output.hintsText["world"][locationType.Free] = []
             for x in hintableWorlds:
-                hintsText["world"][x] = []
+                hint_output.hintsText["world"][x] = []
             for location, item in locationItems:
                 if location.LocationTypes[0] == locationType.WeaponSlot:
                     continue
                 if item.ItemType in importantChecks or item.Name in importantChecks:
-                    world_of_location = location.LocationTypes[0]
-                    if (
-                        world_of_location == locationType.Puzzle
-                        or world_of_location == locationType.SYNTH
-                        or world_of_location == locationType.SHOP
-                    ):
-                        world_of_location = "Creations"
-                    if not world_of_location in hintsText["world"]:
+                    world_of_location = HintUtils.location_to_tracker_world(
+                        location.LocationTypes
+                    )
+                    if not world_of_location in hint_output.hintsText["world"]:
                         raise HintException(
-                            f"Something is going wrong with initializing hintText worlds {world_of_location} {hintsText['world']}"
+                            f"Something is going wrong with initializing hintText worlds {world_of_location} {hint_output.hintsText['world']}"
                         )
-                        # hintsText['world'][world_of_location] = []
-                    hintsText["world"][world_of_location].append(item.Name)
+                        # hint_output.hintsText['world'][world_of_location] = []
+                    hint_output.hintsText["world"][world_of_location].append(item.Name)
 
         if hintsType != HintType.SHANANAS:
-            hintsText["Reports"] = {}
+            hint_output.hintsText["Reports"] = {}
             # importantChecks += [itemType.REPORT]
 
         report_master = [[locationType.Free]] * 14
@@ -501,16 +475,16 @@ class Hints:
             ]
 
             hintable_world_list.sort(
-                reverse=True, key=lambda x: len(hintsText["world"][x])
+                reverse=True, key=lambda x: len(hint_output.hintsText["world"][x])
             )
             barren_world_list.sort(
-                reverse=True, key=lambda x: len(hintsText["world"][x])
+                reverse=True, key=lambda x: len(hint_output.hintsText["world"][x])
             )
 
             report_texts = []
 
             def create_hint_text(world):
-                num_items = len(hintsText["world"][world])
+                num_items = len(hint_output.hintsText["world"][world])
                 hint_text = ""
                 world_text = world
                 if world == locationType.Level:
@@ -605,7 +579,7 @@ class Hints:
 
                 for x in range(1, 14):
                     report_location = report_master[x][0]
-                    hintsText["Reports"][x] = {
+                    hint_output.hintsText["Reports"][x] = {
                         "Text": report_texts[x - 1][0],
                         "HintedWorld": report_texts[x - 1][1],
                         "ProofPath": report_texts[x - 1][2],
@@ -634,7 +608,7 @@ class Hints:
 
                 for x in range(1, num_progression_worlds + 1):
                     report_location = report_master[x][0]
-                    hintsText["Reports"][x] = {
+                    hint_output.hintsText["Reports"][x] = {
                         "Text": report_texts[x - 1][0],
                         "HintedWorld": report_texts[x - 1][1],
                         "ProofPath": report_texts[x - 1][2],
@@ -853,7 +827,7 @@ class Hints:
                         # ------------------ Done filling required hinted worlds --------------------------------
                         # ------------------ Attempting to find a good assignment for the hints, after too many tries, return an error
                         for try_number in range(10):
-                            hintsText["Reports"] = {}
+                            hint_output.hintsText["Reports"] = {}
                             reportsList = list(range(1, 14))
                             for index, world in enumerate(tempWorldsToHint):
                                 reportNumber = None
@@ -873,21 +847,21 @@ class Hints:
                                             reportNumber = maybeReportNumber
                                             break
                                 if reportNumber is None:
-                                    hintsText["Reports"] = {}
+                                    hint_output.hintsText["Reports"] = {}
                                     break
 
-                                hintsText["Reports"][reportNumber] = {
+                                hint_output.hintsText["Reports"][reportNumber] = {
                                     "World": world,
                                     "Count": len(worldChecks[world]),
                                     "Location": "",
                                 }
-                            if len(hintsText["Reports"]) == 0:
+                            if len(hint_output.hintsText["Reports"]) == 0:
                                 continue
-                        if len(hintsText["Reports"]) != 0:
+                        if len(hint_output.hintsText["Reports"]) != 0:
                             worldsToHint = tempWorldsToHint
                             break
 
-                if len(hintsText["Reports"]) == 0:
+                if len(hint_output.hintsText["Reports"]) == 0:
                     raise HintException("Unable to find valid assignment for hints...")
 
             # slack worlds to hint, can point to anywhere
@@ -905,7 +879,7 @@ class Hints:
                 else:
                     continue
 
-                hintsText["Reports"][reportNumber] = {
+                hint_output.hintsText["Reports"][reportNumber] = {
                     "World": randomWorld,
                     "Count": len(worldChecks[randomWorld]),
                     "Location": "",
@@ -913,12 +887,12 @@ class Hints:
                 worldsToHint.append(randomWorld)
 
             for reportNumber in range(1, 14):
-                if hintsText["Reports"][reportNumber]["Location"] != "":
+                if hint_output.hintsText["Reports"][reportNumber]["Location"] != "":
                     continue
                 else:
-                    hintsText["Reports"][reportNumber]["Location"] = report_master[
-                        reportNumber
-                    ][0]
+                    hint_output.hintsText["Reports"][reportNumber][
+                        "Location"
+                    ] = report_master[reportNumber][0]
 
             if len(worldsToHint) != len(set(worldsToHint)):
                 raise HintException(
@@ -929,7 +903,9 @@ class Hints:
                 # get the hinted worlds
                 hinted_worlds = []
                 for reportNumber in range(1, 14):
-                    hinted_worlds.append(hintsText["Reports"][reportNumber]["World"])
+                    hinted_worlds.append(
+                        hint_output.hintsText["Reports"][reportNumber]["World"]
+                    )
 
                 unhinted_worlds = []
                 for h in hintableWorlds:
@@ -937,7 +913,7 @@ class Hints:
                         unhinted_worlds.append(h)
 
                 for reportNumber in range(14, num_progression_worlds + 1):
-                    hintsText["Reports"][reportNumber] = {
+                    hint_output.hintsText["Reports"][reportNumber] = {
                         "World": unhinted_worlds[reportNumber - 14],
                         "Location": "",
                         "Count": len(worldChecks[unhinted_worlds[reportNumber - 14]]),
@@ -1093,7 +1069,7 @@ class Hints:
                         reportsList.append(reportNumber)
                         continue
 
-                hintsText["Reports"][reportNumber] = {
+                hint_output.hintsText["Reports"][reportNumber] = {
                     "World": randomWorld,
                     "check": randomItem.Name,
                     "Location": "",
@@ -1104,20 +1080,24 @@ class Hints:
                 tempExcludeList.append(randomWorld)
 
             for r in reportsList:
-                hintsText["Reports"][r] = {"World": "", "check": "", "Location": ""}
+                hint_output.hintsText["Reports"][r] = {
+                    "World": "",
+                    "check": "",
+                    "Location": "",
+                }
 
             for reportNumber in range(1, 14):
                 # cant make reports anonymous because then report ghosts are unable to know which report was hinted
-                # if "Report" in hintsText["Reports"][reportNumber]["check"]:
-                #     hintsText["Reports"][reportNumber]["check"] = "Ansem Report"
-                if hintsText["Reports"][reportNumber]["Location"] != "":
+                # if "Report" in hint_output.hintsText["Reports"][reportNumber]["check"]:
+                #     hint_output.hintsText["Reports"][reportNumber]["check"] = "Ansem Report"
+                if hint_output.hintsText["Reports"][reportNumber]["Location"] != "":
                     continue
-                hintsText["Reports"][reportNumber]["Location"] = report_master[
-                    reportNumber
-                ][0]
+                hint_output.hintsText["Reports"][reportNumber][
+                    "Location"
+                ] = report_master[reportNumber][0]
 
         if hintsType == HintType.SPOILER:
-            hintsText["reveal"] = spoilerHintValues
+            hint_output.hintsText["reveal"] = spoilerHintValues
             worldsToHint = []
             reportRestrictions = [[], [], [], [], [], [], [], [], [], [], [], [], []]
             reportsList = list(range(1, 14))
@@ -1264,7 +1244,7 @@ class Hints:
                         tempExcludeList.append(worlds[0])
                         continue
 
-                hintsText["Reports"][reportNumber] = {
+                hint_output.hintsText["Reports"][reportNumber] = {
                     "World": randomWorld,
                     "Location": "",
                 }
@@ -1279,7 +1259,7 @@ class Hints:
                     tempExcludeList.append(randomWorld)
 
             for reportNumber in range(1, 14):
-                if hintsText["Reports"][reportNumber]["Location"] != "":
+                if hint_output.hintsText["Reports"][reportNumber]["Location"] != "":
                     continue
                 for world in worldChecks:
                     if any(
@@ -1287,16 +1267,20 @@ class Hints:
                         == str(reportNumber)
                         for item in worldChecks[world]
                     ):
-                        hintsText["Reports"][reportNumber]["Location"] = world
+                        hint_output.hintsText["Reports"][reportNumber][
+                            "Location"
+                        ] = world
 
             if settings.progression_hints:
                 # TODO: Make this more general in refactor
                 if settings.revealMode == "bossreports":
-                    hintsText["ProgressionType"] = "Bosses"
+                    hint_output.hintsText["ProgressionType"] = "Bosses"
                 # get the hinted worlds
                 hinted_worlds = []
                 for reportNumber in range(1, 14):
-                    hinted_worlds.append(hintsText["Reports"][reportNumber]["World"])
+                    hinted_worlds.append(
+                        hint_output.hintsText["Reports"][reportNumber]["World"]
+                    )
 
                 unhinted_worlds = []
                 for h in hintableWorlds:
@@ -1304,7 +1288,7 @@ class Hints:
                         unhinted_worlds.append(h)
 
                 for reportNumber in range(14, num_progression_worlds + 1):
-                    hintsText["Reports"][reportNumber] = {
+                    hint_output.hintsText["Reports"][reportNumber] = {
                         "World": unhinted_worlds[reportNumber - 14],
                         "Location": "",
                     }
@@ -1317,20 +1301,86 @@ class Hints:
         ):
             for reportNumber in range(1, 14):
                 if (
-                    hintsText["Reports"][reportNumber]["Location"]
+                    hint_output.hintsText["Reports"][reportNumber]["Location"]
                     not in report_master[reportNumber]
                 ):
-                    if hintsText["Reports"][reportNumber]["Location"] == "" and (
+                    if hint_output.hintsText["Reports"][reportNumber][
+                        "Location"
+                    ] == "" and (
                         locationType.Critical in report_master[reportNumber]
                         or locationType.Free in report_master[reportNumber]
                     ):
                         # this is fine, continue
                         continue
                     raise RuntimeError(
-                        f"Report {reportNumber} has location written as {hintsText['Reports'][reportNumber]['Location']} but the actual location is {report_master[reportNumber]}"
+                        f"Report {reportNumber} has location written as {hint_output.hintsText['Reports'][reportNumber]['Location']} but the actual location is {report_master[reportNumber]}"
                     )
-        Hints.generator_journal_hints(locationItems, settings, hintsText)
-        return hintsText
+        Hints.generator_journal_hints(locationItems, settings, hint_output.hintsText)
+        return hint_output.hintsText
+
+    @staticmethod
+    def generate_hints_v2(randomizer: Randomizer, settings: RandomizerSettings):
+        # this list is meant to disallow worlds from being hinted, since they will never have hintable items
+        excludeList = HintUtils.update_disabled_worlds_on_tracker(settings)
+        location_item_tuples = HintUtils.convert_item_assignment_to_tuple(
+            randomizer.assignments, randomizer.shop_items
+        )
+
+        common_tracker_data = CommonTrackerInfo(settings)
+        world_items = WorldItems(location_item_tuples, common_tracker_data)
+        hintable_worlds = [
+            i for i in HintUtils.hintable_worlds() if i not in excludeList
+        ]
+        hint_data = common_tracker_data.to_dict()
+        if settings.hintsType == HintType.SHANANAS:
+            hint_data["world"] = world_items.world_dict()
+        elif settings.hintsType == HintType.JSMARTEE:
+            jsmartee_data = []
+            for w in hintable_worlds:
+                jsmartee_data.append(JsmarteeHintData(world_items, w))
+            if common_tracker_data.progression_settings is not None:
+                hint_data["Reports"] = HintUtils.jsmartee_progression_hints(
+                    world_items, jsmartee_data
+                )
+            else:
+                hint_data["Reports"] = HintUtils.jsmartee_hint_report_assignment(
+                    settings, world_items, jsmartee_data
+                )
+        elif settings.hintsType == HintType.POINTS:
+            hint_data["world"] = world_items.world_dict()
+            point_data = []
+            for w in hintable_worlds:
+                point_data.append(
+                    PointHintData(settings, common_tracker_data, world_items, w)
+                )
+            hint_data["Reports"] = HintUtils.point_hint_report_assignment(
+                settings, world_items, point_data
+            )
+
+        elif settings.hintsType == HintType.SPOILER:
+            hint_data["world"] = world_items.world_dict()
+            hint_data["Reports"] = HintUtils.spoiler_hint_assignment(
+                settings, common_tracker_data, world_items, hintable_worlds
+            )
+        elif settings.hintsType == HintType.PATH:
+            hint_data["world"] = world_items.world_dict()
+            path_data = []
+            for w in HintUtils.hintable_worlds():
+                path_data.append(PathHintData(world_items, w))
+            hint_data["Reports"] = HintUtils.path_hint_assignment(
+                world_items,
+                path_data,
+                common_tracker_data,
+            )
+
+        elif settings.hintsType == HintType.DISABLED:
+            # don't need to do anything extra
+            pass
+        else:
+            raise HintException("Unable to generate hints for nonexistent hint system")
+
+        Hints.generator_journal_hints(location_item_tuples, settings, hint_data)
+        return hint_data
 
     @staticmethod
     def write_hints(hint_data, out_zip: ZipFile):
@@ -1352,8 +1402,6 @@ class Hints:
                 )
                 + "NEWLINE" * newlines
             )
-
-        print(hint_data)
 
         for report_number in range(0, 13):
             report_text = ""
