@@ -5,7 +5,6 @@ import string
 import textwrap
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
@@ -437,13 +436,17 @@ class WorldRandomizationTristate(Setting):
         return [selected_values, partial_values]
 
     def spoiler_log_entries(self, value) -> dict[str, str]:
-        if isinstance(value, tuple):
-            randomized_keys, vanilla_keys = value
-        else:
-            randomized_keys, vanilla_keys = value, []
-        randomized_worlds = []
-        vanilla_worlds = []
-        junk_worlds = []
+        # Expects a list of 2 other lists, one for randomized world keys and one for vanilla world keys.
+        # Anything not in those lists is assumed junk.
+        if not isinstance(value, list):
+            return {}
+        if len(value) != 2:
+            return {}
+        randomized_keys: list[str] = value[0]
+        vanilla_keys: list[str] = value[1]
+        randomized_worlds: list[str] = []
+        vanilla_worlds: list[str] = []
+        junk_worlds: list[str] = []
         for choice_key, choice_value in self.choices.items():
             if choice_key in randomized_keys:
                 randomized_worlds.append(choice_value)
