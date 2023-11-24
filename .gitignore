@@ -21,3 +21,6 @@ presets/**/devonly-*.json
 music-rando-config.json
 /env
 EnemyRandoData
+/env1
+/.gitignore
+/.gitignore
