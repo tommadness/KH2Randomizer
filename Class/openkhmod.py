@@ -1,8 +1,13 @@
 from copy import deepcopy
+from ctypes.wintypes import BYTE
+from json import load
+from math import floor
 from typing import Any, Optional, Iterator
 from zipfile import ZipFile
 
 import yaml, re
+
+from symbol import power
 
 Asset = dict[str, Any]
 
@@ -392,3 +397,115 @@ class Treasures:
 
     def write_to_zip_file(self, zip_file: ZipFile):
         write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=True)
+        
+class ATKPObject:
+    def __init__(self, Id: int, SubId: int, Type: str, CriticalAdjust: int, Power: int, Team: int,
+                 Element: int, EnemyReaction: int, EffectOnHit: int, KnockbackStrength1: int, KnockbackStrength2: int, 
+                 Unknown: int, Flags, RefactSelf: str, RefactOther: str, ReflectedMotion: int, ReflectedHitBack: int,
+                 ReflectAction: int, ReflectHitSound: int, ReflectRC: int, ReflectRange: int, ReflectAngle: int, 
+                 DamageEffect: int, Switch: int, Interval: int, FloorCheck: int, DriveDrain: int, RevengeDamage: int,
+                 AttackTrReaction: str, ComboGroup: int, RandomEffect: int, Kind, HPDrain: int):
+        self.Id = Id
+        self.SubId = SubId
+        self.Type = Type
+        self.CriticalAdjust = CriticalAdjust
+        self.Power = Power
+        self.Team = Team
+        self.Element = Element
+        self.EnemyReaction = EnemyReaction
+        self.EffectOnHit = EffectOnHit
+        self.KnockbackStrength1 = KnockbackStrength1
+        self.KnockbackStrength2 = KnockbackStrength2
+        self.Unknown = Unknown
+        self.Flags = Flags
+        self.RefactSelf = RefactSelf
+        self.RefactOther = RefactOther
+        self.ReflectedMotion = ReflectedMotion
+        self.ReflectedHitBack = ReflectedHitBack
+        self.ReflectAction = ReflectAction
+        self.ReflectHitSound = ReflectHitSound
+        self.ReflectRC = ReflectRC
+        self.ReflectRange = ReflectRange
+        self.ReflectAngle = ReflectAngle
+        self.DamageEffect = DamageEffect
+        self.Switch = Switch
+        self.Interval = Interval
+        self.FloorCheck = FloorCheck
+        self.DriveDrain = DriveDrain
+        self.RevengeDamage = RevengeDamage
+        self.AttackTrReaction = AttackTrReaction
+        self.ComboGroup = ComboGroup
+        self.RandomEffect = RandomEffect
+        self.Kind = Kind
+        self.HPDrain = HPDrain
+       
+"""The below values for the dict represent in order:
+            SubId,
+            Id,
+            Type,
+            CriticalAdjust,
+            Power,
+            Team,
+            Element,
+            EnemyReaction (Knockback type),
+            EffectOnHit,
+            KnockbackStrength1 (MAX: 32767, MIN: 0),
+            KnockbackStrength2 (Same MIN/MAX),
+            Unknown,
+            Flags (Check template above),
+            RefactSelf,
+            RefactOther,
+            ReflectedMotion,
+            ReflectHitBack,
+            ReflectAction,
+            ReflectHitSound,
+            ReflectRC,
+            ReflectRange,
+            ReflectAngle,
+            DamageEffect,
+            Switch,
+            Interval (For multi hits: Time between hits),
+            FloorCheck,
+            DriveDrain (If not in drive form, restors drive instead),
+            RevengeDamage,
+            AttackTrReaction,
+            ComboGroup,
+            RandomEffect,
+            Kind (ReactionCommand, ComboFinisher, AirComboFinisher or Empty),
+            HPDrain (Actually restores hp, not drain)
+        """
+ATKP_DICT = dict[int, dict[int, str, int, int, int, int, int, int, int, int, int, str, str, str, int, int, int, int, int, int, int, int, int, int, int, int, int, str, int, int, str, int]]
+
+class AttackEntriesOrganizer:
+    
+    def __init__(self, source_name: str):
+        self.data: ATKP_DICT = {}
+        self.source_name = source_name
+    
+    def convert_atkp_object_to_dict_and_add_to_data(self, atkp_object: ATKPObject):
+        self.data[atkp_object.SubId] = {atkp_object.Id, atkp_object.Type, atkp_object.CriticalAdjust, atkp_object.Power, atkp_object.Team, atkp_object.Element, atkp_object.EnemyReaction, atkp_object.EffectOnHit, atkp_object.KnockbackStrength1, atkp_object.KnockbackStrength2, atkp_object.Unknown, atkp_object.Flags, atkp_object.RefactSelf, atkp_object.RefactOther, atkp_object.ReflectedMotion, atkp_object.ReflectedHitBack, atkp_object.ReflectAction, atkp_object.ReflectHitSound, atkp_object.ReflectRC, atkp_object.ReflectRange, atkp_object.ReflectAngle, atkp_object.DamageEffect, atkp_object.Switch, atkp_object.Interval, atkp_object.FloorCheck, atkp_object.DriveDrain, atkp_object.RevengeDamage, atkp_object.AttackTrReaction, atkp_object.ComboGroup, atkp_object.RandomEffect, atkp_object.Kind, atkp_object.HPDrain}
+    
+    def write_to_zip_file(self, zip_file: ZipFile):
+        write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=False)
+
+    #Below methods are experimental
+    def attack_entry_constructor(values):
+        return ATKPObject(values['Id'], values['SubId'], values['Type'], values['CriticalAdjust'], values['Power'], values['Team'], values['Element'], values['EnemyReaction'], values['EffectOnHit'], values['KnockbackStrength1'], values['KnockbackStrength2'], values['Unknown'], values['Flags'], values['RefactSelf'], values['RefactOther'], values['ReflectedMotion'], values['ReflectHitBack'], values['ReflectAction'], values['ReflectHitSound'], values['ReflectRC'], values['ReflectRange'], values['ReflectAngle'], values['DamageEffect'], values['Switch'], values['Interval'], values['FloorCheck'], values['DriveDrain'], values['RevengeDamage'], values['AttackTrReaction'], values['ComboGroup'], values['RandomEffect'], values['Kind'], values['HPDrain'])
+    
+    def get_attack_using_ids(self, Id, SubId):
+        with open('static/AtkpList.yml', 'r') as file:
+            list_data = yaml.safe_load(file)
+            
+        for attack_entry in list_data:
+            if(attack_entry['SubId'] == SubId and attack_entry['Id'] == Id):
+                return self.attack_entry_constructor(attack_entry)
+            
+    #Used specifically for moves with two Ids that have the same number and same SubId but with different power and uses (like goofy tornado) 
+    def get_attack_using_ids_plus_power(self, Id, SubId, Power):
+        with open('static/AtkpList.yml', 'r') as file:
+            list_data = yaml.safe_load(file)
+            
+        for attack_entry in list_data:
+            if(attack_entry['SubId'] == SubId and attack_entry['Id'] == Id and attack_entry['Power'] == Power):
+                return self.attack_entry_constructor(attack_entry)
+        
