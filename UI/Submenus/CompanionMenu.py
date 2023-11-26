@@ -11,7 +11,6 @@ from UI.worker import CompanionZipWorker
 
 
 class CompanionMenu(KH2Submenu):
-
     def __init__(self, settings: SeedSettings, seed_name_getter: Callable[[], str]):
         super().__init__(title='Companion Options', settings=settings)
         self.seed_name_getter = seed_name_getter
@@ -19,7 +18,10 @@ class CompanionMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.DONALD_DAMAGE_TOGGLE)
-        self.add_option(settingkey.DONALD_KNOCKBACK_TYPES)
+        self.add_option(settingkey.DONALD_MELEE_ATTACKS)
+        self.add_option(settingkey.DONALD_FIRE)
+        self.add_option(settingkey.DONALD_BLIZZARD)
+        self.add_option(settingkey.DONALD_THUNDER)
         self.add_option(settingkey.DONALD_KILL_BOSS)
         self.end_group('Donald Damage and Knockback options')
         self.end_column()
@@ -27,7 +29,10 @@ class CompanionMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.GOOFY_DAMAGE_TOGGLE)
-        self.add_option(settingkey.GOOFY_KNOCKBACK_TYPES)
+        self.add_option(settingkey.GOOFY_MELEE_ATTACKS)
+        self.add_option(settingkey.GOOFY_BASH)
+        self.add_option(settingkey.GOOFY_TURBO)
+        self.add_option(settingkey.GOOFY_TORNADO)
         self.add_option(settingkey.GOOFY_KILL_BOSS)
         self.end_group('Goofy Damage and Knockback options')
         self.end_column()
@@ -43,6 +48,8 @@ class CompanionMenu(KH2Submenu):
         self.pending_group.addWidget(companion_mod_button)
         self.end_group('Companion Mod Maker')
         self.end_column()
+        
+        self.finalizeMenu()
         
     def _make_companion_mod(self):
         worker = CompanionZipWorker(self, self.seed_name_getter(), self.settings)

@@ -29,7 +29,9 @@ from List.configDict import (
     AbilityPoolOption,
 )
 from List.inventory import ability, misc, proof, storyunlock
-from Module import KnockbackTypes, encoding, field2d
+from Module import encoding, field2d
+from Module import knockbackTypes
+from Module.knockbackTypes import KnockbackTypes
 from Module.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.progressionPoints import ProgressionPoints
 
@@ -2596,7 +2598,7 @@ _all_settings = [
         ui_label="Knockback for Donald's Melee Attacks",
         choices=KnockbackTypes.knockback_options(),
         shared=True,
-        default=KnockbackTypes.JUSTDAMAGE,
+        default=knockbackTypes.JUST_DAMAGE,
         tooltip="""
         Defines the kind of knockback the attack/ability will have.
         Keep in mind, changes below will also affect enemies that Companions could already
@@ -2613,7 +2615,7 @@ _all_settings = [
         ui_label="Knockback for Donald's Fire",
         choices=KnockbackTypes.knockback_options(),
         shared=True,
-        default=KnockbackTypes.JUSTDAMAGE,
+        default=knockbackTypes.JUST_DAMAGE,
         tooltip="""
         Defines the kind of knockback the attack/ability will have.
         Keep in mind, changes below will also affect enemies that Companions could already
@@ -2630,7 +2632,7 @@ _all_settings = [
         ui_label="Knockback for Donald's Blizzard",
         choices=KnockbackTypes.knockback_options(),
         shared=True,
-        default=KnockbackTypes.JUSTDAMAGE,
+        default=knockbackTypes.JUST_DAMAGE,
         tooltip="""
         Defines the kind of knockback the attack/ability will have.
         Keep in mind, changes below will also affect enemies that Companions could already
@@ -2647,7 +2649,7 @@ _all_settings = [
         ui_label="Knockback for Donald's Thunder",
         choices=KnockbackTypes.knockback_options(),
         shared=True,
-        default=KnockbackTypes.JUSTDAMAGE,
+        default=knockbackTypes.JUST_DAMAGE,
         tooltip="""
         Defines the kind of knockback the attack/ability will have.
         Keep in mind, changes below will also affect enemies that Companions could already
@@ -2676,7 +2678,7 @@ _all_settings = [
         ui_label="Knockback for Goofy's Melee Attacks",
         choices=KnockbackTypes.knockback_options(),
         shared=True,
-        default=KnockbackTypes.JUSTDAMAGE,
+        default=knockbackTypes.JUST_DAMAGE,
         tooltip="""
         Defines the kind of knockback the attack/ability will have.
         Keep in mind, changes below will also affect enemies that Companions could already
@@ -2693,7 +2695,7 @@ _all_settings = [
         ui_label="Knockback for Goofy's Bash",
         choices=KnockbackTypes.knockback_options(),
         shared=True,
-        default=KnockbackTypes.JUSTDAMAGE,
+        default=knockbackTypes.JUST_DAMAGE,
         tooltip="""
         Defines the kind of knockback the attack/ability will have.
         Keep in mind, changes below will also affect enemies that Companions could already
@@ -2710,7 +2712,7 @@ _all_settings = [
         ui_label="Knockback for Goofy's Turbo",
         choices=KnockbackTypes.knockback_options(),
         shared=True,
-        default=KnockbackTypes.JUSTDAMAGE,
+        default=knockbackTypes.JUST_DAMAGE,
         tooltip="""
         Defines the kind of knockback the attack/ability will have.
         Keep in mind, changes below will also affect enemies that Companions could already
@@ -2727,7 +2729,7 @@ _all_settings = [
         ui_label="Knockback for Goofy's Tornado",
         choices=KnockbackTypes.knockback_options(),
         shared=True,
-        default=KnockbackTypes.JUSTDAMAGE,
+        default=knockbackTypes.JUST_DAMAGE,
         tooltip="""
         Defines the kind of knockback the attack/ability will have.
         Keep in mind, changes below will also affect enemies that Companions could already
@@ -2851,10 +2853,10 @@ class SeedSettings:
 
     def settings_string(self, include_private: bool = False):
         new_var = [bool]
-        flags: new_var
+        flags: new_var = []
         short_select_values = ""
         new_var1 = [str]
-        values: new_var1
+        values: new_var1 = []
         for name in sorted(self._filtered_settings(include_private)):
             setting = settings_by_name[name]
             value = self._values[name]

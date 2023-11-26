@@ -189,7 +189,8 @@ class KH2Submenu(QWidget):
             widget = self.groups_by_id[group_id]
             widget.setVisible(visible)
 
-    def make_multiselect_tristate(self, setting_name: str) -> (WorldRandomizationTristate, list[QGroupBox]):
+    new_var = (WorldRandomizationTristate, list[QGroupBox])
+    def make_multiselect_tristate(self, setting_name: str) -> new_var:
         setting = Class.seedSettings.settings_by_name[setting_name]
 
         if not isinstance(setting, WorldRandomizationTristate):
@@ -252,7 +253,8 @@ class KH2Submenu(QWidget):
 
         return setting, widgets
 
-    def make_multiselect_buttons(self, setting_name: str) -> (MultiSelect, list[QPushButton]):
+    new_var = (MultiSelect, list[QPushButton])
+    def make_multiselect_buttons(self, setting_name: str) -> new_var:
         setting = Class.seedSettings.settings_by_name[setting_name]
 
         if not isinstance(setting, MultiSelect):
