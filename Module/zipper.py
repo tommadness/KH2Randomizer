@@ -13,7 +13,7 @@ from Class.exceptions import GeneratorException
 from Class.itemClass import ItemEncoder
 from Class.newLocationClass import KH2Location
 from Class.openkhmod import ATKPObject, AttackEntriesOrganizer, ModYml
-from Class.seedSettings import SeedSettings, ExtraConfigurationData, makeKHBRSettings
+from Class.seedSettings import SeedSettings, ExtraConfigurationData, Setting, makeKHBRSettings
 from List import ChestList
 from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
@@ -22,6 +22,7 @@ from List.configDict import itemType, locationCategory, locationType, BattleLeve
 from List.inventory import bonus
 from List.location import simulatedtwilighttown as stt
 from Module import hashimage
+from Module import seedmod
 from Module.RandomizerSettings import RandomizerSettings
 from Module.battleLevels import BtlvViewer
 from Module.cosmetics import CosmeticsMod
@@ -313,42 +314,10 @@ class SeedZip:
         enemy_log_output: Optional[str] = None
         with ZipFile(zip_data, "w", ZIP_DEFLATED) as out_zip:
             yaml.emitter.Emitter.process_tag = noop
-            ui_settings = self.settings.ui_settings
             mod = SeedModBuilder(title, out_zip)
             mod.add_base_assets()
             mod.add_base_messages(settings.seedHashIcons, settings.crit_mode)
-            keys = settingkey
-            atkp_organizer = mod._get_atkp_organizer()
-            donald_changed = ui_settings.get(keys.DONALD_DAMAGE_TOGGLE)
-            goofy_changed = ui_settings.get(keys.GOOFY_DAMAGE_TOGGLE)
-
-
-            if (donald_changed or goofy_changed):
-                self.melee_type = 12
-                self.ability1_type = 12
-                self.ability2_type = 12
-                self.ability3_type = 12
-                self.ability4_type = 12
-                self.kill_boss = 0
-                
-                knockback_organizer = KnockbackTypes.get_knockback_value
-                if(donald_changed):
-                    options_list = []
-                    options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE)))
-                    options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_FIRE_KNOCKBACK_TYPE)))
-                    options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_BLIZZARD_KNOCKBACK_TYPE)))
-                    options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_THUNDER_KNOCKBACK_TYPE)))
-                    if(ui_settings.get(keys.DONALD_KILL_BOSS)): self.kill_boss = "KillBoss"
-                    self.ready_companion_damage_knockback_atkp_entries(atkp_organizer, "Donald", options_list, self.kill_boss)
-                    
-                if(goofy_changed):
-                    options_list = []
-                    options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE)))
-                    options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_BASH_KNOCKBACK_TYPE)))
-                    options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_TURBO_KNOCKBACK_TYPE)))
-                    options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_TORNADO_KNOCKBACK_TYPE)))
-                    if(ui_settings.get(keys.GOOFY_KILL_BOSS)): self.kill_boss = "KillBoss"
-                    self.ready_companion_damage_knockback_atkp_entries(atkp_organizer, "Goofy", options_list, self.kill_boss)
+            self.prepare_companion_damage_knockback(mod)
 
             if settings.dummy_forms:
                 # convert the valor and final ids to their dummy values
@@ -1534,6 +1503,41 @@ class SeedZip:
             mod.treasures.add_treasure(
                 location_id=trsr.location.LocationId, item_id=trsr.item.Id
             )
+
+    def check_if_companion_changed(self, companion_name, settings: SeedSettings, keys: settingkey):
+        if(companion_name == "Donald"): return settings.get(keys.DONALD_DAMAGE_TOGGLE)
+        elif(companion_name == "Goofy"): return settings.get(keys.GOOFY_DAMAGE_TOGGLE)
+
+    def prepare_companion_damage_knockback(self, mod: SeedModBuilder):
+        keys = settingkey
+        atkp_organizer = mod._get_atkp_organizer()
+        ui_settings = self.settings.ui_settings
+        donald_changed = self.check_if_companion_changed("Donald", ui_settings, keys)
+        goofy_changed = self.check_if_companion_changed("Goofy", ui_settings, keys)
+        knockback_organizer = KnockbackTypes.get_knockback_value
+        
+        if(not donald_changed and not goofy_changed): return
+        kill_boss = 0
+
+        if(donald_changed):
+            options_list = []
+            options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE)))
+            options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_FIRE_KNOCKBACK_TYPE)))
+            options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_BLIZZARD_KNOCKBACK_TYPE)))
+            options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_THUNDER_KNOCKBACK_TYPE)))
+            if(ui_settings.get(keys.DONALD_KILL_BOSS)): kill_boss = "KillBoss"
+            self.ready_companion_damage_knockback_atkp_entries(atkp_organizer, "Donald", options_list, kill_boss)
+        #Make sure to reset the value of kill_boss before switching characters
+        kill_boss = 0
+        if(goofy_changed):
+            options_list = []
+            options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE)))
+            options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_BASH_KNOCKBACK_TYPE)))
+            options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_TURBO_KNOCKBACK_TYPE)))
+            options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_TORNADO_KNOCKBACK_TYPE)))
+            if(ui_settings.get(keys.GOOFY_KILL_BOSS)): self.kill_boss = "KillBoss"
+            self.ready_companion_damage_knockback_atkp_entries(atkp_organizer, "Goofy", options_list, kill_boss)
+        
             
     def ready_companion_damage_knockback_atkp_entries(self, atkp_organizer: AttackEntriesOrganizer, companion_name, melee_ability_knockback_types_list, kill_boss):
         companion_melee_ids = self._get_companion_ids_for_damage_knockback_options(companion_name, "Melee")
@@ -1594,7 +1598,7 @@ class SeedZip:
             return [[[0, 1163], [2, 1163]], [[0, 1164]], [[0, 1165], [0, 1165]]] #There are two entries in atkp for thunder that have same Id, SubId and Power...
         elif(companion_name == "Goofy"):
             if(id_group == "Melee"): return [[0, 146], [1, 146], [0, 156], [0, 157], [0, 158], [0, 159]]
-            return [[[0, 1161]], [[0, 1162]], [[0, 1163, 25]]] #Third entry in last one is for power
+            return [[[0, 1161]], [[0, 1162]], [[0, 1160, 25]]] #Third entry in last one is for power
 
 class CosmeticsOnlyZip:
     def __init__(self, ui_settings: SeedSettings, extra_data: ExtraConfigurationData):

@@ -1,6 +1,7 @@
 from copy import deepcopy
 from typing import Any, Optional, Iterator
 from zipfile import ZipFile
+from Module.resources import resource_path
 
 import yaml, re
 
@@ -520,7 +521,7 @@ class AttackEntriesOrganizer:
             values['HPDrain'])
     
     def get_attack_using_ids(self, SubId, Id):
-        with open('static/AtkpList.yml', 'r') as file:
+        with open(resource_path("static/AtkpList.yml"), 'r') as file:
             list_data = yaml.safe_load(file)
             
         for attack_entry in list_data:
@@ -529,7 +530,7 @@ class AttackEntriesOrganizer:
             
     #Used specifically for moves with two Ids that have the same number and same SubId but with different power and uses (like goofy tornado) 
     def get_attack_using_ids_plus_power(self, SubId, Id, Power):
-        with open('static/AtkpList.yml', 'r') as file:
+        with open(resource_path("static/AtkpList.yml"), 'r') as file:
             list_data = yaml.safe_load(file)
             
         for attack_entry in list_data:
