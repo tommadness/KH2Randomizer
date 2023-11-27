@@ -2,19 +2,18 @@ import base64
 import io
 import json
 from itertools import accumulate
-from pickle import FALSE
 from typing import Optional, Any
 from zipfile import ZipFile, ZIP_DEFLATED
 
 import random
 import yaml
+from Class import settingkey
 
 from Class.exceptions import GeneratorException
 from Class.itemClass import ItemEncoder
 from Class.newLocationClass import KH2Location
 from Class.openkhmod import ATKPObject, AttackEntriesOrganizer, ModYml
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, makeKHBRSettings
-from Class.settingkey import DONALD_BLIZZARD, DONALD_FIRE, DONALD_KILL_BOSS, DONALD_MELEE_ATTACKS, DONALD_THUNDER, GOOFY_BASH, GOOFY_DAMAGE_TOGGLE, GOOFY_KILL_BOSS, GOOFY_MELEE_ATTACKS, GOOFY_TORNADO, GOOFY_TURBO
 from List import ChestList
 from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
@@ -31,7 +30,7 @@ from Module.knockbackTypes import KnockbackTypes
 from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe, ItemAssignment
 from Module.resources import resource_path
-from Module.seedmod import SeedModBuilder, ChestVisualAssignment, _relative_mod_file
+from Module.seedmod import SeedModBuilder, ChestVisualAssignment
 from Module.spoilerLog import (
     item_spoiler_dictionary,
     levelStatsDictionary,
@@ -39,7 +38,6 @@ from Module.spoilerLog import (
     weapon_stats_dictionary,
 )
 from Module.texture import TextureRecolorizer
-from symbol import power
 
 
 def noop(self, *args, **kw):
@@ -315,10 +313,42 @@ class SeedZip:
         enemy_log_output: Optional[str] = None
         with ZipFile(zip_data, "w", ZIP_DEFLATED) as out_zip:
             yaml.emitter.Emitter.process_tag = noop
-
+            ui_settings = self.settings.ui_settings
             mod = SeedModBuilder(title, out_zip)
             mod.add_base_assets()
             mod.add_base_messages(settings.seedHashIcons, settings.crit_mode)
+            keys = settingkey
+            atkp_organizer = mod._get_atkp_organizer()
+            donald_changed = ui_settings.get(keys.DONALD_DAMAGE_TOGGLE)
+            goofy_changed = ui_settings.get(keys.GOOFY_DAMAGE_TOGGLE)
+
+
+            if (donald_changed or goofy_changed):
+                self.melee_type = 12
+                self.ability1_type = 12
+                self.ability2_type = 12
+                self.ability3_type = 12
+                self.ability4_type = 12
+                self.kill_boss = 0
+                
+                knockback_organizer = KnockbackTypes.get_knockback_value
+                if(donald_changed):
+                    options_list = []
+                    options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE)))
+                    options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_FIRE_KNOCKBACK_TYPE)))
+                    options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_BLIZZARD_KNOCKBACK_TYPE)))
+                    options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_THUNDER_KNOCKBACK_TYPE)))
+                    if(ui_settings.get(keys.DONALD_KILL_BOSS)): self.kill_boss = "KillBoss"
+                    self.ready_companion_damage_knockback_atkp_entries(atkp_organizer, "Donald", options_list, self.kill_boss)
+                    
+                if(goofy_changed):
+                    options_list = []
+                    options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE)))
+                    options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_BASH_KNOCKBACK_TYPE)))
+                    options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_TURBO_KNOCKBACK_TYPE)))
+                    options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_TORNADO_KNOCKBACK_TYPE)))
+                    if(ui_settings.get(keys.GOOFY_KILL_BOSS)): self.kill_boss = "KillBoss"
+                    self.ready_companion_damage_knockback_atkp_entries(atkp_organizer, "Goofy", options_list, self.kill_boss)
 
             if settings.dummy_forms:
                 # convert the valor and final ids to their dummy values
@@ -1504,7 +1534,67 @@ class SeedZip:
             mod.treasures.add_treasure(
                 location_id=trsr.location.LocationId, item_id=trsr.item.Id
             )
+            
+    def ready_companion_damage_knockback_atkp_entries(self, atkp_organizer: AttackEntriesOrganizer, companion_name, melee_ability_knockback_types_list, kill_boss):
+        companion_melee_ids = self._get_companion_ids_for_damage_knockback_options(companion_name, "Melee")
+        companion_melee_objects = []
+        for melee_entry in companion_melee_ids:
+            companion_melee_objects.append(atkp_organizer.get_attack_using_ids(melee_entry[0], melee_entry[1]))
+        for melee_object in companion_melee_objects:
+            melee_object: ATKPObject
+            melee_object.EnemyReaction = melee_ability_knockback_types_list[0]
+            melee_object.Flags = kill_boss
+            
+        companion_ability_ids = self._get_companion_ids_for_damage_knockback_options(companion_name, "Ability")
+        companion_ability1_objects = []
+        companion_ability2_objects = []
+        companion_ability3_objects = []
+        #The third entry is for when we need the power field to distinguish different entries for the same attack (like goofy tornado)
+        for ability_entry in companion_ability_ids[0]:
+            if(len(ability_entry) == 3):
+                companion_ability1_objects.append(atkp_organizer.get_attack_using_ids_plus_power(ability_entry[0], ability_entry[1], ability_entry[2]))
+            else:
+                companion_ability1_objects.append(atkp_organizer.get_attack_using_ids(ability_entry[0], ability_entry[1]))
+        for ability_entry in companion_ability_ids[1]:
+            if(len(ability_entry) == 3):
+                companion_ability2_objects.append(atkp_organizer.get_attack_using_ids_plus_power(ability_entry[0], ability_entry[1], ability_entry[2]))
+            else:
+                companion_ability2_objects.append(atkp_organizer.get_attack_using_ids(ability_entry[0], ability_entry[1]))
+        for ability_entry in companion_ability_ids[2]:
+            if(len(ability_entry) == 3):
+                companion_ability3_objects.append(atkp_organizer.get_attack_using_ids_plus_power(ability_entry[0], ability_entry[1], ability_entry[2]))
+            else:
+                companion_ability3_objects.append(atkp_organizer.get_attack_using_ids(ability_entry[0], ability_entry[1]))
+        
+        for ability_object in companion_ability1_objects:
+            ability_object: ATKPObject
+            ability_object.EnemyReaction = melee_ability_knockback_types_list[1]
+            ability_object.Flags = kill_boss
+            
+        for ability_object in companion_ability2_objects:
+            ability_object: ATKPObject
+            ability_object.EnemyReaction = melee_ability_knockback_types_list[2]
+            ability_object.Flags = kill_boss
+            
+        for ability_object in companion_ability3_objects:
+            ability_object: ATKPObject
+            ability_object.EnemyReaction = melee_ability_knockback_types_list[3]
+            ability_object.Flags = kill_boss
+            
+        for atkp_object in companion_melee_objects: atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
+        for atkp_object in companion_ability1_objects: atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
+        for atkp_object in companion_ability2_objects: atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
+        for atkp_object in companion_ability3_objects: atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
+            
 
+    def _get_companion_ids_for_damage_knockback_options(self, companion_name, id_group) -> dict[{str, list[int]}]:
+        #SubId first, then Id
+        if(companion_name == "Donald"):
+            if(id_group == "Melee"): return [[0, 151], [0, 152], [0, 153], [0, 154], [0, 155]]
+            return [[[0, 1163], [2, 1163]], [[0, 1164]], [[0, 1165], [0, 1165]]] #There are two entries in atkp for thunder that have same Id, SubId and Power...
+        elif(companion_name == "Goofy"):
+            if(id_group == "Melee"): return [[0, 146], [1, 146], [0, 156], [0, 157], [0, 158], [0, 159]]
+            return [[[0, 1161]], [[0, 1162]], [[0, 1163, 25]]] #Third entry in last one is for power
 
 class CosmeticsOnlyZip:
     def __init__(self, ui_settings: SeedSettings, extra_data: ExtraConfigurationData):
@@ -1576,130 +1666,6 @@ class BossEnemyOnlyZip:
                 resource_path("static/icons/misc/Kingdom Hearts II.png"), "icon.png"
             )
             out_zip.writestr("enemyspoilers.txt", enemy_spoilers)
-
-            data.seek(0)
-            return data
-
-class CompanionZip:
-    def __init__(self, seed_name: str, ui_settings: SeedSettings):
-        self.settings = ui_settings
-        self.donald_changed = False
-        self.goofy_changed = False
-        if self.settings.get("donald_damage_toggle") == True:
-            self.donald_changed = True
-        if self.settings.get("goofy_damage_toggle") == True:
-            self.goofy_changed = True
-        self.melee_type = 12
-        self.ability1_type = 12
-        self.ability2_type = 12
-        self.ability3_type = 12
-        """Don't actually remember if any companion has 4 abilities"""
-        self.ability4_type = 12
-        self.kill_boss = 0
-
-    def create_zip(self) -> io.BytesIO:
-        if not self.donald_changed and not self.goofy_changed:
-            raise GeneratorException(
-                "Trying to generate companion mod without enabling those settings."
-            )
-
-        knockback_organizer = KnockbackTypes.get_knockback_value
-        organizer = AttackEntriesOrganizer(_relative_mod_file("AtkpList.yml"))
-        data = io.BytesIO()
-        with ZipFile(data, "w", ZIP_DEFLATED) as out_zip:
-            mod = ModYml(
-                "Companion Mod",
-                description="Generated by the KH2 Randomizer Seed Generator.",
-            )
-
-            mod.add_asset(
-                    {
-                        "name": "00battle.bin",
-                        "method": "binarc",
-                        "source":{
-                        "name": "atkp",
-                        "method": "listpatch",
-                        "type": "List",
-                        "source": [
-                            {"name": organizer.source_name, "type": "atkp"}
-                        ],
-                    },
-                    }
-            )
-
-            mod.write_to_zip_file(out_zip)
-
-            out_zip.write(
-                resource_path("static/icons/misc/Kingdom Hearts II.png"), "icon.png"
-            )
-            #When an attack has a number after _, it means there are different sequences to differentiate (like for melee attacks)
-            #if it has another _ followed by another number, it's because the move has more than one hit in that sequence
-            if(self.donald_changed):
-                self.melee_type = knockback_organizer(self.settings.get(DONALD_MELEE_ATTACKS))
-                self.ability1_type = knockback_organizer(self.settings.get(DONALD_FIRE))
-                self.ability2_type = knockback_organizer(self.settings.get(DONALD_BLIZZARD))
-                self.ability3_type = knockback_organizer(self.settings.get(DONALD_THUNDER))
-                if(self.settings.get(DONALD_KILL_BOSS)):
-                    self.kill_boss = "KillBoss"
-                else: self.kill_boss = 0
-                
-                ground_sequence_1: ATKPObject = organizer.get_attack_using_ids(151, 0)
-                ground_sequence_2_1: ATKPObject = organizer.get_attack_using_ids(152, 0)
-                ground_sequence_2_2: ATKPObject = organizer.get_attack_using_ids(155, 0)
-                air_sequence_1: ATKPObject = organizer.get_attack_using_ids(153, 0)
-                air_sequence_2: ATKPObject = organizer.get_attack_using_ids(154, 0)
-                fire_1: ATKPObject = organizer.get_attack_using_ids(1163, 0)
-                fire_2: ATKPObject = organizer.get_attack_using_ids(1163, 2)
-                blizzard: ATKPObject = organizer.get_attack_using_ids(1164, 0)
-                thunder: ATKPObject = organizer.get_attack_using_ids(1165, 0)
-                
-                ground_sequence_1.EnemyReaction = self.melee_type; ground_sequence_1.Flags = self.kill_boss
-                ground_sequence_2_1.EnemyReaction = self.melee_type; ground_sequence_2_1.Flags = self.kill_boss
-                ground_sequence_2_2.EnemyReaction = self.melee_type; ground_sequence_2_2.Flags = self.kill_boss
-                air_sequence_1.EnemyReaction = self.melee_type; air_sequence_1.Flags = self.kill_boss
-                air_sequence_2.EnemyReaction = self.melee_type; air_sequence_2.Flags = self.kill_boss
-                fire_1.EnemyReaction = self.ability1_type; fire_1.Flags = self.kill_boss
-                fire_2.EnemyReaction = self.ability1_type; fire_2.Flags = self.kill_boss
-                blizzard.EnemyReaction = self.ability2_type; blizzard.Flags = self.kill_boss
-                thunder.EnemyReaction = self.ability3_type; thunder.Flags = self.kill_boss
-                
-                attack_list = [ground_sequence_1, ground_sequence_2_1, ground_sequence_2_2, air_sequence_1, air_sequence_2, fire_1, fire_2, blizzard, thunder]
-                for attack in attack_list: organizer.convert_atkp_object_to_dict_and_add_to_data(attack)
-                
-            if(self.goofy_changed):
-                self.melee_type = knockback_organizer(self.settings.get(GOOFY_MELEE_ATTACKS))
-                self.ability1_type = knockback_organizer(self.settings.get(GOOFY_BASH))
-                self.ability2_type = knockback_organizer(self.settings.get(GOOFY_TURBO))
-                self.ability3_type = knockback_organizer(self.settings.get(GOOFY_TORNADO))
-                if(self.settings.get(GOOFY_KILL_BOSS)):
-                    self.kill_boss = "KillBoss"                
-                else: self.kill_boss = 0
-                
-                ground_sequence_1: ATKPObject = organizer.get_attack_using_ids(156, 0)
-                ground_sequence_2: ATKPObject = organizer.get_attack_using_ids(157, 0)
-                passive_shield_1: ATKPObject = organizer.get_attack_using_ids(146, 0)
-                passive_shield_2: ATKPObject = organizer.get_attack_using_ids(146, 1)
-                air_sequence_1: ATKPObject = organizer.get_attack_using_ids(158, 0)
-                air_sequence_2: ATKPObject = organizer.get_attack_using_ids(159, 0)
-                #Unsure if I should include the other id for tornado
-                tornado: ATKPObject = organizer.get_attack_using_ids_plus_power(1160, 0, 25)
-                bash: ATKPObject = organizer.get_attack_using_ids(1161, 0)
-                turbo: ATKPObject = organizer.get_attack_using_ids(1162, 0)
-                
-                ground_sequence_1.EnemyReaction = self.melee_type; ground_sequence_1.Flags = self.kill_boss
-                ground_sequence_2.EnemyReaction = self.melee_type; ground_sequence_2.Flags = self.kill_boss
-                passive_shield_1.EnemyReaction = self.melee_type; passive_shield_1.Flags = self.kill_boss
-                passive_shield_2.EnemyReaction = self.melee_type; passive_shield_2.Flags = self.kill_boss
-                air_sequence_1.EnemyReaction = self.melee_type; air_sequence_1.Flags = self.kill_boss
-                air_sequence_2.EnemyReaction = self.melee_type; air_sequence_2.Flags = self.kill_boss
-                bash.EnemyReaction = self.ability1_type; bash.Flags = self.kill_boss
-                turbo.EnemyReaction = self.ability2_type; turbo.Flags = self.kill_boss
-                tornado.EnemyReaction = self.ability3_type; tornado.Flags = self.kill_boss
-                
-                attack_list = [ground_sequence_1, ground_sequence_2, passive_shield_1, passive_shield_2, air_sequence_1, air_sequence_2, bash, turbo, tornado]
-                for attack in attack_list: organizer.convert_atkp_object_to_dict_and_add_to_data(attack)
-                
-                organizer.write_to_zip_file(out_zip)              
 
             data.seek(0)
             return data

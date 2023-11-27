@@ -1,13 +1,8 @@
 from copy import deepcopy
-from ctypes.wintypes import BYTE
-from json import load
-from math import floor
 from typing import Any, Optional, Iterator
 from zipfile import ZipFile
 
 import yaml, re
-
-from symbol import power
 
 Asset = dict[str, Any]
 
@@ -399,14 +394,14 @@ class Treasures:
         write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=True)
         
 class ATKPObject:
-    def __init__(self, Id: int, SubId: int, Type: str, CriticalAdjust: int, Power: int, Team: int,
+    def __init__(self, SubId: int, Id: int, Type: str, CriticalAdjust: int, Power: int, Team: int,
                  Element: int, EnemyReaction: int, EffectOnHit: int, KnockbackStrength1: int, KnockbackStrength2: int, 
                  Unknown: int, Flags, RefactSelf: str, RefactOther: str, ReflectedMotion: int, ReflectedHitBack: int,
                  ReflectAction: int, ReflectHitSound: int, ReflectRC: int, ReflectRange: int, ReflectAngle: int, 
                  DamageEffect: int, Switch: int, Interval: int, FloorCheck: int, DriveDrain: int, RevengeDamage: int,
                  AttackTrReaction: str, ComboGroup: int, RandomEffect: int, Kind, HPDrain: int):
-        self.Id = Id
         self.SubId = SubId
+        self.Id = Id
         self.Type = Type
         self.CriticalAdjust = CriticalAdjust
         self.Power = Power
@@ -481,13 +476,17 @@ class AttackEntriesOrganizer:
             "Kind": atkp_object.Kind, 
             "HPDrain": atkp_object.HPDrain,
         })
+        
     def write_to_zip_file(self, zip_file: ZipFile):
         write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=False)
+        
+    def has_entries(self):
+        return len(self.data) > 0
 
     def attack_entry_constructor(self, values):
         return ATKPObject(
-            values['Id'], 
-            values['SubId'], 
+            values['SubId'],
+            values['Id'],
             values['Type'], 
             values['CriticalAdjust'], 
             values['Power'], 
@@ -520,7 +519,7 @@ class AttackEntriesOrganizer:
             values['Kind'], 
             values['HPDrain'])
     
-    def get_attack_using_ids(self, Id, SubId):
+    def get_attack_using_ids(self, SubId, Id):
         with open('static/AtkpList.yml', 'r') as file:
             list_data = yaml.safe_load(file)
             
@@ -529,7 +528,7 @@ class AttackEntriesOrganizer:
                 return self.attack_entry_constructor(attack_entry)
             
     #Used specifically for moves with two Ids that have the same number and same SubId but with different power and uses (like goofy tornado) 
-    def get_attack_using_ids_plus_power(self, Id, SubId, Power):
+    def get_attack_using_ids_plus_power(self, SubId, Id, Power):
         with open('static/AtkpList.yml', 'r') as file:
             list_data = yaml.safe_load(file)
             

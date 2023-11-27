@@ -5,7 +5,6 @@ import string
 import textwrap
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
@@ -2591,9 +2590,9 @@ _all_settings = [
         of just one damage. However, the default is for him to have no knockback, so
         if you want himm to stun/knockback, change the settings below
         """,
-        randomizable=True,
+        randomizable=False,
     ),SingleSelect(
-        name=settingkey.DONALD_MELEE_ATTACKS,
+        name=settingkey.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Donald's Melee Attacks",
         choices=KnockbackTypes.knockback_options(),
@@ -2610,7 +2609,7 @@ _all_settings = [
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
     ),SingleSelect(
-        name=settingkey.DONALD_FIRE,
+        name=settingkey.DONALD_FIRE_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Donald's Fire",
         choices=KnockbackTypes.knockback_options(),
@@ -2627,7 +2626,7 @@ _all_settings = [
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
     ),SingleSelect(
-        name=settingkey.DONALD_BLIZZARD,
+        name=settingkey.DONALD_BLIZZARD_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Donald's Blizzard",
         choices=KnockbackTypes.knockback_options(),
@@ -2644,7 +2643,7 @@ _all_settings = [
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
     ),SingleSelect(
-        name=settingkey.DONALD_THUNDER,
+        name=settingkey.DONALD_THUNDER_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Donald's Thunder",
         choices=KnockbackTypes.knockback_options(),
@@ -2671,9 +2670,9 @@ _all_settings = [
         of just one damage. However, the default is for him to have no knockback, so
         if you want himm to stun/knockback, change the settings below
         """,
-        randomizable=True,
+        randomizable=False,
     ),SingleSelect(
-        name=settingkey.GOOFY_MELEE_ATTACKS,
+        name=settingkey.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Goofy's Melee Attacks",
         choices=KnockbackTypes.knockback_options(),
@@ -2690,7 +2689,7 @@ _all_settings = [
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
     ),SingleSelect(
-        name=settingkey.GOOFY_BASH,
+        name=settingkey.GOOFY_BASH_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Goofy's Bash",
         choices=KnockbackTypes.knockback_options(),
@@ -2707,7 +2706,7 @@ _all_settings = [
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
     ),SingleSelect(
-        name=settingkey.GOOFY_TURBO,
+        name=settingkey.GOOFY_TURBO_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Goofy's Turbo",
         choices=KnockbackTypes.knockback_options(),
@@ -2724,7 +2723,7 @@ _all_settings = [
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
     ),SingleSelect(
-        name=settingkey.GOOFY_TORNADO,
+        name=settingkey.GOOFY_TORNADO_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Goofy's Tornado",
         choices=KnockbackTypes.knockback_options(),
@@ -2749,7 +2748,7 @@ _all_settings = [
         tooltip="""
         If enabled, Donald's attacks will be able to kill bosses
         """,
-        randomizable=True,
+        randomizable=False,
     ),Toggle(
         name=settingkey.GOOFY_KILL_BOSS,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
@@ -2759,7 +2758,7 @@ _all_settings = [
         tooltip="""
         If enabled, Goofy's attacks will be able to kill bosses
         """,
-        randomizable=True,
+        randomizable=False,
     ),
 ]
 
@@ -2852,11 +2851,9 @@ class SeedSettings:
         }
 
     def settings_string(self, include_private: bool = False):
-        new_var = [bool]
-        flags: new_var = []
+        flags: [bool] = []
         short_select_values = ""
-        new_var1 = [str]
-        values: new_var1 = []
+        values: [str] = []
         for name in sorted(self._filtered_settings(include_private)):
             setting = settings_by_name[name]
             value = self._values[name]

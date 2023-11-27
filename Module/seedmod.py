@@ -7,6 +7,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 import yaml
 
 from Class.openkhmod import (
+    AttackEntriesOrganizer,
     ModYml,
     Bonuses,
     FormLevels,
@@ -50,6 +51,7 @@ class SeedModBuilder:
         self.player_params = PlayerParams(_relative_mod_file("PlrpList.yml"))
         self.prize_table = PrizeTable(_relative_mod_file("przt.yml"))
         self.treasures = Treasures(_relative_mod_file("TrsrList.yml"))
+        self.atkp_organizer = AttackEntriesOrganizer(_relative_mod_file("AtkpList.yml"))
 
     def add_base_assets(self):
         """Adds asset entries to the mod for files that get included with every seed."""
@@ -857,6 +859,9 @@ class SeedModBuilder:
             # Prize table only has entries if certain settings are on, so we may need to add its asset as well
             self._add_prize_table_asset()
             self.prize_table.write_to_zip_file(zip_file)
+        if self.atkp_organizer.has_entries():
+            self._add_atkp_asset()
+            self.atkp_organizer.write_to_zip_file(zip_file)
         self.treasures.write_to_zip_file(zip_file)
 
         # Main mod.yml comes last in case any additional assets were added
@@ -1343,3 +1348,17 @@ class SeedModBuilder:
         )
 
         return assets
+    
+    def _add_atkp_asset(self):
+        self.mod_yml.add_asset_source(
+            "00battle.bin",
+            {
+                "name": "atkp",
+                "type": "list",
+                "method": "listpatch",
+                "source": [{"name": self.atkp_organizer.source_name, "type": "atkp"}],
+            },
+        )
+        
+    def _get_atkp_organizer(self):
+        return self.atkp_organizer
