@@ -330,5 +330,3 @@ class BossEnemyZipWorker:
                 outfile_name += ".zip"
             with open(outfile_name, "wb") as out_zip:
                 out_zip.write(zip_file.getbuffer())
-
-

@@ -37,6 +37,7 @@ from Module.tourneySpoiler import TourneySeedSaver
 from Module.version import LOCAL_UI_VERSION, EXTRACTED_DATA_UPDATE_VERSION
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
+from UI.Submenus.CompanionMenu import CompanionMenu
 from UI.Submenus.CosmeticsMenu import CosmeticsMenu
 from UI.Submenus.DevCreateRecolorDialog import DevCreateRecolorDialog
 from UI.Submenus.HintsMenu import HintsMenu
@@ -345,6 +346,7 @@ class KH2RandomizerApp(QMainWindow):
             SeedModMenu(self.settings),
             BossEnemyMenu(self.settings, seed_name_getter=lambda: self.seedName.text()),
             self.cosmetics_menu,
+            CompanionMenu(self.settings),
         ]
 
         for i in range(len(self.widgets)):

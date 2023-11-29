@@ -29,6 +29,8 @@ from List.configDict import (
 )
 from List.inventory import ability, misc, proof, storyunlock
 from Module import encoding, field2d
+from Module import knockbackTypes
+from Module.knockbackTypes import KnockbackTypes
 from Module.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.progressionPoints import ProgressionPoints
 
@@ -61,6 +63,7 @@ class SettingGroup(str, Enum):
     BOSS_RANDO = "Randomized Bosses"
     ENEMY_RANDO = "Randomized Enemies"
     COSMETICS = "Cosmetics"
+    COMPANION_DAMAGE_KNOCKBACK = "Companion Damage Knockback"
 
 
 class Setting:
@@ -2580,6 +2583,186 @@ _all_settings = [
 
         Requires the custom music folder to be set up in the Configure menu.
         """,
+    ),Toggle(
+        name=settingkey.DONALD_DAMAGE_TOGGLE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Donald Deals Damage to ALL enemies and bosses",
+        shared=True,
+        default=False,
+        tooltip="""
+        If enabled, Donald will deal normal damage to all enemies and bosses instead
+        of just one damage. However, the default is for him to have no knockback, so
+        if you want himm to stun/knockback, change the settings below
+        """,
+        randomizable=False,
+    ),SingleSelect(
+        name=settingkey.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Knockback for Donald's Melee Attacks",
+        choices=KnockbackTypes.knockback_options(),
+        shared=True,
+        default=knockbackTypes.JUST_DAMAGE,
+        tooltip="""
+        Defines the kind of knockback the attack/ability will have.
+        Keep in mind, changes below will also affect enemies that Companions could already
+        affect normally...
+        
+        Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
+                                               a second attack id for pulling enemies in)
+        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
+        Damage + Stun + Knockback: Like above, but will also be moved.
+        """,
+    ),SingleSelect(
+        name=settingkey.DONALD_FIRE_KNOCKBACK_TYPE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Knockback for Donald's Fire",
+        choices=KnockbackTypes.knockback_options(),
+        shared=True,
+        default=knockbackTypes.JUST_DAMAGE,
+        tooltip="""
+        Defines the kind of knockback the attack/ability will have.
+        Keep in mind, changes below will also affect enemies that Companions could already
+        affect normally...
+        
+        Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
+                                               a second attack id for pulling enemies in)
+        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
+        Damage + Stun + Knockback: Like above, but will also be moved.
+        """,
+    ),SingleSelect(
+        name=settingkey.DONALD_BLIZZARD_KNOCKBACK_TYPE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Knockback for Donald's Blizzard",
+        choices=KnockbackTypes.knockback_options(),
+        shared=True,
+        default=knockbackTypes.JUST_DAMAGE,
+        tooltip="""
+        Defines the kind of knockback the attack/ability will have.
+        Keep in mind, changes below will also affect enemies that Companions could already
+        affect normally...
+        
+        Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
+                                               a second attack id for pulling enemies in)
+        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
+        Damage + Stun + Knockback: Like above, but will also be moved.
+        """,
+    ),SingleSelect(
+        name=settingkey.DONALD_THUNDER_KNOCKBACK_TYPE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Knockback for Donald's Thunder",
+        choices=KnockbackTypes.knockback_options(),
+        shared=True,
+        default=knockbackTypes.JUST_DAMAGE,
+        tooltip="""
+        Defines the kind of knockback the attack/ability will have.
+        Keep in mind, changes below will also affect enemies that Companions could already
+        affect normally...
+        
+        Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
+                                               a second attack id for pulling enemies in)
+        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
+        Damage + Stun + Knockback: Like above, but will also be moved.
+        """,
+    ),Toggle(
+        name=settingkey.GOOFY_DAMAGE_TOGGLE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Goofy Deals Damage to ALL enemies and bosses",
+        shared=True,
+        default=False,
+        tooltip="""
+        If enabled, Goofy will deal normal damage to all enemies and bosses instead
+        of just one damage. However, the default is for him to have no knockback, so
+        if you want himm to stun/knockback, change the settings below
+        """,
+        randomizable=False,
+    ),SingleSelect(
+        name=settingkey.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Knockback for Goofy's Melee Attacks",
+        choices=KnockbackTypes.knockback_options(),
+        shared=True,
+        default=knockbackTypes.JUST_DAMAGE,
+        tooltip="""
+        Defines the kind of knockback the attack/ability will have.
+        Keep in mind, changes below will also affect enemies that Companions could already
+        affect normally...
+        
+        Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
+                                               a second attack id for pulling enemies in)
+        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
+        Damage + Stun + Knockback: Like above, but will also be moved.
+        """,
+    ),SingleSelect(
+        name=settingkey.GOOFY_BASH_KNOCKBACK_TYPE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Knockback for Goofy's Bash",
+        choices=KnockbackTypes.knockback_options(),
+        shared=True,
+        default=knockbackTypes.JUST_DAMAGE,
+        tooltip="""
+        Defines the kind of knockback the attack/ability will have.
+        Keep in mind, changes below will also affect enemies that Companions could already
+        affect normally...
+        
+        Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
+                                               a second attack id for pulling enemies in)
+        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
+        Damage + Stun + Knockback: Like above, but will also be moved.
+        """,
+    ),SingleSelect(
+        name=settingkey.GOOFY_TURBO_KNOCKBACK_TYPE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Knockback for Goofy's Turbo",
+        choices=KnockbackTypes.knockback_options(),
+        shared=True,
+        default=knockbackTypes.JUST_DAMAGE,
+        tooltip="""
+        Defines the kind of knockback the attack/ability will have.
+        Keep in mind, changes below will also affect enemies that Companions could already
+        affect normally...
+        
+        Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
+                                               a second attack id for pulling enemies in)
+        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
+        Damage + Stun + Knockback: Like above, but will also be moved.
+        """,
+    ),SingleSelect(
+        name=settingkey.GOOFY_TORNADO_KNOCKBACK_TYPE,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Knockback for Goofy's Tornado",
+        choices=KnockbackTypes.knockback_options(),
+        shared=True,
+        default=knockbackTypes.JUST_DAMAGE,
+        tooltip="""
+        Defines the kind of knockback the attack/ability will have.
+        Keep in mind, changes below will also affect enemies that Companions could already
+        affect normally...
+        
+        Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
+                                               a second attack id for pulling enemies in)
+        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
+        Damage + Stun + Knockback: Like above, but will also be moved.
+        """,
+    ),Toggle(
+        name=settingkey.DONALD_KILL_BOSS,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Donald Can Kill Bosses",
+        shared=True,
+        default=False,
+        tooltip="""
+        If enabled, Donald's attacks will be able to kill bosses
+        """,
+        randomizable=False,
+    ),Toggle(
+        name=settingkey.GOOFY_KILL_BOSS,
+        group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
+        ui_label="Goofy Can Kill Bosses",
+        shared=True,
+        default=False,
+        tooltip="""
+        If enabled, Goofy's attacks will be able to kill bosses
+        """,
+        randomizable=False,
     ),
 ]
 
@@ -2894,7 +3077,7 @@ def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
             enemy_options[setting.name] = value
 
     return enemy_options
-
+    
 
 @dataclass(frozen=True)
 class ExtraConfigurationData:
