@@ -471,6 +471,9 @@ class AttackEntriesOrganizer:
     def __init__(self, source_name: str):
         self.data: list[dict] = []
         self.source_name = source_name
+        with open(resource_path("static/AtkpList.yml"), "r") as file:
+            list_data = yaml.safe_load(file)
+        self.yaml_list_data = list_data
 
     def convert_atkp_object_to_dict_and_add_to_data(self, atkp_object: ATKPObject):
         self.data.append(
@@ -555,19 +558,13 @@ class AttackEntriesOrganizer:
         )
 
     def get_attack_using_ids(self, SubId, Id):
-        with open(resource_path("static/AtkpList.yml"), "r") as file:
-            list_data = yaml.safe_load(file)
-
-        for attack_entry in list_data:
+        for attack_entry in self.yaml_list_data:
             if attack_entry["SubId"] == SubId and attack_entry["Id"] == Id:
                 return self.attack_entry_constructor(attack_entry)
 
     # Used specifically for moves with two Ids that have the same number and same SubId but with different power and uses (like goofy tornado)
     def get_attack_using_ids_plus_power(self, SubId, Id, Power):
-        with open(resource_path("static/AtkpList.yml"), "r") as file:
-            list_data = yaml.safe_load(file)
-
-        for attack_entry in list_data:
+        for attack_entry in self.yaml_list_data:
             if (
                 attack_entry["SubId"] == SubId
                 and attack_entry["Id"] == Id
