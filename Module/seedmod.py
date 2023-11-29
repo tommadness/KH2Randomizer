@@ -1348,7 +1348,7 @@ class SeedModBuilder:
         )
 
         return assets
-    
+
     def _add_atkp_asset(self):
         self.mod_yml.add_asset_source(
             "00battle.bin",
@@ -1359,6 +1359,6 @@ class SeedModBuilder:
                 "source": [{"name": self.atkp_organizer.source_name, "type": "atkp"}],
             },
         )
-        
+
     def _get_atkp_organizer(self):
         return self.atkp_organizer

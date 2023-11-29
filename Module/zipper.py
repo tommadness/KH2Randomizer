@@ -430,7 +430,7 @@ class SeedZip:
                 return True
             if enemy_options.get("costume_rando", False):
                 return True
-            if enemy_options.get("party_rando", False):
+            if enemy_options.get("party_member_rando", False):
                 return True
             if not enemy_options.get("remove_cutscenes", False) in [False, "Disabled"]:
                 return True
@@ -1503,9 +1503,13 @@ class SeedZip:
                 location_id=trsr.location.LocationId, item_id=trsr.item.Id
             )
 
-    def check_if_companion_changed(self, companion_name, settings: SeedSettings, keys: settingkey):
-        if(companion_name == "Donald"): return settings.get(keys.DONALD_DAMAGE_TOGGLE)
-        elif(companion_name == "Goofy"): return settings.get(keys.GOOFY_DAMAGE_TOGGLE)
+    def check_if_companion_changed(
+        self, companion_name, settings: SeedSettings, keys: settingkey
+    ):
+        if companion_name == "Donald":
+            return settings.get(keys.DONALD_DAMAGE_TOGGLE)
+        elif companion_name == "Goofy":
+            return settings.get(keys.GOOFY_DAMAGE_TOGGLE)
 
     def prepare_companion_damage_knockback(self, mod: SeedModBuilder):
         keys = settingkey
@@ -1514,90 +1518,170 @@ class SeedZip:
         donald_changed = self.check_if_companion_changed("Donald", ui_settings, keys)
         goofy_changed = self.check_if_companion_changed("Goofy", ui_settings, keys)
         knockback_organizer = KnockbackTypes.get_knockback_value
-        
-        if(not donald_changed and not goofy_changed): return
+
+        if not donald_changed and not goofy_changed:
+            return
         kill_boss = 0
 
-        if(donald_changed):
+        if donald_changed:
             options_list = []
-            options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE)))
-            options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_FIRE_KNOCKBACK_TYPE)))
-            options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_BLIZZARD_KNOCKBACK_TYPE)))
-            options_list.append(knockback_organizer(ui_settings.get(keys.DONALD_THUNDER_KNOCKBACK_TYPE)))
-            if(ui_settings.get(keys.DONALD_KILL_BOSS)): kill_boss = "KillBoss"
-            self.ready_companion_damage_knockback_atkp_entries(atkp_organizer, "Donald", options_list, kill_boss)
-        #Make sure to reset the value of kill_boss before switching characters
+            options_list.append(
+                knockback_organizer(
+                    ui_settings.get(keys.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE)
+                )
+            )
+            options_list.append(
+                knockback_organizer(ui_settings.get(keys.DONALD_FIRE_KNOCKBACK_TYPE))
+            )
+            options_list.append(
+                knockback_organizer(
+                    ui_settings.get(keys.DONALD_BLIZZARD_KNOCKBACK_TYPE)
+                )
+            )
+            options_list.append(
+                knockback_organizer(ui_settings.get(keys.DONALD_THUNDER_KNOCKBACK_TYPE))
+            )
+            if ui_settings.get(keys.DONALD_KILL_BOSS):
+                kill_boss = "KillBoss"
+            self.ready_companion_damage_knockback_atkp_entries(
+                atkp_organizer, "Donald", options_list, kill_boss
+            )
+        # Make sure to reset the value of kill_boss before switching characters
         kill_boss = 0
-        if(goofy_changed):
+        if goofy_changed:
             options_list = []
-            options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE)))
-            options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_BASH_KNOCKBACK_TYPE)))
-            options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_TURBO_KNOCKBACK_TYPE)))
-            options_list.append(knockback_organizer(ui_settings.get(keys.GOOFY_TORNADO_KNOCKBACK_TYPE)))
-            if(ui_settings.get(keys.GOOFY_KILL_BOSS)): self.kill_boss = "KillBoss"
-            self.ready_companion_damage_knockback_atkp_entries(atkp_organizer, "Goofy", options_list, kill_boss)
-        
-            
-    def ready_companion_damage_knockback_atkp_entries(self, atkp_organizer: AttackEntriesOrganizer, companion_name, melee_ability_knockback_types_list, kill_boss):
-        companion_melee_ids = self._get_companion_ids_for_damage_knockback_options(companion_name, "Melee")
+            options_list.append(
+                knockback_organizer(
+                    ui_settings.get(keys.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE)
+                )
+            )
+            options_list.append(
+                knockback_organizer(ui_settings.get(keys.GOOFY_BASH_KNOCKBACK_TYPE))
+            )
+            options_list.append(
+                knockback_organizer(ui_settings.get(keys.GOOFY_TURBO_KNOCKBACK_TYPE))
+            )
+            options_list.append(
+                knockback_organizer(ui_settings.get(keys.GOOFY_TORNADO_KNOCKBACK_TYPE))
+            )
+            if ui_settings.get(keys.GOOFY_KILL_BOSS):
+                self.kill_boss = "KillBoss"
+            self.ready_companion_damage_knockback_atkp_entries(
+                atkp_organizer, "Goofy", options_list, kill_boss
+            )
+
+    def ready_companion_damage_knockback_atkp_entries(
+        self,
+        atkp_organizer: AttackEntriesOrganizer,
+        companion_name,
+        melee_ability_knockback_types_list,
+        kill_boss,
+    ):
+        companion_melee_ids = self._get_companion_ids_for_damage_knockback_options(
+            companion_name, "Melee"
+        )
         companion_melee_objects = []
         for melee_entry in companion_melee_ids:
-            companion_melee_objects.append(atkp_organizer.get_attack_using_ids(melee_entry[0], melee_entry[1]))
+            companion_melee_objects.append(
+                atkp_organizer.get_attack_using_ids(melee_entry[0], melee_entry[1])
+            )
         for melee_object in companion_melee_objects:
             melee_object: ATKPObject
             melee_object.EnemyReaction = melee_ability_knockback_types_list[0]
             melee_object.Flags = kill_boss
-            
-        companion_ability_ids = self._get_companion_ids_for_damage_knockback_options(companion_name, "Ability")
+
+        companion_ability_ids = self._get_companion_ids_for_damage_knockback_options(
+            companion_name, "Ability"
+        )
         companion_ability1_objects = []
         companion_ability2_objects = []
         companion_ability3_objects = []
-        #The third entry is for when we need the power field to distinguish different entries for the same attack (like goofy tornado)
+        # The third entry is for when we need the power field to distinguish different entries for the same attack (like goofy tornado)
         for ability_entry in companion_ability_ids[0]:
-            if(len(ability_entry) == 3):
-                companion_ability1_objects.append(atkp_organizer.get_attack_using_ids_plus_power(ability_entry[0], ability_entry[1], ability_entry[2]))
+            if len(ability_entry) == 3:
+                companion_ability1_objects.append(
+                    atkp_organizer.get_attack_using_ids_plus_power(
+                        ability_entry[0], ability_entry[1], ability_entry[2]
+                    )
+                )
             else:
-                companion_ability1_objects.append(atkp_organizer.get_attack_using_ids(ability_entry[0], ability_entry[1]))
+                companion_ability1_objects.append(
+                    atkp_organizer.get_attack_using_ids(
+                        ability_entry[0], ability_entry[1]
+                    )
+                )
         for ability_entry in companion_ability_ids[1]:
-            if(len(ability_entry) == 3):
-                companion_ability2_objects.append(atkp_organizer.get_attack_using_ids_plus_power(ability_entry[0], ability_entry[1], ability_entry[2]))
+            if len(ability_entry) == 3:
+                companion_ability2_objects.append(
+                    atkp_organizer.get_attack_using_ids_plus_power(
+                        ability_entry[0], ability_entry[1], ability_entry[2]
+                    )
+                )
             else:
-                companion_ability2_objects.append(atkp_organizer.get_attack_using_ids(ability_entry[0], ability_entry[1]))
+                companion_ability2_objects.append(
+                    atkp_organizer.get_attack_using_ids(
+                        ability_entry[0], ability_entry[1]
+                    )
+                )
         for ability_entry in companion_ability_ids[2]:
-            if(len(ability_entry) == 3):
-                companion_ability3_objects.append(atkp_organizer.get_attack_using_ids_plus_power(ability_entry[0], ability_entry[1], ability_entry[2]))
+            if len(ability_entry) == 3:
+                companion_ability3_objects.append(
+                    atkp_organizer.get_attack_using_ids_plus_power(
+                        ability_entry[0], ability_entry[1], ability_entry[2]
+                    )
+                )
             else:
-                companion_ability3_objects.append(atkp_organizer.get_attack_using_ids(ability_entry[0], ability_entry[1]))
-        
+                companion_ability3_objects.append(
+                    atkp_organizer.get_attack_using_ids(
+                        ability_entry[0], ability_entry[1]
+                    )
+                )
+
         for ability_object in companion_ability1_objects:
             ability_object: ATKPObject
             ability_object.EnemyReaction = melee_ability_knockback_types_list[1]
             ability_object.Flags = kill_boss
-            
+
         for ability_object in companion_ability2_objects:
             ability_object: ATKPObject
             ability_object.EnemyReaction = melee_ability_knockback_types_list[2]
             ability_object.Flags = kill_boss
-            
+
         for ability_object in companion_ability3_objects:
             ability_object: ATKPObject
             ability_object.EnemyReaction = melee_ability_knockback_types_list[3]
             ability_object.Flags = kill_boss
-            
-        for atkp_object in companion_melee_objects: atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
-        for atkp_object in companion_ability1_objects: atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
-        for atkp_object in companion_ability2_objects: atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
-        for atkp_object in companion_ability3_objects: atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
-            
 
-    def _get_companion_ids_for_damage_knockback_options(self, companion_name, id_group) -> dict[{str, list[int]}]:
-        #SubId first, then Id
-        if(companion_name == "Donald"):
-            if(id_group == "Melee"): return [[0, 151], [0, 152], [0, 153], [0, 154], [0, 155]]
-            return [[[0, 1163], [2, 1163]], [[0, 1164]], [[0, 1165], [0, 1165]]] #There are two entries in atkp for thunder that have same Id, SubId and Power...
-        elif(companion_name == "Goofy"):
-            if(id_group == "Melee"): return [[0, 146], [1, 146], [0, 156], [0, 157], [0, 158], [0, 159]]
-            return [[[0, 1161]], [[0, 1162]], [[0, 1160, 25]]] #Third entry in last one is for power
+        for atkp_object in companion_melee_objects:
+            atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
+        for atkp_object in companion_ability1_objects:
+            atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
+        for atkp_object in companion_ability2_objects:
+            atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
+        for atkp_object in companion_ability3_objects:
+            atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
+
+    def _get_companion_ids_for_damage_knockback_options(
+        self, companion_name, id_group
+    ) -> dict[{str, list[int]}]:
+        # SubId first, then Id
+        if companion_name == "Donald":
+            if id_group == "Melee":
+                return [[0, 151], [0, 152], [0, 153], [0, 154], [0, 155]]
+            return [
+                [[0, 1163], [2, 1163]],
+                [[0, 1164]],
+                [[0, 1165], [0, 1165]],
+            ]  # There are two entries in atkp for thunder that have same Id, SubId and Power...
+        elif companion_name == "Goofy":
+            if id_group == "Melee":
+                return [[0, 146], [1, 146], [0, 156], [0, 157], [0, 158], [0, 159]]
+            return [
+                [[0, 1161]],
+                [[0, 1162]],
+                [[0, 1160, 25]],
+            ]  # Third entry in last one is for power
+
 
 class CosmeticsOnlyZip:
     def __init__(self, ui_settings: SeedSettings, extra_data: ExtraConfigurationData):

@@ -22,7 +22,9 @@ def _run_custom_cosmetics_executables(extra_data: ExtraConfigurationData):
             subprocess.call(custom_file_path, cwd=custom_cwd)
 
 
-def _wrap_in_last_seed_folder_if_possible(last_seed_folder_txt: Path, output_file_name: str) -> str:
+def _wrap_in_last_seed_folder_if_possible(
+    last_seed_folder_txt: Path, output_file_name: str
+) -> str:
     if last_seed_folder_txt.is_file():
         last_seed_folder = Path(last_seed_folder_txt.read_text().strip())
         if last_seed_folder.is_dir():
@@ -33,13 +35,17 @@ def _wrap_in_last_seed_folder_if_possible(last_seed_folder_txt: Path, output_fil
 def _download_seed(parent: QWidget, seed_zip_result: SeedZipResult):
     zip_file, _, _ = seed_zip_result
 
-    last_seed_folder_txt = appconfig.auto_save_folder() / 'last_seed_folder.txt'
-    output_file_name = _wrap_in_last_seed_folder_if_possible(last_seed_folder_txt, 'randoseed.zip')
+    last_seed_folder_txt = appconfig.auto_save_folder() / "last_seed_folder.txt"
+    output_file_name = _wrap_in_last_seed_folder_if_possible(
+        last_seed_folder_txt, "randoseed.zip"
+    )
 
     save_widget = QFileDialog()
     filter_name = "KH2 Randomizer Seed (*.zip)"
     save_widget.setNameFilters([filter_name])
-    outfile_name, _ = save_widget.getSaveFileName(parent, "Save Seed", output_file_name, filter_name)
+    outfile_name, _ = save_widget.getSaveFileName(
+        parent, "Save Seed", output_file_name, filter_name
+    )
     if outfile_name != "":
         if not outfile_name.endswith(".zip"):
             outfile_name += ".zip"
@@ -53,7 +59,9 @@ class GenerateSeedThread(QThread):
     finished = Signal(object)
     failed = Signal(Exception)
 
-    def __init__(self, rando_settings: RandomizerSettings, extra_data: ExtraConfigurationData):
+    def __init__(
+        self, rando_settings: RandomizerSettings, extra_data: ExtraConfigurationData
+    ):
         super().__init__()
         self.rando_settings = rando_settings
         self.extra_data = extra_data
@@ -71,8 +79,12 @@ class GenerateSeedThread(QThread):
 
 
 class GenerateSeedWorker:
-
-    def __init__(self, parent: QWidget, rando_settings: RandomizerSettings, extra_data: ExtraConfigurationData):
+    def __init__(
+        self,
+        parent: QWidget,
+        rando_settings: RandomizerSettings,
+        extra_data: ExtraConfigurationData,
+    ):
         self.parent = parent
         self.rando_settings = rando_settings
         self.extra_data = extra_data
@@ -82,7 +94,9 @@ class GenerateSeedWorker:
     def generate_seed(self):
         rando_settings = self.rando_settings
         displayed_seed_name = rando_settings.random_seed
-        self.progress = QProgressDialog(f"Creating seed with name {displayed_seed_name}", "Cancel", 0, 0, None)
+        self.progress = QProgressDialog(
+            f"Creating seed with name {displayed_seed_name}", "Cancel", 0, 0, None
+        )
         self.progress.setWindowTitle("Making your Seed, please wait...")
         # self.progress.setCancelButton(None)
         self.progress.setModal(True)
@@ -98,7 +112,11 @@ class GenerateSeedWorker:
         self.progress.close()
         self.progress = None
         zip_file, spoiler_log_output, enemy_log_output = seed_zip_result
-        spoiler_log_output = spoiler_log_output if spoiler_log_output else "<html>No spoiler log generated</html>"
+        spoiler_log_output = (
+            spoiler_log_output
+            if spoiler_log_output
+            else "<html>No spoiler log generated</html>"
+        )
         _download_seed(self.parent, (zip_file, spoiler_log_output, enemy_log_output))
         self.thread = None
 
@@ -119,7 +137,11 @@ class GenerateMultiWorldSeedThread(QThread):
     finished = Signal(object)
     failed = Signal(Exception)
 
-    def __init__(self, rando_settings: list[RandomizerSettings], extra_data: ExtraConfigurationData):
+    def __init__(
+        self,
+        rando_settings: list[RandomizerSettings],
+        extra_data: ExtraConfigurationData,
+    ):
         super().__init__()
         self.rando_settings = rando_settings
         self.extra_data = extra_data
@@ -137,8 +159,12 @@ class GenerateMultiWorldSeedThread(QThread):
 
 
 class GenerateMultiWorldSeedWorker:
-
-    def __init__(self, parent: QWidget, rando_settings: list[RandomizerSettings], extra_data: ExtraConfigurationData):
+    def __init__(
+        self,
+        parent: QWidget,
+        rando_settings: list[RandomizerSettings],
+        extra_data: ExtraConfigurationData,
+    ):
         self.parent = parent
         self.rando_settings = rando_settings
         self.extra_data = extra_data
@@ -148,7 +174,9 @@ class GenerateMultiWorldSeedWorker:
     def generate_seed(self):
         rando_settings = self.rando_settings
         displayed_seed_name = rando_settings[0].random_seed
-        self.progress = QProgressDialog(f"Creating seed with name {displayed_seed_name}", "Cancel", 0, 0, None)
+        self.progress = QProgressDialog(
+            f"Creating seed with name {displayed_seed_name}", "Cancel", 0, 0, None
+        )
         self.progress.setWindowTitle("Making your Seed, please wait...")
         # self.progress.setCancelButton(None)
         self.progress.setModal(True)
@@ -164,8 +192,14 @@ class GenerateMultiWorldSeedWorker:
         self.progress.close()
         self.progress = None
         for zip_file, spoiler_log_output, enemy_log_output in seed_zip_result:
-            spoiler_log_output = spoiler_log_output if spoiler_log_output else "<html>No spoiler log generated</html>"
-            _download_seed(self.parent, (zip_file, spoiler_log_output, enemy_log_output))
+            spoiler_log_output = (
+                spoiler_log_output
+                if spoiler_log_output
+                else "<html>No spoiler log generated</html>"
+            )
+            _download_seed(
+                self.parent, (zip_file, spoiler_log_output, enemy_log_output)
+            )
         self.thread = None
 
     def _handle_failure(self, failure: Exception):
@@ -204,8 +238,12 @@ class GenerateCosmeticsZipThread(QThread):
 
 
 class CosmeticsZipWorker:
-
-    def __init__(self, parent: QWidget, ui_settings: SeedSettings, extra_data: ExtraConfigurationData):
+    def __init__(
+        self,
+        parent: QWidget,
+        ui_settings: SeedSettings,
+        extra_data: ExtraConfigurationData,
+    ):
         self.parent = parent
         self.ui_settings = ui_settings
         self.extra_data = extra_data
@@ -213,7 +251,9 @@ class CosmeticsZipWorker:
         self.thread: Optional[GenerateCosmeticsZipThread] = None
 
     def generate_mod(self):
-        self.progress = QProgressDialog("Creating cosmetics-only mod", "Cancel", 0, 0, None)
+        self.progress = QProgressDialog(
+            "Creating cosmetics-only mod", "Cancel", 0, 0, None
+        )
         self.progress.setWindowTitle("Please wait...")
         self.progress.setModal(True)
         self.progress.show()
@@ -243,13 +283,17 @@ class CosmeticsZipWorker:
         self.thread = None
 
     def _download_zip(self, zip_file: io.BytesIO):
-        last_seed_folder_txt = appconfig.auto_save_folder() / 'last_seed_folder.txt'
-        output_file_name = _wrap_in_last_seed_folder_if_possible(last_seed_folder_txt, 'randomized-cosmetics.zip')
+        last_seed_folder_txt = appconfig.auto_save_folder() / "last_seed_folder.txt"
+        output_file_name = _wrap_in_last_seed_folder_if_possible(
+            last_seed_folder_txt, "randomized-cosmetics.zip"
+        )
 
         save_widget = QFileDialog()
         filter_name = "OpenKH Mod (*.zip)"
         save_widget.setNameFilters([filter_name])
-        outfile_name, _ = save_widget.getSaveFileName(self.parent, "Save Cosmetics Mod", output_file_name, filter_name)
+        outfile_name, _ = save_widget.getSaveFileName(
+            self.parent, "Save Cosmetics Mod", output_file_name, filter_name
+        )
         if outfile_name != "":
             if not outfile_name.endswith(".zip"):
                 outfile_name += ".zip"
@@ -278,8 +322,9 @@ class GenerateBossEnemyZipThread(QThread):
 
 
 class BossEnemyZipWorker:
-
-    def __init__(self, parent: QWidget, seed_name: str, ui_settings: SeedSettings, platform: str):
+    def __init__(
+        self, parent: QWidget, seed_name: str, ui_settings: SeedSettings, platform: str
+    ):
         self.parent = parent
         self.ui_settings = ui_settings
         self.platform = platform
@@ -288,12 +333,16 @@ class BossEnemyZipWorker:
         self.thread: Optional[GenerateBossEnemyZipThread] = None
 
     def generate_mod(self):
-        self.progress = QProgressDialog("Creating boss/enemy-only mod", "Cancel", 0, 0, None)
+        self.progress = QProgressDialog(
+            "Creating boss/enemy-only mod", "Cancel", 0, 0, None
+        )
         self.progress.setWindowTitle("Please wait...")
         self.progress.setModal(True)
         self.progress.show()
 
-        self.thread = GenerateBossEnemyZipThread(self.seed_name, self.ui_settings, self.platform)
+        self.thread = GenerateBossEnemyZipThread(
+            self.seed_name, self.ui_settings, self.platform
+        )
         self.thread.finished.connect(self._handle_result)
         self.thread.failed.connect(self._handle_failure)
         self.progress.canceled.connect(lambda: self.thread.terminate())
@@ -318,13 +367,17 @@ class BossEnemyZipWorker:
         self.thread = None
 
     def _download_zip(self, zip_file: io.BytesIO):
-        last_seed_folder_txt = appconfig.auto_save_folder() / 'last_seed_folder.txt'
-        output_file_name = _wrap_in_last_seed_folder_if_possible(last_seed_folder_txt, 'randomized-bosses-enemies.zip')
+        last_seed_folder_txt = appconfig.auto_save_folder() / "last_seed_folder.txt"
+        output_file_name = _wrap_in_last_seed_folder_if_possible(
+            last_seed_folder_txt, "randomized-bosses-enemies.zip"
+        )
 
         save_widget = QFileDialog()
         filter_name = "OpenKH Mod (*.zip)"
         save_widget.setNameFilters([filter_name])
-        outfile_name, _ = save_widget.getSaveFileName(self.parent, "Save boss/enemy mod", output_file_name, filter_name)
+        outfile_name, _ = save_widget.getSaveFileName(
+            self.parent, "Save boss/enemy mod", output_file_name, filter_name
+        )
         if outfile_name != "":
             if not outfile_name.endswith(".zip"):
                 outfile_name += ".zip"

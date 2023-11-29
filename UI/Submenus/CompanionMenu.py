@@ -5,7 +5,7 @@ from UI.Submenus.SubMenu import KH2Submenu
 
 class CompanionMenu(KH2Submenu):
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Companion Options', settings=settings)
+        super().__init__(title="Companion Options", settings=settings)
 
         self.start_column()
         self.start_group()
@@ -15,9 +15,9 @@ class CompanionMenu(KH2Submenu):
         self.add_option(settingkey.DONALD_BLIZZARD_KNOCKBACK_TYPE)
         self.add_option(settingkey.DONALD_THUNDER_KNOCKBACK_TYPE)
         self.add_option(settingkey.DONALD_KILL_BOSS)
-        self.end_group('Donald Damage and Knockback options')
+        self.end_group("Donald Damage and Knockback options")
         self.end_column()
-        
+
         self.start_column()
         self.start_group()
         self.add_option(settingkey.GOOFY_DAMAGE_TOGGLE)
@@ -26,7 +26,7 @@ class CompanionMenu(KH2Submenu):
         self.add_option(settingkey.GOOFY_TURBO_KNOCKBACK_TYPE)
         self.add_option(settingkey.GOOFY_TORNADO_KNOCKBACK_TYPE)
         self.add_option(settingkey.GOOFY_KILL_BOSS)
-        self.end_group('Goofy Damage and Knockback options')
+        self.end_group("Goofy Damage and Knockback options")
         self.end_column()
-        
+
         self.finalizeMenu()

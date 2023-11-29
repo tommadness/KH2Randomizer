@@ -2583,7 +2583,8 @@ _all_settings = [
 
         Requires the custom music folder to be set up in the Configure menu.
         """,
-    ),Toggle(
+    ),
+    Toggle(
         name=settingkey.DONALD_DAMAGE_TOGGLE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Donald Deals Damage to ALL enemies and bosses",
@@ -2595,7 +2596,8 @@ _all_settings = [
         if you want himm to stun/knockback, change the settings below
         """,
         randomizable=False,
-    ),SingleSelect(
+    ),
+    SingleSelect(
         name=settingkey.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Donald's Melee Attacks",
@@ -2612,7 +2614,8 @@ _all_settings = [
         Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
-    ),SingleSelect(
+    ),
+    SingleSelect(
         name=settingkey.DONALD_FIRE_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Donald's Fire",
@@ -2629,7 +2632,8 @@ _all_settings = [
         Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
-    ),SingleSelect(
+    ),
+    SingleSelect(
         name=settingkey.DONALD_BLIZZARD_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Donald's Blizzard",
@@ -2646,7 +2650,8 @@ _all_settings = [
         Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
-    ),SingleSelect(
+    ),
+    SingleSelect(
         name=settingkey.DONALD_THUNDER_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Donald's Thunder",
@@ -2663,7 +2668,8 @@ _all_settings = [
         Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
-    ),Toggle(
+    ),
+    Toggle(
         name=settingkey.GOOFY_DAMAGE_TOGGLE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Goofy Deals Damage to ALL enemies and bosses",
@@ -2675,7 +2681,8 @@ _all_settings = [
         if you want himm to stun/knockback, change the settings below
         """,
         randomizable=False,
-    ),SingleSelect(
+    ),
+    SingleSelect(
         name=settingkey.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Goofy's Melee Attacks",
@@ -2692,7 +2699,8 @@ _all_settings = [
         Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
-    ),SingleSelect(
+    ),
+    SingleSelect(
         name=settingkey.GOOFY_BASH_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Goofy's Bash",
@@ -2709,7 +2717,8 @@ _all_settings = [
         Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
-    ),SingleSelect(
+    ),
+    SingleSelect(
         name=settingkey.GOOFY_TURBO_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Goofy's Turbo",
@@ -2726,7 +2735,8 @@ _all_settings = [
         Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
-    ),SingleSelect(
+    ),
+    SingleSelect(
         name=settingkey.GOOFY_TORNADO_KNOCKBACK_TYPE,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Knockback for Goofy's Tornado",
@@ -2743,7 +2753,8 @@ _all_settings = [
         Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position
         Damage + Stun + Knockback: Like above, but will also be moved.
         """,
-    ),Toggle(
+    ),
+    Toggle(
         name=settingkey.DONALD_KILL_BOSS,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Donald Can Kill Bosses",
@@ -2753,7 +2764,8 @@ _all_settings = [
         If enabled, Donald's attacks will be able to kill bosses
         """,
         randomizable=False,
-    ),Toggle(
+    ),
+    Toggle(
         name=settingkey.GOOFY_KILL_BOSS,
         group=SettingGroup.COMPANION_DAMAGE_KNOCKBACK,
         ui_label="Goofy Can Kill Bosses",
@@ -3077,7 +3089,7 @@ def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
             enemy_options[setting.name] = value
 
     return enemy_options
-    
+
 
 @dataclass(frozen=True)
 class ExtraConfigurationData:

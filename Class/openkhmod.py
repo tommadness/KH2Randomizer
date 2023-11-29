@@ -393,14 +393,45 @@ class Treasures:
 
     def write_to_zip_file(self, zip_file: ZipFile):
         write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=True)
-        
+
+
 class ATKPObject:
-    def __init__(self, SubId: int, Id: int, Type: str, CriticalAdjust: int, Power: int, Team: int,
-                 Element: int, EnemyReaction: int, EffectOnHit: int, KnockbackStrength1: int, KnockbackStrength2: int, 
-                 Unknown: int, Flags, RefactSelf: str, RefactOther: str, ReflectedMotion: int, ReflectedHitBack: int,
-                 ReflectAction: int, ReflectHitSound: int, ReflectRC: int, ReflectRange: int, ReflectAngle: int, 
-                 DamageEffect: int, Switch: int, Interval: int, FloorCheck: int, DriveDrain: int, RevengeDamage: int,
-                 AttackTrReaction: str, ComboGroup: int, RandomEffect: int, Kind, HPDrain: int):
+    def __init__(
+        self,
+        SubId: int,
+        Id: int,
+        Type: str,
+        CriticalAdjust: int,
+        Power: int,
+        Team: int,
+        Element: int,
+        EnemyReaction: int,
+        EffectOnHit: int,
+        KnockbackStrength1: int,
+        KnockbackStrength2: int,
+        Unknown: int,
+        Flags,
+        RefactSelf: str,
+        RefactOther: str,
+        ReflectedMotion: int,
+        ReflectedHitBack: int,
+        ReflectAction: int,
+        ReflectHitSound: int,
+        ReflectRC: int,
+        ReflectRange: int,
+        ReflectAngle: int,
+        DamageEffect: int,
+        Switch: int,
+        Interval: int,
+        FloorCheck: int,
+        DriveDrain: int,
+        RevengeDamage: int,
+        AttackTrReaction: str,
+        ComboGroup: int,
+        RandomEffect: int,
+        Kind,
+        HPDrain: int,
+    ):
         self.SubId = SubId
         self.Id = Id
         self.Type = Type
@@ -435,105 +466,111 @@ class ATKPObject:
         self.Kind = Kind
         self.HPDrain = HPDrain
 
+
 class AttackEntriesOrganizer:
-    
     def __init__(self, source_name: str):
         self.data: list[dict] = []
         self.source_name = source_name
-    
+
     def convert_atkp_object_to_dict_and_add_to_data(self, atkp_object: ATKPObject):
-        self.data.append({
-            "SubId": atkp_object.SubId,
-            "Id": atkp_object.Id, 
-            "Type": atkp_object.Type, 
-            "CriticalAdjust": atkp_object.CriticalAdjust, 
-            "Power": atkp_object.Power, 
-            "Team": atkp_object.Team, 
-            "Element": atkp_object.Element, 
-            "EnemyReaction": atkp_object.EnemyReaction, 
-            "EffectOnHit": atkp_object.EffectOnHit, 
-            "KnockbackStrength1": atkp_object.KnockbackStrength1, 
-            "KnockbackStrength2": atkp_object.KnockbackStrength2, 
-            "Unknown": atkp_object.Unknown, 
-            "Flags": atkp_object.Flags, 
-            "RefactSelf": atkp_object.RefactSelf, 
-            "RefactOther": atkp_object.RefactOther, 
-            "ReflectedMotion": atkp_object.ReflectedMotion, 
-            "ReflectedHitBack": atkp_object.ReflectedHitBack, 
-            "ReflectAction": atkp_object.ReflectAction, 
-            "ReflectHitSound": atkp_object.ReflectHitSound, 
-            "ReflectRC": atkp_object.ReflectRC, 
-            "ReflectRange": atkp_object.ReflectRange, 
-            "ReflectAngle": atkp_object.ReflectAngle, 
-            "DamageEffect": atkp_object.DamageEffect, 
-            "Switch": atkp_object.Switch,
-            "Interval": atkp_object.Interval,
-            "FloorCheck": atkp_object.FloorCheck, 
-            "DriveDrain": atkp_object.DriveDrain, 
-            "RevengeDamage": atkp_object.RevengeDamage, 
-            "AttackTrReaction": atkp_object.AttackTrReaction, 
-            "ComboGroup": atkp_object.ComboGroup, 
-            "RandomEffect": atkp_object.RandomEffect, 
-            "Kind": atkp_object.Kind, 
-            "HPDrain": atkp_object.HPDrain,
-        })
-        
+        self.data.append(
+            {
+                "SubId": atkp_object.SubId,
+                "Id": atkp_object.Id,
+                "Type": atkp_object.Type,
+                "CriticalAdjust": atkp_object.CriticalAdjust,
+                "Power": atkp_object.Power,
+                "Team": atkp_object.Team,
+                "Element": atkp_object.Element,
+                "EnemyReaction": atkp_object.EnemyReaction,
+                "EffectOnHit": atkp_object.EffectOnHit,
+                "KnockbackStrength1": atkp_object.KnockbackStrength1,
+                "KnockbackStrength2": atkp_object.KnockbackStrength2,
+                "Unknown": atkp_object.Unknown,
+                "Flags": atkp_object.Flags,
+                "RefactSelf": atkp_object.RefactSelf,
+                "RefactOther": atkp_object.RefactOther,
+                "ReflectedMotion": atkp_object.ReflectedMotion,
+                "ReflectedHitBack": atkp_object.ReflectedHitBack,
+                "ReflectAction": atkp_object.ReflectAction,
+                "ReflectHitSound": atkp_object.ReflectHitSound,
+                "ReflectRC": atkp_object.ReflectRC,
+                "ReflectRange": atkp_object.ReflectRange,
+                "ReflectAngle": atkp_object.ReflectAngle,
+                "DamageEffect": atkp_object.DamageEffect,
+                "Switch": atkp_object.Switch,
+                "Interval": atkp_object.Interval,
+                "FloorCheck": atkp_object.FloorCheck,
+                "DriveDrain": atkp_object.DriveDrain,
+                "RevengeDamage": atkp_object.RevengeDamage,
+                "AttackTrReaction": atkp_object.AttackTrReaction,
+                "ComboGroup": atkp_object.ComboGroup,
+                "RandomEffect": atkp_object.RandomEffect,
+                "Kind": atkp_object.Kind,
+                "HPDrain": atkp_object.HPDrain,
+            }
+        )
+
     def write_to_zip_file(self, zip_file: ZipFile):
         write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=False)
-        
+
     def has_entries(self):
         return len(self.data) > 0
 
     def attack_entry_constructor(self, values):
         return ATKPObject(
-            values['SubId'],
-            values['Id'],
-            values['Type'], 
-            values['CriticalAdjust'], 
-            values['Power'], 
-            values['Team'], 
-            values['Element'], 
-            values['EnemyReaction'], 
-            values['EffectOnHit'], 
-            values['KnockbackStrength1'], 
-            values['KnockbackStrength2'], 
-            values['Unknown'], 
-            values['Flags'], 
-            values['RefactSelf'], 
-            values['RefactOther'], 
-            values['ReflectedMotion'], 
-            values['ReflectedHitBack'], 
-            values['ReflectAction'], 
-            values['ReflectHitSound'], 
-            values['ReflectRC'], 
-            values['ReflectRange'], 
-            values['ReflectAngle'], 
-            values['DamageEffect'], 
-            values['Switch'], 
-            values['Interval'], 
-            values['FloorCheck'], 
-            values['DriveDrain'], 
-            values['RevengeDamage'], 
-            values['AttackTrReaction'], 
-            values['ComboGroup'], 
-            values['RandomEffect'], 
-            values['Kind'], 
-            values['HPDrain'])
-    
+            values["SubId"],
+            values["Id"],
+            values["Type"],
+            values["CriticalAdjust"],
+            values["Power"],
+            values["Team"],
+            values["Element"],
+            values["EnemyReaction"],
+            values["EffectOnHit"],
+            values["KnockbackStrength1"],
+            values["KnockbackStrength2"],
+            values["Unknown"],
+            values["Flags"],
+            values["RefactSelf"],
+            values["RefactOther"],
+            values["ReflectedMotion"],
+            values["ReflectedHitBack"],
+            values["ReflectAction"],
+            values["ReflectHitSound"],
+            values["ReflectRC"],
+            values["ReflectRange"],
+            values["ReflectAngle"],
+            values["DamageEffect"],
+            values["Switch"],
+            values["Interval"],
+            values["FloorCheck"],
+            values["DriveDrain"],
+            values["RevengeDamage"],
+            values["AttackTrReaction"],
+            values["ComboGroup"],
+            values["RandomEffect"],
+            values["Kind"],
+            values["HPDrain"],
+        )
+
     def get_attack_using_ids(self, SubId, Id):
-        with open(resource_path("static/AtkpList.yml"), 'r') as file:
+        with open(resource_path("static/AtkpList.yml"), "r") as file:
             list_data = yaml.safe_load(file)
-            
+
         for attack_entry in list_data:
-            if(attack_entry['SubId'] == SubId and attack_entry['Id'] == Id):
+            if attack_entry["SubId"] == SubId and attack_entry["Id"] == Id:
                 return self.attack_entry_constructor(attack_entry)
-            
-    #Used specifically for moves with two Ids that have the same number and same SubId but with different power and uses (like goofy tornado) 
+
+    # Used specifically for moves with two Ids that have the same number and same SubId but with different power and uses (like goofy tornado)
     def get_attack_using_ids_plus_power(self, SubId, Id, Power):
-        with open(resource_path("static/AtkpList.yml"), 'r') as file:
+        with open(resource_path("static/AtkpList.yml"), "r") as file:
             list_data = yaml.safe_load(file)
-            
+
         for attack_entry in list_data:
-            if(attack_entry['SubId'] == SubId and attack_entry['Id'] == Id and attack_entry['Power'] == Power):
+            if (
+                attack_entry["SubId"] == SubId
+                and attack_entry["Id"] == Id
+                and attack_entry["Power"] == Power
+            ):
                 return self.attack_entry_constructor(attack_entry)
-        
