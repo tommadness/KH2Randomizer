@@ -4,28 +4,30 @@ from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QRadioButton, QScrollArea, QLayout
+    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QScrollArea, QLayout
 )
 
 import Class.seedSettings
 from Class.seedSettings import WorldRandomizationTristate, ProgressionChainSelect, SeedSettings, Toggle, IntSpinner, \
     FloatSpinner, SingleSelect, MultiSelect
+from List.configDict import locationType
 from Module.resources import resource_path
+from UI import theme
 from UI.Submenus.ProgressionWidgets import ProgressionWidget
 
 header_styles = [
-    'background: #4d0d0e; color: #ff8080;',  # reds
-    'background: #685901; color: #fff34b;',  # yellows
-    'background: #04641b; color: #31f626;',  # greens
-    'background: #032169; color: #63c6f5;',  # blues
-    'background: #422169; color: #c663f5;',  # purples
+    f"background: {theme.KhMediumRed}; color: {theme.KhLightRed};",
+    f"background: {theme.KhMediumYellow}; color: {theme.KhLightYellow};",
+    f"background: {theme.KhMediumGreen}; color: {theme.KhLightGreen};",
+    f"background: {theme.KhMediumBlue}; color: {theme.KhLightBlue};",
+    f"background: {theme.KhMediumPurple}; color: {theme.KhLightPurple};",
 ]
 frame_styles = [
-    'background: #3c0000;',  # reds
-    'background: #503c00;',  # yellows
-    'background: #003214;',  # greens
-    'background: #001e3c;',  # blues
-    'background: #281e3c;',  # purples
+    f"background: {theme.KhDarkRed};",
+    f"background: {theme.KhDarkYellow};",
+    f"background: {theme.KhDarkGreen};",
+    f"background: {theme.KhDarkBlue};",
+    f"background: {theme.KhDarkPurple};",
 ]
 
 
@@ -43,8 +45,7 @@ class KH2Submenu(QWidget):
         self.pending_column: Optional[QVBoxLayout] = None
         self.pending_group: Optional[QVBoxLayout] = None
 
-        self.tristate_groups = {}
-        self.tristate_backgrounds = {}
+        self.tristate_combo_boxes: dict[str, QComboBox] = {}
 
         self.next_header_style = len(title) % len(header_styles)
 
@@ -160,7 +161,7 @@ class KH2Submenu(QWidget):
         elif isinstance(setting, MultiSelect):
             widget = self.make_multi_select_list(setting_name)
         elif isinstance(setting, WorldRandomizationTristate):
-            widget = self.make_multi_select_tristate_list(setting_name)
+            widget = None  # Handled elsewhere
         elif isinstance(setting, ProgressionChainSelect):
             widget = ProgressionWidget(self.settings,setting_name)
         else:
@@ -203,24 +204,24 @@ class KH2Submenu(QWidget):
             partial_keys = selected_keys[1]
             selected_keys = selected_keys[0]
         for index, choice_key in enumerate(setting.choice_keys):
-            randomize_button = QRadioButton("Rando")
-            vanilla_button = QRadioButton("Vanilla")
-            junk_button = QRadioButton("Junk")
+            combo_box = QComboBox()
+            combo_box.addItems(["Randomized", "Vanilla", "Junk"])
+
             if choice_key in selected_keys:
-                randomize_button.setChecked(True)
+                combo_box.setCurrentIndex(0)
             elif choice_key in partial_keys:
-                vanilla_button.setChecked(True)
+                combo_box.setCurrentIndex(1)
             else:
-                junk_button.setChecked(True)
+                combo_box.setCurrentIndex(2)
 
-            randomize_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
-            vanilla_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
-            junk_button.toggled.connect(lambda state: self._update_multi_tristate_buttons(setting))
+            combo_box.currentIndexChanged.connect(lambda: self._update_multi_tristate_buttons(setting))
 
-            self.tristate_groups[choice_key] = (randomize_button, vanilla_button, junk_button)
+            self.tristate_combo_boxes[choice_key] = combo_box
 
             top_layout = QHBoxLayout()
             world_label = QLabel(setting.choice_values[index])
+            if choice_key == locationType.Level:
+                world_label.setText("Levels (Sora's Heart)")
             top_layout.addWidget(world_label)
 
             bottom_layout = QHBoxLayout()
@@ -231,19 +232,18 @@ class KH2Submenu(QWidget):
             label.setPixmap(pixmap)
             bottom_layout.addWidget(label)
             button_layout = QHBoxLayout()
-            button_layout.addWidget(randomize_button)
-            button_layout.addWidget(vanilla_button)
-            button_layout.addWidget(junk_button)
-            bottom_layout.addLayout(button_layout)
+            button_layout.addWidget(combo_box)
+            bottom_layout.addLayout(button_layout, stretch=1)
 
             vertical = QVBoxLayout()
-            vertical.setContentsMargins(4, 4, 4, 4)
+            vertical.setContentsMargins(4, 0, 4, 0)
             vertical.addLayout(top_layout)
             vertical.addLayout(bottom_layout)
-            self.tristate_backgrounds[choice_key] = world_label
 
             widget = QWidget()
-            widget.setStyleSheet('background-color: #232629')
+            widget.setContentsMargins(0, 0, 0, 8)
+            widget.setStyleSheet("QWidget { background-color: transparent; }")
+            widget.setFixedWidth(250)
             widget.setLayout(vertical)
             widgets.append(widget)
 
@@ -263,6 +263,7 @@ class KH2Submenu(QWidget):
         selected_keys = self.settings.get(setting_name)
         for index, choice_key in enumerate(setting.choice_keys):
             button = QPushButton(setting.choice_values[index])
+            button.setProperty("cssClass", "toggle")
             button.setIconSize(QSize(36, 36))
             button.setIcon(QIcon(resource_path(setting.choice_icons[choice_key])))
             button.setCheckable(True)
@@ -392,13 +393,13 @@ class KH2Submenu(QWidget):
                     for index, key in enumerate(setting.choice_keys):
                         selected = key in enabled_locs
                         vanil_selected = key in vanilla_locs
-                        rando,vanil,junk = self.tristate_groups[setting.choice_keys[index]]
+                        combo_box = self.tristate_combo_boxes[setting.choice_keys[index]]
                         if selected:
-                            rando.setChecked(True)
+                            combo_box.setCurrentIndex(0)
                         elif vanil_selected:
-                            vanil.setChecked(True)
+                            combo_box.setCurrentIndex(1)
                         else:
-                            junk.setChecked(True)
+                            combo_box.setCurrentIndex(2)
             elif isinstance(setting, ProgressionChainSelect):
                 setting.progression.set_uncompressed(self.settings.get(name))
                 widget._update_spinboxes()
@@ -481,35 +482,12 @@ class KH2Submenu(QWidget):
         list_widget.itemSelectionChanged.connect(lambda: self._update_multi_list(setting, list_widget))
         return list_widget
 
-    def make_multi_select_tristate_list(self, name: str):
-        return None
-        # setting: MultiSelectTristate = Class.seedSettings.settings_by_name[name]
-        # list_widget = QListWidget()
-        # list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        # list_widget.addItems(setting.choice_values)
-
-        # for selected in self.settings.get(name):
-        #     if selected in setting.choice_keys:
-        #         index = setting.choice_keys.index(selected)
-        #         list_widget.item(index).setSelected(True)
-
-        # list_widget.itemSelectionChanged.connect(lambda: self._update_multi_tristate_list(setting, list_widget))
-        # return list_widget
-
     def _update_multi_list(self, setting: MultiSelect, widget: QListWidget):
         choice_keys = setting.choice_keys
         selected_keys = []
         for index in widget.selectedIndexes():
             selected_keys.append(choice_keys[index.row()])
         self.settings.set(setting.name, selected_keys)
-
-    def _update_multi_tristate_list(self, setting: WorldRandomizationTristate, widget: QListWidget):
-        return None
-        # choice_keys = setting.choice_keys
-        # selected_keys = []
-        # for index in widget.selectedIndexes():
-        #     selected_keys.append(choice_keys[index.row()])
-        # self.settings.set(setting.name, [selected_keys,[]])
 
     def _update_multi_buttons(self, setting: MultiSelect):
         (_, buttons) = self.widgets_and_settings_by_name[setting.name]
@@ -525,15 +503,30 @@ class KH2Submenu(QWidget):
         choice_keys = setting.choice_keys
         selected_keys = []
         partial_keys = []
-        for index, button in enumerate(buttons):
-            rando, vanil, junk = self.tristate_groups[choice_keys[index]]
-            choice_group = self.tristate_backgrounds[choice_keys[index]]
-            if rando.isChecked():
+        for index, _ in enumerate(buttons):
+            combo_box = self.tristate_combo_boxes[choice_keys[index]]
+            selected_index = combo_box.currentIndex()
+            if selected_index == 0:
                 selected_keys.append(choice_keys[index])
-                choice_group.setStyleSheet("QLabel {background-color: #04641b}")
-            elif vanil.isChecked():
-                choice_group.setStyleSheet("QLabel {background-color: gray}")
+            elif selected_index == 1:
                 partial_keys.append(choice_keys[index])
-            else:
-                choice_group.setStyleSheet("QLabel {background-color: {QTMATERIAL_PRIMARYCOLOR}}")
+            self._update_multi_tristate_visual(combo_box)
         self.settings.set(setting.name, [selected_keys, partial_keys])
+
+    @staticmethod
+    def _update_multi_tristate_visual(combo_box: QComboBox):
+        current_index = combo_box.currentIndex()
+        text_color = "white"
+        if current_index == 0:
+            background_color = theme.SelectionColor
+            border_color = theme.SelectionBorderColor
+        elif current_index == 1:
+            background_color = theme.KhMediumPurple
+            border_color = theme.KhLightPurple
+        else:
+            background_color = "#00000a"
+            border_color = background_color
+            text_color = "#999999"
+        stylesheet = f"QComboBox {{ border: 1px solid {border_color}; background-color: {background_color}; color: {text_color};}}"
+        stylesheet += f" QComboBox QAbstractItemView {{ background-color: {theme.BackgroundPrimary}; }}"
+        combo_box.setStyleSheet(stylesheet)

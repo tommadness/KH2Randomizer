@@ -1,24 +1,59 @@
-QCheckBox {{
-    font-family: KhMenu;
-    font-size: 14px;
+QWidget, QTabBar {{
+    background-color: %(background-primary)s;
+    color: white;
 }}
 
-QComboBox::drop-down {{
-    width: 36px;
+QMenuBar {{
+    min-height: 32px;
+    background-color: %(background-dark)s;
+}}
+
+QMenu::item {{
+    height: 24px;
+    border: 8px solid transparent;
+}}
+
+QMenuBar::item:selected, QMenu::item:selected {{
+    background-color: white;
+    color: black;
+}}
+
+/* Tabs are made to look like the KH2 stock items menu tabs */
+QTabWidget::pane {{
+    border: none;
+}}
+
+QTabBar:tab {{
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-left: 4px solid #6b1e1e;
+    border-right: 4px solid #270000;
+    border-top: 4px solid #975151;
+    border-bottom: 4px solid #270000;
+    background-color: #500000;
+    color: white;
+    font-family: KHMenu;
+}}
+
+QTabBar:tab:selected, QTabBar:tab:hover {{
+    border: 4px solid #bf0000;
+    border-radius: 4px;
+}}
+
+QScrollArea {{
+  border: none;
 }}
 
 QGroupBox {{
-    font-family: KhMenu;
+    font-family: KHMenu;
     font-size: 14px;
     text-transform: none;
 }}
 
-QGroupBox::title {{
-    color: {QTMATERIAL_SECONDARYTEXTCOLOR};
-}}
-
 QLabel {{
-    font-family: KhMenu;
+    font-family: KHMenu;
     font-size: 14px;
 }}
 
@@ -30,25 +65,142 @@ QLabel[cssClass~="groupHeader"] {{
     font-size: 16px;
 }}
 
-QListView::item:selected {{
-  background-color: {QTMATERIAL_PRIMARYCOLOR};
-  selection-background-color: {QTMATERIAL_PRIMARYCOLOR};
-  color: {QTMATERIAL_PRIMARYTEXTCOLOR};
-  selection-color: {QTMATERIAL_PRIMARYTEXTCOLOR}; /* For Windows */
+QLineEdit {{
+    min-height: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border: none;
+    border-radius: 12px;
+    background-color: #00000a;
+    font-family: KHMenu;
+}}
+
+QLineEdit[cssClass~="biggerLineEdit"], QInputDialog > QLineEdit {{
+    min-height: 20px;
+    font-size: 16px;
+    border-radius: 14px;
+}}
+
+/* Check boxes are left normal-looking when unchecked, but made to look like an enabled ability when checked */
+QCheckBox {{
+    height: 24px;
+    font-family: KHMenu;
+    font-size: 14px;
+}}
+
+QCheckBox::indicator {{
+    width: 20px;
+    height: 20px;
+}}
+
+QCheckBox::indicator:checked {{
+    image: url(%(ability-on)s);
+}}
+
+/* Combo boxes, spin boxes, and buttons are made to look like some buttons on in-game menus */
+QComboBox, QAbstractSpinBox {{
+    height: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 12px;
+    background-color: #00000a;
+    color: white;
+    font-family: KHMenu;
+}}
+
+QComboBox:disabled {{
+    background-color: #666666;
+    color: #cccccc;
+}}
+
+QComboBox::drop-down, QAbstractSpinBox::up-button, QAbstractSpinBox::down-button {{
+    border: none;
+}}
+
+QComboBox::down-arrow, QAbstractSpinBox::down-arrow {{
+    padding-right: 8px;
+    width: 8px;
+    height: 8px;
+    image: url(%(down-arrow)s);
+}}
+
+QAbstractSpinBox::up-arrow {{
+    padding-right: 8px;
+    width: 8px;
+    height: 8px;
+    image: url(%(up-arrow)s);
 }}
 
 QPushButton {{
-    text-transform: none;
+    height: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #5f5f66, stop: 0.1 #64646B, stop: 0.11 #00000a, stop: 1.0 #00000a);
+    color: white;
+    font-family: KHMenu;
+    qproperty-iconSize: 24px;
 }}
 
-QTabBar {{
-    text-transform: none;
-    font-weight: normal;
+QPushButton[cssClass~="toggle"]:!checked {{
+    background-color: #00000a;
+    color: #999999;
 }}
 
-QFrame[cssClass~="settingsFrame"],
-QFrame[cssClass~="settingsFrame"] QCheckBox,
-QFrame[cssClass~="settingsFrame"] QLabel,
-QFrame[cssClass~="settingsFrame"] QWidget[cssClass~="layoutWidget"] {{
-    background: #3c3f41;
+QPushButton:checked {{
+    border: 1px solid %(selection-border-color)s;
+    background-color: %(selection-color)s;
+}}
+
+QPushButton:disabled {{
+    border: 1px solid transparent;
+    background-color: #666666;
+    color: #cccccc;
+}}
+
+QPushButton:hover, QPushButton[cssClass~="toggle"]:!checked:hover {{
+    border: 1px solid transparent;
+    background-color: white;
+    color: black;
+}}
+
+QListView {{
+    background-color: %(background-dark)s
+}}
+
+QListView::item {{
+    height: 24px;
+    border: 1px solid transparent;
+    background-color: #00000a;
+    color: white;
+}}
+
+QListView::item {{
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: #cccccc;
+}}
+
+QListView[cssClass~="grid"]::item {{
+    border: 1px solid #cccccc;
+}}
+
+QListView::item:selected {{
+    border: 1px solid %(selection-border-color)s;
+    background-color: %(selection-color)s;
+    color: white;
+}}
+
+/* Progress bar is made to look like a health bar */
+QProgressBar {{
+    height: 12px;
+    border: 4px solid #000c06;
+    background-color: #222222;
+}}
+
+QProgressBar::chunk {{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #b2f645, stop: 1.0 #2dc32e);
 }}

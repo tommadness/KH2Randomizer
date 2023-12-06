@@ -20,7 +20,6 @@ from PySide6.QtWidgets import (
     QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QDialog, QGridLayout, QListWidget, QSpinBox, QComboBox,
     QListView, QFrame
 )
-from qt_material import apply_stylesheet
 
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
@@ -35,6 +34,7 @@ from Module.resources import resource_path
 from Module.seedshare import SharedSeed, ShareStringException
 from Module.tourneySpoiler import TourneySeedSaver
 from Module.version import LOCAL_UI_VERSION, EXTRACTED_DATA_UPDATE_VERSION
+from UI import theme
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CompanionMenu import CompanionMenu
@@ -161,11 +161,10 @@ class RandomPresetDialog(QDialog):
 
         box = QGridLayout()
 
-        self.preset_list_widget = QListWidget()
+        self.preset_list_widget = QListWidget(self)
         self.preset_list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        for c in self.preset_list:
-            self.preset_list_widget.addItem(c)
-        box.addWidget(self.preset_list_widget,0,0)
+        for preset in self.preset_list:
+            self.preset_list_widget.addItem(preset)
 
         select_all_button = QPushButton("Select All Presets")
         select_all_button.clicked.connect(self.select_all_presets_from_list)
@@ -175,9 +174,10 @@ class RandomPresetDialog(QDialog):
         cancel_button.clicked.connect(self.reject)
         choose_button.clicked.connect(self.accept)
 
-        box.addWidget(select_all_button,1,0)
-        box.addWidget(cancel_button,1,1)
-        box.addWidget(choose_button,0,1)
+        box.addWidget(self.preset_list_widget, 0, 0)
+        box.addWidget(choose_button, 0, 1)
+        box.addWidget(select_all_button, 1, 0)
+        box.addWidget(cancel_button, 1, 1)
 
         self.setLayout(box)
 
@@ -186,7 +186,7 @@ class RandomPresetDialog(QDialog):
             self.preset_list_widget.item(index).setSelected(True)
 
     def save(self):
-        return [p.text() for p in self.preset_list_widget.selectedItems()]
+        return [item.text() for item in self.preset_list_widget.selectedItems()]
 
 
 class RandomSettingsDialog(QDialog):
@@ -203,7 +203,7 @@ class RandomSettingsDialog(QDialog):
 
         self.settings_list_widget = QListWidget()
         self.settings_list_widget.setItemAlignment(Qt.AlignVCenter)
-        self.settings_list_widget.setStyleSheet('QListWidget::item { border: 1px solid gray }')
+        self.settings_list_widget.setProperty("cssClass", "grid")
         self.settings_list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
         self.settings_list_widget.setFlow(QListView.LeftToRight)
         self.settings_list_widget.setResizeMode(QListView.Adjust)
@@ -316,12 +316,14 @@ class KH2RandomizerApp(QMainWindow):
                         print('Unable to load preset [{}], skipping'.format(preset_file_name))
 
         pagelayout.addLayout(seed_layout)
+        pagelayout.addSpacing(8)
         pagelayout.addWidget(self.tabs)        
         pagelayout.addLayout(progress_layout)
         pagelayout.addLayout(submit_layout)
 
         seed_layout.addWidget(QLabel("Seed"))
-        self.seedName=QLineEdit()
+        self.seedName = QLineEdit()
+        self.seedName.setProperty("cssClass", "biggerLineEdit")
         self.seedName.setPlaceholderText("Leave blank for a random seed")
         seed_layout.addWidget(self.seedName)
 
@@ -352,12 +354,7 @@ class KH2RandomizerApp(QMainWindow):
         for i in range(len(self.widgets)):
             self.tabs.addTab(self.widgets[i],self.widgets[i].getName())
 
-        self.progress_label = QLabel("Progress Placeholder")
-        self.progress_label.setAlignment(Qt.AlignCenter)
-        self.progress_label.setFixedWidth(360)
-        self.progress_bar = QProgressBar()
-        progress_layout.addWidget(self.progress_label)
-        progress_layout.addWidget(self.progress_bar)
+        progress_layout.addWidget(self._build_progress_frame())
 
         submit_layout.addWidget(self._build_seed_hash_frame())
         submit_layout.addSpacing(8)
@@ -418,6 +415,27 @@ class KH2RandomizerApp(QMainWindow):
 
         menu_bar.addAction("About", self.showAbout)
 
+    def _build_progress_frame(self) -> QFrame:
+        self.progress_label = QLabel("Progress Placeholder")
+        self.progress_label.setContentsMargins(0, 16, 0, 16)
+        self.progress_label.setStyleSheet(f"background: {theme.KhMediumPurple}; color: {theme.KhLightPurple};")
+        self.progress_label.setAlignment(Qt.AlignCenter)
+        self.progress_label.setFixedWidth(320)
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setTextVisible(False)
+
+        progress_layout = QHBoxLayout()
+        progress_layout.setContentsMargins(0, 0, 8, 0)
+        progress_layout.addWidget(self.progress_label)
+        progress_layout.addWidget(self.progress_bar)
+
+        progress_frame = QFrame()
+        progress_frame.setProperty('cssClass', 'settingsFrame')
+        progress_frame.setStyleSheet(f'QLabel, QFrame[cssClass~="settingsFrame"] {{ background: {theme.KhDarkPurple}; }}')
+        progress_frame.setLayout(progress_layout)
+
+        return progress_frame
+
     def _build_seed_hash_frame(self) -> QFrame:
         self.hash_icon_names = []
         self.hash_icon_labels = []
@@ -427,7 +445,7 @@ class KH2RandomizerApp(QMainWindow):
 
         seed_hash_label = QLabel('Seed Hash')
         seed_hash_label.setContentsMargins(8, 8, 8, 8)
-        seed_hash_label.setStyleSheet('background: #422169; color: #c663f5;')
+        seed_hash_label.setStyleSheet(f"background: {theme.KhMediumBlue}; color: {theme.KhLightBlue};")
         hash_layout.addWidget(seed_hash_label)
 
         for i in range(7):
@@ -442,7 +460,7 @@ class KH2RandomizerApp(QMainWindow):
 
         hash_frame = QFrame()
         hash_frame.setProperty('cssClass', 'settingsFrame')
-        hash_frame.setStyleSheet('QLabel, QFrame[cssClass~="settingsFrame"] { background: #281e3c; }')
+        hash_frame.setStyleSheet(f'QLabel, QFrame[cssClass~="settingsFrame"] {{ background: {theme.KhDarkBlue}; }}')
         hash_frame.setLayout(hash_layout)
 
         self.clear_hash_icons()
@@ -455,7 +473,7 @@ class KH2RandomizerApp(QMainWindow):
 
         generate_label = QLabel('Seed Generation')
         generate_label.setContentsMargins(8, 8, 8, 8)
-        generate_label.setStyleSheet('background: #4d0d0e; color: #ff8080;')
+        generate_label.setStyleSheet(f"background: {theme.KhMediumRed}; color: {theme.KhLightRed};")
         generate_layout.addWidget(generate_label)
 
         self.emu_button = QPushButton("Generate Seed (PCSX2)")
@@ -474,7 +492,7 @@ class KH2RandomizerApp(QMainWindow):
 
         generate_frame = QFrame()
         generate_frame.setProperty('cssClass', 'settingsFrame')
-        generate_frame.setStyleSheet('QLabel, QFrame[cssClass~="settingsFrame"] { background: #3c0000; }')
+        generate_frame.setStyleSheet(f'QLabel, QFrame[cssClass~="settingsFrame"] {{ background: {theme.KhDarkRed}; }}')
         generate_frame.setLayout(generate_layout)
         return generate_frame
 
@@ -682,7 +700,7 @@ class KH2RandomizerApp(QMainWindow):
             self.num_items_to_place = dummy_rando.num_available_items
             self.num_locations_to_fill = dummy_rando.num_valid_locations
             text = f"Items: {dummy_rando.num_available_items} / Locations: {dummy_rando.num_valid_locations}"
-            self.progress_bar.setRange(0,dummy_rando.num_valid_locations)
+            self.progress_bar.setRange(0, dummy_rando.num_valid_locations)
             if dummy_rando.num_valid_locations < dummy_rando.num_available_items:
                 self.progress_bar.setValue(dummy_rando.num_valid_locations)
                 text = "Too many "+text
@@ -985,24 +1003,18 @@ class KH2RandomizerApp(QMainWindow):
         dialog.exec()
 
     def showAbout(self):
-        aboutText = '''
-Kingdom Hearts II Final Mix Zip Seed Generator Version {0}<br>
+        aboutText = f'''
+Kingdom Hearts II Final Mix Zip Seed Generator Version {LOCAL_UI_VERSION}<br>
 Created by Equations19, Thundrio, Tommadness, and ZakTheRobot<br><br>
 
 Thank you to all contributors, testers, and advocates.<br><br>
 
-<a href="https://tommadness.github.io/KH2Randomizer" style="color: #4dd0e1">Website</a><br>
-<a href="https://github.com/tommadness/KH2Randomizer" style="color: #4dd0e1">Github Link</a><br>
-<a href="https://discord.gg/KH2FMRando" style="color: #4dd0e1">KH2 Randomizer Discord</a><br><br>
+<a href="https://tommadness.github.io/KH2Randomizer" style="color: {theme.LinkColor}">Website</a><br>
+<a href="https://github.com/tommadness/KH2Randomizer" style="color: {theme.LinkColor}">Github Link</a><br>
+<a href="https://discord.gg/KH2FMRando" style="color: {theme.LinkColor}">KH2 Randomizer Discord</a><br><br>
 
-<a href="https://github.com/tommadness/KH2Randomizer/tree/local_ui#acknowledgements" style="color: #4dd0e1">Acknowledgements</a><br><br>
-
-Uses the qt-material library for theming.<br>Copyright (c) 2020, GCPDS
-<a href="https://github.com/UN-GCPDS/qt-material/blob/master/LICENSE" style="color: #4dd0e1">License</a>
-
-
-
-'''.format(LOCAL_UI_VERSION)
+<a href="https://github.com/tommadness/KH2Randomizer#acknowledgements" style="color: {theme.LinkColor}">Acknowledgements</a><br><br>
+'''
         message = QMessageBox(text=aboutText)
         message.setTextFormat(Qt.RichText)
         message.setWindowTitle("About")
@@ -1021,11 +1033,19 @@ if __name__=="__main__":
 
     window = KH2RandomizerApp()
 
-    apply_stylesheet(app, theme='dark_cyan.xml')
     stylesheet = app.styleSheet()
     with open(resource_path('UI/stylesheet.css')) as file:
-        app.setStyleSheet(stylesheet + file.read().format(**os.environ))
-
+        css_resources = {
+            "background-primary": theme.BackgroundPrimary,
+            "background-dark": theme.BackgroundDark,
+            "link-color": theme.LinkColor,
+            "selection-color": theme.SelectionColor,
+            "selection-border-color": theme.SelectionBorderColor,
+            "ability-on": Path(resource_path("static/icons/misc/ability-on.png")).as_posix(),
+            "down-arrow": Path(resource_path("static/icons/misc/arrow-down.png")).as_posix(),
+            "up-arrow": Path(resource_path("static/icons/misc/arrow-up.png")).as_posix(),
+        }
+        app.setStyleSheet((stylesheet + file.read().format(**os.environ)) % css_resources)
 
     extracted_data_path = Path("extracted_data/version.txt")
     data_version = "None"
