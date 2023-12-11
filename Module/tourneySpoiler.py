@@ -2,6 +2,7 @@ import shutil
 
 from Module import hashimage
 from Module.resources import resource_path
+from UI import theme
 
 
 class TourneySeedSaver:
@@ -19,13 +20,13 @@ class TourneySeedSaver:
     }}
     body {{
         font-family: KHMenu, sans-serif;
-        background-color: #31363b;
+        background-color: {theme.BackgroundPrimary};
         color: #ffffff;
         display: grid;
         place-items: center;
     }}
     .tourney-seed {{
-        background-color: #001e3c;
+        background-color: {theme.KhDarkBlue};
         margin-top: 4px;
         margin-bottom: 4px;
         padding-left: 32px;
@@ -36,8 +37,8 @@ class TourneySeedSaver:
         vertical-align: middle;
     }}
     .tourney-seed a {{
-        background-color: #31363b;
-        color: #4dd0e1;
+        background-color: {theme.BackgroundPrimary};
+        color: {theme.LinkColor};
         margin-left: 32px;
         padding: 8px 12px;
         text-decoration: none;

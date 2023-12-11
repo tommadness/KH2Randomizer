@@ -10,6 +10,8 @@ import yaml
 from PySide6.QtWidgets import (QDialog, QLineEdit, QGridLayout, QPushButton, QFileDialog, QLabel, QVBoxLayout,
                                QComboBox, QHBoxLayout, QMessageBox, QSpacerItem)
 
+from UI import theme
+
 DIALOG_TITLE = 'LuaBackend Hook Setup'
 HOOK_DLL_NAME_MAIN = 'DBGHELP.dll'
 HOOK_DLL_NAME_PANACEA = 'LuaBackend.dll'
@@ -40,11 +42,11 @@ class LuaBackendSetupDialog(QDialog):
         grid = QGridLayout()
         row = 0
 
-        help_text = textwrap.dedent('''
+        help_text = textwrap.dedent(f'''
         <span>
         KH2 Randomizer (the PC version) relies on Lua scripting, either via
-        <a href="https://github.com/Sirius902/LuaBackend" style="color: #4dd0e1">LuaBackend Hook</a> or
-        <a href="https://github.com/TopazTK/LuaFrontend" style="color: #4dd0e1">LuaFrontend</a>. This screen
+        <a href="https://github.com/Sirius902/LuaBackend" style="color: {theme.LinkColor}">LuaBackend Hook</a> or
+        <a href="https://github.com/TopazTK/LuaFrontend" style="color: {theme.LinkColor}">LuaFrontend</a>. This screen
         helps you get set up with the LuaBackend Hook option. This includes applying extra configuration to allow Lua
         scripts to be packaged in mods, making many common Lua scripts easily installable, updatable, and easy to turn
         on and off.
