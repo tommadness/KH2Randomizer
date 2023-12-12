@@ -9,15 +9,13 @@ class SoraMenu(KH2Submenu):
 
         self.start_column()
         self.start_group()
+        self.add_option(settingkey.SORA_AP)
+        self.end_group()
+        self.start_group()
         self.add_option(settingkey.SORA_STR_RATE)
         self.add_option(settingkey.SORA_MAG_RATE)
         self.add_option(settingkey.SORA_DEF_RATE)
         self.add_option(settingkey.SORA_AP_RATE)
-        self.end_group()
-        self.start_group()
-        self.add_option(settingkey.SORA_AP)
-        self.add_option(settingkey.DONALD_AP)
-        self.add_option(settingkey.GOOFY_AP)
         self.end_group()
         self.end_column()
 

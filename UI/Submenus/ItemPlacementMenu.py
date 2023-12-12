@@ -40,6 +40,7 @@ class ItemPlacementMenu(KH2Submenu):
 
         settings.observe(settingkey.ITEM_PLACEMENT_DIFFICULTY, self.nightmare_checking)
         settings.observe(settingkey.ITEM_PLACEMENT_DIFFICULTY, self.key_item_weights)
+        settings.observe(settingkey.CHAIN_LOGIC, self.chain_logic)
 
     def nightmare_checking(self):
         placement_difficulty = self.settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
@@ -60,6 +61,11 @@ class ItemPlacementMenu(KH2Submenu):
             else:
                 widget.setEnabled(True)
 
+    def chain_logic(self):
+        enabled = self.settings.get(settingkey.CHAIN_LOGIC)
+        self.set_option_visibility(settingkey.CHAIN_LOGIC_LENGTH, enabled)
+        self.set_option_visibility(settingkey.CHAIN_LOGIC_TERRA, enabled)
+        self.set_option_visibility(settingkey.CHAIN_LOGIC_MIN_TERRA, enabled)
 
     def disable_widgets(self):
         self.disable_signal = True
