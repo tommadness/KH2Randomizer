@@ -35,6 +35,7 @@ QTabBar:tab {{
     background-color: #500000;
     color: white;
     font-family: KHMenu;
+    font-size: 14px;
 }}
 
 QTabBar:tab:selected, QTabBar:tab:hover {{
@@ -75,11 +76,12 @@ QLineEdit {{
     border-radius: 12px;
     background-color: #00000a;
     font-family: KHMenu;
+    font-size: 16px;
 }}
 
 QLineEdit[cssClass~="biggerLineEdit"], QInputDialog > QLineEdit {{
     min-height: 20px;
-    font-size: 16px;
+    font-size: 20px;
     border-radius: 14px;
 }}
 
@@ -108,6 +110,7 @@ QComboBox, QAbstractSpinBox {{
     background-color: #00000a;
     color: white;
     font-family: KHMenu;
+    font-size: 16px;
 }}
 
 QComboBox:disabled {{
@@ -142,6 +145,7 @@ QPushButton {{
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #5f5f66, stop: 0.1 #64646B, stop: 0.11 #00000a, stop: 1.0 #00000a);
     color: white;
     font-family: KHMenu;
+    font-size: 16px;
     qproperty-iconSize: 24px;
 }}
 
@@ -192,6 +196,13 @@ QListView::item:selected {{
     border: 1px solid %(selection-border-color)s;
     background-color: %(selection-color)s;
     color: white;
+}}
+
+QToolTip {{
+    border: 1px solid white;
+    background-color: %(background-dark)s;
+    color: white;
+    font-size: 14px;
 }}
 
 /* Progress bar is made to look like a health bar */

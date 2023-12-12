@@ -346,9 +346,9 @@ class KH2RandomizerApp(QMainWindow):
             ItemPoolMenu(self.settings),
             ItemPlacementMenu(self.settings),
             SeedModMenu(self.settings),
+            CompanionMenu(self.settings),
             BossEnemyMenu(self.settings, seed_name_getter=lambda: self.seedName.text()),
             self.cosmetics_menu,
-            CompanionMenu(self.settings),
         ]
 
         for i in range(len(self.widgets)):

@@ -9,6 +9,7 @@ class CompanionMenu(KH2Submenu):
 
         self.start_column()
         self.start_group()
+        self.add_option(settingkey.DONALD_AP)
         self.add_option(settingkey.DONALD_DAMAGE_TOGGLE)
         self.add_option(settingkey.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE)
         self.add_option(settingkey.DONALD_FIRE_KNOCKBACK_TYPE)
@@ -20,6 +21,7 @@ class CompanionMenu(KH2Submenu):
 
         self.start_column()
         self.start_group()
+        self.add_option(settingkey.GOOFY_AP)
         self.add_option(settingkey.GOOFY_DAMAGE_TOGGLE)
         self.add_option(settingkey.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE)
         self.add_option(settingkey.GOOFY_BASH_KNOCKBACK_TYPE)
