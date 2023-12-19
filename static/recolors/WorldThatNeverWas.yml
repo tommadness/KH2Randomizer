@@ -22,7 +22,7 @@
         - id: shoes_vest
           name: Shoes/Vest
           hue_start: 30
-          hue_end: 70
+          hue_end: 120
       image_groups:
         - - remastered/obj/P_EH000.mdlx/-1.dds
           - remastered/obj/P_EH000_LAST.mdlx/-1.dds
