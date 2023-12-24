@@ -41,7 +41,7 @@ Index:
 
 ![Setup Wizard-Game Edition](../images/Panacea-ModLoader/Game%20Edition%20Window.png)
 
-5. Click the **"Install Panacea for Windows"** Button. This will install the mod loader to your game installation folder
+5. Click the **"Install Panacea for Windows"** Button. This will install the mod loader to your game installation folder. Then click **"Next"**
 	- If you want to verify it was added successfully, check your game's install folder for a file called `DBGHELP.DLL` and a folder called `Dependencies`
 
 ![Panacea Wizard Window](../images/Panacea-ModLoader/Panacea%20Install%20Window.png)
