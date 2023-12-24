@@ -46,7 +46,7 @@ Index:
 
 ![Panacea Wizard Window](../images/Panacea-ModLoader/Panacea%20Install%20Window.png)
 
-6. You will also need to install LuBackend to play the randomizer. Enable the **"KH2"** option for now and then click "Install and Configure Lua Backend"
+6. You will also need to install LuBackend to play the randomizer. Enable the **"KH2"** option for now and then click **"Install and Configure Lua Backend"**
 	- You may re-run the setup wizard at any time to add support for the other games as well.
 7. Once the LuaBackend install is complete click **"Next"**
 
