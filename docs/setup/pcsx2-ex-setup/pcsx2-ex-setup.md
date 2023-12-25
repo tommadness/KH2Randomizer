@@ -43,7 +43,7 @@ TL;DR, its:
 
 ---
 
-## Step 2: OpenKH Mods Manager Setup ##
+## Step 2: OpenKH Mods Manager Setup
 
 Download and extract the latest OpenKH release into a place you would be most comfortable with. (For this guide, its going to be `C:\KH2FMRando-PS2\OpenKH`) and look for the `OpenKH.Tools.ModsManager.exe` file. We will be configuring and running the Randomizer via the Mods Manager, so it would be wise to make a shortcut of this on your Desktop so that you won’t have to dive in the folder every time you want to play the Randomizer.
 
@@ -63,7 +63,8 @@ When running the Mod Manager for the first time you will be greeted with the set
 
 ![Select ISO](./Select_ISO.png)
 
-**PLEASE SEE:**[How To Verify A Clean ISO](#How-To-Verify-A-Clean-ISO) **BEFORE EXTRACTING**
+**PLEASE SEE: **[How To Verify A Clean ISO](#How-To-Verify-A-Clean-ISO) **BEFORE EXTRACTING**
+
 4.	Click on `Extract game data`. This will take a few minutes depending on the medium of your storage device. Click `Next`.
 
 ![Extraction](./Extraction.png)
