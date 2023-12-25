@@ -18,20 +18,22 @@ To set up Rando, Extract, Download and/or Install the following:
 
 I prefer to have them saved in a single folder (for this guide, I’ll be placing them in the `C:\KH2FMRando-PS2` folder on my computer for simplicity reasons).
 
-__Do not install PCSX2 or the Mod Manager under a Microsoft "OneDrive" directory. Mods won't load correctly and lua scripts will fail if you do.__
+__Do not install PCSX2 or the Mod Manager under a Microsoft "OneDrive" directory or an external hard drive. Mods won't load correctly and lua scripts will fail if you do.__
 
 ---
 
 ## Step 1: PCSX2-EX Setup ##
 PCSX2-EX looks and works similarly to vanilla PCSX2, with the added support of LUA Engine and LUA-based mods. With that in mind, PCSX2-EX’s settings and menus should look familiar if you have ever used the original before. Use this time to set up your controllers, graphics settings, memory cards, etc.
 
-Although, for the Randomizer to work, the **Cheats and LuaEngine seettings must be enabled**, so don’t forget to turn them on. They're under `System > Enable LuaEngine` and `System > Enable Cheats` under the main PCSX2-EX Window.
+Although, for the Randomizer to work, the **Cheats and LuaEngine settings must be enabled**, so don’t forget to turn them on. They're under `System > Enable LuaEngine` and `System > Enable Cheats` under the main PCSX2-EX Window.
 
 ![Enable LuaEngine](./enable-luaengine.png) ![Enable Cheats](./enable-cheats.png)
 
 Afterwards, close up PCSX2-EX, this is the last time that we’ll be opening it manually, as the rest of the setup process will make it so that PCSX2-EX will open automatically.
 
-Copy the `F266B00B_X-O_Swap.pnach` file that you downloaded earlier to the cheats folder that was automatically created during the PCSX2-EX installation, located at `Documents/PCSX2`. If you will be playing with the Japanese controls (X to jump/cancel, O to attack/confirm), you can skip this step.
+Copy the `F266B00B_X-O_Swap.pnach` file that you downloaded earlier to the cheats folder that was automatically created during the PCSX2-EX installation, located at `C:\Users\(Username)\Documents\PCSX2\cheats`. If you will be playing with the Japanese controls (X to jump/cancel, O to attack/confirm), you can skip this step.
+
+![XO_Swap_Pnach](./XO_Swap_Pnach.png)
 
 TL;DR, its:
 1.	Set up PCSX2-EX just like you would set up PCSX2.
@@ -47,29 +49,45 @@ Download and extract the latest OpenKH release into a place you would be most co
 
 ![Send a shortcut to the Desktop!](./diagram1.png)
 
-Opening the OpenKH Mods Manager, you will be greeted with the first time set up. To save everyone the trouble of reading text, I have converted this process into a GIF!
+When running the Mod Manager for the first time you will be greeted with the setup wizard. It is fairly straightforward but the steps with images are provided down below:
 
-![OpenKH Mods Manager Setup in GIF](./mods-manager-setup2.gif)
+1.	At the welcome screen click `Next`.
 
-But if you have difficulty following this GIF, here’s the steps in condensed format:
-1.	Click `Next`.
+![Welcome](./Welcome_Screen.png)
+
 2.	Under `Game Edition`, select `PlayStation 2 using PCSX2 Emulator`. Then, point the file selection prompt to the PCSX2-EX executable (for this guide, its in `C:\KH2FMRando-PS2\PCSX2-EX.v3.10.0`). Then click `Next`.
+
+![Game Edition](./Game_Edition.png)
+
 3.	You will now be prompted to load up your KINGDOM HEARTS II FINAL MIX ISO file. Point the program towards that ISO file (for this guide, its in `C:\KH2FMRando-PS2\<filename of KH2FM ISO>.iso`). Click `Next`.
-4.	Click on `Extract game data`. This will take a few minutes depending on the medium of your storage device. Click `Next`.
+
+![Select ISO](./Select_ISO.png)
+
+4.	Click on `Extract game data`. This will take a few minutes depending on the medium of your storage device. Click `Next`. **PLEASE SEE:**[How to verify my ISO is clean](#How-To-Verify-A-Clean-ISO) **BEFORE EXTRACTING**
+
+![Extraction](./Extraction.png)
+
 5.	Leave the Region Selection as `Default`. Click `Next`.
+
+![Region Selection](./Region.png)
+
 6.	Click `Finish`.
 
 From here on out, we’re now going to get the OpenKH mods needed for this the rando. Click on the green + icon on the middle of the screen (Or click the "Mods" tab and then "Install New Mod"), and in the **Add a new mod from Github** text space, type on `Rikysonic/languagepack-en`, then click Install. This will translate our KINGDOM HEARTS II FINAL MIX ISO file from Japanese to English in real time. If you are playing in a different language, replace this mod with the appropriate language mod.
 
-![Install New Mod](./diagram2-update.png)
+![Install Rikysonic Language Pack](./LanguagePack.png)
 
 Once that’s done, click the green + icon to add a mod again, but this time, type in `KH2FM-Mods-Num/GOA-ROM-Edition` 
 
-![KH2FM-Mods-Num/GOA-ROM-Edition](./GOA-ROM-Edition.png)
+![KH2FM-Mods-Num/GOA-ROM-Edition](./Goa_Rom_Download.png)
 
-Once you have downloaded `KH2FM-Mods-Num/GOA-ROM-Edition`, click on the mod, go to `Mods`, then select `Open mod folder` (Keyboard shortcut: `Ctrl+O`). From here, copy the `F266B00B GoA ROM.lua` file to `scripts` folder (that was automatically created during the PCSX2-EX setup in Part 1) located in your `Documents/PCSX2` folder.
+Once you have downloaded `KH2FM-Mods-Num/GOA-ROM-Edition`, click on the mod, go to `Mods`, then select `Open mod folder` (Keyboard shortcut: `Ctrl+O`). 
 
-![Scripts folder](./scripts.png)
+![Open Mod Folder](./Open_Mod_Folder.png)
+
+From here, copy the `F266B00B GoA ROM.lua` file to `scripts` folder (that was automatically created during the PCSX2-EX setup in Part 1) located in your `Documents/PCSX2` folder.
+
+![Scripts folder](./GoA_ROM_To_Scripts_Folder.png)
 
 ---
 
@@ -79,26 +97,23 @@ All this time, we have only been setting up the Garden of Assemblage mod in its 
 
 Open the KH2FM Randomizer Seed Generator executable file (for this guide, its `C:\KH2FMRando-PS2\SeedGenerator`). Feel free to set up a desktop shortcut of this if you want to as well.
 
-![Seed Generator Window](./randomizer.png)
+![Seed Generator Window](./Seed%20Generator.png)
 
 On the Seed Generator Window, it’s time to create a seed. There are way too many things to tweak around in making a seed that I might’ve made a novel if I enumerated it all here one-by-one, so [here's](../../seed-generator/index.md) the round-up of all the seed generator's features. Otherwise, to check what each setting does, hover your mouse on that area and read the tooltip that shows up.
 
 Once you have created your flavor of a rando seed, its time to make the seed. Click on `Generate Seed (PCSX2/PC)` (or `Generate Seed (PCSX2)` if you have enabled a setting that splits the Generate Seed button for PC and PCSX2) and save the zip file that it generates on the folder of your choice (for this guide, I have saved it to `C:\KH2FMRando-PS2`).
 
-![Generate Seed (PCSX2)](./generate-seed.png)
+Then, open the OpenKH Mods Manager program, click the green + icon, but instead of typing up a mod, click on `Select and install Mod Archive or Lua Script`. From there, point it to the zip file that the Seed Generator has created.
 
-Then, open the OpenKH Mods Manager program, click the green + icon, but instead of typing up a mod, click on `Select and install ZIP`. From there, point it to the zip file that the Seed Generator has created.
-
-![Select and install ZIP](./manual-zip.png)
+![Select and install ZIP](./Select_Zip.png)
 
 From here, you should have three mods installed: the Language pack of your choice, the Garden of Assemblage ROM Edition, and the Randomizer seed itself, arranged by mod priority from bottom to top. Don’t forget the enable the mod by checking the teeny tiny check box next to the gargantuan icon of the mod.
 
-![Almost there...](./three-mods-update.png)
+![Almost there...](./Final_View.png)
 
-=======
 From here, click on `Mod Loader` in the menu, then select `Build and Run` (Keyboard shortcut: `F5`). This will build the mods, automatically open PCSX2-EX with KINGDOM HEARTS II FINAL MIX, and will inject the mods loaded in OpenKH Mods Manager into the game in real time.
 
-![Run > Build and Run](./build-and-run-update.png)
+![Run > Build and Run](./Build_And_Run_DarkMode.png)
 
 All that’s left now is to start the game and play KINGDOM HEARTS II FINAL MIX… now Randomized!
 
@@ -134,3 +149,26 @@ If you have any other mods to install, you may install them via the same install
 **I think I messed up, where can I find help?**
 
 You can find help by asking in the [KH2FM Randomizer Discord](https://discord.com/invite/KH2FMRando)!
+
+
+## How To Verify A Clean ISO:
+
+Follow these steps to verify you have a clean ISO that's ready for the randomizer:
+
+1. Open PCSX2-EX go to the **"Misc"** tab and click **"Show Console"**
+
+![Enable Log](./Enable_Log.png)
+
+2. Then go to the **"CDVD"** tab -> **"ISO Selector"** -> **"Browse"** and select your KH2FM ISO
+
+![Browse ISO](./Browse_ISO.png)
+
+3. After an ISO has been selected, go to the **"System"** tab and click **"Boot ISO (fast)"**. The ISO will boot and you should see the PCSX2 Log start to output.
+
+![Boot ISO  Fast](./Boot_ISO_Fast.png)
+
+4. Once the log stops updating either expand the window vertically or scroll up until you see black text that says **"GSDx Lookup CRC:"**. The correct ID for your game will show up as **"F266B00B"** (See the below example). If any other ID shows up on this line you either have a pre-patched ISO or it is corrupted and you will need to get a clean one. 
+
+![F266B00B](./F266B00B.png)
+
+You may now close out of PCSX2-EX. You can return to the extraction portion of the guide by clicking [HERE](#Step-2:-OpenKH-Mods-Manager-Setup)
