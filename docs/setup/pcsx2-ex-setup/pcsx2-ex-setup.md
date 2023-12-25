@@ -63,7 +63,8 @@ When running the Mod Manager for the first time you will be greeted with the set
 
 ![Select ISO](./Select_ISO.png)
 
-4.	Click on `Extract game data`. This will take a few minutes depending on the medium of your storage device. Click `Next`. **PLEASE SEE:**[How to verify my ISO is clean](#How-To-Verify-A-Clean-ISO) **BEFORE EXTRACTING**
+**PLEASE SEE:**[How To Verify A Clean ISO](#How-To-Verify-A-Clean-ISO) **BEFORE EXTRACTING**
+4.	Click on `Extract game data`. This will take a few minutes depending on the medium of your storage device. Click `Next`.
 
 ![Extraction](./Extraction.png)
 
