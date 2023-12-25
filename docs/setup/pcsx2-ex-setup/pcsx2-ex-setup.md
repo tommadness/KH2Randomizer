@@ -63,7 +63,7 @@ When running the Mod Manager for the first time you will be greeted with the set
 
 ![Select ISO](./Select_ISO.png)
 
-**PLEASE SEE:** [How To Verify A Clean ISO](#How-To-Verify-A-Clean-ISO) **BEFORE EXTRACTING**
+**PLEASE SEE:** [How To Verify You Have A Clean ISO](#how-to-verify-you-have-a-clean-iso) **BEFORE EXTRACTING**
 
 4.	Click on `Extract game data`. This will take a few minutes depending on the medium of your storage device. Click `Next`.
 
@@ -153,7 +153,7 @@ If you have any other mods to install, you may install them via the same install
 You can find help by asking in the [KH2FM Randomizer Discord](https://discord.com/invite/KH2FMRando)!
 
 
-## How To Verify A Clean ISO:
+## How To Verify You Have A Clean ISO:
 
 Follow these steps to verify you have a clean ISO that's ready for the randomizer:
 
