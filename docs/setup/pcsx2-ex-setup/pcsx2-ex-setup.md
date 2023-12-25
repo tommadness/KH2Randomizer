@@ -55,7 +55,7 @@ When running the Mod Manager for the first time you will be greeted with the set
 
 ![Welcome](./Welcome_Screen.png)
 
-2.	Under `Game Edition`, select `PlayStation 2 using PCSX2 Emulator`. Then, point the file selection prompt to the PCSX2-EX executable (for this guide, its in `C:\KH2FMRando-PS2\PCSX2-EX.v3.10.0`). Then click `Next`.
+2.	Under `Game Edition`, select `PlayStation 2 using PCSX2 Emulator`. Then, point the file selection prompt to the PCSX2-EX executable. Then click `Next`.
 
 ![Game Edition](./Game_Edition.png)
 
