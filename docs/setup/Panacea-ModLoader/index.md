@@ -5,7 +5,6 @@ Index:
 * [Downloads](#resources-needed)
 * [Installing the Mod Manager & Seed Generator](#installing-openkh-mod-manager-and-seed-generator)
 * [Setting up the Mod Manager](#how-to-setup-the-mod-manager)
-* [Installing Lua Backend](#lua-backend-installation)
 * [Installing the GoA mod](#garden-of-assemblage-mod-installation)
 * [Installing a new seed](#installing-a-new-seed-to-play)
 * [Stability Notes](#you-are-now-ready-to-play-the-kh2-randomizer)
@@ -25,7 +24,7 @@ Index:
 
 ## Installing OpenKH Mod Manager and Seed Generator
 1. Install .NET6 Runtime by running the `windowsdesktop-runtime-6.0.25-win-x64.exe` executable you just downloaded
-2. Create a KH2 Rando folder on the same hard drive you have the game installed (__This **cannot** be under a Microsoft "OneDrive" directory and also should not be on an external hard drive__). This is where you will put all your randomizer tools
+2. Create a KH2 Rando folder on the same hard drive you have the game installed (**This cannot be under a Microsoft "OneDrive" directory and also should not be on an external hard drive**). This is where you will put all your randomizer tools
 3. Extract OpenKH Mod Manager to this folder 
 4. Extract the Seed Generator to its own folder as well (Be sure to extract ALL files from the zip)
 	- It's recommended to give each app its own subfolder to make navigating their files easier (See screenshot)
