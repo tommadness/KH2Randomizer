@@ -43,7 +43,7 @@ TL;DR, its:
 
 ---
 
-## Step 2 OpenKH Mods Manager Setup
+## Step 2: OpenKH Mods Manager Setup ##
 
 Download and extract the latest OpenKH release into a place you would be most comfortable with. (For this guide, its going to be `C:\KH2FMRando-PS2\OpenKH`) and look for the `OpenKH.Tools.ModsManager.exe` file. We will be configuring and running the Randomizer via the Mods Manager, so it would be wise to make a shortcut of this on your Desktop so that you won’t have to dive in the folder every time you want to play the Randomizer.
 
@@ -173,4 +173,4 @@ Follow these steps to verify you have a clean ISO that's ready for the randomize
 
 ![F266B00B](./F266B00B.png)
 
-You may now close out of PCSX2-EX. You can return to the extraction portion of the guide by clicking [HERE](#Step-2:-OpenKH-Mods-Manager-Setup)
+You may now close out of PCSX2-EX. You can return to the extraction portion of the guide by clicking [HERE](#step-2-openkh-mods-manager-setup)
