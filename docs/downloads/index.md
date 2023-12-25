@@ -7,18 +7,13 @@
 * [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest/download/KhTracker.exe)
 * [LiveSplit Load Remover for Randomizer](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/releases)
   ([instructions](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER/blob/main/README.md))
-* [.NET Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.13-windows-x64-installer)
+* [.NET Desktop Runtime](https://download.visualstudio.microsoft.com/download/pr/52d6ef78-d4ec-4713-9e01-eb8e77276381/e58f307cda1df61e930209b13ecb47a4/windowsdesktop-runtime-6.0.25-win-x64.exe)
     * Required to run the Mod Manager
 * [KH2 Door Randomizer](https://github.com/MainMemory/KH2DoorRando/releases/latest)
     * PCSX2-EX is needed for Lua Support if not using PC version
 
 ### PC Epic Games Store Version ([setup guide](../setup/Panacea-ModLoader/index.md))
 
-* [LuaBackend Hook](https://github.com/Sirius902/LuaBackend/releases/latest/download/DBGHELP.zip)
-    * This is installed through the Seed Generator's setup wizard, but see [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) for additional randomizer-specific setup instructions
-* [Garden of Assemblage ROM Lua Script](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition/releases/latest/download/F266B00B.GoA.ROM.lua)
-    * If you've followed the LuaBackend Hook Setup guide on the previous bullet, this script will be automatically
-      managed for you
 * [Garden of Assemblage Mod](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition/releases)
     * Installed via OpenKH Mods Manager by typing `KH2FM-Mods-Num/GoA-ROM-Edition` into the "Add a new mod from GitHub"
       text box and clicking Install
