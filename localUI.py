@@ -388,7 +388,6 @@ class KH2RandomizerApp(QMainWindow):
         self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
         self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
         self.config_menu = QMenu('Configure')
-        self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
         self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
         self.config_menu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
         self.config_menu.addAction('Choose Custom Visuals Folder', self.custom_visuals_folder_getter)
@@ -398,6 +397,8 @@ class KH2RandomizerApp(QMainWindow):
         self.config_menu.addSeparator()
         self.remember_window_position_action = self.config_menu.addAction('Remember Window Size/Position')
         self.remember_window_position_action.setCheckable(True)
+        self.config_menu.addSeparator()
+        self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
 
@@ -997,9 +998,8 @@ class KH2RandomizerApp(QMainWindow):
 
         self.cosmetics_menu.reload_visual_widgets()
 
-    @staticmethod
-    def show_luabackend_configuration():
-        dialog = LuaBackendSetupDialog()
+    def show_luabackend_configuration(self):
+        dialog = LuaBackendSetupDialog(self)
         dialog.exec()
 
     def showAbout(self):
