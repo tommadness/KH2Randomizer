@@ -283,14 +283,15 @@ class TextureRecolorizer:
                     )
                     recolor_definitions.append(recolor_definition)
 
-                # It's possible everything was vanilla
-                if len(recolor_definitions) == 0:
-                    continue
-
                 image_groups: list[list[str]] = recolor["image_groups"]
                 for group in image_groups:
                     # Each group gets a unique ID
                     group_id = available_image_group_ids.pop(0)
+
+                    if len(recolor_definitions) == 0:
+                        # Everything was vanilla for this group, can save a little time and space by doing nothing
+                        # (but we still need the pop above to make sure the group IDs still line up)
+                        continue
 
                     combined_hues = "-".join(chosen_filename_hues)
                     _, image_ext = os.path.splitext(group[0])
