@@ -53,25 +53,25 @@ When running the Mod Manager for the first time you will be greeted with the set
 
 1.	At the welcome screen click `Next`.
 
-![Welcome](./Welcome_Screen.png)
+    ![Welcome](./Welcome_Screen.png)
 
 2.	Under `Game Edition`, select `PlayStation 2 using PCSX2 Emulator`. Then, point the file selection prompt to the PCSX2-EX executable. Then click `Next`.
 
-![Game Edition](./Game_Edition.png)
+    ![Game Edition](./Game_Edition.png)
 
 3.	You will now be prompted to load up your KINGDOM HEARTS II FINAL MIX ISO file. Point the program towards that ISO file (for this guide, its in `C:\KH2FMRando-PS2\<filename of KH2FM ISO>.iso`). Click `Next`.
 
-![Select ISO](./Select_ISO.png)
+    ![Select ISO](./Select_ISO.png)
 
 **PLEASE SEE:** [How To Verify You Have A Clean ISO](#how-to-verify-you-have-a-clean-iso) **BEFORE EXTRACTING**
 
 4.	Click on `Extract game data`. This will take a few minutes depending on the medium of your storage device. Click `Next`.
 
-![Extraction](./Extraction.png)
+    ![Extraction](./Extraction.png)
 
 5.	Leave the Region Selection as `Default`. Click `Next`.
 
-![Region Selection](./Region.png)
+    ![Region Selection](./Region.png)
 
 6.	Click `Finish`.
 
@@ -163,11 +163,11 @@ Follow these steps to verify you have a clean ISO that's ready for the randomize
 
 2. Then go to the **"CDVD"** tab -> **"ISO Selector"** -> **"Browse"** and select your KH2FM ISO
 
-![Browse ISO](./Browse_ISO.png)
+    ![Browse ISO](./Browse_ISO.png)
 
 3. After an ISO has been selected, go to the **"System"** tab and click **"Boot ISO (fast)"**. The ISO will boot and you should see the PCSX2 Log start to output.
 
-![Boot ISO  Fast](./Boot_ISO_Fast.png)
+    ![Boot ISO  Fast](./Boot_ISO_Fast.png)
 
 4. Once the log stops updating either expand the window vertically or scroll up until you see black text that says **"GSDx Lookup CRC:"**. The correct ID for your game will show up as **"F266B00B"** (See the below example). If any other ID shows up on this line you either have a pre-patched ISO or it is corrupted and you will need to get a clean one. 
 
