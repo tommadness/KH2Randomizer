@@ -159,7 +159,7 @@ Follow these steps to verify you have a clean ISO that's ready for the randomize
 
 1. Open PCSX2-EX go to the **"Misc"** tab and click **"Show Console"**
 
-![Enable Log](./Enable_Log.png)
+    ![Enable Log](./Enable_Log.png)
 
 2. Then go to the **"CDVD"** tab -> **"ISO Selector"** -> **"Browse"** and select your KH2FM ISO
 
