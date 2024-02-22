@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType
 from List.inventory import magic, keyblade
-from List.location.graph import RequirementEdge, chest, popup, LocationGraphBuilder, START_NODE
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
@@ -41,9 +41,26 @@ class CheckLocation(str, Enum):
     StarryHillCureElement = "Starry Hill Cure Element"
     StarryHillOrichalcumPlus = "Starry Hill Orichalcum+"
 
+class HAWLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.PoohsHowse][NodeId.PigletsHowse] = ItemPlacementHelpers.need_torn_pages(1)
+            self.logic[NodeId.PigletsHowse][NodeId.RabbitsHowse] = ItemPlacementHelpers.need_torn_pages(2)
+            self.logic[NodeId.RabbitsHowse][NodeId.KangasHowse] = ItemPlacementHelpers.need_torn_pages(3)
+            self.logic[NodeId.KangasHowse][NodeId.SpookyCave] = ItemPlacementHelpers.need_torn_pages(4)
+            self.logic[NodeId.SpookyCave][NodeId.StarryHill] = ItemPlacementHelpers.need_torn_pages(5)
+        else:
+            self.logic[NodeId.StarryHill][NodeId.SpookyCave] = ItemPlacementHelpers.need_torn_pages(1)
+            self.logic[NodeId.SpookyCave][NodeId.KangasHowse] = ItemPlacementHelpers.need_torn_pages(2)
+            self.logic[NodeId.KangasHowse][NodeId.RabbitsHowse] = ItemPlacementHelpers.need_torn_pages(3)
+            self.logic[NodeId.RabbitsHowse][NodeId.PigletsHowse] = ItemPlacementHelpers.need_torn_pages(4)
+            self.logic[NodeId.PigletsHowse][NodeId.PoohsHowse] = ItemPlacementHelpers.need_torn_pages(5)
 
 def make_graph(graph: LocationGraphBuilder):
     haw = locationType.HUNDREDAW
+    haw_logic = HAWLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(haw_logic)
 
     poohs_howse = graph.add_location(NodeId.PoohsHowse, [
         chest(313, CheckLocation.PoohsHowseHundredAcreWoodMap, haw),
@@ -84,18 +101,18 @@ def make_graph(graph: LocationGraphBuilder):
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, poohs_howse)
-        graph.add_edge(poohs_howse, piglets_howse, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(1)))
-        graph.add_edge(piglets_howse, rabbits_howse, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(2)))
-        graph.add_edge(rabbits_howse, kangas_howse, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(3)))
-        graph.add_edge(kangas_howse, spooky_cave, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(4)))
-        graph.add_edge(spooky_cave, starry_hill, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(5)))
+        graph.add_edge(poohs_howse, piglets_howse)
+        graph.add_edge(piglets_howse, rabbits_howse)
+        graph.add_edge(rabbits_howse, kangas_howse)
+        graph.add_edge(kangas_howse, spooky_cave)
+        graph.add_edge(spooky_cave, starry_hill)
     else:
         graph.add_edge(START_NODE, starry_hill)
-        graph.add_edge(starry_hill, spooky_cave, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(1)))
-        graph.add_edge(spooky_cave, kangas_howse, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(2)))
-        graph.add_edge(kangas_howse, rabbits_howse, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(3)))
-        graph.add_edge(rabbits_howse, piglets_howse, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(4)))
-        graph.add_edge(piglets_howse, poohs_howse, RequirementEdge(req=ItemPlacementHelpers.need_torn_pages(5)))
+        graph.add_edge(starry_hill, spooky_cave)
+        graph.add_edge(spooky_cave, kangas_howse)
+        graph.add_edge(kangas_howse, rabbits_howse)
+        graph.add_edge(rabbits_howse, piglets_howse)
+        graph.add_edge(piglets_howse, poohs_howse)
 
 
 def yeet_the_bear_location_names() -> list[str]:

@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType, itemType
 from List.inventory import misc, magic, keyblade, ability, form
-from List.location.graph import RequirementEdge, chest, popup, item_bonus, stat_bonus, hybrid_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, item_bonus, stat_bonus, hybrid_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -54,9 +54,15 @@ class CheckLocation(str, Enum):
     LingeringWillProofOfConnection = "Lingering Will Proof of Connection"
     LingeringWillManifestIllusion = "Lingering Will Manifest Illusion"
 
+class DCLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        self.logic[NodeId.WisdomPopup][NodeId.LingeringWill] = ItemPlacementHelpers.need_proof_connection
 
 def make_graph(graph: LocationGraphBuilder):
     dc = locationType.DC
+    dc_logic = DCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(dc_logic)
 
     courtyard = graph.add_location(NodeId.DisneyCastleCourtyard, [
         chest(16, CheckLocation.CourtyardMythrilShard, dc),
@@ -137,8 +143,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(future_pete, wisdom_popup)
         graph.add_edge(wisdom_popup, marluxia, RequirementEdge(battle=True))
         graph.add_edge(marluxia, data_marluxia)
-        graph.add_edge(wisdom_popup, lingering_will,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.need_proof_connection))
+        graph.add_edge(wisdom_popup, lingering_will, RequirementEdge(battle=True))
 
         graph.register_superboss(marluxia)
     else:
@@ -155,5 +160,4 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(library_popup, minnie_escort)
         graph.add_edge(minnie_escort, wisdom_popup)
         graph.add_edge(wisdom_popup, data_marluxia, RequirementEdge(battle=True))
-        graph.add_edge(wisdom_popup, lingering_will,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.need_proof_connection))
+        graph.add_edge(wisdom_popup, lingering_will,RequirementEdge(battle=True))

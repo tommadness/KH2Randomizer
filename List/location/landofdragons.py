@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType
 from List.inventory import misc, magic, keyblade, ability
-from List.location.graph import RequirementEdge, chest, popup, item_bonus, hybrid_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, item_bonus, hybrid_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -54,9 +54,18 @@ class CheckLocation(str, Enum):
     StormRiderBonus = "Storm Rider"
     DataXigbarDefenseBoost = "Xigbar (Data) Defense Boost"
 
+class LoDLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.ShanYu][NodeId.ThroneRoom] = ItemPlacementHelpers.mulan_check
+        else:
+            self.logic[NodeId.StormRider][NodeId.BambooGrove] = ItemPlacementHelpers.mulan_check
 
 def make_graph(graph: LocationGraphBuilder):
     lod = locationType.LoD
+    lod_logic = LoDLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(lod_logic)
 
     bamboo_grove = graph.add_location(NodeId.BambooGrove, [
         chest(245, CheckLocation.BambooGroveDarkShard, lod),

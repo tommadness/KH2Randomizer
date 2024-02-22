@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType, itemType
 from List.inventory import keyblade, ability, report
-from List.location.graph import RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, double_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, double_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -63,9 +63,18 @@ class CheckLocation(str, Enum):
     FinalXemnas = "Final Xemnas"
     DataXemnas = "Xemnas (Data) Power Boost"
 
+class TWTNWLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            pass
+        else:
+            pass
 
 def make_graph(graph: LocationGraphBuilder):
     twtnw = locationType.TWTNW
+    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(twtnw_logic)
 
     fragment_crossing = graph.add_location(NodeId.FragmentCrossing, [
         chest(374, CheckLocation.FragmentCrossingMythrilStone, twtnw),

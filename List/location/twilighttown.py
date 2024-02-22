@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType
 from List.inventory import keyblade, ability, report, form, misc
-from List.location.graph import RequirementEdge, chest, popup, stat_bonus, item_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, stat_bonus, item_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -87,9 +87,21 @@ class CheckLocation(str, Enum):
     BetwixtAndBetweenBondOfFlame = "Betwixt and Between Bond of Flame"
     DataAxelMagicBoost = "Axel (Data) Magic Boost"
 
+class TTLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.ValorForm][NodeId.SeifersTrophy] = ItemPlacementHelpers.tt2_check
+            self.logic[NodeId.LimitForm][NodeId.UndergroundConcourse] = ItemPlacementHelpers.tt3_check
+            self.logic[NodeId.LimitForm][NodeId.MansionBonus] = ItemPlacementHelpers.tt3_check
+        else:
+            self.logic[NodeId.BetwixtAndBetween][NodeId.SeifersTrophy] = ItemPlacementHelpers.tt2_check
+            self.logic[NodeId.LimitForm][NodeId.StationFightPopup] = ItemPlacementHelpers.tt3_check
 
 def make_graph(graph: LocationGraphBuilder):
     tt = locationType.TT
+    tt_logic = TTLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(tt_logic)
 
     old_mansion = graph.add_location(NodeId.OldMansion, [
         chest(447, CheckLocation.OldMansionPotion, tt),
@@ -203,12 +215,12 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(yen_sid_tower_entryway, sorcerers_loft, RequirementEdge(battle=True))
         graph.add_edge(sorcerers_loft, tower_wardrobe)
         graph.add_edge(tower_wardrobe, valor_form)
-        graph.add_edge(valor_form, seifers_trophy, RequirementEdge(battle=True, req=ItemPlacementHelpers.tt2_check))
+        graph.add_edge(valor_form, seifers_trophy, RequirementEdge(battle=True))
         graph.add_edge(seifers_trophy, limit_form)
-        graph.add_edge(limit_form, underground_concourse, RequirementEdge(req=ItemPlacementHelpers.tt3_check))
+        graph.add_edge(limit_form, underground_concourse)
         graph.add_edge(underground_concourse, tunnelway)
         graph.add_edge(tunnelway, sunset_terrace)
-        graph.add_edge(limit_form, mansion_bonus, RequirementEdge(battle=True, req=ItemPlacementHelpers.tt3_check))
+        graph.add_edge(limit_form, mansion_bonus, RequirementEdge(battle=True))
         graph.add_edge(mansion_bonus, mansion_foyer)
         graph.add_edge(mansion_foyer, mansion_dining_room)
         graph.add_edge(mansion_foyer, mansion_library)
@@ -233,11 +245,9 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(mansion_foyer, beam)
         graph.add_edge(mansion_foyer, mansion_basement)
         graph.add_edge(beam, betwixt_and_between, RequirementEdge(battle=True))
-        graph.add_edge(betwixt_and_between, seifers_trophy,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.tt2_check))
+        graph.add_edge(betwixt_and_between, seifers_trophy,RequirementEdge(battle=True))
         graph.add_edge(seifers_trophy, limit_form)
-        graph.add_edge(limit_form, station_fight_popup,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.tt3_check))
+        graph.add_edge(limit_form, station_fight_popup,RequirementEdge(battle=True))
         graph.add_edge(station_fight_popup, yen_sid_tower)
         graph.add_edge(yen_sid_tower, yen_sid_tower_entryway)
         graph.add_edge(yen_sid_tower_entryway, sorcerers_loft, RequirementEdge(battle=True))

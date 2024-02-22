@@ -2,7 +2,7 @@ from enum import Enum
 
 from Class.newLocationClass import KH2Location
 from List.configDict import locationType, locationCategory, itemType
-from List.location.graph import RequirementEdge, LocationGraphBuilder, START_NODE
+from List.location.graph import DefaultLogicGraph, RequirementEdge, LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
@@ -23,6 +23,92 @@ class CheckLocation(str, Enum):
     DaylightExecutivesRing = "Daylight (Executive's Ring)"
     SunsetGrandRibbon = "Sunset (Grand Ribbon)"
 
+class PuzzleLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+
+        if not reverse_rando:
+            def daylight_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.need_torn_pages(5)(inv)
+                    and ItemPlacementHelpers.hb_check(inv)
+                    and ItemPlacementHelpers.mulan_check(inv)
+                    and ItemPlacementHelpers.tt3_check(inv)
+                    and ItemPlacementHelpers.jack_pr_check(inv)
+                    and ItemPlacementHelpers.aladdin_check(inv)
+                )
+
+            def sunset_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.hb_check(inv)
+                    and ItemPlacementHelpers.tt3_check(inv)
+                    and ItemPlacementHelpers.tron_check(inv)
+                    and ItemPlacementHelpers.jack_pr_check(inv)
+                    and ItemPlacementHelpers.aladdin_check(inv)
+                    and ItemPlacementHelpers.beast_check(inv)
+                )
+            self.logic[START_NODE][NodeId.AwakeningPuzzle] = ItemPlacementHelpers.need_growths
+            self.logic[START_NODE][NodeId.HeartPuzzle] = ItemPlacementHelpers.need_growths
+            self.logic[START_NODE][NodeId.DualityPuzzle] = ItemPlacementHelpers.need_growths
+            self.logic[START_NODE][NodeId.FrontierPuzzle] = lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.tt2_check(inv) and ItemPlacementHelpers.hb_check(inv)
+            self.logic[START_NODE][NodeId.DaylightPuzzle] = daylight_checker
+            self.logic[START_NODE][NodeId.SunsetPuzzle] = sunset_checker
+        else:
+            def awakening_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.beast_check(inv)
+                    and ItemPlacementHelpers.tt3_check(inv)
+                )
+
+            def heart_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.auron_check(inv)
+                    and ItemPlacementHelpers.jack_pr_check(inv)
+                )
+
+            def duality_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.jack_pr_check(inv)
+                    and ItemPlacementHelpers.auron_check(inv)
+                )
+
+            def frontier_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.jack_pr_check(inv)
+                    and ItemPlacementHelpers.aladdin_check(inv)
+                    and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
+                )
+
+            def daylight_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.need_torn_pages(5)(inv)
+                    and ItemPlacementHelpers.simba_check(inv)
+                    and ItemPlacementHelpers.aladdin_check(inv)
+                    and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
+                    and ItemPlacementHelpers.hb_check(inv)
+                )
+
+            def sunset_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.hb_check(inv)
+                    and ItemPlacementHelpers.tt3_check(inv)
+                    and ItemPlacementHelpers.aladdin_check(inv)
+                    and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
+                )
+            self.logic[START_NODE][NodeId.AwakeningPuzzle] = awakening_checker
+            self.logic[START_NODE][NodeId.HeartPuzzle] = heart_checker
+            self.logic[START_NODE][NodeId.DualityPuzzle] = duality_checker
+            self.logic[START_NODE][NodeId.FrontierPuzzle] = frontier_checker
+            self.logic[START_NODE][NodeId.DaylightPuzzle] = daylight_checker
+            self.logic[START_NODE][NodeId.SunsetPuzzle] = sunset_checker
 
 def puzzle_reward(
     loc_id: int, description: str, invalid_checks: list[itemType]
@@ -37,6 +123,8 @@ def puzzle_reward(
 
 
 def make_graph(graph: LocationGraphBuilder):
+    puzzle_logic = PuzzleLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(puzzle_logic)
     awakening = graph.add_location(
         NodeId.AwakeningPuzzle,
         [
@@ -89,106 +177,9 @@ def make_graph(graph: LocationGraphBuilder):
             ),
         ],
     )
-
-    if not graph.reverse_rando:
-        graph.add_edge(
-            START_NODE,
-            awakening,
-            RequirementEdge(req=ItemPlacementHelpers.need_growths),
-        )
-        graph.add_edge(
-            START_NODE, heart, RequirementEdge(req=ItemPlacementHelpers.need_growths)
-        )
-        graph.add_edge(
-            START_NODE, duality, RequirementEdge(req=ItemPlacementHelpers.need_growths)
-        )
-        graph.add_edge(
-            START_NODE,
-            frontier,
-            RequirementEdge(
-                req=lambda inv: ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.tt2_check(inv)
-                and ItemPlacementHelpers.hb_check(inv)
-            ),
-        )
-
-        def daylight_checker(inv: list[int]) -> bool:
-            return (
-                ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.need_torn_pages(5)(inv)
-                and ItemPlacementHelpers.hb_check(inv)
-                and ItemPlacementHelpers.mulan_check(inv)
-                and ItemPlacementHelpers.tt3_check(inv)
-                and ItemPlacementHelpers.jack_pr_check(inv)
-                and ItemPlacementHelpers.aladdin_check(inv)
-            )
-
-        def sunset_checker(inv: list[int]) -> bool:
-            return (
-                ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.hb_check(inv)
-                and ItemPlacementHelpers.tt3_check(inv)
-                and ItemPlacementHelpers.tron_check(inv)
-                and ItemPlacementHelpers.jack_pr_check(inv)
-                and ItemPlacementHelpers.aladdin_check(inv)
-                and ItemPlacementHelpers.beast_check(inv)
-            )
-
-        graph.add_edge(START_NODE, daylight, RequirementEdge(req=daylight_checker))
-        graph.add_edge(START_NODE, sunset, RequirementEdge(req=sunset_checker))
-    else:
-
-        def awakening_checker(inv: list[int]) -> bool:
-            return (
-                ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.beast_check(inv)
-                and ItemPlacementHelpers.tt3_check(inv)
-            )
-
-        def heart_checker(inv: list[int]) -> bool:
-            return (
-                ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.auron_check(inv)
-                and ItemPlacementHelpers.jack_pr_check(inv)
-            )
-
-        def duality_checker(inv: list[int]) -> bool:
-            return (
-                ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.jack_pr_check(inv)
-                and ItemPlacementHelpers.auron_check(inv)
-            )
-
-        def frontier_checker(inv: list[int]) -> bool:
-            return (
-                ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.jack_pr_check(inv)
-                and ItemPlacementHelpers.aladdin_check(inv)
-                and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
-            )
-
-        def daylight_checker(inv: list[int]) -> bool:
-            return (
-                ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.need_torn_pages(5)(inv)
-                and ItemPlacementHelpers.simba_check(inv)
-                and ItemPlacementHelpers.aladdin_check(inv)
-                and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
-                and ItemPlacementHelpers.hb_check(inv)
-            )
-
-        def sunset_checker(inv: list[int]) -> bool:
-            return (
-                ItemPlacementHelpers.need_growths(inv)
-                and ItemPlacementHelpers.hb_check(inv)
-                and ItemPlacementHelpers.tt3_check(inv)
-                and ItemPlacementHelpers.aladdin_check(inv)
-                and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
-            )
-
-        graph.add_edge(START_NODE, awakening, RequirementEdge(req=awakening_checker))
-        graph.add_edge(START_NODE, heart, RequirementEdge(req=heart_checker))
-        graph.add_edge(START_NODE, duality, RequirementEdge(req=duality_checker))
-        graph.add_edge(START_NODE, frontier, RequirementEdge(req=frontier_checker))
-        graph.add_edge(START_NODE, daylight, RequirementEdge(req=daylight_checker))
-        graph.add_edge(START_NODE, sunset, RequirementEdge(req=sunset_checker))
+    graph.add_edge(START_NODE, awakening)
+    graph.add_edge(START_NODE, heart)
+    graph.add_edge(START_NODE, duality)
+    graph.add_edge(START_NODE, frontier)
+    graph.add_edge(START_NODE, daylight)
+    graph.add_edge(START_NODE, sunset)

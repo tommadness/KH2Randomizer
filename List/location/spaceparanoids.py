@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType
 from List.inventory import ability, keyblade, magic
-from List.location.graph import RequirementEdge, chest, popup, hybrid_bonus, item_bonus, stat_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, item_bonus, stat_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -46,9 +46,18 @@ class CheckLocation(str, Enum):
     LarxeneCloakedThunder = "Larxene (AS) Cloaked Thunder"
     DataLarxeneLostIllusion = "Larxene (Data) Lost Illusion"
     
+class SPLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.PhotonDebugger][NodeId.SolarSailerBonus] = ItemPlacementHelpers.tron_check
+        else:
+            self.logic[NodeId.Larxene][NodeId.ScreensBonus] = ItemPlacementHelpers.tron_check
 
 def make_graph(graph: LocationGraphBuilder):
     sp = locationType.SP
+    sp_logic = SPLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(sp_logic)
 
     pit_cell = graph.add_location(NodeId.PitCell, [
         chest(316, CheckLocation.PitCellAreaMap, sp),
@@ -107,8 +116,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(hallway, communications_room)
         graph.add_edge(communications_room, hostile_program, RequirementEdge(battle=True))
         graph.add_edge(hostile_program, photon_debugger)
-        graph.add_edge(photon_debugger, solar_sailer_bonus,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.tron_check))
+        graph.add_edge(photon_debugger, solar_sailer_bonus)
         graph.add_edge(solar_sailer_bonus, central_computer_core)
         graph.add_edge(central_computer_core, mcp_bonus, RequirementEdge(battle=True))
         graph.add_edge(mcp_bonus, larxene, RequirementEdge(battle=True))
@@ -125,7 +133,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(solar_sailer_bonus, central_computer_core)
         graph.add_edge(central_computer_core, mcp_bonus, RequirementEdge(battle=True))
         graph.add_edge(mcp_bonus, larxene, RequirementEdge(battle=True))
-        graph.add_edge(larxene, screens_bonus, RequirementEdge(battle=True, req=ItemPlacementHelpers.tron_check))
+        graph.add_edge(larxene, screens_bonus, RequirementEdge(battle=True))
         graph.add_edge(screens_bonus, hostile_program, RequirementEdge(battle=True))
         graph.add_edge(hostile_program, photon_debugger)
         graph.add_edge(photon_debugger, data_larxene, RequirementEdge(battle=True))

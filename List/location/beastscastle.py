@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType
 from List.inventory import magic, keyblade, ability, report
-from List.location.graph import RequirementEdge, chest, popup, item_bonus, stat_bonus, hybrid_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, item_bonus, stat_bonus, hybrid_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -57,9 +57,18 @@ class CheckLocation(str, Enum):
     XaldinSecretAnsemReport4 = "Secret Ansem Report 4"
     DataXaldin = "Xaldin (Data) Defense Boost"
 
+class BCLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.DarkThorn][NodeId.RumblingRose] = ItemPlacementHelpers.beast_check
+        else:
+            self.logic[NodeId.Xaldin][NodeId.BeastsCastleCourtyard] = ItemPlacementHelpers.beast_check
 
 def make_graph(graph: LocationGraphBuilder):
     bc = locationType.BC
+    bc_logic = BCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(bc_logic)
 
     courtyard = graph.add_location(NodeId.BeastsCastleCourtyard, [
         chest(39, CheckLocation.CourtyardApBoost, bc),
@@ -137,7 +146,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(west_wing, beast_bonus, RequirementEdge(battle=True))
         graph.add_edge(beast_bonus, beasts_room)
         graph.add_edge(beasts_room, dark_thorn, RequirementEdge(battle=True))
-        graph.add_edge(dark_thorn, rumbling_rose, RequirementEdge(battle=True, req=ItemPlacementHelpers.beast_check))
+        graph.add_edge(dark_thorn, rumbling_rose, RequirementEdge(battle=True))
         graph.add_edge(rumbling_rose, xaldin, RequirementEdge(battle=True))
         graph.add_edge(xaldin, data_xaldin, RequirementEdge(battle=True))
         graph.register_first_boss(dark_thorn)
@@ -149,7 +158,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(west_wing, beasts_room)
         graph.add_edge(beasts_room, rumbling_rose)
         graph.add_edge(rumbling_rose, xaldin, RequirementEdge(battle=True))
-        graph.add_edge(xaldin, courtyard, RequirementEdge(req=ItemPlacementHelpers.beast_check))
+        graph.add_edge(xaldin, courtyard)
         graph.add_edge(courtyard, belles_room)
         graph.add_edge(belles_room, east_wing)
         graph.add_edge(east_wing, thresholder, RequirementEdge(battle=True))

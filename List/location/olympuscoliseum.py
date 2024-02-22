@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType, itemType
 from List.inventory import magic, keyblade, ability, report
-from List.location.graph import RequirementEdge, chest, popup, item_bonus, hybrid_bonus, stat_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, item_bonus, hybrid_bonus, stat_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -78,10 +78,21 @@ class CheckLocation(str, Enum):
     ZexionBookOfShadows = "Zexion (AS) Book of Shadows"
     DataZexionLostIllusion = "Zexion (Data) Lost Illusion"
 
+class OCLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.Hydra][NodeId.AuronsStatue] = ItemPlacementHelpers.auron_check
+            self.logic[NodeId.Hades][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
+        else:
+            self.logic[NodeId.Zexion][NodeId.CerberusBonus] = ItemPlacementHelpers.auron_check
+            self.logic[NodeId.Hydra][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
 
 def make_graph(graph: LocationGraphBuilder):
     oc = locationType.OC
     cups = locationType.OCCups
+    oc_logic = OCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(oc_logic)
 
     passage = graph.add_location(NodeId.Passage, [
         chest(7, CheckLocation.PassageMythrilShard, oc),
@@ -190,14 +201,14 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(demyx, lock)
         graph.add_edge(lock, pete, RequirementEdge(battle=True))
         graph.add_edge(pete, hydra, RequirementEdge(battle=True))
-        graph.add_edge(hydra, aurons_statue, RequirementEdge(battle=True, req=ItemPlacementHelpers.auron_check))
+        graph.add_edge(hydra, aurons_statue, RequirementEdge(battle=True))
         graph.add_edge(aurons_statue, hades, RequirementEdge(battle=True))
 
         graph.add_edge(hades, pain_panic_cup, RequirementEdge(battle=True))
         graph.add_edge(hades, cerberus_cup, RequirementEdge(battle=True))
         graph.add_edge(hades, titan_cup, RequirementEdge(battle=True))
         graph.add_edge(hades, goddess_of_fate_cup, RequirementEdge(battle=True))
-        graph.add_edge(hades, paradox_cups, _paradox_cups_requirement())
+        graph.add_edge(hades, paradox_cups)
         graph.add_edge(hades, zexion, RequirementEdge(battle=True))
         graph.add_edge(zexion, data_zexion)
         graph.register_first_boss(hydra)
@@ -210,7 +221,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(inner_chamber, aurons_statue, RequirementEdge(battle=True))
         graph.add_edge(aurons_statue, hades, RequirementEdge(battle=True))
         graph.add_edge(hades, zexion, RequirementEdge(battle=True))
-        graph.add_edge(zexion, cerberus_bonus, RequirementEdge(battle=True, req=ItemPlacementHelpers.auron_check))
+        graph.add_edge(zexion, cerberus_bonus, RequirementEdge(battle=True))
         graph.add_edge(cerberus_bonus, coliseum_map_popup)
         graph.add_edge(coliseum_map_popup, urns_bonus)
         graph.add_edge(urns_bonus, caverns_entrance)
@@ -224,14 +235,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(hydra, cerberus_cup, RequirementEdge(battle=True))
         graph.add_edge(hydra, titan_cup, RequirementEdge(battle=True))
         graph.add_edge(hydra, goddess_of_fate_cup, RequirementEdge(battle=True))
-        graph.add_edge(hydra, paradox_cups, _paradox_cups_requirement())
+        graph.add_edge(hydra, paradox_cups)
         graph.add_edge(hydra, data_zexion, RequirementEdge(battle=True))
         graph.register_first_boss(hades)
         graph.register_last_story_boss(hydra)
-
-
-def _paradox_cups_requirement():
-    return RequirementEdge(
-        battle=True,
-        req=lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
-    )

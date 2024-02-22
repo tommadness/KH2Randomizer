@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType, itemType
 from List.inventory import magic, keyblade, ability
-from List.location.graph import RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, LocationGraphBuilder, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, LocationGraphBuilder, \
     START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -51,9 +51,18 @@ class CheckLocation(str, Enum):
     VexenRoadToDiscovery = "Vexen (AS) Road to Discovery"
     DataVexen = "Vexen (Data) Lost Illusion"
 
+class HTLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.OogieBoogie][NodeId.LockShockBarrel] = ItemPlacementHelpers.jack_ht_check
+        else:
+            self.logic[NodeId.Vexen][NodeId.FinklesteinsLab] = ItemPlacementHelpers.jack_ht_check
 
 def make_graph(graph: LocationGraphBuilder):
     ht = locationType.HT
+    ht_logic = HTLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(ht_logic)
 
     finklesteins_lab = graph.add_location(NodeId.FinklesteinsLab, [
         chest(211, CheckLocation.FinklesteinsLabHalloweenTownMap, ht),
@@ -121,7 +130,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(santas_house, prison_keeper, RequirementEdge(battle=True))
         graph.add_edge(prison_keeper, oogie_boogie, RequirementEdge(battle=True))
         graph.add_edge(oogie_boogie, lock_shock_barrel,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.jack_ht_check))
+                       RequirementEdge(battle=True))
         graph.add_edge(lock_shock_barrel, presents, RequirementEdge(battle=True))
         graph.add_edge(presents, decoy_present_minigame)
         graph.add_edge(decoy_present_minigame, experiment, RequirementEdge(battle=True))
@@ -141,7 +150,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(presents, decoy_present_minigame)
         graph.add_edge(decoy_present_minigame, experiment, RequirementEdge(battle=True))
         graph.add_edge(experiment, vexen, RequirementEdge(battle=True))
-        graph.add_edge(vexen, finklesteins_lab, RequirementEdge(req=ItemPlacementHelpers.jack_ht_check))
+        graph.add_edge(vexen, finklesteins_lab)
         graph.add_edge(finklesteins_lab, prison_keeper, RequirementEdge(battle=True))
         graph.add_edge(prison_keeper, oogie_boogie, RequirementEdge(battle=True))
         graph.add_edge(oogie_boogie, data_vexen, RequirementEdge(battle=True))

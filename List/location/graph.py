@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Optional, Union, Callable
 
 from altgraph.Graph import Graph
@@ -13,6 +14,31 @@ RequirementFunction = Callable[[list[int]], bool]
 
 START_NODE = "Starting"
 
+
+class DefaultLogicGraph:
+    def __init__(self, node_ids : Enum = None):
+        # makes a dictionary of all unique ordered pairs
+        self.logic = {}
+        self.logic[START_NODE] = {}
+        if node_ids is not None:
+            for i in list(node_ids):
+                self.logic[START_NODE][i] = lambda inv : True
+                self.logic[i] = {}
+                for j in list(node_ids):
+                    if i!=j:
+                        self.logic[i][j] = lambda inv : True
+        
+    def has_rule(self,node1,node2):
+        if node1 in self.logic and node2 in self.logic[node1]:
+            return True
+        return False
+
+    def merge(self, other: 'DefaultLogicGraph'):
+        for start_node, out_edges in other.logic.items():
+            if start_node not in self.logic:
+                self.logic[start_node] = {}
+            for end_node, rule in out_edges.items():
+                self.logic[start_node][end_node] = rule
 
 class LocationNode:
 
@@ -35,12 +61,17 @@ class LocationGraphBuilder:
 
     def __init__(self, graph: Graph, reverse_rando: bool, settings: RandomizerSettings):
         self.graph = graph
+        self.first_visit_locks = False
         self.reverse_rando = reverse_rando
         self.settings = settings
+        self.logic_graph = DefaultLogicGraph()
         self.pending_locations_by_name: dict[str, KH2Location] = {}
         self.pending_first_boss_nodes: list[str] = []
         self.pending_last_story_boss_nodes: list[str] = []
         self.pending_superboss_nodes: list[str] = []
+    
+    def add_logic(self,added_logic_graph : DefaultLogicGraph):
+        self.logic_graph.merge(added_logic_graph)
 
     def add_location(self, name: str, locations: list[KH2Location]) -> str:
         self.graph.add_node(name, LocationNode(locations))
@@ -55,6 +86,8 @@ class LocationGraphBuilder:
     def add_edge(self, node1: str, node2: str, requirement: Optional[RequirementEdge] = None):
         if requirement is None:
             requirement = RequirementEdge()
+        if self.logic_graph.has_rule(node1,node2) and requirement.requirement is None:
+            requirement.requirement = self.logic_graph.logic[node1][node2]
         self.graph.add_edge(node1, node2, requirement)
 
     def register_first_boss(self, node: str):

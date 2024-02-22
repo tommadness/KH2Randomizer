@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType
 from List.inventory import magic, keyblade, misc
-from List.location.graph import RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, LocationGraphBuilder, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, LocationGraphBuilder, \
     START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -57,9 +57,18 @@ class CheckLocation(str, Enum):
     Groundshaker = "Groundshaker"
     DataSaix = "Saix (Data) Defense Boost"
 
+class PLLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.Scar][NodeId.Hyenas2Bonus] = ItemPlacementHelpers.simba_check
+        else:
+            self.logic[NodeId.Groundshaker][NodeId.Gorge] = ItemPlacementHelpers.simba_check
 
 def make_graph(graph: LocationGraphBuilder):
     pl = locationType.PL
+    pl_logic = PLLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(pl_logic)
 
     gorge = graph.add_location(NodeId.Gorge, [
         chest(492, CheckLocation.GorgeSavannahMap, pl),

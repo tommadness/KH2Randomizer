@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType
 from List.inventory import magic, keyblade, ability, summon, report
-from List.location.graph import RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, item_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, item_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -60,9 +60,18 @@ class CheckLocation(str, Enum):
     GrimReaper2SecretAnsemReport6 = "Secret Ansem Report 6"
     DataLuxordApBoost = "Luxord (Data) AP Boost"
 
+class PRLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.Barbossa][NodeId.GrimReaper1] = ItemPlacementHelpers.jack_pr_check
+        else:
+            self.logic[NodeId.GrimReaper2][NodeId.PortRoyalTown] = ItemPlacementHelpers.jack_pr_check
 
 def make_graph(graph: LocationGraphBuilder):
     pr = locationType.PR
+    pr_logic = PRLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(pr_logic)
 
     rampart = graph.add_location(NodeId.Rampart, [
         chest(70, CheckLocation.RampartNavalMap, pr),
@@ -141,7 +150,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(barrels_minigame, powder_store)
         graph.add_edge(powder_store, moonlight_nook)
         graph.add_edge(moonlight_nook, barbossa, RequirementEdge(battle=True))
-        graph.add_edge(barbossa, grim_reaper_1, RequirementEdge(battle=True, req=ItemPlacementHelpers.jack_pr_check))
+        graph.add_edge(barbossa, grim_reaper_1, RequirementEdge(battle=True))
         graph.add_edge(grim_reaper_1, interceptors_hold)
         graph.add_edge(interceptors_hold, seadrift_keep)
         graph.add_edge(seadrift_keep, seadrift_row)
@@ -159,7 +168,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(seadrift_row, cursed_medallion_popup, RequirementEdge(battle=True))
         graph.add_edge(cursed_medallion_popup, cave_mouth)
         graph.add_edge(cave_mouth, grim_reaper_2, RequirementEdge(battle=True))
-        graph.add_edge(grim_reaper_2, town, RequirementEdge(battle=True, req=ItemPlacementHelpers.jack_pr_check))
+        graph.add_edge(grim_reaper_2, town, RequirementEdge(battle=True))
         graph.add_edge(town, isla_de_muerta_popup, RequirementEdge(battle=True))
         graph.add_edge(isla_de_muerta_popup, boat_fight, RequirementEdge(battle=True))
         graph.add_edge(boat_fight, barrels_minigame)

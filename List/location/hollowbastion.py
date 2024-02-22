@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType, itemType
 from List.inventory import magic, keyblade, ability, summon, report, storyunlock, form, misc
-from List.location.graph import RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, item_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, item_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
@@ -105,10 +105,23 @@ class CheckLocation(str, Enum):
     CorMineshaftUpperLevelApBoost = "CoR Mineshaft Upper Level AP Boost"
     TransportToRemembrance = "Transport to Remembrance"
 
+class HBLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.BaseballCharmPopup][NodeId.Postern] = ItemPlacementHelpers.hb_check
+            self.logic[NodeId.DoorToDarknessPopup][NodeId.CorDepths] = ItemPlacementHelpers.need_growths
+            self.logic[NodeId.ThousandHeartless][NodeId.Mushroom13] = ItemPlacementHelpers.need_proof_peace
+            self.logic[NodeId.ThousandHeartless][NodeId.DataDemyx] = ItemPlacementHelpers.need_forms
+        else:
+            self.logic[NodeId.ThousandHeartless][NodeId.CorDepths] = lambda inv : ItemPlacementHelpers.hb_check(inv) and ItemPlacementHelpers.need_growths(inv)
+            self.logic[NodeId.BaseballCharmPopup][NodeId.DataDemyx] = ItemPlacementHelpers.need_forms
 
 def make_graph(graph: LocationGraphBuilder):
     hb = locationType.HB
     cor = locationType.CoR
+    hb_logic = HBLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(hb_logic)
 
     marketplace_map_popup = graph.add_location(NodeId.MarketplaceMapPopup, [
         popup(362, CheckLocation.MarketplaceMap, hb),
@@ -242,13 +255,13 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(borough, merlins_house_popup)
         graph.add_edge(merlins_house_popup, bailey, RequirementEdge(battle=True))
         graph.add_edge(bailey, baseball_charm_popup)
-        graph.add_edge(baseball_charm_popup, postern, RequirementEdge(req=ItemPlacementHelpers.hb_check))
+        graph.add_edge(baseball_charm_popup, postern)
         graph.add_edge(postern, corridors)
         graph.add_edge(corridors, dtd_popup)
         graph.add_edge(corridors, ansems_study)
         graph.add_edge(dtd_popup, ukulele_charm)
 
-        graph.add_edge(dtd_popup, cor_depths, RequirementEdge(req=ItemPlacementHelpers.need_growths))
+        graph.add_edge(dtd_popup, cor_depths)
         graph.add_edge(cor_depths, cor_mineshaft_pre_fight_1)
         graph.add_edge(cor_mineshaft_pre_fight_1, cor_depths_post_fight_1, RequirementEdge(battle=True))
         graph.add_edge(cor_depths_post_fight_1, cor_mining_area)
@@ -266,9 +279,9 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(thousand_heartless, gull_wing)
         graph.add_edge(thousand_heartless, heartless_manufactory)
         graph.add_edge(thousand_heartless, sephiroth, RequirementEdge(battle=True))
-        graph.add_edge(thousand_heartless, mushroom_13, RequirementEdge(req=ItemPlacementHelpers.need_proof_peace))
+        graph.add_edge(thousand_heartless, mushroom_13)
         graph.add_edge(thousand_heartless, data_demyx,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.need_forms))
+                       RequirementEdge(battle=True))
         graph.register_first_boss(baseball_charm_popup)
         graph.register_last_story_boss(thousand_heartless)
         graph.register_superboss(sephiroth)
@@ -286,8 +299,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(crystal_fissure, thousand_heartless, RequirementEdge(battle=True))
         graph.add_edge(thousand_heartless, gull_wing)
         graph.add_edge(thousand_heartless, heartless_manufactory)
-        graph.add_edge(thousand_heartless, cor_depths, RequirementEdge(
-            req=lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.hb_check(inv)))
+        graph.add_edge(thousand_heartless, cor_depths)
         graph.add_edge(cor_depths, cor_mineshaft_pre_fight_1)
         graph.add_edge(cor_mineshaft_pre_fight_1, cor_depths_post_fight_1, RequirementEdge(battle=True))
         graph.add_edge(cor_depths_post_fight_1, cor_mining_area)
@@ -303,6 +315,6 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(merlins_house_popup, bailey, RequirementEdge(battle=True))
         graph.add_edge(bailey, baseball_charm_popup)
         graph.add_edge(baseball_charm_popup, data_demyx,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.need_forms))
+                       RequirementEdge(battle=True))
         graph.register_first_boss(thousand_heartless)
         graph.register_last_story_boss(bailey)

@@ -2,7 +2,7 @@ from enum import Enum
 
 from List.configDict import locationType
 from List.inventory import ability, misc
-from List.location.graph import RequirementEdge, chest, popup, stat_bonus, item_bonus, \
+from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, stat_bonus, item_bonus, \
     LocationGraphBuilder, START_NODE
 
 
@@ -55,8 +55,18 @@ class CheckLocation(str, Enum):
     DataRoxasMagicBoost = "Roxas (Data) Magic Boost"
 
 
+class STTLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            pass
+        else:
+            pass
+
 def make_graph(graph: LocationGraphBuilder):
     stt = locationType.STT
+    stt_logic = STTLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(stt_logic)
 
     twilight_town_map_popup = graph.add_location(NodeId.TwilightTownMapPopup, [
         popup(319, CheckLocation.TwilightTownMap, stt),

@@ -3,7 +3,7 @@ from enum import Enum
 from List.configDict import locationType
 from List.inventory import misc, magic, keyblade, ability, summon
 from List.location.graph import RequirementEdge, chest, popup, item_bonus, stat_bonus, \
-    LocationGraphBuilder, START_NODE
+    LocationGraphBuilder, START_NODE, DefaultLogicGraph
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
@@ -63,9 +63,20 @@ class CheckLocation(str, Enum):
     LexaeusStrengthBeyondStrength = "Lexaeus (AS) Strength Beyond Strength"
     DataLexaeus = "Lexaeus (Data) Lost Illusion"
 
+class AGLogicGraph(DefaultLogicGraph):
+    def __init__(self,reverse_rando,first_visit_locks):
+        DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[NodeId.ElementalLords][NodeId.RuinedChamber] = lambda inv : ItemPlacementHelpers.aladdin_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
+        else:
+            self.logic[NodeId.PalaceWalls][NodeId.RuinedChamber] = ItemPlacementHelpers.need_fire_blizzard_thunder
+            self.logic[NodeId.Lexaeus][NodeId.AgrabahMapPopup] = ItemPlacementHelpers.aladdin_check
+
 
 def make_graph(graph: LocationGraphBuilder):
     ag = locationType.Agrabah
+    ag_logic = AGLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    graph.add_logic(ag_logic)
 
     agrabah_map_popup = graph.add_location(NodeId.AgrabahMapPopup, [
         popup(353, CheckLocation.AgrabahMap, ag),
@@ -148,8 +159,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(chasm_of_challenges, treasure_room_bonus, RequirementEdge(battle=True))
         graph.add_edge(treasure_room_bonus, treasure_room)
         graph.add_edge(treasure_room, elemental_lords, RequirementEdge(battle=True))
-        graph.add_edge(elemental_lords, ruined_chamber, RequirementEdge(battle=True, req=lambda
-            inv: ItemPlacementHelpers.need_fire_blizzard_thunder(inv) and ItemPlacementHelpers.aladdin_check(inv)))
+        graph.add_edge(elemental_lords, ruined_chamber, RequirementEdge(battle=True))
         graph.add_edge(ruined_chamber, genie_jafar, RequirementEdge(battle=True))
         graph.add_edge(genie_jafar, lexaeus, RequirementEdge(battle=True))
         graph.add_edge(lexaeus, data_lexaeus)
@@ -160,11 +170,10 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(START_NODE, agrabah)
         graph.add_edge(agrabah, bazaar)
         graph.add_edge(bazaar, palace_walls)
-        graph.add_edge(palace_walls, ruined_chamber,
-                       RequirementEdge(battle=True, req=ItemPlacementHelpers.need_fire_blizzard_thunder))
+        graph.add_edge(palace_walls, ruined_chamber,RequirementEdge(battle=True))
         graph.add_edge(ruined_chamber, genie_jafar, RequirementEdge(battle=True))
         graph.add_edge(genie_jafar, lexaeus, RequirementEdge(battle=True))
-        graph.add_edge(lexaeus, agrabah_map_popup, RequirementEdge(req=ItemPlacementHelpers.aladdin_check))
+        graph.add_edge(lexaeus, agrabah_map_popup)
         graph.add_edge(agrabah_map_popup, cave_of_wonders_entrance)
         graph.add_edge(cave_of_wonders_entrance, valley_of_stone)
         graph.add_edge(valley_of_stone, abu_escort)
