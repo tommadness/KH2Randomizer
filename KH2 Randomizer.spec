@@ -47,15 +47,61 @@ def external_data_recursive(paths):
   return datas
 
 
-a = Analysis(
-    ['localUI.py'],
+updater_analysis = Analysis(
+    ['updater.py'],
     pathex=[],
     binaries=[],
     datas=build_datas_recursive([
         'UI/**/*.*',
         'UI/*.*',
+        'Module/icon.png',
+       ]),
+    hiddenimports=[],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
+    noarchive=False,
+)
+
+pyz = PYZ(updater_analysis.pure, updater_analysis.zipped_data, cipher=block_cipher)
+
+updater_exe = EXE(
+    pyz,
+    updater_analysis.scripts,
+    updater_analysis.binaries,
+    updater_analysis.zipfiles,
+    updater_analysis.datas,
+    [],
+    name='updater',
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=False,
+    disable_windowed_traceback=False,
+    argv_emulation=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+    icon='rando.ico'
+)
+
+a = Analysis(
+    ['localUI.py'],
+    pathex=[],
+    binaries=[('{0}/updater.exe'.format(DISTPATH),".")],
+    datas=build_datas_recursive([
+        'UI/**/*.*',
+        'UI/*.*',
         'static/**/*.*',
         'static/*.*',
+        'presets/*.*',
         'Module/icon.png',
         'extracted_data.zip'
        ]) + external_data_recursive([khbrpath+"/**/*.*"]),
@@ -69,12 +115,10 @@ a = Analysis(
     cipher=block_cipher,
     noarchive=False,
 )
-pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
-
-
+rando_pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(
-    pyz,
+    rando_pyz,
     a.scripts,
     a.binaries,
     a.zipfiles,
@@ -96,10 +140,10 @@ exe = EXE(
     icon='rando.ico'
 )
 
-presetPath = '{0}/presets'.format(DISTPATH)
-if os.path.exists(presetPath):
-  shutil.rmtree(presetPath)
+#presetPath = '{0}/presets'.format(DISTPATH)
+#if os.path.exists(presetPath):
+#  shutil.rmtree(presetPath)
 
-shutil.copytree('presets', presetPath)
+#shutil.copytree('presets', presetPath)
 
-shutil.make_archive('Kingdom Hearts II Final Mix Randomizer', 'zip', DISTPATH)
+#shutil.make_archive('Kingdom Hearts II Final Mix Randomizer', 'zip', DISTPATH)

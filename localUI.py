@@ -7,6 +7,7 @@ import string
 import sys
 import textwrap
 import zipfile
+import subprocess
 from pathlib import Path
 
 import pyperclip as pc
@@ -36,6 +37,7 @@ from Module.tourneySpoiler import TourneySeedSaver
 from Module.version import LOCAL_UI_VERSION, EXTRACTED_DATA_UPDATE_VERSION
 from UI import theme
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
+from UI.GithubInfo.releaseInfo import KH2RandomizerGithubReleases
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CompanionMenu import CompanionMenu
 from UI.Submenus.CosmeticsMenu import CosmeticsMenu
@@ -305,6 +307,16 @@ class KH2RandomizerApp(QMainWindow):
         self.preset_json = {}
         if not os.path.exists(appconfig.PRESET_FOLDER):
             os.makedirs(appconfig.PRESET_FOLDER)
+            path_to_presets = resource_path("presets")
+            for filename in os.listdir(path_to_presets):
+                f = os.path.join(path_to_presets, filename)
+                if os.path.isfile(f):
+                    with open(f,'r') as preset_file:
+                        preset_data = preset_file.read()
+                        out = os.path.join(appconfig.PRESET_FOLDER, filename)
+                        with open(out,'w') as out_preset_file:
+                            out_preset_file.write(preset_data)
+
         for preset_file_name in os.listdir(appconfig.PRESET_FOLDER):
             preset_name, extension = os.path.splitext(preset_file_name)
             if extension == '.json':
@@ -399,6 +411,13 @@ class KH2RandomizerApp(QMainWindow):
         self.remember_window_position_action.setCheckable(True)
         self.config_menu.addSeparator()
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
+
+        github_releases = KH2RandomizerGithubReleases()
+        infos = github_releases.get_update_infos()
+        self.updateAction = None
+        if(len(infos)>0):
+            self.updateAction = menu_bar.addAction("Update Seed Gen", self._update_generator)
+
         menu_bar.addMenu(self.seedMenu)
         menu_bar.addMenu(self.presetMenu)
 
@@ -415,6 +434,11 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addMenu(self.config_menu)
 
         menu_bar.addAction("About", self.showAbout)
+
+    def _update_generator(self):
+        #invoke the update exe
+        process = subprocess.Popen(resource_path("updater.exe"))
+        sys.exit()
 
     def _build_progress_frame(self) -> QFrame:
         self.progress_label = QLabel("Progress Placeholder")
