@@ -11,10 +11,10 @@ To set up Rando, Extract, Download and/or Install the following:
 - [Custom Build of OpenKH Mod Manager](https://github.com/aliosgaming/OpenKh/releases/latest/download/OpenKH.Mod.Manager.zip)
     - OpenKH Pre-requisite: [.NET Desktop Runtime 6](https://download.visualstudio.microsoft.com/download/pr/52d6ef78-d4ec-4713-9e01-eb8e77276381/e58f307cda1df61e930209b13ecb47a4/windowsdesktop-runtime-6.0.25-win-x64.exe)
 - A copy of KINGDOM HEARTS II FINAL MIX+, ripped in an ISO format. (will not be provided here for legal reasons)
-- [PCSX2-EX](https://cdn.discordapp.com/attachments/803658031749267517/1066421486652497950/PCSX2-EX.v3.10.0.zip) (edit the downloaded archive: remove the “, attachment” bit on the extension file)
+- [PCSX2-EX](https://github.com/shananas/PCSX2-EX/releases/download/V1/PCSX2-EX.v3.10.0.zip)
     - PCSX2-EX Pre-requisite: PCSX2 BIOS files (will not be provided here for legal reasons)
 - [KINGDOM HEARTS II FINAL MIX Randomizer Seed Generator](https://github.com/tommadness/KH2Randomizer/releases)
-- [Special PNACH](https://cdn.discordapp.com/attachments/738526266256392323/1134568809156595793/F266B00B_X-O_Swap.pnach) Swaps controls from JP to EN (X to Confirm and O to Jump)
+- [Special PNACH](https://drive.google.com/file/d/1fRmFl3jEGvlTaYtnHstLTia_kdjrdpMa/view?usp=sharing) Swaps controls from JP to EN (X to Confirm and O to Jump)
 
 I prefer to have them saved in a single folder (for this guide, I’ll be placing them in the `C:\KH2FMRando-PS2` folder on my computer for simplicity reasons).
 
