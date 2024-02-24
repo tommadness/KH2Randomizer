@@ -353,7 +353,10 @@ class HintUtils:
                 form.LimitForm,
             ],
             locationType.Atlantica: [magic.Blizzard],
-            locationType.TWTNW: [magic.Magnet],
+            locationType.TWTNW: [
+                magic.Magnet,
+                storyunlock.WayToTheDawn,
+            ],
             locationType.PR: [
                 magic.Magnet,
                 summon.FeatherCharm,
@@ -363,6 +366,7 @@ class HintUtils:
                 misc.TornPages,
                 magic.Reflect,
                 form.WisdomForm,
+                storyunlock.DisneyCastleKey
             ],
             locationType.HUNDREDAW: [
                 magic.Cure,
@@ -383,7 +387,7 @@ class HintUtils:
                 form.ValorForm,
                 form.LimitForm,
                 storyunlock.IceCream,
-                storyunlock.Picture,
+                # storyunlock.Picture,
             ],
             locationType.SP: [
                 magic.Reflect,
@@ -421,6 +425,7 @@ class HintUtils:
             locationType.STT: [
                 form.ValorForm,
                 form.LimitForm,
+                storyunlock.NaminesSketches
             ],
             locationType.Creations: [],
             locationType.Critical: [],

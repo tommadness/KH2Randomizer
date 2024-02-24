@@ -55,9 +55,10 @@ class HTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.OogieBoogie][NodeId.LockShockBarrel] = ItemPlacementHelpers.jack_ht_check
+            self.logic[START_NODE][NodeId.Graveyard] = ItemPlacementHelpers.ht1_check
+            self.logic[NodeId.OogieBoogie][NodeId.LockShockBarrel] = ItemPlacementHelpers.ht2_check
         else:
-            self.logic[NodeId.Vexen][NodeId.FinklesteinsLab] = ItemPlacementHelpers.jack_ht_check
+            self.logic[NodeId.Vexen][NodeId.FinklesteinsLab] = ItemPlacementHelpers.ht2_check
 
 def make_graph(graph: LocationGraphBuilder):
     ht = locationType.HT

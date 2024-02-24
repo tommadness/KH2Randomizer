@@ -57,6 +57,10 @@ class CheckLocation(str, Enum):
 class DCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
+        if not reverse_rando:
+            self.logic[START_NODE][NodeId.DisneyCastleCourtyard] = ItemPlacementHelpers.dc1_check
+            self.logic[NodeId.MinnieEscort][NodeId.CornerstoneHill] = ItemPlacementHelpers.dc2_check
+
         self.logic[NodeId.WisdomPopup][NodeId.LingeringWill] = ItemPlacementHelpers.need_proof_connection
 
 def make_graph(graph: LocationGraphBuilder):

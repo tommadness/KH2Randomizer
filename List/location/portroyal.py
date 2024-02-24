@@ -64,9 +64,10 @@ class PRLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.Barbossa][NodeId.GrimReaper1] = ItemPlacementHelpers.jack_pr_check
+            self.logic[START_NODE][NodeId.Rampart] = ItemPlacementHelpers.pr1_check
+            self.logic[NodeId.Barbossa][NodeId.GrimReaper1] = ItemPlacementHelpers.pr2_check
         else:
-            self.logic[NodeId.GrimReaper2][NodeId.PortRoyalTown] = ItemPlacementHelpers.jack_pr_check
+            self.logic[NodeId.GrimReaper2][NodeId.PortRoyalTown] = ItemPlacementHelpers.pr2_check
 
 def make_graph(graph: LocationGraphBuilder):
     pr = locationType.PR

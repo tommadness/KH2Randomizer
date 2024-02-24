@@ -58,9 +58,10 @@ class LoDLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.ShanYu][NodeId.ThroneRoom] = ItemPlacementHelpers.mulan_check
+            self.logic[START_NODE][NodeId.BambooGrove] = ItemPlacementHelpers.lod1_check
+            self.logic[NodeId.ShanYu][NodeId.ThroneRoom] = ItemPlacementHelpers.lod2_check
         else:
-            self.logic[NodeId.StormRider][NodeId.BambooGrove] = ItemPlacementHelpers.mulan_check
+            self.logic[NodeId.StormRider][NodeId.BambooGrove] = ItemPlacementHelpers.lod2_check
 
 def make_graph(graph: LocationGraphBuilder):
     lod = locationType.LoD
@@ -136,7 +137,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(village_cave, village_cave_bonus, RequirementEdge(battle=True))
         graph.add_edge(village_cave_bonus, ridge)
         graph.add_edge(ridge, shan_yu, RequirementEdge(battle=True))
-        graph.add_edge(shan_yu, throne_room, RequirementEdge(battle=True, req=ItemPlacementHelpers.mulan_check))
+        graph.add_edge(shan_yu, throne_room, RequirementEdge(battle=True, req=ItemPlacementHelpers.lod2_check))
         graph.add_edge(throne_room, storm_rider, RequirementEdge(battle=True))
         graph.add_edge(storm_rider, data_xigbar, RequirementEdge(battle=True))
         graph.register_first_boss(shan_yu)
@@ -147,7 +148,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(mountain_trail, ridge)
         graph.add_edge(ridge, throne_room, RequirementEdge(battle=True))
         graph.add_edge(throne_room, storm_rider, RequirementEdge(battle=True))
-        graph.add_edge(storm_rider, bamboo_grove, RequirementEdge(req=ItemPlacementHelpers.mulan_check))
+        graph.add_edge(storm_rider, bamboo_grove, RequirementEdge(req=ItemPlacementHelpers.lod2_check))
         graph.add_edge(bamboo_grove, encampment_area_map, RequirementEdge(battle=True))
         graph.add_edge(encampment_area_map, mission3)
         graph.add_edge(mission3, village_cave_map_popup, RequirementEdge(battle=True))

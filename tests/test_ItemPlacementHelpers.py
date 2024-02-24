@@ -184,86 +184,204 @@ class Tests(unittest.TestCase):
         inventory.append(proof.ProofOfNonexistence.id)
         self.assertTrue(restriction(inventory))
 
-    def test_auron_check(self):
+    def test_oc1_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.auron_check
+        restriction = ItemPlacementHelpers.oc1_check
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.BattlefieldsOfWar.id)
         self.assertTrue(restriction(inventory))
 
-    def test_mulan_check(self):
+    def test_oc2_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.mulan_check
+        restriction = ItemPlacementHelpers.oc2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.BattlefieldsOfWar.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.BattlefieldsOfWar.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_lod1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.lod1_check
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.SwordOfTheAncestor.id)
         self.assertTrue(restriction(inventory))
 
-    def test_beast_check(self):
+    def test_lod2_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.beast_check
+        restriction = ItemPlacementHelpers.lod2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.SwordOfTheAncestor.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.SwordOfTheAncestor.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_bc1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.bc1_check
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.BeastsClaw.id)
         self.assertTrue(restriction(inventory))
 
-    def test_jack_ht_check(self):
+    def test_bc2_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.jack_ht_check
+        restriction = ItemPlacementHelpers.bc2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.BeastsClaw.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.BeastsClaw.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_ht1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.ht1_check
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.BoneFist.id)
         self.assertTrue(restriction(inventory))
 
-    def test_simba_check(self):
+    def test_ht2_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.simba_check
+        restriction = ItemPlacementHelpers.ht2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.BoneFist.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.BoneFist.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_pl1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.pl1_check
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.ProudFang.id)
         self.assertTrue(restriction(inventory))
 
-    def test_jack_pr_check(self):
+    def test_pl2_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.jack_pr_check
+        restriction = ItemPlacementHelpers.pl2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.ProudFang.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.ProudFang.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_pr1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.pr1_check
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.SkillAndCrossbones.id)
         self.assertTrue(restriction(inventory))
 
-    def test_aladdin_check(self):
+    def test_pr2_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.aladdin_check
+        restriction = ItemPlacementHelpers.pr2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.SkillAndCrossbones.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.SkillAndCrossbones.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_ag1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.ag1_check
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.Scimitar.id)
         self.assertTrue(restriction(inventory))
 
-    def test_tron_check(self):
+    def test_ag2_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.tron_check
+        restriction = ItemPlacementHelpers.ag2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.Scimitar.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.Scimitar.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_sp1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.sp1_check
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.IdentityDisk.id)
         self.assertTrue(restriction(inventory))
 
-    # def test_riku_check(self):
-    #     inventory = []
-    #
-    #     restriction = ItemPlacementHelpers.riku_check
-    #     self.assertFalse(restriction(inventory))
-    #
-    #     inventory.append(storyunlock.WayToTheDawn.id)
-    #     self.assertTrue(restriction(inventory))
+    def test_sp2_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.sp2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.IdentityDisk.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.IdentityDisk.id)
+        self.assertTrue(restriction(inventory))
+
+
+    def test_twtnw_roxas_check(self):
+        inventory = []
+    
+        restriction = ItemPlacementHelpers.twtnw_roxas_check
+        self.assertFalse(restriction(inventory))
+    
+        inventory.append(storyunlock.WayToTheDawn.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_twtnw_post_saix_check(self):
+        inventory = []
+    
+        restriction = ItemPlacementHelpers.twtnw_post_saix_check
+        self.assertFalse(restriction(inventory))
+    
+        inventory.append(storyunlock.WayToTheDawn.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.WayToTheDawn.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_tt1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.tt1_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.IceCream.id)
+        self.assertTrue(restriction(inventory))
 
     def test_tt2_check(self):
         inventory = []
@@ -271,7 +389,8 @@ class Tests(unittest.TestCase):
         restriction = ItemPlacementHelpers.tt2_check
         self.assertFalse(restriction(inventory))
 
-        inventory.append(storyunlock.Picture.id)
+        inventory.append(storyunlock.IceCream.id)
+        inventory.append(storyunlock.IceCream.id)
         self.assertTrue(restriction(inventory))
 
     def test_tt3_check(self):
@@ -281,19 +400,64 @@ class Tests(unittest.TestCase):
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.IceCream.id)
+        inventory.append(storyunlock.IceCream.id)
         self.assertFalse(restriction(inventory))
 
-        inventory.append(storyunlock.Picture.id)
+        inventory.append(storyunlock.IceCream.id)
         self.assertTrue(restriction(inventory))
 
-    def test_hb_check(self):
+    def test_hb1_check(self):
         inventory = []
 
-        restriction = ItemPlacementHelpers.hb_check
+        restriction = ItemPlacementHelpers.hb1_check
+        self.assertFalse(restriction(inventory))
+        
+        inventory.append(storyunlock.MembershipCard.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_hb2_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.hb2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.MembershipCard.id)
         self.assertFalse(restriction(inventory))
 
         inventory.append(storyunlock.MembershipCard.id)
         self.assertTrue(restriction(inventory))
+
+
+    def test_dc1_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.dc1_check
+        self.assertFalse(restriction(inventory))
+        
+        inventory.append(storyunlock.DisneyCastleKey.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_dc2_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.dc2_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.DisneyCastleKey.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.DisneyCastleKey.id)
+        self.assertTrue(restriction(inventory))
+
+    def test_stt_check(self):
+        inventory = []
+
+        restriction = ItemPlacementHelpers.stt_check
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.NaminesSketches.id)
+        self.assertTrue(restriction(inventory))
+
 
     def test_form_lambda_valor_2(self):
         inventory = []

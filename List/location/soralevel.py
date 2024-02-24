@@ -5,7 +5,8 @@ from List.LvupStats import DreamWeaponOffsets
 from List.configDict import locationCategory, locationType
 from List.inventory import ability
 from List.inventory.item import InventoryItem
-from List.location.graph import LocationGraphBuilder, START_NODE
+from List.location.graph import LocationGraphBuilder, START_NODE, RequirementEdge
+from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
 def level_reward(level: int, description: str, vanilla: Optional[InventoryItem]) -> KH2Location:
@@ -111,6 +112,6 @@ def make_graph(graph: LocationGraphBuilder):
 
     for index, location in enumerate(locations):
         if index == 0:
-            graph.add_edge(START_NODE, location)
+            graph.add_edge(START_NODE, location, RequirementEdge(req=ItemPlacementHelpers.make_level_group_check(index)))
         else:
             graph.add_edge(locations[index - 1], location)

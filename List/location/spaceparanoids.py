@@ -50,9 +50,10 @@ class SPLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.PhotonDebugger][NodeId.SolarSailerBonus] = ItemPlacementHelpers.tron_check
+            self.logic[START_NODE][NodeId.PitCell] = ItemPlacementHelpers.sp1_check
+            self.logic[NodeId.PhotonDebugger][NodeId.SolarSailerBonus] = ItemPlacementHelpers.sp2_check
         else:
-            self.logic[NodeId.Larxene][NodeId.ScreensBonus] = ItemPlacementHelpers.tron_check
+            self.logic[NodeId.Larxene][NodeId.ScreensBonus] = ItemPlacementHelpers.sp2_check
 
 def make_graph(graph: LocationGraphBuilder):
     sp = locationType.SP

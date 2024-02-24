@@ -61,9 +61,10 @@ class BCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.DarkThorn][NodeId.RumblingRose] = ItemPlacementHelpers.beast_check
+            self.logic[START_NODE][NodeId.BeastsCastleCourtyard] = ItemPlacementHelpers.bc1_check
+            self.logic[NodeId.DarkThorn][NodeId.RumblingRose] = ItemPlacementHelpers.bc2_check
         else:
-            self.logic[NodeId.Xaldin][NodeId.BeastsCastleCourtyard] = ItemPlacementHelpers.beast_check
+            self.logic[NodeId.Xaldin][NodeId.BeastsCastleCourtyard] = ItemPlacementHelpers.bc2_check
 
 def make_graph(graph: LocationGraphBuilder):
     bc = locationType.BC

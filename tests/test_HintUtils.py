@@ -76,8 +76,10 @@ class Tests(unittest.TestCase):
         self.assertEqual({locationType.Agrabah}, set(lookup[storyunlock.Scimitar]))
         self.assertEqual({locationType.SP}, set(lookup[storyunlock.IdentityDisk]))
         self.assertEqual({locationType.HB}, set(lookup[storyunlock.MembershipCard]))
-        self.assertEqual({locationType.TT}, set(lookup[storyunlock.Picture]))
+        # self.assertEqual({locationType.TT}, set(lookup[storyunlock.Picture]))
         self.assertEqual({locationType.TT}, set(lookup[storyunlock.IceCream]))
+        self.assertEqual({locationType.TWTNW}, set(lookup[storyunlock.WayToTheDawn]))
+        self.assertEqual({locationType.DC}, set(lookup[storyunlock.DisneyCastleKey]))
 
 
 if __name__ == '__main__':

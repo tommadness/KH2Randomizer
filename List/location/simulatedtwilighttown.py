@@ -4,6 +4,7 @@ from List.configDict import locationType
 from List.inventory import ability, misc
 from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, stat_bonus, item_bonus, \
     LocationGraphBuilder, START_NODE
+from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
 class NodeId(str, Enum):
@@ -59,7 +60,7 @@ class STTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            pass
+            self.logic[START_NODE][NodeId.TwilightTownMapPopup] = ItemPlacementHelpers.stt_check
         else:
             pass
 

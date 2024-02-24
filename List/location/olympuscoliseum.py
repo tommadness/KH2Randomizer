@@ -82,10 +82,11 @@ class OCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.Hydra][NodeId.AuronsStatue] = ItemPlacementHelpers.auron_check
+            self.logic[START_NODE][NodeId.Passage] = ItemPlacementHelpers.oc1_check
+            self.logic[NodeId.Hydra][NodeId.AuronsStatue] = ItemPlacementHelpers.oc2_check
             self.logic[NodeId.Hades][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
         else:
-            self.logic[NodeId.Zexion][NodeId.CerberusBonus] = ItemPlacementHelpers.auron_check
+            self.logic[NodeId.Zexion][NodeId.CerberusBonus] = ItemPlacementHelpers.oc2_check
             self.logic[NodeId.Hydra][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
 
 def make_graph(graph: LocationGraphBuilder):

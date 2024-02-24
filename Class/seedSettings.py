@@ -2208,7 +2208,7 @@ _all_settings = [
         choices={
             str(storyunlock.IdentityDisk.id): "Identity Disk",
             str(storyunlock.SkillAndCrossbones.id): "Skill and Crossbones",
-            str(storyunlock.Picture.id): "Picture",
+            # str(storyunlock.Picture.id): "Picture",
             str(storyunlock.IceCream.id): "Ice Cream",
             str(storyunlock.BattlefieldsOfWar.id): "Battlefields of War",
             str(storyunlock.BoneFist.id): "Bone Fist",
@@ -2222,7 +2222,7 @@ _all_settings = [
         default=[
             str(storyunlock.IdentityDisk.id),
             str(storyunlock.SkillAndCrossbones.id),
-            str(storyunlock.Picture.id),
+            # str(storyunlock.Picture.id),
             str(storyunlock.IceCream.id),
             str(storyunlock.BattlefieldsOfWar.id),
             str(storyunlock.BoneFist.id),
@@ -2234,7 +2234,7 @@ _all_settings = [
         ],
         tooltip="""
         Start with the selected visit unlocks already obtained.
-        Each of these items unlocks a second (or third) visit of a particular world.
+        Each of these items unlocks visits of a particular world.
         See the website for more details.
         """,
     ),

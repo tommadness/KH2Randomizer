@@ -243,52 +243,125 @@ class ItemPlacementHelpers:
         return lambda inventory: False
 
     @staticmethod
-    def auron_check(inventory: list[int]) -> bool:
-        return storyunlock.BattlefieldsOfWar.id in inventory
+    def get_number_visit_unlocks(inventory: list[int]) -> int:
+        visit_unlock_ids = [u.id for u in storyunlock.all_story_unlocks()]
+        running_total = 0
+        for id in visit_unlock_ids:
+            running_total+=inventory.count(id)
+        return running_total
 
     @staticmethod
-    def mulan_check(inventory: list[int]) -> bool:
-        return storyunlock.SwordOfTheAncestor.id in inventory
+    def make_level_group_check(group_index) -> RequirementFunction:
+        thresholds = [1,3,6,9,12,15,18,21,24] # modified from AP so that max level could in theory have a visit unlock
+        if group_index<len(thresholds):
+            return lambda inv: ItemPlacementHelpers.get_number_visit_unlocks(inv) >= thresholds[group_index]
+        else:
+            return lambda inv: ItemPlacementHelpers.get_number_visit_unlocks(inv) >= thresholds[-1]
+
 
     @staticmethod
-    def beast_check(inventory: list[int]) -> bool:
-        return storyunlock.BeastsClaw.id in inventory
+    def stt_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.NaminesSketches.id)==1
+    
+    @staticmethod
+    def dc1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.DisneyCastleKey.id)>=1
 
     @staticmethod
-    def jack_ht_check(inventory: list[int]) -> bool:
-        return storyunlock.BoneFist.id in inventory
+    def dc2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.DisneyCastleKey.id)==2
 
     @staticmethod
-    def simba_check(inventory: list[int]) -> bool:
-        return storyunlock.ProudFang.id in inventory
+    def oc1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.BattlefieldsOfWar.id)>=1
 
     @staticmethod
-    def jack_pr_check(inventory: list[int]) -> bool:
-        return storyunlock.SkillAndCrossbones.id in inventory
+    def oc2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.BattlefieldsOfWar.id)==2
 
     @staticmethod
-    def aladdin_check(inventory: list[int]) -> bool:
-        return storyunlock.Scimitar.id in inventory
-
-    # @staticmethod
-    # def riku_check(inventory: list[int]) -> bool:
-    #     return storyunlock.WayToTheDawn.id in inventory
+    def lod1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.SwordOfTheAncestor.id)>=1
+    
+    @staticmethod
+    def lod2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.SwordOfTheAncestor.id)==2
 
     @staticmethod
-    def tron_check(inventory: list[int]) -> bool:
-        return storyunlock.IdentityDisk.id in inventory
+    def bc1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.BeastsClaw.id)>=1
+    
+    @staticmethod
+    def bc2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.BeastsClaw.id)==2
+
+    @staticmethod
+    def ht1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.BoneFist.id)>=1
+    
+    @staticmethod
+    def ht2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.BoneFist.id)==2
+
+    @staticmethod
+    def pl1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.ProudFang.id)>=1
+    
+    @staticmethod
+    def pl2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.ProudFang.id)==2
+    
+    @staticmethod
+    def pr1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.SkillAndCrossbones.id)>=1
+
+    @staticmethod
+    def pr2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.SkillAndCrossbones.id)==2
+
+    @staticmethod
+    def ag1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.Scimitar.id)>=1
+
+    @staticmethod
+    def ag2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.Scimitar.id)==2
+
+    @staticmethod
+    def twtnw_roxas_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.WayToTheDawn.id) >= 1
+    
+    @staticmethod
+    def twtnw_post_saix_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.WayToTheDawn.id) == 2
+
+    @staticmethod
+    def sp1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.IdentityDisk.id)>=1
+    
+    @staticmethod
+    def sp2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.IdentityDisk.id) == 2
+
+    @staticmethod
+    def tt1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.IceCream.id) >= 1
 
     @staticmethod
     def tt2_check(inventory: list[int]) -> bool:
-        return storyunlock.Picture.id in inventory
+        return inventory.count(storyunlock.IceCream.id) >= 2
 
     @staticmethod
     def tt3_check(inventory: list[int]) -> bool:
-        return storyunlock.Picture.id in inventory and storyunlock.IceCream.id in inventory
+        return inventory.count(storyunlock.IceCream.id) == 3
 
     @staticmethod
-    def hb_check(inventory: list[int]) -> bool:
-        return storyunlock.MembershipCard.id in inventory
+    def hb1_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.MembershipCard.id) >= 1
+
+    @staticmethod
+    def hb2_check(inventory: list[int]) -> bool:
+        return inventory.count(storyunlock.MembershipCard.id) == 2
 
     @staticmethod
     def make_synth_requirement(synth_item: KH2Item) -> RequirementFunction:
@@ -298,17 +371,17 @@ class ItemPlacementHelpers:
             # TR access, so free
             synth.BlazingShard: default_access_lambda,
 
-            synth.BlazingStone: lambda inv: ItemPlacementHelpers.mulan_check(inv) \
-                                               or ItemPlacementHelpers.tron_check(inv) \
-                                               or ItemPlacementHelpers.auron_check(inv),
+            synth.BlazingStone: lambda inv: ItemPlacementHelpers.lod2_check(inv) \
+                                               or ItemPlacementHelpers.sp2_check(inv) \
+                                               or ItemPlacementHelpers.oc2_check(inv),
 
             # AG 1 and 2 both have these, so no requirement needed
             synth.BlazingGem: default_access_lambda,
 
-            synth.BlazingCrystal: lambda inv: ItemPlacementHelpers.auron_check(inv) \
-                                                 or ItemPlacementHelpers.hb_check(inv) \
-                                                 or ItemPlacementHelpers.beast_check(inv) \
-                                                 or ItemPlacementHelpers.aladdin_check(inv),
+            synth.BlazingCrystal: lambda inv: ItemPlacementHelpers.oc2_check(inv) \
+                                                 or ItemPlacementHelpers.hb2_check(inv) \
+                                                 or ItemPlacementHelpers.bc2_check(inv) \
+                                                 or ItemPlacementHelpers.ag2_check(inv),
 
             # shadows are always available in DC/TR
             synth.DarkShard: default_access_lambda,
@@ -320,7 +393,7 @@ class ItemPlacementHelpers:
             synth.DarkGem: default_access_lambda,
 
             # PR1 has them, but could be locked out
-            synth.DarkCrystal: lambda inv: ItemPlacementHelpers.mulan_check(inv),
+            synth.DarkCrystal: lambda inv: ItemPlacementHelpers.lod2_check(inv),
 
             # TWTNW has them post Xemnas
             synth.DenseShard: default_access_lambda,
@@ -335,9 +408,9 @@ class ItemPlacementHelpers:
             synth.DenseCrystal: default_access_lambda,
 
             # BC ones can disappear
-            synth.FrostShard: lambda inv: ItemPlacementHelpers.mulan_check(inv) \
-                                             or ItemPlacementHelpers.aladdin_check(inv) \
-                                             or ItemPlacementHelpers.jack_pr_check(inv),
+            synth.FrostShard: lambda inv: ItemPlacementHelpers.lod2_check(inv) \
+                                             or ItemPlacementHelpers.ag2_check(inv) \
+                                             or ItemPlacementHelpers.pr2_check(inv),
 
             # TR is always available
             synth.FrostStone: default_access_lambda,
@@ -352,23 +425,23 @@ class ItemPlacementHelpers:
             synth.LightningShard: default_access_lambda,
 
             # HT and SP ones can become unavailable
-            synth.LightningStone: lambda inv: ItemPlacementHelpers.auron_check(inv) \
-                                                 or ItemPlacementHelpers.mulan_check(inv) \
-                                                 or ItemPlacementHelpers.aladdin_check(inv),
+            synth.LightningStone: lambda inv: ItemPlacementHelpers.oc2_check(inv) \
+                                                 or ItemPlacementHelpers.lod2_check(inv) \
+                                                 or ItemPlacementHelpers.ag2_check(inv),
 
-            synth.LightningGem: lambda inv: ItemPlacementHelpers.hb_check(inv) \
-                                               or ItemPlacementHelpers.beast_check(inv) \
-                                               or ItemPlacementHelpers.jack_pr_check(inv) \
-                                               or ItemPlacementHelpers.jack_ht_check(inv) \
-                                               or ItemPlacementHelpers.simba_check(inv) \
-                                               or ItemPlacementHelpers.tron_check(inv),
+            synth.LightningGem: lambda inv: ItemPlacementHelpers.hb2_check(inv) \
+                                               or ItemPlacementHelpers.bc2_check(inv) \
+                                               or ItemPlacementHelpers.pr2_check(inv) \
+                                               or ItemPlacementHelpers.ht2_check(inv) \
+                                               or ItemPlacementHelpers.pl2_check(inv) \
+                                               or ItemPlacementHelpers.sp2_check(inv),
 
             # SP1 and 2 both have them
             synth.LightningCrystal: default_access_lambda,
 
             # OC1 can be locked out
-            synth.LucidShard: lambda inv: ItemPlacementHelpers.jack_pr_check(inv) \
-                                             or ItemPlacementHelpers.jack_ht_check(inv),
+            synth.LucidShard: lambda inv: ItemPlacementHelpers.pr2_check(inv) \
+                                             or ItemPlacementHelpers.ht2_check(inv),
 
             # HT1 and 2 have them
             synth.LucidStone: default_access_lambda,
@@ -376,14 +449,14 @@ class ItemPlacementHelpers:
             # SP1 and 2 both have them
             synth.LucidGem: default_access_lambda,
 
-            synth.LucidCrystal: lambda inv: ItemPlacementHelpers.mulan_check(inv) \
-                                               or ItemPlacementHelpers.beast_check(inv) \
-                                               or ItemPlacementHelpers.auron_check(inv) \
-                                               or ItemPlacementHelpers.jack_pr_check(inv) \
-                                               or ItemPlacementHelpers.aladdin_check(inv) \
-                                               or ItemPlacementHelpers.jack_ht_check(inv) \
-                                               or ItemPlacementHelpers.simba_check(inv) \
-                                               or ItemPlacementHelpers.hb_check(inv),
+            synth.LucidCrystal: lambda inv: ItemPlacementHelpers.lod2_check(inv) \
+                                               or ItemPlacementHelpers.bc2_check(inv) \
+                                               or ItemPlacementHelpers.oc2_check(inv) \
+                                               or ItemPlacementHelpers.pr2_check(inv) \
+                                               or ItemPlacementHelpers.ag2_check(inv) \
+                                               or ItemPlacementHelpers.ht2_check(inv) \
+                                               or ItemPlacementHelpers.pl2_check(inv) \
+                                               or ItemPlacementHelpers.hb2_check(inv),
 
             # BC1 and 2 both have them, also TR
             synth.PowerShard: default_access_lambda,
@@ -394,10 +467,10 @@ class ItemPlacementHelpers:
             # PL1 and 2 both have them
             synth.PowerGem: default_access_lambda,
 
-            synth.PowerCrystal: lambda inv: ItemPlacementHelpers.hb_check(inv) \
-                                               or ItemPlacementHelpers.beast_check(inv) \
-                                               or ItemPlacementHelpers.auron_check(inv) \
-                                               or ItemPlacementHelpers.jack_pr_check(inv),
+            synth.PowerCrystal: lambda inv: ItemPlacementHelpers.hb2_check(inv) \
+                                               or ItemPlacementHelpers.bc2_check(inv) \
+                                               or ItemPlacementHelpers.oc2_check(inv) \
+                                               or ItemPlacementHelpers.pr2_check(inv),
 
             # TWTNW always has them in Luxord and Saix rooms
             synth.TwilightShard: default_access_lambda,

@@ -67,7 +67,8 @@ class TWTNWLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            pass
+            self.logic[NodeId.FragmentCrossing][NodeId.Roxas] = ItemPlacementHelpers.twtnw_roxas_check
+            self.logic[NodeId.Saix][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
         else:
             pass
 

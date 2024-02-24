@@ -61,9 +61,10 @@ class PLLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.Scar][NodeId.Hyenas2Bonus] = ItemPlacementHelpers.simba_check
+            self.logic[START_NODE][NodeId.Gorge] = ItemPlacementHelpers.pl1_check
+            self.logic[NodeId.Scar][NodeId.Hyenas2Bonus] = ItemPlacementHelpers.pl2_check
         else:
-            self.logic[NodeId.Groundshaker][NodeId.Gorge] = ItemPlacementHelpers.simba_check
+            self.logic[NodeId.Groundshaker][NodeId.Gorge] = ItemPlacementHelpers.pl2_check
 
 def make_graph(graph: LocationGraphBuilder):
     pl = locationType.PL
@@ -142,7 +143,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(oasis, circle_of_life)
         graph.add_edge(circle_of_life, hyenas_1_bonus, RequirementEdge(battle=True))
         graph.add_edge(hyenas_1_bonus, scar, RequirementEdge(battle=True))
-        graph.add_edge(scar, hyenas_2_bonus, RequirementEdge(battle=True, req=ItemPlacementHelpers.simba_check))
+        graph.add_edge(scar, hyenas_2_bonus, RequirementEdge(battle=True, req=ItemPlacementHelpers.pl2_check))
         graph.add_edge(hyenas_2_bonus, groundshaker, RequirementEdge(battle=True))
         graph.add_edge(groundshaker, data_saix, RequirementEdge(battle=True))
         graph.register_first_boss(scar)
@@ -155,7 +156,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(wildebeest_valley, wastelands)
         graph.add_edge(wastelands, jungle)
         graph.add_edge(jungle, groundshaker, RequirementEdge(battle=True))
-        graph.add_edge(groundshaker, gorge, RequirementEdge(req=ItemPlacementHelpers.simba_check))
+        graph.add_edge(groundshaker, gorge, RequirementEdge(req=ItemPlacementHelpers.pl2_check))
         graph.add_edge(gorge, oasis, RequirementEdge(battle=True))
         graph.add_edge(oasis, circle_of_life)
         graph.add_edge(circle_of_life, hyenas_1_bonus, RequirementEdge(battle=True))

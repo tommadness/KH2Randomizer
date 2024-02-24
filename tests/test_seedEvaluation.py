@@ -29,6 +29,21 @@ class Tests(unittest.TestCase):
 
         self.inventory: list[int] = []
 
+    def test_post_roxas(self):
+        roxas_checks = [worldthatneverwas.NodeId.Roxas]
+        self._assert_unavailable(roxas_checks)
+        self._collect(storyunlock.WayToTheDawn)
+        self._assert_available(roxas_checks)
+
+    def test_post_saix(self):
+        """ Verifies 2 WttD are required to access Post Saix checks. """
+        pre_xemnas_popup = [worldthatneverwas.NodeId.PreXemnas1Popup]
+        self._assert_unavailable(pre_xemnas_popup)
+        self._collect(storyunlock.WayToTheDawn)
+        self._assert_unavailable(pre_xemnas_popup)
+        self._collect(storyunlock.WayToTheDawn)
+        self._assert_available(pre_xemnas_popup)
+
     def test_final_door(self):
         """ Verifies all 3 proofs are required to access Final Xemnas. """
         final_xemnas = [worldthatneverwas.NodeId.FinalXemnas]
@@ -37,12 +52,16 @@ class Tests(unittest.TestCase):
         self._collect(proof.ProofOfConnection)
         self._assert_unavailable(final_xemnas)
         self._collect(proof.ProofOfNonexistence)
+        self._assert_unavailable(final_xemnas)
+        self._collect(storyunlock.WayToTheDawn)
+        self._collect(storyunlock.WayToTheDawn)
         self._assert_available(final_xemnas)
 
     def test_data_demyx(self):
-        """ Verifies Membership Card and all 5 forms are required to access Data Demyx. """
+        """ Verifies 2 Membership Cards and all 5 forms are required to access Data Demyx. """
         data_demyx = [hollowbastion.NodeId.DataDemyx]
         self._assert_unavailable(data_demyx)
+        self._collect(storyunlock.MembershipCard)
         self._collect(storyunlock.MembershipCard)
         self._collect(form.ValorForm)
         self._collect(form.WisdomForm)
@@ -62,11 +81,15 @@ class Tests(unittest.TestCase):
         self._collect(proof.ProofOfPeace)
         self._assert_unavailable(mushroom_13)
         self._collect(storyunlock.MembershipCard)
+        self._assert_unavailable(mushroom_13)
+        self._collect(storyunlock.MembershipCard)
         self._assert_available(mushroom_13)
 
     def test_lingering_will(self):
         """ Verifies Proof of Connection is required to access Lingering Will. """
         lingering_will = [disneycastle.NodeId.LingeringWill]
+        self._collect(storyunlock.DisneyCastleKey)
+        self._collect(storyunlock.DisneyCastleKey)
         self._assert_unavailable(lingering_will)
         self._collect(proof.ProofOfNonexistence)
         self._assert_unavailable(lingering_will)
@@ -83,11 +106,15 @@ class Tests(unittest.TestCase):
         lod2_nodes = [lod.NodeId.ThroneRoom, lod.NodeId.StormRider, lod.NodeId.DataXigbar]
         self._assert_unavailable(lod2_nodes)
         self._collect(storyunlock.SwordOfTheAncestor)
+        self._assert_unavailable(lod2_nodes)
+        self._collect(storyunlock.SwordOfTheAncestor)
         self._assert_available(lod2_nodes)
 
     def test_ag_unlock(self):
         """ Verifies Scimitar and one of each blizzard/fire/thunder is required to access Agrabah 2. """
         ag2_nodes = [ag.NodeId.RuinedChamber, ag.NodeId.GenieJafar, ag.NodeId.Lexaeus, ag.NodeId.DataLexaeus]
+        self._assert_unavailable(ag2_nodes)
+        self._collect(storyunlock.Scimitar)
         self._assert_unavailable(ag2_nodes)
         self._collect(storyunlock.Scimitar)
         self._assert_unavailable(ag2_nodes)
@@ -103,13 +130,12 @@ class Tests(unittest.TestCase):
         self._assert_available(ag2_nodes)
 
     def test_tt2_unlock(self):
-        """ Verifies Picture is required to access Twilight Town 2. """
+        """ Verifies 2 Ice Creams are required to access Twilight Town 2. """
         tt2_nodes = [tt.NodeId.SeifersTrophy, tt.NodeId.LimitForm]
         self._assert_unavailable(tt2_nodes)
         self._collect(storyunlock.IceCream)
         self._assert_unavailable(tt2_nodes)
-        self._uncollect(storyunlock.IceCream)
-        self._collect(storyunlock.Picture)
+        self._collect(storyunlock.IceCream)
         self._assert_available(tt2_nodes)
         self._collect(storyunlock.IceCream)
         self._assert_available(tt2_nodes)
@@ -132,16 +158,15 @@ class Tests(unittest.TestCase):
 
         self._assert_unavailable(tt3_nodes)
 
-        # Just Ice Cream isn't enough
+        # Just 1 Ice Cream isn't enough
         self._collect(storyunlock.IceCream)
         self._assert_unavailable(tt3_nodes)
 
-        # Just Picture isn't enough
-        self._uncollect(storyunlock.IceCream)
-        self._collect(storyunlock.Picture)
+        # Just 2 Ice Creams isn't enough
+        self._collect(storyunlock.IceCream)
         self._assert_unavailable(tt3_nodes)
 
-        # Both Picture and Ice Cream
+        # All 3 Ice Creams
         self._collect(storyunlock.IceCream)
         self._assert_available(tt3_nodes)
 

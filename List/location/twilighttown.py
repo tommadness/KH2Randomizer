@@ -91,6 +91,7 @@ class TTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[START_NODE][NodeId.OldMansion] = ItemPlacementHelpers.tt1_check
             self.logic[NodeId.ValorForm][NodeId.SeifersTrophy] = ItemPlacementHelpers.tt2_check
             self.logic[NodeId.LimitForm][NodeId.UndergroundConcourse] = ItemPlacementHelpers.tt3_check
             self.logic[NodeId.LimitForm][NodeId.MansionBonus] = ItemPlacementHelpers.tt3_check

@@ -109,12 +109,13 @@ class HBLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.BaseballCharmPopup][NodeId.Postern] = ItemPlacementHelpers.hb_check
+            self.logic[START_NODE][NodeId.MarketplaceMapPopup] = ItemPlacementHelpers.hb1_check
+            self.logic[NodeId.BaseballCharmPopup][NodeId.Postern] = ItemPlacementHelpers.hb2_check
             self.logic[NodeId.DoorToDarknessPopup][NodeId.CorDepths] = ItemPlacementHelpers.need_growths
             self.logic[NodeId.ThousandHeartless][NodeId.Mushroom13] = ItemPlacementHelpers.need_proof_peace
             self.logic[NodeId.ThousandHeartless][NodeId.DataDemyx] = ItemPlacementHelpers.need_forms
         else:
-            self.logic[NodeId.ThousandHeartless][NodeId.CorDepths] = lambda inv : ItemPlacementHelpers.hb_check(inv) and ItemPlacementHelpers.need_growths(inv)
+            self.logic[NodeId.ThousandHeartless][NodeId.CorDepths] = lambda inv : ItemPlacementHelpers.hb2_check(inv) and ItemPlacementHelpers.need_growths(inv)
             self.logic[NodeId.BaseballCharmPopup][NodeId.DataDemyx] = ItemPlacementHelpers.need_forms
 
 def make_graph(graph: LocationGraphBuilder):
@@ -185,7 +186,7 @@ def make_graph(graph: LocationGraphBuilder):
         item_bonus(60, CheckLocation.ThousandHeartless, hb, vanilla=ability.GuardBreak),
         popup(525, CheckLocation.ThousandHeartlessSecretAnsemReport1, hb, vanilla=report.AnsemReport1),
         popup(269, CheckLocation.ThousandHeartlessIceCream, hb, vanilla=storyunlock.IceCream),
-        popup(511, CheckLocation.ThousandHeartlessPicture, hb, vanilla=storyunlock.Picture),
+        popup(511, CheckLocation.ThousandHeartlessPicture, hb),
     ])
     gull_wing = graph.add_location(NodeId.GullWing, [
         chest(491, CheckLocation.PosternGullWing, hb, vanilla=keyblade.GullWing),

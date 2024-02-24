@@ -32,56 +32,56 @@ class PuzzleLogicGraph(DefaultLogicGraph):
                 return (
                     ItemPlacementHelpers.need_growths(inv)
                     and ItemPlacementHelpers.need_torn_pages(5)(inv)
-                    and ItemPlacementHelpers.hb_check(inv)
-                    and ItemPlacementHelpers.mulan_check(inv)
+                    and ItemPlacementHelpers.hb2_check(inv)
+                    and ItemPlacementHelpers.lod2_check(inv)
                     and ItemPlacementHelpers.tt3_check(inv)
-                    and ItemPlacementHelpers.jack_pr_check(inv)
-                    and ItemPlacementHelpers.aladdin_check(inv)
+                    and ItemPlacementHelpers.pr2_check(inv)
+                    and ItemPlacementHelpers.ag2_check(inv)
                 )
 
             def sunset_checker(inv: list[int]) -> bool:
                 return (
                     ItemPlacementHelpers.need_growths(inv)
-                    and ItemPlacementHelpers.hb_check(inv)
+                    and ItemPlacementHelpers.hb2_check(inv)
                     and ItemPlacementHelpers.tt3_check(inv)
-                    and ItemPlacementHelpers.tron_check(inv)
-                    and ItemPlacementHelpers.jack_pr_check(inv)
-                    and ItemPlacementHelpers.aladdin_check(inv)
-                    and ItemPlacementHelpers.beast_check(inv)
+                    and ItemPlacementHelpers.sp2_check(inv)
+                    and ItemPlacementHelpers.pr2_check(inv)
+                    and ItemPlacementHelpers.ag2_check(inv)
+                    and ItemPlacementHelpers.bc2_check(inv)
                 )
             self.logic[START_NODE][NodeId.AwakeningPuzzle] = ItemPlacementHelpers.need_growths
             self.logic[START_NODE][NodeId.HeartPuzzle] = ItemPlacementHelpers.need_growths
             self.logic[START_NODE][NodeId.DualityPuzzle] = ItemPlacementHelpers.need_growths
-            self.logic[START_NODE][NodeId.FrontierPuzzle] = lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.tt2_check(inv) and ItemPlacementHelpers.hb_check(inv)
+            self.logic[START_NODE][NodeId.FrontierPuzzle] = lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.tt2_check(inv) and ItemPlacementHelpers.hb2_check(inv)
             self.logic[START_NODE][NodeId.DaylightPuzzle] = daylight_checker
             self.logic[START_NODE][NodeId.SunsetPuzzle] = sunset_checker
         else:
             def awakening_checker(inv: list[int]) -> bool:
                 return (
                     ItemPlacementHelpers.need_growths(inv)
-                    and ItemPlacementHelpers.beast_check(inv)
+                    and ItemPlacementHelpers.bc2_check(inv)
                     and ItemPlacementHelpers.tt3_check(inv)
                 )
 
             def heart_checker(inv: list[int]) -> bool:
                 return (
                     ItemPlacementHelpers.need_growths(inv)
-                    and ItemPlacementHelpers.auron_check(inv)
-                    and ItemPlacementHelpers.jack_pr_check(inv)
+                    and ItemPlacementHelpers.oc2_check(inv)
+                    and ItemPlacementHelpers.pr2_check(inv)
                 )
 
             def duality_checker(inv: list[int]) -> bool:
                 return (
                     ItemPlacementHelpers.need_growths(inv)
-                    and ItemPlacementHelpers.jack_pr_check(inv)
-                    and ItemPlacementHelpers.auron_check(inv)
+                    and ItemPlacementHelpers.pr2_check(inv)
+                    and ItemPlacementHelpers.oc2_check(inv)
                 )
 
             def frontier_checker(inv: list[int]) -> bool:
                 return (
                     ItemPlacementHelpers.need_growths(inv)
-                    and ItemPlacementHelpers.jack_pr_check(inv)
-                    and ItemPlacementHelpers.aladdin_check(inv)
+                    and ItemPlacementHelpers.pr2_check(inv)
+                    and ItemPlacementHelpers.ag2_check(inv)
                     and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
                 )
 
@@ -89,18 +89,18 @@ class PuzzleLogicGraph(DefaultLogicGraph):
                 return (
                     ItemPlacementHelpers.need_growths(inv)
                     and ItemPlacementHelpers.need_torn_pages(5)(inv)
-                    and ItemPlacementHelpers.simba_check(inv)
-                    and ItemPlacementHelpers.aladdin_check(inv)
+                    and ItemPlacementHelpers.pl2_check(inv)
+                    and ItemPlacementHelpers.ag2_check(inv)
                     and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
-                    and ItemPlacementHelpers.hb_check(inv)
+                    and ItemPlacementHelpers.hb2_check(inv)
                 )
 
             def sunset_checker(inv: list[int]) -> bool:
                 return (
                     ItemPlacementHelpers.need_growths(inv)
-                    and ItemPlacementHelpers.hb_check(inv)
+                    and ItemPlacementHelpers.hb2_check(inv)
                     and ItemPlacementHelpers.tt3_check(inv)
-                    and ItemPlacementHelpers.aladdin_check(inv)
+                    and ItemPlacementHelpers.ag2_check(inv)
                     and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
                 )
             self.logic[START_NODE][NodeId.AwakeningPuzzle] = awakening_checker

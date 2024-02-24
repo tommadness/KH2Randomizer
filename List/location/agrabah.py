@@ -67,10 +67,11 @@ class AGLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
-            self.logic[NodeId.ElementalLords][NodeId.RuinedChamber] = lambda inv : ItemPlacementHelpers.aladdin_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
+            self.logic[START_NODE][NodeId.AgrabahMapPopup] = ItemPlacementHelpers.ag1_check
+            self.logic[NodeId.ElementalLords][NodeId.RuinedChamber] = lambda inv : ItemPlacementHelpers.ag2_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
         else:
             self.logic[NodeId.PalaceWalls][NodeId.RuinedChamber] = ItemPlacementHelpers.need_fire_blizzard_thunder
-            self.logic[NodeId.Lexaeus][NodeId.AgrabahMapPopup] = ItemPlacementHelpers.aladdin_check
+            self.logic[NodeId.Lexaeus][NodeId.AgrabahMapPopup] = ItemPlacementHelpers.ag2_check
 
 
 def make_graph(graph: LocationGraphBuilder):
