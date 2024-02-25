@@ -67,6 +67,27 @@ class ItemPlacementHelpers:
     @staticmethod
     def has_final_form(inventory: list[int]) -> bool:
         return form.FinalForm.id in inventory
+    
+    @staticmethod
+    def can_level_valor(inventory: list[int]) -> bool:
+        return True
+    @staticmethod
+    def can_level_wisdom(inventory: list[int]) -> bool:
+        return True
+    @staticmethod
+    def can_level_limit(inventory: list[int]) -> bool:
+        return True
+    @staticmethod
+    def can_level_master(inventory: list[int]) -> bool:
+        return ItemPlacementHelpers.ht1_check(inventory) \
+              or ItemPlacementHelpers.hb2_check(inventory)
+    @staticmethod
+    def can_level_final(inventory: list[int]) -> bool:
+        return ItemPlacementHelpers.twtnw_roxas_check(inventory) \
+              or ItemPlacementHelpers.pr2_check(inventory) \
+              or ItemPlacementHelpers.bc2_check(inventory) \
+              or ItemPlacementHelpers.lod2_check(inventory) \
+              or ItemPlacementHelpers.tt3_check(inventory)
 
     @staticmethod
     def has_auto_valor(inventory: list[int]) -> bool:
@@ -132,18 +153,23 @@ class ItemPlacementHelpers:
     def make_form_lambda(drive_form: DriveForm, form_level: int) -> RequirementFunction:
         if drive_form == form.ValorForm:
             return lambda inventory: ItemPlacementHelpers.has_valor_form(inventory) \
+                                     and ItemPlacementHelpers.can_level_valor(inventory) \
                                      and ItemPlacementHelpers.count_forms(inventory) >= form_level - 2
         if drive_form == form.WisdomForm:
             return lambda inventory: ItemPlacementHelpers.has_wisdom_form(inventory) \
+                                     and ItemPlacementHelpers.can_level_wisdom(inventory) \
                                      and ItemPlacementHelpers.count_forms(inventory) >= form_level - 2
         if drive_form == form.LimitForm:
             return lambda inventory: ItemPlacementHelpers.has_limit_form(inventory) \
+                                     and ItemPlacementHelpers.can_level_limit(inventory) \
                                      and ItemPlacementHelpers.count_forms(inventory) >= form_level - 2
         if drive_form == form.MasterForm:
             return lambda inventory: ItemPlacementHelpers.has_master_form(inventory) \
+                                     and ItemPlacementHelpers.can_level_master(inventory) \
                                      and ItemPlacementHelpers.count_forms(inventory) >= form_level - 2
         if drive_form == form.FinalForm:
             return lambda inventory: ItemPlacementHelpers.has_final_form(inventory) \
+                                     and ItemPlacementHelpers.can_level_final(inventory) \
                                      and ItemPlacementHelpers.count_forms(inventory) >= form_level - 2
         return lambda inventory: False
 
@@ -179,27 +205,34 @@ class ItemPlacementHelpers:
         if drive_form == form.ValorForm:
             return lambda inventory: (ItemPlacementHelpers.has_valor_form(inventory)
                                       or ItemPlacementHelpers.has_auto_valor(inventory)) \
+                                     and ItemPlacementHelpers.can_level_valor(inventory) \
                                      and max_form_level(inventory) >= form_level
         if drive_form == form.WisdomForm:
             return lambda inventory: (ItemPlacementHelpers.has_wisdom_form(inventory)
                                       or ItemPlacementHelpers.has_auto_wisdom(inventory)) \
+                                     and ItemPlacementHelpers.can_level_wisdom(inventory) \
                                      and max_form_level(inventory) >= form_level
         if drive_form == form.LimitForm:
             return lambda inventory: (ItemPlacementHelpers.has_limit_form(inventory)
                                       or ItemPlacementHelpers.has_auto_limit(inventory)) \
+                                     and ItemPlacementHelpers.can_level_limit(inventory) \
                                      and max_form_level(inventory) >= form_level
         if drive_form == form.MasterForm:
             return lambda inventory: (ItemPlacementHelpers.has_master_form(inventory)
                                       or ItemPlacementHelpers.has_auto_master(inventory)) \
+                                     and ItemPlacementHelpers.can_level_master(inventory) \
                                      and max_form_level(inventory) >= form_level
         if drive_form == form.FinalForm:
             def have_final_form(inventory: list[int]) -> bool:
                 return ItemPlacementHelpers.has_final_form(inventory) or final_possible_but_not_obtained(inventory)
 
             if form_level == 2:
-                return lambda inventory: have_final_form(inventory) or ItemPlacementHelpers.has_auto_final(inventory)
+                return lambda inventory: (have_final_form(inventory) or ItemPlacementHelpers.has_auto_final(inventory)) \
+                                     and ItemPlacementHelpers.can_level_final(inventory)
             else:
-                return lambda inventory: have_final_form(inventory) and max_form_level(inventory) >= form_level
+                return lambda inventory: have_final_form(inventory) \
+                                     and max_form_level(inventory) >= form_level \
+                                     and ItemPlacementHelpers.can_level_final(inventory)
 
         return lambda inventory: False
 
@@ -218,27 +251,33 @@ class ItemPlacementHelpers:
         if drive_form == form.ValorForm:
             return lambda inventory: (ItemPlacementHelpers.has_valor_form(inventory)
                                       or ItemPlacementHelpers.has_auto_valor(inventory)) \
+                                     and ItemPlacementHelpers.can_level_valor(inventory) \
                                      and max_form_level(inventory) >= form_level
         if drive_form == form.WisdomForm:
             return lambda inventory: (ItemPlacementHelpers.has_wisdom_form(inventory)
                                       or ItemPlacementHelpers.has_auto_wisdom(inventory)) \
+                                     and ItemPlacementHelpers.can_level_wisdom(inventory) \
                                      and max_form_level(inventory) >= form_level
         if drive_form == form.LimitForm:
             return lambda inventory: (ItemPlacementHelpers.has_limit_form(inventory)
                                       or ItemPlacementHelpers.has_auto_limit(inventory)) \
+                                     and ItemPlacementHelpers.can_level_limit(inventory) \
                                      and max_form_level(inventory) >= form_level
         if drive_form == form.MasterForm:
             return lambda inventory: (ItemPlacementHelpers.has_master_form(inventory)
                                       or ItemPlacementHelpers.has_auto_master(inventory)) \
+                                     and ItemPlacementHelpers.can_level_master(inventory) \
                                      and max_form_level(inventory) >= form_level
         if drive_form == form.FinalForm:
             def have_final_form(inventory: list[int]) -> bool:
                 return final_possible_but_not_obtained(inventory) or ItemPlacementHelpers.has_final_form(inventory)
 
             if form_level == 2:
-                return lambda inventory: have_final_form(inventory) or ItemPlacementHelpers.has_auto_final(inventory)
+                return lambda inventory: (have_final_form(inventory) or ItemPlacementHelpers.has_auto_final(inventory)) \
+                                     and ItemPlacementHelpers.can_level_final(inventory)
             else:
-                return lambda inventory: have_final_form(inventory) and max_form_level(inventory) >= form_level
+                return lambda inventory: have_final_form(inventory) and max_form_level(inventory) >= form_level \
+                                     and ItemPlacementHelpers.can_level_final(inventory)
 
         return lambda inventory: False
 
