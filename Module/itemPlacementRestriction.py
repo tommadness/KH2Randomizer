@@ -407,61 +407,72 @@ class ItemPlacementHelpers:
         # making lambdas for the different synth items
         default_access_lambda: RequirementFunction = lambda inventory: True
         synth_req_map: dict[InventoryItem, RequirementFunction] = {
-            # TR access, so free
-            synth.BlazingShard: default_access_lambda,
+            synth.BlazingShard: lambda inv: ItemPlacementHelpers.dc2_check(inv) \
+                                               or ItemPlacementHelpers.bc2_check(inv) \
+                                               or ItemPlacementHelpers.oc2_check(inv),
 
             synth.BlazingStone: lambda inv: ItemPlacementHelpers.lod2_check(inv) \
                                                or ItemPlacementHelpers.sp2_check(inv) \
                                                or ItemPlacementHelpers.oc2_check(inv),
 
-            # AG 1 and 2 both have these, so no requirement needed
-            synth.BlazingGem: default_access_lambda,
+            synth.BlazingGem: ItemPlacementHelpers.ag1_check,
 
             synth.BlazingCrystal: lambda inv: ItemPlacementHelpers.oc2_check(inv) \
                                                  or ItemPlacementHelpers.hb2_check(inv) \
                                                  or ItemPlacementHelpers.bc2_check(inv) \
                                                  or ItemPlacementHelpers.ag2_check(inv),
 
-            # shadows are always available in DC/TR
-            synth.DarkShard: default_access_lambda,
+            # shadows are guaranteed anytime in DC/TR
+            synth.DarkShard: ItemPlacementHelpers.dc1_check,
 
             # LoD1 and 2 both have them
-            synth.DarkStone: default_access_lambda,
+            synth.DarkStone: ItemPlacementHelpers.lod1_check,
 
             # BC1 and 2 have them
-            synth.DarkGem: default_access_lambda,
+            synth.DarkGem: ItemPlacementHelpers.bc1_check,
 
             # PR1 has them, but could be locked out
             synth.DarkCrystal: lambda inv: ItemPlacementHelpers.lod2_check(inv),
 
             # TWTNW has them post Xemnas
-            synth.DenseShard: default_access_lambda,
+            synth.DenseShard: lambda inv: ItemPlacementHelpers.twtnw_post_saix_check(inv) \
+                                            or ItemPlacementHelpers.bc2_check(inv) \
+                                            or ItemPlacementHelpers.tt3_check(inv),
 
             # TWTNW has them post Xemnas
-            synth.DenseStone: default_access_lambda,
+            synth.DenseStone: lambda inv: ItemPlacementHelpers.lod2_check(inv) \
+                                            or ItemPlacementHelpers.twtnw_roxas_check(inv),
 
             # TWTNW has them post Xemnas
-            synth.DenseGem: default_access_lambda,
+            synth.DenseGem: lambda inv: ItemPlacementHelpers.tt3_check(inv) \
+                                            or ItemPlacementHelpers.stt_check(inv) \
+                                            or ItemPlacementHelpers.twtnw_roxas_check(inv),
 
             # TWTNW has them post Xemnas
-            synth.DenseCrystal: default_access_lambda,
+            synth.DenseCrystal:  lambda inv: ItemPlacementHelpers.tt3_check(inv) \
+                                            or ItemPlacementHelpers.twtnw_roxas_check(inv) \
+                                            or ItemPlacementHelpers.pl2_check(inv),
 
             # BC ones can disappear
             synth.FrostShard: lambda inv: ItemPlacementHelpers.lod2_check(inv) \
                                              or ItemPlacementHelpers.ag2_check(inv) \
                                              or ItemPlacementHelpers.pr2_check(inv),
 
-            # TR is always available
-            synth.FrostStone: default_access_lambda,
+            # DC/TR
+            synth.FrostStone: ItemPlacementHelpers.dc2_check,
 
             # AG1 and 2 both have them
-            synth.FrostGem: default_access_lambda,
+            synth.FrostGem: ItemPlacementHelpers.ag1_check,
 
             # PL1 and 2 both have them
-            synth.FrostCrystal: default_access_lambda,
+            synth.FrostCrystal: ItemPlacementHelpers.pl1_check,
 
             # LoD1 and 2 both have them
-            synth.LightningShard: default_access_lambda,
+            synth.LightningShard: lambda inv: ItemPlacementHelpers.lod1_check(inv) \
+                                                or ItemPlacementHelpers.dc1_check(inv) \
+                                                or ItemPlacementHelpers.pl2_check(inv) \
+                                                or ItemPlacementHelpers.pr2_check(inv) \
+                                                or ItemPlacementHelpers.ag2_check(inv),
 
             # HT and SP ones can become unavailable
             synth.LightningStone: lambda inv: ItemPlacementHelpers.oc2_check(inv) \
@@ -476,17 +487,18 @@ class ItemPlacementHelpers:
                                                or ItemPlacementHelpers.sp2_check(inv),
 
             # SP1 and 2 both have them
-            synth.LightningCrystal: default_access_lambda,
+            synth.LightningCrystal: ItemPlacementHelpers.sp1_check,
 
             # OC1 can be locked out
             synth.LucidShard: lambda inv: ItemPlacementHelpers.pr2_check(inv) \
                                              or ItemPlacementHelpers.ht2_check(inv),
 
             # HT1 and 2 have them
-            synth.LucidStone: default_access_lambda,
+            synth.LucidStone: ItemPlacementHelpers.ht1_check,
 
             # SP1 and 2 both have them
-            synth.LucidGem: default_access_lambda,
+            synth.LucidGem: lambda inv: ItemPlacementHelpers.hb2_check(inv) \
+                                            or ItemPlacementHelpers.sp1_check(inv),
 
             synth.LucidCrystal: lambda inv: ItemPlacementHelpers.lod2_check(inv) \
                                                or ItemPlacementHelpers.bc2_check(inv) \
@@ -498,13 +510,15 @@ class ItemPlacementHelpers:
                                                or ItemPlacementHelpers.hb2_check(inv),
 
             # BC1 and 2 both have them, also TR
-            synth.PowerShard: default_access_lambda,
+            synth.PowerShard: lambda inv: ItemPlacementHelpers.bc1_check(inv)\
+                                          or ItemPlacementHelpers.dc2_check(inv)\
+                                          or ItemPlacementHelpers.ht2_check(inv),
 
             # AG1 and 2 both have them
-            synth.PowerStone: default_access_lambda,
+            synth.PowerStone: ItemPlacementHelpers.ag1_check,
 
             # PL1 and 2 both have them
-            synth.PowerGem: default_access_lambda,
+            synth.PowerGem: ItemPlacementHelpers.pl1_check,
 
             synth.PowerCrystal: lambda inv: ItemPlacementHelpers.hb2_check(inv) \
                                                or ItemPlacementHelpers.bc2_check(inv) \
@@ -512,16 +526,22 @@ class ItemPlacementHelpers:
                                                or ItemPlacementHelpers.pr2_check(inv),
 
             # TWTNW always has them in Luxord and Saix rooms
-            synth.TwilightShard: default_access_lambda,
+            synth.TwilightShard: lambda inv: ItemPlacementHelpers.twtnw_roxas_check(inv)\
+                                                or ItemPlacementHelpers.pr2_check(inv)\
+                                                or ItemPlacementHelpers.tt3_check(inv)\
+                                                or ItemPlacementHelpers.lod2_check(inv),
 
             # TWTNW always has them
-            synth.TwilightStone: default_access_lambda,
+            synth.TwilightStone: lambda inv: ItemPlacementHelpers.tt3_check(inv)\
+                                                or ItemPlacementHelpers.twtnw_roxas_check(inv)\
+                                                or ItemPlacementHelpers.hb2_check(inv),
 
             # TWTNW always has them
-            synth.TwilightGem: default_access_lambda,
+            synth.TwilightGem: lambda inv: ItemPlacementHelpers.twtnw_roxas_check(inv)\
+                                            or ItemPlacementHelpers.tt3_check(inv),
 
             # TWTNW always has them
-            synth.TwilightCrystal: default_access_lambda,
+            synth.TwilightCrystal: ItemPlacementHelpers.twtnw_roxas_check,
         }
 
         item = synth_item.item
