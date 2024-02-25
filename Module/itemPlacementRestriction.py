@@ -148,6 +148,10 @@ class ItemPlacementHelpers:
         return proof.ProofOfConnection.id in inventory \
             and proof.ProofOfNonexistence.id in inventory \
             and proof.ProofOfPeace.id in inventory
+    
+    @staticmethod
+    def need_promise_charm(inventory: list[int]) -> bool:
+        return misc.PromiseCharm.id in inventory
 
     @staticmethod
     def make_form_lambda(drive_form: DriveForm, form_level: int) -> RequirementFunction:

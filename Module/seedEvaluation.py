@@ -7,6 +7,7 @@ from List.NewLocationList import get_all_parent_edge_requirements, Locations
 from List.configDict import ItemAccessibilityOption, locationType
 from List.inventory import proof
 from List.location import simulatedtwilighttown as stt
+from List.location import worldthatneverwas as twtnw
 from List.location.graph import RequirementFunction
 from Module.RandomizerSettings import RandomizerSettings
 from Module.itemPlacementRestriction import ItemPlacementHelpers
@@ -27,10 +28,7 @@ class LocationInformedSeedValidator:
 
     @staticmethod
     def evaluate(inventory: list[int], reqs_list: list[RequirementFunction]) -> bool:
-        result = True
-        for requirement_function in reqs_list:
-            result = result and requirement_function(inventory)
-        return result
+        return all([r(inventory) for r in reqs_list])
 
     def is_location_available(self, inventory: list[int], location: KH2Location) -> bool:
         return self.evaluate(inventory, self.location_requirements[location])
@@ -39,12 +37,11 @@ class LocationInformedSeedValidator:
         self.location_requirements.clear()
         for locations in location_lists:
             for node_id in locations.node_ids():
-                parent_requirements = get_all_parent_edge_requirements(node_id, locations.location_graph)
+                parent_requirement_function = get_all_parent_edge_requirements(node_id, locations.location_graph)
                 for location in locations.locations_for_node(node_id):
-                    if location in self.location_requirements:
-                        self.location_requirements[location].extend(parent_requirements)
-                    else:
-                        self.location_requirements[location] = parent_requirements
+                    if location not in self.location_requirements:
+                        self.location_requirements[location] = []
+                    self.location_requirements[location].append(parent_requirement_function)
 
         for loc, requirements in self.location_requirements.items():
             if locationType.SYNTH in loc.LocationTypes:
@@ -74,7 +71,6 @@ class LocationInformedSeedValidator:
         self.prep_requirements_list(settings, randomizer)
 
         location_requirements = copy.deepcopy(self.location_requirements)
-        proof_ids = [proof.ProofOfConnection.id, proof.ProofOfNonexistence.id, proof.ProofOfPeace.id]
 
         results = ValidationResult()
         inventory = [item_id for item_id in randomizer.starting_item_ids]
@@ -86,8 +82,14 @@ class LocationInformedSeedValidator:
         depth = 0
         while changed:
             depth += 1
-            if all(item in inventory for item in proof_ids):
-                results.any_percent = True
+            final_xem_in_list = False
+            if not results.any_percent:
+                for location, requirements in location_requirements.items():
+                    if location.name() == twtnw.CheckLocation.FinalXemnas:
+                        final_xem_in_list = True
+                        break
+                if not final_xem_in_list:
+                    results.any_percent = True
 
             if len(location_requirements) == 0:
                 if verbose:

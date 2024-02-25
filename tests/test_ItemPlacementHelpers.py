@@ -774,6 +774,10 @@ class Tests(unittest.TestCase):
         self.assertFalse(restriction(inventory))
 
         inventory.append(form.FinalForm.id)
+        self.assertFalse(restriction(inventory))
+
+        # give access to HT
+        inventory.append(storyunlock.BoneFist.id)
         self.assertTrue(restriction(inventory))
 
     def test_form_lambda_final_5(self):
@@ -789,6 +793,10 @@ class Tests(unittest.TestCase):
         self.assertFalse(restriction(inventory))
 
         inventory.append(form.FinalForm.id)
+        self.assertFalse(restriction(inventory))
+        
+        # give access to TWTNW
+        inventory.append(storyunlock.WayToTheDawn.id)
         self.assertTrue(restriction(inventory))
 
     def test_form_lambda_nightmare_final_7(self):
@@ -808,6 +816,10 @@ class Tests(unittest.TestCase):
 
         # We can force final here, so we only need the others
         inventory.append(form.WisdomForm.id)
+        self.assertFalse(restriction(inventory))
+
+        # give access to TWTNW
+        inventory.append(storyunlock.WayToTheDawn.id)
         self.assertTrue(restriction(inventory))
 
 

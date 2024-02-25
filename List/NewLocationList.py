@@ -15,19 +15,35 @@ from Module.RandomizerSettings import RandomizerSettings
 # updated function to allow for multiple incoming connections to enforce multiple constraints
 def get_all_parent_edge_requirements(
         node_id: str,
-        graph: Graph,
-        requirements: Optional[list[RequirementFunction]] = None
-) -> list[RequirementFunction]:
-    if requirements is None:
-        requirements = []
+        graph: Graph
+) -> RequirementFunction:
+    # base_requirement = lambda inv : True
+    non_strict_requirements = []
+    strict_requirements = []
+
     for edge in graph.inc_edges(node_id):
-        data: RequirementEdge = graph.edge_data(edge)
+        # we want to collate the parent requirements in the proper arrangement. 
+        #   If we have non-strict edges, only one of the parent edges is needed to enter this node.
         source, _ = graph.edge_by_id(edge)
-        requirement = data.requirement
-        if requirement is not None:
-            requirements.append(requirement)
-        get_all_parent_edge_requirements(source, graph, requirements)
-    return requirements
+        parent_requirements = get_all_parent_edge_requirements(source, graph)
+        # if debug_mode:
+        #     parent_requirements([])
+        data: RequirementEdge = graph.edge_data(edge)
+        # condition to get to here through this parent
+        if data.requirement is not None:
+            requirement = lambda inv, this_req=data.requirement, par_req=parent_requirements : this_req(inv) and par_req(inv)
+        else:
+            requirement = lambda inv, par_req=parent_requirements: par_req(inv)
+        if data.strict:
+            strict_requirements.append(requirement)
+        else:
+            non_strict_requirements.append(requirement)
+    if len(non_strict_requirements) > 0:
+        #convert the non-strict requirements into a strict with with an or condition
+        new_strict_func = lambda inv, non_s_req=non_strict_requirements: any([r(inv) for r in non_s_req])
+        strict_requirements.append(new_strict_func)
+    this_requirement = lambda inv, s_req=strict_requirements : all([r(inv) for r in s_req])
+    return this_requirement
 
 
 class Locations:

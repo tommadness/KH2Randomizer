@@ -66,6 +66,8 @@ class CheckLocation(str, Enum):
 class TWTNWLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
+
+        self.logic[START_NODE][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_promise_charm(inv) and ItemPlacementHelpers.need_proofs(inv) 
         if not reverse_rando:
             self.logic[NodeId.FragmentCrossing][NodeId.Roxas] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Saix][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
@@ -149,6 +151,9 @@ def make_graph(graph: LocationGraphBuilder):
 
     graph.register_superboss(data_xemnas)
 
+    
+    graph.add_edge(START_NODE, final_xemnas, RequirementEdge(battle=True, strict=False))
+
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, fragment_crossing)
         graph.add_edge(fragment_crossing, roxas, RequirementEdge(battle=True))
@@ -164,7 +169,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(saix, pre_xemnas_1_popup)
         graph.add_edge(pre_xemnas_1_popup, ruin_creations_passage)
         graph.add_edge(ruin_creations_passage, xemnas_1, RequirementEdge(battle=True))
-        graph.add_edge(xemnas_1, final_xemnas, RequirementEdge(battle=True, req=ItemPlacementHelpers.need_proofs))
+        graph.add_edge(xemnas_1, final_xemnas, RequirementEdge(battle=True, req=ItemPlacementHelpers.need_proofs, strict=False))
         graph.add_edge(xemnas_1, data_xemnas, RequirementEdge(battle=True))
         graph.register_first_boss(xemnas_1)
         graph.register_last_story_boss(xemnas_1)
@@ -183,7 +188,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(xigbar, pre_xemnas_1_popup)
         graph.add_edge(pre_xemnas_1_popup, ruin_creations_passage)
         graph.add_edge(ruin_creations_passage, roxas, RequirementEdge(battle=True))
-        graph.add_edge(roxas, final_xemnas, RequirementEdge(battle=True, req=ItemPlacementHelpers.need_proofs))
+        graph.add_edge(roxas, final_xemnas, RequirementEdge(battle=True, req=ItemPlacementHelpers.need_proofs, strict=False))
         graph.add_edge(roxas, data_xemnas, RequirementEdge(battle=True))
         graph.register_first_boss(roxas)
         graph.register_last_story_boss(roxas)
