@@ -26,6 +26,7 @@ from List.configDict import (
     ItemAccessibilityOption,
     SoftlockPreventionOption,
     AbilityPoolOption,
+    StartingVisitMode,
 )
 from List.inventory import ability, misc, proof, storyunlock
 from Module import encoding, field2d
@@ -536,6 +537,23 @@ _depth_options_text = textwrap.dedent(
         Non First Visits - Opposite of the first visit depth. Anywhere but the first visit of the 13 portal worlds (can include drives/levels/100 acre).
 """
 )
+
+
+def _location_unlock_setting(key: str, location: locationType) -> IntSpinner:
+    unlock = storyunlock.story_unlock_for_location(location)
+    return IntSpinner(
+        name=key,
+        group=SettingGroup.LOCATIONS,
+        ui_label=f"{location}",
+        standalone_label=f"{location} Unlocks",
+        shared=True,
+        minimum=0,
+        maximum=storyunlock.story_unlock_for_location(location).visit_count,
+        step=1,
+        default=0,
+        tooltip=f"Number of visits to unlock in {location}. Visits are unlocked with {unlock.name}.",
+    )
+
 
 _all_settings = [
     SingleSelect(
@@ -2147,7 +2165,7 @@ _all_settings = [
         standalone_label="# Visit Unlocks in Shop",
         shared=True,
         minimum=0,
-        maximum=11,
+        maximum=len(storyunlock.all_individual_story_unlocks()),
         step=1,
         default=0,
         tooltip="Adds a number of visit unlocks into the moogle shop.",
@@ -2201,43 +2219,67 @@ _all_settings = [
         """,
         randomizable=True,
     ),
-    MultiSelect(
-        name=settingkey.STARTING_STORY_UNLOCKS,
-        group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Starting Visit Unlocks",
-        choices={
-            str(storyunlock.IdentityDisk.id): "Identity Disk",
-            str(storyunlock.SkillAndCrossbones.id): "Skill and Crossbones",
-            # str(storyunlock.Picture.id): "Picture",
-            str(storyunlock.IceCream.id): "Ice Cream",
-            str(storyunlock.BattlefieldsOfWar.id): "Battlefields of War",
-            str(storyunlock.BoneFist.id): "Bone Fist",
-            str(storyunlock.SwordOfTheAncestor.id): "Sword of the Ancestor",
-            str(storyunlock.BeastsClaw.id): "Beast's Claw",
-            str(storyunlock.Scimitar.id): "Scimitar",
-            str(storyunlock.ProudFang.id): "Proud Fang",
-            str(storyunlock.MembershipCard.id): "Membership Card",
-        },
+    SingleSelect(
+        name=settingkey.STARTING_VISIT_MODE,
+        group=SettingGroup.LOCATIONS,
+        ui_label="Mode",
+        standalone_label="Visit Availability",
+        choices={option.name: option.value for option in list(StartingVisitMode)},
         shared=True,
-        default=[
-            str(storyunlock.IdentityDisk.id),
-            str(storyunlock.SkillAndCrossbones.id),
-            # str(storyunlock.Picture.id),
-            str(storyunlock.IceCream.id),
-            str(storyunlock.BattlefieldsOfWar.id),
-            str(storyunlock.BoneFist.id),
-            str(storyunlock.SwordOfTheAncestor.id),
-            str(storyunlock.BeastsClaw.id),
-            str(storyunlock.Scimitar.id),
-            str(storyunlock.ProudFang.id),
-            str(storyunlock.MembershipCard.id),
-        ],
+        default=StartingVisitMode.ALL.name,
         tooltip="""
-        Start with the selected visit unlocks already obtained.
-        Each of these items unlocks visits of a particular world.
-        See the website for more details.
+        How "visits" for worlds that have them (the 13 portal worlds) should be initially available.
+        
+        All Visits - All visits of all worlds are available from the beginning of the seed.
+
+        First Visits - All first visits are immediately available, but you must find visit unlock items to
+        access subsequent visits in each visit-capable world.
+
+        No Visits - No world visits are immediately available, outside of the ones that are always present. You
+        must find a visit unlock item in the immediately available areas to proceed. 
+
+        Random Visits - Unlock a random set of visits by starting with random visit unlock items.
+
+        Specific Visits - Unlock a specific set of visits by starting with specific visit unlock items.
         """,
     ),
+    IntSpinner(
+        name=settingkey.STARTING_VISIT_RANDOM_MIN,
+        group=SettingGroup.LOCATIONS,
+        ui_label="Minimum Visits Available",
+        standalone_label="Min Random Visits Available",
+        shared=True,
+        minimum=0,
+        maximum=len(storyunlock.all_individual_story_unlocks()),
+        step=1,
+        default=3,
+        tooltip="Minimum number of random visits to unlock at the start.",
+    ),
+    IntSpinner(
+        name=settingkey.STARTING_VISIT_RANDOM_MAX,
+        group=SettingGroup.LOCATIONS,
+        ui_label="Maximum Visits Available",
+        standalone_label="Max Random Visits Available",
+        shared=True,
+        minimum=0,
+        maximum=len(storyunlock.all_individual_story_unlocks()),
+        step=1,
+        default=3,
+        tooltip="Maximum number of random visits to unlock at the start.",
+    ),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_SP, location=locationType.SP),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_PR, location=locationType.PR),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_TT, location=locationType.TT),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_OC, location=locationType.OC),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_HT, location=locationType.HT),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_LOD, location=locationType.LoD),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_TWTNW, location=locationType.TWTNW),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_BC, location=locationType.BC),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_AG, location=locationType.Agrabah),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_PL, location=locationType.PL),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_HB, location=locationType.HB),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_DC, location=locationType.DC),
+    _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_STT, location=locationType.STT),
     Toggle(
         name=settingkey.MAPS_IN_ITEM_POOL,
         group=SettingGroup.ITEM_POOL,

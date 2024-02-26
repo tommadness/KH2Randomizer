@@ -9,6 +9,7 @@ from List.configDict import (
     itemRarity,
     locationDepth,
     locationType,
+    StartingVisitMode,
 )
 
 DailyModifier = namedtuple(
@@ -77,7 +78,8 @@ def corOn(seed_settings: SeedSettings):
 
 
 def lockedVisitsHard(seed_settings: SeedSettings):
-    seed_settings.set(settingkey.STARTING_STORY_UNLOCKS, [])
+    # TODO: Probably need to re-work and/or re-word the description of this
+    seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.FIRST.name)
     seed_settings.set(settingkey.STORY_UNLOCK_CATEGORY, itemRarity.MYTHIC)
 
 
@@ -165,9 +167,8 @@ dailyModifiers = [
         initMod=None,
         description="Visit unlocks are dispersed in the seed, requiring you to find them to get to second visits",
         categories={"progression"},
-        local_modifier=lambda settings: settings.set(
-            settingkey.STARTING_STORY_UNLOCKS, []
-        ),
+        # TODO: Probably need to re-work and/or re-word the description of this
+        local_modifier=lambda settings: settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.FIRST.name),
     ),
     DailyModifier(
         name="Glass Cannon",

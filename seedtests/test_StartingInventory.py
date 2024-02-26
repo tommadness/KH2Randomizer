@@ -2,6 +2,7 @@ import unittest
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
+from List.configDict import StartingVisitMode
 from List.inventory import ability, misc, proof, report, storyunlock
 from List.inventory.item import InventoryItem
 from List.location import simulatedtwilighttown as stt
@@ -146,131 +147,115 @@ class Tests(unittest.TestCase):
     def test_no_starting_unlocks(self):
         """ Verifies that starting unlocks have the appropriate counts when starting with none and none in the shop. """
         seed_settings = SeedSettings()
-        seed_settings.set(settingkey.STARTING_STORY_UNLOCKS, [])
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.NONE.name)
         seed_settings.set(settingkey.SHOP_UNLOCKS, 0)
 
         for randomizer in seedtest.test_seeds(seed_settings):
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.BattlefieldsOfWar]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.BattlefieldsOfWar]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.BattlefieldsOfWar]))
+            for unlock in storyunlock.all_story_unlocks():
+                self.assertEqual(0, self._starting_count(randomizer, [unlock]))
+                self.assertEqual(0, self._shop_count(randomizer, [unlock]))
+                self.assertEqual(unlock.visit_count, self._assignment_count(randomizer, [unlock]))
 
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.SwordOfTheAncestor]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.SwordOfTheAncestor]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.SwordOfTheAncestor]))
+    def test_first_visit_starting_unlocks(self):
+        """ Verifies that starting unlocks have the appropriate counts when starting with all first visits unlocked. """
+        seed_settings = SeedSettings()
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.FIRST.name)
+        seed_settings.set(settingkey.SHOP_UNLOCKS, 0)
 
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.BeastsClaw]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.BeastsClaw]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.BeastsClaw]))
+        all_unlocks = storyunlock.all_story_unlocks()
+        first_visit_unlock_count = len(all_unlocks)
+        remainder = len(storyunlock.all_individual_story_unlocks()) - first_visit_unlock_count
+        for randomizer in seedtest.test_seeds(seed_settings):
+            self.assertEqual(first_visit_unlock_count, self._starting_count(randomizer, all_unlocks))
+            self.assertEqual(0, self._shop_count(randomizer, all_unlocks))
+            self.assertEqual(remainder, self._assignment_count(randomizer, all_unlocks))
 
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.BoneFist]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.BoneFist]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.BoneFist]))
+    def test_all_starting_unlocks(self):
+        """ Verifies that starting unlocks have the appropriate counts when starting with all visits unlocked. """
+        seed_settings = SeedSettings()
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.ALL.name)
+        seed_settings.set(settingkey.SHOP_UNLOCKS, 0)
 
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.ProudFang]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.ProudFang]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.ProudFang]))
+        all_unlocks = storyunlock.all_story_unlocks()
+        individual_unlocks_count = len(storyunlock.all_individual_story_unlocks())
+        for randomizer in seedtest.test_seeds(seed_settings):
+            self.assertEqual(individual_unlocks_count, self._starting_count(randomizer, all_unlocks))
+            self.assertEqual(0, self._shop_count(randomizer, all_unlocks))
+            self.assertEqual(0, self._assignment_count(randomizer, all_unlocks))
 
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.SkillAndCrossbones]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.SkillAndCrossbones]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.SkillAndCrossbones]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.Scimitar]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.Scimitar]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.Scimitar]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.IdentityDisk]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.IdentityDisk]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.IdentityDisk]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.MembershipCard]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.MembershipCard]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.MembershipCard]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.IceCream]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.IceCream]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.IceCream]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.Picture]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.Picture]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.Picture]))
-
-    def test_starting_unlocks(self):
+    def test_specific_starting_unlocks(self):
         """ Verifies that starting unlocks have the appropriate counts when starting with some and none in the shop. """
         seed_settings = SeedSettings()
-        seed_settings.set(settingkey.STARTING_STORY_UNLOCKS, [storyunlock.Picture.id, storyunlock.IceCream.id])
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.SPECIFIC.name)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_TT, 2)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_AG, 1)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_DC, 2)
         seed_settings.set(settingkey.SHOP_UNLOCKS, 0)
 
         for randomizer in seedtest.test_seeds(seed_settings):
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.BattlefieldsOfWar]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.BattlefieldsOfWar]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.BattlefieldsOfWar]))
+            for unlock in storyunlock.all_story_unlocks():
+                if unlock == storyunlock.IceCream:
+                    self.assertEqual(2, self._starting_count(randomizer, [unlock]))
+                    self.assertEqual(0, self._shop_count(randomizer, [unlock]))
+                    self.assertEqual(1, self._assignment_count(randomizer, [unlock]))
+                elif unlock == storyunlock.Scimitar:
+                    self.assertEqual(1, self._starting_count(randomizer, [unlock]))
+                    self.assertEqual(0, self._shop_count(randomizer, [unlock]))
+                    self.assertEqual(1, self._assignment_count(randomizer, [unlock]))
+                elif unlock == storyunlock.DisneyCastleKey:
+                    self.assertEqual(2, self._starting_count(randomizer, [unlock]))
+                    self.assertEqual(0, self._shop_count(randomizer, [unlock]))
+                    self.assertEqual(0, self._assignment_count(randomizer, [unlock]))
+                else:
+                    self.assertEqual(0, self._starting_count(randomizer, [unlock]))
+                    self.assertEqual(0, self._shop_count(randomizer, [unlock]))
+                    self.assertEqual(unlock.visit_count, self._assignment_count(randomizer, [unlock]))
 
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.SwordOfTheAncestor]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.SwordOfTheAncestor]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.SwordOfTheAncestor]))
+    def test_random_starting_unlocks(self):
+        """ Verifies that starting unlocks have the appropriate counts when starting with a fixed random number. """
+        seed_settings = SeedSettings()
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.RANDOM.name)
+        seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MIN, 6)
+        seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 6)
 
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.BeastsClaw]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.BeastsClaw]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.BeastsClaw]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.BoneFist]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.BoneFist]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.BoneFist]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.ProudFang]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.ProudFang]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.ProudFang]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.SkillAndCrossbones]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.SkillAndCrossbones]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.SkillAndCrossbones]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.Scimitar]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.Scimitar]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.Scimitar]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.IdentityDisk]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.IdentityDisk]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.IdentityDisk]))
-
-            self.assertEqual(0, self._starting_count(randomizer, [storyunlock.MembershipCard]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.MembershipCard]))
-            self.assertEqual(1, self._assignment_count(randomizer, [storyunlock.MembershipCard]))
-
-            self.assertEqual(1, self._starting_count(randomizer, [storyunlock.IceCream]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.IceCream]))
-            self.assertEqual(0, self._assignment_count(randomizer, [storyunlock.IceCream]))
-
-            self.assertEqual(1, self._starting_count(randomizer, [storyunlock.Picture]))
-            self.assertEqual(0, self._shop_count(randomizer, [storyunlock.Picture]))
-            self.assertEqual(0, self._assignment_count(randomizer, [storyunlock.Picture]))
+        all_unlocks = storyunlock.all_story_unlocks()
+        remainder = len(storyunlock.all_individual_story_unlocks()) - 6
+        for randomizer in seedtest.test_seeds(seed_settings):
+            self.assertEqual(6, self._starting_count(randomizer, all_unlocks))
+            self.assertEqual(0, self._shop_count(randomizer, all_unlocks))
+            self.assertEqual(remainder, self._assignment_count(randomizer, all_unlocks))
 
     def test_shop_unlocks(self):
         """ Verifies that starting unlocks have the appropriate counts when starting with none and some in the shop. """
         seed_settings = SeedSettings()
-        seed_settings.set(settingkey.STARTING_STORY_UNLOCKS, [])
-        seed_settings.set(settingkey.SHOP_UNLOCKS, 3)
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.NONE.name)
+        seed_settings.set(settingkey.SHOP_UNLOCKS, 8)
 
         all_unlocks = storyunlock.all_story_unlocks()
+        remainder = len(storyunlock.all_individual_story_unlocks()) - 8
         for randomizer in seedtest.test_seeds(seed_settings):
             self.assertEqual(0, self._starting_count(randomizer, all_unlocks))
-            self.assertEqual(3, self._shop_count(randomizer, all_unlocks))
-            self.assertEqual(8, self._assignment_count(randomizer, all_unlocks))
+            self.assertEqual(8, self._shop_count(randomizer, all_unlocks))
+            self.assertEqual(remainder, self._assignment_count(randomizer, all_unlocks))
 
     def test_start_and_shop_unlocks(self):
         """ Verifies that starting unlocks have the appropriate counts when starting with some and some in the shop. """
         seed_settings = SeedSettings()
-        seed_settings.set(
-            settingkey.STARTING_STORY_UNLOCKS,
-            [storyunlock.BoneFist.id, storyunlock.SkillAndCrossbones.id]
-        )
-        seed_settings.set(settingkey.SHOP_UNLOCKS, 3)
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.SPECIFIC.name)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_HT, 1)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_PR, 1)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_TWTNW, 2)
+        seed_settings.set(settingkey.SHOP_UNLOCKS, 9)
 
         all_unlocks = storyunlock.all_story_unlocks()
         for randomizer in seedtest.test_seeds(seed_settings):
-            self.assertEqual(2, self._starting_count(randomizer, all_unlocks))
-            self.assertEqual(3, self._shop_count(randomizer, all_unlocks))
-            self.assertEqual(6, self._assignment_count(randomizer, all_unlocks))
+            starting_count = self._starting_count(randomizer, all_unlocks)
+            shop_count = self._shop_count(randomizer, all_unlocks)
+            self.assertEqual(4, starting_count)
+            self.assertEqual(9, shop_count)
+
+            remainder = len(storyunlock.all_individual_story_unlocks()) - starting_count - shop_count
+            self.assertEqual(remainder, self._assignment_count(randomizer, all_unlocks))
 
     @staticmethod
     def _assignment_count(randomizer: Randomizer, items: list[InventoryItem]) -> int:

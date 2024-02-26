@@ -3,8 +3,8 @@ import unittest
 from Class import settingkey
 from Class.exceptions import SettingsException
 from Class.seedSettings import SeedSettings
-from List.configDict import locationType
-from List.inventory import proof, storyunlock
+from List.configDict import locationType, StartingVisitMode
+from List.inventory import proof
 from Module.newRandomize import RandomizerSettings, Randomizer
 from seedtests import seedtest
 
@@ -18,7 +18,7 @@ class Tests(unittest.TestCase):
         """
         seed_settings = SeedSettings()
         seed_settings.set(settingkey.CHAIN_LOGIC, True)
-        seed_settings.set(settingkey.STARTING_STORY_UNLOCKS, [item.id for item in storyunlock.all_story_unlocks()])
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.ALL.name)
 
         for randomizer in seedtest.test_seeds(seed_settings):
             proof_assignment = randomizer.assignment_for_item(proof.ProofOfNonexistence)
@@ -33,7 +33,7 @@ class Tests(unittest.TestCase):
         """
         seed_settings = SeedSettings()
         seed_settings.set(settingkey.CHAIN_LOGIC, True)
-        seed_settings.set(settingkey.STARTING_STORY_UNLOCKS, [item.id for item in storyunlock.all_story_unlocks()])
+        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.ALL.name)
         seed_settings.set(settingkey.STARTING_INVENTORY, [proof.ProofOfPeace.id])
         randomized_worlds = [
             locationType.STT.name,

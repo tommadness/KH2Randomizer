@@ -327,7 +327,12 @@ class Randomizer:
         )
         self.starting_item_ids.extend(rpt.id for rpt in starting_reports)
 
-        self.starting_item_ids.extend(settings.starting_story_unlock_ids)
+        starting_unlocks = SeedModifier.starting_unlocks(
+            mode=settings.starting_visit_mode,
+            random_range=settings.starting_visit_random_range,
+            specific_unlocks=settings.starting_unlocks_per_world
+        )
+        self.starting_item_ids.extend(unlock.id for unlock in starting_unlocks)
 
         if settings.tt1_jailbreak:
             self.starting_item_ids.append(Items.getTT1Jailbreak().Id)
@@ -369,12 +374,15 @@ class Randomizer:
         item_ids_to_remove.extend(self.starting_item_ids)
 
         def include_item(item: KH2Item) -> bool:
-            return (
-                item.Id not in item_ids_to_remove
-                and item.ItemType not in item_types_to_remove
-            )
-
+            return item.ItemType not in item_types_to_remove
         item_pool = list(filter(include_item, item_pool))
+
+        # Remove these one at a time since we can have duplicate IDs for starting inventory
+        # (at the very least, visit unlocks)
+        for item_id_to_remove in item_ids_to_remove:
+            item_to_remove = next((item for item in item_pool if item.Id == item_id_to_remove), None)
+            if item_to_remove is not None:
+                item_pool.remove(item_to_remove)
 
         # Reports and visit unlocks in the shop (these do affect the item pool)
         if settings.shop_reports > 0:

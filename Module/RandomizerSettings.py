@@ -17,9 +17,10 @@ from List.configDict import (
     SoftlockPreventionOption,
     AbilityPoolOption,
     expCurve,
+    StartingVisitMode,
 )
 from List.hashTextEntries import generate_hash_icons
-from List.inventory import storyunlock, report, proof, form
+from List.inventory import report, proof, form, storyunlock
 from Module.modifier import SeedModifier
 from Module.progressionPoints import ProgressionPoints
 
@@ -217,9 +218,27 @@ class RandomizerSettings:
             ui_settings.get(settingkey.STARTING_MOVEMENT)
         )
         self.starting_report_count: int = ui_settings.get(settingkey.STARTING_REPORTS)
-        self.starting_story_unlock_ids = [
-            int(value) for value in ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)
-        ]
+
+        self.starting_visit_mode: StartingVisitMode = StartingVisitMode[ui_settings.get(settingkey.STARTING_VISIT_MODE)]
+        self.starting_visit_random_range: tuple[int, int] = (
+            ui_settings.get(settingkey.STARTING_VISIT_RANDOM_MIN),
+            ui_settings.get(settingkey.STARTING_VISIT_RANDOM_MAX)
+        )
+        self.starting_unlocks_per_world: dict[locationType, int] = {
+            locationType.Agrabah: ui_settings.get(settingkey.STARTING_UNLOCKS_AG),
+            locationType.BC: ui_settings.get(settingkey.STARTING_UNLOCKS_BC),
+            locationType.DC: ui_settings.get(settingkey.STARTING_UNLOCKS_DC),
+            locationType.HB: ui_settings.get(settingkey.STARTING_UNLOCKS_HB),
+            locationType.HT: ui_settings.get(settingkey.STARTING_UNLOCKS_HT),
+            locationType.LoD: ui_settings.get(settingkey.STARTING_UNLOCKS_LOD),
+            locationType.OC: ui_settings.get(settingkey.STARTING_UNLOCKS_OC),
+            locationType.PL: ui_settings.get(settingkey.STARTING_UNLOCKS_PL),
+            locationType.PR: ui_settings.get(settingkey.STARTING_UNLOCKS_PR),
+            locationType.SP: ui_settings.get(settingkey.STARTING_UNLOCKS_SP),
+            locationType.STT: ui_settings.get(settingkey.STARTING_UNLOCKS_STT),
+            locationType.TT: ui_settings.get(settingkey.STARTING_UNLOCKS_TT),
+            locationType.TWTNW: ui_settings.get(settingkey.STARTING_UNLOCKS_TWTNW),
+        }
 
         self.itemDifficulty = itemDifficulty(
             ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
@@ -550,8 +569,9 @@ class RandomizerSettings:
             self.tracker_includes.append("better_stt")
         if self.as_data_split:
             self.tracker_includes.append("Data Split")
-        if len(ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)) < 11:
-            self.tracker_includes.append("visit_locking")
+        # TODO: Tracker is going to need something different here
+        # if len(ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)) < 11:
+        #     self.tracker_includes.append("visit_locking")
         if self.starting_report_count == 13:
             self.tracker_includes.append("library")
         if self.hiscore_mode:
@@ -694,8 +714,21 @@ class RandomizerSettings:
                 f"Starting Ansem Reports + Ansem Reports in shop is more than {max_reports}"
             )
 
-        max_unlocks = len(storyunlock.all_story_unlocks())
-        if len(self.starting_story_unlock_ids) + self.shop_unlocks > max_unlocks:
+        starting_visit_mode = self.starting_visit_mode
+        starting_visit_items_count = 0
+        if starting_visit_mode is StartingVisitMode.FIRST:
+            starting_visit_items_count = len(storyunlock.all_story_unlocks())
+        elif starting_visit_mode is StartingVisitMode.ALL:
+            starting_visit_items_count = len(storyunlock.all_individual_story_unlocks())
+        elif starting_visit_mode is StartingVisitMode.RANDOM:
+            # Going to be pessimistic here and assume worst-case of max random
+            starting_visit_items_count = self.starting_visit_random_range[1]
+        elif starting_visit_mode is StartingVisitMode.SPECIFIC:
+            for _, count in self.starting_unlocks_per_world.items():
+                starting_visit_items_count = starting_visit_items_count + count
+
+        max_unlocks = len(storyunlock.all_individual_story_unlocks())
+        if starting_visit_items_count + self.shop_unlocks > max_unlocks:
             raise SettingsException(
                 f"Starting Visit Unlocks plus Visit Unlocks in shop is more than {max_unlocks}"
             )
