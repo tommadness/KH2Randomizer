@@ -150,6 +150,7 @@ class itemType(str, Enum):
     SLOT = "Slot Up"
     SYNTH = "SYNTH"
     MULTIWORLD = "MultiWorld"
+    PIECE="Puzzle Piece"
 
 
 class itemRarity(str, Enum):

@@ -28,6 +28,47 @@ class PuzzleLogicGraph(DefaultLogicGraph):
         DefaultLogicGraph.__init__(self,NodeId)
 
         if not reverse_rando:
+            def awakening_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.hb1_check(inv)
+                    and ItemPlacementHelpers.bc1_check(inv)
+                    and ItemPlacementHelpers.tt1_check(inv)
+                    and ItemPlacementHelpers.lod1_check(inv)
+                )
+
+            def heart_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.dc2_check(inv)
+                    and ItemPlacementHelpers.oc1_check(inv)
+                    and ItemPlacementHelpers.pr1_check(inv)
+                    and ItemPlacementHelpers.hb1_check(inv)
+                    and ItemPlacementHelpers.lod1_check(inv)
+                )
+
+            def duality_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.ht1_check(inv)
+                    and ItemPlacementHelpers.dc2_check(inv)
+                    and ItemPlacementHelpers.pr1_check(inv)
+                    and ItemPlacementHelpers.ag1_check(inv)
+                    and ItemPlacementHelpers.oc1_check(inv)
+                    and ItemPlacementHelpers.hb1_check(inv)
+                )
+
+            def frontier_checker(inv: list[int]) -> bool:
+                return (
+                    ItemPlacementHelpers.need_growths(inv)
+                    and ItemPlacementHelpers.tt2_check(inv)
+                    and ItemPlacementHelpers.ht1_check(inv)
+                    and ItemPlacementHelpers.hb2_check(inv)
+                    and ItemPlacementHelpers.dc2_check(inv)
+                    and ItemPlacementHelpers.ag1_check(inv)
+                    and ItemPlacementHelpers.pr1_check(inv)
+                    and ItemPlacementHelpers.lod1_check(inv)
+                )
             def daylight_checker(inv: list[int]) -> bool:
                 return (
                     ItemPlacementHelpers.need_growths(inv)
@@ -37,6 +78,12 @@ class PuzzleLogicGraph(DefaultLogicGraph):
                     and ItemPlacementHelpers.tt3_check(inv)
                     and ItemPlacementHelpers.pr2_check(inv)
                     and ItemPlacementHelpers.ag2_check(inv)
+                    and ItemPlacementHelpers.pl1_check(inv)
+                    and ItemPlacementHelpers.ht1_check(inv)
+                    and ItemPlacementHelpers.oc1_check(inv)
+                    and ItemPlacementHelpers.sp1_check(inv)
+                    and ItemPlacementHelpers.bc1_check(inv)
+                    and ItemPlacementHelpers.twtnw_roxas_check(inv)
                 )
 
             def sunset_checker(inv: list[int]) -> bool:
@@ -48,11 +95,14 @@ class PuzzleLogicGraph(DefaultLogicGraph):
                     and ItemPlacementHelpers.pr2_check(inv)
                     and ItemPlacementHelpers.ag2_check(inv)
                     and ItemPlacementHelpers.bc2_check(inv)
+                    and ItemPlacementHelpers.pl1_check(inv)
+                    and ItemPlacementHelpers.lod1_check(inv)
+                    and ItemPlacementHelpers.twtnw_post_saix_check(inv)
                 )
-            self.logic[START_NODE][NodeId.AwakeningPuzzle] = ItemPlacementHelpers.need_growths
-            self.logic[START_NODE][NodeId.HeartPuzzle] = ItemPlacementHelpers.need_growths
-            self.logic[START_NODE][NodeId.DualityPuzzle] = ItemPlacementHelpers.need_growths
-            self.logic[START_NODE][NodeId.FrontierPuzzle] = lambda inv: ItemPlacementHelpers.need_growths(inv) and ItemPlacementHelpers.tt2_check(inv) and ItemPlacementHelpers.hb2_check(inv)
+            self.logic[START_NODE][NodeId.AwakeningPuzzle] = awakening_checker
+            self.logic[START_NODE][NodeId.HeartPuzzle] = heart_checker
+            self.logic[START_NODE][NodeId.DualityPuzzle] = duality_checker
+            self.logic[START_NODE][NodeId.FrontierPuzzle] = frontier_checker
             self.logic[START_NODE][NodeId.DaylightPuzzle] = daylight_checker
             self.logic[START_NODE][NodeId.SunsetPuzzle] = sunset_checker
         else:
