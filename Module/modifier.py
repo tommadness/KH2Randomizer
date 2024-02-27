@@ -3,9 +3,10 @@ from typing import Callable
 
 from Class.exceptions import GeneratorException, SettingsException
 from Class.itemClass import KH2Item
-from List.configDict import LevelUpStatBonus, StartingMovementOption, AbilityPoolOption
-from List.inventory import growth, ability
+from List.configDict import LevelUpStatBonus, StartingMovementOption, AbilityPoolOption, StartingVisitMode, locationType
+from List.inventory import growth, ability, storyunlock
 from List.inventory.growth import GrowthAbility, GrowthType
+from List.inventory.storyunlock import StoryUnlock
 
 
 class SeedModifier:
@@ -206,3 +207,27 @@ class SeedModifier:
         for growth_type, level in levels_by_growth_type.items():
             random_growth.extend(growth.growth_to_level(level, growth_type))
         return random_growth
+
+    @staticmethod
+    def starting_unlocks(
+            mode: StartingVisitMode,
+            random_range: tuple[int, int],
+            specific_unlocks: dict[locationType, int],
+    ) -> list[StoryUnlock]:
+        if mode is StartingVisitMode.ALL:
+            return storyunlock.all_individual_story_unlocks()
+        elif mode is StartingVisitMode.FIRST:
+            return storyunlock.all_story_unlocks()
+        elif mode is StartingVisitMode.NONE:
+            return []
+        elif mode is StartingVisitMode.RANDOM:
+            random_min, random_max = random_range
+            random_count = random.randint(random_min, random_max)
+            return random.sample(storyunlock.all_individual_story_unlocks(), k=random_count)
+        elif mode is StartingVisitMode.SPECIFIC:
+            result: list[StoryUnlock] = []
+            for location, count in specific_unlocks.items():
+                result.extend([storyunlock.story_unlock_for_location(location)] * count)
+            return result
+        else:
+            raise GeneratorException(f"Unknown mode {mode}")

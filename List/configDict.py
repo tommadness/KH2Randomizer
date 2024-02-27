@@ -217,3 +217,11 @@ class HintType(str, Enum):
     PATH = "Path"
     POINTS = "Points"
     SPOILER = "Spoiler"
+
+
+class StartingVisitMode(str, Enum):
+    ALL = "All Visits"
+    FIRST = "First Visits"
+    NONE = "No Visits"
+    RANDOM = "Random Visits"
+    SPECIFIC = "Specific Visits"

@@ -354,55 +354,58 @@ class KH2Submenu(QWidget):
                     for index, key in enumerate(setting.choice_keys):
                         widget[index].setDisabled(True)
 
+    def update_widget(self, name: str):
+        (setting, widget) = self.widgets_and_settings_by_name[name]
+
+        if isinstance(setting, Toggle):
+            widget.setCheckState(Qt.Checked if self.settings.get(name) else Qt.Unchecked)
+        elif isinstance(setting, IntSpinner):
+            widget.setValue(self.settings.get(name))
+        elif isinstance(setting, FloatSpinner):
+            widget.setValue(self.settings.get(name))
+        elif isinstance(setting, SingleSelect):
+            index = setting.choice_keys.index(self.settings.get(name))
+            widget.setCurrentIndex(index)
+        elif isinstance(setting, MultiSelect):
+            if isinstance(widget, QListWidget):
+                selected_keys = self.settings.get(name)
+                for index, key in enumerate(setting.choice_keys):
+                    selected = key in selected_keys
+                    widget.item(index).setSelected(selected)
+            elif isinstance(widget, list):
+                selected_keys = self.settings.get(name)
+                for index, key in enumerate(setting.choice_keys):
+                    selected = key in selected_keys
+                    widget[index].setChecked(selected)
+        elif isinstance(setting, WorldRandomizationTristate):
+            if isinstance(widget, list):
+                selected_keys = self.settings.get(name)
+                if isinstance(selected_keys[0], list):
+                    # we have the updated settings
+                    enabled_locs = selected_keys[0]
+                    vanilla_locs = selected_keys[1]
+                else:
+                    # we have the updated settings
+                    enabled_locs = selected_keys
+                    vanilla_locs = []
+
+                for index, key in enumerate(setting.choice_keys):
+                    selected = key in enabled_locs
+                    vanil_selected = key in vanilla_locs
+                    combo_box = self.tristate_combo_boxes[setting.choice_keys[index]]
+                    if selected:
+                        combo_box.setCurrentIndex(0)
+                    elif vanil_selected:
+                        combo_box.setCurrentIndex(1)
+                    else:
+                        combo_box.setCurrentIndex(2)
+        elif isinstance(setting, ProgressionChainSelect):
+            setting.progression.set_uncompressed(self.settings.get(name))
+            widget._update_spinboxes()
+
     def update_widgets(self):
         for name in self.widgets_and_settings_by_name:
-            (setting, widget) = self.widgets_and_settings_by_name[name]
-
-            if isinstance(setting, Toggle):
-                widget.setCheckState(Qt.Checked if self.settings.get(name) else Qt.Unchecked)
-            elif isinstance(setting, IntSpinner):
-                widget.setValue(self.settings.get(name))
-            elif isinstance(setting, FloatSpinner):
-                widget.setValue(self.settings.get(name))
-            elif isinstance(setting, SingleSelect):
-                index = setting.choice_keys.index(self.settings.get(name))
-                widget.setCurrentIndex(index)
-            elif isinstance(setting, MultiSelect):
-                if isinstance(widget, QListWidget):
-                    selected_keys = self.settings.get(name)
-                    for index, key in enumerate(setting.choice_keys):
-                        selected = key in selected_keys
-                        widget.item(index).setSelected(selected)
-                elif isinstance(widget, list):
-                    selected_keys = self.settings.get(name)
-                    for index, key in enumerate(setting.choice_keys):
-                        selected = key in selected_keys
-                        widget[index].setChecked(selected)
-            elif isinstance(setting, WorldRandomizationTristate):
-                if isinstance(widget, list):
-                    selected_keys = self.settings.get(name)
-                    if isinstance(selected_keys[0],list):
-                        # we have the updated settings
-                        enabled_locs = selected_keys[0]
-                        vanilla_locs = selected_keys[1]
-                    else:
-                        # we have the updated settings
-                        enabled_locs = selected_keys
-                        vanilla_locs = []
-
-                    for index, key in enumerate(setting.choice_keys):
-                        selected = key in enabled_locs
-                        vanil_selected = key in vanilla_locs
-                        combo_box = self.tristate_combo_boxes[setting.choice_keys[index]]
-                        if selected:
-                            combo_box.setCurrentIndex(0)
-                        elif vanil_selected:
-                            combo_box.setCurrentIndex(1)
-                        else:
-                            combo_box.setCurrentIndex(2)
-            elif isinstance(setting, ProgressionChainSelect):
-                setting.progression.set_uncompressed(self.settings.get(name))
-                widget._update_spinboxes()
+            self.update_widget(name)
 
     @staticmethod
     def make_styled_frame(layout: QLayout, header_style_choice: int, title: str = "") -> QFrame:
