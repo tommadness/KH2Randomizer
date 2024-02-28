@@ -735,7 +735,7 @@ class Randomizer:
             ]
             unlocks[locationType.TT] = [
                 [storyunlock.IceCream.id],
-                [storyunlock.Picture.id],
+                [storyunlock.IceCream.id],
             ]
             unlocks[locationType.BC] = [[storyunlock.BeastsClaw.id]]
             if settings.regular_rando:
@@ -773,7 +773,7 @@ class Randomizer:
                 storyunlock.ProudFang.id,
                 storyunlock.BoneFist.id,
                 storyunlock.IdentityDisk.id,
-                storyunlock.Picture.id,
+                storyunlock.IceCream.id,
                 storyunlock.BeastsClaw.id,
                 storyunlock.Scimitar.id,
                 storyunlock.SkillAndCrossbones.id,
@@ -849,7 +849,7 @@ class Randomizer:
                 settings.chainLogicIncludeTerra
                 and [proof.ProofOfConnection.id] in locking_items
             )
-            tt_condition = [storyunlock.Picture.id] in locking_items and [
+            tt_condition = [storyunlock.IceCream.id] in locking_items and [
                 storyunlock.IceCream.id
             ] in locking_items
             pop_condition = [proof.ProofOfPeace.id] in locking_items
@@ -889,9 +889,9 @@ class Randomizer:
                     [magic.Fire.id, magic.Blizzard.id, magic.Thunder.id]
                 ) > locking_items.index([storyunlock.Scimitar.id]):
                     continue
-                # ice cream needs to be after picture
+                # ice cream needs to be after ice cream
                 if tt_condition and locking_items.index(
-                    [storyunlock.Picture.id]
+                    [storyunlock.IceCream.id]
                 ) > locking_items.index([storyunlock.IceCream.id]):
                     continue
                 # proof of peace needs to be after membership card
@@ -1093,6 +1093,11 @@ class Randomizer:
                             break
 
         # assign valid items to all valid locations remaining
+        if self.yeet_the_bear:
+            # move proof of nonexistence to the front of the item pool if it's in there
+            if proof.ProofOfNonexistence in item_pool:
+                item_pool.insert(0,item_pool.pop(item_pool.index(proof.ProofOfNonexistence)))
+
         for item in item_pool:
             if len(valid_locations) == 0:
                 raise CantAssignItemException(f"Ran out of locations to assign items")
