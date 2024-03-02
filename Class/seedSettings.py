@@ -15,6 +15,7 @@ from List.ItemList import Items
 from List.configDict import (
     HintType,
     expCurve,
+    itemBias,
     itemRarity,
     itemDifficulty,
     locationType,
@@ -552,6 +553,37 @@ def _location_unlock_setting(key: str, location: locationType) -> IntSpinner:
         step=1,
         default=0,
         tooltip=f"Number of visits to unlock in {location}. Visits are unlocked with {unlock.name}.",
+    )
+
+
+def _weighted_item_setting(key: str, item_type: str):
+    return SingleSelect(
+        name=key,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label=f"{item_type} Placement Bias",
+        choices={
+            itemBias.VERY_EARLY: "Very Early",
+            itemBias.EARLY: "Early",
+            itemBias.SLIGHTLY_EARLY: "Slightly Early",
+            itemBias.NOBIAS: "No Bias",
+            itemBias.SLIGHTLY_LATE: "Slightly Late",
+            itemBias.LATE: "Late",
+            itemBias.VERYLATE: "Very Late",
+            itemBias.SUPERLATE: "Very Very Late",
+            itemBias.NIGHTMARE: "As Late as Possible",
+        },
+        shared=True,
+        default=itemBias.NOBIAS,
+        randomizable=[
+            itemBias.EARLY,
+            itemBias.SLIGHTLY_EARLY,
+            itemBias.NOBIAS,
+            itemBias.SLIGHTLY_LATE,
+            itemBias.LATE,
+        ],
+        tooltip=f"""
+        Bias the placement of {item_type} based on how difficult/easy you'd like accessing these items to be.
+        """,
     )
 
 
@@ -1358,6 +1390,22 @@ _all_settings = [
         shared=True,
         default=locationDepth.Anywhere,
         tooltip="The set of locations in which Proofs are allowed to be placed."
+        + _depth_options_text,
+        randomizable=[
+            locationDepth.SecondVisitOnly,
+            locationDepth.NonSuperboss,
+            locationDepth.LastStoryBoss,
+            locationDepth.Anywhere,
+        ],
+    ),
+    SingleSelect(
+        name=settingkey.PROMISE_CHARM_DEPTH,
+        group=SettingGroup.ITEM_POOL,
+        ui_label="Promise Charm Depth",
+        choices=location_depth_choices(),
+        shared=True,
+        default=locationDepth.Anywhere,
+        tooltip="The set of locations in which the Promise Charm is allowed to be placed (if enabled)."
         + _depth_options_text,
         randomizable=[
             locationDepth.SecondVisitOnly,
@@ -2362,7 +2410,7 @@ _all_settings = [
             itemDifficulty.NIGHTMARE: "Nightmare",
         },
         shared=True,
-        default="Normal",
+        default=itemDifficulty.NORMAL,
         randomizable=[
             itemDifficulty.EASY,
             itemDifficulty.SLIGHTLY_EASY,
@@ -2376,6 +2424,13 @@ _all_settings = [
         Super Easy and Easy will bias Rare and Mythic items early, while the Hard settings will bias those later.
         """,
     ),
+    _weighted_item_setting(key=settingkey.WEIGHTED_FORMS, item_type="Form"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_UNLOCKS, item_type="Visit Unlock"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_MAGIC, item_type="Magic"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_PAGES, item_type="Page"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_SUMMONS, item_type="Summon"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_PROOFS, item_type="Proof"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_PROMISE_CHARM, item_type="Promise Charm"),
     Toggle(
         name=settingkey.NIGHTMARE_LOGIC,
         group=SettingGroup.ITEM_PLACEMENT,

@@ -324,45 +324,37 @@ function populateWeightTable(in_depth_data,which_table)
 {
     weight_table = document.getElementById(which_table);
     var weight_header = document.createElement("tr");
-    weight_header.innerHTML+="<th></th><th colspan=\""+String(in_depth_data["Common"].length)+"\">Location Weights</th>";
+    weight_header.innerHTML+="<th></th><th colspan=\""+String(in_depth_data["Form"].length)+"\">Location Weights</th>";
     weight_table.appendChild(weight_header);
 
     var data_row = document.createElement("tr");
     data_row.innerHTML+="<th>Item Type</th>";
-    for(var i=0;i<in_depth_data["Common"].length;i++)
+    for(var i=0;i<in_depth_data["Form"].length;i++)
     {
         data_row.innerHTML+="<th>"+String(i)+"</th>";
     }
     weight_table.appendChild(data_row);
 
-    var data_row = document.createElement("tr");
-    data_row.innerHTML+="<td>Common</td>";
-    for(var i=0;i<in_depth_data["Common"].length;i++)
+    // Visible String - Dict Key
+    var item_types = [["Forms", "Form"], 
+                        ["Visit Unlocks", "Story Unlock"], 
+                        ["Magics", "Fire"], 
+                        ["Pages", "Torn Page"], 
+                        ["Summons", "Summon"], 
+                        ["Proofs", "Proof of Connection"], 
+                        ["Promise Charm", "Promise Charm"]];
+
+    const iterator = item_types.keys()
+    for(const index of iterator)
     {
-        data_row.innerHTML+="<td>"+String(in_depth_data["Common"][i])+"</td>";
+        var data_row = document.createElement("tr");
+        data_row.innerHTML+="<td>"+item_types[index][0]+"</td>";
+        for(var i=0;i<in_depth_data[item_types[index][1]].length;i++)
+        {
+            data_row.innerHTML+="<td>"+String(in_depth_data[item_types[index][1]][i])+"</td>";
+        }
+        weight_table.appendChild(data_row);
     }
-    weight_table.appendChild(data_row);
-    var data_row = document.createElement("tr");
-    data_row.innerHTML+="<td>Uncommon</td>";
-    for(var i=0;i<in_depth_data["Uncommon"].length;i++)
-    {
-        data_row.innerHTML+="<td>"+String(in_depth_data["Uncommon"][i])+"</td>";
-    }
-    weight_table.appendChild(data_row);
-    var data_row = document.createElement("tr");
-    data_row.innerHTML+="<td>Rare</td>";
-    for(var i=0;i<in_depth_data["Rare"].length;i++)
-    {
-        data_row.innerHTML+="<td>"+String(in_depth_data["Rare"][i])+"</td>";
-    }
-    weight_table.appendChild(data_row);
-    var data_row = document.createElement("tr");
-    data_row.innerHTML+="<td>Mythic</td>";
-    for(var i=0;i<in_depth_data["Mythic"].length;i++)
-    {
-        data_row.innerHTML+="<td>"+String(in_depth_data["Mythic"][i])+"</td>";
-    }
-    weight_table.appendChild(data_row);
 }
 
 populateWeightTable(depth_data,"weightTable");

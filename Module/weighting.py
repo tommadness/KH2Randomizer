@@ -4,10 +4,35 @@ from typing import Union
 from Class.newLocationClass import KH2Location
 from List.LvupStats import DreamWeaponOffsets
 from List.NewLocationList import Locations
-from List.configDict import locationCategory, itemRarity, locationType, itemDifficulty
+from List.configDict import itemType, locationCategory, itemRarity, locationType, itemBias, itemDifficulty
 from List.location.graph import START_NODE
 from Module.RandomizerSettings import RandomizerSettings
 
+
+
+
+class SimplifiedWeightDistributions:
+    def __init__(self, max_depth: int):
+        self.weighting_function: dict[itemBias, list[int]] = {}
+
+        weight_list_maker = lambda function_index : [
+                    max(1, floor(10.0 / pow((max_depth + 2 - x) / (max_depth / 3.0), function_index * .5 + 1)))
+                    for x in range(1, max_depth + 2)
+                ]
+
+        self.weighting_function[itemBias.VERY_EARLY]  = weight_list_maker(1)[::-1]
+        self.weighting_function[itemBias.EARLY]  = weight_list_maker(0)[::-1]
+        self.weighting_function[itemBias.SLIGHTLY_EARLY] = [2] * floor((max_depth + 1) / 2) + [1] * ceil((max_depth + 1) / 2)
+        self.weighting_function[itemBias.NOBIAS] = [1] * (max_depth + 1)
+        self.weighting_function[itemBias.SLIGHTLY_LATE] = [1] * floor((max_depth + 1) / 2) + [2] * ceil((max_depth + 1) / 2)
+        self.weighting_function[itemBias.LATE]  = weight_list_maker(0)
+        self.weighting_function[itemBias.VERYLATE]  = weight_list_maker(1)
+        self.weighting_function[itemBias.SUPERLATE]  = weight_list_maker(2)
+        self.weighting_function[itemBias.NIGHTMARE]  = weight_list_maker(3)
+
+    
+    def get_rarity_weightings(self):
+        return self.weighting_function
 
 class WeightDistributions:
 
@@ -131,8 +156,6 @@ class LocationWeights:
                 if loc.LocationCategory is locationCategory.LEVEL:
                     self.level_depths[loc.LocationId] = scaled_depth
 
-        self.weights = WeightDistributions(max_hops).get_rarity_weighting(settings.itemDifficulty)
-
         # Reverse
         # -------------------------------
         self.reverse_location_depths: dict[KH2Location, int] = {}
@@ -158,6 +181,33 @@ class LocationWeights:
                     scaled_depth = distance
                 self.reverse_location_depths[loc] = scaled_depth
 
+                
+        self.base_weights = SimplifiedWeightDistributions(max_hops).get_rarity_weightings()
+        self.weights = {}
+        # default to normal weighting
+        for item_type in itemType:
+            self.weights[item_type] = self.base_weights[itemBias.NOBIAS]
+
+        self.weights[itemType.FORM] = self.base_weights[settings.form_weights]
+        self.weights[itemType.STORYUNLOCK] = self.base_weights[settings.unlock_weights]
+
+        self.weights[itemType.FIRE] = self.base_weights[settings.magic_weights]
+        self.weights[itemType.BLIZZARD] = self.base_weights[settings.magic_weights]
+        self.weights[itemType.THUNDER] = self.base_weights[settings.magic_weights]
+        self.weights[itemType.CURE] = self.base_weights[settings.magic_weights]
+        self.weights[itemType.MAGNET] = self.base_weights[settings.magic_weights]
+        self.weights[itemType.REFLECT] = self.base_weights[settings.magic_weights]
+
+        self.weights[itemType.TORN_PAGE] = self.base_weights[settings.page_weights]
+
+        self.weights[itemType.SUMMON] = self.base_weights[settings.summon_weights]
+
+        self.weights[itemType.PROOF_OF_PEACE] = self.base_weights[settings.proof_weights]
+        self.weights[itemType.PROOF_OF_CONNECTION] = self.base_weights[settings.proof_weights]
+        self.weights[itemType.PROOF_OF_NONEXISTENCE] = self.base_weights[settings.proof_weights]
+
+        self.weights[itemType.PROMISE_CHARM] = self.base_weights[settings.promise_charm_weights]
+
     def get_depth(self, location: KH2Location) -> Union[int, tuple[int, int]]:
         """
         Returns either a single depth (for levels or regular or reverse rando) or a tuple of
@@ -181,9 +231,22 @@ class LocationWeights:
                 return self.reverse_location_depths[location]
 
     def get_weight(self, rarity: itemRarity, location: KH2Location) -> int:
+        raise AssertionError("Deprecated weighting function")
         """ Returns the weight that should be used for an item of the given rarity at the given location. """
         depth_or_depths = self.get_depth(location)
         rarity_weights = self.weights[rarity]
+        if isinstance(depth_or_depths, int):
+            return rarity_weights[depth_or_depths]
+        elif isinstance(depth_or_depths, tuple):
+            regular_weight = rarity_weights[depth_or_depths[0]]
+            reverse_weight = rarity_weights[depth_or_depths[1]]
+            return (regular_weight + reverse_weight) // 2
+        
+
+    def get_weight(self, item_type: itemType, location: KH2Location) -> int:
+        """ Returns the weight that should be used for an item of the given type at the given location. """
+        depth_or_depths = self.get_depth(location)
+        rarity_weights = self.weights[item_type]
         if isinstance(depth_or_depths, int):
             return rarity_weights[depth_or_depths]
         elif isinstance(depth_or_depths, tuple):

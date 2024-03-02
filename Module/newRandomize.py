@@ -172,6 +172,7 @@ class Randomizer:
         self.report_depths = ItemDepths(settings.reportDepth, self.master_locations)
         self.proof_depths = ItemDepths(settings.proofDepth, self.master_locations)
         self.story_depths = ItemDepths(settings.storyDepth, self.master_locations)
+        self.promise_charm_depths = ItemDepths(settings.promiseCharmDepth, self.master_locations)
         self.yeet_the_bear = settings.yeetTheBear
         self.num_valid_locations = None
         self.num_available_items = None
@@ -675,14 +676,14 @@ class Randomizer:
             loc_weights = self.location_weights
             if restricted_proofs or restricted_reports or restricted_story:
                 result = [
-                    loc_weights.get_weight(item.Rarity, loc)
+                    loc_weights.get_weight(item.ItemType, loc)
                     if (any(i_type in loc.InvalidChecks for i_type in invalid_test))
                     else 0
                     for loc in location_pool
                 ]
             else:
                 result = [
-                    loc_weights.get_weight(item.Rarity, loc) for loc in location_pool
+                    loc_weights.get_weight(item.ItemType, loc) for loc in location_pool
                 ]
 
             if restricted_reports and item.ItemType is itemType.REPORT:
@@ -1235,6 +1236,9 @@ class Randomizer:
 
             if not self.story_depths.is_valid(loc):
                 loc.InvalidChecks.append(itemType.STORYUNLOCK)
+
+            if not self.promise_charm_depths.is_valid(loc):
+                loc.InvalidChecks.append(itemType.PROMISE_CHARM)
 
             # if both reports and proofs are very restricted (only in 13 locations)
             # add extra proof restrictions to allow reports to be assigned

@@ -240,9 +240,18 @@ class RandomizerSettings:
             locationType.TWTNW: ui_settings.get(settingkey.STARTING_UNLOCKS_TWTNW),
         }
 
-        self.itemDifficulty = itemDifficulty(
-            ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
-        )
+        # self.itemDifficulty = itemDifficulty(
+        #     ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
+        # )
+
+        self.form_weights = ui_settings.get(settingkey.WEIGHTED_FORMS)
+        self.unlock_weights = ui_settings.get(settingkey.WEIGHTED_UNLOCKS)
+        self.magic_weights = ui_settings.get(settingkey.WEIGHTED_MAGIC)
+        self.page_weights = ui_settings.get(settingkey.WEIGHTED_PAGES)
+        self.summon_weights = ui_settings.get(settingkey.WEIGHTED_SUMMONS)
+        self.proof_weights = ui_settings.get(settingkey.WEIGHTED_PROOFS)
+        self.promise_charm_weights = ui_settings.get(settingkey.WEIGHTED_PROMISE_CHARM)
+
         self.extended_placement_logic: bool = ui_settings.get(
             settingkey.NIGHTMARE_LOGIC
         )
@@ -292,6 +301,7 @@ class RandomizerSettings:
         self.hintsType: str = ui_settings.get(settingkey.HINT_SYSTEM)
         self.reportDepth = locationDepth(ui_settings.get(settingkey.REPORT_DEPTH))
         self.proofDepth = locationDepth(ui_settings.get(settingkey.PROOF_DEPTH))
+        self.promiseCharmDepth = locationDepth(ui_settings.get(settingkey.PROMISE_CHARM_DEPTH))
         self.storyDepth = locationDepth(ui_settings.get(settingkey.STORY_UNLOCK_DEPTH))
 
         if softlock_option == SoftlockPreventionOption.BOTH:

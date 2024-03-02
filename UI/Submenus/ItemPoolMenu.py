@@ -17,6 +17,7 @@ class ItemPoolMenu(KH2Submenu):
         self.add_option(settingkey.STATSANITY)
         self.add_option(settingkey.FIFTY_AP_BOOSTS)
         self.add_option(settingkey.ENABLE_PROMISE_CHARM)
+        self.add_option(settingkey.PROMISE_CHARM_DEPTH)
         # self.add_option(settingkey.PUREBLOOD)
         self.add_option(settingkey.ANTIFORM)
         self.add_option(settingkey.MAPS_IN_ITEM_POOL)
@@ -61,6 +62,14 @@ class ItemPoolMenu(KH2Submenu):
         select_better_junk.clicked.connect(lambda: self.toggle_better_junk())
 
         self.finalizeMenu()
+
+        settings.observe(settingkey.ENABLE_PROMISE_CHARM, self.promise_charm_enabled)
+
+    def promise_charm_enabled(self):
+        promise_charm_toggle = self.settings.get(settingkey.ENABLE_PROMISE_CHARM)
+        _, widget = self.widgets_and_settings_by_name[settingkey.PROMISE_CHARM_DEPTH]
+        if not self.disable_signal:
+            widget.setEnabled(promise_charm_toggle)
 
     def toggle_all_items(self):
         setting, widget = self.widgets_and_settings_by_name[settingkey.JUNK_ITEMS]
