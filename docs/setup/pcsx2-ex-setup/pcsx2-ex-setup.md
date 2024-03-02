@@ -87,7 +87,7 @@ Once you have downloaded `KH2FM-Mods-Num/GOA-ROM-Edition`, click on the mod, go 
 
 ![Open Mod Folder](./Open_Mod_Folder.png)
 
-From here, copy the `F266B00B GoA ROM.lua` file to `scripts` folder (that was automatically created during the PCSX2-EX setup in Part 1) located in your `Documents/PCSX2` folder.
+From here, copy the `F266B00B GoA ROM.lua` file to `scripts` folder (that was automatically created during the PCSX2-EX setup in Part 1) located here: `C:\Users\(Username)\Documents\PCSX2\scripts`.
 
 ![Scripts folder](./GoA_ROM_To_Scripts_Folder.png)
 
