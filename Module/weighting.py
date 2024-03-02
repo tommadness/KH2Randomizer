@@ -4,7 +4,7 @@ from typing import Union
 from Class.newLocationClass import KH2Location
 from List.LvupStats import DreamWeaponOffsets
 from List.NewLocationList import Locations
-from List.configDict import itemType, locationCategory, itemRarity, locationType, itemBias, itemDifficulty
+from List.configDict import itemType, locationCategory, itemRarity, locationDepth, locationType, itemBias, itemDifficulty
 from List.location.graph import START_NODE
 from Module.RandomizerSettings import RandomizerSettings
 
@@ -26,8 +26,8 @@ class SimplifiedWeightDistributions:
         self.weighting_function[itemBias.NOBIAS] = [1] * (max_depth + 1)
         self.weighting_function[itemBias.SLIGHTLY_LATE] = [1] * floor((max_depth + 1) / 2) + [2] * ceil((max_depth + 1) / 2)
         self.weighting_function[itemBias.LATE]  = weight_list_maker(0)
-        self.weighting_function[itemBias.VERYLATE]  = weight_list_maker(1)
-        self.weighting_function[itemBias.SUPERLATE]  = weight_list_maker(2)
+        self.weighting_function[itemBias.VERY_LATE]  = weight_list_maker(1)
+        self.weighting_function[itemBias.SUPER_LATE]  = weight_list_maker(2)
         self.weighting_function[itemBias.NIGHTMARE]  = weight_list_maker(3)
 
     

@@ -6,6 +6,8 @@ from Class.seedSettings import SeedSettings
 from List.configDict import (
     BattleLevelOption,
     expCurve,
+    itemBias,
+    itemDifficulty,
     itemRarity,
     locationDepth,
     locationType,
@@ -78,9 +80,10 @@ def corOn(seed_settings: SeedSettings):
 
 
 def lockedVisitsHard(seed_settings: SeedSettings):
-    # TODO: Probably need to re-work and/or re-word the description of this
-    seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.FIRST.name)
-    seed_settings.set(settingkey.STORY_UNLOCK_CATEGORY, itemRarity.MYTHIC)
+    seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.SPECIFIC.name)
+    seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 5)
+    seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MIN, 3)
+    seed_settings.set(settingkey.WEIGHTED_UNLOCKS, itemBias.LATE)
 
 
 def blockSkips(seed_settings: SeedSettings):
@@ -96,6 +99,25 @@ def turnOffWorldsLocal(worlds: list):
                 worlds_with_rewards[0].remove(world.name)
 
     return _turnOffLocal
+
+def mimic_item_placement_difficulty(seed_settings: SeedSettings, difficulty: itemDifficulty):
+    
+    map_from_difficulty_to_bias = {}
+    map_from_difficulty_to_bias[itemDifficulty.SLIGHTLY_EASY] = itemBias.SLIGHTLY_EARLY
+    map_from_difficulty_to_bias[itemDifficulty.SLIGHTLY_HARD] = itemBias.SLIGHTLY_LATE
+    map_from_difficulty_to_bias[itemDifficulty.HARD] = itemBias.LATE
+    map_from_difficulty_to_bias[itemDifficulty.VERYHARD] = itemBias.VERY_LATE
+    if difficulty in map_from_difficulty_to_bias:
+        map_result = map_from_difficulty_to_bias[difficulty]
+    else:
+        map_result = itemBias.NOBIAS
+
+    seed_settings.set(settingkey.WEIGHTED_FORMS, map_result)
+    seed_settings.set(settingkey.WEIGHTED_MAGIC, map_result)
+    seed_settings.set(settingkey.WEIGHTED_PAGES, map_result)
+    seed_settings.set(settingkey.WEIGHTED_SUMMONS, map_result)
+    seed_settings.set(settingkey.WEIGHTED_PROOFS, map_result)
+    seed_settings.set(settingkey.WEIGHTED_PROMISE_CHARM, map_result)
 
 
 def enableBossEnemy(settings: SeedSettings):
@@ -165,9 +187,8 @@ dailyModifiers = [
     DailyModifier(
         name="Locked Second Visits",
         initMod=None,
-        description="Visit unlocks are dispersed in the seed, requiring you to find them to get to second visits",
+        description="Visit unlocks are dispersed throughout the seed, and you'll need to find them before you can enter second visits.",
         categories={"progression"},
-        # TODO: Probably need to re-work and/or re-word the description of this
         local_modifier=lambda settings: settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.FIRST.name),
     ),
     DailyModifier(
@@ -248,26 +269,22 @@ dailyModifiers = [
         description="Proofs will be on the last non-superboss of a world.",
         categories={"proof"},
         local_modifier=lambda settings: settings.set(
-            settingkey.PROOF_DEPTH, locationDepth.LastStoryBoss.name
+            settingkey.PROOF_DEPTH, locationDepth.LastStoryBoss.value
         ),
     ),
     DailyModifier(
         name="Biased Checks Early",
         initMod=None,
-        description="Using the Slightly Easy item placement, good stuff is twice as likely to be in first half of worlds",
+        description="Using the Slightly Early item bias, good stuff is twice as likely to be in first half of worlds",
         categories={"placement"},
-        local_modifier=lambda settings: settings.set(
-            settingkey.ITEM_PLACEMENT_DIFFICULTY, "Slightly Easy"
-        ),
+        local_modifier=lambda settings: mimic_item_placement_difficulty(settings, itemDifficulty.SLIGHTLY_EASY),
     ),
     DailyModifier(
         name="Biased Checks Late",
         initMod=None,
-        description="Using the Slightly Hard item placement, good stuff is twice as likely to be in second half of worlds",
+        description="Using the Slightly Late item bias, good stuff is twice as likely to be in second half of worlds",
         categories={"placement"},
-        local_modifier=lambda settings: settings.set(
-            settingkey.ITEM_PLACEMENT_DIFFICULTY, "Slightly Hard"
-        ),
+        local_modifier=lambda settings: mimic_item_placement_difficulty(settings, itemDifficulty.SLIGHTLY_HARD),
     ),
     DailyModifier(
         name="You can have 3 of those?",
@@ -305,20 +322,16 @@ dailyHardModifiers = [
     DailyModifier(
         name="Biased Checks Even Later",
         initMod=None,
-        description="Using the Hard item placement, good stuff is likely to be pushed even later.",
+        description="Using the Hard item bias, good stuff is likely to be pushed even later.",
         categories={"placement"},
-        local_modifier=lambda settings: settings.set(
-            settingkey.ITEM_PLACEMENT_DIFFICULTY, "Hard"
-        ),
+        local_modifier=lambda settings: mimic_item_placement_difficulty(settings, itemDifficulty.HARD),
     ),
     DailyModifier(
         name="Biased Checks Way Later",
         initMod=None,
-        description="Using the Very Hard item placement, good stuff is likely to be pushed way later.",
+        description="Using the Very Hard item bias, good stuff is likely to be pushed way later.",
         categories={"placement"},
-        local_modifier=lambda settings: settings.set(
-            settingkey.ITEM_PLACEMENT_DIFFICULTY, "Very Hard"
-        ),
+        local_modifier=lambda settings: mimic_item_placement_difficulty(settings, itemDifficulty.VERYHARD),
     ),
     DailyModifier(
         name="All Super Bosses",
@@ -336,9 +349,9 @@ dailyHardModifiers = [
         ),
     ),
     DailyModifier(
-        name="Locked Second Visits (Mythic Version)",
+        name="Locked Visits (Hard Version)",
         initMod=None,
-        description="Visit unlocks are dispersed in the seed, requiring you to find them to get to second visits, and those items are Mythic rarity",
+        description="Visit unlocks are dispersed in the seed, requiring you to find them to enter worlds and make progress. Also biases them late.",
         categories={"progression"},
         local_modifier=lockedVisitsHard,
     ),

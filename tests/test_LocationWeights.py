@@ -3,7 +3,7 @@ import unittest
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from List.NewLocationList import Locations
-from List.configDict import itemDifficulty, itemRarity
+from List.configDict import itemBias, itemDifficulty, itemRarity, itemType
 from List.location import hundredacrewood as haw, soralevel
 from Module.RandomizerSettings import RandomizerSettings
 from Module.weighting import LocationWeights
@@ -13,17 +13,17 @@ class Tests(unittest.TestCase):
 
     def test_normal(self):
         seed_settings = SeedSettings()
-        seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.NORMAL)
+        seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.NOBIAS)
         seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'default')
 
         reverse_seed_settings = SeedSettings()
-        reverse_seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.NORMAL)
+        reverse_seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.NOBIAS)
         reverse_seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         reverse_seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'reverse')
 
         both_seed_settings = SeedSettings()
-        both_seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.NORMAL)
+        both_seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.NOBIAS)
         both_seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         both_seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'both')
 
@@ -51,51 +51,51 @@ class Tests(unittest.TestCase):
 
         # Earliest regular depth location
         haw_map = regular_locations.locations_by_name[haw.CheckLocation.PoohsHowseHundredAcreWoodMap]
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, haw_map))
-        self.assertEqual(1, reverse_weights.get_weight(itemRarity.MYTHIC, haw_map))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, haw_map))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, haw_map))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, haw_map))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, haw_map))
 
         # Medium depth location
         kangas_magic_boost = regular_locations.locations_by_name[haw.CheckLocation.KangasHowseMagicBoost]
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost))
-        self.assertEqual(1, reverse_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, kangas_magic_boost))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, kangas_magic_boost))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, kangas_magic_boost))
 
         # Latest regular depth location
         starry_hill_cure = regular_locations.locations_by_name[haw.CheckLocation.StarryHillCureElement]
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure))
-        self.assertEqual(1, reverse_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, starry_hill_cure))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, starry_hill_cure))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, starry_hill_cure))
 
         # Sample a few levels
         level_1 = soralevel.level_reward(1, "Level 1", None)
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, level_1))
-        self.assertEqual(1, reverse_weights.get_weight(itemRarity.MYTHIC, level_1))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, level_1))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, level_1))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, level_1))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, level_1))
 
         level_25 = soralevel.level_reward(25, "Level 25", None)
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, level_25))
-        self.assertEqual(1, reverse_weights.get_weight(itemRarity.MYTHIC, level_25))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, level_25))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, level_25))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, level_25))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, level_25))
 
         level_50 = soralevel.level_reward(50, "Level 50", None)
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, level_50))
-        self.assertEqual(1, reverse_weights.get_weight(itemRarity.MYTHIC, level_50))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, level_50))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, level_50))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, level_50))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, level_50))
 
     def test_slightly_easy(self):
         seed_settings = SeedSettings()
-        seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.SLIGHTLY_EASY)
+        seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.SLIGHTLY_EARLY)
         seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'default')
 
         reverse_seed_settings = SeedSettings()
-        reverse_seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.SLIGHTLY_EASY)
+        reverse_seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.SLIGHTLY_EARLY)
         reverse_seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         reverse_seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'reverse')
 
         both_seed_settings = SeedSettings()
-        both_seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.SLIGHTLY_EASY)
+        both_seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.SLIGHTLY_EARLY)
         both_seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         both_seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'both')
 
@@ -123,51 +123,51 @@ class Tests(unittest.TestCase):
 
         # Earliest regular depth location
         haw_map = regular_locations.locations_by_name[haw.CheckLocation.PoohsHowseHundredAcreWoodMap]
-        self.assertEqual(2, regular_weights.get_weight(itemRarity.MYTHIC, haw_map))
-        self.assertEqual(1, reverse_weights.get_weight(itemRarity.MYTHIC, haw_map))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, haw_map))
+        self.assertEqual(2, regular_weights.get_weight(itemType.FORM, haw_map))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, haw_map))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, haw_map))
 
         # Medium depth location
         kangas_magic_boost = regular_locations.locations_by_name[haw.CheckLocation.KangasHowseMagicBoost]
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost))
-        self.assertEqual(2, reverse_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, kangas_magic_boost))
+        self.assertEqual(2, reverse_weights.get_weight(itemType.FORM, kangas_magic_boost))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, kangas_magic_boost))
 
         # Latest regular depth location
         starry_hill_cure = regular_locations.locations_by_name[haw.CheckLocation.StarryHillCureElement]
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure))
-        self.assertEqual(2, reverse_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, starry_hill_cure))
+        self.assertEqual(2, reverse_weights.get_weight(itemType.FORM, starry_hill_cure))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, starry_hill_cure))
 
         # Sample a few levels
         level_1 = soralevel.level_reward(1, "Level 1", None)
-        self.assertEqual(2, regular_weights.get_weight(itemRarity.MYTHIC, level_1))
-        self.assertEqual(2, reverse_weights.get_weight(itemRarity.MYTHIC, level_1))
-        self.assertEqual(2, both_weights.get_weight(itemRarity.MYTHIC, level_1))
+        self.assertEqual(2, regular_weights.get_weight(itemType.FORM, level_1))
+        self.assertEqual(2, reverse_weights.get_weight(itemType.FORM, level_1))
+        self.assertEqual(2, both_weights.get_weight(itemType.FORM, level_1))
 
         level_25 = soralevel.level_reward(25, "Level 25", None)
-        self.assertEqual(2, regular_weights.get_weight(itemRarity.MYTHIC, level_25))
-        self.assertEqual(2, reverse_weights.get_weight(itemRarity.MYTHIC, level_25))
-        self.assertEqual(2, both_weights.get_weight(itemRarity.MYTHIC, level_25))
+        self.assertEqual(2, regular_weights.get_weight(itemType.FORM, level_25))
+        self.assertEqual(2, reverse_weights.get_weight(itemType.FORM, level_25))
+        self.assertEqual(2, both_weights.get_weight(itemType.FORM, level_25))
 
         level_50 = soralevel.level_reward(50, "Level 50", None)
-        self.assertEqual(1, regular_weights.get_weight(itemRarity.MYTHIC, level_50))
-        self.assertEqual(1, reverse_weights.get_weight(itemRarity.MYTHIC, level_50))
-        self.assertEqual(1, both_weights.get_weight(itemRarity.MYTHIC, level_50))
+        self.assertEqual(1, regular_weights.get_weight(itemType.FORM, level_50))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, level_50))
+        self.assertEqual(1, both_weights.get_weight(itemType.FORM, level_50))
 
     def test_nightmare(self):
         seed_settings = SeedSettings()
-        seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.NIGHTMARE)
+        seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.NIGHTMARE)
         seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'default')
 
         reverse_seed_settings = SeedSettings()
-        reverse_seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.NIGHTMARE)
+        reverse_seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.NIGHTMARE)
         reverse_seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         reverse_seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'reverse')
 
         both_seed_settings = SeedSettings()
-        both_seed_settings.set(settingkey.ITEM_PLACEMENT_DIFFICULTY, itemDifficulty.NIGHTMARE)
+        both_seed_settings.set(settingkey.WEIGHTED_FORMS, itemBias.NIGHTMARE)
         both_seed_settings.set(settingkey.AS_DATA_SPLIT, True)
         both_seed_settings.set(settingkey.SOFTLOCK_CHECKING, 'both')
 
@@ -194,24 +194,24 @@ class Tests(unittest.TestCase):
         )
 
         # Determine the expected weights from the weight distribution, so we're not tying these to specific details
-        weight_distribution = regular_weights.weights[itemRarity.MYTHIC]
+        weight_distribution = regular_weights.weights[itemType.FORM]
         min_weight = weight_distribution[0]
         max_weight = weight_distribution[-1]
 
         # Earliest regular depth location
         haw_map = regular_locations.locations_by_name[haw.CheckLocation.PoohsHowseHundredAcreWoodMap]
-        regular = regular_weights.get_weight(itemRarity.MYTHIC, haw_map)
-        reverse = reverse_weights.get_weight(itemRarity.MYTHIC, haw_map)
-        both = both_weights.get_weight(itemRarity.MYTHIC, haw_map)
+        regular = regular_weights.get_weight(itemType.FORM, haw_map)
+        reverse = reverse_weights.get_weight(itemType.FORM, haw_map)
+        both = both_weights.get_weight(itemType.FORM, haw_map)
         self.assertEqual(min_weight, regular)
         self.assertEqual(max_weight, reverse)
         self.assertTrue(both in range(regular + 1, reverse))
 
         # Medium depth location
         kangas_magic_boost = regular_locations.locations_by_name[haw.CheckLocation.KangasHowseMagicBoost]
-        regular = regular_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost)
-        reverse = reverse_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost)
-        both = both_weights.get_weight(itemRarity.MYTHIC, kangas_magic_boost)
+        regular = regular_weights.get_weight(itemType.FORM, kangas_magic_boost)
+        reverse = reverse_weights.get_weight(itemType.FORM, kangas_magic_boost)
+        both = both_weights.get_weight(itemType.FORM, kangas_magic_boost)
         self.assertGreater(regular, min_weight)
         self.assertGreater(reverse, min_weight)
         if reverse > regular:
@@ -221,28 +221,28 @@ class Tests(unittest.TestCase):
 
         # Latest regular depth location
         starry_hill_cure = regular_locations.locations_by_name[haw.CheckLocation.StarryHillCureElement]
-        regular = regular_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure)
-        reverse = reverse_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure)
-        both = both_weights.get_weight(itemRarity.MYTHIC, starry_hill_cure)
+        regular = regular_weights.get_weight(itemType.FORM, starry_hill_cure)
+        reverse = reverse_weights.get_weight(itemType.FORM, starry_hill_cure)
+        both = both_weights.get_weight(itemType.FORM, starry_hill_cure)
         self.assertEqual(max_weight, regular)
         self.assertEqual(min_weight, reverse)
         self.assertTrue(both in range(reverse + 1, regular))
 
         # Sample a few levels
         level_1 = soralevel.level_reward(1, "Level 1", None)
-        self.assertEqual(min_weight, regular_weights.get_weight(itemRarity.MYTHIC, level_1))
-        self.assertEqual(min_weight, reverse_weights.get_weight(itemRarity.MYTHIC, level_1))
-        self.assertEqual(min_weight, both_weights.get_weight(itemRarity.MYTHIC, level_1))
+        self.assertEqual(min_weight, regular_weights.get_weight(itemType.FORM, level_1))
+        self.assertEqual(min_weight, reverse_weights.get_weight(itemType.FORM, level_1))
+        self.assertEqual(min_weight, both_weights.get_weight(itemType.FORM, level_1))
 
         level_25 = soralevel.level_reward(25, "Level 25", None)
-        self.assertTrue(regular_weights.get_weight(itemRarity.MYTHIC, level_25) in range(min_weight + 1, max_weight))
-        self.assertTrue(reverse_weights.get_weight(itemRarity.MYTHIC, level_25) in range(min_weight + 1, max_weight))
-        self.assertTrue(both_weights.get_weight(itemRarity.MYTHIC, level_25) in range(min_weight + 1, max_weight))
+        self.assertTrue(regular_weights.get_weight(itemType.FORM, level_25) in range(min_weight + 1, max_weight))
+        self.assertTrue(reverse_weights.get_weight(itemType.FORM, level_25) in range(min_weight + 1, max_weight))
+        self.assertTrue(both_weights.get_weight(itemType.FORM, level_25) in range(min_weight + 1, max_weight))
 
         level_50 = soralevel.level_reward(50, "Level 50", None)
-        self.assertEqual(max_weight, regular_weights.get_weight(itemRarity.MYTHIC, level_50))
-        self.assertEqual(max_weight, reverse_weights.get_weight(itemRarity.MYTHIC, level_50))
-        self.assertEqual(max_weight, both_weights.get_weight(itemRarity.MYTHIC, level_50))
+        self.assertEqual(max_weight, regular_weights.get_weight(itemType.FORM, level_50))
+        self.assertEqual(max_weight, reverse_weights.get_weight(itemType.FORM, level_50))
+        self.assertEqual(max_weight, both_weights.get_weight(itemType.FORM, level_50))
 
 
 if __name__ == '__main__':

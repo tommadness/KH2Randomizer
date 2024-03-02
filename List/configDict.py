@@ -85,8 +85,8 @@ class itemBias(str, Enum):
     NOBIAS = "No Bias"
     SLIGHTLY_LATE = "Slightly Late"
     LATE = "Late"
-    VERYLATE = "Very Late"
-    SUPERLATE = "Very Very Late"
+    VERY_LATE = "Very Late"
+    SUPER_LATE = "Very Very Late"
     NIGHTMARE = "As Late as Possible"
 
 
