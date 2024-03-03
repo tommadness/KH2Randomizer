@@ -370,6 +370,8 @@ class Randomizer:
             item_types_to_remove.append(itemType.ACCESSORY)
         if not settings.include_armor:
             item_types_to_remove.append(itemType.ARMOR)
+        if not settings.include_munny_pouches:
+            item_types_to_remove.append(itemType.MUNNY_POUCH)
 
         # Any starting items get removed from the item pool
         item_ids_to_remove.extend(self.starting_item_ids)

@@ -2365,6 +2365,15 @@ _all_settings = [
         tooltip="If enabled, all armor items are included in the required item pool.",
     ),
     Toggle(
+        name=settingkey.MUNNY_IN_ITEM_POOL,
+        group=SettingGroup.ITEM_POOL,
+        ui_label="Munny Pouches",
+        standalone_label="Munny Pouches in Item Pool",
+        shared=True,
+        default=True,
+        tooltip="If enabled, all munny pouches are included in the required item pool.",
+    ),
+    Toggle(
         name=settingkey.REMOVE_POPUPS,
         group=SettingGroup.LOCATIONS,
         ui_label="Remove Non-Superboss Popups",

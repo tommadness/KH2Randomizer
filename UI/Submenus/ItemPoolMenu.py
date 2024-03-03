@@ -24,6 +24,7 @@ class ItemPoolMenu(KH2Submenu):
         self.add_option(settingkey.RECIPES_IN_ITEM_POOL)
         self.add_option(settingkey.ACCESSORIES_IN_ITEM_POOL)
         self.add_option(settingkey.ARMOR_IN_ITEM_POOL)
+        self.add_option(settingkey.MUNNY_IN_ITEM_POOL)
         self.add_option(settingkey.ABILITY_POOL)
         self.end_group('Include in Item Pool')
         self.end_column()

@@ -449,9 +449,8 @@ class RandomizerSettings:
         self.wardrobe_skip: bool = ui_settings.get(settingkey.REMOVE_WARDROBE_ANIMATION)
         self.include_maps: bool = ui_settings.get(settingkey.MAPS_IN_ITEM_POOL)
         self.include_recipes: bool = ui_settings.get(settingkey.RECIPES_IN_ITEM_POOL)
-        self.include_accessories: bool = ui_settings.get(
-            settingkey.ACCESSORIES_IN_ITEM_POOL
-        )
+        self.include_munny_pouches: bool = ui_settings.get(settingkey.MUNNY_IN_ITEM_POOL)
+        self.include_accessories: bool = ui_settings.get(settingkey.ACCESSORIES_IN_ITEM_POOL)
         self.include_armor: bool = ui_settings.get(settingkey.ARMOR_IN_ITEM_POOL)
         self.remove_popups: bool = ui_settings.get(settingkey.REMOVE_POPUPS)
 
