@@ -1,0 +1,6 @@
+altgraph==0.17.2
+bitstring==3.1.9
+khbr==4.0.5
+numpy==1.25.2
+pillow==9.3.0
+PyYAML==5.4.1

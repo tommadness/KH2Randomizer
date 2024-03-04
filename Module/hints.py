@@ -324,7 +324,7 @@ class Hints:
                 form.LimitForm.id,
             ]
             world_to_vanilla_ICs[locationType.Atlantica] = [magic.Blizzard.id]
-            world_to_vanilla_ICs[locationType.TWTNW] = [magic.Magnet.id]
+            world_to_vanilla_ICs[locationType.TWTNW] = [storyunlock.WayToTheDawn.id,magic.Magnet.id]
             world_to_vanilla_ICs[locationType.PR] = [
                 magic.Magnet.id,
                 summon.FeatherCharm.id,
@@ -334,6 +334,7 @@ class Hints:
                 misc.TornPages.id,
                 magic.Reflect.id,
                 form.WisdomForm.id,
+                storyunlock.DisneyCastleKey.id,
             ]
             world_to_vanilla_ICs[locationType.HUNDREDAW] = [
                 magic.Cure.id,
@@ -354,7 +355,6 @@ class Hints:
                 form.ValorForm.id,
                 form.LimitForm.id,
                 storyunlock.IceCream.id,
-                storyunlock.Picture.id,
             ]
             world_to_vanilla_ICs[locationType.SP] = [
                 magic.Reflect.id,
@@ -392,6 +392,7 @@ class Hints:
             world_to_vanilla_ICs[locationType.STT] = [
                 form.ValorForm.id,
                 form.LimitForm.id,
+                storyunlock.NaminesSketches.id,
             ]
             world_to_vanilla_ICs["Creations"] = []
             world_to_vanilla_ICs[locationType.Critical] = []

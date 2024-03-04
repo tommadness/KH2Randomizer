@@ -2905,9 +2905,9 @@ class SeedSettings:
         }
 
     def settings_string(self, include_private: bool = False):
-        flags: [bool] = []
+        flags: list[bool] = []
         short_select_values = ""
-        values: [str] = []
+        values: list[str] = []
         for name in sorted(self._filtered_settings(include_private)):
             setting = settings_by_name[name]
             value = self._values[name]

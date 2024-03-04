@@ -76,7 +76,7 @@ def generateMultiWorldSeed(
     for settings, randomizer, unreachable in zip(
         settingsSet, randomizers, unreachables
     ):
-        hints = Hints.generate_hints(randomizer, settings)
+        hints = Hints.generate_hints_v2(randomizer, settings)
         zipper = SeedZip(
             settings, randomizer, hints, extra_data, unreachable, m.multi_output
         )
