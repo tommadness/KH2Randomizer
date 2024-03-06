@@ -181,7 +181,6 @@ class LocationWeights:
                     scaled_depth = distance
                 self.reverse_location_depths[loc] = scaled_depth
 
-                
         self.base_weights = SimplifiedWeightDistributions(max_hops).get_rarity_weightings()
         self.weights = {}
         # default to normal weighting
@@ -201,6 +200,8 @@ class LocationWeights:
         self.weights[itemType.TORN_PAGE] = self.base_weights[settings.page_weights]
 
         self.weights[itemType.SUMMON] = self.base_weights[settings.summon_weights]
+
+        self.weights[itemType.REPORT] = self.base_weights[settings.report_weights]
 
         self.weights[itemType.PROOF_OF_PEACE] = self.base_weights[settings.proof_weights]
         self.weights[itemType.PROOF_OF_CONNECTION] = self.base_weights[settings.proof_weights]

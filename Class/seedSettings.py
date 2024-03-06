@@ -560,17 +560,18 @@ def _weighted_item_setting(key: str, item_type: str):
     return SingleSelect(
         name=key,
         group=SettingGroup.ITEM_PLACEMENT,
-        ui_label=f"{item_type} Placement Bias",
+        ui_label=item_type,
+        standalone_label=f"{item_type} Placement Bias",
         choices={
-            itemBias.VERY_EARLY: "Very Early",
-            itemBias.EARLY: "Early",
-            itemBias.SLIGHTLY_EARLY: "Slightly Early",
-            itemBias.NOBIAS: "No Bias",
-            itemBias.SLIGHTLY_LATE: "Slightly Late",
-            itemBias.LATE: "Late",
-            itemBias.VERY_LATE: "Very Late",
-            itemBias.SUPER_LATE: "Very Very Late",
-            itemBias.NIGHTMARE: "As Late as Possible",
+            itemBias.VERY_EARLY: "Very Early (Scaled)",
+            itemBias.EARLY: "Earlier (Scaled)",
+            itemBias.SLIGHTLY_EARLY: "Early (Twice as Likely)",
+            itemBias.NOBIAS: "None (Normal)",
+            itemBias.SLIGHTLY_LATE: "Late (Twice as Likely)",
+            itemBias.LATE: "Later (Scaled)",
+            itemBias.VERY_LATE: "Very Late (Scaled)",
+            itemBias.SUPER_LATE: "Extremely Late (Scaled)",
+            itemBias.NIGHTMARE: "Latest (Scaled)",
         },
         shared=True,
         default=itemBias.NOBIAS,
@@ -583,6 +584,28 @@ def _weighted_item_setting(key: str, item_type: str):
         ],
         tooltip=f"""
         Bias the placement of {item_type} based on how difficult/easy you'd like accessing these items to be.
+        
+        Very Early (Scaled) - Equivalent to Earlier (Scaled) with more bias to the early locations.
+        
+        Earlier (Scaled) - Items in the category are more likely to be placed in the earliest locations, with the
+        likelihood decreasing as locations get later.
+        
+        Early (Twice as Likely) - Items in the category are (equally) twice as likely to be placed in the first half of
+        locations.
+        
+        None (Normal) - Items in the category are equally likely to be placed anywhere.
+        
+        Late (Twice as Likely) - Items in the category are (equally) twice as likely to be placed in the second half of
+        locations.
+        
+        Later (Scaled) - Items in the category are less likely to be placed in the earliest locations, with the
+        likelihood increasing as locations get later.
+        
+        Very Late (Scaled) - Equivalent to Later (Scaled) with more bias to the late locations.
+        
+        Extremely Late (Scaled) - Equivalent to Very Late (Scaled) with even more bias to the late locations.
+        
+        Latest (Scaled) - Items are _drastically_ biased towards the latest locations.
         """,
     )
 
@@ -2433,12 +2456,13 @@ _all_settings = [
         Super Easy and Easy will bias Rare and Mythic items early, while the Hard settings will bias those later.
         """,
     ),
-    _weighted_item_setting(key=settingkey.WEIGHTED_FORMS, item_type="Form"),
-    _weighted_item_setting(key=settingkey.WEIGHTED_UNLOCKS, item_type="Visit Unlock"),
-    _weighted_item_setting(key=settingkey.WEIGHTED_MAGIC, item_type="Magic"),
-    _weighted_item_setting(key=settingkey.WEIGHTED_PAGES, item_type="Page"),
-    _weighted_item_setting(key=settingkey.WEIGHTED_SUMMONS, item_type="Summon"),
-    _weighted_item_setting(key=settingkey.WEIGHTED_PROOFS, item_type="Proof"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_FORMS, item_type="Drive Forms"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_UNLOCKS, item_type="Visit Unlocks"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_MAGIC, item_type="Magics"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_PAGES, item_type="Torn Pages"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_SUMMONS, item_type="Summons"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_REPORTS, item_type="Ansem Reports"),
+    _weighted_item_setting(key=settingkey.WEIGHTED_PROOFS, item_type="Proofs"),
     _weighted_item_setting(key=settingkey.WEIGHTED_PROMISE_CHARM, item_type="Promise Charm"),
     Toggle(
         name=settingkey.NIGHTMARE_LOGIC,
