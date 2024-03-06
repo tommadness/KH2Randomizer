@@ -19,7 +19,6 @@ class HintsMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.HINT_SYSTEM)
-        self.add_option(settingkey.REPORT_DEPTH)
         self.add_option(settingkey.JOURNAL_HINTS_ABILITIES)
         self.add_option(settingkey.PROGRESSION_HINTS)
         self.add_option(settingkey.PROGRESSION_HINTS_REVEAL_END)
