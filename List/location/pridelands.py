@@ -9,12 +9,19 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     Gorge = "Gorge"
+    GorgeChests = "Gorge Chests"
     ElephantGraveyard = "Elephant Graveyard"
+    ElephantGraveyardChests = "Elephant Graveyard Chests"
     PrideRock = "Pride Rock"
+    PrideRockChests = "Pride Rock Chests"
     WildebeestValley = "Wildebeest Valley"
+    WildebeestValleyChests = "Wildebeest Valley Chests"
     Wastelands = "Wastelands"
+    WastelandsChests = "Wastelands Chests"
     Jungle = "Jungle"
+    JungleChests = "Jungle Chests"
     Oasis = "Oasis"
+    OasisChests = "Oasis Chests"
     CircleOfLife = "Circle of Life"
     Hyenas1Bonus = "Hyenas 1 Bonus"
     Scar = "Scar"
@@ -61,55 +68,70 @@ class PLLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.Gorge][NodeId.GorgeChests] = ItemPlacementHelpers.need_pl_keyblade
+            self.logic[NodeId.ElephantGraveyard][NodeId.ElephantGraveyardChests] = ItemPlacementHelpers.need_pl_keyblade
+            self.logic[NodeId.PrideRock][NodeId.PrideRockChests] = ItemPlacementHelpers.need_pl_keyblade
+            self.logic[NodeId.WildebeestValley][NodeId.WildebeestValleyChests] = ItemPlacementHelpers.need_pl_keyblade
+            self.logic[NodeId.Wastelands][NodeId.WastelandsChests] = ItemPlacementHelpers.need_pl_keyblade
+            self.logic[NodeId.Jungle][NodeId.JungleChests] = ItemPlacementHelpers.need_pl_keyblade
+            self.logic[NodeId.Oasis][NodeId.OasisChests] = ItemPlacementHelpers.need_pl_keyblade
             self.logic[START_NODE][NodeId.Gorge] = ItemPlacementHelpers.pl1_check
             self.logic[NodeId.Scar][NodeId.Hyenas2Bonus] = ItemPlacementHelpers.pl2_check
         else:
             self.logic[NodeId.Groundshaker][NodeId.Gorge] = ItemPlacementHelpers.pl2_check
+           
 
 def make_graph(graph: LocationGraphBuilder):
     pl = locationType.PL
     pl_logic = PLLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(pl_logic)
 
-    gorge = graph.add_location(NodeId.Gorge, [
+    gorge_chests = graph.add_location(NodeId.GorgeChests, [
         chest(492, CheckLocation.GorgeSavannahMap, pl),
         chest(404, CheckLocation.GorgeDarkGem, pl),
         chest(405, CheckLocation.GorgeMyhtrilStone, pl),
     ])
-    elephant_graveyard = graph.add_location(NodeId.ElephantGraveyard, [
+    gorge = graph.add_location(NodeId.Gorge, [])
+    elephant_graveyard_chests = graph.add_location(NodeId.ElephantGraveyardChests, [
         chest(401, CheckLocation.ElephantGraveyardFrostGem, pl),
         chest(402, CheckLocation.ElephantGraveyardMythrilStone, pl),
         chest(403, CheckLocation.ElephantGraveyardBrightStone, pl),
         chest(508, CheckLocation.ElephantGraveyardApBoost, pl),
         chest(509, CheckLocation.ElephantGraveyardMythrilShard, pl),
     ])
-    pride_rock = graph.add_location(NodeId.PrideRock, [
+    elephant_graveyard = graph.add_location(NodeId.ElephantGraveyard, [])
+    pride_rock_chests = graph.add_location(NodeId.PrideRockChests, [
         chest(418, CheckLocation.PrideRockMap, pl),
         chest(392, CheckLocation.PrideRockMythrilStone, pl),
         chest(393, CheckLocation.PrideRockSerenityCrystal, pl),
     ])
-    wildebeest_valley = graph.add_location(NodeId.WildebeestValley, [
+    pride_rock = graph.add_location(NodeId.PrideRock, [])
+    wildebeest_valley_chests = graph.add_location(NodeId.WildebeestValleyChests, [
         chest(396, CheckLocation.WildebeestValleyEnergyStone, pl),
         chest(397, CheckLocation.WildebeestValleyApBoost, pl),
         chest(398, CheckLocation.WildebeestValleyMythrilGem, pl),
         chest(399, CheckLocation.WildebeestValleyMythrilStone, pl),
         chest(400, CheckLocation.WildebeestValleyLucidGem, pl),
     ])
-    wastelands = graph.add_location(NodeId.Wastelands, [
+    wildebeest_valley = graph.add_location(NodeId.WildebeestValley, [])
+    wastelands_chests = graph.add_location(NodeId.WastelandsChests, [
         chest(406, CheckLocation.WastelandsMythrilShard, pl),
         chest(407, CheckLocation.WastelandsSerenityGem, pl),
         chest(408, CheckLocation.WastelandsMythrilStone, pl),
     ])
-    jungle = graph.add_location(NodeId.Jungle, [
+    wastelands = graph.add_location(NodeId.Wastelands, [])
+    jungle_chests = graph.add_location(NodeId.JungleChests, [
         chest(409, CheckLocation.JungleSerenityGem, pl),
         chest(410, CheckLocation.JungleMythrilStone, pl),
         chest(411, CheckLocation.JungleSerenityCrystal, pl),
     ])
-    oasis = graph.add_location(NodeId.Oasis, [
+    jungle = graph.add_location(NodeId.Jungle, [])
+    oasis_chests = graph.add_location(NodeId.OasisChests, [
         chest(412, CheckLocation.OasisMap, pl),
         chest(493, CheckLocation.OasisTornPages, pl, vanilla=misc.TornPages),
         chest(413, CheckLocation.OasisApBoost, pl),
     ])
+    oasis = graph.add_location(NodeId.Oasis, [])
     circle_of_life = graph.add_location(NodeId.CircleOfLife, [
         popup(264, CheckLocation.CircleOfLife, pl, vanilla=keyblade.CircleOfLife),
     ])
@@ -131,6 +153,14 @@ def make_graph(graph: LocationGraphBuilder):
     ])
 
     graph.register_superboss(data_saix)
+    
+    graph.add_edge(gorge, gorge_chests)
+    graph.add_edge(elephant_graveyard, elephant_graveyard_chests)
+    graph.add_edge(pride_rock, pride_rock_chests)
+    graph.add_edge(wildebeest_valley, wildebeest_valley_chests)
+    graph.add_edge(wastelands, wastelands_chests)
+    graph.add_edge(jungle, jungle_chests)
+    graph.add_edge(oasis, oasis_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, gorge)

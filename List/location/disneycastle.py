@@ -9,12 +9,17 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     DisneyCastleCourtyard = "DC Courtyard"
+    DisneyCastleCourtyardChests = "DC Courtyard Chests"
     Library = "Library"
+    LibraryChests = "Library Chests"
     LibraryPopup = "Library Popup"
     MinnieEscort = "Minnie Escort"
     CornerstoneHill = "Cornerstone Hill"
+    CornerstoneHillChests = "Cornerstone Hill Chests"
     Pier = "Pier"
+    PierChests = "Pier Chests"
     Waterway = "Waterway"
+    WaterwayChests = "Waterway Chests"
     WindowsPopup = "Windows Popup"
     BoatPete = "Boat Pete"
     FuturePete = "Future Pete"
@@ -58,17 +63,23 @@ class DCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.DisneyCastleCourtyard][NodeId.DisneyCastleCourtyardChests] = ItemPlacementHelpers.need_dc_keyblade
+            self.logic[NodeId.Library][NodeId.LibraryChests] = ItemPlacementHelpers.need_dc_keyblade
+            self.logic[NodeId.CornerstoneHill][NodeId.CornerstoneHillChests] = ItemPlacementHelpers.need_dc_keyblade
+            self.logic[NodeId.Pier][NodeId.PierChests] = ItemPlacementHelpers.need_dc_keyblade
+            self.logic[NodeId.Waterway][NodeId.WaterwayChests] = ItemPlacementHelpers.need_dc_keyblade
             self.logic[START_NODE][NodeId.DisneyCastleCourtyard] = ItemPlacementHelpers.dc1_check
             self.logic[NodeId.MinnieEscort][NodeId.CornerstoneHill] = ItemPlacementHelpers.dc2_check
 
         self.logic[NodeId.WisdomPopup][NodeId.LingeringWill] = ItemPlacementHelpers.need_proof_connection
+        
 
 def make_graph(graph: LocationGraphBuilder):
     dc = locationType.DC
     dc_logic = DCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(dc_logic)
 
-    courtyard = graph.add_location(NodeId.DisneyCastleCourtyard, [
+    courtyard_chests = graph.add_location(NodeId.DisneyCastleCourtyardChests, [
         chest(16, CheckLocation.CourtyardMythrilShard, dc),
         chest(17, CheckLocation.CourtyardStarRecipe, dc),
         chest(18, CheckLocation.CourtyardApBoost, dc),
@@ -77,28 +88,33 @@ def make_graph(graph: LocationGraphBuilder):
         chest(247, CheckLocation.CourtyardBlazingShard, dc),
         chest(248, CheckLocation.CourtyardMythrilShard2, dc),
     ])
-    library = graph.add_location(NodeId.Library, [
+    courtyard = graph.add_location(NodeId.DisneyCastleCourtyard, [])
+    library_chests = graph.add_location(NodeId.LibraryChests, [
         chest(91, CheckLocation.LibraryTornPages, dc, vanilla=misc.TornPages),
     ])
+    library = graph.add_location(NodeId.Library, [])
     library_popup = graph.add_location(NodeId.LibraryPopup, [
         popup(332, CheckLocation.DisneyCastleMap, dc),
     ])
     minnie_escort = graph.add_location(NodeId.MinnieEscort, [
         hybrid_bonus(38, CheckLocation.MinnieEscort, dc, vanilla=ability.AutoSummon),
     ])
-    cornerstone_hill = graph.add_location(NodeId.CornerstoneHill, [
+    cornerstone_hill_chests = graph.add_location(NodeId.CornerstoneHillChests, [
         chest(79, CheckLocation.CornerstoneHillMap, dc),
         chest(12, CheckLocation.CornerstoneHillFrostShard, dc),
     ])
-    pier = graph.add_location(NodeId.Pier, [
+    cornerstone_hill = graph.add_location(NodeId.CornerstoneHill, [])
+    pier_chests = graph.add_location(NodeId.PierChests, [
         chest(81, CheckLocation.PierMythrilShard, dc),
         chest(82, CheckLocation.PierHiPotion, dc),
     ])
-    waterway = graph.add_location(NodeId.Waterway, [
+    pier = graph.add_location(NodeId.Pier, [])
+    waterway_chests = graph.add_location(NodeId.WaterwayChests, [
         chest(83, CheckLocation.WaterwayMythrilStone, dc),
         chest(84, CheckLocation.WaterwayApBoost, dc),
         chest(85, CheckLocation.WaterwayFrostStone, dc),
     ])
+    waterway = graph.add_location(NodeId.Waterway, [])
     windows_popup = graph.add_location(NodeId.WindowsPopup, [
         popup(368, CheckLocation.WindowOfTimeMap, dc),
     ])
@@ -132,6 +148,12 @@ def make_graph(graph: LocationGraphBuilder):
     graph.register_superboss(lingering_will)
     graph.register_first_boss(wisdom_popup)
     graph.register_last_story_boss(wisdom_popup)
+    
+    graph.add_edge(courtyard, courtyard_chests)
+    graph.add_edge(library, library_chests)
+    graph.add_edge(cornerstone_hill, cornerstone_hill_chests)
+    graph.add_edge(pier, pier_chests)
+    graph.add_edge(waterway, waterway_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, courtyard)

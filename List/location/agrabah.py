@@ -10,16 +10,24 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 class NodeId(str, Enum):
     AgrabahMapPopup = "Agrabah Map Popup"
     Agrabah = "Agrabah"
+    AgrabahChests = "Agrabah Chests"
     Bazaar = "Bazaar"
+    BazaarChests = "Bazaar Chests"
     PalaceWalls = "Palace Walls"
+    PalaceWallsChests = "Palace Walls Chests"
     CaveOfWondersEntrance = "Cave of Wonders Entrance"
+    CaveOfWondersEntranceChests = "Cave of Wonders Entrance Chests"
     ValleyOfStone = "Valley of Stone"
+    ValleyOfStoneChests = "Valley of Stone Chests"
     AbuEscort = "Abu Escort"
     ChasmOfChallenges = "Chasm of Challenges"
+    ChasmOfChallengesChests = "Chasm of Challenges Chests"
     TreasureRoomBonus = "Treasure Room Bonus"
     TreasureRoom = "Treasure Room"
+    TreasureRoomChests = "Treasure Room Chests"
     ElementalLords = "Elemental Lords"
     RuinedChamber = "Ruined Chamber"
+    RuinedChamberChests = "Ruined Chamber Chests"
     GenieJafar = "Genie Jafar"
     Lexaeus = "AS Lexaeus"
     DataLexaeus = "Data Lexaeus"
@@ -67,6 +75,14 @@ class AGLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.Agrabah][NodeId.AgrabahChests] = ItemPlacementHelpers.need_ag_keyblade
+            self.logic[NodeId.Bazaar][NodeId.BazaarChests] = ItemPlacementHelpers.need_ag_keyblade
+            self.logic[NodeId.PalaceWalls][NodeId.PalaceWallsChests] = ItemPlacementHelpers.need_ag_keyblade
+            self.logic[NodeId.CaveOfWondersEntrance][NodeId.CaveOfWondersEntranceChests] = ItemPlacementHelpers.need_ag_keyblade
+            self.logic[NodeId.ValleyOfStone][NodeId.ValleyOfStoneChests] = ItemPlacementHelpers.need_ag_keyblade
+            self.logic[NodeId.ChasmOfChallenges][NodeId.ChasmOfChallengesChests] = ItemPlacementHelpers.need_ag_keyblade
+            self.logic[NodeId.TreasureRoom][NodeId.TreasureRoomChests] = ItemPlacementHelpers.need_ag_keyblade
+            self.logic[NodeId.RuinedChamber][NodeId.RuinedChamberChests] = ItemPlacementHelpers.need_ag_keyblade
             self.logic[START_NODE][NodeId.AgrabahMapPopup] = ItemPlacementHelpers.ag1_check
             self.logic[NodeId.ElementalLords][NodeId.RuinedChamber] = lambda inv : ItemPlacementHelpers.ag2_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
         else:
@@ -82,7 +98,7 @@ def make_graph(graph: LocationGraphBuilder):
     agrabah_map_popup = graph.add_location(NodeId.AgrabahMapPopup, [
         popup(353, CheckLocation.AgrabahMap, ag),
     ])
-    agrabah = graph.add_location(NodeId.Agrabah, [
+    agrabah_chests = graph.add_location(NodeId.AgrabahChests, [
         chest(28, CheckLocation.AgrabahDarkShard, ag),
         chest(29, CheckLocation.AgrabahMythrilShard, ag),
         chest(30, CheckLocation.AgrabahHiPotion, ag),
@@ -91,49 +107,57 @@ def make_graph(graph: LocationGraphBuilder):
         chest(249, CheckLocation.AgrabahMythrilShard2, ag),
         chest(501, CheckLocation.AgrabahSerenityShard, ag),
     ])
-    bazaar = graph.add_location(NodeId.Bazaar, [
+    agrabah = graph.add_location(NodeId.Agrabah, [])
+    bazaar_chests = graph.add_location(NodeId.BazaarChests, [
         chest(31, CheckLocation.BazaarMythrilGem, ag),
         chest(32, CheckLocation.BazaarPowerShard, ag),
         chest(33, CheckLocation.BazaarHiPotion, ag),
         chest(134, CheckLocation.BazaarApBoost, ag),
         chest(135, CheckLocation.BazaarMythrilShard, ag),
     ])
-    palace_walls = graph.add_location(NodeId.PalaceWalls, [
+    bazaar = graph.add_location(NodeId.Bazaar, [])
+    palace_walls_chests = graph.add_location(NodeId.PalaceWallsChests, [
         chest(136, CheckLocation.PalaceWallsSkillRing, ag),
         chest(520, CheckLocation.PalaceWallsMythrilStone, ag),
     ])
-    cave_of_wonders_entrance = graph.add_location(NodeId.CaveOfWondersEntrance, [
+    palace_walls = graph.add_location(NodeId.PalaceWalls, [])
+    cave_of_wonders_entrance_chests = graph.add_location(NodeId.CaveOfWondersEntranceChests, [
         chest(250, CheckLocation.CaveEntrancePowerStone, ag),
         chest(251, CheckLocation.CaveEntranceMythrilShard, ag),
     ])
-    valley_of_stone = graph.add_location(NodeId.ValleyOfStone, [
+    cave_of_wonders_entrance = graph.add_location(NodeId.CaveOfWondersEntrance, [])
+    valley_of_stone_chests = graph.add_location(NodeId.ValleyOfStoneChests, [
         chest(35, CheckLocation.ValleyOfStoneMythrilStone, ag),
         chest(36, CheckLocation.ValleyOfStoneApBoost, ag),
         chest(137, CheckLocation.ValleyOfStoneMythrilShard, ag),
         chest(138, CheckLocation.ValleyOfStoneHiPotion, ag),
     ])
+    valley_of_stone = graph.add_location(NodeId.ValleyOfStone, [])
     abu_escort = graph.add_location(NodeId.AbuEscort, [
         item_bonus(42, CheckLocation.AbuEscort, ag, vanilla=ability.SummonBoost),
     ])
-    chasm_of_challenges = graph.add_location(NodeId.ChasmOfChallenges, [
+    chasm_of_challenges_chests = graph.add_location(NodeId.ChasmOfChallengesChests, [
         chest(487, CheckLocation.ChasmOfChallengesCaveOfWondersMap, ag),
         chest(37, CheckLocation.ChasmOfChallengesApBoost, ag),
     ])
+    chasm_of_challenges = graph.add_location(NodeId.ChasmOfChallenges, [])
     treasure_room_bonus = graph.add_location(NodeId.TreasureRoomBonus, [
         stat_bonus(46, CheckLocation.TreasureRoomBonus, ag),
     ])
-    treasure_room = graph.add_location(NodeId.TreasureRoom, [
+    treasure_room_chests = graph.add_location(NodeId.TreasureRoomChests, [
         chest(502, CheckLocation.TreasureRoomApBoost, ag),
         chest(503, CheckLocation.TreasureRoomSerenityGem, ag),
     ])
+    treasure_room = graph.add_location(NodeId.TreasureRoom, [])
     elemental_lords = graph.add_location(NodeId.ElementalLords, [
         item_bonus(37, CheckLocation.ElementalLordsBonus, ag, vanilla=ability.FinishingLeap),
         popup(300, CheckLocation.LampCharm, ag, vanilla=summon.LampCharm),
     ])
-    ruined_chamber = graph.add_location(NodeId.RuinedChamber, [
+    ruined_chamber_chests = graph.add_location(NodeId.RuinedChamberChests, [
         chest(34, CheckLocation.RuinedChamberTornPages, ag, vanilla=misc.TornPages),
         chest(486, CheckLocation.RuinedChamberRuinsMap, ag),
     ])
+    ruined_chamber = graph.add_location(NodeId.RuinedChamber, [])
     genie_jafar = graph.add_location(NodeId.GenieJafar, [
         item_bonus(15, CheckLocation.GenieJafarBonus, ag, vanilla=magic.Fire),
         popup(303, CheckLocation.WishingLamp, ag, vanilla=keyblade.WishingLamp),
@@ -147,6 +171,15 @@ def make_graph(graph: LocationGraphBuilder):
     ])
 
     graph.register_superboss(data_lexaeus)
+
+    graph.add_edge(agrabah, agrabah_chests)
+    graph.add_edge(bazaar, bazaar_chests)
+    graph.add_edge(palace_walls, palace_walls_chests)
+    graph.add_edge(cave_of_wonders_entrance, cave_of_wonders_entrance_chests)
+    graph.add_edge(valley_of_stone, valley_of_stone_chests)
+    graph.add_edge(chasm_of_challenges, chasm_of_challenges_chests)
+    graph.add_edge(treasure_room, treasure_room_chests)
+    graph.add_edge(ruined_chamber, ruined_chamber_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, agrabah_map_popup)
