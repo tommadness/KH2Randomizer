@@ -10,32 +10,49 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 class NodeId(str, Enum):
     MarketplaceMapPopup = "Marketplace Map Popup"
     Borough = "Borough"
+    BoroughChests = "Borough Chests"
     MerlinsHousePopup = "Merlin's House Popup"
     Bailey = "Bailey"
     BaseballCharmPopup = "Baseball Charm Popup"
     Postern = "Postern"
+    PosternChests = "Postern Chests"
     Corridors = "Cooridors"
+    CorridorsChests = "Cooridors Chests"
     DoorToDarknessPopup = "DTD Popup"
     AnsemsStudy = "Ansem's Study"
+    AnsemsStudyChests = "Ansem's Study Chests"
     UkuleleCharm = "Ukulele Charm"
+    UkuleleCharmChests = "Ukulele Charm Chests"
     RestorationSite = "Restoration Site"
+    RestorationSiteChests = "Restoration Site Chests"
     DemyxHollowBastion = "Demyx (HB)"
     FinalFantasyFights = "Final Fantasy Fights"
     CrystalFissure = "Crystal Fissure"
+    CrystalFissureChests = "Crystal Fissure Chests"
     ThousandHeartless = "1000 Heartless"
     GullWing = "Gull Wing"
+    GullWingChests = "Gull Wing Chests"
     HeartlessManufactory = "Heartless Manufactory"
+    HeartlessManufactoryChests = "Heartless Manufactory Chests"
     Sephiroth = "Sephiroth"
     Mushroom13 = "Mushroom 13"
     DataDemyx = "Data Demyx"
     CorDepths = "CoR Depths"
+    CorDepthsChests = "CoR Depths Chests"
     CorMineshaftPreFigh1 = "CoR Mineshaft Pre-Fight 1"
+    CorMineshaftPreFigh1Chests = "CoR Mineshaft Pre-Fight 1 Chests"
     CorDepthsPostFight1 = "CoR-Depths Post-Fight 1"
+    CorDepthsPostFight1Chests = "CoR-Depths Post-Fight 1 Chests"
     CorMiningArea = "CoR Mining Area"
+    CorMiningAreaChests = "CoR Mining Area Chests"
     CorMineshaftPreFight2 = "CoR Minshaft Pre-Fight 2"
+    CorMineshaftPreFight2Chests = "CoR Minshaft Pre-Fight 2 Chests"
     CorEngineChamber = "CoR Engine Chamber"
+    CorEngineChamberChests  = "CoR Engine Chamber Chests"
     CorMineshaftPostFight2 = "CoR Mineshaft Post Fight 2"
+    CorMineshaftPostFight2Chests = "CoR Mineshaft Post Fight 2 Chests"
     CorMineshaftLastChest = "CoR Mineshaft Last Chest"
+    CorMineshaftLastChestChests = "CoR Mineshaft Last Chest Chests"
     TransportToRemembrance = "Transport to Remembrance"
 
 
@@ -109,6 +126,24 @@ class HBLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.Borough][NodeId.BoroughChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.Postern][NodeId.PosternChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.Corridors][NodeId.CorridorsChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.AnsemsStudy][NodeId.AnsemsStudyChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.UkuleleCharm][NodeId.UkuleleCharmChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.RestorationSite][NodeId.RestorationSiteChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.CrystalFissure][NodeId.CrystalFissureChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.GullWing][NodeId.GullWingChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.HeartlessManufactory][NodeId.HeartlessManufactoryChests] = ItemPlacementHelpers.need_hb_keyblade
+
+            self.logic[NodeId.CorDepths][NodeId.CorDepthsChests] = ItemPlacementHelpers.need_cor_keyblade
+            self.logic[NodeId.CorMineshaftPreFigh1][NodeId.CorMineshaftPreFigh1Chests] = ItemPlacementHelpers.need_cor_keyblade
+            self.logic[NodeId.CorDepthsPostFight1][NodeId.CorDepthsPostFight1Chests] = ItemPlacementHelpers.need_cor_keyblade
+            self.logic[NodeId.CorMiningArea][NodeId.CorMiningAreaChests] = ItemPlacementHelpers.need_cor_keyblade
+            self.logic[NodeId.CorMineshaftPreFight2][NodeId.CorMineshaftPreFight2Chests] = ItemPlacementHelpers.need_cor_keyblade
+            self.logic[NodeId.CorEngineChamber][NodeId.CorEngineChamberChests] = ItemPlacementHelpers.need_cor_keyblade
+            self.logic[NodeId.CorMineshaftPostFight2][NodeId.CorMineshaftPostFight2Chests] = ItemPlacementHelpers.need_cor_keyblade
+            self.logic[NodeId.CorMineshaftLastChest][NodeId.CorMineshaftLastChestChests] = ItemPlacementHelpers.need_cor_keyblade
             self.logic[START_NODE][NodeId.MarketplaceMapPopup] = ItemPlacementHelpers.hb1_check
             self.logic[NodeId.BaseballCharmPopup][NodeId.Postern] = ItemPlacementHelpers.hb2_check
             self.logic[NodeId.DoorToDarknessPopup][NodeId.CorDepths] = ItemPlacementHelpers.need_growths
@@ -117,6 +152,7 @@ class HBLogicGraph(DefaultLogicGraph):
         else:
             self.logic[NodeId.ThousandHeartless][NodeId.CorDepths] = lambda inv : ItemPlacementHelpers.hb2_check(inv) and ItemPlacementHelpers.need_growths(inv)
             self.logic[NodeId.BaseballCharmPopup][NodeId.DataDemyx] = ItemPlacementHelpers.need_forms
+            
 
 def make_graph(graph: LocationGraphBuilder):
     hb = locationType.HB
@@ -127,13 +163,14 @@ def make_graph(graph: LocationGraphBuilder):
     marketplace_map_popup = graph.add_location(NodeId.MarketplaceMapPopup, [
         popup(362, CheckLocation.MarketplaceMap, hb),
     ])
-    borough = graph.add_location(NodeId.Borough, [
+    borough_chests = graph.add_location(NodeId.BoroughChests, [
         chest(194, CheckLocation.BoroughDriveRecovery, hb),
         chest(195, CheckLocation.BoroughApBoost, hb),
         chest(196, CheckLocation.BoroughHiPotion, hb),
         chest(305, CheckLocation.BoroughMythrilShard, hb),
         chest(506, CheckLocation.BoroughDarkShard, hb),
     ])
+    borough = graph.add_location(NodeId.Borough, [])
     merlins_house_popup = graph.add_location(NodeId.MerlinsHousePopup, [
         popup(256, CheckLocation.MerlinsHouseMembershipCard, hb, vanilla=storyunlock.MembershipCard),
         popup(292, CheckLocation.MerlinsHouseBlizzardElement, hb, vanilla=magic.Blizzard),
@@ -145,55 +182,63 @@ def make_graph(graph: LocationGraphBuilder):
     baseball_charm_popup = graph.add_location(NodeId.BaseballCharmPopup, [
         popup(258, CheckLocation.BaseballCharm, hb, vanilla=summon.BaseballCharm),
     ])
-    postern = graph.add_location(NodeId.Postern, [
+    postern_chests = graph.add_location(NodeId.PosternChests, [
         chest(310, CheckLocation.PosternCastlePerimeterMap, hb),
         chest(189, CheckLocation.PosternMythrilGem, hb),
         chest(190, CheckLocation.PosternApBoost, hb),
     ])
-    corridors = graph.add_location(NodeId.Corridors, [
+    postern = graph.add_location(NodeId.Postern, [])
+    corridors_chests = graph.add_location(NodeId.CorridorsChests, [
         chest(200, CheckLocation.CorridorsMythrilStone, hb),
         chest(201, CheckLocation.CorridorsMythrilCrystal, hb),
         chest(202, CheckLocation.CorridorsDarkCrystal, hb),
         chest(307, CheckLocation.CorridorsApBoost, hb),
     ])
+    corridors = graph.add_location(NodeId.Corridors, [])
     dtd_popup = graph.add_location(NodeId.DoorToDarknessPopup, [
         popup(266, CheckLocation.AnsemsStudyMasterForm, hb, vanilla=form.MasterForm),
         popup(276, CheckLocation.AnsemsStudySleepingLion, hb, vanilla=keyblade.SleepingLion),
     ])
-    ansems_study = graph.add_location(NodeId.AnsemsStudy, [
+    ansems_study_chests = graph.add_location(NodeId.AnsemsStudyChests, [
         chest(184, CheckLocation.AnsemsStudySkillRecipe, hb),
     ])
-    ukulele_charm = graph.add_location(NodeId.UkuleleCharm, [
+    ansems_study = graph.add_location(NodeId.AnsemsStudy, [])
+    ukulele_charm_chests = graph.add_location(NodeId.UkuleleCharmChests, [
         chest(183, CheckLocation.UkuleleCharm, hb, vanilla=summon.UkuleleCharm),
     ])
-    restoration_site = graph.add_location(NodeId.RestorationSite, [
+    ukulele_charm = graph.add_location(NodeId.UkuleleCharm, [])
+    restoration_site_chests = graph.add_location(NodeId.RestorationSiteChests, [
         chest(309, CheckLocation.RestorationSiteMoonRecipe, hb),
         chest(507, CheckLocation.RestorationSiteApBoost, hb),
     ])
+    restoration_site = graph.add_location(NodeId.RestorationSite, [])
     demyx = graph.add_location(NodeId.DemyxHollowBastion, [
         hybrid_bonus(28, CheckLocation.DemyxHollowBastion, hb, vanilla=magic.Blizzard),
     ])
     final_fantasy_fights = graph.add_location(NodeId.FinalFantasyFights, [
         popup(361, CheckLocation.FinalFantasyFightsCureElement, hb, vanilla=magic.Cure),
     ])
-    crystal_fissure = graph.add_location(NodeId.CrystalFissure, [
+    crystal_fissure_chests = graph.add_location(NodeId.CrystalFissureChests, [
         chest(179, CheckLocation.CrystalFissureTornPages, hb, vanilla=misc.TornPages),
         chest(489, CheckLocation.CrystalFissureGreatMawMap, hb),
         chest(180, CheckLocation.CrystalFissureEnergyCrystal, hb),
         chest(181, CheckLocation.CrystalFissureApBoost, hb),
     ])
+    crystal_fissure = graph.add_location(NodeId.CrystalFissure, [])
     thousand_heartless = graph.add_location(NodeId.ThousandHeartless, [
         item_bonus(60, CheckLocation.ThousandHeartless, hb, vanilla=ability.GuardBreak),
         popup(525, CheckLocation.ThousandHeartlessSecretAnsemReport1, hb, vanilla=report.AnsemReport1),
         popup(269, CheckLocation.ThousandHeartlessIceCream, hb, vanilla=storyunlock.IceCream),
         popup(511, CheckLocation.ThousandHeartlessPicture, hb),
     ])
-    gull_wing = graph.add_location(NodeId.GullWing, [
+    gull_wing_chests = graph.add_location(NodeId.GullWingChests, [
         chest(491, CheckLocation.PosternGullWing, hb, vanilla=keyblade.GullWing),
     ])
-    heartless_manufactory = graph.add_location(NodeId.HeartlessManufactory, [
+    gull_wing = graph.add_location(NodeId.GullWing, [])
+    heartless_manufactory_chests = graph.add_location(NodeId.HeartlessManufactoryChests, [
         chest(311, CheckLocation.HeartlessManufactoryCosmicChain, hb, invalid_checks=[itemType.MANUFACTORYUNLOCK]),
     ])
+    heartless_manufactory = graph.add_location(NodeId.HeartlessManufactory, [])
     sephiroth = graph.add_location(NodeId.Sephiroth, [
         stat_bonus(35, CheckLocation.SephirothBonus, [hb, locationType.Sephi]),
         popup(282, CheckLocation.SephirothFenrir, [hb, locationType.Sephi], vanilla=keyblade.Fenrir),
@@ -207,21 +252,24 @@ def make_graph(graph: LocationGraphBuilder):
         popup(560, CheckLocation.DataDemyxApBoost, [hb, locationType.DataOrg], invalid_checks=[itemType.FORM]),
     ])
 
-    cor_depths = graph.add_location(NodeId.CorDepths, [
+    cor_depths_chests = graph.add_location(NodeId.CorDepthsChests, [
         chest(562, CheckLocation.CorDepthsApBoost, [hb, cor]),
         chest(563, CheckLocation.CorDepthsPowerCrystal, [hb, cor]),
         chest(564, CheckLocation.CorDepthsFrostCrystal, [hb, cor]),
         chest(565, CheckLocation.CorDepthsManifestIllusion, [hb, cor]),
         chest(566, CheckLocation.CorDepthsApBoost2, [hb, cor]),
     ])
-    cor_mineshaft_pre_fight_1 = graph.add_location(NodeId.CorMineshaftPreFigh1, [
+    cor_depths = graph.add_location(NodeId.CorDepths, [])
+    cor_mineshaft_pre_fight_1_chests = graph.add_location(NodeId.CorMineshaftPreFigh1Chests, [
         chest(580, CheckLocation.CorMineshaftLowerLevelDepthsOfRemembranceMap, [hb, cor]),
         chest(578, CheckLocation.CorMineshaftLowerLevelApBoost, [hb, cor]),
     ])
-    cor_depths_post_fight_1 = graph.add_location(NodeId.CorDepthsPostFight1, [
+    cor_mineshaft_pre_fight_1 = graph.add_location(NodeId.CorMineshaftPreFigh1, [])
+    cor_depths_post_fight_1_chests = graph.add_location(NodeId.CorDepthsPostFight1Chests, [
         chest(567, CheckLocation.CorDepthsUpperLevelRemembranceGem, [hb, cor]),
     ])
-    cor_mining_area = graph.add_location(NodeId.CorMiningArea, [
+    cor_depths_post_fight_1 = graph.add_location(NodeId.CorDepthsPostFight1, [])
+    cor_mining_area_chests = graph.add_location(NodeId.CorMiningAreaChests, [
         chest(568, CheckLocation.CorMiningAreaSerenityGem, [hb, cor]),
         chest(569, CheckLocation.CorMiningAreaApBoost, [hb, cor]),
         chest(570, CheckLocation.CorMiningAreaSerenityCrystal, [hb, cor]),
@@ -229,26 +277,50 @@ def make_graph(graph: LocationGraphBuilder):
         chest(572, CheckLocation.CorMiningAreaSerenityGem2, [hb, cor]),
         chest(573, CheckLocation.CorMiningAreaDarkRemembranceMap, [hb, cor]),
     ])
-    cor_mineshaft_pre_fight_2 = graph.add_location(NodeId.CorMineshaftPreFight2, [
+    cor_mining_area = graph.add_location(NodeId.CorMiningArea, [])
+    cor_mineshaft_pre_fight_2_chests = graph.add_location(NodeId.CorMineshaftPreFight2Chests, [
         chest(581, CheckLocation.CorMineshaftMidLevelPowerBoost, [hb, cor]),
     ])
-    cor_engine_chamber = graph.add_location(NodeId.CorEngineChamber, [
+    cor_mineshaft_pre_fight_2 = graph.add_location(NodeId.CorMineshaftPreFight2, [])
+    cor_engine_chamber_chests = graph.add_location(NodeId.CorEngineChamberChests, [
         chest(574, CheckLocation.CorEngineChamberSerenityCrystal, [hb, cor]),
         chest(575, CheckLocation.CorEngineChamberRemembranceCrystal, [hb, cor]),
         chest(576, CheckLocation.CorEngineChamberApBoost, [hb, cor]),
         chest(577, CheckLocation.CorEngineChamberManifestIllusion, [hb, cor]),
     ])
-    cor_mineshaft_post_fight_2 = graph.add_location(NodeId.CorMineshaftPostFight2, [
+    cor_engine_chamber = graph.add_location(NodeId.CorEngineChamber, [])
+    cor_mineshaft_post_fight_2_chests = graph.add_location(NodeId.CorMineshaftPostFight2Chests, [
         chest(582, CheckLocation.CorMineshaftUpperLevelMagicBoost, [hb, cor]),
     ])
-    cor_mineshaft_last_chest = graph.add_location(NodeId.CorMineshaftLastChest, [
+    cor_mineshaft_post_fight_2 = graph.add_location(NodeId.CorMineshaftPostFight2, [])
+    cor_mineshaft_last_chest_chests = graph.add_location(NodeId.CorMineshaftLastChestChests, [
         chest(579, CheckLocation.CorMineshaftUpperLevelApBoost, [hb, cor]),
     ])
+    cor_mineshaft_last_chest = graph.add_location(NodeId.CorMineshaftLastChest, [])
     transport_to_remembrance = graph.add_location(NodeId.TransportToRemembrance, [
         stat_bonus(72, CheckLocation.TransportToRemembrance, [hb, locationType.TTR]),
     ])
 
     graph.register_superboss(data_demyx)
+    
+    graph.add_edge(borough, borough_chests)
+    graph.add_edge(postern, postern_chests)
+    graph.add_edge(corridors, corridors_chests)
+    graph.add_edge(ansems_study, ansems_study_chests)
+    graph.add_edge(ukulele_charm, ukulele_charm_chests)
+    graph.add_edge(restoration_site, restoration_site_chests)
+    graph.add_edge(crystal_fissure, crystal_fissure_chests)
+    graph.add_edge(gull_wing, gull_wing_chests)
+    graph.add_edge(heartless_manufactory, heartless_manufactory_chests)
+    
+    graph.add_edge(cor_depths, cor_depths_chests)
+    graph.add_edge(cor_mineshaft_pre_fight_1, cor_mineshaft_pre_fight_1_chests)
+    graph.add_edge(cor_depths_post_fight_1, cor_depths_post_fight_1_chests)
+    graph.add_edge(cor_mining_area, cor_mining_area_chests)
+    graph.add_edge(cor_mineshaft_pre_fight_2, cor_mineshaft_pre_fight_2_chests)
+    graph.add_edge(cor_engine_chamber, cor_engine_chamber_chests)
+    graph.add_edge(cor_mineshaft_post_fight_2, cor_mineshaft_post_fight_2_chests)
+    graph.add_edge(cor_mineshaft_last_chest, cor_mineshaft_last_chest_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, marketplace_map_popup)

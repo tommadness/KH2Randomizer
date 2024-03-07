@@ -1,5 +1,5 @@
 from Class.itemClass import KH2Item
-from List.inventory import ability, form, growth, magic, misc, proof, storyunlock, summon, synth
+from List.inventory import ability, form, growth, magic, misc, proof, storyunlock, summon, synth, keyblade
 from List.inventory.form import DriveForm
 from List.inventory.growth import GrowthType
 from List.inventory.item import InventoryItem
@@ -554,3 +554,49 @@ class ItemPlacementHelpers:
 
         # default returned lambda, doesn't allow for acquiring the item, failsafe
         return lambda inventory: False
+
+    @staticmethod
+    def need_stt_keyblade(inventory: list[int]) -> bool:
+        return keyblade.BondOfFlame.id in inventory
+    @staticmethod
+    def need_tt_keyblade(inventory: list[int]) -> bool:
+        return keyblade.Oathkeeper.id in inventory
+    @staticmethod
+    def need_hb_keyblade(inventory: list[int]) -> bool:
+        return keyblade.SleepingLion.id in inventory
+    @staticmethod
+    def need_cor_keyblade(inventory: list[int]) -> bool:
+        return keyblade.WinnersProof.id in inventory
+    @staticmethod
+    def need_lod_keyblade(inventory: list[int]) -> bool:
+        return keyblade.HiddenDragon.id in inventory
+    @staticmethod
+    def need_bc_keyblade(inventory: list[int]) -> bool:
+        return keyblade.RumblingRose.id in inventory
+    @staticmethod
+    def need_oc_keyblade(inventory: list[int]) -> bool:
+        return keyblade.HerosCrest.id in inventory
+    @staticmethod
+    def need_dc_keyblade(inventory: list[int]) -> bool:
+        return keyblade.Monochrome.id in inventory
+    @staticmethod
+    def need_pr_keyblade(inventory: list[int]) -> bool:
+        return keyblade.FollowTheWind.id in inventory
+    @staticmethod
+    def need_ag_keyblade(inventory: list[int]) -> bool:
+        return keyblade.WishingLamp.id in inventory
+    @staticmethod
+    def need_ht_keyblade(inventory: list[int]) -> bool:
+        return keyblade.DecisivePumpkin.id in inventory
+    @staticmethod
+    def need_pl_keyblade(inventory: list[int]) -> bool:
+        return keyblade.CircleOfLife.id in inventory
+    @staticmethod
+    def need_sp_keyblade(inventory: list[int]) -> bool:
+        return keyblade.PhotonDebugger.id in inventory
+    @staticmethod
+    def need_twtnw_keyblade(inventory: list[int]) -> bool:
+        return keyblade.TwoBecomeOne.id in inventory
+    @staticmethod
+    def need_haw_keyblade(inventory: list[int]) -> bool:
+        return keyblade.SweetMemories.id in inventory

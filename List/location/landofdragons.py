@@ -9,16 +9,22 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     BambooGrove = "Bamboo Grove"
+    BambooGroveChests = "Bamboo Grove Chests"
     EncampmentAreaMap = "Encampment Area Map"
     Mission3 = "Mission 3"
     Checkpoint = "Checkpoint"
+    CheckpointChests = "Checkpoint Chests"
     MountainTrail = "Mountain Trail"
+    MountainTrailChests = "Mountain Trail Chests"
     VillageCaveMapPopup = "Village Cave Map Popup"
     VillageCave = "Village Cave"
+    VillageCaveChests = "Village Cave Chests"
     VillageCaveBonus = "Village Cave Bonus"
     Ridge = "Ridge"
+    RidgeChests = "Ridge Chests"
     ShanYu = "Shan-Yu"
     ThroneRoom = "Throne Room"
+    ThroneRoomChests = "Throne Room Chests"
     StormRider = "Storm Rider"
     DataXigbar = "Data Xigbar"
 
@@ -58,6 +64,12 @@ class LoDLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.BambooGrove][NodeId.BambooGroveChests] = ItemPlacementHelpers.need_lod_keyblade
+            self.logic[NodeId.Checkpoint][NodeId.CheckpointChests] = ItemPlacementHelpers.need_lod_keyblade
+            self.logic[NodeId.MountainTrail][NodeId.MountainTrailChests] = ItemPlacementHelpers.need_lod_keyblade
+            self.logic[NodeId.VillageCave][NodeId.VillageCaveChests] = ItemPlacementHelpers.need_lod_keyblade
+            self.logic[NodeId.Ridge][NodeId.RidgeChests] = ItemPlacementHelpers.need_lod_keyblade
+            self.logic[NodeId.ThroneRoom][NodeId.ThroneRoomChests] = ItemPlacementHelpers.need_lod_keyblade
             self.logic[START_NODE][NodeId.BambooGrove] = ItemPlacementHelpers.lod1_check
             self.logic[NodeId.ShanYu][NodeId.ThroneRoom] = ItemPlacementHelpers.lod2_check
         else:
@@ -68,46 +80,51 @@ def make_graph(graph: LocationGraphBuilder):
     lod_logic = LoDLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(lod_logic)
 
-    bamboo_grove = graph.add_location(NodeId.BambooGrove, [
+    bamboo_grove_chests = graph.add_location(NodeId.BambooGroveChests, [
         chest(245, CheckLocation.BambooGroveDarkShard, lod),
         chest(497, CheckLocation.BambooGroveEther, lod),
         chest(498, CheckLocation.BambooGroveMythrilShard, lod),
     ])
+    bamboo_grove = graph.add_location(NodeId.BambooGrove, [])
     encampment_area_map = graph.add_location(NodeId.EncampmentAreaMap, [
         popup(350, CheckLocation.EncampmentAreaMap, lod),
     ])
     mission3 = graph.add_location(NodeId.Mission3, [
         popup(417, CheckLocation.Mission3, lod),
     ])
-    checkpoint = graph.add_location(NodeId.Checkpoint, [
+    checkpoint_chests = graph.add_location(NodeId.CheckpointChests, [
         chest(21, CheckLocation.CheckpointHiPotion, lod),
         chest(121, CheckLocation.CheckpointMythrilShard, lod),
     ])
-    mountain_trail = graph.add_location(NodeId.MountainTrail, [
+    checkpoint = graph.add_location(NodeId.Checkpoint, [])
+    mountain_trail_chests = graph.add_location(NodeId.MountainTrailChests, [
         chest(22, CheckLocation.MountainTrailLightningShard, lod),
         chest(23, CheckLocation.MountainTrailRecoveryRecipe, lod),
         chest(122, CheckLocation.MountainTrailEther, lod),
         chest(123, CheckLocation.MountainTrailMythrilShard, lod),
     ])
+    mountain_trail = graph.add_location(NodeId.MountainTrail, [])
     village_cave_map_popup = graph.add_location(NodeId.VillageCaveMapPopup, [
         popup(495, CheckLocation.VillageCaveAreaMap, lod),
     ])
-    village_cave = graph.add_location(NodeId.VillageCave, [
+    village_cave_chests = graph.add_location(NodeId.VillageCaveChests, [
         chest(124, CheckLocation.VillageCaveApBoost, lod),
         chest(125, CheckLocation.VillageCaveDarkShard, lod),
     ])
+    village_cave = graph.add_location(NodeId.VillageCave, [])
     village_cave_bonus = graph.add_location(NodeId.VillageCaveBonus, [
         item_bonus(43, CheckLocation.VillageCaveBonus, lod, vanilla=ability.SlideDash),
     ])
-    ridge = graph.add_location(NodeId.Ridge, [
+    ridge_chests = graph.add_location(NodeId.RidgeChests, [
         chest(24, CheckLocation.RidgeFrostShard, lod),
         chest(126, CheckLocation.RidgeApBoost, lod),
     ])
+    ridge = graph.add_location(NodeId.Ridge, [])
     shan_yu = graph.add_location(NodeId.ShanYu, [
         hybrid_bonus(9, CheckLocation.ShanYuBonus, lod, vanilla=ability.AerialSweep),
         popup(257, CheckLocation.HiddenDragon, lod, vanilla=keyblade.HiddenDragon),
     ])
-    throne_room = graph.add_location(NodeId.ThroneRoom, [
+    throne_room_chests = graph.add_location(NodeId.ThroneRoomChests, [
         chest(25, CheckLocation.ThroneRoomTornPages, lod, vanilla=misc.TornPages),
         chest(127, CheckLocation.ThroneRoomPalaceMap, lod),
         chest(26, CheckLocation.ThroneRoomApBoost, lod),
@@ -117,6 +134,7 @@ def make_graph(graph: LocationGraphBuilder):
         chest(130, CheckLocation.ThroneRoomMythrilCrystal, lod),
         chest(131, CheckLocation.ThroneRoomOrichalcum, lod),
     ])
+    throne_room = graph.add_location(NodeId.ThroneRoom, [])
     storm_rider = graph.add_location(NodeId.StormRider, [
         item_bonus(10, CheckLocation.StormRiderBonus, lod, vanilla=magic.Thunder),
     ])
@@ -125,6 +143,13 @@ def make_graph(graph: LocationGraphBuilder):
     ])
 
     graph.register_superboss(data_xigbar)
+    
+    graph.add_edge(bamboo_grove, bamboo_grove_chests)
+    graph.add_edge(checkpoint, checkpoint_chests)
+    graph.add_edge(mountain_trail, mountain_trail_chests)
+    graph.add_edge(village_cave, village_cave_chests)
+    graph.add_edge(ridge, ridge_chests)
+    graph.add_edge(throne_room, throne_room_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, bamboo_grove)

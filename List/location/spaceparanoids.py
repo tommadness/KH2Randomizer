@@ -9,14 +9,19 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     PitCell = "Pit Cell"
+    PitCellChests = "Pit Cell Chests"
     Canyon = "Canyon"
+    CanyonChests = "Canyon Chests"
     ScreensBonus = "Screens Bonus"
     Hallway = "Hallway"
+    HallwayChests = "Hallway Chests"
     CommunicationsRoom = "Communications Room"
+    CommunicationsRoomChests = "Communications Room Chests"
     HostileProgram = "Hostile Program"
     PhotonDebugger = "Photon Debugger"
     SolarSailerBonus = "Solar Sailer Bonus"
     CentralComputerCore = "Central Computer Core"
+    CentralComputerCoreChests = "Central Computer Core Chests"
     MasterControlProgramBonus = "MCP Bonus"
     Larxene = "AS Larxene"
     DataLarxene = "Data Larxene"
@@ -50,6 +55,11 @@ class SPLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.PitCell][NodeId.PitCellChests] = ItemPlacementHelpers.need_sp_keyblade
+            self.logic[NodeId.Canyon][NodeId.CanyonChests] = ItemPlacementHelpers.need_sp_keyblade
+            self.logic[NodeId.Hallway][NodeId.HallwayChests] = ItemPlacementHelpers.need_sp_keyblade
+            self.logic[NodeId.CommunicationsRoom][NodeId.CommunicationsRoomChests] = ItemPlacementHelpers.need_sp_keyblade
+            self.logic[NodeId.CentralComputerCore][NodeId.CentralComputerCoreChests] = ItemPlacementHelpers.need_sp_keyblade
             self.logic[START_NODE][NodeId.PitCell] = ItemPlacementHelpers.sp1_check
             self.logic[NodeId.PhotonDebugger][NodeId.SolarSailerBonus] = ItemPlacementHelpers.sp2_check
         else:
@@ -60,27 +70,31 @@ def make_graph(graph: LocationGraphBuilder):
     sp_logic = SPLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(sp_logic)
 
-    pit_cell = graph.add_location(NodeId.PitCell, [
+    pit_cell_chests = graph.add_location(NodeId.PitCellChests, [
         chest(316, CheckLocation.PitCellAreaMap, sp),
         chest(64, CheckLocation.PitCellMythrilCrystal, sp),
     ])
-    canyon = graph.add_location(NodeId.Canyon, [
+    pit_cell = graph.add_location(NodeId.PitCell, [])
+    canyon_chests = graph.add_location(NodeId.CanyonChests, [
         chest(65, CheckLocation.CanyonDarkCrystal, sp),
         chest(171, CheckLocation.CanyonMythrilStone, sp),
         chest(253, CheckLocation.CanyonMythrilGem, sp),
         chest(521, CheckLocation.CanyonFrostCrystal, sp),
     ])
+    canyon = graph.add_location(NodeId.Canyon, [])
     screens_bonus = graph.add_location(NodeId.ScreensBonus, [
         stat_bonus(45, CheckLocation.ScreensBonus, sp),
     ])
-    hallway = graph.add_location(NodeId.Hallway, [
+    hallway_chests = graph.add_location(NodeId.HallwayChests, [
         chest(49, CheckLocation.HallwayPowerCrystal, sp),
         chest(50, CheckLocation.HallwayApBoost, sp),
     ])
-    communications_room = graph.add_location(NodeId.CommunicationsRoom, [
+    hallway = graph.add_location(NodeId.Hallway, [])
+    communications_room_chests = graph.add_location(NodeId.CommunicationsRoomChests, [
         chest(255, CheckLocation.CommunicationsRoomIoTowerMap, sp),
         chest(499, CheckLocation.CommunicationsRoomGaiaBelt, sp),
     ])
+    communications_room = graph.add_location(NodeId.CommunicationsRoom, [])
     hostile_program = graph.add_location(NodeId.HostileProgram, [
         hybrid_bonus(31, CheckLocation.HostileProgramBonus, sp, vanilla=ability.VicinityBreak),
     ])
@@ -90,12 +104,13 @@ def make_graph(graph: LocationGraphBuilder):
     solar_sailer_bonus = graph.add_location(NodeId.SolarSailerBonus, [
         item_bonus(61, CheckLocation.SolarSailerBonus, sp, vanilla=ability.Explosion),
     ])
-    central_computer_core = graph.add_location(NodeId.CentralComputerCore, [
+    central_computer_core_chests = graph.add_location(NodeId.CentralComputerCoreChests, [
         chest(177, CheckLocation.CentralComputerCoreApBoost, sp),
         chest(178, CheckLocation.CentralComputerCoreOrichalcumPlus, sp),
         chest(51, CheckLocation.CentralComputerCoreCosmicArts, sp),
         chest(488, CheckLocation.CentralComputerCoreMap, sp),
     ])
+    central_computer_core = graph.add_location(NodeId.CentralComputerCore, [])
     mcp_bonus = graph.add_location(NodeId.MasterControlProgramBonus, [
         hybrid_bonus(32, CheckLocation.McpBonus, sp, vanilla=magic.Reflect),
     ])
@@ -108,6 +123,12 @@ def make_graph(graph: LocationGraphBuilder):
     ])
 
     graph.register_superboss(data_larxene)
+    
+    graph.add_edge(pit_cell, pit_cell_chests)
+    graph.add_edge(canyon, canyon_chests)
+    graph.add_edge(hallway, hallway_chests)
+    graph.add_edge(communications_room, communications_room_chests)
+    graph.add_edge(central_computer_core, central_computer_core_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, pit_cell)

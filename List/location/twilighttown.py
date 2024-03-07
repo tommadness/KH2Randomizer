@@ -9,26 +9,41 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     OldMansion = "Old Mansion"
+    OldMansionChests = "Old Mansion Chests"
     Woods = "Woods"
+    WoodsChests = "Woods Chests"
     TramCommon = "Tram Common"
+    TramCommonChests = "Tram Common Chests"
     StationFightPopup = "Station Fight Popup"
     CentralStation = "TT Central Station"
+    CentralStationChests = "TT Central Station Chests"
     YenSidTower = "Yensid Tower"
+    YenSidTowerChests = "Yensid Tower Chests"
     YenSidTowerEntryway = "Yensid Tower Entryway"
+    YenSidTowerEntrywayChests = "Yensid Tower Entryway Chests"
     SorcerersLoft = "Sorcerer's Loft"
+    SorcerersLoftChests = "Sorcerer's Loft Chests"
     TowerWardrobe = "Tower Wardrobe"
+    TowerWardrobeChests = "Tower Wardrobe Chests"
     ValorForm = "Valor Form"
     SeifersTrophy = "Seifer's Trophy"
     LimitForm = "Limit Form"
     UndergroundConcourse = "Underground Concourse"
+    UndergroundConcourseChests = "Underground Concourse Chests"
     Tunnelway = "Tunnelway"
+    TunnelwayChests = "Tunnelway Chests"
     SunsetTerrace = "TT Sunset Terrace"
+    SunsetTerraceChests = "TT Sunset Terrace Chests"
     MansionBonus = "TT Mansion Bonus"
     MansionFoyer = "TT Mansion Foyer"
+    MansionFoyerChests = "TT Mansion Foyer Chests"
     MansionDiningRoom = "TT Mansion Dining Room"
+    MansionDiningRoomChests = "TT Mansion Dining Room Chests"
     MansionLibrary = "TT Mansion Library"
+    MansionLibraryChests = "TT Mansion Library Chests"
     TwilightTownBeam = "TT Beam"
     MansionBasement = "TT Mansion Basement"
+    MansionBasementChests = "TT Mansion Basement Chests"
     BetwixtAndBetween = "Betwixt and Between"
     DataAxel = "Data Axel"
 
@@ -91,6 +106,23 @@ class TTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.OldMansion][NodeId.OldMansionChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.Woods][NodeId.WoodsChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.TramCommon][NodeId.TramCommonChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.CentralStation][NodeId.CentralStationChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.UndergroundConcourse][NodeId.UndergroundConcourseChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.Tunnelway][NodeId.TunnelwayChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.SunsetTerrace][NodeId.SunsetTerraceChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.MansionFoyer][NodeId.MansionFoyerChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.MansionDiningRoom][NodeId.MansionDiningRoomChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.MansionLibrary][NodeId.MansionLibraryChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.MansionBasement][NodeId.MansionBasementChests] = ItemPlacementHelpers.need_tt_keyblade
+            #I wanted a different keyblade for MT but it would need extra logic (i think??) ex: you can't return till after 3rd visit or before getting 2nd visit lock
+            self.logic[NodeId.YenSidTower][NodeId.YenSidTowerChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.YenSidTowerEntryway][NodeId.YenSidTowerEntrywayChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.SorcerersLoft][NodeId.SorcerersLoftChests] = ItemPlacementHelpers.need_tt_keyblade
+            self.logic[NodeId.TowerWardrobe][NodeId.TowerWardrobeChests] = ItemPlacementHelpers.need_tt_keyblade
+            
             self.logic[START_NODE][NodeId.OldMansion] = ItemPlacementHelpers.tt1_check
             self.logic[NodeId.ValorForm][NodeId.SeifersTrophy] = ItemPlacementHelpers.tt2_check
             self.logic[NodeId.LimitForm][NodeId.UndergroundConcourse] = ItemPlacementHelpers.tt3_check
@@ -104,16 +136,18 @@ def make_graph(graph: LocationGraphBuilder):
     tt_logic = TTLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(tt_logic)
 
-    old_mansion = graph.add_location(NodeId.OldMansion, [
+    old_mansion_chests = graph.add_location(NodeId.OldMansionChests, [
         chest(447, CheckLocation.OldMansionPotion, tt),
         chest(448, CheckLocation.OldMansionMythrilShard, tt),
     ])
-    woods = graph.add_location(NodeId.Woods, [
+    old_mansion = graph.add_location(NodeId.OldMansion, [])
+    woods_chests = graph.add_location(NodeId.WoodsChests, [
         chest(442, CheckLocation.WoodsPotion, tt),
         chest(443, CheckLocation.WoodsMythrilShard, tt),
         chest(444, CheckLocation.WoodsHiPotion, tt),
     ])
-    tram_common = graph.add_location(NodeId.TramCommon, [
+    woods = graph.add_location(NodeId.Woods, [])
+    tram_common_chests = graph.add_location(NodeId.TramCommonChests, [
         chest(420, CheckLocation.TramCommonHiPotion, tt),
         chest(421, CheckLocation.TramCommonApBoost, tt),
         chest(422, CheckLocation.TramCommonTent, tt),
@@ -122,31 +156,37 @@ def make_graph(graph: LocationGraphBuilder):
         chest(425, CheckLocation.TramCommonMythrilShard2, tt),
         chest(484, CheckLocation.TramCommonPotion2, tt),
     ])
+    tram_common = graph.add_location(NodeId.TramCommon, [])
     station_fight_popup = graph.add_location(NodeId.StationFightPopup, [
         popup(526, CheckLocation.StationPlazaSecretAnsemReport2, tt, vanilla=report.AnsemReport2),
         popup(290, CheckLocation.MunnyPouchMickey, tt, vanilla=misc.MunnyPouchMickey),
         popup(291, CheckLocation.CrystalOrb, tt),
     ])
-    central_station = graph.add_location(NodeId.CentralStation, [
+    central_station_chests = graph.add_location(NodeId.CentralStationChests, [
         chest(431, CheckLocation.CentralStationTent, tt),
         chest(432, CheckLocation.CentralStationHiPotion, tt),
         chest(433, CheckLocation.CentralStationMythrilShard, tt),
     ])
-    yen_sid_tower = graph.add_location(NodeId.YenSidTower, [
+    central_station = graph.add_location(NodeId.CentralStation, [])
+    yen_sid_tower_chests = graph.add_location(NodeId.YenSidTowerChests, [
         chest(465, CheckLocation.TowerPotion, tt),
         chest(466, CheckLocation.TowerHiPotion, tt),
         chest(522, CheckLocation.TowerEther, tt),
     ])
-    yen_sid_tower_entryway = graph.add_location(NodeId.YenSidTowerEntryway, [
+    yen_sid_tower = graph.add_location(NodeId.YenSidTower, [])
+    yen_sid_tower_entryway_chests = graph.add_location(NodeId.YenSidTowerEntrywayChests, [
         chest(467, CheckLocation.TowerEntrywayEther, tt),
         chest(468, CheckLocation.TowerEntrywayMythrilShard, tt),
     ])
-    sorcerers_loft = graph.add_location(NodeId.SorcerersLoft, [
+    yen_sid_tower_entryway = graph.add_location(NodeId.YenSidTowerEntryway, [])
+    sorcerers_loft_chests = graph.add_location(NodeId.SorcerersLoftChests, [
         chest(469, CheckLocation.SorcerersLoftTowerMap, tt),
     ])
-    tower_wardrobe = graph.add_location(NodeId.TowerWardrobe, [
+    sorcerers_loft = graph.add_location(NodeId.SorcerersLoft, [])
+    tower_wardrobe_chests = graph.add_location(NodeId.TowerWardrobeChests, [
         chest(470, CheckLocation.TowerWardrobeMythrilStone, tt),
     ])
+    tower_wardrobe = graph.add_location(NodeId.TowerWardrobe, [])
     valor_form = graph.add_location(NodeId.ValorForm, [
         popup(304, CheckLocation.StarSeeker, tt, vanilla=keyblade.StarSeeker),
         popup(286, CheckLocation.ValorForm, tt, vanilla=form.ValorForm),
@@ -158,43 +198,50 @@ def make_graph(graph: LocationGraphBuilder):
         popup(265, CheckLocation.Oathkeeper, tt, vanilla=keyblade.Oathkeeper),
         popup(543, CheckLocation.LimitForm, tt, vanilla=form.LimitForm),
     ])
-    underground_concourse = graph.add_location(NodeId.UndergroundConcourse, [
+    underground_concourse_chests = graph.add_location(NodeId.UndergroundConcourseChests, [
         chest(479, CheckLocation.UndergroundConcourseMythrilGem, tt),
         chest(480, CheckLocation.UndergroundConcourseOrichalcum, tt),
         chest(481, CheckLocation.UndergroundConcourseApBoost, tt),
         chest(482, CheckLocation.UndergroundConcourseMythrilCrystal, tt),
     ])
-    tunnelway = graph.add_location(NodeId.Tunnelway, [
+    underground_concourse = graph.add_location(NodeId.UndergroundConcourse, [])
+    tunnelway_chests = graph.add_location(NodeId.TunnelwayChests, [
         chest(477, CheckLocation.TunnelwayOrichalcum, tt),
         chest(478, CheckLocation.TunnelwayMythrilCrystal, tt),
     ])
-    sunset_terrace = graph.add_location(NodeId.SunsetTerrace, [
+    tunnelway = graph.add_location(NodeId.Tunnelway, [])
+    sunset_terrace_chests = graph.add_location(NodeId.SunsetTerraceChests, [
         chest(438, CheckLocation.SunsetTerraceOrichalcumPlus, tt),
         chest(439, CheckLocation.SunsetTerraceMythrilShard, tt),
         chest(440, CheckLocation.SunsetTerraceMythrilCrystal, tt),
         chest(441, CheckLocation.SunsetTerraceApBoost, tt),
     ])
+    sunset_terrace = graph.add_location(NodeId.SunsetTerrace, [])
     mansion_bonus = graph.add_location(NodeId.MansionBonus, [
         stat_bonus(56, CheckLocation.MansionNobodies, tt),
     ])
-    mansion_foyer = graph.add_location(NodeId.MansionFoyer, [
+    mansion_foyer_chests = graph.add_location(NodeId.MansionFoyerChests, [
         chest(452, CheckLocation.MansionFoyerMythrilCrystal, tt),
         chest(453, CheckLocation.MansionFoyerMythrilStone, tt),
         chest(454, CheckLocation.MansionFoyerSerenityCrystal, tt),
     ])
-    mansion_dining_room = graph.add_location(NodeId.MansionDiningRoom, [
+    mansion_foyer = graph.add_location(NodeId.MansionFoyer, [])
+    mansion_dining_room_chests = graph.add_location(NodeId.MansionDiningRoomChests, [
         chest(457, CheckLocation.MansionDiningRoomMythrilCrystal, tt),
         chest(458, CheckLocation.MansionDiningRoomMythrilStone, tt),
     ])
-    mansion_library = graph.add_location(NodeId.MansionLibrary, [
+    mansion_dining_room = graph.add_location(NodeId.MansionDiningRoom, [])
+    mansion_library_chests = graph.add_location(NodeId.MansionLibraryChests, [
         chest(460, CheckLocation.MansionLibraryOrichalcum, tt),
     ])
+    mansion_library = graph.add_location(NodeId.MansionLibrary, [])
     beam = graph.add_location(NodeId.TwilightTownBeam, [
         popup(534, CheckLocation.BeamSecretAnsemReport10, tt, vanilla=report.AnsemReport10),
     ])
-    mansion_basement = graph.add_location(NodeId.MansionBasement, [
+    mansion_basement_chests = graph.add_location(NodeId.MansionBasementChests, [
         chest(464, CheckLocation.MansionBasementCorridorUltimateRecipe, tt),
     ])
+    mansion_basement = graph.add_location(NodeId.MansionBasement, [])
     betwixt_and_between = graph.add_location(NodeId.BetwixtAndBetween, [
         item_bonus(63, CheckLocation.BetwixtAndBetween, tt, vanilla=ability.Slapshot),
         popup(317, CheckLocation.BetwixtAndBetweenBondOfFlame, tt, vanilla=keyblade.BondOfFlame),
@@ -204,6 +251,22 @@ def make_graph(graph: LocationGraphBuilder):
     ])
 
     graph.register_superboss(data_axel)
+    
+    graph.add_edge(old_mansion, old_mansion_chests)
+    graph.add_edge(woods, woods_chests)
+    graph.add_edge(tram_common, tram_common_chests)
+    graph.add_edge(central_station, central_station_chests)
+    graph.add_edge(yen_sid_tower, yen_sid_tower_chests)
+    graph.add_edge(yen_sid_tower_entryway, yen_sid_tower_entryway_chests)
+    graph.add_edge(sorcerers_loft, sorcerers_loft_chests)
+    graph.add_edge(tower_wardrobe, tower_wardrobe_chests)
+    graph.add_edge(underground_concourse, underground_concourse_chests)
+    graph.add_edge(tunnelway, tunnelway_chests)
+    graph.add_edge(sunset_terrace, sunset_terrace_chests)
+    graph.add_edge(mansion_foyer, mansion_foyer_chests)
+    graph.add_edge(mansion_dining_room, mansion_dining_room_chests)
+    graph.add_edge(mansion_library, mansion_library_chests)
+    graph.add_edge(mansion_basement, mansion_basement_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, old_mansion)

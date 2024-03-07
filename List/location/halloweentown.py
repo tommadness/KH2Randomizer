@@ -9,11 +9,17 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     Graveyard = "Graveyard"
+    GraveyardChests = "Graveyard Chests"
     FinklesteinsLab = "Finklestein's Lab"
+    FinklesteinsLabChests = "Finklestein's Lab Chests"
     TownSquare = "Town Square"
+    TownSquareChests = "Town Square Chests"
     Hinterlands = "Hinterlands"
+    HinterlandsChests = "Hinterlands Chests"
     CandyCaneLane = "Candy Cane Lane"
+    CandyCaneLaneChests = "Candy Cane Lane Chests"
     SantasHouse = "Santa's House"
+    SantasHouseChests = "Santa's House Chests"
     PrisonKeeper = "Prison Keeper"
     OogieBoogie = "Oogie Boogie"
     LockShockBarrel = "Lock, Shock, and Barrel"
@@ -55,6 +61,12 @@ class HTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.Graveyard][NodeId.GraveyardChests] = ItemPlacementHelpers.need_ht_keyblade
+            self.logic[NodeId.FinklesteinsLab][NodeId.FinklesteinsLabChests] = ItemPlacementHelpers.need_ht_keyblade
+            self.logic[NodeId.TownSquare][NodeId.TownSquareChests] = ItemPlacementHelpers.need_ht_keyblade
+            self.logic[NodeId.Hinterlands][NodeId.HinterlandsChests] = ItemPlacementHelpers.need_ht_keyblade
+            self.logic[NodeId.CandyCaneLane][NodeId.CandyCaneLaneChests] = ItemPlacementHelpers.need_ht_keyblade
+            self.logic[NodeId.SantasHouse][NodeId.SantasHouseChests] = ItemPlacementHelpers.need_ht_keyblade
             self.logic[START_NODE][NodeId.Graveyard] = ItemPlacementHelpers.ht1_check
             self.logic[NodeId.OogieBoogie][NodeId.LockShockBarrel] = ItemPlacementHelpers.ht2_check
         else:
@@ -65,32 +77,38 @@ def make_graph(graph: LocationGraphBuilder):
     ht_logic = HTLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(ht_logic)
 
-    finklesteins_lab = graph.add_location(NodeId.FinklesteinsLab, [
+    finklesteins_lab_chests = graph.add_location(NodeId.FinklesteinsLabChests, [
         chest(211, CheckLocation.FinklesteinsLabHalloweenTownMap, ht),
     ])
-    graveyard = graph.add_location(NodeId.Graveyard, [
+    finklesteins_lab = graph.add_location(NodeId.FinklesteinsLab, [])
+    graveyard_chests = graph.add_location(NodeId.GraveyardChests, [
         chest(53, CheckLocation.GraveyardMythrilShard, ht),
         chest(212, CheckLocation.GraveyardSerenityGem, ht),
     ])
-    town_square = graph.add_location(NodeId.TownSquare, [
+    graveyard = graph.add_location(NodeId.Graveyard, [])
+    town_square_chests = graph.add_location(NodeId.TownSquareChests, [
         chest(209, CheckLocation.TownSquareMythrilStone, ht),
         chest(210, CheckLocation.TownSquareEnergyShard, ht),
     ])
-    hinterlands = graph.add_location(NodeId.Hinterlands, [
+    town_square = graph.add_location(NodeId.TownSquare, [])
+    hinterlands_chests = graph.add_location(NodeId.HinterlandsChests, [
         chest(54, CheckLocation.HinterlandsLightningShard, ht),
         chest(213, CheckLocation.HinterlandsMythrilStone, ht),
         chest(214, CheckLocation.HinterlandsApBoost, ht),
     ])
-    candy_cane_lane = graph.add_location(NodeId.CandyCaneLane, [
+    hinterlands = graph.add_location(NodeId.Hinterlands, [])
+    candy_cane_lane_chests = graph.add_location(NodeId.CandyCaneLaneChests, [
         chest(55, CheckLocation.CandyCaneLaneMegaPotion, ht),
         chest(56, CheckLocation.CandyCaneLaneMythrilGem, ht),
         chest(216, CheckLocation.CandyCaneLaneLightningStone, ht),
         chest(217, CheckLocation.CandyCaneLaneMythrilStone, ht),
     ])
-    santas_house = graph.add_location(NodeId.SantasHouse, [
+    candy_cane_lane = graph.add_location(NodeId.CandyCaneLane, [])
+    santas_house_chests = graph.add_location(NodeId.SantasHouseChests, [
         chest(57, CheckLocation.SantasHouseChristmasTownMap, ht, invalid_checks=[itemType.GAUGE]),
         chest(58, CheckLocation.SantasHouseApBoost, ht, invalid_checks=[itemType.GAUGE]),
     ])
+    santas_house = graph.add_location(NodeId.SantasHouse, [])
     prison_keeper = graph.add_location(NodeId.PrisonKeeper, [
         hybrid_bonus(18, CheckLocation.PrisonKeeper, ht, vanilla=ability.FlashStep),
     ])
@@ -120,6 +138,13 @@ def make_graph(graph: LocationGraphBuilder):
     ])
 
     graph.register_superboss(data_vexen)
+    
+    graph.add_edge(finklesteins_lab, finklesteins_lab_chests)
+    graph.add_edge(graveyard, graveyard_chests)
+    graph.add_edge(town_square, town_square_chests)
+    graph.add_edge(hinterlands, hinterlands_chests)
+    graph.add_edge(candy_cane_lane, candy_cane_lane_chests)
+    graph.add_edge(santas_house, santas_house_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, graveyard)

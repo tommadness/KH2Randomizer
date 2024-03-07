@@ -8,11 +8,17 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     PoohsHowse = "Pooh's Howse"
+    PoohsHowseChests = "Pooh's Howse Chests"
     PigletsHowse = "Piglet's Howse"
+    PigletsHowseChests = "Piglet's Howse Chests"
     RabbitsHowse = "Rabbit's Howse"
+    RabbitsHowseChests = "Rabbit's Howse Chests"
     KangasHowse = "Kanga's Howse"
+    KangasHowseChests = "Kanga's Howse Chests"
     SpookyCave = "Spooky Cave"
+    SpookyCaveChests = "Spooky Cave Chests"
     StarryHill = "Starry Hill"
+    StarryHillChests = "Starry Hill Chests"
 
 
 class CheckLocation(str, Enum):
@@ -45,6 +51,12 @@ class HAWLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.PoohsHowse][NodeId.PoohsHowseChests] = ItemPlacementHelpers.need_haw_keyblade
+            self.logic[NodeId.PigletsHowse][NodeId.PigletsHowseChests] = ItemPlacementHelpers.need_haw_keyblade
+            self.logic[NodeId.RabbitsHowse][NodeId.RabbitsHowseChests] = ItemPlacementHelpers.need_haw_keyblade
+            self.logic[NodeId.KangasHowse][NodeId.KangasHowseChests] = ItemPlacementHelpers.need_haw_keyblade
+            self.logic[NodeId.SpookyCave][NodeId.SpookyCaveChests] = ItemPlacementHelpers.need_haw_keyblade
+            self.logic[NodeId.StarryHill][NodeId.StarryHillChests] = ItemPlacementHelpers.need_haw_keyblade
             self.logic[NodeId.PoohsHowse][NodeId.PigletsHowse] = ItemPlacementHelpers.need_torn_pages(1)
             self.logic[NodeId.PigletsHowse][NodeId.RabbitsHowse] = ItemPlacementHelpers.need_torn_pages(2)
             self.logic[NodeId.RabbitsHowse][NodeId.KangasHowse] = ItemPlacementHelpers.need_torn_pages(3)
@@ -56,48 +68,64 @@ class HAWLogicGraph(DefaultLogicGraph):
             self.logic[NodeId.KangasHowse][NodeId.RabbitsHowse] = ItemPlacementHelpers.need_torn_pages(3)
             self.logic[NodeId.RabbitsHowse][NodeId.PigletsHowse] = ItemPlacementHelpers.need_torn_pages(4)
             self.logic[NodeId.PigletsHowse][NodeId.PoohsHowse] = ItemPlacementHelpers.need_torn_pages(5)
+            
 
 def make_graph(graph: LocationGraphBuilder):
     haw = locationType.HUNDREDAW
     haw_logic = HAWLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(haw_logic)
 
-    poohs_howse = graph.add_location(NodeId.PoohsHowse, [
+    poohs_howse_chests = graph.add_location(NodeId.PoohsHowseChests, [
         chest(313, CheckLocation.PoohsHowseHundredAcreWoodMap, haw),
         chest(97, CheckLocation.PoohsHowseApBoost, haw),
         chest(98, CheckLocation.PoohsHowseMythrilStone, haw),
     ])
-    piglets_howse = graph.add_location(NodeId.PigletsHowse, [
+    poohs_howse = graph.add_location(NodeId.PoohsHowse, [])
+    piglets_howse_chests = graph.add_location(NodeId.PigletsHowseChests, [
         chest(105, CheckLocation.PigletsHowseDefenseBoost, haw),
         chest(103, CheckLocation.PigletsHowseApBoost, haw),
         chest(104, CheckLocation.PigletsHowseMythrilGem, haw),
     ])
-    rabbits_howse = graph.add_location(NodeId.RabbitsHowse, [
+    piglets_howse = graph.add_location(NodeId.PigletsHowse, [])
+    rabbits_howse_chests = graph.add_location(NodeId.RabbitsHowseChests, [
         chest(314, CheckLocation.RabbitsHowseDrawRing, haw),
         chest(100, CheckLocation.RabbitsHowseMythrilCrystal, haw),
         chest(101, CheckLocation.RabbitsHowseApBoost, haw),
     ])
-    kangas_howse = graph.add_location(NodeId.KangasHowse, [
+    rabbits_howse = graph.add_location(NodeId.RabbitsHowse, [])
+    kangas_howse_chests = graph.add_location(NodeId.KangasHowseChests, [
         chest(108, CheckLocation.KangasHowseMagicBoost, haw),
         chest(106, CheckLocation.KangasHowseApBoost, haw),
         chest(107, CheckLocation.KangasHowseOrichalcum, haw),
     ])
-    spooky_cave = graph.add_location(NodeId.SpookyCave, [
+    kangas_howse = graph.add_location(NodeId.KangasHowse, [])
+    spooky_cave_chests = graph.add_location(NodeId.SpookyCaveChests, [
         chest(110, CheckLocation.SpookyCaveMyhtrilGem, haw),
         chest(111, CheckLocation.SpookyCaveApBoost, haw),
         chest(112, CheckLocation.SpookyCaveOrichalcum, haw),
         chest(113, CheckLocation.SpookyCaveGuardRecipe, haw),
         chest(115, CheckLocation.SpookyCaveMythrilCrystal, haw),
         chest(116, CheckLocation.SpookyCaveApBoost2, haw),
+    ])
+    spooky_cave = graph.add_location(NodeId.SpookyCave, [
         popup(284, CheckLocation.SweetMemories, haw, vanilla=keyblade.SweetMemories),
         popup(485, CheckLocation.SpookyCaveMap, haw),
     ])
-    starry_hill = graph.add_location(NodeId.StarryHill, [
+    starry_hill_chests = graph.add_location(NodeId.StarryHillChests, [
         chest(312, CheckLocation.StarryHillCosmicRing, haw),
         chest(94, CheckLocation.StarryHillStyleRecipe, haw),
+    ])
+    starry_hill = graph.add_location(NodeId.StarryHill, [
         popup(285, CheckLocation.StarryHillCureElement, haw, vanilla=magic.Cure),
         popup(539, CheckLocation.StarryHillOrichalcumPlus, haw),
     ])
+
+    graph.add_edge(poohs_howse, poohs_howse_chests)
+    graph.add_edge(piglets_howse, piglets_howse_chests)
+    graph.add_edge(rabbits_howse, rabbits_howse_chests)
+    graph.add_edge(kangas_howse, kangas_howse_chests)
+    graph.add_edge(spooky_cave, spooky_cave_chests)
+    graph.add_edge(starry_hill, starry_hill_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, poohs_howse)
