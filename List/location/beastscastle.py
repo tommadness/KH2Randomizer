@@ -67,18 +67,19 @@ class CheckLocation(str, Enum):
     DataXaldin = "Xaldin (Data) Defense Boost"
 
 class BCLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_bc_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.BeastsCastleCourtyard][NodeId.BeastsCastleCourtyardChests] = ItemPlacementHelpers.need_bc_keyblade
-            self.logic[NodeId.BellesRoom][NodeId.BellesRoomChests] = ItemPlacementHelpers.need_bc_keyblade
-            self.logic[NodeId.EastWing][NodeId.EastWingChests] = ItemPlacementHelpers.need_bc_keyblade
-            self.logic[NodeId.WestHall][NodeId.WestHallChests] = ItemPlacementHelpers.need_bc_keyblade
-            self.logic[NodeId.Dungeon][NodeId.DungeonChests] = ItemPlacementHelpers.need_bc_keyblade
-            self.logic[NodeId.SecretPassage][NodeId.SecretPassageChests] = ItemPlacementHelpers.need_bc_keyblade
-            self.logic[NodeId.WestHallPostDungeon][NodeId.WestHallPostDungeonChests] = ItemPlacementHelpers.need_bc_keyblade
-            self.logic[NodeId.WestWing][NodeId.WestWingChests] = ItemPlacementHelpers.need_bc_keyblade
-            self.logic[NodeId.BeastsRoom][NodeId.BeastsRoomChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.BeastsCastleCourtyard][NodeId.BeastsCastleCourtyardChests] = keyblade_lambda
+            self.logic[NodeId.BellesRoom][NodeId.BellesRoomChests] = keyblade_lambda
+            self.logic[NodeId.EastWing][NodeId.EastWingChests] = keyblade_lambda
+            self.logic[NodeId.WestHall][NodeId.WestHallChests] = keyblade_lambda
+            self.logic[NodeId.Dungeon][NodeId.DungeonChests] = keyblade_lambda
+            self.logic[NodeId.SecretPassage][NodeId.SecretPassageChests] = keyblade_lambda
+            self.logic[NodeId.WestHallPostDungeon][NodeId.WestHallPostDungeonChests] = keyblade_lambda
+            self.logic[NodeId.WestWing][NodeId.WestWingChests] = keyblade_lambda
+            self.logic[NodeId.BeastsRoom][NodeId.BeastsRoomChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.BeastsCastleCourtyard] = ItemPlacementHelpers.bc1_check
             self.logic[NodeId.DarkThorn][NodeId.RumblingRose] = ItemPlacementHelpers.bc2_check
         else:
@@ -86,7 +87,7 @@ class BCLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     bc = locationType.BC
-    bc_logic = BCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    bc_logic = BCLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(bc_logic)
 
     courtyard_chests = graph.add_location(NodeId.BeastsCastleCourtyardChests, [

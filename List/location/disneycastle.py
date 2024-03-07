@@ -60,14 +60,15 @@ class CheckLocation(str, Enum):
     LingeringWillManifestIllusion = "Lingering Will Manifest Illusion"
 
 class DCLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_dc_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.DisneyCastleCourtyard][NodeId.DisneyCastleCourtyardChests] = ItemPlacementHelpers.need_dc_keyblade
-            self.logic[NodeId.Library][NodeId.LibraryChests] = ItemPlacementHelpers.need_dc_keyblade
-            self.logic[NodeId.CornerstoneHill][NodeId.CornerstoneHillChests] = ItemPlacementHelpers.need_dc_keyblade
-            self.logic[NodeId.Pier][NodeId.PierChests] = ItemPlacementHelpers.need_dc_keyblade
-            self.logic[NodeId.Waterway][NodeId.WaterwayChests] = ItemPlacementHelpers.need_dc_keyblade
+            self.logic[NodeId.DisneyCastleCourtyard][NodeId.DisneyCastleCourtyardChests] = keyblade_lambda
+            self.logic[NodeId.Library][NodeId.LibraryChests] = keyblade_lambda
+            self.logic[NodeId.CornerstoneHill][NodeId.CornerstoneHillChests] = keyblade_lambda
+            self.logic[NodeId.Pier][NodeId.PierChests] = keyblade_lambda
+            self.logic[NodeId.Waterway][NodeId.WaterwayChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.DisneyCastleCourtyard] = ItemPlacementHelpers.dc1_check
             self.logic[NodeId.MinnieEscort][NodeId.CornerstoneHill] = ItemPlacementHelpers.dc2_check
 
@@ -76,7 +77,7 @@ class DCLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     dc = locationType.DC
-    dc_logic = DCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    dc_logic = DCLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(dc_logic)
 
     courtyard_chests = graph.add_location(NodeId.DisneyCastleCourtyardChests, [

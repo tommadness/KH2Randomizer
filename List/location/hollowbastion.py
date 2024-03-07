@@ -123,27 +123,29 @@ class CheckLocation(str, Enum):
     TransportToRemembrance = "Transport to Remembrance"
 
 class HBLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        hb_keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_hb_keyblade(inv)
+        cor_keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_cor_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.Borough][NodeId.BoroughChests] = ItemPlacementHelpers.need_hb_keyblade
-            self.logic[NodeId.Postern][NodeId.PosternChests] = ItemPlacementHelpers.need_hb_keyblade
-            self.logic[NodeId.Corridors][NodeId.CorridorsChests] = ItemPlacementHelpers.need_hb_keyblade
-            self.logic[NodeId.AnsemsStudy][NodeId.AnsemsStudyChests] = ItemPlacementHelpers.need_hb_keyblade
-            self.logic[NodeId.UkuleleCharm][NodeId.UkuleleCharmChests] = ItemPlacementHelpers.need_hb_keyblade
-            self.logic[NodeId.RestorationSite][NodeId.RestorationSiteChests] = ItemPlacementHelpers.need_hb_keyblade
-            self.logic[NodeId.CrystalFissure][NodeId.CrystalFissureChests] = ItemPlacementHelpers.need_hb_keyblade
-            self.logic[NodeId.GullWing][NodeId.GullWingChests] = ItemPlacementHelpers.need_hb_keyblade
-            self.logic[NodeId.HeartlessManufactory][NodeId.HeartlessManufactoryChests] = ItemPlacementHelpers.need_hb_keyblade
+            self.logic[NodeId.Borough][NodeId.BoroughChests] = hb_keyblade_lambda
+            self.logic[NodeId.Postern][NodeId.PosternChests] = hb_keyblade_lambda
+            self.logic[NodeId.Corridors][NodeId.CorridorsChests] = hb_keyblade_lambda
+            self.logic[NodeId.AnsemsStudy][NodeId.AnsemsStudyChests] = hb_keyblade_lambda
+            self.logic[NodeId.UkuleleCharm][NodeId.UkuleleCharmChests] = hb_keyblade_lambda
+            self.logic[NodeId.RestorationSite][NodeId.RestorationSiteChests] = hb_keyblade_lambda
+            self.logic[NodeId.CrystalFissure][NodeId.CrystalFissureChests] = hb_keyblade_lambda
+            self.logic[NodeId.GullWing][NodeId.GullWingChests] = hb_keyblade_lambda
+            self.logic[NodeId.HeartlessManufactory][NodeId.HeartlessManufactoryChests] = hb_keyblade_lambda
 
-            self.logic[NodeId.CorDepths][NodeId.CorDepthsChests] = ItemPlacementHelpers.need_cor_keyblade
-            self.logic[NodeId.CorMineshaftPreFigh1][NodeId.CorMineshaftPreFigh1Chests] = ItemPlacementHelpers.need_cor_keyblade
-            self.logic[NodeId.CorDepthsPostFight1][NodeId.CorDepthsPostFight1Chests] = ItemPlacementHelpers.need_cor_keyblade
-            self.logic[NodeId.CorMiningArea][NodeId.CorMiningAreaChests] = ItemPlacementHelpers.need_cor_keyblade
-            self.logic[NodeId.CorMineshaftPreFight2][NodeId.CorMineshaftPreFight2Chests] = ItemPlacementHelpers.need_cor_keyblade
-            self.logic[NodeId.CorEngineChamber][NodeId.CorEngineChamberChests] = ItemPlacementHelpers.need_cor_keyblade
-            self.logic[NodeId.CorMineshaftPostFight2][NodeId.CorMineshaftPostFight2Chests] = ItemPlacementHelpers.need_cor_keyblade
-            self.logic[NodeId.CorMineshaftLastChest][NodeId.CorMineshaftLastChestChests] = ItemPlacementHelpers.need_cor_keyblade
+            self.logic[NodeId.CorDepths][NodeId.CorDepthsChests] = cor_keyblade_lambda
+            self.logic[NodeId.CorMineshaftPreFigh1][NodeId.CorMineshaftPreFigh1Chests] = cor_keyblade_lambda
+            self.logic[NodeId.CorDepthsPostFight1][NodeId.CorDepthsPostFight1Chests] = cor_keyblade_lambda
+            self.logic[NodeId.CorMiningArea][NodeId.CorMiningAreaChests] = cor_keyblade_lambda
+            self.logic[NodeId.CorMineshaftPreFight2][NodeId.CorMineshaftPreFight2Chests] = cor_keyblade_lambda
+            self.logic[NodeId.CorEngineChamber][NodeId.CorEngineChamberChests] = cor_keyblade_lambda
+            self.logic[NodeId.CorMineshaftPostFight2][NodeId.CorMineshaftPostFight2Chests] = cor_keyblade_lambda
+            self.logic[NodeId.CorMineshaftLastChest][NodeId.CorMineshaftLastChestChests] = cor_keyblade_lambda
             self.logic[START_NODE][NodeId.MarketplaceMapPopup] = ItemPlacementHelpers.hb1_check
             self.logic[NodeId.BaseballCharmPopup][NodeId.Postern] = ItemPlacementHelpers.hb2_check
             self.logic[NodeId.DoorToDarknessPopup][NodeId.CorDepths] = ItemPlacementHelpers.need_growths
@@ -157,7 +159,7 @@ class HBLogicGraph(DefaultLogicGraph):
 def make_graph(graph: LocationGraphBuilder):
     hb = locationType.HB
     cor = locationType.CoR
-    hb_logic = HBLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    hb_logic = HBLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(hb_logic)
 
     marketplace_map_popup = graph.add_location(NodeId.MarketplaceMapPopup, [

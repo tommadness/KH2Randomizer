@@ -86,16 +86,17 @@ class CheckLocation(str, Enum):
     DataZexionLostIllusion = "Zexion (Data) Lost Illusion"
 
 class OCLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_oc_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.Passage][NodeId.PassageChests] = ItemPlacementHelpers.need_oc_keyblade
-            self.logic[NodeId.InnerChamber][NodeId.InnerChamberChests] = ItemPlacementHelpers.need_oc_keyblade
-            self.logic[NodeId.UnderworldEntrance][NodeId.UnderworldEntranceChests] = ItemPlacementHelpers.need_oc_keyblade
-            self.logic[NodeId.CavernsEntrance][NodeId.CavernsEntranceChests] = ItemPlacementHelpers.need_oc_keyblade
-            self.logic[NodeId.LostRoad][NodeId.LostRoadChests] = ItemPlacementHelpers.need_oc_keyblade
-            self.logic[NodeId.Atrium][NodeId.AtriumChests] = ItemPlacementHelpers.need_oc_keyblade
-            self.logic[NodeId.TheLock][NodeId.TheLockChests] = ItemPlacementHelpers.need_oc_keyblade
+            self.logic[NodeId.Passage][NodeId.PassageChests] = keyblade_lambda
+            self.logic[NodeId.InnerChamber][NodeId.InnerChamberChests] = keyblade_lambda
+            self.logic[NodeId.UnderworldEntrance][NodeId.UnderworldEntranceChests] = keyblade_lambda
+            self.logic[NodeId.CavernsEntrance][NodeId.CavernsEntranceChests] = keyblade_lambda
+            self.logic[NodeId.LostRoad][NodeId.LostRoadChests] = keyblade_lambda
+            self.logic[NodeId.Atrium][NodeId.AtriumChests] = keyblade_lambda
+            self.logic[NodeId.TheLock][NodeId.TheLockChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.Passage] = ItemPlacementHelpers.oc1_check
             self.logic[NodeId.Hydra][NodeId.AuronsStatue] = ItemPlacementHelpers.oc2_check
             self.logic[NodeId.Hades][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
@@ -106,7 +107,7 @@ class OCLogicGraph(DefaultLogicGraph):
 def make_graph(graph: LocationGraphBuilder):
     oc = locationType.OC
     cups = locationType.OCCups
-    oc_logic = OCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    oc_logic = OCLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(oc_logic)
 
     passage_chests = graph.add_location(NodeId.PassageChests, [

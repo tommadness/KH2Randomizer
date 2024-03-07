@@ -20,7 +20,7 @@ class CheckLocation(str, Enum):
 
 
 class ATLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
             self.logic[NodeId.AtlanticaTutorial][NodeId.Ursula] = ItemPlacementHelpers.need_2_magnet
@@ -32,7 +32,7 @@ class ATLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     at = locationType.Atlantica
-    at_logic = ATLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    at_logic = ATLogicGraph(graph.reverse_rando)
     graph.add_logic(at_logic)
 
     tutorial = graph.add_location(NodeId.AtlanticaTutorial, [

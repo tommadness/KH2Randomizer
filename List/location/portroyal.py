@@ -69,17 +69,18 @@ class CheckLocation(str, Enum):
     DataLuxordApBoost = "Luxord (Data) AP Boost"
 
 class PRLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_pr_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.Rampart][NodeId.RampartChests] = ItemPlacementHelpers.need_pr_keyblade
-            self.logic[NodeId.PortRoyalTown][NodeId.PortRoyalTownChests] = ItemPlacementHelpers.need_pr_keyblade
-            self.logic[NodeId.CaveMouth][NodeId.CaveMouthChests] = ItemPlacementHelpers.need_pr_keyblade
-            self.logic[NodeId.PowderStore][NodeId.PowderStoreChests] = ItemPlacementHelpers.need_pr_keyblade
-            self.logic[NodeId.MoonlightNook][NodeId.MoonlightNookChests] = ItemPlacementHelpers.need_pr_keyblade
-            self.logic[NodeId.InterceptorsHold][NodeId.InterceptorsHoldChests] = ItemPlacementHelpers.need_pr_keyblade
-            self.logic[NodeId.SeadriftKeep][NodeId.SeadriftKeepChests] = ItemPlacementHelpers.need_pr_keyblade
-            self.logic[NodeId.SeadriftRow][NodeId.SeadriftRowChests] = ItemPlacementHelpers.need_pr_keyblade
+            self.logic[NodeId.Rampart][NodeId.RampartChests] = keyblade_lambda
+            self.logic[NodeId.PortRoyalTown][NodeId.PortRoyalTownChests] = keyblade_lambda
+            self.logic[NodeId.CaveMouth][NodeId.CaveMouthChests] = keyblade_lambda
+            self.logic[NodeId.PowderStore][NodeId.PowderStoreChests] = keyblade_lambda
+            self.logic[NodeId.MoonlightNook][NodeId.MoonlightNookChests] = keyblade_lambda
+            self.logic[NodeId.InterceptorsHold][NodeId.InterceptorsHoldChests] = keyblade_lambda
+            self.logic[NodeId.SeadriftKeep][NodeId.SeadriftKeepChests] = keyblade_lambda
+            self.logic[NodeId.SeadriftRow][NodeId.SeadriftRowChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.Rampart] = ItemPlacementHelpers.pr1_check
             self.logic[NodeId.Barbossa][NodeId.GrimReaper1] = ItemPlacementHelpers.pr2_check
         else:
@@ -88,7 +89,7 @@ class PRLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     pr = locationType.PR
-    pr_logic = PRLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    pr_logic = PRLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(pr_logic)
 
     rampart_chests = graph.add_location(NodeId.RampartChests, [

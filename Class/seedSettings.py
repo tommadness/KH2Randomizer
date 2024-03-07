@@ -2290,6 +2290,32 @@ _all_settings = [
         """,
         randomizable=True,
     ),
+    Toggle(
+        name=settingkey.KEYBLADES_LOCK_CHESTS,
+        group=SettingGroup.LOCATIONS,
+        ui_label="Keyblades Unlock Chests",
+        shared=True,
+        default=False,
+        tooltip="""
+        When enabled, Sora must have certain keyblades to open chests in the different worlds.
+        STT     | Bond of Flame
+        TT      | Oathkeeper (lock Yensid's towe with Star Seeker?)
+        HB      | Sleeping Lion
+        CoR     | Winner's Proof (Maybe Pureblood instead?)
+        LoD     | Hidden Dragon
+        BC      | Rumbling Rose
+        OC      | Hero's Crest
+        DC      | Monochrome
+        PR      | Follow The Wind
+        AG      | Wishing Lamp
+        HT      | Decisive Pumpkin
+        PL      | Circle of Life
+        SP      | Photon Debugger
+        TWTNW   | Two Become One
+        HAW     | Sweet Memories
+        """,
+        randomizable=True,
+    ),
     SingleSelect(
         name=settingkey.STARTING_VISIT_MODE,
         group=SettingGroup.LOCATIONS,

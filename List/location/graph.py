@@ -61,7 +61,7 @@ class LocationGraphBuilder:
 
     def __init__(self, graph: Graph, reverse_rando: bool, settings: RandomizerSettings):
         self.graph = graph
-        self.first_visit_locks = False
+        self.keyblades_unlock_chests = settings.keyblades_unlock_chests
         self.reverse_rando = reverse_rando
         self.settings = settings
         self.logic_graph = DefaultLogicGraph()

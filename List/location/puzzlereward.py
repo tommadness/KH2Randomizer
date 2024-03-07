@@ -173,7 +173,7 @@ def puzzle_reward(
 
 
 def make_graph(graph: LocationGraphBuilder):
-    puzzle_logic = PuzzleLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    puzzle_logic = PuzzleLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(puzzle_logic)
     awakening = graph.add_location(
         NodeId.AwakeningPuzzle,

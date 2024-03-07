@@ -64,16 +64,17 @@ class CheckLocation(str, Enum):
 
 
 class STTLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_stt_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.RoxasStation][NodeId.RoxasStationChests] = ItemPlacementHelpers.need_stt_keyblade
-            self.logic[NodeId.SimulatedCentralStation][NodeId.SimulatedCentralStationChests] = ItemPlacementHelpers.need_stt_keyblade
-            self.logic[NodeId.SimulatedSunsetTerrace][NodeId.SimulatedSunsetTerraceChests] = ItemPlacementHelpers.need_stt_keyblade
-            self.logic[NodeId.SimulatedMansionFoyer][NodeId.SimulatedMansionFoyerChests] = ItemPlacementHelpers.need_stt_keyblade
-            self.logic[NodeId.SimulatedMansionDiningRoom][NodeId.SimulatedMansionDiningRoomChests] = ItemPlacementHelpers.need_stt_keyblade
-            self.logic[NodeId.SimulatedMansionLibrary][NodeId.SimulatedMansionLibraryChests] = ItemPlacementHelpers.need_stt_keyblade
-            self.logic[NodeId.SimulatedMansionBasement][NodeId.SimulatedMansionBasementChests] = ItemPlacementHelpers.need_stt_keyblade
+            self.logic[NodeId.RoxasStation][NodeId.RoxasStationChests] = keyblade_lambda
+            self.logic[NodeId.SimulatedCentralStation][NodeId.SimulatedCentralStationChests] = keyblade_lambda
+            self.logic[NodeId.SimulatedSunsetTerrace][NodeId.SimulatedSunsetTerraceChests] = keyblade_lambda
+            self.logic[NodeId.SimulatedMansionFoyer][NodeId.SimulatedMansionFoyerChests] = keyblade_lambda
+            self.logic[NodeId.SimulatedMansionDiningRoom][NodeId.SimulatedMansionDiningRoomChests] = keyblade_lambda
+            self.logic[NodeId.SimulatedMansionLibrary][NodeId.SimulatedMansionLibraryChests] = keyblade_lambda
+            self.logic[NodeId.SimulatedMansionBasement][NodeId.SimulatedMansionBasementChests] = keyblade_lambda
         
             self.logic[START_NODE][NodeId.TwilightTownMapPopup] = ItemPlacementHelpers.stt_check
         else:
@@ -81,7 +82,7 @@ class STTLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     stt = locationType.STT
-    stt_logic = STTLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    stt_logic = STTLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(stt_logic)
 
     twilight_town_map_popup = graph.add_location(NodeId.TwilightTownMapPopup, [

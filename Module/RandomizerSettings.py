@@ -435,6 +435,8 @@ class RandomizerSettings:
                 "Can't do chain logic with both regular and reverse rando"
             )
 
+        self.keyblades_unlock_chests: bool = ui_settings.get(settingkey.KEYBLADES_LOCK_CHESTS)
+
         self.roxas_abilities_enabled: bool = ui_settings.get(
             settingkey.ROXAS_ABILITIES_ENABLED
         )

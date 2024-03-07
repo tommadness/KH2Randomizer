@@ -58,15 +58,16 @@ class CheckLocation(str, Enum):
     DataVexen = "Vexen (Data) Lost Illusion"
 
 class HTLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_ht_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.Graveyard][NodeId.GraveyardChests] = ItemPlacementHelpers.need_ht_keyblade
-            self.logic[NodeId.FinklesteinsLab][NodeId.FinklesteinsLabChests] = ItemPlacementHelpers.need_ht_keyblade
-            self.logic[NodeId.TownSquare][NodeId.TownSquareChests] = ItemPlacementHelpers.need_ht_keyblade
-            self.logic[NodeId.Hinterlands][NodeId.HinterlandsChests] = ItemPlacementHelpers.need_ht_keyblade
-            self.logic[NodeId.CandyCaneLane][NodeId.CandyCaneLaneChests] = ItemPlacementHelpers.need_ht_keyblade
-            self.logic[NodeId.SantasHouse][NodeId.SantasHouseChests] = ItemPlacementHelpers.need_ht_keyblade
+            self.logic[NodeId.Graveyard][NodeId.GraveyardChests] = keyblade_lambda
+            self.logic[NodeId.FinklesteinsLab][NodeId.FinklesteinsLabChests] = keyblade_lambda
+            self.logic[NodeId.TownSquare][NodeId.TownSquareChests] = keyblade_lambda
+            self.logic[NodeId.Hinterlands][NodeId.HinterlandsChests] = keyblade_lambda
+            self.logic[NodeId.CandyCaneLane][NodeId.CandyCaneLaneChests] = keyblade_lambda
+            self.logic[NodeId.SantasHouse][NodeId.SantasHouseChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.Graveyard] = ItemPlacementHelpers.ht1_check
             self.logic[NodeId.OogieBoogie][NodeId.LockShockBarrel] = ItemPlacementHelpers.ht2_check
         else:
@@ -74,7 +75,7 @@ class HTLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     ht = locationType.HT
-    ht_logic = HTLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    ht_logic = HTLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(ht_logic)
 
     finklesteins_lab_chests = graph.add_location(NodeId.FinklesteinsLabChests, [

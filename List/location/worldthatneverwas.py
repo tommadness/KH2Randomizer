@@ -71,18 +71,19 @@ class CheckLocation(str, Enum):
     DataXemnas = "Xemnas (Data) Power Boost"
 
 class TWTNWLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_twtnw_keyblade(inv)
 
         self.logic[START_NODE][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_promise_charm(inv) and ItemPlacementHelpers.need_proofs(inv) 
         if not reverse_rando:
-            self.logic[NodeId.FragmentCrossing][NodeId.FragmentCrossingChests] = ItemPlacementHelpers.need_twtnw_keyblade
-            self.logic[NodeId.MemorysSkyscraper][NodeId.MemorysSkyscraperChests] = ItemPlacementHelpers.need_twtnw_keyblade
-            self.logic[NodeId.BrinkOfDespair][NodeId.BrinkOfDespairChests] = ItemPlacementHelpers.need_twtnw_keyblade
-            self.logic[NodeId.NothingsCall][NodeId.NothingsCallChests] = ItemPlacementHelpers.need_twtnw_keyblade
-            self.logic[NodeId.TwilightsView][NodeId.TwilightsViewChests] = ItemPlacementHelpers.need_twtnw_keyblade
-            self.logic[NodeId.NaughtsSkyway][NodeId.NaughtsSkywayChests] = ItemPlacementHelpers.need_twtnw_keyblade
-            self.logic[NodeId.RuinAndCreationsPassage][NodeId.RuinAndCreationsPassageChests] = ItemPlacementHelpers.need_twtnw_keyblade
+            self.logic[NodeId.FragmentCrossing][NodeId.FragmentCrossingChests] = keyblade_lambda
+            self.logic[NodeId.MemorysSkyscraper][NodeId.MemorysSkyscraperChests] = keyblade_lambda
+            self.logic[NodeId.BrinkOfDespair][NodeId.BrinkOfDespairChests] = keyblade_lambda
+            self.logic[NodeId.NothingsCall][NodeId.NothingsCallChests] = keyblade_lambda
+            self.logic[NodeId.TwilightsView][NodeId.TwilightsViewChests] = keyblade_lambda
+            self.logic[NodeId.NaughtsSkyway][NodeId.NaughtsSkywayChests] = keyblade_lambda
+            self.logic[NodeId.RuinAndCreationsPassage][NodeId.RuinAndCreationsPassageChests] = keyblade_lambda
 
             self.logic[NodeId.FragmentCrossing][NodeId.Roxas] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Saix][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
@@ -91,7 +92,7 @@ class TWTNWLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     twtnw = locationType.TWTNW
-    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(twtnw_logic)
 
     fragment_crossing_chests = graph.add_location(NodeId.FragmentCrossingChests, [

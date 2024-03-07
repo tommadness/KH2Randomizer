@@ -61,15 +61,16 @@ class CheckLocation(str, Enum):
     DataXigbarDefenseBoost = "Xigbar (Data) Defense Boost"
 
 class LoDLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_lod_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.BambooGrove][NodeId.BambooGroveChests] = ItemPlacementHelpers.need_lod_keyblade
-            self.logic[NodeId.Checkpoint][NodeId.CheckpointChests] = ItemPlacementHelpers.need_lod_keyblade
-            self.logic[NodeId.MountainTrail][NodeId.MountainTrailChests] = ItemPlacementHelpers.need_lod_keyblade
-            self.logic[NodeId.VillageCave][NodeId.VillageCaveChests] = ItemPlacementHelpers.need_lod_keyblade
-            self.logic[NodeId.Ridge][NodeId.RidgeChests] = ItemPlacementHelpers.need_lod_keyblade
-            self.logic[NodeId.ThroneRoom][NodeId.ThroneRoomChests] = ItemPlacementHelpers.need_lod_keyblade
+            self.logic[NodeId.BambooGrove][NodeId.BambooGroveChests] = keyblade_lambda
+            self.logic[NodeId.Checkpoint][NodeId.CheckpointChests] = keyblade_lambda
+            self.logic[NodeId.MountainTrail][NodeId.MountainTrailChests] = keyblade_lambda
+            self.logic[NodeId.VillageCave][NodeId.VillageCaveChests] = keyblade_lambda
+            self.logic[NodeId.Ridge][NodeId.RidgeChests] = keyblade_lambda
+            self.logic[NodeId.ThroneRoom][NodeId.ThroneRoomChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.BambooGrove] = ItemPlacementHelpers.lod1_check
             self.logic[NodeId.ShanYu][NodeId.ThroneRoom] = ItemPlacementHelpers.lod2_check
         else:
@@ -77,7 +78,7 @@ class LoDLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     lod = locationType.LoD
-    lod_logic = LoDLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    lod_logic = LoDLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(lod_logic)
 
     bamboo_grove_chests = graph.add_location(NodeId.BambooGroveChests, [

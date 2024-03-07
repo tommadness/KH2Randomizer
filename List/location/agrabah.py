@@ -72,17 +72,18 @@ class CheckLocation(str, Enum):
     DataLexaeus = "Lexaeus (Data) Lost Illusion"
 
 class AGLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_ag_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.Agrabah][NodeId.AgrabahChests] = ItemPlacementHelpers.need_ag_keyblade
-            self.logic[NodeId.Bazaar][NodeId.BazaarChests] = ItemPlacementHelpers.need_ag_keyblade
-            self.logic[NodeId.PalaceWalls][NodeId.PalaceWallsChests] = ItemPlacementHelpers.need_ag_keyblade
-            self.logic[NodeId.CaveOfWondersEntrance][NodeId.CaveOfWondersEntranceChests] = ItemPlacementHelpers.need_ag_keyblade
-            self.logic[NodeId.ValleyOfStone][NodeId.ValleyOfStoneChests] = ItemPlacementHelpers.need_ag_keyblade
-            self.logic[NodeId.ChasmOfChallenges][NodeId.ChasmOfChallengesChests] = ItemPlacementHelpers.need_ag_keyblade
-            self.logic[NodeId.TreasureRoom][NodeId.TreasureRoomChests] = ItemPlacementHelpers.need_ag_keyblade
-            self.logic[NodeId.RuinedChamber][NodeId.RuinedChamberChests] = ItemPlacementHelpers.need_ag_keyblade
+            self.logic[NodeId.Agrabah][NodeId.AgrabahChests] = keyblade_lambda
+            self.logic[NodeId.Bazaar][NodeId.BazaarChests] = keyblade_lambda
+            self.logic[NodeId.PalaceWalls][NodeId.PalaceWallsChests] = keyblade_lambda
+            self.logic[NodeId.CaveOfWondersEntrance][NodeId.CaveOfWondersEntranceChests] = keyblade_lambda
+            self.logic[NodeId.ValleyOfStone][NodeId.ValleyOfStoneChests] = keyblade_lambda
+            self.logic[NodeId.ChasmOfChallenges][NodeId.ChasmOfChallengesChests] = keyblade_lambda
+            self.logic[NodeId.TreasureRoom][NodeId.TreasureRoomChests] = keyblade_lambda
+            self.logic[NodeId.RuinedChamber][NodeId.RuinedChamberChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.AgrabahMapPopup] = ItemPlacementHelpers.ag1_check
             self.logic[NodeId.ElementalLords][NodeId.RuinedChamber] = lambda inv : ItemPlacementHelpers.ag2_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
         else:
@@ -92,7 +93,7 @@ class AGLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     ag = locationType.Agrabah
-    ag_logic = AGLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    ag_logic = AGLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(ag_logic)
 
     agrabah_map_popup = graph.add_location(NodeId.AgrabahMapPopup, [

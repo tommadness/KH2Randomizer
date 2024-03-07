@@ -65,16 +65,17 @@ class CheckLocation(str, Enum):
     DataSaix = "Saix (Data) Defense Boost"
 
 class PLLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_pl_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.Gorge][NodeId.GorgeChests] = ItemPlacementHelpers.need_pl_keyblade
-            self.logic[NodeId.ElephantGraveyard][NodeId.ElephantGraveyardChests] = ItemPlacementHelpers.need_pl_keyblade
-            self.logic[NodeId.PrideRock][NodeId.PrideRockChests] = ItemPlacementHelpers.need_pl_keyblade
-            self.logic[NodeId.WildebeestValley][NodeId.WildebeestValleyChests] = ItemPlacementHelpers.need_pl_keyblade
-            self.logic[NodeId.Wastelands][NodeId.WastelandsChests] = ItemPlacementHelpers.need_pl_keyblade
-            self.logic[NodeId.Jungle][NodeId.JungleChests] = ItemPlacementHelpers.need_pl_keyblade
-            self.logic[NodeId.Oasis][NodeId.OasisChests] = ItemPlacementHelpers.need_pl_keyblade
+            self.logic[NodeId.Gorge][NodeId.GorgeChests] = keyblade_lambda
+            self.logic[NodeId.ElephantGraveyard][NodeId.ElephantGraveyardChests] = keyblade_lambda
+            self.logic[NodeId.PrideRock][NodeId.PrideRockChests] = keyblade_lambda
+            self.logic[NodeId.WildebeestValley][NodeId.WildebeestValleyChests] = keyblade_lambda
+            self.logic[NodeId.Wastelands][NodeId.WastelandsChests] = keyblade_lambda
+            self.logic[NodeId.Jungle][NodeId.JungleChests] = keyblade_lambda
+            self.logic[NodeId.Oasis][NodeId.OasisChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.Gorge] = ItemPlacementHelpers.pl1_check
             self.logic[NodeId.Scar][NodeId.Hyenas2Bonus] = ItemPlacementHelpers.pl2_check
         else:
@@ -83,7 +84,7 @@ class PLLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     pl = locationType.PL
-    pl_logic = PLLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    pl_logic = PLLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(pl_logic)
 
     gorge_chests = graph.add_location(NodeId.GorgeChests, [

@@ -52,14 +52,15 @@ class CheckLocation(str, Enum):
     DataLarxeneLostIllusion = "Larxene (Data) Lost Illusion"
     
 class SPLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_sp_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.PitCell][NodeId.PitCellChests] = ItemPlacementHelpers.need_sp_keyblade
-            self.logic[NodeId.Canyon][NodeId.CanyonChests] = ItemPlacementHelpers.need_sp_keyblade
-            self.logic[NodeId.Hallway][NodeId.HallwayChests] = ItemPlacementHelpers.need_sp_keyblade
-            self.logic[NodeId.CommunicationsRoom][NodeId.CommunicationsRoomChests] = ItemPlacementHelpers.need_sp_keyblade
-            self.logic[NodeId.CentralComputerCore][NodeId.CentralComputerCoreChests] = ItemPlacementHelpers.need_sp_keyblade
+            self.logic[NodeId.PitCell][NodeId.PitCellChests] = keyblade_lambda
+            self.logic[NodeId.Canyon][NodeId.CanyonChests] = keyblade_lambda
+            self.logic[NodeId.Hallway][NodeId.HallwayChests] = keyblade_lambda
+            self.logic[NodeId.CommunicationsRoom][NodeId.CommunicationsRoomChests] = keyblade_lambda
+            self.logic[NodeId.CentralComputerCore][NodeId.CentralComputerCoreChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.PitCell] = ItemPlacementHelpers.sp1_check
             self.logic[NodeId.PhotonDebugger][NodeId.SolarSailerBonus] = ItemPlacementHelpers.sp2_check
         else:
@@ -67,7 +68,7 @@ class SPLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     sp = locationType.SP
-    sp_logic = SPLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    sp_logic = SPLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(sp_logic)
 
     pit_cell_chests = graph.add_location(NodeId.PitCellChests, [

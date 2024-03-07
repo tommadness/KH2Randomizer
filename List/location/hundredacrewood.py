@@ -48,15 +48,16 @@ class CheckLocation(str, Enum):
     StarryHillOrichalcumPlus = "Starry Hill Orichalcum+"
 
 class HAWLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando, keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
+        keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_haw_keyblade(inv)
         if not reverse_rando:
-            self.logic[NodeId.PoohsHowse][NodeId.PoohsHowseChests] = ItemPlacementHelpers.need_haw_keyblade
-            self.logic[NodeId.PigletsHowse][NodeId.PigletsHowseChests] = ItemPlacementHelpers.need_haw_keyblade
-            self.logic[NodeId.RabbitsHowse][NodeId.RabbitsHowseChests] = ItemPlacementHelpers.need_haw_keyblade
-            self.logic[NodeId.KangasHowse][NodeId.KangasHowseChests] = ItemPlacementHelpers.need_haw_keyblade
-            self.logic[NodeId.SpookyCave][NodeId.SpookyCaveChests] = ItemPlacementHelpers.need_haw_keyblade
-            self.logic[NodeId.StarryHill][NodeId.StarryHillChests] = ItemPlacementHelpers.need_haw_keyblade
+            self.logic[NodeId.PoohsHowse][NodeId.PoohsHowseChests] = keyblade_lambda
+            self.logic[NodeId.PigletsHowse][NodeId.PigletsHowseChests] = keyblade_lambda
+            self.logic[NodeId.RabbitsHowse][NodeId.RabbitsHowseChests] = keyblade_lambda
+            self.logic[NodeId.KangasHowse][NodeId.KangasHowseChests] = keyblade_lambda
+            self.logic[NodeId.SpookyCave][NodeId.SpookyCaveChests] = keyblade_lambda
+            self.logic[NodeId.StarryHill][NodeId.StarryHillChests] = keyblade_lambda
             self.logic[NodeId.PoohsHowse][NodeId.PigletsHowse] = ItemPlacementHelpers.need_torn_pages(1)
             self.logic[NodeId.PigletsHowse][NodeId.RabbitsHowse] = ItemPlacementHelpers.need_torn_pages(2)
             self.logic[NodeId.RabbitsHowse][NodeId.KangasHowse] = ItemPlacementHelpers.need_torn_pages(3)
@@ -72,7 +73,7 @@ class HAWLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     haw = locationType.HUNDREDAW
-    haw_logic = HAWLogicGraph(graph.reverse_rando,graph.first_visit_locks)
+    haw_logic = HAWLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
     graph.add_logic(haw_logic)
 
     poohs_howse_chests = graph.add_location(NodeId.PoohsHowseChests, [
