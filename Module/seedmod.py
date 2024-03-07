@@ -617,6 +617,7 @@ class SeedModBuilder:
         # Remastered Textures
         trash_source_name = _relative_mod_file("chest/remastered/trash.dds")
         abilities_source_name = _relative_mod_file("chest/remastered/abilities.dds")
+        equipment_source_name = _relative_mod_file("chest/remastered/equipment.dds")
         forms_source_name = _relative_mod_file("chest/remastered/forms.dds")
         magic_source_name = _relative_mod_file("chest/remastered/magic.dds")
         pages_source_name = _relative_mod_file("chest/remastered/pages.dds")
@@ -665,6 +666,9 @@ class SeedModBuilder:
         self.out_zip.write(
             resource_path("static/chests/remastered/proofs.dds"), proofs_source_name
         )
+        self.out_zip.write(
+            resource_path("static/chests/remastered/equipment.dds"), equipment_source_name
+        )
 
         # Listpatch
         chest_obj_list_source_name = _relative_mod_file("chest/ChestObjList.yml")
@@ -690,6 +694,7 @@ class SeedModBuilder:
         # MDLX
         jnk_source_name = _relative_mod_file("chest/obj/F_EX030_JNK.mdlx")
         abl_source_name = _relative_mod_file("chest/obj/F_EX030_ABL.mdlx")
+        eqp_source_name = _relative_mod_file("chest/obj/F_EX030_EQP.mdlx")
         frm_source_name = _relative_mod_file("chest/obj/F_EX030_FRM.mdlx")
         mag_source_name = _relative_mod_file("chest/obj/F_EX030_MAG.mdlx")
         pag_source_name = _relative_mod_file("chest/obj/F_EX030_PAG.mdlx")
@@ -704,6 +709,9 @@ class SeedModBuilder:
         )
         self.out_zip.write(
             resource_path("static/chests/obj/F_EX030_ABL.mdlx"), abl_source_name
+        )
+        self.out_zip.write(
+            resource_path("static/chests/obj/F_EX030_EQP.mdlx"), eqp_source_name
         )
         self.out_zip.write(
             resource_path("static/chests/obj/F_EX030_FRM.mdlx"), frm_source_name
@@ -910,6 +918,7 @@ class SeedModBuilder:
         basic_types = {
             "JNK": "trash",
             "ABL": "abilities",
+            "EQP": "equipment",
             "FRM": "forms",
             "MAG": "magic",
             "PAG": "pages",
@@ -1165,6 +1174,7 @@ class SeedModBuilder:
                 "platform": "pc",
                 "multi": [
                     {"name": "obj/F_EX030_ABL.a.us"},
+                    {"name": "obj/F_EX030_EQP.a.us"},
                     {"name": "obj/F_EX030_FRM.a.us"},
                     {"name": "obj/F_EX030_MAG.a.us"},
                     {"name": "obj/F_EX030_PAG.a.us"},
@@ -1175,6 +1185,7 @@ class SeedModBuilder:
                     {"name": "obj/F_EX030_WEP.a.us"},
                     {"name": "obj/F_EX050_JNK.a.us"},
                     {"name": "obj/F_EX050_ABL.a.us"},
+                    {"name": "obj/F_EX050_EQP.a.us"},
                     {"name": "obj/F_EX050_FRM.a.us"},
                     {"name": "obj/F_EX050_MAG.a.us"},
                     {"name": "obj/F_EX050_PAG.a.us"},
@@ -1217,6 +1228,7 @@ class SeedModBuilder:
                 "platform": "ps2",
                 "multi": [
                     {"name": "obj/F_EX030_ABL.a.fm"},
+                    {"name": "obj/F_EX030_EQP.a.fm"},
                     {"name": "obj/F_EX030_FRM.a.fm"},
                     {"name": "obj/F_EX030_MAG.a.fm"},
                     {"name": "obj/F_EX030_PAG.a.fm"},
@@ -1227,6 +1239,7 @@ class SeedModBuilder:
                     {"name": "obj/F_EX030_WEP.a.fm"},
                     {"name": "obj/F_EX050_JNK.a.fm"},
                     {"name": "obj/F_EX050_ABL.a.fm"},
+                    {"name": "obj/F_EX050_EQP.a.fm"},
                     {"name": "obj/F_EX050_FRM.a.fm"},
                     {"name": "obj/F_EX050_MAG.a.fm"},
                     {"name": "obj/F_EX050_PAG.a.fm"},
