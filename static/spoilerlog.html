@@ -340,7 +340,8 @@ function populateWeightTable(in_depth_data,which_table)
                         ["Visit Unlocks", "Story Unlock"], 
                         ["Magics", "Fire"], 
                         ["Pages", "Torn Page"], 
-                        ["Summons", "Summon"], 
+                        ["Summons", "Summon"],
+                        ["Ansem Reports", "Report"],
                         ["Proofs", "Proof of Connection"], 
                         ["Promise Charm", "Promise Charm"]];
 
@@ -571,7 +572,7 @@ function populateTable(container, data)
                 world_table_html+=item_data[0]
                 world_table_html+="</td>"
                 world_table_html+="<td>"
-                world_table_html+=item_data[1]["Name"] + " (" +item_data[1]["Rarity"] + ")";
+                world_table_html+=item_data[1]["Name"];
                 world_table_html+="</td>"
                 table_entry.innerHTML += world_table_html;
                 container.appendChild(table_entry);
@@ -593,7 +594,7 @@ function populateTable(container, data)
             world_table_html+=level_data[0];
             world_table_html+="</td>";
             world_table_html+="<td>";
-            world_table_html+=level_data[1]["Name"] + " (" +level_data[1]["Rarity"] + ")";
+            world_table_html+=level_data[1]["Name"];
             world_table_html+="</td>";
             table_entry.innerHTML += world_table_html;
             container.appendChild(table_entry);
@@ -614,7 +615,7 @@ function populateTable(container, data)
             world_table_html+=level_data[0];
             world_table_html+="</td>";
             world_table_html+="<td>";
-            world_table_html+=level_data[1]["Name"] + " (" +level_data[1]["Rarity"] + ")";
+            world_table_html+=level_data[1]["Name"];
             world_table_html+="</td>";
             table_entry.innerHTML += world_table_html;
             container.appendChild(table_entry);
@@ -635,7 +636,7 @@ function populateTable(container, data)
             world_table_html+=weapon[0];
             world_table_html+="</td>";
             world_table_html+="<td>";
-            world_table_html+=weapon[1]["Name"] + " (" +weapon[1]["Rarity"] + ")";
+            world_table_html+=weapon[1]["Name"];
             world_table_html+="</td>";
             table_entry.innerHTML += world_table_html;
             container.appendChild(table_entry);

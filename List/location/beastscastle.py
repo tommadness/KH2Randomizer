@@ -9,16 +9,25 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     BeastsCastleCourtyard = "BC Courtyard"
+    BeastsCastleCourtyardChests = "BC Courtyard Chests"
     BellesRoom = "Belle's Room"
+    BellesRoomChests = "Belle's Room Chests"
     EastWing = "East Wing"
+    EastWingChests = "East Wing Chests"
     WestHall = "West Hall"
+    WestHallChests = "West Hall Chests"
     Thresholder = "Thresholder"
     Dungeon = "Dungeon"
+    DungeonChests = "Dungeon Chests"
     SecretPassage = "Secret Passage"
+    SecretPassageChests = "Secret Passage Chests"
     WestHallPostDungeon = "West Hall Post Dungeon"
+    WestHallPostDungeonChests = "West Hall Post Dungeon Chests"
     WestWing = "West Wing"
+    WestWingChests = "West Wing Chests"
     BeastBonus = "Beast Bonus"
     BeastsRoom = "Beast's Room"
+    BeastsRoomChests = "Beast's Room Chests"
     DarkThorn = "Dark Thorn"
     RumblingRose = "Rumbling Rose"
     Xaldin = "Xaldin"
@@ -61,6 +70,15 @@ class BCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.BeastsCastleCourtyard][NodeId.BeastsCastleCourtyardChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.BellesRoom][NodeId.BellesRoomChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.EastWing][NodeId.EastWingChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.WestHall][NodeId.WestHallChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.Dungeon][NodeId.DungeonChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.SecretPassage][NodeId.SecretPassageChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.WestHallPostDungeon][NodeId.WestHallPostDungeonChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.WestWing][NodeId.WestWingChests] = ItemPlacementHelpers.need_bc_keyblade
+            self.logic[NodeId.BeastsRoom][NodeId.BeastsRoomChests] = ItemPlacementHelpers.need_bc_keyblade
             self.logic[START_NODE][NodeId.BeastsCastleCourtyard] = ItemPlacementHelpers.bc1_check
             self.logic[NodeId.DarkThorn][NodeId.RumblingRose] = ItemPlacementHelpers.bc2_check
         else:
@@ -71,51 +89,60 @@ def make_graph(graph: LocationGraphBuilder):
     bc_logic = BCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(bc_logic)
 
-    courtyard = graph.add_location(NodeId.BeastsCastleCourtyard, [
+    courtyard_chests = graph.add_location(NodeId.BeastsCastleCourtyardChests, [
         chest(39, CheckLocation.CourtyardApBoost, bc),
         chest(40, CheckLocation.CourtyardHiPotion, bc),
         chest(505, CheckLocation.CourtyardMythrilShard, bc),
     ])
-    belles_room = graph.add_location(NodeId.BellesRoom, [
+    courtyard = graph.add_location(NodeId.BeastsCastleCourtyard, [])
+    belles_room_chests = graph.add_location(NodeId.BellesRoomChests, [
         chest(46, CheckLocation.BellesRoomCastleMap, bc),
         chest(240, CheckLocation.BellesRoomMegaRecipe, bc),
     ])
-    east_wing = graph.add_location(NodeId.EastWing, [
+    belles_room = graph.add_location(NodeId.BellesRoom, [])
+    east_wing_chests = graph.add_location(NodeId.EastWingChests, [
         chest(63, CheckLocation.EastWingMythrilShard, bc),
         chest(155, CheckLocation.EastWingTent, bc),
     ])
-    west_hall = graph.add_location(NodeId.WestHall, [
+    east_wing = graph.add_location(NodeId.EastWing, [])
+    west_hall_chests = graph.add_location(NodeId.WestHallChests, [
         chest(41, CheckLocation.WestHallHiPotion, bc),
         chest(207, CheckLocation.WestHallPowerShard, bc),
         chest(208, CheckLocation.WestHallMythrilShard2, bc),
         chest(159, CheckLocation.WestHallBrightStone, bc),
         chest(206, CheckLocation.WestHallMythrilShard, bc),
     ])
+    west_hall = graph.add_location(NodeId.WestHall, [])
     thresholder = graph.add_location(NodeId.Thresholder, [
         item_bonus(2, CheckLocation.Thresholder, bc, vanilla=ability.UpperSlash),
     ])
-    dungeon = graph.add_location(NodeId.Dungeon, [
+    dungeon_chests = graph.add_location(NodeId.DungeonChests, [
         chest(239, CheckLocation.DungeonBasementMap, bc),
         chest(43, CheckLocation.DungeonApBoost, bc),
     ])
-    secret_passage = graph.add_location(NodeId.SecretPassage, [
+    dungeon = graph.add_location(NodeId.Dungeon, [])
+    secret_passage_chests = graph.add_location(NodeId.SecretPassageChests, [
         chest(44, CheckLocation.SecretPassageMythrilShard, bc),
         chest(168, CheckLocation.SecretPassageHiPotion, bc),
         chest(45, CheckLocation.SecretPassageLucidShard, bc),
     ])
-    west_hall_post_dungeon = graph.add_location(NodeId.WestHallPostDungeon, [
+    secret_passage = graph.add_location(NodeId.SecretPassage, [])
+    west_hall_post_dungeon_chests = graph.add_location(NodeId.WestHallPostDungeonChests, [
         chest(158, CheckLocation.WestHallPostDungeonApBoost, bc),
     ])
-    west_wing = graph.add_location(NodeId.WestWing, [
+    west_hall_post_dungeon = graph.add_location(NodeId.WestHallPostDungeon, [])
+    west_wing_chests = graph.add_location(NodeId.WestWingChests, [
         chest(42, CheckLocation.WestWingMythrilShard, bc),
         chest(164, CheckLocation.WestWingTent, bc),
     ])
+    west_wing = graph.add_location(NodeId.WestWing, [])
     beast_bonus = graph.add_location(NodeId.BeastBonus, [
         stat_bonus(12, CheckLocation.Beast, bc),
     ])
-    beasts_room = graph.add_location(NodeId.BeastsRoom, [
+    beasts_room_chests = graph.add_location(NodeId.BeastsRoomChests, [
         chest(241, CheckLocation.BeastsRoomBlazingShard, bc),
     ])
+    beasts_room = graph.add_location(NodeId.BeastsRoom, [])
     dark_thorn = graph.add_location(NodeId.DarkThorn, [
         hybrid_bonus(3, CheckLocation.DarkThorn, bc, vanilla=ability.RetaliatingSlash),
         popup(299, CheckLocation.DarkThornCureElement, bc, vanilla=magic.Cure),
@@ -133,6 +160,16 @@ def make_graph(graph: LocationGraphBuilder):
     ])
 
     graph.register_superboss(data_xaldin)
+    
+    graph.add_edge(courtyard, courtyard_chests)
+    graph.add_edge(belles_room, belles_room_chests)
+    graph.add_edge(east_wing, east_wing_chests)
+    graph.add_edge(west_hall, west_hall_chests)
+    graph.add_edge(dungeon, dungeon_chests)
+    graph.add_edge(secret_passage, secret_passage_chests)
+    graph.add_edge(west_hall_post_dungeon, west_hall_post_dungeon_chests)
+    graph.add_edge(west_wing, west_wing_chests)
+    graph.add_edge(beasts_room, beasts_room_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, courtyard)

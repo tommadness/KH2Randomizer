@@ -11,17 +11,24 @@ class NodeId(str, Enum):
     TwilightTownMapPopup = "Twilight Town Map Popup"
     MunnyPouchPopup = "Munny Pouch Popup"
     RoxasStation = "Roxas Station"
+    RoxasStationChests = "Roxas Station Chests"
     TwilightThorn = "Twilight Thorn"
     Axel1 = "Axel 1"
     StruggleChampion = "Struggle Champion"
     SimulatedCentralStation = "STT Central Station"
+    SimulatedCentralStationChests = "STT Central Station Chests"
     SimulatedSunsetTerrace = "STT Sunset Terrace"
+    SimulatedSunsetTerraceChests = "STT Sunset Terrace Chests"
     SimulatedMansionFoyer = "STT Mansion Foyer"
+    SimulatedMansionFoyerChests = "STT Mansion Foyer Chests"
     SimulatedMansionDiningRoom = "STT Mansion Dining Room"
+    SimulatedMansionDiningRoomChests = "STT Mansion Dining Room Chests"
     NaminesRoom = "Namine's Room"
     SimulatedMansionLibrary = "STT Mansion Library"
+    SimulatedMansionLibraryChests = "STT Mansion Library Chests"
     Axel2 = "Axel 2"
     SimulatedMansionBasement = "STT Mansion Basement"
+    SimulatedMansionBasementChests = "STT Mansion Basement Chests"
     DataRoxas = "Data Roxas"
 
 
@@ -60,6 +67,14 @@ class STTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.RoxasStation][NodeId.RoxasStationChests] = ItemPlacementHelpers.need_stt_keyblade
+            self.logic[NodeId.SimulatedCentralStation][NodeId.SimulatedCentralStationChests] = ItemPlacementHelpers.need_stt_keyblade
+            self.logic[NodeId.SimulatedSunsetTerrace][NodeId.SimulatedSunsetTerraceChests] = ItemPlacementHelpers.need_stt_keyblade
+            self.logic[NodeId.SimulatedMansionFoyer][NodeId.SimulatedMansionFoyerChests] = ItemPlacementHelpers.need_stt_keyblade
+            self.logic[NodeId.SimulatedMansionDiningRoom][NodeId.SimulatedMansionDiningRoomChests] = ItemPlacementHelpers.need_stt_keyblade
+            self.logic[NodeId.SimulatedMansionLibrary][NodeId.SimulatedMansionLibraryChests] = ItemPlacementHelpers.need_stt_keyblade
+            self.logic[NodeId.SimulatedMansionBasement][NodeId.SimulatedMansionBasementChests] = ItemPlacementHelpers.need_stt_keyblade
+        
             self.logic[START_NODE][NodeId.TwilightTownMapPopup] = ItemPlacementHelpers.stt_check
         else:
             pass
@@ -75,10 +90,12 @@ def make_graph(graph: LocationGraphBuilder):
     munny_pouch_popup = graph.add_location(NodeId.MunnyPouchPopup, [
         popup(288, CheckLocation.MunnyPouchOlette, stt, vanilla=misc.MunnyPouchOlette),
     ])
-    roxas_station = graph.add_location(NodeId.RoxasStation, [
-        item_bonus(54, CheckLocation.StationDusks, stt, vanilla=ability.AerialRecovery),
+    roxas_station_chests = graph.add_location(NodeId.RoxasStationChests, [
         chest(315, CheckLocation.StationOfSerenityPotion, stt),
         chest(472, CheckLocation.StationOfCallingPotion, stt),
+    ])
+    roxas_station = graph.add_location(NodeId.RoxasStation, [
+        item_bonus(54, CheckLocation.StationDusks, stt, vanilla=ability.AerialRecovery),
     ])
     twilight_thorn = graph.add_location(NodeId.TwilightThorn, [
         item_bonus(33, CheckLocation.TwilightThorn, stt, vanilla=ability.Guard),
@@ -91,44 +108,59 @@ def make_graph(graph: LocationGraphBuilder):
         popup(390, CheckLocation.StruggleLoserMedal, stt),
         popup(519, CheckLocation.StruggleTrophy, stt),
     ])
-    central_station = graph.add_location(NodeId.SimulatedCentralStation, [
+    central_station_chests = graph.add_location(NodeId.SimulatedCentralStationChests, [
         chest(428, CheckLocation.CentralStationPotion1, stt),
         chest(429, CheckLocation.CentralStationHiPotion, stt),
         chest(430, CheckLocation.CentralStationPotion2, stt),
     ])
-    sunset_terrace = graph.add_location(NodeId.SimulatedSunsetTerrace, [
+    central_station = graph.add_location(NodeId.SimulatedCentralStation, [])
+    sunset_terrace_chests = graph.add_location(NodeId.SimulatedSunsetTerraceChests, [
         chest(434, CheckLocation.SunsetTerraceAbilityRing, stt),
         chest(435, CheckLocation.SunsetTerraceHiPotion, stt),
         chest(436, CheckLocation.SunsetTerracePotion1, stt),
         chest(437, CheckLocation.SunsetTerracePotion2, stt),
     ])
-    mansion_foyer = graph.add_location(NodeId.SimulatedMansionFoyer, [
+    sunset_terrace = graph.add_location(NodeId.SimulatedSunsetTerrace, [])
+    mansion_foyer_chests = graph.add_location(NodeId.SimulatedMansionFoyerChests, [
         chest(449, CheckLocation.MansionFoyerHiPotion, stt),
         chest(450, CheckLocation.MansionFoyerPotion1, stt),
         chest(451, CheckLocation.MansionFoyerPotion2, stt),
     ])
-    mansion_dining_room = graph.add_location(NodeId.SimulatedMansionDiningRoom, [
+    mansion_foyer = graph.add_location(NodeId.SimulatedMansionFoyer, [])
+    mansion_dining_room_chests = graph.add_location(NodeId.SimulatedMansionDiningRoomChests, [
         chest(455, CheckLocation.MansionDiningRoomElvenBandanna, stt),
         chest(456, CheckLocation.MansionDiningRoomPotion, stt),
     ])
+    mansion_dining_room = graph.add_location(NodeId.SimulatedMansionDiningRoom, [])
     namines_room = graph.add_location(NodeId.NaminesRoom, [
         popup(289, CheckLocation.NaminesSketches, stt),
         popup(483, CheckLocation.MansionMap, stt),
     ])
-    mansion_library = graph.add_location(NodeId.SimulatedMansionLibrary, [
+    mansion_library_chests = graph.add_location(NodeId.SimulatedMansionLibraryChests, [
         chest(459, CheckLocation.MansionLibraryHiPotion, stt),
     ])
+    mansion_library = graph.add_location(NodeId.SimulatedMansionLibrary, [])
     axel_2 = graph.add_location(NodeId.Axel2, [
         stat_bonus(34, CheckLocation.Axel2, stt),
     ])
-    mansion_basement = graph.add_location(NodeId.SimulatedMansionBasement, [
+    mansion_basement_chests = graph.add_location(NodeId.SimulatedMansionBasementChests, [
         chest(463, CheckLocation.MansionBasementCorridorHiPotion, stt),
     ])
+    mansion_basement = graph.add_location(NodeId.SimulatedMansionBasement, [])
+
     data_roxas = graph.add_location(NodeId.DataRoxas, [
         popup(558, CheckLocation.DataRoxasMagicBoost, [stt, locationType.DataOrg]),
     ])
 
     graph.register_superboss(data_roxas)
+
+    graph.add_edge(roxas_station, roxas_station_chests)
+    graph.add_edge(central_station, central_station_chests)
+    graph.add_edge(sunset_terrace, sunset_terrace_chests)
+    graph.add_edge(mansion_foyer, mansion_foyer_chests)
+    graph.add_edge(mansion_dining_room, mansion_dining_room_chests)
+    graph.add_edge(mansion_library, mansion_library_chests)
+    graph.add_edge(mansion_basement, mansion_basement_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, twilight_town_map_popup)
@@ -146,8 +178,8 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(namines_room, axel_2, RequirementEdge(battle=True))
         graph.add_edge(axel_2, mansion_basement)
         graph.add_edge(mansion_basement, data_roxas, RequirementEdge(battle=True))
-        graph.register_first_boss(mansion_basement)
-        graph.register_last_story_boss(mansion_basement)
+        graph.register_first_boss(mansion_basement_chests)
+        graph.register_last_story_boss(mansion_basement_chests)
     else:
         graph.add_edge(START_NODE, mansion_foyer)
         graph.add_edge(mansion_foyer, mansion_dining_room)

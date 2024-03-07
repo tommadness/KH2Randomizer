@@ -240,15 +240,12 @@ class RandomizerSettings:
             locationType.TWTNW: ui_settings.get(settingkey.STARTING_UNLOCKS_TWTNW),
         }
 
-        # self.itemDifficulty = itemDifficulty(
-        #     ui_settings.get(settingkey.ITEM_PLACEMENT_DIFFICULTY)
-        # )
-
         self.form_weights = ui_settings.get(settingkey.WEIGHTED_FORMS)
         self.unlock_weights = ui_settings.get(settingkey.WEIGHTED_UNLOCKS)
         self.magic_weights = ui_settings.get(settingkey.WEIGHTED_MAGIC)
         self.page_weights = ui_settings.get(settingkey.WEIGHTED_PAGES)
         self.summon_weights = ui_settings.get(settingkey.WEIGHTED_SUMMONS)
+        self.report_weights = ui_settings.get(settingkey.WEIGHTED_REPORTS)
         self.proof_weights = ui_settings.get(settingkey.WEIGHTED_PROOFS)
         self.promise_charm_weights = ui_settings.get(settingkey.WEIGHTED_PROMISE_CHARM)
 

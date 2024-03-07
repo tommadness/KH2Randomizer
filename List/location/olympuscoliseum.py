@@ -9,16 +9,23 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     Passage = "Passage"
+    PassageChests = "Passage Chests"
     InnerChamber = "Inner Chamber"
+    InnerChamberChests = "Inner Chamber Chests"
     CerberusBonus = "Cerberus Bonus"
     ColiseumMapPopup = "Coliseum Map Popup"
     UrnsBonus = "Urns Bonus"
     UnderworldEntrance = "Underworld Entrance"
+    UnderworldEntranceChests = "Underworld Entrance Chests"
     CavernsEntrance = "Caverns Entrance"
+    CavernsEntranceChests = "Caverns Entrance Chests"
     LostRoad = "Lost Road"
+    LostRoadChests = "Lost Road Chests"
     Atrium = "Atrium"
+    AtriumChests = "Atrium Chests"
     DemyxOlympusColiseum = "Demyx (OC)"
     TheLock = "The Lock"
+    TheLockChests = "The Lock Chests"
     PeteOlympusColiseum = "Pete (OC)"
     Hydra = "Hydra"
     AuronsStatue = "Auron Statue"
@@ -82,6 +89,13 @@ class OCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,first_visit_locks):
         DefaultLogicGraph.__init__(self,NodeId)
         if not reverse_rando:
+            self.logic[NodeId.Passage][NodeId.PassageChests] = ItemPlacementHelpers.need_oc_keyblade
+            self.logic[NodeId.InnerChamber][NodeId.InnerChamberChests] = ItemPlacementHelpers.need_oc_keyblade
+            self.logic[NodeId.UnderworldEntrance][NodeId.UnderworldEntranceChests] = ItemPlacementHelpers.need_oc_keyblade
+            self.logic[NodeId.CavernsEntrance][NodeId.CavernsEntranceChests] = ItemPlacementHelpers.need_oc_keyblade
+            self.logic[NodeId.LostRoad][NodeId.LostRoadChests] = ItemPlacementHelpers.need_oc_keyblade
+            self.logic[NodeId.Atrium][NodeId.AtriumChests] = ItemPlacementHelpers.need_oc_keyblade
+            self.logic[NodeId.TheLock][NodeId.TheLockChests] = ItemPlacementHelpers.need_oc_keyblade
             self.logic[START_NODE][NodeId.Passage] = ItemPlacementHelpers.oc1_check
             self.logic[NodeId.Hydra][NodeId.AuronsStatue] = ItemPlacementHelpers.oc2_check
             self.logic[NodeId.Hades][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
@@ -95,17 +109,19 @@ def make_graph(graph: LocationGraphBuilder):
     oc_logic = OCLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(oc_logic)
 
-    passage = graph.add_location(NodeId.Passage, [
+    passage_chests = graph.add_location(NodeId.PassageChests, [
         chest(7, CheckLocation.PassageMythrilShard, oc),
         chest(8, CheckLocation.PassageMythrilStone, oc),
         chest(144, CheckLocation.PassageEther, oc),
         chest(145, CheckLocation.PassageApBoost, oc),
         chest(146, CheckLocation.PassageHiPotion, oc),
     ])
-    inner_chamber = graph.add_location(NodeId.InnerChamber, [
+    passage = graph.add_location(NodeId.Passage, [])
+    inner_chamber_chests = graph.add_location(NodeId.InnerChamberChests, [
         chest(2, CheckLocation.InnerChamberUnderworldMap, oc),
         chest(243, CheckLocation.InnerChamberMythrilShard, oc),
     ])
+    inner_chamber = graph.add_location(NodeId.InnerChamber, [])
     cerberus_bonus = graph.add_location(NodeId.CerberusBonus, [
         item_bonus(5, CheckLocation.Cerberus, oc, vanilla=ability.Counterguard),
     ])
@@ -115,34 +131,39 @@ def make_graph(graph: LocationGraphBuilder):
     urns_bonus = graph.add_location(NodeId.UrnsBonus, [
         item_bonus(57, CheckLocation.Urns, oc, vanilla=ability.AerialDive),
     ])
-    underworld_entrance = graph.add_location(NodeId.UnderworldEntrance, [
+    underworld_entrance_chests = graph.add_location(NodeId.UnderworldEntranceChests, [
         chest(242, CheckLocation.UnderworldEntrancePowerBoost, oc),
     ])
-    caverns_entrance = graph.add_location(NodeId.CavernsEntrance, [
+    underworld_entrance = graph.add_location(NodeId.UnderworldEntrance, [])
+    caverns_entrance_chests = graph.add_location(NodeId.CavernsEntranceChests, [
         chest(3, CheckLocation.CavernsEntranceLucidShard, oc),
         chest(11, CheckLocation.CavernsEntranceApBoost, oc),
         chest(504, CheckLocation.CavernsEntranceMythrilShard, oc),
     ])
-    lost_road = graph.add_location(NodeId.LostRoad, [
+    caverns_entrance = graph.add_location(NodeId.CavernsEntrance, [])
+    lost_road_chests = graph.add_location(NodeId.LostRoadChests, [
         chest(9, CheckLocation.LostRoadBrightShard, oc),
         chest(10, CheckLocation.LostRoadEther, oc),
         chest(148, CheckLocation.LostRoadMythrilShard, oc),
         chest(149, CheckLocation.LostRoadMythrilStone, oc),
     ])
-    atrium = graph.add_location(NodeId.Atrium, [
+    lost_road = graph.add_location(NodeId.LostRoad, [])
+    atrium_chests = graph.add_location(NodeId.AtriumChests, [
         chest(150, CheckLocation.AtriumLucidStone, oc),
         chest(151, CheckLocation.AtriumApBoost, oc),
     ])
+    atrium = graph.add_location(NodeId.Atrium, [])
     demyx = graph.add_location(NodeId.DemyxOlympusColiseum, [
         stat_bonus(58, CheckLocation.DemyxOlympusColiseum, oc),
         popup(529, CheckLocation.DemyxOcSecretAnsemReport5, oc, vanilla=report.AnsemReport5),
         popup(293, CheckLocation.OlympusStone, oc),
     ])
-    lock = graph.add_location(NodeId.TheLock, [
+    lock_chests = graph.add_location(NodeId.TheLockChests, [
         chest(244, CheckLocation.LockCavernsMap, oc),
         chest(5, CheckLocation.LockMythrilShard, oc),
         chest(142, CheckLocation.LockApBoost, oc),
     ])
+    lock = graph.add_location(NodeId.TheLock, [])
     pete = graph.add_location(NodeId.PeteOlympusColiseum, [
         item_bonus(6, CheckLocation.PeteOlympusColiseum, oc, vanilla=ability.TrinityLimit),
     ])
@@ -187,6 +208,14 @@ def make_graph(graph: LocationGraphBuilder):
     ])
 
     graph.register_superboss(data_zexion)
+    
+    graph.add_edge(passage, passage_chests)
+    graph.add_edge(inner_chamber, inner_chamber_chests)
+    graph.add_edge(underworld_entrance, underworld_entrance_chests)
+    graph.add_edge(caverns_entrance, caverns_entrance_chests)
+    graph.add_edge(lost_road, lost_road_chests)
+    graph.add_edge(atrium, atrium_chests)
+    graph.add_edge(lock, lock_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, passage)

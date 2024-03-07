@@ -9,18 +9,25 @@ from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class NodeId(str, Enum):
     FragmentCrossing = "Fragment Crossing"
+    FragmentCrossingChests = "Fragment Crossing Chests"
     Roxas = "Roxas"
     MemorysSkyscraper = "Memory's Skyscraper"
+    MemorysSkyscraperChests = "Memory's Skyscraper Chests"
     BrinkOfDespair = "Brink of Despair"
+    BrinkOfDespairChests = "Brink of Despair Chests"
     NothingsCall = "Nothing's Call"
+    NothingsCallChests = "Nothing's Call Chests"
     TwilightsView = "Twilight's View"
+    TwilightsViewChests = "Twilight's View Chests"
     Xigbar = "Xigbar"
     NaughtsSkyway = "Naught's Skyway"
+    NaughtsSkywayChests = "Naught's Skyway Chests"
     Oblivion = "Oblivion"
     Luxord = "Luxord"
     Saix = "Saix"
     PreXemnas1Popup = "Pre-Xemnas 1 Popup"
     RuinAndCreationsPassage = "Ruin and Creation's Passage"
+    RuinAndCreationsPassageChests = "Ruin and Creation's Passage Chests"
     Xemnas1 = "Xemnas 1"
     FinalXemnas = "Final Xemnas"
     DataXemnas = "Data Xemnas"
@@ -69,6 +76,14 @@ class TWTNWLogicGraph(DefaultLogicGraph):
 
         self.logic[START_NODE][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_promise_charm(inv) and ItemPlacementHelpers.need_proofs(inv) 
         if not reverse_rando:
+            self.logic[NodeId.FragmentCrossing][NodeId.FragmentCrossingChests] = ItemPlacementHelpers.need_twtnw_keyblade
+            self.logic[NodeId.MemorysSkyscraper][NodeId.MemorysSkyscraperChests] = ItemPlacementHelpers.need_twtnw_keyblade
+            self.logic[NodeId.BrinkOfDespair][NodeId.BrinkOfDespairChests] = ItemPlacementHelpers.need_twtnw_keyblade
+            self.logic[NodeId.NothingsCall][NodeId.NothingsCallChests] = ItemPlacementHelpers.need_twtnw_keyblade
+            self.logic[NodeId.TwilightsView][NodeId.TwilightsViewChests] = ItemPlacementHelpers.need_twtnw_keyblade
+            self.logic[NodeId.NaughtsSkyway][NodeId.NaughtsSkywayChests] = ItemPlacementHelpers.need_twtnw_keyblade
+            self.logic[NodeId.RuinAndCreationsPassage][NodeId.RuinAndCreationsPassageChests] = ItemPlacementHelpers.need_twtnw_keyblade
+
             self.logic[NodeId.FragmentCrossing][NodeId.Roxas] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Saix][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
         else:
@@ -79,42 +94,48 @@ def make_graph(graph: LocationGraphBuilder):
     twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.first_visit_locks)
     graph.add_logic(twtnw_logic)
 
-    fragment_crossing = graph.add_location(NodeId.FragmentCrossing, [
+    fragment_crossing_chests = graph.add_location(NodeId.FragmentCrossingChests, [
         chest(374, CheckLocation.FragmentCrossingMythrilStone, twtnw),
         chest(375, CheckLocation.FragmentCrossingMythrilCrystal, twtnw),
         chest(376, CheckLocation.FragmentCrossingApBoost, twtnw),
         chest(377, CheckLocation.FragmentCrossingOrichalcum, twtnw),
     ])
+    fragment_crossing = graph.add_location(NodeId.FragmentCrossing, [])
     roxas = graph.add_location(NodeId.Roxas, [
         hybrid_bonus(69, CheckLocation.Roxas, twtnw, vanilla=ability.ComboMaster),
         popup(532, CheckLocation.RoxasSecretAnsemReport8, twtnw, vanilla=report.AnsemReport8),
         popup(277, CheckLocation.TwoBecomeOne, twtnw, vanilla=keyblade.TwoBecomeOne),
     ])
-    memorys_skyscraper = graph.add_location(NodeId.MemorysSkyscraper, [
+    memorys_skyscraper_chests = graph.add_location(NodeId.MemorysSkyscraperChests, [
         chest(391, CheckLocation.MemorysSkyscraperMythrilCrystal, twtnw),
         chest(523, CheckLocation.MemorysSkyscraperApBoost, twtnw),
         chest(524, CheckLocation.MemorysSkyscraperMythrilStone, twtnw),
     ])
-    brink_of_despair = graph.add_location(NodeId.BrinkOfDespair, [
+    memorys_skyscraper = graph.add_location(NodeId.MemorysSkyscraper, [])
+    brink_of_despair_chests = graph.add_location(NodeId.BrinkOfDespairChests, [
         chest(335, CheckLocation.BrinkOfDespairDarkCityMap, twtnw),
         chest(500, CheckLocation.BrinkOfDespairOrichalcumPlus, twtnw),
     ])
-    nothings_call = graph.add_location(NodeId.NothingsCall, [
+    brink_of_despair = graph.add_location(NodeId.BrinkOfDespair, [])
+    nothings_call_chests = graph.add_location(NodeId.NothingsCallChests, [
         chest(378, CheckLocation.NothingsCallMythrilGem, twtnw),
         chest(379, CheckLocation.NothingsCallOrichalcum, twtnw),
     ])
-    twilights_view = graph.add_location(NodeId.TwilightsView, [
+    nothings_call = graph.add_location(NodeId.NothingsCall, [])
+    twilights_view_chests = graph.add_location(NodeId.TwilightsViewChests, [
         chest(336, CheckLocation.TwilightsViewCosmicBelt, twtnw),
     ])
+    twilights_view = graph.add_location(NodeId.TwilightsView, [])
     xigbar = graph.add_location(NodeId.Xigbar, [
         stat_bonus(23, CheckLocation.XigbarBonus, twtnw),
         popup(527, CheckLocation.XigbarSecretAnsemReport3, twtnw, vanilla=report.AnsemReport3),
     ])
-    naughts_skyway = graph.add_location(NodeId.NaughtsSkyway, [
+    naughts_skyway_chests = graph.add_location(NodeId.NaughtsSkywayChests, [
         chest(380, CheckLocation.NaughtsSkywayMythrilGem, twtnw),
         chest(381, CheckLocation.NaughtsSkywayOrichalcum, twtnw),
         chest(382, CheckLocation.NaughtsSkywayMythrilCrystal, twtnw),
     ])
+    naughts_skyway = graph.add_location(NodeId.NaughtsSkyway, [])
     oblivion = graph.add_location(NodeId.Oblivion, [
         popup(278, CheckLocation.Oblivion, twtnw, vanilla=keyblade.Oblivion),
         popup(496, CheckLocation.CastleThatNeverWasMap, twtnw),
@@ -130,12 +151,13 @@ def make_graph(graph: LocationGraphBuilder):
     pre_xemnas_1_popup = graph.add_location(NodeId.PreXemnas1Popup, [
         popup(535, CheckLocation.PreXemnas1SecretAnsemReport11, twtnw, vanilla=report.AnsemReport11),
     ])
-    ruin_creations_passage = graph.add_location(NodeId.RuinAndCreationsPassage, [
+    ruin_creations_passage_chests = graph.add_location(NodeId.RuinAndCreationsPassageChests, [
         chest(385, CheckLocation.RuinCreationsPassageMythrilStone, twtnw),
         chest(386, CheckLocation.RuinCreationsPassageApBoost, twtnw),
         chest(387, CheckLocation.RuinCreationsPassageMythrilCrystal, twtnw),
         chest(388, CheckLocation.RuinCreationsPassageOrichalcum, twtnw),
     ])
+    ruin_creations_passage = graph.add_location(NodeId.RuinAndCreationsPassage, [])
     xemnas_1 = graph.add_location(NodeId.Xemnas1, [
         double_bonus(26, CheckLocation.Xemnas1Bonus, twtnw),
         popup(537, CheckLocation.Xemnas1SecretAnsemReport13, twtnw, vanilla=report.AnsemReport13),
@@ -153,6 +175,14 @@ def make_graph(graph: LocationGraphBuilder):
 
     
     graph.add_edge(START_NODE, final_xemnas, RequirementEdge(battle=True, strict=False))
+    
+    graph.add_edge(fragment_crossing, fragment_crossing_chests)
+    graph.add_edge(memorys_skyscraper, memorys_skyscraper_chests)
+    graph.add_edge(brink_of_despair, brink_of_despair_chests)
+    graph.add_edge(nothings_call, nothings_call_chests)
+    graph.add_edge(twilights_view, twilights_view_chests)
+    graph.add_edge(naughts_skyway, naughts_skyway_chests)
+    graph.add_edge(ruin_creations_passage, ruin_creations_passage_chests)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, fragment_crossing)
