@@ -692,7 +692,7 @@ class SeedModBuilder:
         )
 
         # MDLX
-        jnk_source_name = _relative_mod_file("chest/obj/F_EX030_JNK.mdlx")
+        jnk_source_name = _relative_mod_file("chest/obj/F_EX030_JK2.mdlx")
         abl_source_name = _relative_mod_file("chest/obj/F_EX030_ABL.mdlx")
         eqp_source_name = _relative_mod_file("chest/obj/F_EX030_EQP.mdlx")
         frm_source_name = _relative_mod_file("chest/obj/F_EX030_FRM.mdlx")
@@ -705,7 +705,7 @@ class SeedModBuilder:
         wep_source_name = _relative_mod_file("chest/obj/F_EX030_WEP.mdlx")
         prf_source_name = _relative_mod_file("chest/obj/F_EX040_PRF.mdlx")
         self.out_zip.write(
-            resource_path("static/chests/obj/F_EX030_JNK.mdlx"), jnk_source_name
+            resource_path("static/chests/obj/F_EX030_JK2.mdlx"), jnk_source_name
         )
         self.out_zip.write(
             resource_path("static/chests/obj/F_EX030_ABL.mdlx"), abl_source_name
@@ -916,7 +916,7 @@ class SeedModBuilder:
         assets: list[Asset] = []
 
         basic_types = {
-            "JNK": "trash",
+            "JK2": "trash",
             "ABL": "abilities",
             "EQP": "equipment",
             "FRM": "forms",
@@ -1170,7 +1170,7 @@ class SeedModBuilder:
         # chest *.a.us (PC)
         assets.append(
             {
-                "name": "obj/F_EX030_JNK.a.us",
+                "name": "obj/F_EX030_JK2.a.us",
                 "platform": "pc",
                 "multi": [
                     {"name": "obj/F_EX030_ABL.a.us"},
@@ -1183,7 +1183,7 @@ class SeedModBuilder:
                     {"name": "obj/F_EX030_SMN.a.us"},
                     {"name": "obj/F_EX030_VST.a.us"},
                     {"name": "obj/F_EX030_WEP.a.us"},
-                    {"name": "obj/F_EX050_JNK.a.us"},
+                    {"name": "obj/F_EX050_JK2.a.us"},
                     {"name": "obj/F_EX050_ABL.a.us"},
                     {"name": "obj/F_EX050_EQP.a.us"},
                     {"name": "obj/F_EX050_FRM.a.us"},
@@ -1224,7 +1224,7 @@ class SeedModBuilder:
         # chest *.a.fm (PS2)
         assets.append(
             {
-                "name": "obj/F_EX030_JNK.a.fm",
+                "name": "obj/F_EX030_JK2.a.fm",
                 "platform": "ps2",
                 "multi": [
                     {"name": "obj/F_EX030_ABL.a.fm"},
@@ -1237,7 +1237,7 @@ class SeedModBuilder:
                     {"name": "obj/F_EX030_SMN.a.fm"},
                     {"name": "obj/F_EX030_VST.a.fm"},
                     {"name": "obj/F_EX030_WEP.a.fm"},
-                    {"name": "obj/F_EX050_JNK.a.fm"},
+                    {"name": "obj/F_EX050_JK2.a.fm"},
                     {"name": "obj/F_EX050_ABL.a.fm"},
                     {"name": "obj/F_EX050_EQP.a.fm"},
                     {"name": "obj/F_EX050_FRM.a.fm"},

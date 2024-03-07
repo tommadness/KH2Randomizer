@@ -5,7 +5,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_JNK
+  ModelName: F_EX030_JK2
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -366,7 +366,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_JNK
+  ModelName: F_EX030_JK2
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -727,7 +727,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_JNK
+  ModelName: F_EX050_JK2
   AnimationName: F_EX030_LK.mset
   Flags: 0
   ObjectTargetType: M
