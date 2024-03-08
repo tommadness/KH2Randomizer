@@ -2299,9 +2299,9 @@ _all_settings = [
         tooltip="""
         When enabled, Sora must have certain keyblades to open chests in the different worlds.
         STT     | Bond of Flame
-        TT      | Oathkeeper (lock Yensid's towe with Star Seeker?)
+        TT      | Oathkeeper
         HB      | Sleeping Lion
-        CoR     | Winner's Proof (Maybe Pureblood instead?)
+        CoR     | Winner's Proof
         LoD     | Hidden Dragon
         BC      | Rumbling Rose
         OC      | Hero's Crest

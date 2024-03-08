@@ -18,10 +18,6 @@ class RewardLocationsMenu(KH2Submenu):
         self.end_group()
 
         self.start_group()
-        self.add_option(settingkey.KEYBLADES_LOCK_CHESTS)
-        self.end_group("Keyblade Chest Locking")
-
-        self.start_group()
         self.add_option(settingkey.STARTING_VISIT_MODE)
         self.add_option(settingkey.STARTING_VISIT_RANDOM_MIN)
         self.add_option(settingkey.STARTING_VISIT_RANDOM_MAX)
