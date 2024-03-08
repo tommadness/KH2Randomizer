@@ -127,31 +127,32 @@ class HBLogicGraph(DefaultLogicGraph):
         DefaultLogicGraph.__init__(self,NodeId)
         hb_keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_hb_keyblade(inv)
         cor_keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_cor_keyblade(inv)
-        if not reverse_rando:
-            self.logic[NodeId.Borough][NodeId.BoroughChests] = hb_keyblade_lambda
-            self.logic[NodeId.Postern][NodeId.PosternChests] = hb_keyblade_lambda
-            self.logic[NodeId.Corridors][NodeId.CorridorsChests] = hb_keyblade_lambda
-            self.logic[NodeId.AnsemsStudy][NodeId.AnsemsStudyChests] = hb_keyblade_lambda
-            self.logic[NodeId.UkuleleCharm][NodeId.UkuleleCharmChests] = hb_keyblade_lambda
-            self.logic[NodeId.RestorationSite][NodeId.RestorationSiteChests] = hb_keyblade_lambda
-            self.logic[NodeId.CrystalFissure][NodeId.CrystalFissureChests] = hb_keyblade_lambda
-            self.logic[NodeId.GullWing][NodeId.GullWingChests] = hb_keyblade_lambda
-            self.logic[NodeId.HeartlessManufactory][NodeId.HeartlessManufactoryChests] = hb_keyblade_lambda
+        self.logic[NodeId.Borough][NodeId.BoroughChests] = hb_keyblade_lambda
+        self.logic[NodeId.Postern][NodeId.PosternChests] = hb_keyblade_lambda
+        self.logic[NodeId.Corridors][NodeId.CorridorsChests] = hb_keyblade_lambda
+        self.logic[NodeId.AnsemsStudy][NodeId.AnsemsStudyChests] = hb_keyblade_lambda
+        self.logic[NodeId.UkuleleCharm][NodeId.UkuleleCharmChests] = hb_keyblade_lambda
+        self.logic[NodeId.RestorationSite][NodeId.RestorationSiteChests] = hb_keyblade_lambda
+        self.logic[NodeId.CrystalFissure][NodeId.CrystalFissureChests] = hb_keyblade_lambda
+        self.logic[NodeId.GullWing][NodeId.GullWingChests] = hb_keyblade_lambda
+        self.logic[NodeId.HeartlessManufactory][NodeId.HeartlessManufactoryChests] = hb_keyblade_lambda
 
-            self.logic[NodeId.CorDepths][NodeId.CorDepthsChests] = cor_keyblade_lambda
-            self.logic[NodeId.CorMineshaftPreFigh1][NodeId.CorMineshaftPreFigh1Chests] = cor_keyblade_lambda
-            self.logic[NodeId.CorDepthsPostFight1][NodeId.CorDepthsPostFight1Chests] = cor_keyblade_lambda
-            self.logic[NodeId.CorMiningArea][NodeId.CorMiningAreaChests] = cor_keyblade_lambda
-            self.logic[NodeId.CorMineshaftPreFight2][NodeId.CorMineshaftPreFight2Chests] = cor_keyblade_lambda
-            self.logic[NodeId.CorEngineChamber][NodeId.CorEngineChamberChests] = cor_keyblade_lambda
-            self.logic[NodeId.CorMineshaftPostFight2][NodeId.CorMineshaftPostFight2Chests] = cor_keyblade_lambda
-            self.logic[NodeId.CorMineshaftLastChest][NodeId.CorMineshaftLastChestChests] = cor_keyblade_lambda
+        self.logic[NodeId.CorDepths][NodeId.CorDepthsChests] = cor_keyblade_lambda
+        self.logic[NodeId.CorMineshaftPreFigh1][NodeId.CorMineshaftPreFigh1Chests] = cor_keyblade_lambda
+        self.logic[NodeId.CorDepthsPostFight1][NodeId.CorDepthsPostFight1Chests] = cor_keyblade_lambda
+        self.logic[NodeId.CorMiningArea][NodeId.CorMiningAreaChests] = cor_keyblade_lambda
+        self.logic[NodeId.CorMineshaftPreFight2][NodeId.CorMineshaftPreFight2Chests] = cor_keyblade_lambda
+        self.logic[NodeId.CorEngineChamber][NodeId.CorEngineChamberChests] = cor_keyblade_lambda
+        self.logic[NodeId.CorMineshaftPostFight2][NodeId.CorMineshaftPostFight2Chests] = cor_keyblade_lambda
+        self.logic[NodeId.CorMineshaftLastChest][NodeId.CorMineshaftLastChestChests] = cor_keyblade_lambda
+        if not reverse_rando:
             self.logic[START_NODE][NodeId.MarketplaceMapPopup] = ItemPlacementHelpers.hb1_check
             self.logic[NodeId.BaseballCharmPopup][NodeId.Postern] = ItemPlacementHelpers.hb2_check
             self.logic[NodeId.DoorToDarknessPopup][NodeId.CorDepths] = ItemPlacementHelpers.need_growths
             self.logic[NodeId.ThousandHeartless][NodeId.Mushroom13] = ItemPlacementHelpers.need_proof_peace
             self.logic[NodeId.ThousandHeartless][NodeId.DataDemyx] = ItemPlacementHelpers.need_forms
         else:
+            self.logic[START_NODE][NodeId.Borough] = ItemPlacementHelpers.hb1_check
             self.logic[NodeId.ThousandHeartless][NodeId.CorDepths] = lambda inv : ItemPlacementHelpers.hb2_check(inv) and ItemPlacementHelpers.need_growths(inv)
             self.logic[NodeId.BaseballCharmPopup][NodeId.DataDemyx] = ItemPlacementHelpers.need_forms
             

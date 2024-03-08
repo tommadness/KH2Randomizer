@@ -63,14 +63,17 @@ class DCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_dc_keyblade(inv)
+        self.logic[NodeId.DisneyCastleCourtyard][NodeId.DisneyCastleCourtyardChests] = keyblade_lambda
+        self.logic[NodeId.Library][NodeId.LibraryChests] = keyblade_lambda
+        self.logic[NodeId.CornerstoneHill][NodeId.CornerstoneHillChests] = keyblade_lambda
+        self.logic[NodeId.Pier][NodeId.PierChests] = keyblade_lambda
+        self.logic[NodeId.Waterway][NodeId.WaterwayChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.DisneyCastleCourtyard][NodeId.DisneyCastleCourtyardChests] = keyblade_lambda
-            self.logic[NodeId.Library][NodeId.LibraryChests] = keyblade_lambda
-            self.logic[NodeId.CornerstoneHill][NodeId.CornerstoneHillChests] = keyblade_lambda
-            self.logic[NodeId.Pier][NodeId.PierChests] = keyblade_lambda
-            self.logic[NodeId.Waterway][NodeId.WaterwayChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.DisneyCastleCourtyard] = ItemPlacementHelpers.dc1_check
             self.logic[NodeId.MinnieEscort][NodeId.CornerstoneHill] = ItemPlacementHelpers.dc2_check
+        else:
+            self.logic[START_NODE][NodeId.CornerstoneHill] = ItemPlacementHelpers.dc1_check
+            self.logic[NodeId.Marluxia][NodeId.DisneyCastleCourtyard] = ItemPlacementHelpers.dc2_check
 
         self.logic[NodeId.WisdomPopup][NodeId.LingeringWill] = ItemPlacementHelpers.need_proof_connection
         

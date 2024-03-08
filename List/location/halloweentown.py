@@ -61,16 +61,17 @@ class HTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_ht_keyblade(inv)
+        self.logic[NodeId.Graveyard][NodeId.GraveyardChests] = keyblade_lambda
+        self.logic[NodeId.FinklesteinsLab][NodeId.FinklesteinsLabChests] = keyblade_lambda
+        self.logic[NodeId.TownSquare][NodeId.TownSquareChests] = keyblade_lambda
+        self.logic[NodeId.Hinterlands][NodeId.HinterlandsChests] = keyblade_lambda
+        self.logic[NodeId.CandyCaneLane][NodeId.CandyCaneLaneChests] = keyblade_lambda
+        self.logic[NodeId.SantasHouse][NodeId.SantasHouseChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.Graveyard][NodeId.GraveyardChests] = keyblade_lambda
-            self.logic[NodeId.FinklesteinsLab][NodeId.FinklesteinsLabChests] = keyblade_lambda
-            self.logic[NodeId.TownSquare][NodeId.TownSquareChests] = keyblade_lambda
-            self.logic[NodeId.Hinterlands][NodeId.HinterlandsChests] = keyblade_lambda
-            self.logic[NodeId.CandyCaneLane][NodeId.CandyCaneLaneChests] = keyblade_lambda
-            self.logic[NodeId.SantasHouse][NodeId.SantasHouseChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.Graveyard] = ItemPlacementHelpers.ht1_check
             self.logic[NodeId.OogieBoogie][NodeId.LockShockBarrel] = ItemPlacementHelpers.ht2_check
         else:
+            self.logic[START_NODE][NodeId.SantasHouse] = ItemPlacementHelpers.ht1_check
             self.logic[NodeId.Vexen][NodeId.FinklesteinsLab] = ItemPlacementHelpers.ht2_check
 
 def make_graph(graph: LocationGraphBuilder):

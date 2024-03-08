@@ -75,18 +75,19 @@ class AGLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_ag_keyblade(inv)
+        self.logic[NodeId.Agrabah][NodeId.AgrabahChests] = keyblade_lambda
+        self.logic[NodeId.Bazaar][NodeId.BazaarChests] = keyblade_lambda
+        self.logic[NodeId.PalaceWalls][NodeId.PalaceWallsChests] = keyblade_lambda
+        self.logic[NodeId.CaveOfWondersEntrance][NodeId.CaveOfWondersEntranceChests] = keyblade_lambda
+        self.logic[NodeId.ValleyOfStone][NodeId.ValleyOfStoneChests] = keyblade_lambda
+        self.logic[NodeId.ChasmOfChallenges][NodeId.ChasmOfChallengesChests] = keyblade_lambda
+        self.logic[NodeId.TreasureRoom][NodeId.TreasureRoomChests] = keyblade_lambda
+        self.logic[NodeId.RuinedChamber][NodeId.RuinedChamberChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.Agrabah][NodeId.AgrabahChests] = keyblade_lambda
-            self.logic[NodeId.Bazaar][NodeId.BazaarChests] = keyblade_lambda
-            self.logic[NodeId.PalaceWalls][NodeId.PalaceWallsChests] = keyblade_lambda
-            self.logic[NodeId.CaveOfWondersEntrance][NodeId.CaveOfWondersEntranceChests] = keyblade_lambda
-            self.logic[NodeId.ValleyOfStone][NodeId.ValleyOfStoneChests] = keyblade_lambda
-            self.logic[NodeId.ChasmOfChallenges][NodeId.ChasmOfChallengesChests] = keyblade_lambda
-            self.logic[NodeId.TreasureRoom][NodeId.TreasureRoomChests] = keyblade_lambda
-            self.logic[NodeId.RuinedChamber][NodeId.RuinedChamberChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.AgrabahMapPopup] = ItemPlacementHelpers.ag1_check
             self.logic[NodeId.ElementalLords][NodeId.RuinedChamber] = lambda inv : ItemPlacementHelpers.ag2_check(inv) and ItemPlacementHelpers.need_fire_blizzard_thunder(inv)
         else:
+            self.logic[START_NODE][NodeId.Agrabah] = ItemPlacementHelpers.ag1_check
             self.logic[NodeId.PalaceWalls][NodeId.RuinedChamber] = ItemPlacementHelpers.need_fire_blizzard_thunder
             self.logic[NodeId.Lexaeus][NodeId.AgrabahMapPopup] = ItemPlacementHelpers.ag2_check
 

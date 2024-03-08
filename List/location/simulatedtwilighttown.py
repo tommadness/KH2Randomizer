@@ -67,18 +67,17 @@ class STTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_stt_keyblade(inv)
+        self.logic[NodeId.RoxasStation][NodeId.RoxasStationChests] = keyblade_lambda
+        self.logic[NodeId.SimulatedCentralStation][NodeId.SimulatedCentralStationChests] = keyblade_lambda
+        self.logic[NodeId.SimulatedSunsetTerrace][NodeId.SimulatedSunsetTerraceChests] = keyblade_lambda
+        self.logic[NodeId.SimulatedMansionFoyer][NodeId.SimulatedMansionFoyerChests] = keyblade_lambda
+        self.logic[NodeId.SimulatedMansionDiningRoom][NodeId.SimulatedMansionDiningRoomChests] = keyblade_lambda
+        self.logic[NodeId.SimulatedMansionLibrary][NodeId.SimulatedMansionLibraryChests] = keyblade_lambda
+        self.logic[NodeId.SimulatedMansionBasement][NodeId.SimulatedMansionBasementChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.RoxasStation][NodeId.RoxasStationChests] = keyblade_lambda
-            self.logic[NodeId.SimulatedCentralStation][NodeId.SimulatedCentralStationChests] = keyblade_lambda
-            self.logic[NodeId.SimulatedSunsetTerrace][NodeId.SimulatedSunsetTerraceChests] = keyblade_lambda
-            self.logic[NodeId.SimulatedMansionFoyer][NodeId.SimulatedMansionFoyerChests] = keyblade_lambda
-            self.logic[NodeId.SimulatedMansionDiningRoom][NodeId.SimulatedMansionDiningRoomChests] = keyblade_lambda
-            self.logic[NodeId.SimulatedMansionLibrary][NodeId.SimulatedMansionLibraryChests] = keyblade_lambda
-            self.logic[NodeId.SimulatedMansionBasement][NodeId.SimulatedMansionBasementChests] = keyblade_lambda
-        
             self.logic[START_NODE][NodeId.TwilightTownMapPopup] = ItemPlacementHelpers.stt_check
         else:
-            pass
+            self.logic[START_NODE][NodeId.SimulatedMansionFoyer] = ItemPlacementHelpers.stt_check
 
 def make_graph(graph: LocationGraphBuilder):
     stt = locationType.STT

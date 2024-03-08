@@ -64,16 +64,17 @@ class LoDLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_lod_keyblade(inv)
+        self.logic[NodeId.BambooGrove][NodeId.BambooGroveChests] = keyblade_lambda
+        self.logic[NodeId.Checkpoint][NodeId.CheckpointChests] = keyblade_lambda
+        self.logic[NodeId.MountainTrail][NodeId.MountainTrailChests] = keyblade_lambda
+        self.logic[NodeId.VillageCave][NodeId.VillageCaveChests] = keyblade_lambda
+        self.logic[NodeId.Ridge][NodeId.RidgeChests] = keyblade_lambda
+        self.logic[NodeId.ThroneRoom][NodeId.ThroneRoomChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.BambooGrove][NodeId.BambooGroveChests] = keyblade_lambda
-            self.logic[NodeId.Checkpoint][NodeId.CheckpointChests] = keyblade_lambda
-            self.logic[NodeId.MountainTrail][NodeId.MountainTrailChests] = keyblade_lambda
-            self.logic[NodeId.VillageCave][NodeId.VillageCaveChests] = keyblade_lambda
-            self.logic[NodeId.Ridge][NodeId.RidgeChests] = keyblade_lambda
-            self.logic[NodeId.ThroneRoom][NodeId.ThroneRoomChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.BambooGrove] = ItemPlacementHelpers.lod1_check
             self.logic[NodeId.ShanYu][NodeId.ThroneRoom] = ItemPlacementHelpers.lod2_check
         else:
+            self.logic[START_NODE][NodeId.MountainTrail] = ItemPlacementHelpers.lod1_check
             self.logic[NodeId.StormRider][NodeId.BambooGrove] = ItemPlacementHelpers.lod2_check
 
 def make_graph(graph: LocationGraphBuilder):

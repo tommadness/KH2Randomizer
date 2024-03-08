@@ -174,6 +174,10 @@ class Locations:
         self.last_story_boss_nodes.extend(builder.pending_last_story_boss_nodes)
         self.superboss_nodes.extend(builder.pending_superboss_nodes)
 
+        # from altgraph.Dot import Dot
         # dot = Dot(self.location_graph)
         # dot.style(rankdir="LR")
-        # dot.save_img(file_name='graph',file_type="gif")
+        # if self.reverse_rando:
+        #     dot.save_img(file_name='reverse_graph',file_type="gif")
+        # else:
+        #     dot.save_img(file_name='graph',file_type="gif")

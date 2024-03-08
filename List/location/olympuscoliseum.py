@@ -89,18 +89,19 @@ class OCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_oc_keyblade(inv)
+        self.logic[NodeId.Passage][NodeId.PassageChests] = keyblade_lambda
+        self.logic[NodeId.InnerChamber][NodeId.InnerChamberChests] = keyblade_lambda
+        self.logic[NodeId.UnderworldEntrance][NodeId.UnderworldEntranceChests] = keyblade_lambda
+        self.logic[NodeId.CavernsEntrance][NodeId.CavernsEntranceChests] = keyblade_lambda
+        self.logic[NodeId.LostRoad][NodeId.LostRoadChests] = keyblade_lambda
+        self.logic[NodeId.Atrium][NodeId.AtriumChests] = keyblade_lambda
+        self.logic[NodeId.TheLock][NodeId.TheLockChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.Passage][NodeId.PassageChests] = keyblade_lambda
-            self.logic[NodeId.InnerChamber][NodeId.InnerChamberChests] = keyblade_lambda
-            self.logic[NodeId.UnderworldEntrance][NodeId.UnderworldEntranceChests] = keyblade_lambda
-            self.logic[NodeId.CavernsEntrance][NodeId.CavernsEntranceChests] = keyblade_lambda
-            self.logic[NodeId.LostRoad][NodeId.LostRoadChests] = keyblade_lambda
-            self.logic[NodeId.Atrium][NodeId.AtriumChests] = keyblade_lambda
-            self.logic[NodeId.TheLock][NodeId.TheLockChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.Passage] = ItemPlacementHelpers.oc1_check
             self.logic[NodeId.Hydra][NodeId.AuronsStatue] = ItemPlacementHelpers.oc2_check
             self.logic[NodeId.Hades][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
         else:
+            self.logic[START_NODE][NodeId.UnderworldEntrance] = ItemPlacementHelpers.oc1_check
             self.logic[NodeId.Zexion][NodeId.CerberusBonus] = ItemPlacementHelpers.oc2_check
             self.logic[NodeId.Hydra][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
 

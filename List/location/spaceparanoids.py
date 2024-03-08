@@ -55,15 +55,16 @@ class SPLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_sp_keyblade(inv)
+        self.logic[NodeId.PitCell][NodeId.PitCellChests] = keyblade_lambda
+        self.logic[NodeId.Canyon][NodeId.CanyonChests] = keyblade_lambda
+        self.logic[NodeId.Hallway][NodeId.HallwayChests] = keyblade_lambda
+        self.logic[NodeId.CommunicationsRoom][NodeId.CommunicationsRoomChests] = keyblade_lambda
+        self.logic[NodeId.CentralComputerCore][NodeId.CentralComputerCoreChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.PitCell][NodeId.PitCellChests] = keyblade_lambda
-            self.logic[NodeId.Canyon][NodeId.CanyonChests] = keyblade_lambda
-            self.logic[NodeId.Hallway][NodeId.HallwayChests] = keyblade_lambda
-            self.logic[NodeId.CommunicationsRoom][NodeId.CommunicationsRoomChests] = keyblade_lambda
-            self.logic[NodeId.CentralComputerCore][NodeId.CentralComputerCoreChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.PitCell] = ItemPlacementHelpers.sp1_check
             self.logic[NodeId.PhotonDebugger][NodeId.SolarSailerBonus] = ItemPlacementHelpers.sp2_check
         else:
+            self.logic[START_NODE][NodeId.PitCell] = ItemPlacementHelpers.sp1_check
             self.logic[NodeId.Larxene][NodeId.ScreensBonus] = ItemPlacementHelpers.sp2_check
 
 def make_graph(graph: LocationGraphBuilder):

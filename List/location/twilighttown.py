@@ -106,29 +106,29 @@ class TTLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_tt_keyblade(inv)
+        self.logic[NodeId.OldMansion][NodeId.OldMansionChests] = keyblade_lambda
+        self.logic[NodeId.Woods][NodeId.WoodsChests] = keyblade_lambda
+        self.logic[NodeId.TramCommon][NodeId.TramCommonChests] = keyblade_lambda
+        self.logic[NodeId.CentralStation][NodeId.CentralStationChests] = keyblade_lambda
+        self.logic[NodeId.UndergroundConcourse][NodeId.UndergroundConcourseChests] = keyblade_lambda
+        self.logic[NodeId.Tunnelway][NodeId.TunnelwayChests] = keyblade_lambda
+        self.logic[NodeId.SunsetTerrace][NodeId.SunsetTerraceChests] = keyblade_lambda
+        self.logic[NodeId.MansionFoyer][NodeId.MansionFoyerChests] = keyblade_lambda
+        self.logic[NodeId.MansionDiningRoom][NodeId.MansionDiningRoomChests] = keyblade_lambda
+        self.logic[NodeId.MansionLibrary][NodeId.MansionLibraryChests] = keyblade_lambda
+        self.logic[NodeId.MansionBasement][NodeId.MansionBasementChests] = keyblade_lambda
+        #I wanted a different keyblade for MT but it would need extra logic (i think??) ex: you can't return till after 3rd visit or before getting 2nd visit lock
+        self.logic[NodeId.YenSidTower][NodeId.YenSidTowerChests] = keyblade_lambda
+        self.logic[NodeId.YenSidTowerEntryway][NodeId.YenSidTowerEntrywayChests] = keyblade_lambda
+        self.logic[NodeId.SorcerersLoft][NodeId.SorcerersLoftChests] = keyblade_lambda
+        self.logic[NodeId.TowerWardrobe][NodeId.TowerWardrobeChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.OldMansion][NodeId.OldMansionChests] = keyblade_lambda
-            self.logic[NodeId.Woods][NodeId.WoodsChests] = keyblade_lambda
-            self.logic[NodeId.TramCommon][NodeId.TramCommonChests] = keyblade_lambda
-            self.logic[NodeId.CentralStation][NodeId.CentralStationChests] = keyblade_lambda
-            self.logic[NodeId.UndergroundConcourse][NodeId.UndergroundConcourseChests] = keyblade_lambda
-            self.logic[NodeId.Tunnelway][NodeId.TunnelwayChests] = keyblade_lambda
-            self.logic[NodeId.SunsetTerrace][NodeId.SunsetTerraceChests] = keyblade_lambda
-            self.logic[NodeId.MansionFoyer][NodeId.MansionFoyerChests] = keyblade_lambda
-            self.logic[NodeId.MansionDiningRoom][NodeId.MansionDiningRoomChests] = keyblade_lambda
-            self.logic[NodeId.MansionLibrary][NodeId.MansionLibraryChests] = keyblade_lambda
-            self.logic[NodeId.MansionBasement][NodeId.MansionBasementChests] = keyblade_lambda
-            #I wanted a different keyblade for MT but it would need extra logic (i think??) ex: you can't return till after 3rd visit or before getting 2nd visit lock
-            self.logic[NodeId.YenSidTower][NodeId.YenSidTowerChests] = keyblade_lambda
-            self.logic[NodeId.YenSidTowerEntryway][NodeId.YenSidTowerEntrywayChests] = keyblade_lambda
-            self.logic[NodeId.SorcerersLoft][NodeId.SorcerersLoftChests] = keyblade_lambda
-            self.logic[NodeId.TowerWardrobe][NodeId.TowerWardrobeChests] = keyblade_lambda
-            
             self.logic[START_NODE][NodeId.OldMansion] = ItemPlacementHelpers.tt1_check
             self.logic[NodeId.ValorForm][NodeId.SeifersTrophy] = ItemPlacementHelpers.tt2_check
             self.logic[NodeId.LimitForm][NodeId.UndergroundConcourse] = ItemPlacementHelpers.tt3_check
             self.logic[NodeId.LimitForm][NodeId.MansionBonus] = ItemPlacementHelpers.tt3_check
         else:
+            self.logic[START_NODE][NodeId.CentralStation] = ItemPlacementHelpers.tt1_check
             self.logic[NodeId.BetwixtAndBetween][NodeId.SeifersTrophy] = ItemPlacementHelpers.tt2_check
             self.logic[NodeId.LimitForm][NodeId.StationFightPopup] = ItemPlacementHelpers.tt3_check
 

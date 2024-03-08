@@ -72,18 +72,19 @@ class PRLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_pr_keyblade(inv)
+        self.logic[NodeId.Rampart][NodeId.RampartChests] = keyblade_lambda
+        self.logic[NodeId.PortRoyalTown][NodeId.PortRoyalTownChests] = keyblade_lambda
+        self.logic[NodeId.CaveMouth][NodeId.CaveMouthChests] = keyblade_lambda
+        self.logic[NodeId.PowderStore][NodeId.PowderStoreChests] = keyblade_lambda
+        self.logic[NodeId.MoonlightNook][NodeId.MoonlightNookChests] = keyblade_lambda
+        self.logic[NodeId.InterceptorsHold][NodeId.InterceptorsHoldChests] = keyblade_lambda
+        self.logic[NodeId.SeadriftKeep][NodeId.SeadriftKeepChests] = keyblade_lambda
+        self.logic[NodeId.SeadriftRow][NodeId.SeadriftRowChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.Rampart][NodeId.RampartChests] = keyblade_lambda
-            self.logic[NodeId.PortRoyalTown][NodeId.PortRoyalTownChests] = keyblade_lambda
-            self.logic[NodeId.CaveMouth][NodeId.CaveMouthChests] = keyblade_lambda
-            self.logic[NodeId.PowderStore][NodeId.PowderStoreChests] = keyblade_lambda
-            self.logic[NodeId.MoonlightNook][NodeId.MoonlightNookChests] = keyblade_lambda
-            self.logic[NodeId.InterceptorsHold][NodeId.InterceptorsHoldChests] = keyblade_lambda
-            self.logic[NodeId.SeadriftKeep][NodeId.SeadriftKeepChests] = keyblade_lambda
-            self.logic[NodeId.SeadriftRow][NodeId.SeadriftRowChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.Rampart] = ItemPlacementHelpers.pr1_check
             self.logic[NodeId.Barbossa][NodeId.GrimReaper1] = ItemPlacementHelpers.pr2_check
         else:
+            self.logic[START_NODE][NodeId.Rampart] = ItemPlacementHelpers.pr1_check
             self.logic[NodeId.GrimReaper2][NodeId.PortRoyalTown] = ItemPlacementHelpers.pr2_check
             
 

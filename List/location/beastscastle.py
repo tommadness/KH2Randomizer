@@ -70,19 +70,20 @@ class BCLogicGraph(DefaultLogicGraph):
     def __init__(self,reverse_rando,keyblade_unlocks):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_bc_keyblade(inv)
+        self.logic[NodeId.BeastsCastleCourtyard][NodeId.BeastsCastleCourtyardChests] = keyblade_lambda
+        self.logic[NodeId.BellesRoom][NodeId.BellesRoomChests] = keyblade_lambda
+        self.logic[NodeId.EastWing][NodeId.EastWingChests] = keyblade_lambda
+        self.logic[NodeId.WestHall][NodeId.WestHallChests] = keyblade_lambda
+        self.logic[NodeId.Dungeon][NodeId.DungeonChests] = keyblade_lambda
+        self.logic[NodeId.SecretPassage][NodeId.SecretPassageChests] = keyblade_lambda
+        self.logic[NodeId.WestHallPostDungeon][NodeId.WestHallPostDungeonChests] = keyblade_lambda
+        self.logic[NodeId.WestWing][NodeId.WestWingChests] = keyblade_lambda
+        self.logic[NodeId.BeastsRoom][NodeId.BeastsRoomChests] = keyblade_lambda
         if not reverse_rando:
-            self.logic[NodeId.BeastsCastleCourtyard][NodeId.BeastsCastleCourtyardChests] = keyblade_lambda
-            self.logic[NodeId.BellesRoom][NodeId.BellesRoomChests] = keyblade_lambda
-            self.logic[NodeId.EastWing][NodeId.EastWingChests] = keyblade_lambda
-            self.logic[NodeId.WestHall][NodeId.WestHallChests] = keyblade_lambda
-            self.logic[NodeId.Dungeon][NodeId.DungeonChests] = keyblade_lambda
-            self.logic[NodeId.SecretPassage][NodeId.SecretPassageChests] = keyblade_lambda
-            self.logic[NodeId.WestHallPostDungeon][NodeId.WestHallPostDungeonChests] = keyblade_lambda
-            self.logic[NodeId.WestWing][NodeId.WestWingChests] = keyblade_lambda
-            self.logic[NodeId.BeastsRoom][NodeId.BeastsRoomChests] = keyblade_lambda
             self.logic[START_NODE][NodeId.BeastsCastleCourtyard] = ItemPlacementHelpers.bc1_check
             self.logic[NodeId.DarkThorn][NodeId.RumblingRose] = ItemPlacementHelpers.bc2_check
         else:
+            self.logic[START_NODE][NodeId.WestHall] = ItemPlacementHelpers.bc1_check
             self.logic[NodeId.Xaldin][NodeId.BeastsCastleCourtyard] = ItemPlacementHelpers.bc2_check
 
 def make_graph(graph: LocationGraphBuilder):
