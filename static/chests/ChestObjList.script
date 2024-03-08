@@ -5,7 +5,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_JNK
+  ModelName: F_EX030_JK2
   AnimationName: F_EX030.mset
   Flags: 0
   ObjectTargetType: M
@@ -329,6 +329,36 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
+4011:
+  ObjectId: 4011
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX030_EQP
+  AnimationName: F_EX030.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
 #TT Chests
 4020:
   ObjectId: 4020
@@ -336,7 +366,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX030_JNK
+  ModelName: F_EX030_JK2
   AnimationName: F_EX030_TT.mset
   Flags: 0
   ObjectTargetType: M
@@ -660,6 +690,36 @@
   IsPirate: false
   WallOcclusion: false
   Hift: false
+4031:
+  ObjectId: 4031
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX030_EQP
+  AnimationName: F_EX030_TT.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
 #LK Chests
 4040:
   ObjectId: 4040
@@ -667,7 +727,7 @@
   SubType: 0
   DrawPriority: 0
   WeaponJoint: 0
-  ModelName: F_EX050_JNK
+  ModelName: F_EX050_JK2
   AnimationName: F_EX030_LK.mset
   Flags: 0
   ObjectTargetType: M
@@ -969,6 +1029,36 @@
   WeaponJoint: 0
   ModelName: F_EX060_PRF
   AnimationName: F_EX040_LK.mset
+  Flags: 0
+  ObjectTargetType: M
+  Padding: 0
+  NeoStatus: 0
+  NeoMoveset: 0
+  Weight: 0
+  SpawnLimiter: 0
+  Page: 0
+  ObjectShadowSize: NoShadow
+  ObjectForm: Default
+  SpawnObject1: 0
+  SpawnObject2: 0
+  SpawnObject3: 0
+  SpawnObject4: 0
+  NoApdx: false
+  Before: false
+  FixColor: false
+  Fly: false
+  Scissoring: false
+  IsPirate: false
+  WallOcclusion: false
+  Hift: false
+4051:
+  ObjectId: 4051
+  ObjectType: TREASURE
+  SubType: 0
+  DrawPriority: 0
+  WeaponJoint: 0
+  ModelName: F_EX050_EQP
+  AnimationName: F_EX030_LK.mset
   Flags: 0
   ObjectTargetType: M
   Padding: 0
