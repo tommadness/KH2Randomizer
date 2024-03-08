@@ -220,7 +220,7 @@ def _sample_first_visit_nodes() -> list[str]:
     return [
         simulatedtwilighttown.NodeId.MunnyPouchPopup,
         simulatedtwilighttown.NodeId.Axel2,
-        simulatedtwilighttown.NodeId.SimulatedMansionBasement,
+        simulatedtwilighttown.NodeId.SimulatedMansionBasementChests,
         twilighttown.NodeId.OldMansion,
         twilighttown.NodeId.YenSidTowerEntryway,
         twilighttown.NodeId.TowerWardrobe,
@@ -328,7 +328,7 @@ def _expected_first_boss_nodes() -> list[str]:
         portroyal.NodeId.Barbossa,
         disneycastle.NodeId.WisdomPopup,
         spaceparanoids.NodeId.PhotonDebugger,
-        simulatedtwilighttown.NodeId.SimulatedMansionBasement,
+        simulatedtwilighttown.NodeId.SimulatedMansionBasementChests,
     ]
 
 
@@ -350,7 +350,7 @@ def _expected_last_story_boss_nodes() -> list[str]:
         portroyal.NodeId.GrimReaper2,
         disneycastle.NodeId.WisdomPopup,
         spaceparanoids.NodeId.MasterControlProgramBonus,
-        simulatedtwilighttown.NodeId.SimulatedMansionBasement,
+        simulatedtwilighttown.NodeId.SimulatedMansionBasementChests,
     ]
 
 

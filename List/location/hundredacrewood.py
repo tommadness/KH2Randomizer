@@ -19,6 +19,7 @@ class NodeId(str, Enum):
     SpookyCaveChests = "Spooky Cave Chests"
     StarryHill = "Starry Hill"
     StarryHillChests = "Starry Hill Chests"
+    StarryHillPopups = "Starry Hill Popups"
 
 
 class CheckLocation(str, Enum):
@@ -116,7 +117,9 @@ def make_graph(graph: LocationGraphBuilder):
         chest(312, CheckLocation.StarryHillCosmicRing, haw),
         chest(94, CheckLocation.StarryHillStyleRecipe, haw),
     ])
-    starry_hill = graph.add_location(NodeId.StarryHill, [
+    starry_hill = graph.add_location(NodeId.StarryHill, [])
+    
+    starry_hill_popups = graph.add_location(NodeId.StarryHillPopups, [
         popup(285, CheckLocation.StarryHillCureElement, haw, vanilla=magic.Cure),
         popup(539, CheckLocation.StarryHillOrichalcumPlus, haw),
     ])
@@ -127,6 +130,7 @@ def make_graph(graph: LocationGraphBuilder):
     graph.add_edge(kangas_howse, kangas_howse_chests)
     graph.add_edge(spooky_cave, spooky_cave_chests)
     graph.add_edge(starry_hill, starry_hill_chests)
+    graph.add_edge(starry_hill, starry_hill_popups)
 
     if not graph.reverse_rando:
         graph.add_edge(START_NODE, poohs_howse)

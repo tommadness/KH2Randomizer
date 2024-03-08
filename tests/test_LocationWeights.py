@@ -130,7 +130,7 @@ class Tests(unittest.TestCase):
         # Medium depth location
         kangas_magic_boost = regular_locations.locations_by_name[haw.CheckLocation.KangasHowseMagicBoost]
         self.assertEqual(1, regular_weights.get_weight(itemType.FORM, kangas_magic_boost))
-        self.assertEqual(2, reverse_weights.get_weight(itemType.FORM, kangas_magic_boost))
+        self.assertEqual(1, reverse_weights.get_weight(itemType.FORM, kangas_magic_boost))
         self.assertEqual(1, both_weights.get_weight(itemType.FORM, kangas_magic_boost))
 
         # Latest regular depth location
