@@ -186,7 +186,7 @@ class RandomizerSettings:
             l
             for l in locationType
             if l not in include_list
-            and l not in [locationType.Mush13, locationType.WeaponSlot]
+            and l not in [locationType.Mush13, locationType.WeaponSlot, locationType.Creations] # added creations here since we have all the subtypes covered
         ]
 
         level_setting = SoraLevelOption(ui_settings.get(settingkey.SORA_LEVELS))
