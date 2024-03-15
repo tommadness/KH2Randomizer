@@ -85,7 +85,7 @@ class CosmeticsMod:
             (custom_music_path / folder).mkdir(exist_ok=True)
 
     @staticmethod
-    def randomize_music(ui_settings: SeedSettings) -> tuple[list[dict], dict[str, str]]:
+    def randomize_music(ui_settings: SeedSettings) -> tuple[list[Asset], dict[str, str]]:
         """
         Randomizes music, returning a list of assets to be added to the seed mod and a dictionary of which song was
         replaced by which replacement.
@@ -174,7 +174,7 @@ class CosmeticsMod:
         return result
 
     @staticmethod
-    def _get_music_assets(settings: SeedSettings) -> tuple[list[dict], dict[str, str]]:
+    def _get_music_assets(settings: SeedSettings) -> tuple[list[Asset], dict[str, str]]:
         music_rando_enabled = settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
         if not music_rando_enabled:
             return [], {}
@@ -194,7 +194,7 @@ class CosmeticsMod:
 
             backup_files_by_categories[category] = song_list
 
-        assets = []
+        assets: list[Asset] = []
         replacements: dict[str, str] = {}
 
         music_list_file_path = CosmeticsMod.bootstrap_music_list_file()

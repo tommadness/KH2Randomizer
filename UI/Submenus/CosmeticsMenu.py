@@ -26,10 +26,10 @@ class CosmeticsMenu(KH2Submenu):
         self.end_group('Visuals')
 
         self.start_group()
+        self.add_option(settingkey.RANDO_THEMED_TEXTURES)
         self.add_option(settingkey.ROOM_TRANSITION_IMAGES)
 
         self.add_option(settingkey.RECOLOR_TEXTURES)
-
         self.configure_recolors = QPushButton("Texture Recolor Settings")
         self.configure_recolors.clicked.connect(self._configure_recolors)
         self.pending_group.addWidget(self.configure_recolors)
