@@ -1364,6 +1364,8 @@ class Hints:
         else:
             raise HintException("Unable to generate hints for nonexistent hint system")
 
+        hint_data["startingInventory"] = randomizer.starting_item_ids
+
         Hints.generator_journal_hints(location_item_tuples, settings, hint_data)
         return hint_data
 
