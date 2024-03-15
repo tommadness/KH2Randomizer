@@ -1375,3 +1375,56 @@ class SeedModBuilder:
 
     def _get_atkp_organizer(self):
         return self.atkp_organizer
+
+
+class CosmeticsModAppender:
+
+    def __init__(self, out_zip: ZipFile, mod_yml: ModYml):
+        self.out_zip = out_zip
+        self.mod_yml = mod_yml
+
+    def write_music_rando_assets(self, music_assets: list[Asset], music_replacements: dict[str, str]):
+        self.mod_yml.add_assets(music_assets)
+        self._write_music_replacements(music_replacements)
+
+    def write_rando_themed_texture_assets(self):
+        """Adds assets and files to the mod for 'Add Randomizer-Themed Textures'."""
+        goa_computer_source_name = _relative_mod_file("textures/goa/randomizer-themed-computer.dds")
+        final_arena_logo_source_name = _relative_mod_file("textures/final-arena/randomizer-logo.dds")
+
+        self.mod_yml.add_asset(
+            {
+                "name": "remastered/map/hb26.map/-40.dds",
+                "platform": "pc",
+                "method": "copy",
+                "source": [{"name": goa_computer_source_name}],
+            },
+        )
+        self.mod_yml.add_asset(
+            {
+                "name": "remastered/map/eh20.map/-4.dds",
+                "platform": "pc",
+                "multi": [
+                    {"name": "remastered/map/eh20.map/-6.dds"},
+                    {"name": "remastered/map/eh20.map/-9.dds"},
+                ],
+                "method": "copy",
+                "source": [{"name": final_arena_logo_source_name}],
+            },
+        )
+
+        self.out_zip.write(
+            resource_path("static/textures/goa/randomizer-themed-computer.dds"),
+            goa_computer_source_name,
+        )
+        self.out_zip.write(
+            resource_path("static/textures/final-arena/randomizer-logo.dds"),
+            final_arena_logo_source_name,
+        )
+
+    def _write_music_replacements(self, replacements: dict[str, str]):
+        if len(replacements) > 0:
+            music_replacements_string = ""
+            for original, replacement in replacements.items():
+                music_replacements_string += f"[{original}] was replaced by [{replacement}]\n"
+            self.out_zip.writestr("music-replacement-list.txt", music_replacements_string)

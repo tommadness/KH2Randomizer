@@ -2584,6 +2584,16 @@ _all_settings = [
         individual command menu options - Forces all command menus to have the chosen appearance.
         """,
     ),
+    Toggle(
+        name=settingkey.RANDO_THEMED_TEXTURES,
+        group=SettingGroup.COSMETICS,
+        ui_label="Add Randomizer-Themed Textures",
+        shared=False,
+        default=False,
+        tooltip="""
+        If enabled, adds a few KH2 Randomizer-themed textures to the game.
+        """,
+    ),
     SingleSelect(
         name=settingkey.ROOM_TRANSITION_IMAGES,
         group=SettingGroup.COSMETICS,
