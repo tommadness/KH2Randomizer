@@ -134,15 +134,13 @@ class WorldItems:
                         if world_of_location in hintable_worlds:
                             self.path_breadcrump_map[vanilla_world].add(world_of_location)
 
-    def world_to_item_names(self) -> dict[locationType, list[str]]:
+    def world_to_item_ids(self) -> dict[locationType, list[int]]:
         """
-        Returns a dictionary of world to a list of names of items in that world.
+        Returns a dictionary of world to a list of IDs of items in that world.
         """
-        dictionary: dict[locationType, list[str]] = {}
+        dictionary: dict[locationType, list[int]] = {}
         for world, item_list in self.world_to_item_list.items():
-            dictionary[world] = []
-            for item in item_list:
-                dictionary[world].append(item.Name)
+            dictionary[world] = [item.Id for item in item_list]
         return dictionary
 
 

@@ -1320,7 +1320,7 @@ class Hints:
         ]
         hint_data = common_tracker_data.to_dict()
         if settings.hintsType == HintType.SHANANAS:
-            hint_data["world"] = world_items.world_to_item_names()
+            hint_data["world"] = world_items.world_to_item_ids()
         elif settings.hintsType == HintType.JSMARTEE:
             jsmartee_data = []
             for world in hintable_worlds:
@@ -1334,7 +1334,7 @@ class Hints:
                     settings, world_items, jsmartee_data
                 )
         elif settings.hintsType == HintType.POINTS:
-            hint_data["world"] = world_items.world_to_item_names()
+            hint_data["world"] = world_items.world_to_item_ids()
             point_data = []
             for world in hintable_worlds:
                 point_data.append(
@@ -1344,12 +1344,12 @@ class Hints:
                 settings, world_items, point_data
             )
         elif settings.hintsType == HintType.SPOILER:
-            hint_data["world"] = world_items.world_to_item_names()
+            hint_data["world"] = world_items.world_to_item_ids()
             hint_data["Reports"] = HintUtils.spoiler_hint_assignment(
                 settings, common_tracker_data, world_items, hintable_worlds
             )
         elif settings.hintsType == HintType.PATH:
-            hint_data["world"] = world_items.world_to_item_names()
+            hint_data["world"] = world_items.world_to_item_ids()
             path_data = []
             for world in HintUtils.hintable_worlds():
                 path_data.append(PathHintData(world_items, world))

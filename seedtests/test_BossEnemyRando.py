@@ -13,7 +13,7 @@ class Tests(unittest.TestCase):
         seed_settings = SeedSettings()
         seed_settings.set("boss", "One to One")
 
-        for seed_name in seedtest.test_seed_names(count=20):
+        for seed_name in seedtest.test_seed_names():
             enemy_options = makeKHBRSettings(seed_name, seed_settings)
             del enemy_options["seed_name"]
             enemy_options["memory_expansion"] = True
@@ -24,7 +24,7 @@ class Tests(unittest.TestCase):
         seed_settings = SeedSettings()
         seed_settings.set("boss", "Wild")
 
-        for seed_name in seedtest.test_seed_names(count=20):
+        for seed_name in seedtest.test_seed_names():
             enemy_options = makeKHBRSettings(seed_name, seed_settings)
             del enemy_options["seed_name"]
             enemy_options["memory_expansion"] = True
@@ -35,7 +35,7 @@ class Tests(unittest.TestCase):
         seed_settings = SeedSettings()
         seed_settings.set("enemy", "One to One")
 
-        for seed_name in seedtest.test_seed_names(count=20):
+        for seed_name in seedtest.test_seed_names():
             enemy_options = makeKHBRSettings(seed_name, seed_settings)
             enemy_options["memory_expansion"] = True
             del enemy_options["seed_name"]
@@ -46,7 +46,7 @@ class Tests(unittest.TestCase):
         seed_settings = SeedSettings()
         seed_settings.set("enemy", "One to One Per Room")
 
-        for seed_name in seedtest.test_seed_names(count=20):
+        for seed_name in seedtest.test_seed_names():
             enemy_options = makeKHBRSettings(seed_name, seed_settings)
             enemy_options["memory_expansion"] = True
             del enemy_options["seed_name"]
@@ -57,7 +57,7 @@ class Tests(unittest.TestCase):
         seed_settings = SeedSettings()
         seed_settings.set("enemy", "Wild")
 
-        for seed_name in seedtest.test_seed_names(count=20):
+        for seed_name in seedtest.test_seed_names():
             enemy_options = makeKHBRSettings(seed_name, seed_settings)
             enemy_options["memory_expansion"] = True
             del enemy_options["seed_name"]
