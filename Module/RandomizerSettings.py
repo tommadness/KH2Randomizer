@@ -21,6 +21,7 @@ from List.configDict import (
 )
 from List.hashTextEntries import generate_hash_icons
 from List.inventory import report, proof, form, storyunlock
+from List.inventory.keyblade import get_locking_keyblade_names
 from Module.modifier import SeedModifier
 from Module.progressionPoints import ProgressionPoints
 
@@ -610,6 +611,7 @@ class RandomizerSettings:
             "ability",
             "other",
             "report",
+            "keyblade",
         ]:
             if check_type not in self.hintable_check_types:
                 self.point_hint_values[check_type] = 0
@@ -655,6 +657,8 @@ class RandomizerSettings:
             check_list += [itemType.SUMMON]
         if "visit" in hintable_checks_list:
             check_list += [itemType.STORYUNLOCK]
+        if "keyblade" in hintable_checks_list:
+            check_list += get_locking_keyblade_names()
         if "ability" in hintable_checks_list:
             check_list += ["Second Chance", "Once More"]
         if "other" in hintable_checks_list:

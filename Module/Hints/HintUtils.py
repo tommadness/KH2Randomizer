@@ -128,6 +128,7 @@ class WorldItems:
                     itemType.TROPHY,
                     itemType.MANUFACTORYUNLOCK,
                     itemType.MUNNY_POUCH,
+                    itemType.KEYBLADE,
                 ]:
                     # this item could have come from any world from this list
                     for vanilla_world in item_to_vanilla_world[inventory_item]:

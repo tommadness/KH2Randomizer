@@ -37,3 +37,22 @@ Fenrir = Keyblade(499, "Fenrir", weaponslot_id=weaponslot.LocationId.Fenrir)
 UltimaWeapon = Keyblade(500, "Ultima Weapon", weaponslot_id=weaponslot.LocationId.UltimaWeapon)
 TwoBecomeOne = Keyblade(543, "Two Become One", weaponslot_id=weaponslot.LocationId.TwoBecomeOne)
 WinnersProof = Keyblade(544, "Winner's Proof", weaponslot_id=weaponslot.LocationId.WinnersProof)
+
+
+def get_locking_keyblade_names() -> list[str]:
+    return [Oathkeeper.name,
+            StarSeeker.name,
+            HiddenDragon.name,
+            HerosCrest.name,
+            Monochrome.name,
+            FollowTheWind.name,
+            CircleOfLife.name,
+            PhotonDebugger.name,
+            WishingLamp.name,
+            DecisivePumpkin.name,
+            SleepingLion.name,
+            SweetMemories.name,
+            BondOfFlame.name,
+            TwoBecomeOne.name,
+            WinnersProof.name,
+            ]
