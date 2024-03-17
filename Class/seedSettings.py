@@ -1161,6 +1161,18 @@ _all_settings = [
         tooltip="Point value for each Ansem Report.",
     ),
     IntSpinner(
+        name=settingkey.POINTS_KEYBLADES,
+        group=SettingGroup.HINTS,
+        ui_label="Locking Keyblades",
+        standalone_label="Locking Keyblades Point Value",
+        minimum=0,
+        maximum=1000,
+        step=1,
+        shared=True,
+        default=9,
+        tooltip="Point value for each keyblade that locks chests.",
+    ),
+    IntSpinner(
         name=settingkey.POINTS_AUX,
         group=SettingGroup.HINTS,
         ui_label="Aux. Unlock",

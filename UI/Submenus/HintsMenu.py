@@ -47,6 +47,7 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_ABILITY)
         self.add_option(settingkey.POINTS_PAGE)
         self.add_option(settingkey.POINTS_VISIT)
+        self.add_option(settingkey.POINTS_KEYBLADES)
         self.add_option(settingkey.POINTS_AUX)
         self.end_group(title="Item Point Values", group_id=_ITEM_POINT_VALUES)
 

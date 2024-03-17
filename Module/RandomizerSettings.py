@@ -472,6 +472,7 @@ class RandomizerSettings:
             "magic": ui_settings.get(settingkey.POINTS_MAGIC),
             "summon": ui_settings.get(settingkey.POINTS_SUMMON),
             "ability": ui_settings.get(settingkey.POINTS_ABILITY),
+            "keyblade": ui_settings.get(settingkey.POINTS_KEYBLADES),
             "page": ui_settings.get(settingkey.POINTS_PAGE),
             "report": ui_settings.get(settingkey.POINTS_REPORT),
             "visit": ui_settings.get(settingkey.POINTS_VISIT),

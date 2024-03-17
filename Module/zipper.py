@@ -479,6 +479,7 @@ class SeedZip:
     ) -> str:
         settings = self.settings
         randomizer = self.randomizer
+        platform = self.extra_data.platform
 
         exp_multipliers_json = {
             "Summon": {
@@ -531,6 +532,7 @@ class SeedZip:
                 spoiler_site.read()
                 .replace("{SEED_NAME_STRING}", settings.random_seed)
                 .replace("{SEED_STRING}", settings.seed_string)
+                .replace("{PLATFORM_GENERATED}",platform)
                 .replace(
                     "{LEVEL_STATS_JSON}",
                     json.dumps(levelStatsDictionary(randomizer.level_stats)),
