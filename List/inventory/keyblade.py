@@ -41,7 +41,6 @@ WinnersProof = Keyblade(544, "Winner's Proof", weaponslot_id=weaponslot.Location
 
 def get_locking_keyblade_names() -> list[str]:
     return [Oathkeeper.name,
-            StarSeeker.name,
             HiddenDragon.name,
             HerosCrest.name,
             Monochrome.name,
@@ -55,4 +54,5 @@ def get_locking_keyblade_names() -> list[str]:
             BondOfFlame.name,
             TwoBecomeOne.name,
             WinnersProof.name,
+            RumblingRose.name,
             ]
