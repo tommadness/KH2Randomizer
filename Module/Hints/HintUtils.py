@@ -143,6 +143,16 @@ class WorldItems:
         for world, item_list in self.world_to_item_list.items():
             dictionary[world] = [item.Id for item in item_list]
         return dictionary
+    
+    def item_ids_to_names(self) -> dict[int, str]:
+        """
+        Returns a dictionary of world to a list of IDs of items in that world.
+        """
+        dictionary: dict[int, str] = {}
+        for _, item_list in self.world_to_item_list.items():
+            for item in item_list:
+                dictionary[item.Id] = item.Name
+        return dictionary
 
 
 class JsmarteeHintData:

@@ -1345,6 +1345,7 @@ class Hints:
             )
         elif settings.hintsType == HintType.SPOILER:
             hint_data["world"] = world_items.world_to_item_ids()
+            hint_data["aux_data"] = world_items.item_ids_to_names()
             hint_data["Reports"] = HintUtils.spoiler_hint_assignment(
                 settings, common_tracker_data, world_items, hintable_worlds
             )
@@ -1424,7 +1425,8 @@ class Hints:
                     hinted_world = report_data["World"]
                     hint_text.append(f"{hinted_world_text(hinted_world)} has:")
                     for c in hint_data["world"][hinted_world]:
-                        hint_text.append(c)
+                        c_txt = hint_data["aux_data"][c]
+                        hint_text.append(c_txt)
 
             for hint_text_instance in hint_text:
                 spoiler_text += hint_text_instance + "\n"
