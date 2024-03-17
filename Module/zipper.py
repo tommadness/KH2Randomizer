@@ -37,7 +37,6 @@ from Module.spoilerLog import (
     synth_recipe_dictionary,
     weapon_stats_dictionary,
 )
-from Module.texture import TextureRecolorizer
 
 
 def noop(self, *args, **kw):
@@ -126,6 +125,7 @@ def _add_cosmetics(
     music_assets, music_replacements = CosmeticsMod.randomize_music(settings)
     appender.write_music_rando_assets(music_assets, music_replacements)
 
+    from Module.texture import TextureRecolorizer
     texture_assets = TextureRecolorizer(settings).recolor_textures()
     mod_yml.add_assets(texture_assets)
 
