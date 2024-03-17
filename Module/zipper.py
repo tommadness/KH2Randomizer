@@ -222,6 +222,7 @@ class SynthLocation:
 
 # (output zip, spoiler log, enemy log)
 SeedZipResult = tuple[io.BytesIO, Optional[str], Optional[str]]
+SeedNotZipResult = tuple[Optional[str], Optional[str]]
 
 
 def _invoke_khbr_with_overrides(
@@ -307,6 +308,25 @@ class SeedZip:
         self.extra_data = extra_data
         self.unreachable_locations = unreachable_locations
         self.multiworld = multiworld
+
+    def make_spoiler_without_zip(self) -> str:
+        enemy_spoilers_json: dict[str, str] = {}
+
+        settings = self.settings
+        btlv_option_name = settings.battle_level_rando
+
+        btlv = BtlvViewer()
+        btlv.use_setting(
+            btlv_option_name,
+            battle_level_offset=settings.battle_level_offset,
+            battle_level_range=settings.battle_level_range,
+        )
+        battle_level_spoiler = btlv.get_spoiler()
+        journal_hints_spoiler = {}
+        spoiler_log_output = self.generate_spoiler_html(
+            enemy_spoilers_json, battle_level_spoiler, journal_hints_spoiler
+        )
+        return spoiler_log_output
 
     def create_zip(self) -> SeedZipResult:
         settings = self.settings

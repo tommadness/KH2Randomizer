@@ -37,6 +37,31 @@ def generateSeed(
             continue
     raise last_error
 
+def generateSeedCLI(
+    settings: RandomizerSettings, extra_data: ExtraConfigurationData
+) -> str:
+    newSeedValidation = LocationInformedSeedValidator()
+    last_error = None
+    for attempt in range(50):
+        try:
+            randomizer = Randomizer(settings)
+            unreachable_locations = newSeedValidation.validate_seed(
+                settings, randomizer
+            )
+            # hints = Hints.generate_hints(randomizer, settings)
+            hints = Hints.generate_hints_v2(randomizer, settings)
+            zipper = SeedZip(
+                settings, randomizer, hints, extra_data, unreachable_locations
+            )
+            return zipper.make_spoiler_without_zip()
+        except RandomizerExceptions as e:
+            characters = string.ascii_letters + string.digits
+            settings.random_seed = "".join(random.choice(characters) for i in range(30))
+            settings.create_full_seed_string()
+            last_error = e
+            continue
+    raise last_error
+
 
 def generateMultiWorldSeed(
     settingsSet: List[RandomizerSettings], extra_data: ExtraConfigurationData

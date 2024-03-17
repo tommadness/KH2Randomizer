@@ -7,7 +7,7 @@ from collections import namedtuple
 from Class.seedSettings import ExtraConfigurationData, SeedSettings
 from Module import appconfig, field2d
 from Module.RandomizerSettings import RandomizerSettings
-from Module.generate import generateSeed
+from Module.generate import generateSeedCLI
 from Module.seedshare import SharedSeed
 from Module.version import LOCAL_UI_VERSION
 
@@ -54,10 +54,11 @@ def make_random_seed_from_preset_name(requested_type:str):
         custom_cosmetics_executables=[],
     )
 
-    _, spoiler_log, _ = generateSeed(rando_settings, extra_data)
+    spoiler_log = generateSeedCLI(rando_settings, extra_data)
 
     return SeedInfo(seed_name=seedString,requested_preset=requested_type,generator_string=shared_string_text, hash_icons=rando_settings.seedHashIcons, spoiler_html=spoiler_log)
 
 if __name__ == '__main__':
     seed_info = make_random_seed_from_preset_name(requested_preset)
     print(seed_info.generator_string)
+    print(seed_info.hash_icons)
