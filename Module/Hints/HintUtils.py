@@ -129,7 +129,7 @@ class WorldItems:
                     itemType.MANUFACTORYUNLOCK,
                     itemType.MUNNY_POUCH,
                     itemType.KEYBLADE,
-                ]:
+                ] and item.Id not in [form.AntiForm.id]:
                     # this item could have come from any world from this list
                     for vanilla_world in item_to_vanilla_world[inventory_item]:
                         if world_of_location in hintable_worlds:
