@@ -183,6 +183,215 @@
         - - remastered/obj/N_CM020_BTL.mdlx/-5.dds
 
 
+- id: lexaeus_fx
+  name: Lexaeus (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: rocks_1
+          name: Rocks 1
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-3.dds
+
+        - - remastered/obj/N_CM020_BTL.a.us/-4.dds
+          - remastered/obj/N_CM020_BTL.a.us/-16.dds
+          - remastered/obj/N_CM020_BTL.a.us/-25.dds
+
+    - colorable_areas:
+        - id: rocks_2
+          name: Rocks 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-5.dds
+          - remastered/obj/N_CM020_BTL.a.us/-15.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-9.dds
+
+    - colorable_areas:
+        - id: fx10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-10.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-12.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-13.dds
+
+    - colorable_areas:
+        - id: fx14
+          name: Effect 14
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-14.dds
+
+    - colorable_areas:
+        - id: fx17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-17.dds
+
+    - colorable_areas:
+        - id: fx18
+          name: Effect 18
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-18.dds
+
+    - colorable_areas:
+        - id: fx19
+          name: Effect 19
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-19.dds
+
+    - colorable_areas:
+        - id: fx20
+          name: Effect 20
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-20.dds
+
+    - colorable_areas:
+        - id: fx21
+          name: Effect 21
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-21.dds
+
+    - colorable_areas:
+        - id: fx22
+          name: Effect 22
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-22.dds
+
+    - colorable_areas:
+        - id: fx23
+          name: Effect 23
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-23.dds
+
+    - colorable_areas:
+        - id: fx24
+          name: Effect 24
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-24.dds
+
+    - colorable_areas:
+        - id: fx26
+          name: Effect 26
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-26.dds
+
+    - colorable_areas:
+        - id: fx27
+          name: Effect 27
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-27.dds
+
+    - colorable_areas:
+        - id: fx28
+          name: Effect 28
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM020_BTL.a.us/-28.dds
+
+
 - id: peddler
   name: Peddler
   tags:

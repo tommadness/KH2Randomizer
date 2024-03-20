@@ -24,6 +24,8 @@ _model_tags_by_category_name = {
     "Characters": "character",
     "Heartless": "heartless",
     "Nobodies": "nobody",
+    "Environment": "environment",
+    "Effects": "effects",
 }
 
 
@@ -69,6 +71,11 @@ class TextureRecolorSettingsDialog(QDialog):
         category_menu.addAction("All in Category to Vanilla", self._all_in_category_to_vanilla)
         category_menu.addAction("All in Category to Random", self._all_in_category_to_random)
         menu_bar.addMenu(category_menu)
+
+        model_menu = QMenu("Model")
+        model_menu.addAction("All in Model to Vanilla", self._all_in_model_to_vanilla)
+        model_menu.addAction("All in Model to Random", self._all_in_model_to_random)
+        menu_bar.addMenu(model_menu)
 
         category_picker = QComboBox()
         category_picker.setToolTip("Chooses a category of items to choose for recoloring.")
@@ -328,6 +335,12 @@ class TextureRecolorSettingsDialog(QDialog):
 
     def _all_in_category_to_random(self):
         self._apply_setting_to_models([model for _, model in self.models_by_name.items()], texture.RANDOM)
+
+    def _all_in_model_to_vanilla(self):
+        self._apply_setting_to_models([self._selected_model()], texture.VANILLA)
+
+    def _all_in_model_to_random(self):
+        self._apply_setting_to_models([self._selected_model()], texture.RANDOM)
 
     def _random_party_only(self):
         for recolorable_model in self.all_models:

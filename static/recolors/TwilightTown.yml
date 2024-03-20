@@ -34,6 +34,194 @@
           - remastered/obj/H_EX520.mdlx/-3.dds
 
 
+- id: axel_fx
+  name: Axel (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-3.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-3.dds
+          - remastered/obj/B_EX110_LV99.a.us/-3.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-3.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-4.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-4.dds
+          - remastered/obj/B_EX110_LV99.a.us/-4.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-5.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-5.dds
+          - remastered/obj/B_EX110_LV99.a.us/-5.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-5.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-6.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-6.dds
+          - remastered/obj/B_EX110_LV99.a.us/-6.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-7.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-7.dds
+          - remastered/obj/B_EX110_LV99.a.us/-7.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-9.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-9.dds
+          - remastered/obj/B_EX110_LV99.a.us/-9.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-9.dds
+
+    - colorable_areas:
+        - id: fx10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-10.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-10.dds
+          - remastered/obj/B_EX110_LV99.a.us/-10.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-10.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-11.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-11.dds
+          - remastered/obj/B_EX110_LV99.a.us/-11.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-13.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-13.dds
+          - remastered/obj/B_EX110_LV99.a.us/-13.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-13.dds
+
+    - colorable_areas:
+        - id: fx14
+          name: Effect 14
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-14.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-14.dds
+          - remastered/obj/B_EX110_LV99.a.us/-14.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-14.dds
+
+    - colorable_areas:
+        - id: fx15
+          name: Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-15.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-15.dds
+          - remastered/obj/B_EX110_LV99.a.us/-15.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-15.dds
+
+    - colorable_areas:
+        - id: fx16
+          name: Effect 16
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-16.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-16.dds
+          - remastered/obj/B_EX110_LV99.a.us/-16.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-16.dds
+
+    - colorable_areas:
+        - id: fx17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-17.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-17.dds
+          - remastered/obj/B_EX110_LV99.a.us/-17.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-17.dds
+
+    - colorable_areas:
+        - id: fx18
+          name: Effect 18
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-18.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-18.dds
+          - remastered/obj/B_EX110_LV99.a.us/-18.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-18.dds
+
+    - colorable_areas:
+        - id: fx19
+          name: Effect 19
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-19.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-19.dds
+          - remastered/obj/B_EX110_LV99.a.us/-19.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-19.dds
+
+    - colorable_areas:
+        - id: fx20
+          name: Effect 20
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX110.a.us/-20.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-20.dds
+          - remastered/obj/B_EX110_LV99.a.us/-20.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-20.dds
+
+
 - id: fauna
   name: Fauna
   tags:
@@ -231,6 +419,395 @@
         - - remastered/obj/H_EX510.mdlx/-1.dds
           - remastered/obj/P_EX110.mdlx/-0.dds
           - remastered/obj/P_EX110_BTLF.mdlx/-0.dds
+
+
+- id: roxas_boss_fx
+  name: Roxas (Boss Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-3.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-5.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-9.dds
+
+# 10 is the Nobody symbol
+#    - colorable_areas:
+#        - id: fx10
+#          name: Effect 10
+#          hue_start: 0
+#          hue_end: 360
+#          new_saturation: 75
+#      image_groups:
+#        - - remastered/obj/B_EX390.a.us/-10.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-12.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-13.dds
+
+# This one doesn't seem right to color
+#    - colorable_areas:
+#        - id: fx14
+#          name: Effect 14
+#          hue_start: 0
+#          hue_end: 360
+#          new_saturation: 75
+#      image_groups:
+#        - - remastered/obj/B_EX390.a.us/-14.dds
+
+# This one doesn't seem right to color
+#    - colorable_areas:
+#        - id: fx16
+#          name: Effect 16
+#          hue_start: 0
+#          hue_end: 360
+#          new_saturation: 75
+#      image_groups:
+#        - - remastered/obj/B_EX390.a.us/-16.dds
+
+    - colorable_areas:
+        - id: fx17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-17.dds
+
+# This one doesn't seem right to color
+#    - colorable_areas:
+#        - id: fx18
+#          name: Effect 18
+#          hue_start: 0
+#          hue_end: 360
+#          new_saturation: 75
+#      image_groups:
+#        - - remastered/obj/B_EX390.a.us/-18.dds
+
+    - colorable_areas:
+        - id: fx19
+          name: Effect 19
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-19.dds
+
+    - colorable_areas:
+        - id: fx20
+          name: Effect 20
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-20.dds
+
+    - colorable_areas:
+        - id: fx21
+          name: Effect 21
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-21.dds
+
+    - colorable_areas:
+        - id: fx22
+          name: Effect 22
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-22.dds
+
+    - colorable_areas:
+        - id: fx23
+          name: Effect 23
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-23.dds
+
+    - colorable_areas:
+        - id: fx24
+          name: Effect 24
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-24.dds
+
+    - colorable_areas:
+        - id: fx25
+          name: Effect 25
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-25.dds
+
+    - colorable_areas:
+        - id: fx26
+          name: Effect 26
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-26.dds
+
+    - colorable_areas:
+        - id: fx27
+          name: Effect 27
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-27.dds
+
+    - colorable_areas:
+        - id: fx28
+          name: Effect 28
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-28.dds
+
+    - colorable_areas:
+        - id: fx29
+          name: Effect 29
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-29.dds
+
+    - colorable_areas:
+        - id: fx30
+          name: Effect 30
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-30.dds
+
+# 31 is just a black mask
+#    - colorable_areas:
+#        - id: fx31
+#          name: Effect 31
+#          hue_start: 0
+#          hue_end: 360
+#          new_saturation: 75
+#      image_groups:
+#        - - remastered/obj/B_EX390.a.us/-31.dds
+
+    - colorable_areas:
+        - id: fx32
+          name: Effect 32
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-32.dds
+
+    - colorable_areas:
+        - id: fx33
+          name: Effect 33
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-33.dds
+
+    - colorable_areas:
+        - id: fx34
+          name: Effect 34
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-34.dds
+
+    - colorable_areas:
+        - id: fx35
+          name: Effect 35
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-35.dds
+
+    - colorable_areas:
+        - id: fx36
+          name: Effect 36
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-36.dds
+
+    - colorable_areas:
+        - id: fx37
+          name: Effect 37
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-37.dds
+
+    - colorable_areas:
+        - id: fx38
+          name: Effect 38
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-38.dds
+
+    - colorable_areas:
+        - id: fx39
+          name: Effect 39
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-39.dds
+
+    - colorable_areas:
+        - id: fx40
+          name: Effect 40
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-40.dds
+
+    - colorable_areas:
+        - id: fx41
+          name: Effect 41
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-41.dds
+
+    - colorable_areas:
+        - id: fx42
+          name: Effect 42
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-42.dds
+
+    - colorable_areas:
+        - id: fx43
+          name: Effect 43
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-43.dds
+
+    - colorable_areas:
+        - id: fx44
+          name: Effect 44
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-44.dds
+
+    - colorable_areas:
+        - id: fx45
+          name: Effect 45
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX390.a.us/-45.dds
 
 
 - id: roxas_coat

@@ -1,6 +1,426 @@
 # Notes:
 # - Final Xemnas being black/white is tough to recolor because there are "darker white areas" and "lighter black areas"
 
+- id: altar_of_naught
+  name: Altar of Naught
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: ramp
+          name: Ramp
+          hue_start: 180
+          hue_end: 210
+      image_groups:
+        - - remastered/map/eh18.map/-56.dds
+
+    - colorable_areas:
+        - id: door
+          name: Door
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh18.map/-47.dds
+
+        - - remastered/map/eh18.map/-49.dds
+
+        - - remastered/map/eh18.map/-50.dds
+
+        - - remastered/map/eh18.map/-51.dds
+
+        - - remastered/map/eh18.map/-52.dds
+
+    - colorable_areas:
+        - id: sky
+          name: Sky
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh18.map/-58.dds
+
+
+- id: final_buildings_1_arena
+  name: Final Fights (Buildings 1)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: buildings
+          name: Buildings
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/map/eh27.map/-0.dds
+
+        - - remastered/map/eh27.map/-1.dds
+
+        - - remastered/map/eh27.map/-2.dds
+
+        - - remastered/map/eh27.map/-15.dds
+
+        - - remastered/map/eh27.map/-24.dds
+
+        - - remastered/map/eh27.map/-35.dds
+
+        - - remastered/map/eh27.map/-36.dds
+
+        - - remastered/map/eh27.map/-37.dds
+
+        - - remastered/map/eh27.map/-38.dds
+
+        - - remastered/map/eh27.map/-48.dds
+
+    - colorable_areas:
+        - id: sky
+          name: Sky
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh27.map/-86.dds
+
+
+- id: final_buildings_2_arena
+  name: Final Fights (Buildings 2)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: buildings
+          name: Buildings
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/map/eh28.map/-1.dds
+
+        - - remastered/map/eh28.map/-2.dds
+
+        - - remastered/map/eh28.map/-4.dds
+
+        - - remastered/map/eh28.map/-5.dds
+
+        - - remastered/map/eh28.map/-6.dds
+
+        - - remastered/map/eh28.map/-27.dds
+
+        - - remastered/map/eh28.map/-31.dds
+
+        - - remastered/map/eh28.map/-32.dds
+
+        - - remastered/map/eh28.map/-41.dds
+
+        - - remastered/map/eh28.map/-53.dds
+
+        - - remastered/map/eh28.map/-84.dds
+          - remastered/map/eh28.map/-86.dds
+
+    - colorable_areas:
+        - id: sky
+          name: Sky
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh28.map/-79.dds
+
+
+- id: final_fights_engine_arena
+  name: Final Fights (Engine Exterior)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: engine_main
+          name: Main Color
+          hue_start: 210
+          hue_end: 240
+      image_groups:
+        - - remastered/map/eh26.map/-12.dds
+
+        - - remastered/map/eh26.map/-13.dds
+
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh26.map/-17.dds
+
+    - colorable_areas:
+        - id: effect_2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh26.map/-47.dds
+
+    - colorable_areas:
+        - id: grate
+          name: Grate
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/map/eh26.map/-50.dds
+
+    - colorable_areas:
+        - id: city
+          name: City
+          hue_start: 210
+          hue_end: 240
+      image_groups:
+        - - remastered/map/eh26.map/-51.dds
+
+        - - remastered/map/eh26.map/-55.dds
+
+    - colorable_areas:
+        - id: sky
+          name: Sky
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh26.map/-52.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh26.map/-56.dds
+
+        - - remastered/map/eh26.map/-57.dds
+
+
+- id: final_fights_engine_core_arena
+  name: Final Fights (Engine Core)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+          saturation_start: 20
+          saturation_end: 100
+      image_groups:
+        - - remastered/map/eh25.map/-2.dds
+
+    - colorable_areas:
+        - id: effect_2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh25.map/-6.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh25.map/-8.dds
+
+    - colorable_areas:
+        - id: accent_1
+          name: Accent 1
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh25.map/-14.dds
+
+    - colorable_areas:
+        - id: accent_2
+          name: Accent 2
+          hue_start: 180
+          hue_end: 210
+      image_groups:
+        - - remastered/map/eh25.map/-19.dds
+
+    - colorable_areas:
+        - id: sky
+          name: Sky
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh25.map/-29.dds
+
+
+- id: kingdom_hearts_moon
+  name: Kingdom Hearts (Moon)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: moon
+          name: Moon
+          hue_start: 0
+          hue_end: 90
+        - id: background
+          name: Background
+          hue_start: 210
+          hue_end: 360
+      image_groups:
+        # Solid heart
+        - - remastered/map/eh02.map/-148.dds
+
+        - - remastered/map/eh01.map/-34.dds
+          - remastered/map/eh03.map/-72.dds
+          - remastered/map/eh06.map/-66.dds
+          - remastered/map/eh10.map/-90.dds
+          - remastered/map/eh11.map/-90.dds
+          - remastered/map/eh14.map/-27.dds
+          - remastered/map/eh15.map/-47.dds
+          - remastered/map/eh18.map/-68.dds
+
+        - - remastered/map/eh04.map/-127.dds
+          - remastered/map/eh12.map/-39.dds
+          - remastered/map/eh16.map/-59.dds
+
+        # Moon
+        - - remastered/map/eh01.map/-36.dds
+          - remastered/map/eh03.map/-74.dds
+
+        - - remastered/map/eh02.map/-162.dds
+
+        - - remastered/map/eh06.map/-69.dds
+        - - remastered/map/eh10.map/-94.dds
+        - - remastered/map/eh11.map/-94.dds
+        - - remastered/map/eh14.map/-29.dds
+        - - remastered/map/eh15.map/-50.dds
+
+        - - remastered/map/eh04.map/-128.dds
+          - remastered/map/eh04.map/-130.dds
+          - remastered/map/eh12.map/-41.dds
+          - remastered/map/eh16.map/-63.dds
+
+
+- id: kingdom_hearts_ruined
+  name: Kingdom Hearts (Ruined)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 300
+          hue_end: 30
+      image_groups:
+        # Solid heart
+        - - remastered/map/eh02.map/-85.dds
+
+        - - remastered/map/eh01.map/-35.dds
+          - remastered/map/eh03.map/-73.dds
+          - remastered/map/eh06.map/-65.dds
+          - remastered/map/eh10.map/-89.dds
+          - remastered/map/eh11.map/-89.dds
+          - remastered/map/eh14.map/-28.dds
+          - remastered/map/eh15.map/-45.dds
+
+        - - remastered/map/eh04.map/-132.dds
+          - remastered/map/eh12.map/-40.dds
+          - remastered/map/eh16.map/-58.dds
+          - remastered/map/eh18.map/-78.dds
+
+        # Double arches
+        - - remastered/map/eh01.map/-37.dds
+          - remastered/map/eh03.map/-126.dds
+
+        - - remastered/map/eh02.map/-153.dds
+
+        - - remastered/map/eh06.map/-67.dds
+          - remastered/map/eh10.map/-91.dds
+          - remastered/map/eh11.map/-91.dds
+          - remastered/map/eh14.map/-31.dds
+          - remastered/map/eh15.map/-48.dds
+
+        - - remastered/map/eh04.map/-133.dds
+          - remastered/map/eh12.map/-43.dds
+          - remastered/map/eh16.map/-61.dds
+          - remastered/map/eh18.map/-80.dds
+
+        # Muliple circles
+        - - remastered/map/eh01.map/-39.dds
+          - remastered/map/eh02.map/-165.dds
+          - remastered/map/eh03.map/-131.dds
+
+        - - remastered/map/eh04.map/-137.dds
+          - remastered/map/eh06.map/-73.dds
+          - remastered/map/eh10.map/-97.dds
+          - remastered/map/eh11.map/-97.dds
+          - remastered/map/eh12.map/-48.dds
+          - remastered/map/eh14.map/-35.dds
+          - remastered/map/eh15.map/-53.dds
+          - remastered/map/eh16.map/-65.dds
+          - remastered/map/eh18.map/-88.dds
+
+        # Four strokes
+        - - remastered/map/eh01.map/-74.dds
+          - remastered/map/eh02.map/-151.dds
+          - remastered/map/eh03.map/-127.dds
+
+        - - remastered/map/eh06.map/-68.dds
+          - remastered/map/eh10.map/-92.dds
+          - remastered/map/eh11.map/-92.dds
+          - remastered/map/eh14.map/-30.dds
+          - remastered/map/eh15.map/-49.dds
+
+        - - remastered/map/eh18.map/-79.dds
+
+        # Swirl
+        - - remastered/map/eh01.map/-75.dds
+          - remastered/map/eh03.map/-129.dds
+
+        - - remastered/map/eh02.map/-163.dds
+          - remastered/map/eh06.map/-71.dds
+          - remastered/map/eh10.map/-95.dds
+          - remastered/map/eh11.map/-95.dds
+          - remastered/map/eh16.map/-62.dds
+
+        - - remastered/map/eh04.map/-135.dds
+          - remastered/map/eh12.map/-44.dds
+          - remastered/map/eh14.map/-33.dds
+          - remastered/map/eh15.map/-51.dds
+        - - remastered/map/eh18.map/-81.dds
+
+        # Wave
+        - - remastered/map/eh04.map/-134.dds
+          - remastered/map/eh12.map/-42.dds
+          - remastered/map/eh16.map/-60.dds
+
+        # Full
+        - - remastered/map/eh02.map/-164.dds
+
+        - - remastered/map/eh01.map/-76.dds
+          - remastered/map/eh03.map/-130.dds
+          - remastered/map/eh06.map/-72.dds
+          - remastered/map/eh10.map/-96.dds
+          - remastered/map/eh11.map/-96.dds
+          - remastered/map/eh14.map/-34.dds
+          - remastered/map/eh15.map/-52.dds
+
+        - - remastered/map/eh04.map/-136.dds
+          - remastered/map/eh12.map/-45.dds
+          - remastered/map/eh16.map/-64.dds
+
+        # Pink box (Altar of Naught only)
+        - - remastered/map/eh18.map/-82.dds
+
+        # Large pieces (Altar of Naught only)
+        - - remastered/map/eh18.map/-83.dds
+
+        - - remastered/map/eh18.map/-84.dds
+
+        - - remastered/map/eh18.map/-85.dds
+
+        - - remastered/map/eh18.map/-86.dds
+
+        - - remastered/map/eh18.map/-87.dds
+
+
 - id: riku
   name: Riku
   tags:
@@ -29,6 +449,336 @@
           - remastered/obj/P_EH000_RTN.mdlx/-1.dds
           - remastered/obj/H_EX710.mdlx/-4.dds
 
+        - - remastered/obj/P_EH000.a.us/-6.dds
+
+
+- id: twtnw_swirling_darkness
+  name: Swirling Darkness (TWNTW)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: texture_1
+          name: Texture 1
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        # Group A
+        - - remastered/map/eh13.map/-37.dds
+
+        - - remastered/map/eh10.map/-105.dds
+          - remastered/map/eh11.map/-105.dds
+
+        # Group B
+        - - remastered/map/eh12.map/-46.dds
+          - remastered/map/eh12.map/-52.dds
+          - remastered/map/eh15.map/-44.dds
+          - remastered/map/eh15.map/-57.dds
+          - remastered/map/eh16.map/-16.dds
+          - remastered/map/eh16.map/-73.dds
+
+        - - remastered/map/eh14.map/-22.dds
+          - remastered/map/eh14.map/-37.dds
+
+        # Group C
+        - - remastered/map/eh12.map/-50.dds
+          - remastered/map/eh15.map/-58.dds
+          - remastered/map/eh16.map/-25.dds
+          - remastered/map/eh16.map/-72.dds
+          - remastered/map/eh18.map/-60.dds
+
+        - - remastered/map/eh14.map/-38.dds
+
+        # Group D
+        - - remastered/map/eh17.map/-38.dds
+          - remastered/map/eh18.map/-66.dds
+
+
+- id: xemnas_1_arena
+  name: Xemnas 1 (Arena)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: windows_1
+          name: Windows 1
+          hue_start: 0
+          hue_end: 60
+      image_groups:
+        - - remastered/map/eh19.map/-5.dds
+
+        - - remastered/map/eh19.map/-35.dds
+
+        - - remastered/map/eh19.map/-36.dds
+
+        - - remastered/map/eh19.map/-41.dds
+
+    - colorable_areas:
+        - id: windows_2
+          name: Windows 2
+          hue_start: 90
+          hue_end: 150
+      image_groups:
+        - - remastered/map/eh19.map/-56.dds
+
+    - colorable_areas:
+        - id: effect_1a
+          name: Effect 1A
+          hue_start: 150
+          hue_end: 213
+        - id: effect_1b
+          name: Effect 1B
+          hue_start: 214
+          hue_end: 335
+      image_groups:
+        - - remastered/map/eh19.map/-0.dds
+
+    - colorable_areas:
+        - id: effect_2a
+          name: Effect 2A
+          hue_start: 330
+          hue_end: 29
+        - id: effect_2b
+          name: Effect 2B
+          hue_start: 30
+          hue_end: 60
+        - id: effect_2c
+          name: Effect 2C
+          hue_start: 210
+          hue_end: 240
+          value_start: 50
+          value_end: 100
+      image_groups:
+        - - remastered/map/eh19.map/-15.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 120
+          hue_end: 180
+      image_groups:
+        - - remastered/map/eh19.map/-24.dds
+
+        - - remastered/map/eh19.map/-25.dds
+
+    - colorable_areas:
+        - id: effect_4
+          name: Effect 4
+          hue_start: 150
+          hue_end: 180
+      image_groups:
+        - - remastered/map/eh19.map/-37.dds
+
+    - colorable_areas:
+        - id: effect_5a
+          name: Effect 5A
+          hue_start: 0
+          hue_end: 179
+        - id: effect_5b
+          name: Effect 5B
+          hue_start: 180
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh19.map/-45.dds
+
+    - colorable_areas:
+        - id: sky
+          name: Sky
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh19.map/-59.dds
+
+    - colorable_areas:
+        - id: buildings_1
+          name: Background Buildings 1
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh19.map/-60.dds
+
+    - colorable_areas:
+        - id: buildings_2
+          name: Background Buildings 2
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh19.map/-61.dds
+
+    - colorable_areas:
+        - id: buildings_3
+          name: Background Buildings 3
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh19.map/-62.dds
+
+
+- id: xemnas_1_fx
+  name: Xemnas 1 (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-3.dds
+          - remastered/obj/B_EX170_LV99.a.us/-3.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-4.dds
+          - remastered/obj/B_EX170_LV99.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-5.dds
+          - remastered/obj/B_EX170_LV99.a.us/-5.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-6.dds
+          - remastered/obj/B_EX170_LV99.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-7.dds
+          - remastered/obj/B_EX170_LV99.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-8.dds
+          - remastered/obj/B_EX170_LV99.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-10.dds
+          - remastered/obj/B_EX170_LV99.a.us/-10.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-11.dds
+          - remastered/obj/B_EX170_LV99.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-12.dds
+          - remastered/obj/B_EX170_LV99.a.us/-12.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-13.dds
+          - remastered/obj/B_EX170_LV99.a.us/-13.dds
+
+    - colorable_areas:
+        - id: fx14
+          name: Effect 14
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-14.dds
+          - remastered/obj/B_EX170_LV99.a.us/-14.dds
+
+    - colorable_areas:
+        - id: fx15
+          name: Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-15.dds
+          - remastered/obj/B_EX170_LV99.a.us/-15.dds
+
+    - colorable_areas:
+        - id: fx16
+          name: Effect 16
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-16.dds
+          - remastered/obj/B_EX170_LV99.a.us/-16.dds
+
+    - colorable_areas:
+        - id: fx17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-17.dds
+          - remastered/obj/B_EX170_LV99.a.us/-17.dds
+
+    - colorable_areas:
+        - id: fx18
+          name: Effect 18
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-18.dds
+          - remastered/obj/B_EX170_LV99.a.us/-18.dds
+
+    - colorable_areas:
+        - id: fx19
+          name: Effect 19
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170.a.us/-19.dds
+          - remastered/obj/B_EX170_LV99.a.us/-19.dds
+
 
 - id: xemnas_armored
   name: Xemnas (Armored)
@@ -41,13 +791,451 @@
           hue_start: 121
           hue_end: 360
         - id: crown
-          name: crown
+          name: Crown
           hue_start: 50
           hue_end: 120
       image_groups:
         - - remastered/obj/B_EX260.mdlx/-1.dds
 
         - - remastered/obj/B_EX260.mdlx/-2.dds
+
+    - colorable_areas:
+        - id: dragon
+          name: Dragon
+          hue_start: 180
+          hue_end: 270
+      image_groups:
+        - - remastered/obj/B_EX180.mdlx/-1.dds
+
+        - - remastered/obj/B_EX180.mdlx/-2.dds
+
+        - - remastered/obj/B_EX180.mdlx/-3.dds
+
+        - - remastered/obj/B_EX180.mdlx/-4.dds
+
+        - - remastered/obj/B_EX180.mdlx/-5.dds
+
+        - - remastered/obj/B_EX180.mdlx/-6.dds
+
+        - - remastered/obj/B_EX180.mdlx/-7.dds
+
+    - colorable_areas:
+        - id: accent_1
+          name: Accent 1
+          hue_start: 300
+          hue_end: 180
+        - id: accent_2
+          name: Accent 2
+          hue_start: 181
+          hue_end: 299
+      image_groups:
+        - - remastered/obj/B_EX180.mdlx/-0.dds
+
+
+- id: xemnas_armored_arena
+  name: Xemnas (Armored Arena)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: accent_1
+          name: Accent 1
+          hue_start: 180
+          hue_end: 240
+      image_groups:
+        - - remastered/map/eh24.map/-6.dds
+
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/map/eh24.map/-12.dds
+
+    - colorable_areas:
+        - id: effect_2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/map/eh24.map/-13.dds
+
+    - colorable_areas:
+        - id: sky
+          name: Sky
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh24.map/-29.dds
+
+    - colorable_areas:
+        - id: city
+          name: City
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh24.map/-30.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh24.map/-31.dds
+
+    - colorable_areas:
+        - id: decoration_1
+          name: Decoration 1
+          hue_start: 0
+          hue_end: 60
+        - id: decoration_2
+          name: Decoration 2
+          hue_start: 150
+          hue_end: 270
+      image_groups:
+        - - remastered/map/eh24.map/-34.dds
+
+    - colorable_areas:
+        - id: decoration_3
+          name: Decoration 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/map/eh24.map/-16.dds
+
+    - colorable_areas:
+        - id: decoration_4
+          name: Decoration 4
+          hue_start: 0
+          hue_end: 360
+          value_start: 0
+          value_end: 55
+          new_saturation: 75
+      image_groups:
+        - - remastered/map/eh24.map/-18.dds
+
+
+- id: xemnas_armored_2_arena
+  name: Xemnas (Armored 2 Arena)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh23.map/-0.dds
+
+    - colorable_areas:
+        - id: effect_2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/map/eh23.map/-1.dds
+
+        - - remastered/map/eh23.map/-2.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/eh23.map/-3.dds
+
+        - - remastered/map/eh23.map/-4.dds
+
+    - colorable_areas:
+        - id: effect_4
+          name: Effect 4
+          hue_start: 240
+          hue_end: 300
+      image_groups:
+        - - remastered/map/eh23.map/-11.dds
+
+    - colorable_areas:
+        - id: effect_5
+          name: Effect 5
+          hue_start: 330
+          hue_end: 0
+      image_groups:
+        - - remastered/map/eh23.map/-12.dds
+
+    - colorable_areas:
+        - id: effect_6
+          name: Effect 6
+          hue_start: 270
+          hue_end: 0
+        - id: effect_7
+          name: Effect 7
+          hue_start: 1
+          hue_end: 269
+      image_groups:
+        - - remastered/map/eh23.map/-13.dds
+
+
+- id: xemnas_armored_fx
+  name: Xemnas (Armored) (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-3.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-5.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-9.dds
+
+    - colorable_areas:
+        - id: fx10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-10.dds
+
+    - colorable_areas:
+        - id: fx12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX260.a.us/-12.dds
+
+    - colorable_areas:
+        - id: dragonfx0
+          name: Dragon Effect 0
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-0.dds
+
+    - colorable_areas:
+        - id: dragonfx1
+          name: Dragon Effect 1
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-1.dds
+
+    - colorable_areas:
+        - id: dragonfx2
+          name: Dragon Effect 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-2.dds
+
+    - colorable_areas:
+        - id: dragonfx3
+          name: Dragon Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-3.dds
+
+    - colorable_areas:
+        - id: dragonfx4
+          name: Dragon Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-4.dds
+
+    - colorable_areas:
+        - id: dragonfx5
+          name: Dragon Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-5.dds
+
+    - colorable_areas:
+        - id: dragonfx6
+          name: Dragon Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-6.dds
+
+    - colorable_areas:
+        - id: dragonfx7
+          name: Dragon Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-7.dds
+
+    - colorable_areas:
+        - id: dragonfx8
+          name: Dragon Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-8.dds
+
+    - colorable_areas:
+        - id: dragonfx9
+          name: Dragon Effect 9
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-9.dds
+
+    - colorable_areas:
+        - id: dragonfx10
+          name: Dragon Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-10.dds
+
+    - colorable_areas:
+        - id: dragonfx11
+          name: Dragon Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-11.dds
+
+    - colorable_areas:
+        - id: dragonfx12
+          name: Dragon Effect 12
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-12.dds
+
+    - colorable_areas:
+        - id: dragonfx13
+          name: Dragon Effect 13
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-13.dds
+
+    - colorable_areas:
+        - id: dragonfx14
+          name: Dragon Effect 14
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-14.dds
+
+    - colorable_areas:
+        - id: dragonfx15
+          name: Dragon Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-15.dds
+
+    - colorable_areas:
+        - id: dragonfx16
+          name: Dragon Effect 16
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-16.dds
+
+    - colorable_areas:
+        - id: dragonfx17
+          name: Dragon Effect 17
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-17.dds
+
+    - colorable_areas:
+        - id: dragonfx18
+          name: Dragon Effect 18
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX180.a.us/-18.dds
 
 
 - id: xemnas_black_coat
@@ -70,3 +1258,503 @@
         - - remastered/obj/B_EX170.mdlx/-2.dds
           - remastered/obj/B_EX170_LV99.mdlx/-2.dds
           - remastered/obj/B_EX170_RTN.mdlx/-2.dds
+
+
+- id: xemnas_final_arena
+  name: Xemnas (Final Arena)
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: background
+          name: Background
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 20
+      image_groups:
+        - - remastered/map/eh20.map/-1.dds
+
+        - - remastered/map/eh20.map/-11.dds
+
+        - - remastered/map/eh20.map/-12.dds
+
+
+- id: xemnas_final_fx
+  name: Xemnas (Final) (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-3.png
+          - remastered/obj/B_EX170_LAST.a.gr/-3.png
+          - remastered/obj/B_EX170_LAST.a.it/-3.png
+          - remastered/obj/B_EX170_LAST.a.sp/-3.png
+          - remastered/obj/B_EX170_LAST.a.us/-3.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-3.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-3.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-3.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-3.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-3.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-4.png
+          - remastered/obj/B_EX170_LAST.a.gr/-4.png
+          - remastered/obj/B_EX170_LAST.a.it/-4.png
+          - remastered/obj/B_EX170_LAST.a.sp/-4.png
+          - remastered/obj/B_EX170_LAST.a.us/-4.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-4.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-4.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-4.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-4.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-5.png
+          - remastered/obj/B_EX170_LAST.a.gr/-5.png
+          - remastered/obj/B_EX170_LAST.a.it/-5.png
+          - remastered/obj/B_EX170_LAST.a.sp/-5.png
+          - remastered/obj/B_EX170_LAST.a.us/-5.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-5.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-5.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-5.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-5.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-5.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-6.png
+          - remastered/obj/B_EX170_LAST.a.gr/-6.png
+          - remastered/obj/B_EX170_LAST.a.it/-6.png
+          - remastered/obj/B_EX170_LAST.a.sp/-6.png
+          - remastered/obj/B_EX170_LAST.a.us/-6.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-6.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-6.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-6.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-6.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-7.png
+          - remastered/obj/B_EX170_LAST.a.gr/-7.png
+          - remastered/obj/B_EX170_LAST.a.it/-7.png
+          - remastered/obj/B_EX170_LAST.a.sp/-7.png
+          - remastered/obj/B_EX170_LAST.a.us/-7.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-7.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-7.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-7.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-7.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-8.png
+          - remastered/obj/B_EX170_LAST.a.gr/-8.png
+          - remastered/obj/B_EX170_LAST.a.it/-8.png
+          - remastered/obj/B_EX170_LAST.a.sp/-8.png
+          - remastered/obj/B_EX170_LAST.a.us/-8.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-8.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-8.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-8.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-8.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-9.png
+          - remastered/obj/B_EX170_LAST.a.gr/-9.png
+          - remastered/obj/B_EX170_LAST.a.it/-9.png
+          - remastered/obj/B_EX170_LAST.a.sp/-9.png
+          - remastered/obj/B_EX170_LAST.a.us/-9.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-9.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-9.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-9.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-9.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-9.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-11.png
+          - remastered/obj/B_EX170_LAST.a.gr/-11.png
+          - remastered/obj/B_EX170_LAST.a.it/-11.png
+          - remastered/obj/B_EX170_LAST.a.sp/-11.png
+          - remastered/obj/B_EX170_LAST.a.us/-11.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-11.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-11.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-11.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-11.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-12.png
+          - remastered/obj/B_EX170_LAST.a.gr/-12.png
+          - remastered/obj/B_EX170_LAST.a.it/-12.png
+          - remastered/obj/B_EX170_LAST.a.sp/-12.png
+          - remastered/obj/B_EX170_LAST.a.us/-12.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-12.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-12.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-12.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-12.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-12.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-13.png
+          - remastered/obj/B_EX170_LAST.a.gr/-13.png
+          - remastered/obj/B_EX170_LAST.a.it/-13.png
+          - remastered/obj/B_EX170_LAST.a.sp/-13.png
+          - remastered/obj/B_EX170_LAST.a.us/-13.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-13.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-13.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-13.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-13.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-13.dds
+
+    - colorable_areas:
+        - id: fx14
+          name: Effect 14
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-14.png
+          - remastered/obj/B_EX170_LAST.a.gr/-14.png
+          - remastered/obj/B_EX170_LAST.a.it/-14.png
+          - remastered/obj/B_EX170_LAST.a.sp/-14.png
+          - remastered/obj/B_EX170_LAST.a.us/-14.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-14.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-14.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-14.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-14.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-14.dds
+
+    - colorable_areas:
+        - id: fx15
+          name: Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-15.png
+          - remastered/obj/B_EX170_LAST.a.gr/-15.png
+          - remastered/obj/B_EX170_LAST.a.it/-15.png
+          - remastered/obj/B_EX170_LAST.a.sp/-15.png
+          - remastered/obj/B_EX170_LAST.a.us/-15.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-15.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-15.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-15.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-15.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-15.dds
+
+    - colorable_areas:
+        - id: fx16
+          name: Effect 16
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-16.png
+          - remastered/obj/B_EX170_LAST.a.gr/-16.png
+          - remastered/obj/B_EX170_LAST.a.it/-16.png
+          - remastered/obj/B_EX170_LAST.a.sp/-16.png
+          - remastered/obj/B_EX170_LAST.a.us/-16.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-16.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-16.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-16.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-16.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-16.dds
+
+    - colorable_areas:
+        - id: fx17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-17.png
+          - remastered/obj/B_EX170_LAST.a.gr/-17.png
+          - remastered/obj/B_EX170_LAST.a.it/-17.png
+          - remastered/obj/B_EX170_LAST.a.sp/-17.png
+          - remastered/obj/B_EX170_LAST.a.us/-17.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-17.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-17.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-17.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-17.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-17.dds
+
+    - colorable_areas:
+        - id: fx18
+          name: Effect 18
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-18.png
+          - remastered/obj/B_EX170_LAST.a.gr/-18.png
+          - remastered/obj/B_EX170_LAST.a.it/-18.png
+          - remastered/obj/B_EX170_LAST.a.sp/-18.png
+          - remastered/obj/B_EX170_LAST.a.us/-18.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-18.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-18.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-18.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-18.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-18.dds
+
+    - colorable_areas:
+        - id: fx19
+          name: Effect 19
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-19.png
+          - remastered/obj/B_EX170_LAST.a.gr/-19.png
+          - remastered/obj/B_EX170_LAST.a.it/-19.png
+          - remastered/obj/B_EX170_LAST.a.sp/-19.png
+          - remastered/obj/B_EX170_LAST.a.us/-19.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-19.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-19.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-19.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-19.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-19.dds
+
+    - colorable_areas:
+        - id: fx20
+          name: Effect 20
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-20.png
+          - remastered/obj/B_EX170_LAST.a.gr/-20.png
+          - remastered/obj/B_EX170_LAST.a.it/-20.png
+          - remastered/obj/B_EX170_LAST.a.sp/-20.png
+          - remastered/obj/B_EX170_LAST.a.us/-20.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-20.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-20.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-20.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-20.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-20.dds
+
+    - colorable_areas:
+        - id: fx21
+          name: Effect 21
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-21.png
+          - remastered/obj/B_EX170_LAST.a.gr/-21.png
+          - remastered/obj/B_EX170_LAST.a.it/-21.png
+          - remastered/obj/B_EX170_LAST.a.sp/-21.png
+          - remastered/obj/B_EX170_LAST.a.us/-21.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-21.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-21.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-21.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-21.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-21.dds
+
+    - colorable_areas:
+        - id: fx22
+          name: Effect 22
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-22.png
+          - remastered/obj/B_EX170_LAST.a.gr/-22.png
+          - remastered/obj/B_EX170_LAST.a.it/-22.png
+          - remastered/obj/B_EX170_LAST.a.sp/-22.png
+          - remastered/obj/B_EX170_LAST.a.us/-22.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-22.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-22.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-22.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-22.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-22.dds
+
+    - colorable_areas:
+        - id: fx23
+          name: Effect 22
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-23.png
+          - remastered/obj/B_EX170_LAST.a.gr/-23.png
+          - remastered/obj/B_EX170_LAST.a.it/-23.png
+          - remastered/obj/B_EX170_LAST.a.sp/-23.png
+          - remastered/obj/B_EX170_LAST.a.us/-23.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-23.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-23.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-23.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-23.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-23.dds
+
+    - colorable_areas:
+        - id: fx24
+          name: Effect 24
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-24.png
+          - remastered/obj/B_EX170_LAST.a.gr/-24.png
+          - remastered/obj/B_EX170_LAST.a.it/-24.png
+          - remastered/obj/B_EX170_LAST.a.sp/-24.png
+          - remastered/obj/B_EX170_LAST.a.us/-24.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-24.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-24.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-24.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-24.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-24.dds
+
+    - colorable_areas:
+        - id: fx25
+          name: Effect 25
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-25.png
+          - remastered/obj/B_EX170_LAST.a.gr/-25.png
+          - remastered/obj/B_EX170_LAST.a.it/-25.png
+          - remastered/obj/B_EX170_LAST.a.sp/-25.png
+          - remastered/obj/B_EX170_LAST.a.us/-25.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-25.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-25.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-25.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-25.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-25.dds
+
+    - colorable_areas:
+        - id: fx26
+          name: Effect 26
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-26.png
+          - remastered/obj/B_EX170_LAST.a.gr/-26.png
+          - remastered/obj/B_EX170_LAST.a.it/-26.png
+          - remastered/obj/B_EX170_LAST.a.sp/-26.png
+          - remastered/obj/B_EX170_LAST.a.us/-26.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-26.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-26.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-26.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-26.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-26.dds
+
+    - colorable_areas:
+        - id: fx27
+          name: Effect 27
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-27.png
+          - remastered/obj/B_EX170_LAST.a.gr/-27.png
+          - remastered/obj/B_EX170_LAST.a.it/-27.png
+          - remastered/obj/B_EX170_LAST.a.sp/-27.png
+          - remastered/obj/B_EX170_LAST.a.us/-27.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-27.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-27.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-27.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-27.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-27.dds
+
+    - colorable_areas:
+        - id: fx28
+          name: Effect 28
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.a.fr/-28.png
+          - remastered/obj/B_EX170_LAST.a.gr/-28.png
+          - remastered/obj/B_EX170_LAST.a.it/-28.png
+          - remastered/obj/B_EX170_LAST.a.sp/-28.png
+          - remastered/obj/B_EX170_LAST.a.us/-28.png
+
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-28.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-28.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-28.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-28.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-28.dds

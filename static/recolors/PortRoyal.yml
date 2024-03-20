@@ -116,6 +116,78 @@
           - remastered/obj/B_EX210_EH.mdlx/-3.dds
 
 
+- id: luxord_fx
+  name: Luxord (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX150.a.us/-5.dds
+          - remastered/obj/B_EX150_LV99.a.us/-5.dds
+          - remastered/obj/B_EX150.a.us/-9.dds
+          - remastered/obj/B_EX150_LV99.a.us/-9.dds
+          - remastered/obj/B_EX150.a.us/-15.dds
+          - remastered/obj/B_EX150_LV99.a.us/-15.dds
+          - remastered/obj/B_EX210.a.us/-8.dds
+          - remastered/obj/B_EX210.a.us/-15.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX150.a.us/-11.dds
+          - remastered/obj/B_EX150_LV99.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX150.a.us/-12.dds
+          - remastered/obj/B_EX150_LV99.a.us/-12.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX150.a.us/-13.dds
+          - remastered/obj/B_EX150_LV99.a.us/-13.dds
+
+    - colorable_areas:
+        - id: fx14
+          name: Effect 14
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX150.a.us/-14.dds
+          - remastered/obj/B_EX150_LV99.a.us/-14.dds
+
+    - colorable_areas:
+        - id: fx17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX150.a.us/-17.dds
+          - remastered/obj/B_EX150_LV99.a.us/-17.dds
+
+
 - id: will_turner
   name: Will Turner
   tags:

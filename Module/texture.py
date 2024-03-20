@@ -258,7 +258,7 @@ class TextureRecolorizer:
 
         for model in recolorable_models:
             model_id: str = model["id"]
-            available_image_group_ids: list[str] = [s for s in string.ascii_lowercase]
+            available_image_group_ids: list[str] = _available_group_ids()
             model_cache_folder = recolors_cache_folder / model_id
 
             for recolor in model["recolors"]:
@@ -364,3 +364,12 @@ def _value_in_range_condition(value_start: float, value_end: float) -> ColorCond
     adjusted_start = value_start / 100.0 * 256.0
     adjusted_end = value_end / 100.0 * 256.0
     return lambda value_value: adjusted_start <= value_value <= adjusted_end
+
+
+def _available_group_ids() -> list[str]:
+    # Gives us a-z, aa-az, ba-bz, and so on - should be more than enough
+    ascii_characters = string.ascii_lowercase
+    result: list[str] = [c for c in ascii_characters]
+    for c in ascii_characters:
+        result.extend(f"{c}{c2}" for c2 in ascii_characters)
+    return result

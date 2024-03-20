@@ -116,6 +116,168 @@
           - remastered/obj/H_EX580.mdlx/-2.dds
 
 
+- id: demyx_fx
+  name: Demyx (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx0
+          name: Effect 0
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-0.dds
+          - remastered/obj/B_EX120_HB.a.us/-0.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-0.dds
+
+    - colorable_areas:
+        - id: fx1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-1.dds
+          - remastered/obj/B_EX120_HB.a.us/-1.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-1.dds
+
+    - colorable_areas:
+        - id: fx2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-2.dds
+          - remastered/obj/B_EX120_HB.a.us/-2.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-2.dds
+
+    - colorable_areas:
+        - id: fx3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-3.dds
+          - remastered/obj/B_EX120_HB.a.us/-3.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-3.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-4.dds
+          - remastered/obj/B_EX120_HB.a.us/-4.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-5.dds
+          - remastered/obj/B_EX120_HB.a.us/-5.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-5.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-6.dds
+          - remastered/obj/B_EX120_HB.a.us/-6.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-7.dds
+          - remastered/obj/B_EX120_HB.a.us/-7.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-8.dds
+          - remastered/obj/B_EX120_HB.a.us/-8.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX120.a.us/-10.dds
+          - remastered/obj/B_EX120_HB.a.us/-10.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-10.dds
+
+
+- id: goa
+  name: Garden of Assemblage
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: portal
+          name: Portal
+          hue_start: 180
+          hue_end: 270
+      image_groups:
+        - - remastered/map/hb26.map/-14.dds
+
+    - colorable_areas:
+        - id: portal_finished
+          name: Portal (Finished)
+          hue_start: 270
+          hue_end: 0
+      image_groups:
+        - - remastered/map/hb26.map/-15.dds
+
+    - colorable_areas:
+        - id: wall_glow
+          name: Wall Glow
+          hue_start: 180
+          hue_end: 210
+      image_groups:
+        - - remastered/map/hb26.map/-30.dds
+
+    - colorable_areas:
+        - id: computer
+          name: Computer
+          hue_start: 150
+          hue_end: 210
+      image_groups:
+        - - remastered/map/hb26.map/-41.dds
+
+    - colorable_areas:
+        - id: sky
+          name: Sky
+          hue_start: 270
+          hue_end: 30
+      image_groups:
+        - - remastered/map/hb26.map/-57.dds
+
+
 - id: leon
   name: Leon
   tags:
@@ -226,6 +388,225 @@
           - remastered/obj/N_HB590_GM.mdlx/-4.dds
           - remastered/obj/N_HB590_RTN.mdlx/-4.dds
           - remastered/obj/N_HB630.mdlx/-4.dds
+
+
+- id: sephiroth_fx
+  name: Sephiroth (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-1.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-3.dds
+          - remastered/obj/N_HB630.a.us/-16.dds
+          - remastered/obj/N_HB630.a.us/-28.dds
+          - remastered/obj/N_HB630.a.us/-31.dds
+          - remastered/obj/N_HB630.a.us/-35.dds
+
+    - colorable_areas:
+        - id: effect_4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 25
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-4.dds
+
+    - colorable_areas:
+        - id: effect_5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-5.dds
+
+    - colorable_areas:
+        - id: effect_6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-6.dds
+
+    - colorable_areas:
+        - id: effect_7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-7.dds
+
+    - colorable_areas:
+        - id: effect_8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-8.dds
+
+    - colorable_areas:
+        - id: effect_9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-9.dds
+
+    - colorable_areas:
+        - id: effect_10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-10.dds
+
+    - colorable_areas:
+        - id: effect_11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-11.dds
+
+    - colorable_areas:
+        - id: effect_12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-12.dds
+
+    - colorable_areas:
+        - id: effect_13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-13.dds
+
+    - colorable_areas:
+        - id: effect_14
+          name: Effect 14
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-14.dds
+          - remastered/obj/N_HB630.a.us/-22.dds
+          - remastered/obj/N_HB630.a.us/-29.dds
+          - remastered/obj/N_HB630.a.us/-34.dds
+
+    - colorable_areas:
+        - id: effect_15
+          name: Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-15.dds
+          - remastered/obj/N_HB630.a.us/-30.dds
+
+    - colorable_areas:
+        - id: effect_17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-17.dds
+
+    - colorable_areas:
+        - id: effect_18
+          name: Effect 18
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-18.dds
+          - remastered/obj/N_HB630.a.us/-27.dds
+
+    - colorable_areas:
+        - id: effect_19
+          name: Effect 19
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-19.dds
+
+    - colorable_areas:
+        - id: effect_20
+          name: Effect 20
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-20.dds
+          - remastered/obj/N_HB630.a.us/-26.dds
+          - remastered/obj/N_HB630.a.us/-32.dds
+          - remastered/obj/N_HB630.a.us/-36.dds
+
+    - colorable_areas:
+        - id: effect_21
+          name: Effect 21
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-21.dds
+
+    - colorable_areas:
+        - id: effect_23
+          name: Effect 23
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-23.dds
+
+    - colorable_areas:
+        - id: effect_24
+          name: Effect 24
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-24.dds
+
+    - colorable_areas:
+        - id: effect_25
+          name: Effect 25
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-25.dds
+
+    - colorable_areas:
+        - id: effect_33
+          name: Effect 33
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB630.a.us/-33.dds
 
 
 - id: tifa
