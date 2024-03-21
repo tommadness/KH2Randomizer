@@ -1390,6 +1390,8 @@ class CosmeticsModAppender:
     def write_rando_themed_texture_assets(self):
         """Adds assets and files to the mod for 'Add Randomizer-Themed Textures'."""
         goa_computer_source_name = _relative_mod_file("textures/goa/randomizer-themed-computer.dds")
+        tt_computer_source_name = _relative_mod_file("textures/tt-computer/randomizer-themed-computer-tt.dds")
+        data_door_source_name = _relative_mod_file("textures/data-door/data-door-logo.dds")
         final_arena_logo_source_name = _relative_mod_file("textures/final-arena/randomizer-logo.dds")
 
         self.mod_yml.add_asset(
@@ -1398,6 +1400,22 @@ class CosmeticsModAppender:
                 "platform": "pc",
                 "method": "copy",
                 "source": [{"name": goa_computer_source_name}],
+            },
+        )
+        self.mod_yml.add_asset(
+            {
+                "name": "remastered/map/tt21.map/-84.dds",
+                "platform": "pc",
+                "method": "copy",
+                "source": [{"name": tt_computer_source_name}],
+            },
+        )
+        self.mod_yml.add_asset(
+            {
+                "name": "remastered/obj/F_WI550.mdlx/-2.dds",
+                "platform": "pc",
+                "method": "copy",
+                "source": [{"name": data_door_source_name}],
             },
         )
         self.mod_yml.add_asset(
@@ -1416,6 +1434,14 @@ class CosmeticsModAppender:
         self.out_zip.write(
             resource_path("static/textures/goa/randomizer-themed-computer.dds"),
             goa_computer_source_name,
+        )
+        self.out_zip.write(
+            resource_path("static/textures/tt-computer/randomizer-themed-computer-tt.dds"),
+            tt_computer_source_name,
+        )
+        self.out_zip.write(
+            resource_path("static/textures/data-door/data-door-logo.dds"),
+            data_door_source_name,
         )
         self.out_zip.write(
             resource_path("static/textures/final-arena/randomizer-logo.dds"),

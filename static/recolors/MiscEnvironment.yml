@@ -1,0 +1,125 @@
+- id: data_door
+  name: Door to Data Org
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: door
+          name: Door
+          hue_start: 0
+          hue_end: 360
+          value_start: 0
+          value_end: 80
+          new_saturation: 75
+          value_offset: 10
+      image_groups:
+        - - remastered/obj/F_WI550.mdlx/-0.dds
+
+        - - remastered/obj/F_WI550.mdlx/-1.dds
+
+        # Deliberately not coloring the door emblem since it can be replaced by a rando-themed one
+
+
+- id: save_point
+  name: Save Point
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: effect_0
+          name: Effect 0
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/WORLD_POINT.a.us/-0.dds
+
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/WORLD_POINT.a.us/-1.dds
+
+    - colorable_areas:
+        - id: effect_2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/SAVE_POINT.a.us/-0.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/SAVE_POINT.a.us/-1.dds
+
+
+- id: drops
+  name: Drops
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: mp_bubble
+          name: MP Bubble
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/PRIZE.mdlx/-1.dds
+
+    - colorable_areas:
+        - id: blue_item_main
+          name: Blue Item (Main)
+          hue_start: 180
+          hue_end: 240
+        - id: blue_item_trim
+          name: Blue Item (Trim)
+          hue_start: 30
+          hue_end: 90
+      image_groups:
+        - - remastered/obj/PRIZE_BOX_BLUE.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: green_item_main
+          name: Green Item (Main)
+          hue_start: 150
+          hue_end: 300
+        - id: green_item_trim
+          name: Green Item (Trim)
+          hue_start: 60
+          hue_end: 145
+      image_groups:
+        - - remastered/obj/PRIZE_BOX_GREEN.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: red_item_main
+          name: Red Item (Main)
+          hue_start: 300
+          hue_end: 25
+        - id: red_item_trim
+          name: Red Item (Trim)
+          hue_start: 26
+          hue_end: 90
+      image_groups:
+        - - remastered/obj/PRIZE_BOX_RED.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: yellow_item_main
+          name: Yellow Item (Main)
+          hue_start: 240
+          hue_end: 300
+        - id: yellow_item_trim
+          name: Yellow Item (Trim)
+          hue_start: 0
+          hue_end: 60
+      image_groups:
+        - - remastered/obj/PRIZE_BOX_YELLOW.mdlx/-0.dds

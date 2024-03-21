@@ -2,6 +2,107 @@
 # - Marluxia has some texture orders changed by GoA ROM so can't currently recolor him
 # - Tough to do Minnie's bow because of the mouth/tongue being in the same texture and a similar color
 
+- id: dc_castle
+  name: Disney Castle
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: accent_wall
+          name: Accent Wall
+          hue_start: 210
+          hue_end: 330
+      image_groups:
+        - - remastered/map/dc00.map/-1.dds
+
+        - - remastered/map/dc02.map/-58.dds
+
+    - colorable_areas:
+        - id: carpet_main
+          name: Carpet (Main)
+          hue_start: 330
+          hue_end: 25
+        - id: carpet_trim
+          name: Carpet (Trim)
+          hue_start: 26
+          hue_end: 90
+      image_groups:
+        - - remastered/map/dc00.map/-10.dds
+          - remastered/map/dc02.map/-33.dds
+
+        - - remastered/map/dc00.map/-14.dds
+
+        - - remastered/map/dc03.map/-10.dds
+
+        - - remastered/map/dc04.map/-16.dds
+
+        - - remastered/map/dc05.map/-23.dds
+
+    - colorable_areas:
+        - id: pillar
+          name: Pillar
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/dc00.map/-6.dds
+
+        - - remastered/map/dc02.map/-35.dds
+
+    - colorable_areas:
+        - id: banner
+          name: Banner
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/map/dc00.map/-28.dds
+
+        - - remastered/map/dc02.map/-12.dds
+
+    - colorable_areas:
+        - id: chamber_door
+          name: Audience Chamber (Door)
+          hue_start: 210
+          hue_end: 330
+      image_groups:
+        - - remastered/map/dc00.map/-2.dds
+
+        - - remastered/map/dc02.map/-15.dds
+          - remastered/map/dc02.map/-17.dds
+
+
+- id: dc_library
+  name: Disney Castle Library
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: floor
+          name: Floor
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 60
+      image_groups:
+        - - remastered/map/dc01.map/-8.dds
+
+    - colorable_areas:
+        - id: wall_main
+          name: Wall (Main)
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 60
+      image_groups:
+        - - remastered/map/dc01.map/-21.dds
+
+    - colorable_areas:
+        - id: wall_trim
+          name: Wall (Trim)
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 60
+      image_groups:
+        - - remastered/map/dc01.map/-6.dds
+
+
 - id: lingering_will
   name: Lingering Will
   tags:
@@ -32,6 +133,249 @@
           hue_end: 205
       image_groups:
         - - remastered/obj/B_EX420.mdlx/-2.dds
+
+
+- id: marluxia_fx
+  name: Marluxia (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: petals
+          name: Petals
+          hue_start: 330
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-3.dds
+
+        - - remastered/obj/N_CM000_BTL.a.us/-12.dds
+          - remastered/obj/N_CM000_BTL.a.us/-14.dds
+          - remastered/obj/N_CM000_BTL.a.us/-15.dds
+          - remastered/obj/N_CM000_BTL.a.us/-17.dds
+          - remastered/obj/N_CM000_BTL.a.us/-21.dds
+          - remastered/obj/N_CM000_BTL.a.us/-25.dds
+          - remastered/obj/N_CM000_BTL.a.us/-29.dds
+          - remastered/obj/N_CM000_BTL.a.us/-31.dds
+          - remastered/obj/N_CM000_BTL.a.us/-35.dds
+
+    - colorable_areas:
+        - id: vines
+          name: Vines
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-5.dds
+          - remastered/obj/N_CM000_BTL.a.us/-18.dds
+          - remastered/obj/N_CM000_BTL.a.us/-24.dds
+          - remastered/obj/N_CM000_BTL.a.us/-27.dds
+          - remastered/obj/N_CM000_BTL.a.us/-30.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-9.dds
+
+    - colorable_areas:
+        - id: fx10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-10.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-13.dds
+
+    - colorable_areas:
+        - id: fx16
+          name: Effect 16
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-16.dds
+
+    - colorable_areas:
+        - id: fx19
+          name: Effect 19
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-19.dds
+
+    - colorable_areas:
+        - id: fx20
+          name: Effect 20
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-20.dds
+
+    - colorable_areas:
+        - id: fx22
+          name: Effect 22
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-22.dds
+
+    - colorable_areas:
+        - id: fx23
+          name: Effect 23
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-23.dds
+
+    - colorable_areas:
+        - id: fx28
+          name: Effect 28
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-28.dds
+
+    - colorable_areas:
+        - id: fx32
+          name: Effect 32
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-32.dds
+
+    - colorable_areas:
+        - id: fx33
+          name: Effect 33
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-33.dds
+
+    - colorable_areas:
+        - id: fx34
+          name: Effect 34
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-34.dds
+
+    - colorable_areas:
+        - id: fx36
+          name: Effect 36
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-36.dds
+
+    - colorable_areas:
+        - id: fx37
+          name: Effect 37
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-37.dds
+
+    - colorable_areas:
+        - id: fx38
+          name: Effect 38
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-38.dds
+
+    - colorable_areas:
+        - id: fx39
+          name: Effect 39
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-39.dds
+
+    - colorable_areas:
+        - id: fx40
+          name: Effect 40
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-40.dds
+
+    - colorable_areas:
+        - id: fx41
+          name: Effect 41
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM000_BTL.a.us/-41.dds
 
 
 - id: minnie

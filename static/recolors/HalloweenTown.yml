@@ -1,5 +1,6 @@
 # Notes:
 # - Looks like maybe the GoA messes with Oogie's textures order so can't currently recolor Oogie
+# - Dance Call has some texture orders changed by GoA ROM so can't currently recolor its effects
 
 - id: barrel
   name: Barrel
@@ -134,6 +135,8 @@
 
         - - remastered/obj/P_NM000_SANTA_RTN.mdlx/-2.dds
 
+        - - remastered/obj/P_NM000_SANTA.a.us/-5.dds
+
 
 - id: lock
   name: Lock
@@ -237,3 +240,212 @@
           - remastered/obj/N_CM040_BTL.mdlx/-5.dds
 
         - - remastered/obj/N_CM040_GM.mdlx/-4.dds
+
+
+- id: vexen_fx
+  name: Vexen (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-3.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-5.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-9.dds
+
+    - colorable_areas:
+        - id: fx10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-10.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-12.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-13.dds
+
+    - colorable_areas:
+        - id: fx15
+          name: Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-15.dds
+
+    - colorable_areas:
+        - id: fx16
+          name: Effect 16
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-16.dds
+
+    - colorable_areas:
+        - id: fx17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-17.dds
+
+    - colorable_areas:
+        - id: fx18
+          name: Effect 18
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-18.dds
+
+    - colorable_areas:
+        - id: fx19
+          name: Effect 19
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-19.dds
+
+    - colorable_areas:
+        - id: fx20
+          name: Effect 20
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-20.dds
+
+    - colorable_areas:
+        - id: fx21
+          name: Effect 21
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-21.dds
+
+    - colorable_areas:
+        - id: fx22
+          name: Effect 22
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-22.dds
+
+    - colorable_areas:
+        - id: fx23
+          name: Effect 23
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-23.dds
+
+    - colorable_areas:
+        - id: fx24
+          name: Effect 24
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-24.dds
+
+    - colorable_areas:
+        - id: fx25
+          name: Effect 25
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-25.dds
+
+    - colorable_areas:
+        - id: fx26
+          name: Effect 26
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_CM040_BTL.a.us/-26.dds
