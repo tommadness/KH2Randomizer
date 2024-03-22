@@ -114,4 +114,4 @@ def make_graph(graph: LocationGraphBuilder):
         if index == 0:
             graph.add_edge(START_NODE, location, RequirementEdge(req=ItemPlacementHelpers.make_level_group_check(index)))
         else:
-            graph.add_edge(locations[index - 1], location)
+            graph.add_edge(locations[index - 1], location, RequirementEdge(req=ItemPlacementHelpers.make_level_group_check(index)))
