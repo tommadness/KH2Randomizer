@@ -7,6 +7,11 @@
     - colorable_areas:
         - id: hat_collar
           name: Hat/Collar
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - static/recolors/masks/donald/6_HUD.mask
           hue_start: 180
           hue_end: 260
       image_groups:
@@ -23,6 +28,7 @@
         - - remastered/obj/P_EX020_WM.mdlx/-3.dds
 
         - - remastered/obj/P_EX020.a.us/-6.dds
+      previews: [ true, false, true, true ]
 
 
 - id: goofy
@@ -44,6 +50,7 @@
 
         - - remastered/obj/P_EX030_NOBG_RTN.mdlx/-0.dds
           - remastered/obj/P_EX030_WM.mdlx/-0.dds
+      previews: [ true, false ]
 
     - colorable_areas:
         - id: shirt
@@ -60,6 +67,7 @@
           - remastered/obj/P_EX030_WM.mdlx/-1.dds
 
         - - remastered/obj/P_EX030.a.us/-2.dds
+      previews: [ true, false, true ]
 
 
 - id: sora
@@ -71,16 +79,89 @@
     - colorable_areas:
         - id: main
           name: Main
-          saturation_start: 0
-          saturation_end: 25
-          value_start: 0
-          value_end: 30
+          mask_files:
+            - static/recolors/masks/sora/0_Black.mask
+            - static/recolors/masks/sora/0_Black.mask
+            - static/recolors/masks/sora/0_Black.mask
+            - N/A
+            - N/A
+            - N/A
+            - N/A
           new_saturation: 50
           value_offset: 15
-        - id: belt_shoes
-          name: Belt/Shoes
-          hue_start: 27
-          hue_end: 57
+
+        - id: belts
+          name: Belts
+          mask_files:
+            - static/recolors/masks/sora/0_Belts.mask
+            - static/recolors/masks/sora/0_Belts.mask
+            - static/recolors/masks/sora/0_Belts.mask
+            - static/recolors/masks/sora/1_Belts.mask
+            - static/recolors/masks/sora/1_Belts.mask
+            - static/recolors/masks/sora/1_Belts.mask
+            - static/recolors/masks/sora/1_Belts.mask
+          new_saturation: 50
+          value_offset: 15
+
+        - id: blue_inner
+          name: Blue (Inner)
+          mask_files:
+            - static/recolors/masks/sora/0_Blue-Inner.mask
+            - static/recolors/masks/sora/0_Blue-Inner.mask
+            - static/recolors/masks/sora/0_Blue-Inner.mask
+            - static/recolors/masks/sora/1_Blue-Inner.mask
+            - static/recolors/masks/sora/1_Blue-Inner.mask
+            - static/recolors/masks/sora/1_Blue-Inner.mask
+            - static/recolors/masks/sora/1_Blue-Inner.mask
+          new_saturation: 50
+          value_offset: 15
+
+        - id: red
+          name: Red
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - static/recolors/masks/sora/1_Red.mask
+            - static/recolors/masks/sora/1_Red.mask
+            - static/recolors/masks/sora/1_Red.mask
+            - static/recolors/masks/sora/1_Red.mask
+
+        - id: silver
+          name: Silver
+          mask_files:
+            - static/recolors/masks/sora/0_Silver.mask
+            - static/recolors/masks/sora/0_Silver.mask
+            - static/recolors/masks/sora/0_Silver.mask
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+
+        - id: trim
+          name: Trim
+          mask_files:
+            - static/recolors/masks/sora/0_Trim.mask
+            - static/recolors/masks/sora/0_Trim.mask
+            - static/recolors/masks/sora/0_Trim.mask
+            - static/recolors/masks/sora/1_Trim.mask
+            - static/recolors/masks/sora/1_Trim.mask
+            - static/recolors/masks/sora/1_Trim.mask
+            - static/recolors/masks/sora/1_Trim.mask
+          new_saturation: 50
+
+        - id: yellow
+          name: Yellow
+          mask_files:
+            - static/recolors/masks/sora/0_Yellow.mask
+            - static/recolors/masks/sora/0_Yellow.mask
+            - static/recolors/masks/sora/0_Yellow.mask
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+
       image_groups:
         - - remastered/obj/ACTOR_SORA.mdlx/-0.dds
           - remastered/obj/ACTOR_SORA_H.mdlx/-3.dds
@@ -103,12 +184,6 @@
           - remastered/obj/P_EX100_NPC.mdlx/-0.dds
           - remastered/obj/P_EX100_WM.mdlx/-0.dds
 
-    - colorable_areas:
-        - id: side_accent
-          name: Side Accent
-          hue_start: 0
-          hue_end: 8
-      image_groups:
         - - remastered/obj/ACTOR_SORA.mdlx/-1.dds
           - remastered/obj/AL14_PLAYER.mdlx/-1.dds
           - remastered/obj/DEAD_BOSS.mdlx/-1.dds
@@ -131,6 +206,8 @@
           - remastered/obj/P_EX100_NPC.mdlx/-1.dds
           - remastered/obj/P_EX100_WM.mdlx/-1.dds
 
+      previews: [ false, false, true, false, false, false, true ]
+
 
 - id: sora_valor
   name: Sora (Valor Form)
@@ -139,25 +216,98 @@
     - party
   recolors:
     - colorable_areas:
-        - id: main
-          name: Main Color
-          hue_start: 320
-          hue_end: 40
+        - id: black
+          name: Black
+          mask_files:
+            - static/recolors/masks/sora-valor/0_Black.mask
+            - static/recolors/masks/sora-valor/0_Black.mask
+            - static/recolors/masks/sora-valor/1_Black.mask
+            - static/recolors/masks/sora-valor/1_Black.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 15
+
+        - id: blue_belts
+          name: Blue (Belts)
+          mask_files:
+            - static/recolors/masks/sora-valor/0_Blue-Belts.mask
+            - static/recolors/masks/sora-valor/0_Blue-Belts.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+          value_offset: 5
+
+        - id: emblem
+          name: Emblem
+          mask_files:
+            - static/recolors/masks/sora-valor/0_Emblem.mask
+            - static/recolors/masks/sora-valor/0_Emblem.mask
+            - N/A
+            - N/A
+            - N/A
+
+        - id: red
+          name: Red
+          mask_files:
+            - static/recolors/masks/sora-valor/0_Red.mask
+            - static/recolors/masks/sora-valor/0_Red.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-valor/4_HUD-Red.mask
+
+        - id: red_accent
+          name: Red (Accent)
+          mask_files:
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-valor/1_Red.mask
+            - static/recolors/masks/sora-valor/1_Red.mask
+            - N/A
+
+        - id: silver
+          name: Silver
+          mask_files:
+            - static/recolors/masks/sora-valor/0_Silver.mask
+            - static/recolors/masks/sora-valor/0_Silver.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+
+        - id: shirt_inner
+          name: Shirt (Inner)
+          mask_files:
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-valor/1_Shirt-Inner.mask
+            - static/recolors/masks/sora-valor/1_Shirt-Inner.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 5
+
+        - id: trim
+          name: Trim
+          mask_files:
+            - static/recolors/masks/sora-valor/0_Trim.mask
+            - static/recolors/masks/sora-valor/0_Trim.mask
+            - static/recolors/masks/sora-valor/1_Trim.mask
+            - static/recolors/masks/sora-valor/1_Trim.mask
+            - N/A
+          new_saturation: 50
+
       image_groups:
         - - remastered/obj/H_EX500_BTLF.mdlx/-3.dds
 
         - - remastered/obj/P_EX100_BTLF.mdlx/-0.dds
 
-    - colorable_areas:
-        - id: side_accent
-          name: Side Accent
-          hue_start: 0
-          hue_end: 8
-      image_groups:
         - - remastered/obj/H_EX500_BTLF.mdlx/-0.dds
 
         - - remastered/obj/P_EX100_BTLF.mdlx/-1.dds
 
+        - - remastered/obj/P_EX100_BTLF.a.us/-4.dds
+
+      previews: [ false, true, false, true, true ]
 
 - id: sora_wisdom
   name: Sora (Wisdom Form)
@@ -166,17 +316,98 @@
     - party
   recolors:
     - colorable_areas:
-        - id: main
-          name: Main Color
-          hue_start: 150
-          hue_end: 265
+        - id: black
+          name: Black
+          mask_files:
+            - static/recolors/masks/sora-wisdom/0_Black.mask
+            - static/recolors/masks/sora-wisdom/0_Black.mask
+            - static/recolors/masks/sora-wisdom/1_Black.mask
+            - static/recolors/masks/sora-wisdom/1_Black.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 5
+
+        - id: blue
+          name: Blue
+          mask_files:
+            - static/recolors/masks/sora-wisdom/0_Blue.mask
+            - static/recolors/masks/sora-wisdom/0_Blue.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-wisdom/2_HUD-Blue.mask
+
+        - id: emblem
+          name: Emblem
+          mask_files:
+            - static/recolors/masks/sora-wisdom/0_Emblem.mask
+            - static/recolors/masks/sora-wisdom/0_Emblem.mask
+            - N/A
+            - N/A
+            - N/A
+
+        - id: silver
+          name: Silver
+          mask_files:
+            - static/recolors/masks/sora-wisdom/0_Silver.mask
+            - static/recolors/masks/sora-wisdom/0_Silver.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+
+        - id: grey
+          name: Grey
+          mask_files:
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-wisdom/1_Grey.mask
+            - static/recolors/masks/sora-wisdom/1_Grey.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 10
+
+        - id: straps
+          name: Straps
+          mask_files:
+            - static/recolors/masks/sora-wisdom/0_Straps.mask
+            - static/recolors/masks/sora-wisdom/0_Straps.mask
+            - static/recolors/masks/sora-wisdom/1_Straps.mask
+            - static/recolors/masks/sora-wisdom/1_Straps.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 5
+
+        - id: trim
+          name: Trim
+          mask_files:
+            - static/recolors/masks/sora-wisdom/0_Trim.mask
+            - static/recolors/masks/sora-wisdom/0_Trim.mask
+            - static/recolors/masks/sora-wisdom/1_Trim.mask
+            - static/recolors/masks/sora-wisdom/1_Trim.mask
+            - N/A
+          new_saturation: 50
+
+        - id: yellow
+          name: Yellow
+          mask_files:
+            - static/recolors/masks/sora-wisdom/0_Yellow.mask
+            - static/recolors/masks/sora-wisdom/0_Yellow.mask
+            - N/A
+            - N/A
+            - N/A
+
       image_groups:
         - - remastered/obj/H_EX500_MAGF.mdlx/-3.dds
 
         - - remastered/obj/P_EX100_MAGF.mdlx/-0.dds
 
+        - - remastered/obj/H_EX500_MAGF.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_MAGF.mdlx/-1.dds
+
         - - remastered/obj/P_EX100_MAGF.a.us/-2.dds
 
+      previews: [ false, true, false, true, true ]
 
 - id: sora_limit
   name: Sora (Limit Form)
@@ -185,28 +416,97 @@
     - party
   recolors:
     - colorable_areas:
-        - id: main
-          name: Main Color
-          hue_start: 340
-          hue_end: 8
-        - id: shoes
-          name: Shoes
-          hue_start: 25
-          hue_end: 65
+        - id: black
+          name: Black
+          mask_files:
+            - static/recolors/masks/sora-limit/0_Black.mask
+            - static/recolors/masks/sora-limit/0_Black.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-limit/9_HUD-Black.mask
+          new_saturation: 50
+          value_offset: 10
+        - id: blue
+          name: Blue
+          mask_files:
+            - static/recolors/masks/sora-limit/0_Blue.mask
+            - static/recolors/masks/sora-limit/0_Blue.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-limit/9_HUD-Blue.mask
+        - id: grey
+          name: Grey
+          mask_files:
+            - static/recolors/masks/sora-limit/0_Grey.mask
+            - static/recolors/masks/sora-limit/0_Grey.mask
+            - static/recolors/masks/sora-limit/1_Grey.mask
+            - static/recolors/masks/sora-limit/1_Grey.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 10
+        - id: red
+          name: Red
+          mask_files:
+            - static/recolors/masks/sora-limit/0_Red.mask
+            - static/recolors/masks/sora-limit/0_Red.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-limit/9_HUD-Red.mask
+        - id: red_accent
+          name: Red (Accent)
+          mask_files:
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-limit/1_Red.mask
+            - static/recolors/masks/sora-limit/1_Red.mask
+            - N/A
+        - id: silver
+          name: Silver
+          mask_files:
+            - static/recolors/masks/sora-limit/0_Silver.mask
+            - static/recolors/masks/sora-limit/0_Silver.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+        - id: trim
+          name: Trim
+          mask_files:
+            - static/recolors/masks/sora-limit/0_Trim.mask
+            - static/recolors/masks/sora-limit/0_Trim.mask
+            - static/recolors/masks/sora-limit/1_Trim.mask
+            - static/recolors/masks/sora-limit/1_Trim.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 5
+        - id: white
+          name: White
+          mask_files:
+            - static/recolors/masks/sora-limit/0_White.mask
+            - static/recolors/masks/sora-limit/0_White.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+        - id: yellow
+          name: Yellow
+          mask_files:
+            - static/recolors/masks/sora-limit/0_Yellow.mask
+            - static/recolors/masks/sora-limit/0_Yellow.mask
+            - N/A
+            - N/A
+            - N/A
       image_groups:
         - - remastered/obj/H_EX500_KH1F.mdlx/-3.dds
 
         - - remastered/obj/P_EX100_KH1F.mdlx/-0.dds
 
-    - colorable_areas:
-        - id: side_accent
-          name: Side Accent
-          hue_start: 340
-          hue_end: 8
-      image_groups:
         - - remastered/obj/H_EX500_KH1F.mdlx/-0.dds
 
         - - remastered/obj/P_EX100_KH1F.mdlx/-1.dds
+
+        - - remastered/obj/P_EX100_KH1F.a.us/-9.dds
+      previews: [ false, true, false, true, true ]
 
 
 - id: sora_master
@@ -216,14 +516,81 @@
     - party
   recolors:
     - colorable_areas:
-        - id: main
-          name: Main Color
-          hue_start: 5
-          hue_end: 65
+        - id: black
+          name: Black
+          mask_files:
+            - static/recolors/masks/sora-master/0_Black.mask
+            - static/recolors/masks/sora-master/0_Black.mask
+            - static/recolors/masks/sora-master/1_Black.mask
+            - static/recolors/masks/sora-master/1_Black.mask
+            - static/recolors/masks/sora-master/5_HUD-Black.mask
+          new_saturation: 50
+          value_offset: 10
+        - id: blue
+          name: Blue
+          mask_files:
+            - static/recolors/masks/sora-master/0_Blue.mask
+            - static/recolors/masks/sora-master/0_Blue.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+          value_offset: 10
+        - id: emblem
+          name: Emblem
+          mask_files:
+            - static/recolors/masks/sora-master/0_Emblem.mask
+            - static/recolors/masks/sora-master/0_Emblem.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 75
+          value_offset: 25
+        - id: silver
+          name: Silver
+          mask_files:
+            - static/recolors/masks/sora-master/0_Silver.mask
+            - static/recolors/masks/sora-master/0_Silver.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+        - id: trim
+          name: Trim
+          mask_files:
+            - static/recolors/masks/sora-master/0_Trim.mask
+            - static/recolors/masks/sora-master/0_Trim.mask
+            - static/recolors/masks/sora-master/1_Trim.mask
+            - static/recolors/masks/sora-master/1_Trim.mask
+            - N/A
+          new_saturation: 50
+        - id: yellow
+          name: Yellow
+          mask_files:
+            - static/recolors/masks/sora-master/0_Yellow.mask
+            - static/recolors/masks/sora-master/0_Yellow.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-master/5_HUD-Yellow.mask
+        - id: grey
+          name: Grey
+          mask_files:
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-master/1_Grey.mask
+            - static/recolors/masks/sora-master/1_Grey.mask
+            - N/A
       image_groups:
         - - remastered/obj/H_EX500_TRIF.mdlx/-3.dds
 
         - - remastered/obj/P_EX100_TRIF.mdlx/-0.dds
+
+        - - remastered/obj/H_EX500_TRIF.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_TRIF.mdlx/-1.dds
+
+        - - remastered/obj/P_EX100_TRIF.a.us/-5.dds
+      previews: [ false, true, false, true, true ]
 
 
 - id: sora_final
@@ -233,21 +600,83 @@
     - party
   recolors:
     - colorable_areas:
+        - id: blue
+          name: Blue
+          mask_files:
+            - static/recolors/masks/sora-final/0_Blue.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+          value_offset: 5
+
+        - id: grey
+          name: Grey
+          mask_files:
+            - static/recolors/masks/sora-final/0_Grey.mask
+            - N/A
+            - N/A
+            - N/A
+          new_saturation: 50
+          value_offset: 15
+
+        - id: silver
+          name: Silver
+          mask_files:
+            - static/recolors/masks/sora-final/0_Silver.mask
+            - static/recolors/masks/sora-final/1_Silver.mask
+            - static/recolors/masks/sora-final/1_Silver.mask
+            - N/A
+          new_saturation: 50
+
+        - id: teal
+          name: Teal
+          mask_files:
+            - static/recolors/masks/sora-final/0_Teal.mask
+            - static/recolors/masks/sora-final/1_Teal.mask
+            - static/recolors/masks/sora-final/1_Teal.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 5
+
         - id: trim
           name: Trim
-          hue_start: 160
-          hue_end: 200
+          mask_files:
+            - static/recolors/masks/sora-final/0_Trim.mask
+            - static/recolors/masks/sora-final/1_Trim.mask
+            - static/recolors/masks/sora-final/1_Trim.mask
+            - N/A
+          new_saturation: 50
+
+        - id: white
+          name: White
+          mask_files:
+            - static/recolors/masks/sora-final/0_White.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-final/10_HUD-White.mask
+          new_saturation: 50
+
+        - id: black
+          name: Black
+          mask_files:
+            - N/A
+            - static/recolors/masks/sora-final/1_Black.mask
+            - static/recolors/masks/sora-final/1_Black.mask
+            - N/A
+          new_saturation: 50
+          value_offset: 5
+
       image_groups:
-        - - remastered/obj/H_EX500_ULTF.mdlx/-3.dds
+        # This one is actually a larger image than the mask we have for it
+        #        - - remastered/obj/H_EX500_ULTF.mdlx/-3.dds
 
         - - remastered/obj/P_EX100_ULTF.mdlx/-0.dds
 
-    - colorable_areas:
-        - id: side_accent
-          name: Side Accent
-          hue_start: 160
-          hue_end: 200
-      image_groups:
         - - remastered/obj/H_EX500_ULTF.mdlx/-0.dds
 
         - - remastered/obj/P_EX100_ULTF.mdlx/-1.dds
+
+        - - remastered/obj/P_EX100_ULTF.a.us/-10.dds
+
+      previews: [ true, false, true, true ]

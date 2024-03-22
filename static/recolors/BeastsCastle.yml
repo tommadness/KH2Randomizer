@@ -24,6 +24,7 @@
           - remastered/obj/P_BB000_BTL.mdlx/-0.dds
           - remastered/obj/P_BB000_RTN.mdlx/-0.dds
           - remastered/obj/P_BB000_TSURU.mdlx/-0.dds
+      previews: [ true, false, true ]
 
     - colorable_areas:
         - id: pants
@@ -38,6 +39,7 @@
           - remastered/obj/P_BB000_BTL.mdlx/-8.dds
           - remastered/obj/P_BB000_RTN.mdlx/-8.dds
           - remastered/obj/P_BB000_TSURU.mdlx/-8.dds
+      previews: [ false, true ]
 
 
 - id: beast_ball
@@ -55,6 +57,7 @@
 
         - - remastered/obj/N_BB020_RTN.mdlx/-0.dds
           - remastered/obj/N_BB020_TSURU.mdlx/-0.dds
+      previews: [ true, false ]
 
 
 - id: belle
@@ -81,6 +84,7 @@
           - remastered/obj/N_BB010_RTN.mdlx/-7.dds
           - remastered/obj/N_BB010_SIT_RTN.mdlx/-7.dds
           - remastered/obj/N_BB010_TSURU.mdlx/-7.dds
+      previews: [ true, true, false, false ]
 
 
 - id: belle_ball
@@ -245,6 +249,7 @@
           - remastered/obj/N_BB080_RTN.mdlx/-4.dds
           - remastered/obj/N_BB080_TSURU.mdlx/-4.dds
           - remastered/obj/N_BB080_TSURU1.mdlx/-4.dds
+      previews: [ true, false, false, true, false, true, true, true ]
 
 
 - id: xaldin
@@ -265,6 +270,7 @@
           - remastered/obj/H_EX670.mdlx/-4.dds
 
         - - remastered/obj/B_EX130_GM.mdlx/-3.dds
+      previews: [ true, false ]
 
     - colorable_areas:
         - id: lances

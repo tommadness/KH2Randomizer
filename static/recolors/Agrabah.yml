@@ -166,6 +166,7 @@
 
         - - remastered/obj/N_CM020.mdlx/-1.dds
           - remastered/obj/N_CM020_BTL.mdlx/-1.dds
+      previews: [ false, true ]
 
     - colorable_areas:
         - id: weapon_red
@@ -181,6 +182,7 @@
           - remastered/obj/N_CM020.mdlx/-5.dds
 
         - - remastered/obj/N_CM020_BTL.mdlx/-5.dds
+      previews: [ false, true ]
 
 
 - id: lexaeus_fx

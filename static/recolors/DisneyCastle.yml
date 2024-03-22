@@ -1,6 +1,5 @@
 # Notes:
 # - Marluxia has some texture orders changed by GoA ROM so can't currently recolor him
-# - Tough to do Minnie's bow because of the mouth/tongue being in the same texture and a similar color
 
 - id: dc_castle
   name: Disney Castle
@@ -392,3 +391,13 @@
         - - remastered/obj/H_DC010.mdlx/-1.dds
           - remastered/obj/N_DC010_BTL.mdlx/-4.dds
           - remastered/obj/N_DC010_RTN.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: bow
+          name: Bow
+          mask_files:
+            - static/recolors/masks/minnie/3_Bow.mask
+            - static/recolors/masks/minnie/3_Bow.mask
+      image_groups:
+        - - remastered/obj/N_DC010_BTL.mdlx/-3.dds
+          - remastered/obj/N_DC010_RTN.mdlx/-3.dds

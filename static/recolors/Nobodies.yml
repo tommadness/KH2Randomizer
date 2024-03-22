@@ -53,6 +53,8 @@
     - colorable_areas:
         - id: main
           name: Main Color
+          mask_files:
+            - static/recolors/masks/creeper/0_Main.mask
           value_start: 10
           value_end: 100
           new_saturation: 50
@@ -113,9 +115,23 @@
     - colorable_areas:
         - id: main
           name: Main Color
+          mask_files:
+            - static/recolors/masks/dusk/0_Main.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/dusk/1_Main.mask
+            - static/recolors/masks/dusk/2_Main.mask
           value_start: 10
           value_end: 100
           new_saturation: 50
+        - id: lights
+          name: Lights
+          mask_files:
+            - static/recolors/masks/dusk/0_Lights.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/dusk/1_Lights.mask
+            - N/A
       image_groups:
         - - remastered/obj/H_EX990.mdlx/-0.dds
           - remastered/obj/M_EX990.mdlx/-0.dds
@@ -133,7 +149,7 @@
           - remastered/obj/M_EX990_ZIPPER_RTN.mdlx/-1.dds
 
         - - remastered/obj/H_EX990.mdlx/-2.dds
-
+      previews: [ true, true, false, true, false ]
 
 - id: gambler
   name: Gambler

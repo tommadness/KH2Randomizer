@@ -67,6 +67,7 @@
 
         - - remastered/obj/N_EX640_SHOP_RTN.mdlx/-1.dds
           - remastered/obj/SHOP_POINT_SUB.mdlx/-1.dds
+      previews: [ true, false ]
 
 
 - id: moogle_shop

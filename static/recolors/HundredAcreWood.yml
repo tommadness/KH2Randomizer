@@ -34,6 +34,7 @@
         - - remastered/obj/PO06_N_PO010.mdlx/-2.dds
           - remastered/obj/PO07_N_PO010.mdlx/-2.dds
           - remastered/obj/PO08_N_PO010.mdlx/-2.dds
+      previews: [ false, true, false ]
 
 
 - id: roo
@@ -53,3 +54,4 @@
         - - remastered/obj/N_PO100_RTN.mdlx/-2.dds
 
         - - remastered/obj/PO08_N_PO070.mdlx/-3.dds
+      previews: [ false, true, false ]

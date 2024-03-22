@@ -1,12 +1,15 @@
+import gzip
 from pathlib import Path
+from typing import Optional
 
 import numpy
 from PIL import Image
 from PySide6.QtGui import Qt
-from PySide6.QtWidgets import QDialog, QGridLayout, QLabel, QLineEdit, QHBoxLayout, QSpinBox, QCheckBox
+from PySide6.QtWidgets import QDialog, QGridLayout, QLabel, QLineEdit, QHBoxLayout, QSpinBox, QCheckBox, QPushButton
 from numpy import ndarray
 
-from Module.texture import make_hsva_conditions, recolor_image, RecolorDefinition
+from Module.image import rgb_to_mask
+from Module.texture import make_matching_conditions, recolor_image, RecolorDefinition, TextureRecolorizer
 
 
 class DevCreateRecolorDialog(QDialog):
@@ -25,6 +28,12 @@ class DevCreateRecolorDialog(QDialog):
         self.image_path_field = QLineEdit(r"C:\games\kh2\extract\kh2\remastered\obj\P_EX100.mdlx\-0.dds")
         self.image_path_field.textChanged.connect(self._do_preview)
         grid.addWidget(self.image_path_field, row, 1, 1, 2)
+        row = row + 1
+
+        grid.addWidget(QLabel("Mask File"), row, 0)
+        self.mask_file_field = QLineEdit("")
+        self.mask_file_field.textChanged.connect(self._do_preview)
+        grid.addWidget(self.mask_file_field, row, 1, 1, 2)
         row = row + 1
 
         grid.addWidget(QLabel("Hue Range"), row, 0)
@@ -89,6 +98,10 @@ class DevCreateRecolorDialog(QDialog):
         grid.addWidget(self.value_offset_field, row, 1, 1, 2)
         row = row + 1
 
+        btn = QPushButton("Generate Mask File From PNG")
+        btn.clicked.connect(self._generate_mask_file)
+        grid.addWidget(btn, row, 0, 1, 2)
+
         hbox.addLayout(grid)
 
         image_grid = QGridLayout()
@@ -134,10 +147,23 @@ class DevCreateRecolorDialog(QDialog):
         with Image.open(image_path) as base_image:
             self.image_view.setPixmap(base_image.toqpixmap())
 
-            conditions = make_hsva_conditions(
-                hue_range=((self.hue_start_field.value()), (self.hue_end_field.value())),
-                saturation_range=((self.saturation_start_field.value()), (self.saturation_end_field.value())),
-                value_range=((self.value_start_field.value()), (self.value_end_field.value()))
+            mask: Optional[ndarray] = None
+            mask_text = self.mask_file_field.text()
+            if len(mask_text) > 0:
+                mask_path = Path(mask_text)
+                if mask_path.is_file():
+                    if mask_path.suffix.lower() == ".png":
+                        with Image.open(mask_path) as mask_image:
+                            image_array = numpy.array(mask_image.convert("RGBA"))
+                            mask = rgb_to_mask(image_array)
+                    elif mask_path.suffix.lower() == ".mask":
+                        mask = TextureRecolorizer.mask_file_to_mask(mask_path)
+
+            conditions = make_matching_conditions(
+                masks=[mask] * 20,
+                hue_range=(self.hue_start_field.value(), self.hue_end_field.value()),
+                saturation_range=(self.saturation_start_field.value(), self.saturation_end_field.value()),
+                value_range=(self.value_start_field.value(), self.value_end_field.value())
             )
 
             if self.apply_saturation_and_value.isChecked():
@@ -147,7 +173,7 @@ class DevCreateRecolorDialog(QDialog):
                 new_saturation = None
                 value_offset = None
 
-            image_array = numpy.array(base_image)
+            image_array = numpy.array(base_image.convert("RGBA"))
 
             recolor_90 = RecolorDefinition(conditions, 90, new_saturation, value_offset)
             recolored_image = Image.fromarray(self._recolor_image(image_array, recolor_90), "RGBA")
@@ -163,4 +189,31 @@ class DevCreateRecolorDialog(QDialog):
 
     @staticmethod
     def _recolor_image(rgb_array: ndarray, recolor_definition: RecolorDefinition) -> ndarray:
-        return recolor_image(rgb_array, recolor_definitions=[recolor_definition])
+        return recolor_image(rgb_array, recolor_definitions=[recolor_definition], group_index=0)
+
+    def _generate_mask_file(self):
+        image_path = Path(self.mask_file_field.text())
+        mask_path = image_path.with_suffix(".mask")
+        # mask_path_raw = image_path.with_suffix(".mask.txt")
+
+        with Image.open(image_path) as image:
+            with gzip.open(mask_path, "wb") as mask_file:
+                # with open(mask_path_raw, "w") as mask_file_raw:
+                image_array = numpy.array(image.convert("RGBA"))
+                y_dimension, x_dimension, _ = image_array.shape
+                result = f"{y_dimension},{x_dimension}\n"
+                for y in range(y_dimension):
+                    pixels: list[str] = []
+                    for x in range(x_dimension):
+                        r = image_array[y, x, 0]
+                        g = image_array[y, x, 1]
+                        b = image_array[y, x, 2]
+                        if r > 0 and g == 0 and b == 0:
+                            pixels.append("1")
+                        else:
+                            pixels.append(" ")
+                    result += "".join(pixels)
+                    result += "\n"
+
+                # mask_file_raw.write(result)
+                mask_file.write(result.encode())
