@@ -276,3 +276,126 @@
           - remastered/obj/B_EX130_GM.mdlx/-4.dds
           - remastered/obj/B_EX130_LV99.mdlx/-5.dds
           - remastered/obj/H_EX670.mdlx/-1.dds
+
+
+- id: xaldin_fx
+  name: Xaldin (Effects)
+  tags:
+    - effects
+  recolors:
+    - colorable_areas:
+        - id: fx3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-3.dds
+          - remastered/obj/B_EX130_LV99.a.us/-3.dds
+
+    - colorable_areas:
+        - id: fx4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-4.dds
+          - remastered/obj/B_EX130_LV99.a.us/-4.dds
+
+    - colorable_areas:
+        - id: fx5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-5.dds
+          - remastered/obj/B_EX130_LV99.a.us/-5.dds
+
+    - colorable_areas:
+        - id: fx6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-6.dds
+          - remastered/obj/B_EX130_LV99.a.us/-6.dds
+
+    - colorable_areas:
+        - id: fx7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-7.dds
+          - remastered/obj/B_EX130_LV99.a.us/-7.dds
+
+    - colorable_areas:
+        - id: fx8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-8.dds
+          - remastered/obj/B_EX130_LV99.a.us/-8.dds
+
+    - colorable_areas:
+        - id: fx10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-10.dds
+          - remastered/obj/B_EX130_LV99.a.us/-10.dds
+
+    - colorable_areas:
+        - id: fx11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-11.dds
+          - remastered/obj/B_EX130_LV99.a.us/-11.dds
+
+    - colorable_areas:
+        - id: fx12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-12.dds
+          - remastered/obj/B_EX130_LV99.a.us/-12.dds
+
+    - colorable_areas:
+        - id: fx13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-13.dds
+          - remastered/obj/B_EX130_LV99.a.us/-13.dds
+
+    - colorable_areas:
+        - id: fx14
+          name: Effect 14
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-14.dds
+          - remastered/obj/B_EX130_LV99.a.us/-14.dds
+
+    - colorable_areas:
+        - id: fx15
+          name: Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/B_EX130.a.us/-15.dds
+          - remastered/obj/B_EX130_LV99.a.us/-15.dds

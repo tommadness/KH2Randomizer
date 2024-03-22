@@ -1,0 +1,348 @@
+- id: misc_fx
+  name: Miscellaneous Effects
+  tags:
+    - effects
+  recolors:
+    # Two vertical-ish effects on black background
+    - colorable_areas:
+        - id: misc_fx_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        # Twilight Thorn
+        - - remastered/obj/B_EX100.a.us/-2.dds
+          # Axel
+          - remastered/obj/B_EX110.a.us/-0.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-0.dds
+          - remastered/obj/B_EX110_LV99.a.us/-0.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-0.dds
+          # Demyx
+          - remastered/obj/B_EX120.a.us/-11.dds
+          - remastered/obj/B_EX120_HB.a.us/-11.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-11.dds
+          # Xaldin
+          - remastered/obj/B_EX130.a.us/-0.dds
+          - remastered/obj/B_EX130_LV99.a.us/-0.dds
+          # Xigbar
+          - remastered/obj/B_EX140.a.fr/-0.dds
+          - remastered/obj/B_EX140.a.gr/-0.dds
+          - remastered/obj/B_EX140.a.it/-0.dds
+          - remastered/obj/B_EX140.a.sp/-0.dds
+          - remastered/obj/B_EX140.a.us/-0.dds
+          - remastered/obj/B_EX140_LV99.a.us/-0.dds
+          # Luxord
+          - remastered/obj/B_EX150.a.us/-0.dds
+          - remastered/obj/B_EX150_LV99.a.us/-0.dds
+          # Saix
+          - remastered/obj/B_EX160.a.us/-0.dds
+          - remastered/obj/B_EX160_LV99.a.us/-0.dds
+          # Xemnas 1
+          - remastered/obj/B_EX170.a.us/-0.dds
+          - remastered/obj/B_EX170_LV99.a.us/-0.dds
+          # Armored Xemnas
+          - remastered/obj/B_EX260.a.us/-0.dds
+          # Roxas
+          - remastered/obj/B_EX390.a.us/-0.dds
+          # Larxene
+          - remastered/obj/B_EX400.a.us/-0.dds
+          # Lingering Will
+          - remastered/obj/B_EX420.a.us/-2.dds
+          # Marluxia
+          - remastered/obj/N_CM000_BTL.a.us/-0.dds
+          # Lexaeus
+          - remastered/obj/N_CM020_BTL.a.us/-0.dds
+          # Vexen
+          - remastered/obj/N_CM040_BTL.a.us/-0.dds
+          # Sephiroth
+          - remastered/obj/N_HB630.a.us/-2.dds
+
+        # Final Xemnas
+        - - remastered/obj/B_EX170_LAST.a.fr/-0.png
+          - remastered/obj/B_EX170_LAST.a.gr/-0.png
+          - remastered/obj/B_EX170_LAST.a.it/-0.png
+          - remastered/obj/B_EX170_LAST.a.sp/-0.png
+          - remastered/obj/B_EX170_LAST.a.us/-0.png
+          # Zexion
+          - remastered/obj/B_EX370.a.fr/-0.png
+          - remastered/obj/B_EX370.a.gr/-0.png
+          - remastered/obj/B_EX370.a.it/-0.png
+          - remastered/obj/B_EX370.a.sp/-0.png
+          - remastered/obj/B_EX370.a.us/-0.png
+
+        # Final Xemnas
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-0.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-0.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-0.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-0.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-0.dds
+
+    # Mostly white swirl, top-left heavy
+    - colorable_areas:
+        - id: misc_fx_2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        # Axel
+        - - remastered/obj/B_EX110.a.us/-1.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-1.dds
+          - remastered/obj/B_EX110_LV99.a.us/-1.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-1.dds
+          # Xaldin
+          - remastered/obj/B_EX130.a.us/-1.dds
+          - remastered/obj/B_EX130_LV99.a.us/-1.dds
+          # Xigbar
+          - remastered/obj/B_EX140.a.fr/-1.dds
+          - remastered/obj/B_EX140.a.gr/-1.dds
+          - remastered/obj/B_EX140.a.it/-1.dds
+          - remastered/obj/B_EX140.a.sp/-1.dds
+          - remastered/obj/B_EX140.a.us/-1.dds
+          - remastered/obj/B_EX140_LV99.a.us/-1.dds
+          # Luxord
+          - remastered/obj/B_EX150.a.us/-1.dds
+          - remastered/obj/B_EX150_LV99.a.us/-1.dds
+          # Saix
+          - remastered/obj/B_EX160.a.us/-1.dds
+          - remastered/obj/B_EX160_LV99.a.us/-1.dds
+          # Xemnas 1
+          - remastered/obj/B_EX170.a.us/-1.dds
+          - remastered/obj/B_EX170_LV99.a.us/-1.dds
+          # Armored Xemnas
+          - remastered/obj/B_EX260.a.us/-1.dds
+          # Roxas
+          - remastered/obj/B_EX390.a.us/-1.dds
+          # Larxene
+          - remastered/obj/B_EX400.a.us/-1.dds
+          # Marluxia
+          - remastered/obj/N_CM000_BTL.a.us/-1.dds
+          # Lexaeus
+          - remastered/obj/N_CM020_BTL.a.us/-1.dds
+          # Vexen
+          - remastered/obj/N_CM040_BTL.a.us/-1.dds
+
+        # Final Xemnas
+        - - remastered/obj/B_EX170_LAST.a.fr/-1.png
+          - remastered/obj/B_EX170_LAST.a.gr/-1.png
+          - remastered/obj/B_EX170_LAST.a.it/-1.png
+          - remastered/obj/B_EX170_LAST.a.sp/-1.png
+          - remastered/obj/B_EX170_LAST.a.us/-1.png
+          # Zexion
+          - remastered/obj/B_EX370.a.fr/-1.png
+          - remastered/obj/B_EX370.a.gr/-1.png
+          - remastered/obj/B_EX370.a.it/-1.png
+          - remastered/obj/B_EX370.a.sp/-1.png
+          - remastered/obj/B_EX370.a.us/-1.png
+
+        # Final Xemnas
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-1.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-1.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-1.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-1.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-1.dds
+
+    # Light burst from right side
+    - colorable_areas:
+        - id: misc_fx_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        # Twilight Thorn
+        - - remastered/obj/B_EX100.a.us/-0.dds
+          # Axel
+          - remastered/obj/B_EX110.a.us/-2.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-2.dds
+          - remastered/obj/B_EX110_LV99.a.us/-2.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-2.dds
+          # Demyx
+          - remastered/obj/B_EX120.a.us/-9.dds
+          - remastered/obj/B_EX120_HB.a.us/-9.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-9.dds
+          # Xaldin
+          - remastered/obj/B_EX130.a.us/-2.dds
+          - remastered/obj/B_EX130_LV99.a.us/-2.dds
+          # Xigbar
+          - remastered/obj/B_EX140.a.fr/-2.dds
+          - remastered/obj/B_EX140.a.gr/-2.dds
+          - remastered/obj/B_EX140.a.it/-2.dds
+          - remastered/obj/B_EX140.a.sp/-2.dds
+          - remastered/obj/B_EX140.a.us/-2.dds
+          - remastered/obj/B_EX140_LV99.a.us/-2.dds
+          # Luxord
+          - remastered/obj/B_EX150.a.us/-2.dds
+          - remastered/obj/B_EX150_LV99.a.us/-2.dds
+          # Saix
+          - remastered/obj/B_EX160.a.us/-2.dds
+          - remastered/obj/B_EX160_LV99.a.us/-2.dds
+          # Xemnas 1
+          - remastered/obj/B_EX170.a.us/-2.dds
+          - remastered/obj/B_EX170_LV99.a.us/-2.dds
+          # Armored Xemnas
+          - remastered/obj/B_EX260.a.us/-2.dds
+          # Roxas
+          - remastered/obj/B_EX390.a.us/-2.dds
+          # Larxene
+          - remastered/obj/B_EX400.a.us/-2.dds
+          # Lingering Will
+          - remastered/obj/B_EX420.a.us/-0.dds
+          # Marluxia
+          - remastered/obj/N_CM000_BTL.a.us/-2.dds
+          # Lexaeus
+          - remastered/obj/N_CM020_BTL.a.us/-2.dds
+          # Vexen
+          - remastered/obj/N_CM040_BTL.a.us/-2.dds
+          # Sephiroth
+          - remastered/obj/N_HB630.a.us/-0.dds
+
+        # Final Xemnas
+        - - remastered/obj/B_EX170_LAST.a.fr/-2.png
+          - remastered/obj/B_EX170_LAST.a.gr/-2.png
+          - remastered/obj/B_EX170_LAST.a.it/-2.png
+          - remastered/obj/B_EX170_LAST.a.sp/-2.png
+          - remastered/obj/B_EX170_LAST.a.us/-2.png
+          # Zexion
+          - remastered/obj/B_EX370.a.fr/-2.png
+          - remastered/obj/B_EX370.a.gr/-2.png
+          - remastered/obj/B_EX370.a.it/-2.png
+          - remastered/obj/B_EX370.a.sp/-2.png
+          - remastered/obj/B_EX370.a.us/-2.png
+
+        # Final Xemnas
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-2.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-2.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-2.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-2.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-2.dds
+
+    # Single vine in middle with split in left
+    - colorable_areas:
+        - id: misc_fx_4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        # Axel
+        - - remastered/obj/B_EX110.a.us/-8.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-8.dds
+          - remastered/obj/B_EX110_LV99.a.us/-8.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-8.dds
+          - remastered/obj/B_EX110.a.us/-12.dds
+          - remastered/obj/B_EX110_FRIEND.a.us/-12.dds
+          - remastered/obj/B_EX110_LV99.a.us/-12.dds
+          - remastered/obj/B_EX110_SKIRMISH.a.us/-12.dds
+          # Demyx
+          - remastered/obj/B_EX120.a.us/-9.dds
+          - remastered/obj/B_EX120_HB.a.us/-9.dds
+          - remastered/obj/B_EX120_HB_LV99.a.us/-9.dds
+          # Xaldin
+          - remastered/obj/B_EX130.a.us/-9.dds
+          - remastered/obj/B_EX130_LV99.a.us/-9.dds
+          - remastered/obj/B_EX130.a.us/-16.dds
+          - remastered/obj/B_EX130_LV99.a.us/-16.dds
+          # Xemnas 1
+          - remastered/obj/B_EX170.a.us/-9.dds
+          - remastered/obj/B_EX170_LV99.a.us/-9.dds
+          # ???
+          - remastered/obj/B_EX310.a.us/-5.dds
+          # ???
+          - remastered/obj/B_EX320.a.us/-1.dds
+          # Roxas
+          - remastered/obj/B_EX390.a.us/-15.dds
+          # Larxene
+          - remastered/obj/B_EX400.a.us/-10.dds
+
+        # Final Xemnas
+        - - remastered/obj/B_EX170_LAST.a.fr/-10.png
+          - remastered/obj/B_EX170_LAST.a.gr/-10.png
+          - remastered/obj/B_EX170_LAST.a.it/-10.png
+          - remastered/obj/B_EX170_LAST.a.sp/-10.png
+          - remastered/obj/B_EX170_LAST.a.us/-10.png
+          - remastered/obj/B_EX170_LAST.a.fr/-14.png
+          - remastered/obj/B_EX170_LAST.a.gr/-14.png
+          - remastered/obj/B_EX170_LAST.a.it/-14.png
+          - remastered/obj/B_EX170_LAST.a.sp/-14.png
+          - remastered/obj/B_EX170_LAST.a.us/-14.png
+
+        # Final Xemnas
+        - - remastered/obj/B_EX170_LAST_LV99.a.fr/-10.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-10.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-10.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-10.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-10.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.fr/-14.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.gr/-14.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.it/-14.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.sp/-14.dds
+          - remastered/obj/B_EX170_LAST_LV99.a.us/-14.dds
+
+        # Zexion (gray)
+        - - remastered/obj/B_EX370.a.fr/-7.png
+          - remastered/obj/B_EX370.a.gr/-7.png
+          - remastered/obj/B_EX370.a.it/-7.png
+          - remastered/obj/B_EX370.a.sp/-7.png
+          - remastered/obj/B_EX370.a.us/-7.png
+
+        # Zexion (this one is a different size)
+        - - remastered/obj/B_EX370.a.fr/-20.png
+          - remastered/obj/B_EX370.a.gr/-20.png
+          - remastered/obj/B_EX370.a.it/-20.png
+          - remastered/obj/B_EX370.a.sp/-20.png
+          - remastered/obj/B_EX370.a.us/-20.png
+
+        # Marluxia (gray)
+        - - remastered/obj/N_CM000_BTL.a.us/-26.dds
+          # Vexen (gray)
+          - remastered/obj/N_CM040_BTL.a.us/-14.dds
+
+    # Double vines, top one split on left
+    - colorable_areas:
+        - id: misc_fx_5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        # Twilight Thorn
+        - - remastered/obj/B_EX100.a.us/-4.dds
+          - remastered/obj/B_EX100.a.us/-6.dds
+          - remastered/obj/B_EX100.a.us/-7.dds
+          - remastered/obj/B_EX100.a.us/-12.dds
+          - remastered/obj/B_EX100.a.us/-14.dds
+          - remastered/obj/B_EX100.a.us/-15.dds
+          - remastered/obj/B_EX100.a.us/-16.dds
+          # Luxord
+          - remastered/obj/B_EX150.a.us/-6.dds
+          - remastered/obj/B_EX150_LV99.a.us/-6.dds
+          - remastered/obj/B_EX150.a.us/-10.dds
+          - remastered/obj/B_EX150_LV99.a.us/-10.dds
+          - remastered/obj/B_EX150.a.us/-16.dds
+          - remastered/obj/B_EX150_LV99.a.us/-16.dds
+          # Saix
+          - remastered/obj/B_EX160.a.us/-4.dds
+          - remastered/obj/B_EX160_LV99.a.us/-4.dds
+          - remastered/obj/B_EX160.a.us/-11.dds
+          - remastered/obj/B_EX160_LV99.a.us/-11.dds
+          - remastered/obj/B_EX160.a.us/-12.dds
+          - remastered/obj/B_EX160_LV99.a.us/-12.dds
+          # ???
+          - remastered/obj/B_EX200.a.us/-4.dds
+          # Luxord cards?
+          - remastered/obj/B_EX210.a.us/-3.dds
+          - remastered/obj/B_EX210.a.us/-9.dds
+          - remastered/obj/B_EX210.a.us/-11.dds
+          - remastered/obj/B_EX210_EH.a.us/-3.dds
+          - remastered/obj/B_EX210_EH.a.us/-4.dds
+          # Saix?
+          - remastered/obj/B_EX220.a.us/-0.dds
+          - remastered/obj/B_EX220_LV99.a.us/-0.dds
+          - remastered/obj/B_EX220.a.us/-3.dds
+          - remastered/obj/B_EX220_LV99.a.us/-3.dds
+          # ???
+          - remastered/obj/B_EX250.a.us/-0.dds
+          # Armored Xemnas
+          - remastered/obj/B_EX260.a.us/-11.dds

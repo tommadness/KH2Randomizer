@@ -22,6 +22,8 @@
 
         - - remastered/obj/P_EX020_WM.mdlx/-3.dds
 
+        - - remastered/obj/P_EX020.a.us/-6.dds
+
 
 - id: goofy
   name: Goofy
@@ -46,7 +48,7 @@
     - colorable_areas:
         - id: shirt
           name: Shirt
-          hue_start: 85
+          hue_start: 60
           hue_end: 95
       image_groups:
         - - remastered/obj/H_ZZ030.mdlx/-1.dds
@@ -56,6 +58,8 @@
 
         - - remastered/obj/P_EX030_NOBG_RTN.mdlx/-1.dds
           - remastered/obj/P_EX030_WM.mdlx/-1.dds
+
+        - - remastered/obj/P_EX030.a.us/-2.dds
 
 
 - id: sora
@@ -170,6 +174,8 @@
         - - remastered/obj/H_EX500_MAGF.mdlx/-3.dds
 
         - - remastered/obj/P_EX100_MAGF.mdlx/-0.dds
+
+        - - remastered/obj/P_EX100_MAGF.a.us/-2.dds
 
 
 - id: sora_limit

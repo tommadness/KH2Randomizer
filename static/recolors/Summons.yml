@@ -12,6 +12,103 @@
       image_groups:
         - - remastered/obj/P_EX350.mdlx/-0.dds
 
+        - - remastered/obj/P_EX350.a.fr/-15.png
+          - remastered/obj/P_EX350.a.gr/-15.png
+          - remastered/obj/P_EX350.a.it/-15.png
+          - remastered/obj/P_EX350.a.sp/-15.png
+          - remastered/obj/P_EX350.a.us/-15.png
+
+
+- id: chicken_little_fx
+  name: Chicken Little (Effects)
+  tags:
+    - effects
+    - summon
+  recolors:
+    - colorable_areas:
+        - id: baseball
+          name: Baseball
+          hue_start: 0
+          hue_end: 360
+          saturation_start: 0
+          saturation_end: 30
+          new_saturation: 50
+        - id: baseball_stitches
+          name: Baseball Stitches
+          hue_start: 330
+          hue_end: 30
+      image_groups:
+        - - remastered/obj/P_EX350.a.fr/-0.png
+          - remastered/obj/P_EX350.a.gr/-0.png
+          - remastered/obj/P_EX350.a.it/-0.png
+          - remastered/obj/P_EX350.a.sp/-0.png
+          - remastered/obj/P_EX350.a.us/-0.png
+
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX350.a.fr/-1.png
+          - remastered/obj/P_EX350.a.gr/-1.png
+          - remastered/obj/P_EX350.a.it/-1.png
+          - remastered/obj/P_EX350.a.sp/-1.png
+          - remastered/obj/P_EX350.a.us/-1.png
+
+    - colorable_areas:
+        - id: effect_2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX350.a.fr/-2.png
+          - remastered/obj/P_EX350.a.gr/-2.png
+          - remastered/obj/P_EX350.a.it/-2.png
+          - remastered/obj/P_EX350.a.sp/-2.png
+          - remastered/obj/P_EX350.a.us/-2.png
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX350.a.fr/-3.png
+          - remastered/obj/P_EX350.a.gr/-3.png
+          - remastered/obj/P_EX350.a.it/-3.png
+          - remastered/obj/P_EX350.a.sp/-3.png
+          - remastered/obj/P_EX350.a.us/-3.png
+
+    - colorable_areas:
+        - id: effect_4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX350.a.fr/-4.png
+          - remastered/obj/P_EX350.a.gr/-4.png
+          - remastered/obj/P_EX350.a.it/-4.png
+          - remastered/obj/P_EX350.a.sp/-4.png
+          - remastered/obj/P_EX350.a.us/-4.png
+
+    - colorable_areas:
+        - id: effect_6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX350.a.fr/-6.png
+          - remastered/obj/P_EX350.a.gr/-6.png
+          - remastered/obj/P_EX350.a.it/-6.png
+          - remastered/obj/P_EX350.a.sp/-6.png
+          - remastered/obj/P_EX350.a.us/-6.png
+
 
 - id: genie
   name: Genie
@@ -57,6 +154,8 @@
 
         - - remastered/obj/P_AL010.mdlx/-2.dds
 
+        - - remastered/obj/P_AL010.a.us/-21.dds
+
     - colorable_areas:
         - id: valor
           name: Valor Genie
@@ -82,6 +181,156 @@
         - - remastered/obj/P_AL010.mdlx/-10.dds
 
 
+- id: genie_fx
+  name: Genie (Effects)
+  tags:
+    - effects
+    - summon
+  recolors:
+    - colorable_areas:
+        - id: effect_0
+          name: Effect 0
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-0.dds
+          - remastered/obj/P_AL010.a.us/-10.dds
+          - remastered/obj/P_AL010.a.us/-17.dds
+
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 180
+          hue_end: 270
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-1.dds
+          - remastered/obj/P_AL010.a.us/-16.dds
+
+    - colorable_areas:
+        - id: effect_2
+          name: Effect 2
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-2.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-3.dds
+
+    - colorable_areas:
+        - id: effect_4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-4.dds
+
+    - colorable_areas:
+        - id: effect_5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-5.dds
+
+    - colorable_areas:
+        - id: effect_6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-6.dds
+          - remastered/obj/P_AL010.a.us/-12.dds
+
+    - colorable_areas:
+        - id: effect_7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-7.dds
+
+    - colorable_areas:
+        - id: effect_8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-8.dds
+          - remastered/obj/P_AL010.a.us/-19.dds
+
+    - colorable_areas:
+        - id: effect_9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-9.dds
+
+    - colorable_areas:
+        - id: effect_11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-11.dds
+
+    - colorable_areas:
+        - id: effect_13
+          name: Effect 13
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-13.dds
+
+    - colorable_areas:
+        - id: effect_14
+          name: Effect 14
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-14.dds
+
+    - colorable_areas:
+        - id: effect_15
+          name: Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-15.dds
+
+    - colorable_areas:
+        - id: effect_18
+          name: Effect 18
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-18.dds
+
+    - colorable_areas:
+        - id: effect_20
+          name: Effect 20
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/P_AL010.a.us/-20.dds
+
+
 - id: peter_pan
   name: Peter Pan
   tags:
@@ -91,14 +340,76 @@
     - colorable_areas:
         - id: outfit
           name: Outfit
-          hue_start: 83
-          hue_end: 167
+          hue_start: 50
+          hue_end: 119
       image_groups:
         - - remastered/obj/P_EX330.mdlx/-0.dds
 
         - - remastered/obj/P_EX330.mdlx/-1.dds
 
         - - remastered/obj/P_EX330.mdlx/-5.dds
+
+        - - remastered/obj/P_EX330.a.us/-10.dds
+
+
+- id: peter_pan_fx
+  name: Peter Pan (Effects)
+  tags:
+    - effects
+    - summon
+  recolors:
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX330.a.us/-1.dds
+
+    - colorable_areas:
+        - id: effect_5
+          name: Effect 5
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX330.a.us/-5.dds
+
+    - colorable_areas:
+        - id: effect_6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX330.a.us/-6.dds
+
+    - colorable_areas:
+        - id: effect_7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX330.a.us/-7.dds
+
+    - colorable_areas:
+        - id: effect_8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/P_EX330.a.us/-8.dds
+
+    - colorable_areas:
+        - id: effect_9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/P_EX330.a.us/-9.dds
 
 
 - id: stitch
@@ -119,6 +430,12 @@
         - - remastered/obj/N_HB040_BTL.mdlx/-1.dds
           - remastered/obj/N_HB040_TSURU.mdlx/-1.dds
 
+        - - remastered/obj/N_HB040_BTL.a.fr/-18.png
+          - remastered/obj/N_HB040_BTL.a.gr/-18.png
+          - remastered/obj/N_HB040_BTL.a.it/-18.png
+          - remastered/obj/N_HB040_BTL.a.sp/-18.png
+          - remastered/obj/N_HB040_BTL.a.us/-18.png
+
     - colorable_areas:
         - id: ukulele
           name: Ukulele
@@ -127,3 +444,183 @@
       image_groups:
         - - remastered/obj/N_HB040_BTL.mdlx/-2.dds
           - remastered/obj/N_HB040_TSURU.mdlx/-2.dds
+
+
+- id: stitch_fx
+  name: Stitch (Effects)
+  tags:
+    - effects
+    - summon
+  recolors:
+    - colorable_areas:
+        - id: effect_0
+          name: Effect 0
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-0.png
+          - remastered/obj/N_HB040_BTL.a.gr/-0.png
+          - remastered/obj/N_HB040_BTL.a.it/-0.png
+          - remastered/obj/N_HB040_BTL.a.sp/-0.png
+          - remastered/obj/N_HB040_BTL.a.us/-0.png
+
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 1
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-1.png
+          - remastered/obj/N_HB040_BTL.a.gr/-1.png
+          - remastered/obj/N_HB040_BTL.a.it/-1.png
+          - remastered/obj/N_HB040_BTL.a.sp/-1.png
+          - remastered/obj/N_HB040_BTL.a.us/-1.png
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 3
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-3.png
+          - remastered/obj/N_HB040_BTL.a.gr/-3.png
+          - remastered/obj/N_HB040_BTL.a.it/-3.png
+          - remastered/obj/N_HB040_BTL.a.sp/-3.png
+          - remastered/obj/N_HB040_BTL.a.us/-3.png
+
+    - colorable_areas:
+        - id: effect_4
+          name: Effect 4
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-4.png
+          - remastered/obj/N_HB040_BTL.a.gr/-4.png
+          - remastered/obj/N_HB040_BTL.a.it/-4.png
+          - remastered/obj/N_HB040_BTL.a.sp/-4.png
+          - remastered/obj/N_HB040_BTL.a.us/-4.png
+
+    - colorable_areas:
+        - id: effect_6
+          name: Effect 6
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-6.png
+          - remastered/obj/N_HB040_BTL.a.gr/-6.png
+          - remastered/obj/N_HB040_BTL.a.it/-6.png
+          - remastered/obj/N_HB040_BTL.a.sp/-6.png
+          - remastered/obj/N_HB040_BTL.a.us/-6.png
+
+    - colorable_areas:
+        - id: effect_7
+          name: Effect 7
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-7.png
+          - remastered/obj/N_HB040_BTL.a.gr/-7.png
+          - remastered/obj/N_HB040_BTL.a.it/-7.png
+          - remastered/obj/N_HB040_BTL.a.sp/-7.png
+          - remastered/obj/N_HB040_BTL.a.us/-7.png
+
+    - colorable_areas:
+        - id: effect_8
+          name: Effect 8
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-8.png
+          - remastered/obj/N_HB040_BTL.a.gr/-8.png
+          - remastered/obj/N_HB040_BTL.a.it/-8.png
+          - remastered/obj/N_HB040_BTL.a.sp/-8.png
+          - remastered/obj/N_HB040_BTL.a.us/-8.png
+
+    - colorable_areas:
+        - id: effect_9
+          name: Effect 9
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-9.png
+          - remastered/obj/N_HB040_BTL.a.gr/-9.png
+          - remastered/obj/N_HB040_BTL.a.it/-9.png
+          - remastered/obj/N_HB040_BTL.a.sp/-9.png
+          - remastered/obj/N_HB040_BTL.a.us/-9.png
+
+    - colorable_areas:
+        - id: effect_10
+          name: Effect 10
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-10.png
+          - remastered/obj/N_HB040_BTL.a.gr/-10.png
+          - remastered/obj/N_HB040_BTL.a.it/-10.png
+          - remastered/obj/N_HB040_BTL.a.sp/-10.png
+          - remastered/obj/N_HB040_BTL.a.us/-10.png
+
+    - colorable_areas:
+        - id: effect_11
+          name: Effect 11
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-11.png
+          - remastered/obj/N_HB040_BTL.a.gr/-11.png
+          - remastered/obj/N_HB040_BTL.a.it/-11.png
+          - remastered/obj/N_HB040_BTL.a.sp/-11.png
+          - remastered/obj/N_HB040_BTL.a.us/-11.png
+
+    - colorable_areas:
+        - id: effect_12
+          name: Effect 12
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-12.png
+          - remastered/obj/N_HB040_BTL.a.gr/-12.png
+          - remastered/obj/N_HB040_BTL.a.it/-12.png
+          - remastered/obj/N_HB040_BTL.a.sp/-12.png
+          - remastered/obj/N_HB040_BTL.a.us/-12.png
+
+    - colorable_areas:
+        - id: effect_15
+          name: Effect 15
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-15.png
+          - remastered/obj/N_HB040_BTL.a.gr/-15.png
+          - remastered/obj/N_HB040_BTL.a.it/-15.png
+          - remastered/obj/N_HB040_BTL.a.sp/-15.png
+          - remastered/obj/N_HB040_BTL.a.us/-15.png
+
+    - colorable_areas:
+        - id: effect_16
+          name: Effect 16
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-16.png
+          - remastered/obj/N_HB040_BTL.a.gr/-16.png
+          - remastered/obj/N_HB040_BTL.a.it/-16.png
+          - remastered/obj/N_HB040_BTL.a.sp/-16.png
+          - remastered/obj/N_HB040_BTL.a.us/-16.png
+
+    - colorable_areas:
+        - id: effect_17
+          name: Effect 17
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - - remastered/obj/N_HB040_BTL.a.fr/-17.png
+          - remastered/obj/N_HB040_BTL.a.gr/-17.png
+          - remastered/obj/N_HB040_BTL.a.it/-17.png
+          - remastered/obj/N_HB040_BTL.a.sp/-17.png
+          - remastered/obj/N_HB040_BTL.a.us/-17.png
