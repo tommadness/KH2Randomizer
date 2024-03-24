@@ -609,6 +609,27 @@ class Randomizer:
         if self.progress_bar_vis:
             return
 
+        # actual item assignment code starts here
+        
+        # give synth recipes their ingredients (if they are in valid locations)
+        for location in valid_locations:
+            if locationType.SYNTH in location.LocationTypes:
+                # assign a recipe to this item
+                items: list[KH2Item] = random.sample(
+                    Items.getSynthRequirementsList(), k=random.randint(1, 3)
+                )
+                requirements = [
+                    SynthRequirement(synth_item=item, amount=random.randint(1, 3))
+                    for item in items
+                ]
+                recipe = SynthesisRecipe(
+                    location=location,
+                    unlock_rank=1 if location.LocationId < 15 else 2,
+                    requirements=requirements,
+                )
+                self.synthesis_recipes.append(recipe)
+
+
         vanilla_abilities, randomizable_abilities = self.split_vanilla_abilities(
             ability_pool, vanilla_item_ids
         )
@@ -620,6 +641,7 @@ class Randomizer:
         item_pool.extend(vanilla_abilities)
         item_pool.extend(randomizable_abilities)
         item_pool.extend(valid_junk)
+        random.shuffle(item_pool)
 
         # vanilla location item assignment
         for loc_with_vanilla in locations_with_vanilla_items:
@@ -636,75 +658,56 @@ class Randomizer:
                     if self.assign_item(loc_with_vanilla, vanilla_item):
                         invalid_locations.remove(loc_with_vanilla)
 
-        restricted_reports = self.report_depths.very_restricted_locations
-        restricted_proofs = self.proof_depths.very_restricted_locations
-        restricted_story = self.story_depths.very_restricted_locations
-
-        # leaving this code here for future bug testing. Puts a specific item in a specific location
-        # placed_item = False
-        # for item in allItems:
-        #     if not placed_item and item.Id == 23:
-        #         location_to_place = [loc for loc in validLocations if loc.LocationCategory is locationCategory.CHEST and loc.LocationId==463][0]
-        #         if self.assignItem(location_to_place,item):
-        #             validLocations.remove(location_to_place)
-        #         allItems.remove(item)
-        #         placed_item = True
-        #         break
-
-        invalid_test = []
-        if restricted_reports:
-            invalid_test.append(itemType.REPORT)
-        if restricted_proofs:
-            invalid_test.extend(proof.proof_item_types())
-        if restricted_story:
-            invalid_test.append(itemType.STORYUNLOCK)
-
-        def item_sorter(item: KH2Item) -> int:
-            if item.ItemType in invalid_test:
-                # put the most restricted things first in the ordering
-                return 3
-            elif item.Rarity == itemRarity.MYTHIC:
-                # put mythic things second, to let proofs get most leeway possible
-                return 2
+        # assign items that have very restricted locations (boss depths, yeet, etc.)
+        self.assign_plando_like_items(item_pool, valid_locations)
+        # (a)determine sphere 0
+        #    if sphere 0 is big enough
+        #       return
+        #    if sphere 0 is too small
+        #    determine available unlocks for available checks
+        #    place that somewhere that's available
+        #    loop again
+        
+        sphere_0_check = True
+        while sphere_0_check:
+            from Module.seedEvaluation import LocationInformedSeedValidator
+            validator = LocationInformedSeedValidator()
+            validator.prep_requirements_list(settings, self)
+            # calculate the available checks
+            acquired_item_locations = []
+            acquired_items = []
+            sphere_0 = []
+            found_new_item = True
+            # check if any of the already assigned locations are valid right now, and if so, add their item to current inventory
+            while found_new_item:
+                found_new_item = False
+                # get unassigned locations that are available
+                sphere_0 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items,loc)]
+                # get already assigned items from available locations
+                for assignment in self.assignments:
+                    if assignment.location.LocationCategory is not locationCategory.WEAPONSLOT and assignment.location not in acquired_item_locations and validator.is_location_available(self.starting_item_ids + acquired_items, assignment.location):
+                        acquired_item_locations.append(assignment.location)
+                        acquired_items.extend([i.Id for i in assignment.items()])
+                        found_new_item = True
+            if len(sphere_0) < 80: # TODO(zak) this is arbitrary and may need tuning
+                # pick a locking item we don't have, assign it somewhere valid, repeat
+                unlocks = [] + [s.id for s in storyunlock.all_story_unlocks()] + [k.id for k in keyblade.get_locking_keyblades()]
+                random.shuffle(unlocks)
+                for u in unlocks:
+                    i_data = next((it for it in item_pool if it.Id == u), None)
+                    if i_data is not None:
+                        sphere_1 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items + [i_data.Id],loc)]
+                        if len(sphere_1) > len(sphere_0):
+                            # assign this item somewhere
+                            locations_to_remove = self.randomly_assign_single_item(i_data,sphere_0)
+                            for l in locations_to_remove:
+                                valid_locations.remove(l)
+                            item_pool.remove(i_data)
+                            break
             else:
-                return 1
+                sphere_0_check = False                
 
-        random.shuffle(item_pool)
-        item_pool.sort(reverse=True, key=item_sorter)
-
-        def compute_location_weights(
-            item: KH2Item, location_pool: list[KH2Location]
-        ) -> list[int]:
-            loc_weights = self.location_weights
-            if restricted_proofs or restricted_reports or restricted_story:
-                result = [
-                    loc_weights.get_weight(item.ItemType, loc)
-                    if (any(i_type in loc.InvalidChecks for i_type in invalid_test))
-                    else 0
-                    for loc in location_pool
-                ]
-            else:
-                result = [
-                    loc_weights.get_weight(item.ItemType, loc) for loc in location_pool
-                ]
-
-            if restricted_reports and item.ItemType is itemType.REPORT:
-                result = [
-                    1 if itemType.REPORT not in loc.InvalidChecks else 0
-                    for loc in location_pool
-                ]
-            if restricted_proofs and item.ItemType in proof.proof_item_types():
-                result = [
-                    1 if item.ItemType not in loc.InvalidChecks else 0
-                    for loc in location_pool
-                ]
-            if restricted_story and item.ItemType is itemType.STORYUNLOCK:
-                result = [
-                    1 if itemType.STORYUNLOCK not in loc.InvalidChecks else 0
-                    for loc in location_pool
-                ]
-            return result
-
+        '''
         # chain logic placement
         if settings.chainLogic:
             from Module.seedEvaluation import LocationInformedSeedValidator
@@ -1101,26 +1104,120 @@ class Randomizer:
             if proof.ProofOfNonexistence in item_pool:
                 item_pool.insert(0,item_pool.pop(item_pool.index(proof.ProofOfNonexistence)))
 
+        '''
+        self.randomly_assign_items(item_pool, valid_locations)
+
+        # move remaining items to invalid locations for junk item assignment
+        invalid_locations.extend(valid_locations)
+        self.assign_junk_locations(settings, invalid_locations)
+
+    def assign_plando_like_items(self, item_pool, valid_locations):
+        restricted_reports = self.report_depths.very_restricted_locations
+        restricted_proofs = self.proof_depths.very_restricted_locations
+        restricted_promise_charm = self.promise_charm_depths.very_restricted_locations
+        restricted_story = self.story_depths.very_restricted_locations
+
+        if self.yeet_the_bear:
+            # Manually assign to Starry Hill
+            yeet_locations = _find_locations(
+                haw.yeet_the_bear_location_names(), valid_locations
+            )
+            if len(yeet_locations) > 0:
+                yeet_location = random.choice(yeet_locations)
+                if self.assign_item(yeet_location, proof.ProofOfNonexistence):
+                    valid_locations.remove(yeet_location)
+                    item_pool.remove(proof.ProofOfNonexistence)
+            else:
+                raise CantAssignItemException(
+                    "None of the Starry Hill locations are available for Yeet the Bear. Is HAW not randomized?"
+                )
+            
+        if restricted_proofs:
+            remaining_proofs = [i for i in item_pool if i.ItemType in proof.proof_item_types()]
+            # pick N valid locations for these items
+            valid_for_proofs = [loc for loc in valid_locations if self.proof_depths.is_valid(loc)]
+            chosen_locations = random.choices(valid_for_proofs,k=len(remaining_proofs))
+            for index,c in enumerate(chosen_locations):
+                item_pool.remove(remaining_proofs[index])
+                if self.assign_item(c, remaining_proofs[index]):
+                    valid_locations.remove(c)
+        if restricted_promise_charm:
+            promise_charm_item_list = [i for i in item_pool if i.ItemType is misc.PromiseCharm.type]
+            # pick N valid locations for these items
+            valid_for_promise_charm = [loc for loc in valid_locations if self.promise_charm_depths.is_valid(loc)]
+            chosen_locations = random.choices(valid_for_promise_charm,k=len(promise_charm_item_list))
+            for index,c in enumerate(chosen_locations):
+                item_pool.remove(promise_charm_item_list[index])
+                if self.assign_item(c, promise_charm_item_list[index]):
+                    valid_locations.remove(c)
+        if restricted_story:
+            remaining_unlocks = [i for i in item_pool if i.ItemType is itemType.STORYUNLOCK]
+            # pick N valid locations for these items
+            valid_for_unlocks = [loc for loc in valid_locations if self.story_depths.is_valid(loc)]
+            number_of_choices = min(len(remaining_unlocks),len(valid_for_unlocks))
+            chosen_locations = random.choices(valid_for_unlocks,k=number_of_choices)
+            for index,c in enumerate(chosen_locations):
+                item_pool.remove(remaining_unlocks[index])
+                if self.assign_item(c, remaining_unlocks[index]):
+                    valid_locations.remove(c)
+        if restricted_reports:
+            remaining_reports = [i for i in item_pool if i.ItemType is itemType.REPORT]
+            # pick N valid locations for these items
+            valid_for_reports = [loc for loc in valid_locations if self.story_depths.is_valid(loc)]
+            number_of_choices = min(len(remaining_reports),len(valid_for_reports))
+            chosen_locations = random.choices(valid_for_reports,k=number_of_choices)
+            for index,c in enumerate(chosen_locations):
+                item_pool.remove(remaining_reports[index])
+                if self.assign_item(c, remaining_reports[index]):
+                    valid_locations.remove(c)
+
+    def randomly_assign_single_item(self, item, location_pool):
+        locations_to_remove = []
+        if len(location_pool) == 0:
+            raise CantAssignItemException(f"Ran out of locations to assign items {item}")
+
+        weights = self.compute_location_weights(item, location_pool)
+
+        count = 0
+        while True:
+            count += 1
+            if len(weights) == 0:
+                raise CantAssignItemException(
+                    f"Ran out of locations to assign items to."
+                )
+            if sum(weights) == 0:
+                raise CantAssignItemException(
+                    f"Somehow, can't assign an item because there are no valid locations for {item.Name}."
+                )
+
+            random_location: KH2Location = random.choices(location_pool, weights)[
+                0
+            ]
+            if item.ItemType not in random_location.InvalidChecks:
+                if self.assign_item(random_location, item):
+                    location_pool.remove(random_location)
+                    locations_to_remove.append(random_location)
+
+                    struggle_pair = self._maybe_assign_struggle_pair(
+                        random_location, item, location_pool
+                    )
+                    if struggle_pair is not None:
+                        location_pool.remove(struggle_pair)
+                        locations_to_remove.append(struggle_pair)
+                break
+            if count == 100:
+                raise CantAssignItemException(
+                    f"Trying to assign {item} and failed 100 times in {len([i for i in location_pool if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(location_pool)}"
+                )
+        return locations_to_remove
+
+
+    def randomly_assign_items(self, item_pool, valid_locations):
         for item in item_pool:
             if len(valid_locations) == 0:
                 raise CantAssignItemException(f"Ran out of locations to assign items")
 
-            if item.item == proof.ProofOfNonexistence and self.yeet_the_bear:
-                # Manually assign to Starry Hill
-                yeet_locations = _find_locations(
-                    haw.yeet_the_bear_location_names(), valid_locations
-                )
-                if len(yeet_locations) > 0:
-                    yeet_location = random.choice(yeet_locations)
-                    if self.assign_item(yeet_location, item):
-                        valid_locations.remove(yeet_location)
-                    continue
-                else:
-                    raise CantAssignItemException(
-                        "None of the Starry Hill locations are available for Yeet the Bear"
-                    )
-
-            weights = compute_location_weights(item, valid_locations)
+            weights = self.compute_location_weights(item, valid_locations)
 
             count = 0
             while True:
@@ -1129,9 +1226,9 @@ class Randomizer:
                     raise CantAssignItemException(
                         f"Ran out of locations to assign items to."
                     )
-                if sum(weights) == 0 and restricted_reports:
+                if sum(weights) == 0:
                     raise CantAssignItemException(
-                        f"Somehow, can't assign an item. If using report depth option that restricts to specific bosses, make sure all worlds with doors in GoA are enabled."
+                        f"Somehow, can't assign an item because there are no valid locations for {item.Name}."
                     )
 
                 random_location: KH2Location = random.choices(valid_locations, weights)[
@@ -1152,8 +1249,15 @@ class Randomizer:
                         f"Trying to assign {item} and failed 100 times in {len([i for i in valid_locations if i.LocationCategory==locationCategory.POPUP])} popups left out of {len(valid_locations)}"
                     )
 
-        invalid_locations.extend(valid_locations)
-        self.assign_junk_locations(settings, invalid_locations)
+
+    def compute_location_weights(
+        self, item: KH2Item, location_pool: list[KH2Location]
+    ) -> list[int]:
+        loc_weights = self.location_weights
+        result = [
+            loc_weights.get_weight(item.ItemType, loc) for loc in location_pool
+        ]
+        return result
 
     def assign_junk_locations(
         self, settings: RandomizerSettings, locations: list[KH2Location]
@@ -1230,6 +1334,7 @@ class Randomizer:
             if locationType.Critical in loc.LocationTypes:
                 loc.InvalidChecks.append(itemType.GAUGE)
 
+            ''' Commenting this code out because new plando logic should account for this
             if not self.report_depths.is_valid(loc):
                 loc.InvalidChecks.append(itemType.REPORT)
 
@@ -1272,6 +1377,7 @@ class Randomizer:
                         loc.InvalidChecks.remove(itemType.PROOF_OF_NONEXISTENCE)
                 else:
                     loc.InvalidChecks.append(itemType.PROOF_OF_NONEXISTENCE)
+            '''
 
     def assign_keyblade_abilities(
         self,
@@ -1448,22 +1554,6 @@ class Randomizer:
                 )
             assignment.item2 = item
             all_slots_filled = True
-
-        if locationType.SYNTH in location.LocationTypes:
-            # assign a recipe to this item
-            items: list[KH2Item] = random.sample(
-                Items.getSynthRequirementsList(), k=random.randint(1, 3)
-            )
-            requirements = [
-                SynthRequirement(synth_item=item, amount=random.randint(1, 3))
-                for item in items
-            ]
-            recipe = SynthesisRecipe(
-                location=location,
-                unlock_rank=1 if location.LocationId < 15 else 2,
-                requirements=requirements,
-            )
-            self.synthesis_recipes.append(recipe)
 
         return all_slots_filled
 

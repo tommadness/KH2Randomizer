@@ -40,19 +40,23 @@ WinnersProof = Keyblade(544, "Winner's Proof", weaponslot_id=weaponslot.Location
 
 
 def get_locking_keyblade_names() -> list[str]:
-    return [Oathkeeper.name,
-            HiddenDragon.name,
-            HerosCrest.name,
-            Monochrome.name,
-            FollowTheWind.name,
-            CircleOfLife.name,
-            PhotonDebugger.name,
-            WishingLamp.name,
-            DecisivePumpkin.name,
-            SleepingLion.name,
-            SweetMemories.name,
-            BondOfFlame.name,
-            TwoBecomeOne.name,
-            WinnersProof.name,
-            RumblingRose.name,
+    return [i.name for i in get_locking_keyblades()]
+
+
+def get_locking_keyblades() -> list[Keyblade]:
+    return [Oathkeeper,
+            HiddenDragon,
+            HerosCrest,
+            Monochrome,
+            FollowTheWind,
+            CircleOfLife,
+            PhotonDebugger,
+            WishingLamp,
+            DecisivePumpkin,
+            SleepingLion,
+            SweetMemories,
+            BondOfFlame,
+            TwoBecomeOne,
+            WinnersProof,
+            RumblingRose,
             ]
