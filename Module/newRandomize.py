@@ -659,7 +659,7 @@ class Randomizer:
                         invalid_locations.remove(loc_with_vanilla)
 
         # assign items that have very restricted locations (boss depths, yeet, etc.)
-        self.assign_plando_like_items(item_pool, valid_locations)
+        self.assign_plando_like_items(settings, item_pool, valid_locations)
         # (a)determine sphere 0
         #    if sphere 0 is big enough
         #       return
@@ -1111,7 +1111,7 @@ class Randomizer:
         invalid_locations.extend(valid_locations)
         self.assign_junk_locations(settings, invalid_locations)
 
-    def assign_plando_like_items(self, item_pool, valid_locations):
+    def assign_plando_like_items(self, settings, item_pool, valid_locations):
         restricted_reports = self.report_depths.very_restricted_locations
         restricted_proofs = self.proof_depths.very_restricted_locations
         restricted_promise_charm = self.promise_charm_depths.very_restricted_locations
@@ -1139,7 +1139,24 @@ class Randomizer:
             remaining_proofs = [i for i in item_pool if i.ItemType in proof.proof_item_types()]
             # pick N valid locations for these items
             valid_for_proofs = [loc for loc in valid_locations if self.proof_depths.is_valid(loc)]
-            chosen_locations = random.choices(valid_for_proofs,k=len(remaining_proofs))
+
+            # Check if both AS's and datas are enabled, and remove AS locations if so
+            # We do this mainly to prevent the AS and data fight in the same world from both having proofs.
+            if (
+                locationType.AS in settings.enabledLocations
+                and locationType.DataOrg in settings.enabledLocations
+            ):
+                valid_for_proofs = [loc for loc in valid_for_proofs if locationType.AS not in loc.LocationTypes]
+
+            good_choices = False
+            while not good_choices:
+                good_choices = True
+                chosen_locations = random.sample(valid_for_proofs,k=len(remaining_proofs))
+                for index,c in enumerate(chosen_locations):
+                    # check that each proof is valid for the location (i.e. no connection on Terra)
+                    if remaining_proofs[index].ItemType in c.InvalidChecks:
+                        good_choices = False                    
+
             for index,c in enumerate(chosen_locations):
                 item_pool.remove(remaining_proofs[index])
                 if self.assign_item(c, remaining_proofs[index]):
@@ -1148,7 +1165,7 @@ class Randomizer:
             promise_charm_item_list = [i for i in item_pool if i.ItemType is misc.PromiseCharm.type]
             # pick N valid locations for these items
             valid_for_promise_charm = [loc for loc in valid_locations if self.promise_charm_depths.is_valid(loc)]
-            chosen_locations = random.choices(valid_for_promise_charm,k=len(promise_charm_item_list))
+            chosen_locations = random.sample(valid_for_promise_charm,k=len(promise_charm_item_list))
             for index,c in enumerate(chosen_locations):
                 item_pool.remove(promise_charm_item_list[index])
                 if self.assign_item(c, promise_charm_item_list[index]):
@@ -1158,7 +1175,7 @@ class Randomizer:
             # pick N valid locations for these items
             valid_for_unlocks = [loc for loc in valid_locations if self.story_depths.is_valid(loc)]
             number_of_choices = min(len(remaining_unlocks),len(valid_for_unlocks))
-            chosen_locations = random.choices(valid_for_unlocks,k=number_of_choices)
+            chosen_locations = random.sample(valid_for_unlocks,k=number_of_choices)
             for index,c in enumerate(chosen_locations):
                 item_pool.remove(remaining_unlocks[index])
                 if self.assign_item(c, remaining_unlocks[index]):
@@ -1168,7 +1185,7 @@ class Randomizer:
             # pick N valid locations for these items
             valid_for_reports = [loc for loc in valid_locations if self.story_depths.is_valid(loc)]
             number_of_choices = min(len(remaining_reports),len(valid_for_reports))
-            chosen_locations = random.choices(valid_for_reports,k=number_of_choices)
+            chosen_locations = random.sample(valid_for_reports,k=number_of_choices)
             for index,c in enumerate(chosen_locations):
                 item_pool.remove(remaining_reports[index])
                 if self.assign_item(c, remaining_reports[index]):
