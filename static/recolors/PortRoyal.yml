@@ -24,6 +24,7 @@
         - - remastered/obj/H_CA050.mdlx/-7.dds
 
         - - remastered/obj/H_CA060.mdlx/-0.dds
+      previews: [ true, false, true, false, false ]
 
 
 - id: elizabeth
@@ -42,6 +43,7 @@
         - - remastered/obj/N_CA010_GM.mdlx/-0.dds
           - remastered/obj/N_CA010_RTN.mdlx/-0.dds
           - remastered/obj/N_CA010_SAD_RTN.mdlx/-0.dds
+      previews: [ false, true ]
 
 
 - id: grim_reaper
@@ -86,6 +88,7 @@
           - remastered/obj/B_EX150_LV99.mdlx/-1.dds
 
         - - remastered/obj/H_EX690.mdlx/-5.dds
+      previews: [ true, true, false ]
 
     - colorable_areas:
         - id: cards
@@ -114,6 +117,7 @@
 
         - - remastered/obj/B_EX210.mdlx/-3.dds
           - remastered/obj/B_EX210_EH.mdlx/-3.dds
+      previews: [ false, false, true, true, true ]
 
 
 - id: luxord_fx

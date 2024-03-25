@@ -1,5 +1,6 @@
 import json
 import os
+import random
 import string
 import textwrap
 import time
@@ -8,9 +9,8 @@ from typing import Any
 
 import numpy
 from PIL import Image
-from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QDialog, QMenuBar, QMenu, QComboBox, QSpinBox, QLabel, QVBoxLayout, QHBoxLayout, \
-    QInputDialog, QLineEdit
+    QInputDialog, QLineEdit, QPushButton
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
@@ -18,7 +18,6 @@ from Module import texture, appconfig
 from Module.cosmetics import CosmeticsMod
 from Module.texture import TextureRecolorSettings, TextureRecolorizer, recolor_image, RecolorDefinition
 from UI.Submenus.SubMenu import KH2Submenu
-
 
 _model_tags_by_category_name = {
     "Characters": "character",
@@ -118,14 +117,22 @@ class TextureRecolorSettingsDialog(QDialog):
         hue_picker.setRange(0, 355)
         hue_picker.setSingleStep(5)
         self.hue_picker = hue_picker
-        base_image = QLabel()
-        base_image.setScaledContents(True)
-        base_image.setFixedSize(320, 320)
-        self.base_image = base_image
-        recolored_image = QLabel()
-        recolored_image.setScaledContents(True)
-        recolored_image.setFixedSize(320, 320)
-        self.recolored_image = recolored_image
+
+        base_images: list[QLabel] = []
+        for _ in range(8):
+            base_image = QLabel()
+            base_image.setScaledContents(True)
+            base_image.setFixedSize(160, 160)
+            base_images.append(base_image)
+        self.base_images = base_images
+
+        recolored_images: list[QLabel] = []
+        for _ in range(8):
+            recolored_image = QLabel()
+            recolored_image.setScaledContents(True)
+            recolored_image.setFixedSize(160, 160)
+            recolored_images.append(recolored_image)
+        self.recolored_images = recolored_images
 
         category_picker.addItems(_model_tags_by_category_name.keys())
         category_picker.currentIndexChanged.connect(self._category_changed)
@@ -136,6 +143,9 @@ class TextureRecolorSettingsDialog(QDialog):
         setting_picker.currentIndexChanged.connect(self._setting_changed)
 
         hue_picker.valueChanged.connect(self._setting_changed)
+
+        reroll_button = QPushButton("Re-Randomize Preview Colors")
+        reroll_button.clicked.connect(self._new_random_color)
 
         main = QVBoxLayout()
         main.setContentsMargins(0, 0, 0, 0)
@@ -156,31 +166,32 @@ class TextureRecolorSettingsDialog(QDialog):
         submenu_layout.add_labeled_widget(hue_picker, "Color Hue")
         submenu_layout.end_group("Color to Use")
         submenu_layout.end_column()
+
+        submenu_layout.start_column()
+        submenu_layout.start_group()
+        submenu_layout.add_option(settingkey.RECOLOR_TEXTURES_KEEP_CACHE)
+        submenu_layout.pending_group.addWidget(reroll_button)
+        submenu_layout.end_group("Other")
+        submenu_layout.end_column()
         submenu_layout.finalizeMenu()
 
         main.addWidget(submenu_layout)
 
-        images_layout = QHBoxLayout()
-        images_layout.setContentsMargins(16, 0, 16, 16)
-
         base_image_layout = QHBoxLayout()
         base_image_layout.setContentsMargins(8, 8, 8, 8)
-        base_image_layout.addWidget(base_image)
-        images_layout.addWidget(KH2Submenu.make_styled_frame(base_image_layout, 2, "Original Texture Sample"))
+        for base_image in base_images:
+            base_image_layout.addWidget(base_image)
         preview_image_layout = QHBoxLayout()
         preview_image_layout.setContentsMargins(8, 8, 8, 8)
-        preview_image_layout.addWidget(recolored_image)
-        images_layout.addWidget(KH2Submenu.make_styled_frame(preview_image_layout, 3, "Recolored Preview"))
-        main.addLayout(images_layout)
+        for recolored_image in recolored_images:
+            preview_image_layout.addWidget(recolored_image)
+        main.addWidget(KH2Submenu.make_styled_frame(base_image_layout, 2, "Original Texture(s)"))
+        main.addWidget(KH2Submenu.make_styled_frame(preview_image_layout, 3, "Recolored Preview(s)"))
 
         self.setLayout(main)
 
         self.all_models = TextureRecolorizer.load_recolorable_models()
         self._category_changed()
-
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self._new_random_color)
-        self.timer.start(5000)
 
     def _category_changed(self):
         selected_category = _model_tags_by_category_name[self.category_picker.currentText()]
@@ -240,40 +251,61 @@ class TextureRecolorSettingsDialog(QDialog):
         self._update_preview()
 
     def _update_preview(self):
-        selected_area = self._selected_colorable_area()
-        recolor = self.recolors_by_area_name[selected_area["name"]]
-        # Just pick one of the images to show as the preview
+        recolor = self.recolors_by_area_name[self._selected_colorable_area()["name"]]
+
+        colorable_areas: list[dict[str, Any]] = recolor["colorable_areas"]
+        recolor_definitions: list[RecolorDefinition] = []
+        random_hue_index = int(time.time())
+        for colorable_area in colorable_areas:
+            area_id = colorable_area["id"]
+            setting = self.texture_recolor_settings.setting_for_area(
+                model_id=self._selected_model()["id"],
+                area_id=area_id
+            )
+
+            if setting == texture.VANILLA:
+                continue
+            elif setting == texture.RANDOM:
+                available_random_hues = texture.available_random_hues
+                random_hue_count = len(available_random_hues)
+                chosen_hue = available_random_hues[random_hue_index % random_hue_count]
+                random_hue_index = random_hue_index + random.randint(0, random_hue_count)
+            else:  # Custom
+                chosen_hue = int(setting)
+
+            conditions = TextureRecolorizer.conditions_from_colorable_area(colorable_area)
+            new_saturation = colorable_area.get("new_saturation")
+            value_offset = colorable_area.get("value_offset")
+            recolor_definitions.append(RecolorDefinition(conditions, chosen_hue, new_saturation, value_offset))
+
         image_groups: list[list[str]] = recolor["image_groups"]
-        full_path = self.base_path / image_groups[0][0]
-        with Image.open(full_path) as base_image:
-            self.base_image.setPixmap(base_image.toqpixmap())
+        preview_images: list[bool] = recolor.get("previews", [True] * len(image_groups))
 
-        setting = self.texture_recolor_settings.setting_for_area(
-            model_id=self._selected_model()["id"],
-            area_id=selected_area["id"]
-        )
-        if setting == texture.VANILLA:
+        preview_count = len(self.base_images)
+
+        for index in range(preview_count):
+            self.base_images[index].clear()
+            self.recolored_images[index].clear()
+
+        current_preview = 0
+        for group_index in range(len(image_groups)):
+            if not preview_images[group_index]:
+                continue
+
+            full_path = self.base_path / image_groups[group_index][0]
             with Image.open(full_path) as base_image:
-                self.recolored_image.setPixmap(base_image.toqpixmap())
-            return
-        elif setting == texture.RANDOM:
-            available_random_hues = texture.available_random_hues
-            conditions = TextureRecolorizer.conditions_from_colorable_area(selected_area)
-            chosen_hue = available_random_hues[int(time.time()) % len(available_random_hues)]
-            new_saturation = selected_area.get("new_saturation")
-            value_offset = selected_area.get("value_offset")
-            recolor_definitions = [RecolorDefinition(conditions, chosen_hue, new_saturation, value_offset)]
-        else:  # Custom
-            custom_hue = self.hue_picker.value()
-            conditions = TextureRecolorizer.conditions_from_colorable_area(selected_area)
-            new_saturation = selected_area.get("new_saturation")
-            value_offset = selected_area.get("value_offset")
-            recolor_definitions = [RecolorDefinition(conditions, custom_hue, new_saturation, value_offset)]
+                self.base_images[current_preview].setPixmap(base_image.toqpixmap())
 
-        with Image.open(full_path) as source_image:
-            image_array = numpy.array(source_image)
-        with Image.fromarray(recolor_image(image_array, recolor_definitions), "RGBA") as recolored_image:
-            self.recolored_image.setPixmap(recolored_image.toqpixmap())
+            with Image.open(full_path) as source_image:
+                image_array = numpy.array(source_image.convert("RGBA"))
+            recolored_array = recolor_image(image_array, recolor_definitions, group_index=group_index)
+            with Image.fromarray(recolored_array, "RGBA") as recolored_image:
+                self.recolored_images[current_preview].setPixmap(recolored_image.toqpixmap())
+
+            current_preview = current_preview + 1
+
+            if current_preview == preview_count:
+                break
 
     def _selected_model(self) -> dict[str, Any]:
         selected_model_name = self.model_names[self.model_picker.currentIndex()]
@@ -385,6 +417,3 @@ class TextureRecolorSettingsDialog(QDialog):
         selected_setting = self.setting_picker.currentIndex()
         if selected_setting == 1:
             self._update_preview()
-
-    def closeEvent(self, e):
-        self.timer.stop()

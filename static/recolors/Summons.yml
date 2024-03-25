@@ -155,6 +155,7 @@
         - - remastered/obj/P_AL010.mdlx/-2.dds
 
         - - remastered/obj/P_AL010.a.us/-21.dds
+      previews: [ false, false, true, false, true, false, false, false, true, false, false, false, false, false, false, false, true ]
 
     - colorable_areas:
         - id: valor

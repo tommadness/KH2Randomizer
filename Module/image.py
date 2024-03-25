@@ -47,3 +47,16 @@ def hsv_to_rgb(hsv: ndarray) -> ndarray:
     rgb[..., 1] = np.select(conditions, [v, v, v, q, p, p], default=t)
     rgb[..., 2] = np.select(conditions, [v, p, t, v, v, q], default=p)
     return rgb.astype('uint8')
+
+
+def rgb_to_mask(rgb: ndarray) -> ndarray:
+    y_dimension, x_dimension, _ = rgb.shape
+    result = np.zeros(shape=(y_dimension, x_dimension), dtype="bool")
+    for y in range(y_dimension):
+        for x in range(x_dimension):
+            # Matching on pixels that have red but no green or blue
+            if rgb[y, x, 0] > 0 and rgb[y, x, 1] == 0 and rgb[y, x, 2] == 0:
+                result[y, x] = True
+            else:
+                result[y, x] = False
+    return result

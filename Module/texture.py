@@ -1,5 +1,7 @@
+import gzip
 import os
 import random
+import shutil
 import string
 from pathlib import Path
 from typing import Any, Optional, Callable
@@ -24,6 +26,7 @@ _SATURATION_INDEX = 1
 _VALUE_INDEX = 2
 _ALPHA_INDEX = 3
 
+MaskCondition = Callable[[tuple[int, int]], bool]
 ColorCondition = Callable[[Optional[float]], bool]
 
 # In most cases, the difference between 90-180 is pretty minimal (various degrees of blue-green), and including all of
@@ -66,12 +69,46 @@ class HsvaConditions:
             and self.alpha_condition(alpha)
 
 
+class PixelMatchingConditions:
+    """Conditions for matching pixels."""
+
+    def __init__(self, masks: list[Optional[ndarray]], hsva_conditions: Optional[HsvaConditions]):
+        super().__init__()
+        self.mask_conditions: list[Optional[MaskCondition]] = []
+        for mask in masks:
+            self.mask_conditions.append(_make_mask_condition(mask))
+        self.hsva_conditions = hsva_conditions
+
+    def matches(
+            self,
+            x: int,
+            y: int,
+            group_index: int,
+            hue: Optional[float],
+            saturation: Optional[float],
+            value: Optional[float],
+            alpha: Optional[float],
+    ) -> bool:
+        mask_condition: Optional[MaskCondition] = None
+        if group_index in range(len(self.mask_conditions)):
+            mask_condition = self.mask_conditions[group_index]
+        if mask_condition is not None:
+            coordinates = (x, y)
+            return mask_condition(coordinates)
+        else:
+            hsva_conditions = self.hsva_conditions
+            if hsva_conditions is None:
+                return False
+            else:
+                return hsva_conditions.matches(hue=hue, saturation=saturation, value=value, alpha=alpha)
+
+
 class RecolorDefinition:
     """Defines how to recolor a portion of an image."""
 
     def __init__(
             self,
-            conditions: HsvaConditions,
+            conditions: PixelMatchingConditions,
             new_hue: int,
             new_saturation: Optional[int] = None,
             value_offset: Optional[int] = None
@@ -92,13 +129,14 @@ class RecolorDefinition:
             self.value_offset = value_offset / 100.0 * 256.0
 
 
-def make_hsva_conditions(
+def make_matching_conditions(
+        masks: list[Optional[ndarray]],
         hue_range: Optional[tuple[int, int]],
         saturation_range: Optional[tuple[int, int]],
         value_range: Optional[tuple[int, int]]
-) -> HsvaConditions:
+) -> PixelMatchingConditions:
     """
-    Creates an HsvaConditions object given hue/saturation/value ranges.
+    Creates a PixelMatching object given masks and hue/saturation/value ranges.
 
     hue range [0 - 360] or None (can wrap around if desired, i.e. can go from 330 to 30)
     saturation range [0 - 100] or None
@@ -106,34 +144,40 @@ def make_hsva_conditions(
     """
     descriptions: list[str] = []
 
-    hue_condition: ColorCondition = _default_color_condition
+    hue_condition: Optional[ColorCondition] = None
     if hue_range is not None:
         hue_start, hue_end = hue_range
         hue_condition = _hue_in_range_condition(hue_start, hue_end)
         descriptions.append(f"h {hue_start}-{hue_end}")
 
-    saturation_condition: ColorCondition = _default_color_condition
+    saturation_condition: Optional[ColorCondition] = None
     if saturation_range is not None:
         saturation_start, saturation_end = saturation_range
         saturation_condition = _saturation_in_range_condition(saturation_start, saturation_end)
         descriptions.append(f"s {saturation_start}-{saturation_end}")
 
-    value_condition: ColorCondition = _default_color_condition
+    value_condition: Optional[ColorCondition] = None
     if value_range is not None:
         value_start, value_end = value_range
         value_condition = _value_in_range_condition(float(value_start), float(value_end))
         descriptions.append(f"v {value_start}-{value_end}")
 
-    return HsvaConditions(
-        description=", ".join(descriptions),
-        hue_condition=hue_condition,
-        saturation_condition=saturation_condition,
-        value_condition=value_condition,
-        alpha_condition=_default_color_condition
-    )
+    hsva_conditions: Optional[HsvaConditions] = None
+    if hue_condition is not None or saturation_condition is not None or value_condition is not None:
+        hue_condition = hue_condition if hue_condition is not None else _default_color_condition
+        saturation_condition = saturation_condition if saturation_condition is not None else _default_color_condition
+        value_condition = value_condition if value_condition is not None else _default_color_condition
+        hsva_conditions = HsvaConditions(
+            description=", ".join(descriptions),
+            hue_condition=hue_condition,
+            saturation_condition=saturation_condition,
+            value_condition=value_condition,
+            alpha_condition=_default_color_condition
+        )
+    return PixelMatchingConditions(masks=masks, hsva_conditions=hsva_conditions)
 
 
-def recolor_image(rgb_array: ndarray, recolor_definitions: list[RecolorDefinition]) -> ndarray:
+def recolor_image(rgb_array: ndarray, recolor_definitions: list[RecolorDefinition], group_index: int) -> ndarray:
     """Applies recoloring(s) configured in recolor_definitions to the image represented by rgb_array"""
     hsv_array = rgb_to_hsv(rgb_array)
 
@@ -145,7 +189,16 @@ def recolor_image(rgb_array: ndarray, recolor_definitions: list[RecolorDefinitio
             value: Optional[float] = hsv_array[x, y, _VALUE_INDEX]
             alpha: Optional[float] = hsv_array[x, y, _ALPHA_INDEX]
             for recolor_definition in recolor_definitions:
-                if recolor_definition.conditions.matches(hue=hue, saturation=saturation, value=value, alpha=alpha):
+                matches = recolor_definition.conditions.matches(
+                    x=x,
+                    y=y,
+                    group_index=group_index,
+                    hue=hue,
+                    saturation=saturation,
+                    value=value,
+                    alpha=alpha,
+                )
+                if matches:
                     hsv_array[x, y, _HUE_INDEX] = recolor_definition.new_hue
 
                     new_saturation = recolor_definition.new_saturation
@@ -215,8 +268,36 @@ class TextureRecolorizer:
         return result
 
     @staticmethod
-    def conditions_from_colorable_area(colorable_area: dict[str, Any]) -> HsvaConditions:
+    def mask_file_to_mask(mask_file_path: Path) -> ndarray:
+        """
+        Decodes a mask file into ndarray [y, x] where the value is True for any pixels that are part of the mask.
+        """
+        with gzip.open(mask_file_path) as mask_file:
+            first_line = mask_file.readline().decode()
+            y_dimension_str, x_dimension_str = first_line.split(",")
+            y_dimension = int(y_dimension_str)
+            x_dimension = int(x_dimension_str)
+            mask = np.zeros((y_dimension, x_dimension), dtype="bool")
+            for y in range(y_dimension):
+                line = mask_file.readline().decode()
+                for x in range(x_dimension):
+                    if line[x] != ' ':
+                        mask[y, x] = True
+            return mask
+
+    @staticmethod
+    def conditions_from_colorable_area(colorable_area: dict[str, Any]) -> PixelMatchingConditions:
         """Returns color conditions defined by properties of the specified colorable_area."""
+        mask_files: Optional[list[str]] = colorable_area.get("mask_files")
+        masks: list[Optional[ndarray]] = []
+        if mask_files is not None:
+            for mask_file_str in mask_files:
+                mask_file_path = Path(resource_path(mask_file_str))
+                if mask_file_path.is_file():
+                    masks.append(TextureRecolorizer.mask_file_to_mask(mask_file_path))
+                else:
+                    masks.append(None)
+
         hue_start: Optional[int] = colorable_area.get("hue_start")
         hue_end: Optional[int] = colorable_area.get("hue_end")
         hue_range: Optional[tuple[int, int]] = None
@@ -235,7 +316,12 @@ class TextureRecolorizer:
         if value_start is not None and value_end is not None:
             value_range = (value_start, value_end)
 
-        return make_hsva_conditions(hue_range=hue_range, saturation_range=saturation_range, value_range=value_range)
+        return make_matching_conditions(
+            masks=masks,
+            hue_range=hue_range,
+            saturation_range=saturation_range,
+            value_range=value_range
+        )
 
     def recolor_textures(self) -> list[Asset]:
         """Returns a list of mod assets (if any) that recolor textures based on settings."""
@@ -255,6 +341,9 @@ class TextureRecolorizer:
             return assets
 
         recolors_cache_folder = Path("cache/texture-recolors")
+        if recolors_cache_folder.is_dir():
+            if not self.settings.get(settingkey.RECOLOR_TEXTURES_KEEP_CACHE):
+                shutil.rmtree(recolors_cache_folder)
 
         for model in recolorable_models:
             model_id: str = model["id"]
@@ -284,7 +373,7 @@ class TextureRecolorizer:
                     recolor_definitions.append(recolor_definition)
 
                 image_groups: list[list[str]] = recolor["image_groups"]
-                for group in image_groups:
+                for index, group in enumerate(image_groups):
                     # Each group gets a unique ID
                     group_id = available_image_group_ids.pop(0)
 
@@ -322,7 +411,8 @@ class TextureRecolorizer:
                     # Just use the first one as the canonical representation
                     with Image.open(Path(base_path) / group[0]) as original_image:
                         image_array = np.array(original_image.convert("RGBA"))
-                        with Image.fromarray(recolor_image(image_array, recolor_definitions), "RGBA") as new_image:
+                        recolored_array = recolor_image(image_array, recolor_definitions, group_index=index)
+                        with Image.fromarray(recolored_array, "RGBA") as new_image:
                             new_image.save(destination_path)
 
         return assets
@@ -342,6 +432,14 @@ class TextureRecolorizer:
                 return random.choice(available_random_hues)
         else:
             return int(area_setting)
+
+
+def _make_mask_condition(mask: Optional[ndarray]) -> Optional[MaskCondition]:
+    if mask is None:
+        return None
+    else:
+        # NOTE: The bool() function call is to convert the numpy bool_ type to normal bool
+        return lambda coordinates: bool(mask[coordinates[0], coordinates[1]])
 
 
 def _hue_in_range_condition(hue_start: float, hue_end: float) -> ColorCondition:

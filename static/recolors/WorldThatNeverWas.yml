@@ -1259,6 +1259,51 @@
           - remastered/obj/B_EX170_LV99.mdlx/-2.dds
           - remastered/obj/B_EX170_RTN.mdlx/-2.dds
 
+# Final Xemnas has cutscene textures that are different, so we'd need different masks if we want to recolor those
+- id: xemnas_final
+  name: Xemnas (Final)
+  tags:
+    - character
+  recolors:
+    - colorable_areas:
+        - id: white
+          name: White
+          mask_files:
+            - N/A
+            - static/recolors/masks/xemnas-final/1_White.mask
+            - static/recolors/masks/xemnas-final/2_White.mask
+          new_saturation: 50
+        - id: black
+          name: Black
+          mask_files:
+            - N/A
+            - static/recolors/masks/xemnas-final/1_Black.mask
+            - static/recolors/masks/xemnas-final/2_Black.mask
+          new_saturation: 50
+        - id: silver
+          name: Silver
+          mask_files:
+            - static/recolors/masks/xemnas-final/0_Silver.mask
+            - static/recolors/masks/xemnas-final/1_Silver.mask
+            - N/A
+          new_saturation: 50
+        - id: trim
+          name: Trim
+          mask_files:
+            - N/A
+            - N/A
+            - static/recolors/masks/xemnas-final/2_Trim.mask
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.mdlx/-0.dds
+          - remastered/obj/B_EX170_LAST_LV99.mdlx/-0.dds
+
+        - - remastered/obj/B_EX170_LAST.mdlx/-1.dds
+          - remastered/obj/B_EX170_LAST_LV99.mdlx/-1.dds
+
+        - - remastered/obj/B_EX170_LAST.mdlx/-2.dds
+          - remastered/obj/B_EX170_LAST_LV99.mdlx/-2.dds
+
 
 - id: xemnas_final_arena
   name: Xemnas (Final Arena)
