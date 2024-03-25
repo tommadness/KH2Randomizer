@@ -299,6 +299,7 @@
         - - remastered/obj/N_HB530_BOSS.mdlx/-6.dds
           - remastered/obj/N_HB530_BTL.mdlx/-6.dds
           - remastered/obj/N_HB530_BTL2.mdlx/-6.dds
+      previews: [ false, true ]
 
 
 - id: merlin

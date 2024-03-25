@@ -2647,6 +2647,18 @@ _all_settings = [
         first, since all of the replacement textures need to be generated.
         """,
     ),
+    Toggle(
+        name=settingkey.RECOLOR_TEXTURES_KEEP_CACHE,
+        group=SettingGroup.COSMETICS,
+        ui_label="Keep Previously Generated Textures",
+        shared=False,
+        default=True,
+        tooltip="""
+        If enabled, previously generated textures will be kept around to speed up future recolors. This will potentially
+        use large amounts of disk space, but improves performance. Disable this option to minimize disk space usage, but
+        recoloring will take longer.
+        """,
+    ),
     TextureRecolorsSetting(
         name=settingkey.TEXTURE_RECOLOR_SETTINGS,
         group=SettingGroup.COSMETICS,

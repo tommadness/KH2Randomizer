@@ -29,6 +29,14 @@ Configures a specific area of an entity that can be colored.
 
 **name** - The user-facing name for the area being colored.
 
+**new_saturation (optional)** - A new color saturation (on a scale of 0-100) to apply to this area when recoloring.
+Most often only applicable when coloring areas that are mainly black/white/gray.
+
+**value_offset (optional)** - A value (between -100 and 100) by which to offset the color value of each pixel within
+this area when recoloring. Most often only applicable when coloring areas that are mainly black/white/gray.
+
+#### Option 1 - Dynamic color matching
+
 **hue_start/hue_end (optional)** - The range of color hues (0-360) to match when computing which pixels should be
 colored as part of this area. The range can "wrap around" if needed (i.e. hue range could be 150-210 to match hues in
 the middle of the color spectrum, or it could be 300-60 to match hues both at the start and end of the color spectrum).
@@ -39,13 +47,18 @@ when computing which pixels should be colored as part of this area.
 **value_start/value_end (optional)** - The range of color values (on a scale of 0-100) to match when computing which
 pixels should be colored as part of this area.
 
-**new_saturation (optional)** - A new color saturation (on a scale of 0-100) to apply to this area when recoloring.
-Most often only applicable when coloring areas that are mainly black/white/gray.
+#### Option 2 - Area masking
 
-**value_offset (optional)** - A value (between -100 and 100) by which to offset the color value of each pixel within
-this area when recoloring. Most often only applicable when coloring areas that are mainly black/white/gray. 
+**mask_files** - A listing of files containing masks of areas that should be colored. The mask files are a format
+derived from an image file where areas containing red pixels are considered part of the colorable area. There needs to
+be one item in this list per image group. Use `N/A` to indicate that there is no mask file for a specific group.
 
-## Full Example with Comments
+The current way to create an encoded mask file from a mask image file is to use the `Configure -> Create Texture
+Recolor` menu option (only available in a special debug build of the seed generator).
+
+## Full Examples with Comments
+
+### Dynamic color matching example
 
 ```yaml
 - id: sora
@@ -137,4 +150,59 @@ this area when recoloring. Most often only applicable when coloring areas that a
           - remastered/obj/P_EX100_MEMO.mdlx/-1.dds
           - remastered/obj/P_EX100_NPC.mdlx/-1.dds
           - remastered/obj/P_EX100_WM.mdlx/-1.dds
+```
+
+### Mask files example
+
+```yaml
+- id: xemnas_final
+  name: Xemnas (Final)
+  tags:
+    - character
+  recolors:
+    # We define four colorable areas for Final Xemnas. All the areas are contained within three unique
+    # texture images.
+    - colorable_areas:
+        - id: white
+          name: White
+          mask_files:
+            # There are mask files for the second and third image group for the white area, but none is needed for the
+            # first group, so that group just gets an N/A designation.
+            - N/A
+            - static/recolors/masks/xemnas-final/1_White.mask
+            - static/recolors/masks/xemnas-final/2_White.mask
+          new_saturation: 50
+        - id: black
+          name: Black
+          mask_files:
+            # The black area is in both the second and third textures
+            - N/A
+            - static/recolors/masks/xemnas-final/1_Black.mask
+            - static/recolors/masks/xemnas-final/2_Black.mask
+          new_saturation: 50
+        - id: silver
+          name: Silver
+          mask_files:
+            # The silver area is in both the first and second textures
+            - static/recolors/masks/xemnas-final/0_Silver.mask
+            - static/recolors/masks/xemnas-final/1_Silver.mask
+            - N/A
+          new_saturation: 50
+        - id: trim
+          name: Trim
+          mask_files:
+            # The trim is only in the third texture
+            - N/A
+            - N/A
+            - static/recolors/masks/xemnas-final/2_Trim.mask
+          new_saturation: 50
+      image_groups:
+        - - remastered/obj/B_EX170_LAST.mdlx/-0.dds
+          - remastered/obj/B_EX170_LAST_LV99.mdlx/-0.dds
+
+        - - remastered/obj/B_EX170_LAST.mdlx/-1.dds
+          - remastered/obj/B_EX170_LAST_LV99.mdlx/-1.dds
+
+        - - remastered/obj/B_EX170_LAST.mdlx/-2.dds
+          - remastered/obj/B_EX170_LAST_LV99.mdlx/-2.dds
 ```

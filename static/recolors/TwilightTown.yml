@@ -302,6 +302,7 @@
           - remastered/obj/N_EX500_MONEY_RTN.mdlx/-0.dds
           - remastered/obj/N_EX500_RAW_RTN.mdlx/-0.dds
           - remastered/obj/N_EX500_RTN.mdlx/-0.dds
+      previews: [ false, true ]
 
 
 - id: merryweather
@@ -340,6 +341,7 @@
         - - remastered/obj/N_EX520_RAW_RTN.mdlx/-4.dds
 
         - - remastered/obj/N_EX520_RTN.mdlx/-4.dds
+      previews: [ false, false, true ]
 
     - colorable_areas:
         - id: pants
@@ -351,6 +353,7 @@
           - remastered/obj/N_EX520_RTN.mdlx/-5.dds
 
         - - remastered/obj/N_EX520_RAW_RTN.mdlx/-5.dds
+      previews: [ false, true ]
 
 
 - id: pence
@@ -368,6 +371,7 @@
 
         - - remastered/obj/N_EX510_RAW_RTN.mdlx/-2.dds
           - remastered/obj/N_EX510_RTN.mdlx/-2.dds
+      previews: [ false, true ]
 
     - colorable_areas:
         - id: pants
@@ -489,15 +493,15 @@
       image_groups:
         - - remastered/obj/B_EX390.a.us/-9.dds
 
-# 10 is the Nobody symbol
-#    - colorable_areas:
-#        - id: fx10
-#          name: Effect 10
-#          hue_start: 0
-#          hue_end: 360
-#          new_saturation: 75
-#      image_groups:
-#        - - remastered/obj/B_EX390.a.us/-10.dds
+    # 10 is the Nobody symbol
+    #    - colorable_areas:
+    #        - id: fx10
+    #          name: Effect 10
+    #          hue_start: 0
+    #          hue_end: 360
+    #          new_saturation: 75
+    #      image_groups:
+    #        - - remastered/obj/B_EX390.a.us/-10.dds
 
     - colorable_areas:
         - id: fx11
@@ -526,25 +530,25 @@
       image_groups:
         - - remastered/obj/B_EX390.a.us/-13.dds
 
-# This one doesn't seem right to color
-#    - colorable_areas:
-#        - id: fx14
-#          name: Effect 14
-#          hue_start: 0
-#          hue_end: 360
-#          new_saturation: 75
-#      image_groups:
-#        - - remastered/obj/B_EX390.a.us/-14.dds
+    # This one doesn't seem right to color
+    #    - colorable_areas:
+    #        - id: fx14
+    #          name: Effect 14
+    #          hue_start: 0
+    #          hue_end: 360
+    #          new_saturation: 75
+    #      image_groups:
+    #        - - remastered/obj/B_EX390.a.us/-14.dds
 
-# This one doesn't seem right to color
-#    - colorable_areas:
-#        - id: fx16
-#          name: Effect 16
-#          hue_start: 0
-#          hue_end: 360
-#          new_saturation: 75
-#      image_groups:
-#        - - remastered/obj/B_EX390.a.us/-16.dds
+    # This one doesn't seem right to color
+    #    - colorable_areas:
+    #        - id: fx16
+    #          name: Effect 16
+    #          hue_start: 0
+    #          hue_end: 360
+    #          new_saturation: 75
+    #      image_groups:
+    #        - - remastered/obj/B_EX390.a.us/-16.dds
 
     - colorable_areas:
         - id: fx17
@@ -555,15 +559,15 @@
       image_groups:
         - - remastered/obj/B_EX390.a.us/-17.dds
 
-# This one doesn't seem right to color
-#    - colorable_areas:
-#        - id: fx18
-#          name: Effect 18
-#          hue_start: 0
-#          hue_end: 360
-#          new_saturation: 75
-#      image_groups:
-#        - - remastered/obj/B_EX390.a.us/-18.dds
+    # This one doesn't seem right to color
+    #    - colorable_areas:
+    #        - id: fx18
+    #          name: Effect 18
+    #          hue_start: 0
+    #          hue_end: 360
+    #          new_saturation: 75
+    #      image_groups:
+    #        - - remastered/obj/B_EX390.a.us/-18.dds
 
     - colorable_areas:
         - id: fx19
@@ -673,15 +677,15 @@
       image_groups:
         - - remastered/obj/B_EX390.a.us/-30.dds
 
-# 31 is just a black mask
-#    - colorable_areas:
-#        - id: fx31
-#          name: Effect 31
-#          hue_start: 0
-#          hue_end: 360
-#          new_saturation: 75
-#      image_groups:
-#        - - remastered/obj/B_EX390.a.us/-31.dds
+    # 31 is just a black mask
+    #    - colorable_areas:
+    #        - id: fx31
+    #          name: Effect 31
+    #          hue_start: 0
+    #          hue_end: 360
+    #          new_saturation: 75
+    #      image_groups:
+    #        - - remastered/obj/B_EX390.a.us/-31.dds
 
     - colorable_areas:
         - id: fx32
@@ -834,6 +838,7 @@
         - - remastered/obj/N_EX820_BTL.mdlx/-2.dds
 
         - - remastered/obj/N_EX830.mdlx/-0.dds
+      previews: [ true, true, true, false, false, true ]
 
     - colorable_areas:
         - id: oathkeeper
@@ -1001,3 +1006,4 @@
 
         - - remastered/obj/N_TT010_RTN.mdlx/-0.dds
           - remastered/obj/N_TT010_SIT_RTN.mdlx/-0.dds
+      previews: [ true, false ]

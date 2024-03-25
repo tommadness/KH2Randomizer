@@ -16,6 +16,7 @@
           - remastered/obj/P_HE000_BTL.mdlx/-0.dds
           - remastered/obj/P_HE000_NPC_QSATO.mdlx/-0.dds
           - remastered/obj/P_HE000_RTN.mdlx/-0.dds
+      previews: [ false, true ]
 
 
 - id: hades
@@ -74,6 +75,7 @@
         - - remastered/obj/H_HE040.mdlx/-1.dds
 
         - - remastered/obj/H_HE040.mdlx/-2.dds
+      previews: [ true, false, true, true, false, false, false, false, true ]
 
     - colorable_areas:
         - id: angry
@@ -121,6 +123,7 @@
         - - remastered/obj/H_HE040.mdlx/-4.dds
 
         - - remastered/obj/H_HE040.mdlx/-5.dds
+      previews: [ true, false, true, true, false, false, false, true ]
 
 
 - id: hercules
@@ -151,6 +154,7 @@
         - - remastered/obj/N_HE010_RTN.mdlx/-4.dds
 
         - - remastered/obj/N_HE010_SIT_RTN.mdlx/-4.dds
+      previews: [ false, true, false, false, false, false, false ]
 
 
 - id: megara
@@ -222,6 +226,7 @@
           - remastered/obj/N_CM030_BTL.mdlx/-0.dds
 
         - - remastered/obj/H_CM030.mdlx/-0.dds
+      previews: [ true, false ]
 
     - colorable_areas:
         - id: book

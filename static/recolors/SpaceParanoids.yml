@@ -37,6 +37,7 @@
           - remastered/obj/P_EX020_TR_RTN.mdlx/-3.dds
 
         - - remastered/obj/P_EX020_TR.a.us/-6.dds
+      previews: [ true, true, true, true, true, false, true, true, true ]
 
 - id: goofy_sp
   name: Goofy (Space Paranoids)
@@ -65,6 +66,7 @@
           - remastered/obj/P_EX030_TR_RTN.mdlx/-2.dds
 
         - - remastered/obj/P_EX030_TR.a.us/-2.dds
+      previews: [ true, true, false, false, true, true ]
 
 
 - id: hostile_program
@@ -337,6 +339,15 @@
     - colorable_areas:
         - id: glow
           name: Glow
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-sp/8_HUD-Base.mask
           hue_start: 140
           hue_end: 240
       image_groups:
@@ -356,6 +367,7 @@
         - - remastered/obj/P_EX100_TR.mdlx/-4.dds
 
         - - remastered/obj/P_EX100_TR.a.us/-8.dds
+      previews: [ true, false, true, false, false, true, false, true ]
 
 - id: sora_sp_valor
   name: Sora (Space Paranoids Valor Form)
@@ -366,6 +378,15 @@
     - colorable_areas:
         - id: glow
           name: Glow
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-sp/HUD_VWMF.mask
           hue_start: 330
           hue_end: 10
       image_groups:
@@ -385,6 +406,7 @@
         - - remastered/obj/P_EX100_TR_BTLF.mdlx/-4.dds
 
         - - remastered/obj/P_EX100_TR_BTLF.a.us/-4.dds
+      previews: [ true, false, false, false, true, true, false, true ]
 
 
 - id: sora_sp_wisdom
@@ -396,6 +418,14 @@
     - colorable_areas:
         - id: glow
           name: Glow
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-sp/HUD_VWMF.mask
           hue_start: 230
           hue_end: 270
       image_groups:
@@ -411,6 +441,9 @@
         - - remastered/obj/P_EX100_TR_MAGF.mdlx/-2.dds
 
         - - remastered/obj/P_EX100_TR_MAGF.mdlx/-4.dds
+
+        - - remastered/obj/P_EX100_TR_MAGF.a.us/-2.dds
+      previews: [ true, false, false, true, true, false, true ]
 
 
 - id: sora_sp_limit
@@ -431,6 +464,7 @@
         - - remastered/obj/H_EX500_TR_KH1F.mdlx/-3.dds
 
         - - remastered/obj/P_EX100_TR_KH1F.mdlx/-0.dds
+      previews: [ true, false, true ]
 
 
 - id: sora_sp_master
@@ -442,6 +476,15 @@
     - colorable_areas:
         - id: glow
           name: Glow
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-sp/HUD_VWMF.mask
           hue_start: 30
           hue_end: 70
       image_groups:
@@ -461,6 +504,7 @@
         - - remastered/obj/P_EX100_TR_TRIF.mdlx/-4.dds
 
         - - remastered/obj/P_EX100_TR_TRIF.a.us/-5.dds
+      previews: [ true, false, false, false, true, true, false, true ]
 
 
 - id: sora_sp_final
@@ -472,6 +516,11 @@
     - colorable_areas:
         - id: glow
           name: Glow
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - static/recolors/masks/sora-sp/HUD_VWMF.mask
           hue_start: 0
           hue_end: 360
           new_saturation: 50
@@ -482,6 +531,9 @@
 
         - - remastered/obj/H_EX500_TR_ULTF.mdlx/-2.dds
           - remastered/obj/P_EX100_TR_ULTF.mdlx/-1.dds
+
+        - - remastered/obj/P_EX100_TR_ULTF.a.us/-10.dds
+      previews: [ false, true, true, true ]
 
 
 - id: tron
@@ -516,3 +568,4 @@
           - remastered/obj/P_TR000_TSURU.mdlx/-4.dds
 
         - - remastered/obj/P_TR000.a.us/-3.dds
+      previews: [ true, true, false, true, true ]
