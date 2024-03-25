@@ -1124,9 +1124,12 @@ class Randomizer:
             )
             if len(yeet_locations) > 0:
                 yeet_location = random.choice(yeet_locations)
-                if self.assign_item(yeet_location, proof.ProofOfNonexistence):
+                proof_item = next(
+                        key for key in item_pool if key.Id == proof.ProofOfNonexistence.id
+                    )
+                if self.assign_item(yeet_location, proof_item):
                     valid_locations.remove(yeet_location)
-                    item_pool.remove(proof.ProofOfNonexistence)
+                    item_pool.remove(proof_item)
             else:
                 raise CantAssignItemException(
                     "None of the Starry Hill locations are available for Yeet the Bear. Is HAW not randomized?"
