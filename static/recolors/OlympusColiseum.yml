@@ -228,16 +228,6 @@
         - - remastered/obj/H_CM030.mdlx/-0.dds
       previews: [ true, false ]
 
-    - colorable_areas:
-        - id: book
-          name: Book
-          value_start: 0
-          value_end: 30
-          new_saturation: 50
-          value_offset: 15
-      image_groups:
-        - - remastered/obj/B_EX370.mdlx/-7.dds
-
 
 - id: zexion_fx
   name: Zexion (Effects)
@@ -246,7 +236,7 @@
   recolors:
     - colorable_areas:
         - id: fx3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -259,7 +249,7 @@
 
     - colorable_areas:
         - id: fx4
-          name: Effect 4
+          name: Effect 04
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -271,33 +261,8 @@
           - remastered/obj/B_EX370.a.us/-4.png
 
     - colorable_areas:
-        - id: fx5
-          name: Effect 5
-          hue_start: 0
-          hue_end: 360
-      image_groups:
-        - - remastered/obj/B_EX370.a.fr/-5.png
-          - remastered/obj/B_EX370.a.gr/-5.png
-          - remastered/obj/B_EX370.a.it/-5.png
-          - remastered/obj/B_EX370.a.sp/-5.png
-          - remastered/obj/B_EX370.a.us/-5.png
-
-    - colorable_areas:
-        - id: fx6
-          name: Effect 6
-          hue_start: 0
-          hue_end: 360
-          new_saturation: 75
-      image_groups:
-        - - remastered/obj/B_EX370.a.fr/-6.png
-          - remastered/obj/B_EX370.a.gr/-6.png
-          - remastered/obj/B_EX370.a.it/-6.png
-          - remastered/obj/B_EX370.a.sp/-6.png
-          - remastered/obj/B_EX370.a.us/-6.png
-
-    - colorable_areas:
         - id: fx8
-          name: Effect 8
+          name: Effect 08
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -310,7 +275,7 @@
 
     - colorable_areas:
         - id: fx9
-          name: Effect 9
+          name: Effect 09
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -320,37 +285,6 @@
           - remastered/obj/B_EX370.a.it/-9.png
           - remastered/obj/B_EX370.a.sp/-9.png
           - remastered/obj/B_EX370.a.us/-9.png
-
-    - colorable_areas:
-        - id: fx10
-          name: Effect 10
-          hue_start: 0
-          hue_end: 360
-          new_saturation: 75
-      image_groups:
-        - - remastered/obj/B_EX370.a.fr/-10.png
-          - remastered/obj/B_EX370.a.gr/-10.png
-          - remastered/obj/B_EX370.a.it/-10.png
-          - remastered/obj/B_EX370.a.sp/-10.png
-          - remastered/obj/B_EX370.a.us/-10.png
-          - remastered/obj/B_EX370.a.fr/-13.png
-          - remastered/obj/B_EX370.a.gr/-13.png
-          - remastered/obj/B_EX370.a.it/-13.png
-          - remastered/obj/B_EX370.a.sp/-13.png
-          - remastered/obj/B_EX370.a.us/-13.png
-
-    - colorable_areas:
-        - id: fx11
-          name: Effect 11
-          hue_start: 0
-          hue_end: 360
-          new_saturation: 75
-      image_groups:
-        - - remastered/obj/B_EX370.a.fr/-11.png
-          - remastered/obj/B_EX370.a.gr/-11.png
-          - remastered/obj/B_EX370.a.it/-11.png
-          - remastered/obj/B_EX370.a.sp/-11.png
-          - remastered/obj/B_EX370.a.us/-11.png
 
     - colorable_areas:
         - id: fx12

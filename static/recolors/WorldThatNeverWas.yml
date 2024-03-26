@@ -141,7 +141,7 @@
 
     - colorable_areas:
         - id: effect_1
-          name: Effect 1
+          name: Effect 01
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -149,7 +149,7 @@
 
     - colorable_areas:
         - id: effect_2
-          name: Effect 2
+          name: Effect 02
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -184,7 +184,7 @@
 
     - colorable_areas:
         - id: effect_3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -200,7 +200,7 @@
   recolors:
     - colorable_areas:
         - id: effect_1
-          name: Effect 1
+          name: Effect 01
           hue_start: 0
           hue_end: 360
           saturation_start: 20
@@ -210,7 +210,7 @@
 
     - colorable_areas:
         - id: effect_2
-          name: Effect 2
+          name: Effect 02
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -218,7 +218,7 @@
 
     - colorable_areas:
         - id: effect_3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -523,11 +523,11 @@
 
     - colorable_areas:
         - id: effect_1a
-          name: Effect 1A
+          name: Effect 01A
           hue_start: 150
           hue_end: 213
         - id: effect_1b
-          name: Effect 1B
+          name: Effect 01B
           hue_start: 214
           hue_end: 335
       image_groups:
@@ -535,15 +535,15 @@
 
     - colorable_areas:
         - id: effect_2a
-          name: Effect 2A
+          name: Effect 02A
           hue_start: 330
           hue_end: 29
         - id: effect_2b
-          name: Effect 2B
+          name: Effect 02B
           hue_start: 30
           hue_end: 60
         - id: effect_2c
-          name: Effect 2C
+          name: Effect 02C
           hue_start: 210
           hue_end: 240
           value_start: 50
@@ -553,7 +553,7 @@
 
     - colorable_areas:
         - id: effect_3
-          name: Effect 3
+          name: Effect 03
           hue_start: 120
           hue_end: 180
       image_groups:
@@ -563,7 +563,7 @@
 
     - colorable_areas:
         - id: effect_4
-          name: Effect 4
+          name: Effect 04
           hue_start: 150
           hue_end: 180
       image_groups:
@@ -571,11 +571,11 @@
 
     - colorable_areas:
         - id: effect_5a
-          name: Effect 5A
+          name: Effect 05A
           hue_start: 0
           hue_end: 179
         - id: effect_5b
-          name: Effect 5B
+          name: Effect 05B
           hue_start: 180
           hue_end: 360
       image_groups:
@@ -621,7 +621,7 @@
   recolors:
     - colorable_areas:
         - id: fx3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -631,7 +631,7 @@
 
     - colorable_areas:
         - id: fx4
-          name: Effect 4
+          name: Effect 04
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -641,7 +641,7 @@
 
     - colorable_areas:
         - id: fx5
-          name: Effect 5
+          name: Effect 05
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -651,7 +651,7 @@
 
     - colorable_areas:
         - id: fx6
-          name: Effect 6
+          name: Effect 06
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -661,7 +661,7 @@
 
     - colorable_areas:
         - id: fx7
-          name: Effect 7
+          name: Effect 07
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -671,7 +671,7 @@
 
     - colorable_areas:
         - id: fx8
-          name: Effect 8
+          name: Effect 08
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -847,7 +847,7 @@
 
     - colorable_areas:
         - id: effect_1
-          name: Effect 1
+          name: Effect 01
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -856,7 +856,7 @@
 
     - colorable_areas:
         - id: effect_2
-          name: Effect 2
+          name: Effect 02
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -881,7 +881,7 @@
 
     - colorable_areas:
         - id: effect_3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -927,7 +927,7 @@
   recolors:
     - colorable_areas:
         - id: effect_1
-          name: Effect 1
+          name: Effect 01
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -935,7 +935,7 @@
 
     - colorable_areas:
         - id: effect_2
-          name: Effect 2
+          name: Effect 02
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -946,7 +946,7 @@
 
     - colorable_areas:
         - id: effect_3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -956,7 +956,7 @@
 
     - colorable_areas:
         - id: effect_4
-          name: Effect 4
+          name: Effect 04
           hue_start: 240
           hue_end: 300
       image_groups:
@@ -964,7 +964,7 @@
 
     - colorable_areas:
         - id: effect_5
-          name: Effect 5
+          name: Effect 05
           hue_start: 330
           hue_end: 0
       image_groups:
@@ -972,11 +972,11 @@
 
     - colorable_areas:
         - id: effect_6
-          name: Effect 6
+          name: Effect 06
           hue_start: 270
           hue_end: 0
         - id: effect_7
-          name: Effect 7
+          name: Effect 07
           hue_start: 1
           hue_end: 269
       image_groups:
@@ -990,7 +990,7 @@
   recolors:
     - colorable_areas:
         - id: fx3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -999,7 +999,7 @@
 
     - colorable_areas:
         - id: fx4
-          name: Effect 4
+          name: Effect 04
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1008,7 +1008,7 @@
 
     - colorable_areas:
         - id: fx5
-          name: Effect 5
+          name: Effect 05
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1017,7 +1017,7 @@
 
     - colorable_areas:
         - id: fx6
-          name: Effect 6
+          name: Effect 06
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1026,7 +1026,7 @@
 
     - colorable_areas:
         - id: fx7
-          name: Effect 7
+          name: Effect 07
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1035,7 +1035,7 @@
 
     - colorable_areas:
         - id: fx8
-          name: Effect 8
+          name: Effect 08
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1044,7 +1044,7 @@
 
     - colorable_areas:
         - id: fx9
-          name: Effect 9
+          name: Effect 09
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1071,7 +1071,7 @@
 
     - colorable_areas:
         - id: dragonfx0
-          name: Dragon Effect 0
+          name: Dragon Effect 00
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1080,7 +1080,7 @@
 
     - colorable_areas:
         - id: dragonfx1
-          name: Dragon Effect 1
+          name: Dragon Effect 01
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -1088,7 +1088,7 @@
 
     - colorable_areas:
         - id: dragonfx2
-          name: Dragon Effect 2
+          name: Dragon Effect 02
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1097,7 +1097,7 @@
 
     - colorable_areas:
         - id: dragonfx3
-          name: Dragon Effect 3
+          name: Dragon Effect 03
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1106,7 +1106,7 @@
 
     - colorable_areas:
         - id: dragonfx4
-          name: Dragon Effect 4
+          name: Dragon Effect 04
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1115,7 +1115,7 @@
 
     - colorable_areas:
         - id: dragonfx5
-          name: Dragon Effect 5
+          name: Dragon Effect 05
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1124,7 +1124,7 @@
 
     - colorable_areas:
         - id: dragonfx6
-          name: Dragon Effect 6
+          name: Dragon Effect 06
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1133,7 +1133,7 @@
 
     - colorable_areas:
         - id: dragonfx7
-          name: Dragon Effect 7
+          name: Dragon Effect 07
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1142,7 +1142,7 @@
 
     - colorable_areas:
         - id: dragonfx8
-          name: Dragon Effect 8
+          name: Dragon Effect 08
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1151,7 +1151,7 @@
 
     - colorable_areas:
         - id: dragonfx9
-          name: Dragon Effect 9
+          name: Dragon Effect 09
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -1331,7 +1331,7 @@
   recolors:
     - colorable_areas:
         - id: fx3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1350,7 +1350,7 @@
 
     - colorable_areas:
         - id: fx4
-          name: Effect 4
+          name: Effect 04
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1369,7 +1369,7 @@
 
     - colorable_areas:
         - id: fx5
-          name: Effect 5
+          name: Effect 05
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1388,7 +1388,7 @@
 
     - colorable_areas:
         - id: fx6
-          name: Effect 6
+          name: Effect 06
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1407,7 +1407,7 @@
 
     - colorable_areas:
         - id: fx7
-          name: Effect 7
+          name: Effect 07
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1426,7 +1426,7 @@
 
     - colorable_areas:
         - id: fx8
-          name: Effect 8
+          name: Effect 08
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -1445,7 +1445,7 @@
 
     - colorable_areas:
         - id: fx9
-          name: Effect 9
+          name: Effect 09
           hue_start: 0
           hue_end: 360
           new_saturation: 75
