@@ -99,10 +99,16 @@ class OCLogicGraph(DefaultLogicGraph):
         if not reverse_rando:
             self.logic[START_NODE][NodeId.Passage] = ItemPlacementHelpers.oc1_check
             self.logic[NodeId.Hydra][NodeId.AuronsStatue] = ItemPlacementHelpers.oc2_check
+            self.logic[NodeId.Hydra][NodeId.PainAndPanicCup] = ItemPlacementHelpers.dc2_check
+            self.logic[NodeId.Hydra][NodeId.CerberusCup] = lambda inv: ItemPlacementHelpers.ht1_check(inv) and ItemPlacementHelpers.ag1_check(inv) and ItemPlacementHelpers.pl1_check(inv)
+            self.logic[NodeId.Hades][NodeId.GoddessOfFateCup] = ItemPlacementHelpers.twtnw_post_saix_check
             self.logic[NodeId.Hades][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
         else:
             self.logic[START_NODE][NodeId.UnderworldEntrance] = ItemPlacementHelpers.oc1_check
             self.logic[NodeId.Zexion][NodeId.CerberusBonus] = ItemPlacementHelpers.oc2_check
+            self.logic[NodeId.Hades][NodeId.PainAndPanicCup] = ItemPlacementHelpers.dc2_check
+            self.logic[NodeId.Hades][NodeId.CerberusCup] = lambda inv: ItemPlacementHelpers.ht1_check(inv) and ItemPlacementHelpers.ag1_check(inv) and ItemPlacementHelpers.pl1_check(inv)
+            self.logic[NodeId.Hydra][NodeId.GoddessOfFateCup] = ItemPlacementHelpers.twtnw_post_saix_check
             self.logic[NodeId.Hydra][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
 
 def make_graph(graph: LocationGraphBuilder):
@@ -236,8 +242,8 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(hydra, aurons_statue, RequirementEdge(battle=True))
         graph.add_edge(aurons_statue, hades, RequirementEdge(battle=True))
 
-        graph.add_edge(hades, pain_panic_cup, RequirementEdge(battle=True))
-        graph.add_edge(hades, cerberus_cup, RequirementEdge(battle=True))
+        graph.add_edge(hydra, pain_panic_cup, RequirementEdge(battle=True))
+        graph.add_edge(hydra, cerberus_cup, RequirementEdge(battle=True))
         graph.add_edge(hades, titan_cup, RequirementEdge(battle=True))
         graph.add_edge(hades, goddess_of_fate_cup, RequirementEdge(battle=True))
         graph.add_edge(hades, paradox_cups)
@@ -263,8 +269,8 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(demyx, lock)
         graph.add_edge(lock, pete, RequirementEdge(battle=True))
         graph.add_edge(pete, hydra, RequirementEdge(battle=True))
-        graph.add_edge(hydra, pain_panic_cup, RequirementEdge(battle=True))
-        graph.add_edge(hydra, cerberus_cup, RequirementEdge(battle=True))
+        graph.add_edge(hades, pain_panic_cup, RequirementEdge(battle=True))
+        graph.add_edge(hades, cerberus_cup, RequirementEdge(battle=True))
         graph.add_edge(hydra, titan_cup, RequirementEdge(battle=True))
         graph.add_edge(hydra, goddess_of_fate_cup, RequirementEdge(battle=True))
         graph.add_edge(hydra, paradox_cups)
