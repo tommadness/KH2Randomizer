@@ -492,6 +492,22 @@ class SeedModBuilder:
 
         self.out_zip.writestr(source_name, modified_battle_level_binary)
 
+    def write_keyblade_locking_lua(self):
+        keyblade_lua_name = _relative_mod_file("keyblade_locking/keyblade.lua")
+        assets = [
+            {
+                "name": "scripts/keyblade.lua",
+                "method": "copy",
+                "source": [{"name": keyblade_lua_name}],
+            },
+        ]
+        self.mod_yml.add_assets(assets)
+
+        self.out_zip.write(
+            resource_path("static/keyblade_locking/keyblade.lua"), keyblade_lua_name
+        )
+
+
     def write_better_stt_assets(self, boss_enabled: bool):
         """Adds assets and files to the mod for 'Better STT'."""
         trinity_bar_source_name = _relative_mod_file("better_stt/trinity_zz.bar")
