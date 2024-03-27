@@ -6,7 +6,8 @@ from typing import Any, Optional
 from Class.exceptions import HintException
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
-from List.configDict import HintType, itemType, locationCategory, locationType
+from List.LvupStats import DreamWeaponOffsets
+from List.configDict import HintType, SoraLevelOption, itemType, locationCategory, locationType
 from List.inventory import ability, form, magic, misc, storyunlock, summon
 from List.inventory.item import InventoryItem
 from List.inventory.report import AnsemReport
@@ -90,6 +91,7 @@ class WorldItems:
         self.proof_of_nonexistence_world: Optional[locationType] = None
         self.path_breadcrump_map: dict[locationType, set[locationType]] = {}
 
+        self.create_level_check_data_for_tracker(location_item_tuples, tracker_info)
         for world_with_vanilla in HintUtils.world_to_vanilla_items().keys():
             if world_with_vanilla not in self.path_breadcrump_map:
                 self.path_breadcrump_map[world_with_vanilla] = set()
@@ -134,6 +136,44 @@ class WorldItems:
                     for vanilla_world in item_to_vanilla_world[inventory_item]:
                         if world_of_location in hintable_worlds:
                             self.path_breadcrump_map[vanilla_world].add(world_of_location)
+
+    def create_level_check_data_for_tracker(self, location_item_tuples, tracker_info):
+        dream_weapon_matters_setting = "Dream Weapon Matters"
+        dream_weapon_matters = dream_weapon_matters_setting in tracker_info.settings
+        offsets = DreamWeaponOffsets()
+        max_level = 1
+        if SoraLevelOption.LEVEL_50 in tracker_info.settings:
+            max_level = 50
+        elif SoraLevelOption.LEVEL_99 in tracker_info.settings:
+            max_level = 99
+
+        self.level_checks = {}
+        self.level_checks[locationCategory.VALORLEVEL] = {}
+        self.level_checks[locationCategory.WISDOMLEVEL] = {}
+        self.level_checks[locationCategory.LIMITLEVEL] = {}
+        self.level_checks[locationCategory.MASTERLEVEL] = {}
+        self.level_checks[locationCategory.FINALLEVEL] = {}
+        self.level_checks[locationCategory.LEVEL] = {}
+        self.level_checks[locationCategory.LEVEL]["Sword"] = {}
+        self.level_checks[locationCategory.LEVEL]["Staff"] = {}
+        self.level_checks[locationCategory.LEVEL]["Shield"] = {}
+
+        important_checks = tracker_info.important_check_list
+        for location, item in location_item_tuples:
+            if item.ItemType in important_checks or item.Name in important_checks:
+                if locationType.Level in location.LocationTypes:
+                    self.level_checks[locationCategory.LEVEL]["Sword"][location.LocationId] = item.Name
+                    if not dream_weapon_matters:
+                        self.level_checks[locationCategory.LEVEL]["Staff"][location.LocationId] = item.Name
+                        self.level_checks[locationCategory.LEVEL]["Shield"][location.LocationId] = item.Name
+                    if dream_weapon_matters:
+                        self.level_checks[locationCategory.LEVEL]["Staff"][offsets.get_staff_level(max_level,location.LocationId)] = item.Name
+                        self.level_checks[locationCategory.LEVEL]["Shield"][offsets.get_shield_level(max_level,location.LocationId)] = item.Name
+
+                if locationType.FormLevel in location.LocationTypes:
+                    for form_category in self.level_checks.keys():
+                        if form_category is location.LocationCategory:
+                            self.level_checks[form_category][location.LocationId] = item.Name
 
     def world_to_item_ids(self) -> dict[locationType, list[int]]:
         """

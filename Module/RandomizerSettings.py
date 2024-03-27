@@ -586,6 +586,8 @@ class RandomizerSettings:
             self.tracker_includes.append("library")
         if self.hiscore_mode:
             self.tracker_includes.append("ScoreMode")
+        if self.split_levels:
+            self.tracker_includes.append("Dream Weapon Matters")
 
         if (
             self.hintsType in ["JSmartee", "Path"]

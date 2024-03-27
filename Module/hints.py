@@ -1319,6 +1319,7 @@ class Hints:
             world for world in HintUtils.hintable_worlds() if world not in exclude_list
         ]
         hint_data = common_tracker_data.to_dict()
+        hint_data["level_data"] = world_items.level_checks
         if settings.hintsType == HintType.SHANANAS:
             hint_data["world"] = world_items.world_to_item_ids()
         elif settings.hintsType == HintType.JSMARTEE:
