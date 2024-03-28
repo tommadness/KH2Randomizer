@@ -170,6 +170,11 @@ class CosmeticsMod:
                 game_music_path=extracted_data_path / 'bbs' / 'sound' / 'win' / 'bgm',
                 game_music_list=music.bbs_music_list
             )
+            add_other_game_music(
+                enabled_key=settingkey.MUSIC_RANDO_PC_INCLUDE_DDD,
+                game_music_path=extracted_data_path / 'kh3d' / 'sound' / 'jp' / 'output' / 'BGM',
+                game_music_list=music.ddd_music_list
+            )
 
         return result
 

@@ -729,7 +729,7 @@ recom_music_list = [
 ]
 
 bbs_music_list = [
-    {"name": "001sinde_f.win32.scd", "kind": "field", "dmca": True},  # Bibbidi-Bobbidi-Boo (Castle of Dreams Field Music)
+    {"name": "001sinde_f.win32.scd", "kind": "field", "dmca": True},  # Bibbidi-Bobbidi-Boo (Castle of Dreams Field)
     {"name": "002sinde_b.win32.scd", "kind": "battle"},  # Castle Escapade (Castle of Dreams Battle Music)
     {"name": "003nemure_f.win32.scd", "kind": "field"},  # The Silent Forest (Enchanted Dominion Field Music)
     {"name": "004nemure_b.win32.scd", "kind": "battle"},  # The Rustling Forest (Enchanted Dominion Battle Music)
@@ -818,4 +818,99 @@ bbs_music_list = [
     {"name": "128Eraqu_b.win32.scd", "kind": "boss"},  # Master, Tell Me the Truth
     {"name": "129Pure_b.win32.scd", "kind": "boss"},  # Hunter of the Dark
     {"name": "130Mons_b.win32.scd", "kind": "boss"}  # Monstrous Monstro -Arena Ver.-
+]
+
+ddd_music_list = [
+    {"name": "bgm_001.win32.scd", "kind": "field"},  # Traverse in Trance (Traverse Town Field Music)
+    {"name": "bgm_002.win32.scd", "kind": "field"},  # One for All (Country of the Musketeers Field Music)
+    {"name": "bgm_003.win32.scd", "kind": "field"},  # The Fun Fair (Prankster's Paradise Field Music)
+    {"name": "bgm_004.win32.scd", "kind": "field"},  # A Very Small Wish (Monstro Field Music)
+    {"name": "bgm_005.win32.scd", "kind": "field", "dmca": True},  # Symphony No. 6 Pastoral Op. 68 (Sora's SoS Music)
+    {"name": "bgm_006.win32.scd", "kind": "field", "dmca": True},  # The Nutcracker Suite Op. 71 (Riku's SoS Music)
+    {"name": "bgm_007.win32.scd", "kind": "field", "dmca": True},  # L'Apprenti Sorcier (Symphony of Sorcery Music)
+    {"name": "bgm_008.win32.scd", "kind": "battle", "dmca": True},  # Night on Bald Mountain
+    {"name": "bgm_009.win32.scd", "kind": "field"},  # La Cloche (La Cité des Cloches Field Music)
+    {"name": "bgm_010.win32.scd", "kind": "field"},  # Magical Mystery (Mysterious Tower Field Music)
+    {"name": "bgm_011.win32.scd", "kind": "field"},  # Access the Grid (The Grid Field Music)
+    {"name": "bgm_012.win32.scd", "kind": "field"},  # Sacred Distance (KH3D The World That Never Was Field Music)
+    {"name": "bgm_013.win32.scd", "kind": "field"},  # Sacred Moon (KH2 The World That Never Was Field Music)
+    {"name": "bgm_014.win32.scd", "kind": "battle"},  # Hand to Hand (Traverse Town Battle Music)
+    {"name": "bgm_015.win32.scd", "kind": "battle"},  # All for One (Country of the Musketeers Battle Music)
+    {"name": "bgm_016.win32.scd", "kind": "battle"},  # Prankster's Party (Prankster's Paradise Battle Music)
+    {"name": "bgm_017.win32.scd", "kind": "battle"},  # Monstrous Monstro (Monstro Battle Music)
+    {"name": "bgm_018.win32.scd", "kind": "battle"},  # Le Sanctuaire (La Cité des Cloches Field Music)
+    {"name": "bgm_019.win32.scd", "kind": "battle"},  # Working Together (Mysterious Tower Field Music)
+    {"name": "bgm_020.win32.scd", "kind": "battle"},  # Digital Domination (The Grid Battle Music)
+    {"name": "bgm_021.win32.scd", "kind": "battle"},  # Deep Drop (KH3D The World That Never Was Battle Music)
+    {"name": "bgm_022.win32.scd", "kind": "battle"},  # Deep Drive (KH2 The World That Never Was Battle Music)
+    {"name": "bgm_035.win32.scd", "kind": "field"},  # Dream Matchup
+    {"name": "bgm_036.win32.scd", "kind": "field"},  # The Flick Finalist
+    {"name": "bgm_037.win32.scd", "kind": "field"},  # The World of Dream Drops (World Map Music)
+    {"name": "bgm_038.win32.scd", "kind": "title"},  # Dearly Beloved (Dream Drop Distance Version)
+    {"name": "bgm_039.win32.scd", "kind": "cutscene"},  # Innocent Times
+    {"name": "bgm_040.win32.scd", "kind": "cutscene"},  # Cheers for the Brave
+    {"name": "bgm_041.win32.scd", "kind": "cutscene"},  # Peaceful Hearts
+    {"name": "bgm_042.win32.scd", "kind": "cutscene"},  # Drops of Poison
+    {"name": "bgm_043.win32.scd", "kind": "cutscene"},  # Tears of the Light
+    {"name": "bgm_044.win32.scd", "kind": "cutscene"},  # Shaded Truths
+    {"name": "bgm_045.win32.scd", "kind": "cutscene"},  # Broken Reality
+    {"name": "bgm_046.win32.scd", "kind": "cutscene"},  # Ever After
+    {"name": "bgm_047.win32.scd", "kind": "cutscene"},  # Sora
+    {"name": "bgm_048.win32.scd", "kind": "cutscene"},  # Riku
+    {"name": "bgm_050.win32.scd", "kind": "battle"},  # Road to a Hero
+    {"name": "bgm_051.win32.scd", "kind": "cutscene"},  # Villains of a Sort
+    {"name": "bgm_052.win32.scd", "kind": "cutscene"},  # Strange Whispers
+    {"name": "bgm_053.win32.scd", "kind": "battle"},  # Night of Fate
+    {"name": "bgm_059.win32.scd", "kind": "cutscene"},  # The Key of Light
+    {"name": "bgm_060.win32.scd", "kind": "cutscene"},  # The Key of Darkness
+    {"name": "bgm_061.win32.scd", "kind": "cutscene"},  # Xehanort
+    {"name": "bgm_062.win32.scd", "kind": "cutscene"},  # Xehanort -The Early Years-
+    {"name": "bgm_063.win32.scd", "kind": "cutscene"},  # Xigbar
+    {"name": "bgm_065.win32.scd", "kind": "cutscene"},  # Organization XIII
+    {"name": "bgm_066.win32.scd", "kind": "cutscene"},  # Destiny's Union
+    {"name": "bgm_067.win32.scd", "kind": "field"},  # Dream Eaters
+    {"name": "bgm_068.win32.scd", "kind": "cutscene"},  # TWISTER -KINGDOM MIX-
+    {"name": "bgm_069.win32.scd", "kind": "cutscene"},  # CALLING -KINGDOM MIX- (No Intro)
+    {"name": "bgm_070.win32.scd", "kind": "title"},  # Dearly Beloved (End of Symphony of Sorcery Cutscene 1)
+    {"name": "bgm_071.win32.scd", "kind": "title"},  # Dearly Beloved (End of Symphony of Sorcery Cutscene 2)
+    {"name": "bgm_072.win32.scd", "kind": "field", "dmca": True},  # Symphony of Sorcery Music
+    {"name": "bgm_073.win32.scd", "kind": "field", "dmca": True},  # Symphony of Sorcery Music (Spellican Battle Music)
+    {"name": "bgm_074.win32.scd", "kind": "field", "dmca": True},  # Symphony of Sorcery Music
+    {"name": "bgm_075.win32.scd", "kind": "cutscene"},  # The Dream
+    {"name": "bgm_076.win32.scd", "kind": "cutscene"},  # The Nightmare
+    {"name": "bgm_077.win32.scd", "kind": "cutscene"},  # Link to All
+    {"name": "bgm_078.win32.scd", "kind": "cutscene"},  # Distant from You...
+    {"name": "bgm_083.win32.scd", "kind": "field"},  # Sweet Spirits
+    {"name": "bgm_084.win32.scd", "kind": "field"},  # Ready to Rush
+    {"name": "bgm_085.win32.scd", "kind": "field"},  # Victor's Pride
+    {"name": "bgm_086.win32.scd", "kind": "battle"},  # Keyblade Cycle
+    {"name": "bgm_089.win32.scd", "kind": "field"},  # My Heart's Descent
+    # {"name": "bgm_091.win32.scd", "kind": "battle"}, # Dream Drop Distance -The Next Awakening- (no loop)
+    {"name": "bgm_095.win32.scd", "kind": "battle"},  # SOMEDAY -KINGDOM MIX-
+    # {"name": "bgm_096.win32.scd", "kind": "unknown"}, # Hand in Hand (KH2 Ending Version)
+    # {"name": "bgm_097.win32.scd", "kind": "unknown"}, # Oopsy-Daisy
+    {"name": "bgm_098.win32.scd", "kind": "cutscene"},  # TWISTER -KINGDOM MIX-
+    {"name": "bgm_099.win32.scd", "kind": "cutscene"},  # CALLING -KINGDOM MIX- (With Intro)
+    # {"name": "bgm_112.win32.scd", "kind": "title"}, # Dearly Beloved (Kingdom Hearts II Version)
+    # {"name": "bgm_113.win32.scd", "kind": "title"}, # Dearly Beloved -Reprise-
+    {"name": "bgm_114.win32.scd", "kind": "cutscene"},  # Roxas
+    {"name": "bgm_115.win32.scd", "kind": "cutscene"},  # Ventus
+    # boss/Special
+    {"name": "bgm_023.win32.scd", "kind": "boss"},  # Majestic Wings
+    {"name": "bgm_024.win32.scd", "kind": "boss"},  # UNTAMABLE
+    {"name": "bgm_025.win32.scd", "kind": "boss"},  # Ice-hot Lobster
+    {"name": "bgm_026.win32.scd", "kind": "boss"},  # Gigabyte Mantis
+    {"name": "bgm_027.win32.scd", "kind": "boss"},  # Rowdy Rumble
+    {"name": "bgm_028.win32.scd", "kind": "boss"},  # The Encounter -Birth by Sleep Version-
+    {"name": "bgm_029.win32.scd", "kind": "boss"},  # L'Oscurità dell' Ignoto
+    {"name": "bgm_030.win32.scd", "kind": "boss"},  # L'Eminenza Oscura I
+    {"name": "bgm_031.win32.scd", "kind": "boss"},  # L'Eminenza Oscura II
+    {"name": "bgm_032.win32.scd", "kind": "boss"},  # L'Impeto Oscuro
+    {"name": "bgm_033.win32.scd", "kind": "boss"},  # Destiny's Force
+    {"name": "bgm_034.win32.scd", "kind": "boss"},  # Shrouding Dark Cloud
+    {"name": "bgm_087.win32.scd", "kind": "boss"},  # Storm Diver
+    {"name": "bgm_088.win32.scd", "kind": "boss"},  # Wild Blue
+    {"name": "bgm_093.win32.scd", "kind": "boss"},  # The Eye of Darkness
+    {"name": "bgm_094.win32.scd", "kind": "boss"},  # The Dread of Night
+    {"name": "bgm_116.win32.scd", "kind": "boss"}   # Rinzler Recompiled
 ]

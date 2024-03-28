@@ -45,6 +45,7 @@ class CosmeticsMenu(KH2Submenu):
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2)
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM)
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_BBS)
+        self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_DDD)
         self.add_option(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM)
         self.add_option(settingkey.MUSIC_RANDO_PC_DMCA_SAFE)
         self.add_option(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES)
@@ -106,6 +107,7 @@ class CosmeticsMenu(KH2Submenu):
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_BBS, self.reload_music_widgets)
+        settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_DDD, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_DMCA_SAFE, self.reload_music_widgets)
         settings.observe(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES, self.reload_music_widgets)
@@ -122,6 +124,7 @@ class CosmeticsMenu(KH2Submenu):
         _, include_kh2_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_KH2]
         _, include_recom_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM]
         _, include_bbs_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_BBS]
+        _, include_ddd_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_DDD]
         _, include_custom_widget = self.widgets_and_settings_by_name[settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM]
 
         music_rando_enabled = self.settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
@@ -129,6 +132,7 @@ class CosmeticsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2, visible=music_rando_enabled)
         self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM, visible=music_rando_enabled)
         self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_BBS, visible=music_rando_enabled)
+        self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_DDD, visible=music_rando_enabled)
         self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM, visible=music_rando_enabled)
         self.set_option_visibility(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES, visible=music_rando_enabled)
         self.set_option_visibility(settingkey.MUSIC_RANDO_PC_DMCA_SAFE, visible=music_rando_enabled)
@@ -142,6 +146,7 @@ class CosmeticsMenu(KH2Submenu):
             include_kh2_widget.setEnabled(False)
             include_recom_widget.setEnabled(False)
             include_bbs_widget.setEnabled(False)
+            include_ddd_widget.setEnabled(False)
         else:
             kh2_is_dir = (extracted_data_path / 'kh2').is_dir()
             recolor_textures_widget.setEnabled(kh2_is_dir)
@@ -150,6 +155,7 @@ class CosmeticsMenu(KH2Submenu):
             include_kh2_widget.setEnabled(kh2_is_dir)
             include_recom_widget.setEnabled((extracted_data_path / 'recom').is_dir())
             include_bbs_widget.setEnabled((extracted_data_path / 'bbs').is_dir())
+            include_ddd_widget.setEnabled((extracted_data_path / 'kh3d').is_dir())
 
         custom_music_configured = appconfig.read_custom_music_path() is not None
         include_custom_widget.setEnabled(custom_music_configured)
