@@ -65,6 +65,7 @@ class HAWLogicGraph(DefaultLogicGraph):
             self.logic[NodeId.KangasHowse][NodeId.SpookyCave] = ItemPlacementHelpers.need_torn_pages(4)
             self.logic[NodeId.SpookyCave][NodeId.StarryHill] = ItemPlacementHelpers.need_torn_pages(5)
         else:
+            self.logic[START_NODE][NodeId.StarryHill] = keyblade_lambda # need to do this because pages can lock themselves in Reverse Rando
             self.logic[NodeId.StarryHill][NodeId.SpookyCave] = ItemPlacementHelpers.need_torn_pages(1)
             self.logic[NodeId.SpookyCave][NodeId.KangasHowse] = ItemPlacementHelpers.need_torn_pages(2)
             self.logic[NodeId.KangasHowse][NodeId.RabbitsHowse] = ItemPlacementHelpers.need_torn_pages(3)

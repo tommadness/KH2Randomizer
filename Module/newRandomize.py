@@ -1,3 +1,4 @@
+from collections import Counter
 import copy
 import itertools
 import random
@@ -660,36 +661,102 @@ class Randomizer:
 
         # assign items that have very restricted locations (boss depths, yeet, etc.)
         self.assign_plando_like_items(settings, item_pool, valid_locations)
+
+
+        if settings.chainLogic:
+            self.assign_chain_logic(settings, item_pool, valid_locations)    
+        else:
+            # create some space for random assignment by doing a forward-pass assignment
+            self.create_available_location_space(settings, item_pool, valid_locations)                
+
+        self.randomly_assign_items(item_pool, valid_locations)
+
+        # move remaining items to invalid locations for junk item assignment
+        invalid_locations.extend(valid_locations)
+        self.assign_junk_locations(settings, invalid_locations)
+
+    def assign_chain_logic(self, settings : RandomizerSettings, item_pool, valid_locations):
+        def contains(bigger_list,smaller_list):
+            return not (Counter(smaller_list)-Counter(bigger_list))
+        def missing_items(bigger_list,smaller_list):
+            return list((Counter(smaller_list)-Counter(bigger_list)).elements())
+        # determine available unlocks for
+        #   1) regular/reverse
+        #   2) keyblade locking on/off
+        #   3) Anything already placed
+        #       a) specifically visit locks and proofs from the "very restricted" pool
+        #   4) Determine the existing dependency graph (we will use this to make sure we don't overlap two unlocks in the chain)
+        from Module.seedEvaluation import LocationInformedSeedValidator
+        validator = LocationInformedSeedValidator()
+        validator.prep_requirements_list(settings, self)
+        item_locking_ids_per_world = validator.generate_locking_item_ids()
+
+        item_depth = 0
+        min_item_depth = settings.chainLogicMinLength
+        max_item_depth = settings.chainLogicMinLength+50
+
+        acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator)
+        last_unlocked_sphere = accessible_locations
+
+        worlds_to_unlock = list(item_locking_ids_per_world.keys())
+        while item_depth < min_item_depth or (item_depth < max_item_depth and random.random() < 0.75): # 25% chance of breaking early
+            # pick a world to unlock checks from
+            if len(worlds_to_unlock)==0:
+                break
+            chosen_world = random.choice(worlds_to_unlock)
+            chosen_checks = item_locking_ids_per_world[chosen_world][0]
+            item_locking_ids_per_world[chosen_world].pop(0)
+            if len(item_locking_ids_per_world[chosen_world])==0:
+                worlds_to_unlock.remove(chosen_world)
+            if contains(acquired_items,chosen_checks):
+                continue
+            chosen_checks = missing_items(acquired_items,chosen_checks)
+
+            sphere_1 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items + chosen_checks,loc) and loc not in accessible_locations]
+            if len(sphere_1):
+                # assign new items
+                for i in chosen_checks:
+                    i_data = next((it for it in item_pool if it.Id == i), None)
+                    if i_data is not None:
+                        # assign this item somewhere
+                        locations_to_remove = self.randomly_assign_single_item(i_data,last_unlocked_sphere)
+                        for l in locations_to_remove:
+                            valid_locations.remove(l)
+                        item_pool.remove(i_data)
+                    else:
+                        raise GeneratorException("Uh....chain logic couldn't find an item with the id from the unlock list. This shouldn't happen")
+                acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator)
+                last_unlocked_sphere = sphere_1
+                print(len(last_unlocked_sphere))
+                item_depth+=1
+        i_data = next((it for it in item_pool if it.Id == proof.ProofOfNonexistence.id), None)
+        if i_data is not None:
+            # assign this item somewhere
+            locations_to_remove = self.randomly_assign_single_item(i_data,last_unlocked_sphere)
+            for l in locations_to_remove:
+                valid_locations.remove(l)
+            item_pool.remove(i_data)
+
+
+
+    def create_available_location_space(self, settings, item_pool, valid_locations):
         # (a)determine sphere 0
         #    if sphere 0 is big enough
         #       return
         #    if sphere 0 is too small
         #    determine available unlocks for available checks
         #    place that somewhere that's available
-        #    loop again
-        
+        #    loop again        
+        from Module.seedEvaluation import LocationInformedSeedValidator
+        validator = LocationInformedSeedValidator()
+        validator.prep_requirements_list(settings, self)
+
         sphere_0_check = True
+        num_available_locations_needed_to_allow_random_assignment = 80 # TODO(zak) this is arbitrary and may need tuning
         while sphere_0_check:
-            from Module.seedEvaluation import LocationInformedSeedValidator
-            validator = LocationInformedSeedValidator()
-            validator.prep_requirements_list(settings, self)
             # calculate the available checks
-            acquired_item_locations = []
-            acquired_items = []
-            sphere_0 = []
-            found_new_item = True
-            # check if any of the already assigned locations are valid right now, and if so, add their item to current inventory
-            while found_new_item:
-                found_new_item = False
-                # get unassigned locations that are available
-                sphere_0 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items,loc)]
-                # get already assigned items from available locations
-                for assignment in self.assignments:
-                    if assignment.location.LocationCategory is not locationCategory.WEAPONSLOT and assignment.location not in acquired_item_locations and validator.is_location_available(self.starting_item_ids + acquired_items, assignment.location):
-                        acquired_item_locations.append(assignment.location)
-                        acquired_items.extend([i.Id for i in assignment.items()])
-                        found_new_item = True
-            if len(sphere_0) < 80: # TODO(zak) this is arbitrary and may need tuning
+            acquired_items, sphere_0 = self.get_accessible_locations(valid_locations, validator)
+            if len(sphere_0) < num_available_locations_needed_to_allow_random_assignment:
                 # pick a locking item we don't have, assign it somewhere valid, repeat
                 unlocks = [] + [s.id for s in storyunlock.all_story_unlocks()] + [k.id for k in keyblade.get_locking_keyblades()]
                 random.shuffle(unlocks)
@@ -705,411 +772,25 @@ class Randomizer:
                             item_pool.remove(i_data)
                             break
             else:
-                sphere_0_check = False                
+                sphere_0_check = False
 
-        '''
-        # chain logic placement
-        if settings.chainLogic:
-            from Module.seedEvaluation import LocationInformedSeedValidator
-
-            validator = LocationInformedSeedValidator()
-
-            if not any(item.item == proof.ProofOfNonexistence for item in item_pool):
-                raise CantAssignItemException(
-                    "Chain logic expects Proof of Nonexistence to be available"
-                )
-
-            unlocks = {}
-            if settings.regular_rando:
-                unlocks[locationType.HB] = [
-                    [proof.ProofOfPeace.id],
-                    [storyunlock.MembershipCard.id],
-                ]
-            elif settings.reverse_rando:
-                unlocks[locationType.HB] = [[storyunlock.MembershipCard.id]]
-            unlocks[locationType.OC] = [[storyunlock.BattlefieldsOfWar.id]]
-            unlocks[locationType.LoD] = [[storyunlock.SwordOfTheAncestor.id]]
-            unlocks[locationType.PL] = [[storyunlock.ProudFang.id]]
-            unlocks[locationType.HT] = [[storyunlock.BoneFist.id]]
-            unlocks[locationType.SP] = [[storyunlock.IdentityDisk.id]]
-            unlocks[locationType.FormLevel] = [
-                [form.ValorForm.id],
-                [form.WisdomForm.id],
-                [form.FinalForm.id],
-                [form.MasterForm.id],
-                [form.LimitForm.id],
-            ]
-            unlocks[locationType.TT] = [
-                [storyunlock.IceCream.id],
-                [storyunlock.IceCream.id],
-            ]
-            unlocks[locationType.BC] = [[storyunlock.BeastsClaw.id]]
-            if settings.regular_rando:
-                unlocks[locationType.Agrabah] = [
-                    [
-                        storyunlock.Scimitar.id,
-                        magic.Fire.id,
-                        magic.Blizzard.id,
-                        magic.Thunder.id,
-                    ]
-                ]
-            elif settings.reverse_rando:
-                unlocks[locationType.Agrabah] = [
-                    [storyunlock.Scimitar.id],
-                    [magic.Fire.id, magic.Blizzard.id, magic.Thunder.id],
-                ]
-            unlocks[locationType.HUNDREDAW] = [
-                [misc.TornPages.id],
-                [misc.TornPages.id],
-                [misc.TornPages.id],
-                [misc.TornPages.id],
-                [misc.TornPages.id],
-            ]
-            unlocks[locationType.LW] = [[proof.ProofOfConnection.id]]
-            unlocks[locationType.PR] = [[storyunlock.SkillAndCrossbones.id]]
-            unlocks[locationType.Atlantica] = [
-                [magic.Thunder.id, magic.Thunder.id, magic.Thunder.id],
-                [magic.Magnet.id, magic.Magnet.id],
-            ]
-
-            second_visit_locking_items = [
-                storyunlock.MembershipCard.id,
-                storyunlock.BattlefieldsOfWar.id,
-                storyunlock.SwordOfTheAncestor.id,
-                storyunlock.ProudFang.id,
-                storyunlock.BoneFist.id,
-                storyunlock.IdentityDisk.id,
-                storyunlock.IceCream.id,
-                storyunlock.BeastsClaw.id,
-                storyunlock.Scimitar.id,
-                storyunlock.SkillAndCrossbones.id,
-            ]
-            # stuff that we can safely remove the first step from
-            flex_logical_locks = [
-                storyunlock.BattlefieldsOfWar.id,
-                storyunlock.SwordOfTheAncestor.id,
-                storyunlock.ProudFang.id,
-                storyunlock.BoneFist.id,
-                storyunlock.IdentityDisk.id,
-                storyunlock.BeastsClaw.id,
-                storyunlock.SkillAndCrossbones.id,
-                form.ValorForm.id,
-                form.WisdomForm.id,
-                form.FinalForm.id,
-                form.MasterForm.id,
-                form.LimitForm.id,
-            ]
-
-            locking_items = []
-            for loc_type in settings.enabledLocations:
-                if loc_type in unlocks:
-                    locking_items.extend(unlocks[loc_type])
-
-            for i in self.starting_item_ids + [
-                shop_item.Id for shop_item in self.shop_items
-            ]:
-                if [i] in locking_items:
-                    locking_items.remove([i])
-                if [
-                    i,
-                    magic.Fire.id,
-                    magic.Blizzard.id,
-                    magic.Thunder.id,
-                ] in locking_items:
-                    locking_items.remove(
-                        [i, magic.Fire.id, magic.Blizzard.id, magic.Thunder.id]
-                    )
-            for i in vanilla_item_ids:  # TODO add vanilla worlds to chain
-                if [i] in locking_items:
-                    locking_items.remove([i])
-
-            if not settings.chainLogicIncludeTerra:
-                if [proof.ProofOfConnection.id] in locking_items:
-                    locking_items.remove([proof.ProofOfConnection.id])
-
-            if len(locking_items) > settings.chainLogicMinLength:
-                # keep the last parts of the chain
-                num_to_remove = min(
-                    len(locking_items) - settings.chainLogicMinLength,
-                    len(flex_logical_locks),
-                )
-
-                random.shuffle(flex_logical_locks)
-                # remove N flex locks from the list
-                for i in range(num_to_remove):
-                    print(locking_items)
-                    print(flex_logical_locks)
-                    locking_items.remove([flex_logical_locks[i]])
-
-            minimum_terra_depth = (
-                len(locking_items) - 5 if settings.chainLogicTerraLate else 0
-            )
-
-            if self.yeet_the_bear:
-                locking_items.remove([misc.TornPages.id])
-
-            if settings.extended_placement_logic:
-                locking_items.remove([form.FinalForm.id])
-
-            terra = (
-                settings.chainLogicIncludeTerra
-                and [proof.ProofOfConnection.id] in locking_items
-            )
-            tt_condition = [storyunlock.IceCream.id] in locking_items and [
-                storyunlock.IceCream.id
-            ] in locking_items
-            pop_condition = [proof.ProofOfPeace.id] in locking_items
-            hb_condition = [
-                storyunlock.MembershipCard.id
-            ] in locking_items and pop_condition
-            ag_condition = [storyunlock.Scimitar.id] in locking_items
-            atlantica_condition = [magic.Magnet.id, magic.Magnet.id] in locking_items
-            second_visit_condition = settings.proofDepth in [
-                locationDepth.Superbosses,
-                locationDepth.SecondVisitOnly,
-                locationDepth.LastStoryBoss,
-            ]
-            data_condition = settings.proofDepth is locationDepth.Superbosses
-            story_data_condition = settings.storyDepth is locationDepth.Superbosses
-
-            if second_visit_condition:
-                # check if enough unlock items are available for the chain
-                num_proofs_in_chain = (
-                    int(pop_condition) + int(terra) + int(not self.yeet_the_bear)
-                )
-
-                counter = 0
-                for world_unlocks in locking_items:
-                    for i in world_unlocks:
-                        if i in second_visit_locking_items:
-                            counter += 1
-                if counter < num_proofs_in_chain:
-                    raise SettingsException(
-                        "Not enough locked second visits for chain logic."
-                    )
-
-            while True:
-                random.shuffle(locking_items)
-                # scimitar has to be after fire/blizz/thunder
-                if ag_condition and locking_items.index(
-                    [magic.Fire.id, magic.Blizzard.id, magic.Thunder.id]
-                ) > locking_items.index([storyunlock.Scimitar.id]):
-                    continue
-                # ice cream needs to be after ice cream
-                if tt_condition and locking_items.index(
-                    [storyunlock.IceCream.id]
-                ) > locking_items.index([storyunlock.IceCream.id]):
-                    continue
-                # proof of peace needs to be after membership card
-                if hb_condition and locking_items.index(
-                    [storyunlock.MembershipCard.id]
-                ) > locking_items.index([proof.ProofOfPeace.id]):
-                    continue
-                if (
-                    terra
-                    and locking_items.index([proof.ProofOfConnection.id])
-                    < minimum_terra_depth
-                ):
-                    continue
-                if atlantica_condition and locking_items.index(
-                    [magic.Magnet.id, magic.Magnet.id]
-                ) > locking_items.index(
-                    [magic.Thunder.id, magic.Thunder.id, magic.Thunder.id]
-                ):
-                    continue
-                if story_data_condition:
-                    form_indices = [
-                        locking_items.index(x) for x in unlocks[locationType.FormLevel]
-                    ]
-                    membership_index = locking_items.index(
-                        [storyunlock.MembershipCard.id]
-                    )
-
-                    # print(f"{storyunlock.MembershipCard.id in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
-                    if not all(x < membership_index for x in form_indices):
-                        continue
-
-                # proof depth checking
-                if second_visit_condition:
-                    if pop_condition:
-                        proof_index = locking_items.index([proof.ProofOfPeace.id])
-                        if proof_index == 0:
-                            continue
-                        if not any(
-                            it in locking_items[proof_index - 1]
-                            for it in second_visit_locking_items
-                        ):
-                            continue
-                        form_indices = [
-                            locking_items.index(x)
-                            for x in unlocks[locationType.FormLevel]
-                        ]
-                        # print(f"{storyunlock.MembershipCard.id in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
-                        if (
-                            data_condition
-                            and storyunlock.MembershipCard.id
-                            in locking_items[proof_index - 1]
-                            and not all(x < proof_index for x in form_indices)
-                        ):
-                            continue
-                    if terra:
-                        proof_index = locking_items.index([proof.ProofOfConnection.id])
-                        if proof_index == 0:
-                            continue
-                        if not any(
-                            it in locking_items[proof_index - 1]
-                            for it in second_visit_locking_items
-                        ):
-                            continue
-                        form_indices = [
-                            locking_items.index(x)
-                            for x in unlocks[locationType.FormLevel]
-                        ]
-                        # print(f"{storyunlock.MembershipCard.id in locking_items[proof_index-1]} {not all(x<proof_index for x in form_indices)}")
-                        if (
-                            data_condition
-                            and storyunlock.MembershipCard.id
-                            in locking_items[proof_index - 1]
-                            and not all(x < proof_index for x in form_indices)
-                        ):
-                            continue
-                    if not self.yeet_the_bear:
-                        if not any(
-                            it in locking_items[-1] for it in second_visit_locking_items
-                        ):
-                            continue
-                break
-            if self.yeet_the_bear:
-                locking_items.append([misc.TornPages.id])
-
-            force_obtained = []
-            if len(locking_items) > settings.chainLogicMinLength:
-                # keep the last parts of the chain
-                num_to_remove = len(locking_items) - settings.chainLogicMinLength
-                force_obtained = locking_items[:num_to_remove]
-                locking_items = locking_items[num_to_remove:]
-
-            # add the proof of nonexistence at the end of the chain
-            locking_items.append([proof.ProofOfNonexistence.id])
-
-            if settings.extended_placement_logic:
-                locking_items[-1].append(form.FinalForm.id)
-
-            # print(locking_items)
-
-            validator.prep_requirements_list(settings, self)
-
-            current_inventory = [] + self.starting_item_ids
-            for i in force_obtained:
-                current_inventory += i
-            if settings.reverse_rando:
-                current_inventory += [
-                    growth.HighJump1.id,
-                    growth.HighJump2.id,
-                    growth.HighJump3.id,
-                    growth.QuickRun1.id,
-                    growth.QuickRun2.id,
-                    growth.QuickRun3.id,
-                    growth.AerialDodge1.id,
-                    growth.AerialDodge2.id,
-                    growth.AerialDodge3.id,
-                    growth.Glide1.id,
-                    growth.Glide2.id,
-                    growth.Glide3.id,
-                    growth.DodgeRoll1.id,
-                    growth.DodgeRoll2.id,
-                    growth.DodgeRoll3.id,
-                ]
-
-            def open_location(inv, loc):
-                return (
-                    validator.is_location_available(inv, loc)
-                    and (
-                        not settings.extended_placement_logic
-                        or loc.name() != hb.CheckLocation.DataDemyxApBoost
-                    )
-                    and (locationType.SYNTH not in loc.LocationTypes)
-                )
-
-            accessible_locations = [
-                [l for l in valid_locations if open_location(current_inventory, l)]
-            ]
-            for items in locking_items:
-                accessible_locations_start = [
-                    l for l in valid_locations if open_location(current_inventory, l)
-                ]
-                accessible_locations_new = [
-                    l
-                    for l in valid_locations
-                    if open_location(current_inventory + items, l)
-                    and l not in accessible_locations_start
-                ]
-                accessible_locations.append(accessible_locations_new)
-                # print(f"{items} unlocked {len(accessible_locations[-1])}")
-                current_inventory += items
-            for iter, items in enumerate(locking_items):
-                accessible_locations_new = accessible_locations[iter]
-                if len(accessible_locations_new) == 0:
-                    raise GeneratorException(
-                        "Chain logic created a situation where the chain item couldn't be placed"
-                    )
-                for i in items:
-                    # find item in item list
-                    if len(accessible_locations_new) == 0:
-                        raise GeneratorException(
-                            f"Chain logic couldn't place an item because it ran out of locations."
-                        )
-
-                    i_data = next((it for it in item_pool if it.Id == i), None)
-                    if i_data is None:
-                        continue
-                    weights = compute_location_weights(i_data, accessible_locations_new)
-                    # if len(weights)==0:
-                    #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
-                    # if sum(weights)==0:
-                    #     raise GeneratorException(f"Chain Logic failed to place {i_data}")
-
-                    # try to assign the item multiple times
-                    goa_location_list = [
-                        loc
-                        for loc in accessible_locations_new
-                        if loc.name() == starting.CheckLocation.GoaLostIllusion
-                    ]
-                    for _ in range(5):
-                        if (
-                            iter == 0 and len(goa_location_list) > 0
-                        ):  # put the first chain item in the goa
-                            random_location = goa_location_list[0]
-                        else:
-                            random_location = random.choices(
-                                accessible_locations_new, weights
-                            )[0]
-                        if i_data.ItemType not in random_location.InvalidChecks:
-                            item_pool.remove(i_data)
-                            if self.assign_item(random_location, i_data):
-                                valid_locations.remove(random_location)
-                                accessible_locations_new.remove(random_location)
-
-                                struggle_pair = self._maybe_assign_struggle_pair(
-                                    random_location, i_data, accessible_locations_new
-                                )
-                                if struggle_pair is not None:
-                                    valid_locations.remove(struggle_pair)
-                                    accessible_locations_new.remove(struggle_pair)
-                            break
-
-        # assign valid items to all valid locations remaining
-        if self.yeet_the_bear:
-            # move proof of nonexistence to the front of the item pool if it's in there
-            if proof.ProofOfNonexistence in item_pool:
-                item_pool.insert(0,item_pool.pop(item_pool.index(proof.ProofOfNonexistence)))
-
-        '''
-        self.randomly_assign_items(item_pool, valid_locations)
-
-        # move remaining items to invalid locations for junk item assignment
-        invalid_locations.extend(valid_locations)
-        self.assign_junk_locations(settings, invalid_locations)
+    def get_accessible_locations(self, valid_locations, validator):
+        acquired_item_locations = []
+        acquired_items = []
+        sphere_0 = []
+        found_new_item = True
+        # check if any of the already assigned locations are valid right now, and if so, add their item to current inventory
+        while found_new_item:
+            found_new_item = False
+            # get unassigned locations that are available
+            sphere_0 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items,loc)]
+            # get already assigned items from available locations
+            for assignment in self.assignments:
+                if assignment.location.LocationCategory is not locationCategory.WEAPONSLOT and assignment.location not in acquired_item_locations and validator.is_location_available(self.starting_item_ids + acquired_items, assignment.location):
+                    acquired_item_locations.append(assignment.location)
+                    acquired_items.extend([i.Id for i in assignment.items()])
+                    found_new_item = True
+        return acquired_items,sphere_0
 
     def assign_plando_like_items(self, settings, item_pool, valid_locations):
         restricted_reports = self.report_depths.very_restricted_locations
