@@ -698,12 +698,39 @@ class Randomizer:
         acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator)
         last_unlocked_sphere = accessible_locations
 
+        world_names_to_unlock = [w for w in item_locking_ids_per_world.keys() for _ in item_locking_ids_per_world[w]]
+        random.shuffle(world_names_to_unlock)
+
+        proof_nonexistence_assignment = self.assignment_for_item_id(proof.ProofOfNonexistence.id)
+        proof_of_nonexistence_last_world = None
+        proof_of_nonexistence_last_unlock = None
+
+
+        if proof_nonexistence_assignment is not None:
+            # find the world that has the proof, and how many items it takes to get it
+            proof_world = list(set(proof_nonexistence_assignment.location.LocationTypes).intersection(item_locking_ids_per_world.keys()))[0]
+            # figure out how far into the world you need to go
+            world_progression = item_locking_ids_per_world[proof_world]
+            items_needed = []
+            for w in world_progression:
+                if validator.is_location_available(self.starting_item_ids + items_needed, proof_nonexistence_assignment.location):
+                    # uh, bad chain
+                    raise GeneratorException("Chain logic couldn't make a seed that ended on proof of nonexistence. Try changing proof depths.")
+                proof_of_nonexistence_last_unlock = missing_items(items_needed,w)
+                items_needed.extend(proof_of_nonexistence_last_unlock)
+            proof_of_nonexistence_last_world = proof_world
+
+            # confirmed location, check last instance of this world and move it last
+            last_index = [i for i in range(len(world_names_to_unlock)) if world_names_to_unlock[i] == proof_world][-1]
+            del world_names_to_unlock[last_index]
+            world_names_to_unlock.append(proof_world)            
+
         worlds_to_unlock = list(item_locking_ids_per_world.keys())
         while item_depth < min_item_depth or (item_depth < max_item_depth and random.random() < 0.75): # 25% chance of breaking early
             # pick a world to unlock checks from
             if len(worlds_to_unlock)==0:
                 break
-            chosen_world = random.choice(worlds_to_unlock)
+            chosen_world = world_names_to_unlock.pop(0)
             chosen_checks = item_locking_ids_per_world[chosen_world][0]
             item_locking_ids_per_world[chosen_world].pop(0)
             if len(item_locking_ids_per_world[chosen_world])==0:
@@ -727,7 +754,6 @@ class Randomizer:
                         raise GeneratorException("Uh....chain logic couldn't find an item with the id from the unlock list. This shouldn't happen")
                 acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator)
                 last_unlocked_sphere = sphere_1
-                print(len(last_unlocked_sphere))
                 item_depth+=1
         i_data = next((it for it in item_pool if it.Id == proof.ProofOfNonexistence.id), None)
         if i_data is not None:
@@ -1289,3 +1315,6 @@ class Randomizer:
 
     def assignment_for_item(self, item: InventoryItem) -> Optional[ItemAssignment]:
         return next((a for a in self.assignments if a.item.item == item), None)
+    
+    def assignment_for_item_id(self, item_id: int) -> Optional[ItemAssignment]:
+        return next((a for a in self.assignments if a.item.item.id == item_id), None)
