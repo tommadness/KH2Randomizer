@@ -2766,6 +2766,19 @@ _all_settings = [
         """,
     ),
     Toggle(
+        name=settingkey.MUSIC_RANDO_PC_INCLUDE_DDD,
+        group=SettingGroup.COSMETICS,
+        ui_label="Include Dream Drop Distance Songs",
+        shared=False,
+        default=False,
+        tooltip="""
+        If enabled, includes all the base Dream Drop Distance songs in the song list for music rando.
+
+        Requires the OpenKH folder to be set up in the Configure menu, and for DDD to have been extracted using the
+        OpenKH Mods Manager setup wizard.
+        """,
+    ),
+    Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM,
         group=SettingGroup.COSMETICS,
         ui_label="Include Custom Songs",
