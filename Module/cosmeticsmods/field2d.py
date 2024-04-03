@@ -3,13 +3,9 @@ import random
 from pathlib import Path
 
 from Class.openkhmod import Asset
+from List import configDict
 from Module import appconfig
 
-VANILLA = "vanilla"
-RANDOMIZE_ONE = "rand1"
-RANDOMIZE_ALL = "randAll"
-RANDOMIZE_IN_GAME_ONLY = "randInGameOnly"
-RANDOMIZE_CUSTOM_ONLY = "randCustomOnly"
 AGRABAH = "al0"
 BEAST_CASTLE = "bb0"
 PORT_ROYAL = "ca0"
@@ -52,9 +48,9 @@ class CommandMenuRandomizer:
     @staticmethod
     def command_menu_options() -> dict[str, str]:
         return {
-            VANILLA: "Vanilla",
-            RANDOMIZE_ONE: "Randomize (one)",
-            RANDOMIZE_ALL: "Randomize (all)",
+            configDict.VANILLA: "Vanilla",
+            configDict.RANDOMIZE_ONE: "Randomize (one)",
+            configDict.RANDOMIZE_ALL: "Randomize (all)",
             AGRABAH: "Agrabah",
             BEAST_CASTLE: "Beast's Castle",
             PORT_ROYAL: "Port Royal",
@@ -89,7 +85,7 @@ class CommandMenuRandomizer:
         }
 
     def randomize_command_menus(self) -> list[Asset]:
-        if self.command_menu_choice == VANILLA:
+        if self.command_menu_choice == configDict.VANILLA:
             return []
         assets = []
         assets.extend(self._randomize_ps2())
@@ -153,7 +149,7 @@ class CommandMenuRandomizer:
         return assets
 
     def _compute_menu_replacements(self, pc: bool) -> dict[str, str]:
-        unsupported = [VANILLA, RANDOMIZE_ONE, RANDOMIZE_ALL]
+        unsupported = [configDict.VANILLA, configDict.RANDOMIZE_ONE, configDict.RANDOMIZE_ALL]
         if pc:
             unsupported.append(ATLANTICA)
         supported_menus = [menu for menu in self.command_menu_options().keys() if menu not in unsupported]
@@ -161,12 +157,12 @@ class CommandMenuRandomizer:
         command_menu_choice = self.command_menu_choice
 
         menu_replacements: dict[str, str] = {}
-        if command_menu_choice == RANDOMIZE_ALL:
+        if command_menu_choice == configDict.RANDOMIZE_ALL:
             shuffled_menus = supported_menus.copy()
             random.shuffle(shuffled_menus)
             for index, old_menu in enumerate(supported_menus):
                 menu_replacements[old_menu] = shuffled_menus[index]
-        elif command_menu_choice == RANDOMIZE_ONE:
+        elif command_menu_choice == configDict.RANDOMIZE_ONE:
             new_menu = random.choice(supported_menus)
             for old_menu in supported_menus:
                 menu_replacements[old_menu] = new_menu
@@ -185,14 +181,14 @@ class RoomTransitionImageRandomizer:
     @staticmethod
     def room_transition_options() -> dict[str, str]:
         return {
-            VANILLA: "Vanilla",
-            RANDOMIZE_IN_GAME_ONLY: "Randomize (in-game only)",
-            RANDOMIZE_CUSTOM_ONLY: "Randomize (custom only)",
-            RANDOMIZE_ALL: "Randomize (in-game + custom)",
+            configDict.VANILLA: "Vanilla",
+            configDict.RANDOMIZE_IN_GAME_ONLY: "Randomize (in-game only)",
+            configDict.RANDOMIZE_CUSTOM_ONLY: "Randomize (custom only)",
+            configDict.RANDOMIZE_ALL: "Randomize (in-game + custom)",
         }
 
     def randomize_room_transitions(self) -> list[Asset]:
-        if self.transition_choice == VANILLA:
+        if self.transition_choice == configDict.VANILLA:
             return []
         assets = []
         # assets.extend(self._randomize_ps2())
@@ -249,11 +245,11 @@ class RoomTransitionImageRandomizer:
         transition_choice = self.transition_choice
 
         source_list: list[str] = []
-        if transition_choice == RANDOMIZE_IN_GAME_ONLY:
+        if transition_choice == configDict.RANDOMIZE_IN_GAME_ONLY:
             source_list = supported_transitions.copy()
-        elif transition_choice == RANDOMIZE_CUSTOM_ONLY:
+        elif transition_choice == configDict.RANDOMIZE_CUSTOM_ONLY:
             source_list = [f"$x${path}" for path in self._custom_room_transition_images().values()]
-        elif transition_choice == RANDOMIZE_ALL:
+        elif transition_choice == configDict.RANDOMIZE_ALL:
             source_list = []
             source_list.extend(supported_transitions)
             source_list.extend([f"$x${path}" for path in self._custom_room_transition_images().values()])

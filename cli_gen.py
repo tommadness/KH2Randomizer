@@ -5,12 +5,11 @@ import string
 from collections import namedtuple
 
 from Class.seedSettings import ExtraConfigurationData, SeedSettings
-from Module import appconfig, field2d
+from Module import appconfig
 from Module.RandomizerSettings import RandomizerSettings
 from Module.generate import generateSeedCLI
 from Module.seedshare import SharedSeed
 from Module.version import LOCAL_UI_VERSION
-
 
 SeedInfo = namedtuple("SeedInfo",["seed_name","requested_preset","generator_string","hash_icons","spoiler_html"])
 
@@ -46,17 +45,18 @@ def make_random_seed_from_preset_name(requested_type:str):
 
     rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,settings,shared_string_text)
 
-    extra_data = ExtraConfigurationData(
-        platform="PC",
-        command_menu_choice=field2d.VANILLA,
-        room_transition_choice=field2d.VANILLA,
-        tourney=True,
-        custom_cosmetics_executables=[],
-    )
+    extra_data = ExtraConfigurationData(platform="PC", tourney=True, custom_cosmetics_executables=[])
 
     spoiler_log = generateSeedCLI(rando_settings, extra_data)
 
-    return SeedInfo(seed_name=seedString,requested_preset=requested_type,generator_string=shared_string_text, hash_icons=rando_settings.seedHashIcons, spoiler_html=spoiler_log)
+    return SeedInfo(
+        seed_name=seedString,
+        requested_preset=requested_type,
+        generator_string=shared_string_text,
+        hash_icons=rando_settings.seedHashIcons,
+        spoiler_html=spoiler_log
+    )
+
 
 if __name__ == '__main__':
     seed_info = make_random_seed_from_preset_name(requested_preset)

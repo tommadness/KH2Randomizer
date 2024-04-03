@@ -8,9 +8,12 @@ import yaml
 
 from Class import settingkey
 from Class.openkhmod import Asset
-from Class.seedSettings import SeedSettings, ExtraConfigurationData
-from Module import appconfig, music
-from Module.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
+from Class.seedSettings import SeedSettings
+from Module import appconfig
+from Module.cosmeticsmods import music
+from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
+from Module.cosmeticsmods.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
+from Module.cosmeticsmods.itempic import ItempicRandomizer
 
 
 class CustomCosmetics:
@@ -68,6 +71,19 @@ class CosmeticsMod:
                 return extracted_data_path
             else:
                 return None
+
+    @staticmethod
+    def bootstrap_cosmetics_files():
+        CosmeticsMod.bootstrap_music_list_file()
+        ItempicRandomizer.bootstrap_itempic_file()
+
+        custom_music_path = appconfig.read_custom_music_path()
+        if custom_music_path is not None:
+            CosmeticsMod.bootstrap_custom_music_folder(custom_music_path)
+
+        custom_visuals_path = appconfig.read_custom_visuals_path()
+        if custom_visuals_path is not None:
+            CosmeticsMod.bootstrap_custom_visuals_folder(custom_visuals_path)
 
     @staticmethod
     def bootstrap_music_list_file() -> Path:
@@ -155,6 +171,7 @@ class CosmeticsMod:
                             category=song['kind'],
                             song_dmca=song.get('dmca', False)
                         )
+
             add_other_game_music(
                 enabled_key=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
                 game_music_path=extracted_data_path / 'kh1' / 'remastered' / 'amusic',
@@ -248,10 +265,39 @@ class CosmeticsMod:
         for folder in ["room-transition-images"]:
             (custom_visuals_path / folder).mkdir(exist_ok=True)
 
+        end_pictures_path = custom_visuals_path / "ending-pictures"
+        end_pictures_path.mkdir(exist_ok=True)
+
+        item_pictures_path = custom_visuals_path / "item-pictures"
+        item_pictures_path.mkdir(exist_ok=True)
+
+        itempic_categories: list[str] = []
+        for itempic in ItempicRandomizer.replaceable_itempics():
+            itempic_categories.extend(itempic.types)
+        for category in set(itempic_categories):
+            (item_pictures_path / category.lower()).mkdir(exist_ok=True)
+
     @staticmethod
-    def randomize_field2d(extra_data: ExtraConfigurationData) -> list[Asset]:
+    def randomize_field2d(seed_settings: SeedSettings) -> list[Asset]:
         """Randomizes various field2d entries, returning a list of assets to be added to a mod."""
         assets: list[Asset] = []
-        assets.extend(CommandMenuRandomizer(extra_data.command_menu_choice).randomize_command_menus())
-        assets.extend(RoomTransitionImageRandomizer(extra_data.room_transition_choice).randomize_room_transitions())
+
+        command_menu_choice = seed_settings.get(settingkey.COMMAND_MENU)
+        assets.extend(CommandMenuRandomizer(command_menu_choice).randomize_command_menus())
+
+        transition_choice = seed_settings.get(settingkey.ROOM_TRANSITION_IMAGES)
+        assets.extend(RoomTransitionImageRandomizer(transition_choice).randomize_room_transitions())
+
         return assets
+
+    @staticmethod
+    def randomize_itempics(seed_settings: SeedSettings) -> list[Asset]:
+        """Randomizes various itempic entries, returning a list of assets to be added to a mod."""
+        setting = seed_settings.get(settingkey.ITEMPIC_RANDO)
+        return ItempicRandomizer.randomize_itempics(setting)
+
+    @staticmethod
+    def randomize_end_screen(seed_settings: SeedSettings) -> list[Asset]:
+        """Randomizes the ending screen, returning a list of assets to be added to a mod."""
+        setting = seed_settings.get(settingkey.ENDPIC_RANDO)
+        return EndingPictureRandomizer.randomize_end_screen(setting)

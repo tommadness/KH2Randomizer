@@ -227,7 +227,7 @@ class GenerateCosmeticsZipThread(QThread):
     def run(self):
         try:
             extra_data = self.extra_data
-            zipper = CosmeticsOnlyZip(self.ui_settings, extra_data)
+            zipper = CosmeticsOnlyZip(self.ui_settings)
             zip_file = zipper.create_zip()
 
             _run_custom_cosmetics_executables(extra_data)

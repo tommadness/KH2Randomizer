@@ -11,6 +11,7 @@ from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
 from Class.exceptions import SettingsException
+from List import configDict
 from List.ItemList import Items
 from List.configDict import (
     HintType,
@@ -30,10 +31,12 @@ from List.configDict import (
     StartingVisitMode,
 )
 from List.inventory import ability, misc, proof, storyunlock
-from Module import encoding, field2d
+from Module import encoding
 from Module import knockbackTypes
+from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
+from Module.cosmeticsmods.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
+from Module.cosmeticsmods.itempic import ItempicRandomizer
 from Module.knockbackTypes import KnockbackTypes
-from Module.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.progressionPoints import ProgressionPoints
 
 # Characters available to be used for short encoding of certain settings
@@ -2585,7 +2588,7 @@ _all_settings = [
         ui_label="Command Menu",
         choices=CommandMenuRandomizer.command_menu_options(),
         shared=False,
-        default=field2d.VANILLA,
+        default=configDict.VANILLA,
         tooltip="""
         Controls the appearance of the command menu on-screen.
         
@@ -2609,12 +2612,34 @@ _all_settings = [
         """,
     ),
     SingleSelect(
+        name=settingkey.ITEMPIC_RANDO,
+        group=SettingGroup.COSMETICS,
+        ui_label="Item Pictures",
+        choices=ItempicRandomizer.itempic_rando_options(),
+        shared=False,
+        default=configDict.VANILLA,
+        tooltip="""
+        Controls the appearance of the item pictures. Customize item categories using item-pictures.json next to the
+        seed generator.
+        
+        Vanilla - Item pictures will have their normal appearance.
+        
+        Randomize (in-game only) - Chooses a random picture for each item from existing in-game item pictures.
+        
+        Randomize (custom only) - Chooses a random picture for each item from the item-pictures folder contained within
+        your configured Custom Visuals Folder.
+        
+        Randomize (in-game + custom) - Chooses a random picture for each item from both existing in-game item pictures
+        and the item-pictures folder contained within your configured Custom Visuals Folder.
+        """,
+    ),
+    SingleSelect(
         name=settingkey.ROOM_TRANSITION_IMAGES,
         group=SettingGroup.COSMETICS,
-        ui_label="Room Transition Images",
+        ui_label="Room Transitions",
         choices=RoomTransitionImageRandomizer.room_transition_options(),
         shared=False,
-        default=field2d.VANILLA,
+        default=configDict.VANILLA,
         tooltip="""
         Controls the appearance of the room transition images.
         
@@ -2628,6 +2653,27 @@ _all_settings = [
         
         Randomize (in-game + custom) - Chooses a random transition for each world from both existing in-game transition
         images and the room-transition-images folder contained within your configured Custom Visuals Folder.
+        """,
+    ),
+    SingleSelect(
+        name=settingkey.ENDPIC_RANDO,
+        group=SettingGroup.COSMETICS,
+        ui_label="Ending Screen",
+        choices=EndingPictureRandomizer.endingpic_rando_options(),
+        shared=False,
+        default=configDict.VANILLA,
+        tooltip="""
+        Controls the appearance of the ending screen picture.
+        
+        Vanilla - The ending screen picture will have its normal appearance.
+        
+        Randomize (in-game only) - Chooses a random ending screen from the in-game images.
+        
+        Randomize (custom only) - Chooses a random ending screen from the ending-pictures folder contained within your
+        configured Custom Visuals Folder.
+        
+        Randomize (in-game + custom) - Chooses a random ending screen from both existing in-game images and the
+        ending-pictures folder contained within your configured Custom Visuals Folder.
         """,
     ),
     Toggle(
@@ -3231,7 +3277,5 @@ def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
 @dataclass(frozen=True)
 class ExtraConfigurationData:
     platform: str
-    command_menu_choice: str
-    room_transition_choice: str
     tourney: bool
     custom_cosmetics_executables: list[str]

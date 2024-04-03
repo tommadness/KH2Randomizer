@@ -27,7 +27,9 @@ class CosmeticsMenu(KH2Submenu):
 
         self.start_group()
         self.add_option(settingkey.RANDO_THEMED_TEXTURES)
+        self.add_option(settingkey.ITEMPIC_RANDO)
         self.add_option(settingkey.ROOM_TRANSITION_IMAGES)
+        self.add_option(settingkey.ENDPIC_RANDO)
 
         self.add_option(settingkey.RECOLOR_TEXTURES)
         self.configure_recolors = QPushButton("Texture Recolor Settings")
@@ -215,8 +217,6 @@ class CosmeticsMenu(KH2Submenu):
     def _make_cosmetics_only_mod(self):
         extra_data = ExtraConfigurationData(
             platform="PC",
-            command_menu_choice=self.settings.get(settingkey.COMMAND_MENU),
-            room_transition_choice=self.settings.get(settingkey.ROOM_TRANSITION_IMAGES),
             tourney=False,
             custom_cosmetics_executables=self.custom_cosmetics.collect_custom_files(),
         )
