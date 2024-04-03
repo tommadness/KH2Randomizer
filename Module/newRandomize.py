@@ -762,9 +762,12 @@ class Randomizer:
             for l in locations_to_remove:
                 valid_locations.remove(l)
             item_pool.remove(i_data)
-
-
-
+        else:
+            # make sure we have access to nonexistence
+            acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator)
+            if proof.ProofOfNonexistence.id not in acquired_items:
+                raise GeneratorException("Couldn't access proof of nonexistence in chain logic")
+            
     def create_available_location_space(self, settings, item_pool, valid_locations):
         # (a)determine sphere 0
         #    if sphere 0 is big enough
@@ -1061,7 +1064,7 @@ class Randomizer:
             if locationType.Critical in loc.LocationTypes:
                 loc.InvalidChecks.append(itemType.GAUGE)
 
-            ''' Commenting this code out because new plando logic should account for this
+            # handle the easy depth options, restricted versions are handled specially
             if not self.report_depths.is_valid(loc):
                 loc.InvalidChecks.append(itemType.REPORT)
 
@@ -1074,6 +1077,7 @@ class Randomizer:
             if not self.promise_charm_depths.is_valid(loc):
                 loc.InvalidChecks.append(itemType.PROMISE_CHARM)
 
+            ''' Commenting this code out because new plando logic should account for this
             # if both reports and proofs are very restricted (only in 13 locations)
             # add extra proof restrictions to allow reports to be assigned
             if self.report_depths.is_valid(loc) and self.proof_depths.is_valid(loc):

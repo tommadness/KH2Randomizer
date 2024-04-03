@@ -46,7 +46,7 @@ def generateSeedCLI(
         try:
             randomizer = Randomizer(settings)
             unreachable_locations = newSeedValidation.validate_seed(
-                settings, randomizer
+                settings, randomizer, False
             )
             # hints = Hints.generate_hints(randomizer, settings)
             hints = Hints.generate_hints_v2(randomizer, settings)

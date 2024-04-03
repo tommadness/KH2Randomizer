@@ -351,7 +351,8 @@ class LocationInformedSeedValidator:
         if (settings.item_accessibility == ItemAccessibilityOption.ALL and results.full_clear) \
                 or (settings.item_accessibility == ItemAccessibilityOption.BEATABLE and results.any_percent):
             # we all good
-            print(f"Unreachable locations {len(location_requirements)}")
+            if verbose:
+                print(f"Unreachable locations {len(location_requirements)}")
             return [i for i in location_requirements.keys()]
         else:
             if verbose:
