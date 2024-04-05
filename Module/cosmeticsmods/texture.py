@@ -16,7 +16,7 @@ from Class.openkhmod import Asset
 from Class.seedSettings import SeedSettings
 from Module import version
 from Module.cosmetics import CosmeticsMod
-from Module.image import rgb_to_hsv, hsv_to_rgb
+from Module.cosmeticsmods.image import rgb_to_hsv, hsv_to_rgb
 from Module.resources import resource_path
 
 VANILLA = "vanilla"
