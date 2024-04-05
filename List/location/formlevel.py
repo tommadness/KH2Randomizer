@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Optional
 
 from Class.newLocationClass import KH2Location
@@ -7,6 +8,39 @@ from List.inventory.form import DriveForm
 from List.inventory.item import InventoryItem
 from List.location.graph import RequirementEdge, LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
+
+
+class CheckLocation(str, Enum):
+    Valor2 = "Valor Level 2"
+    Valor3 = "Valor Level 3"
+    Valor4 = "Valor Level 4"
+    Valor5 = "Valor Level 5"
+    Valor6 = "Valor Level 6"
+    Valor7 = "Valor Level 7"
+    Wisdom2 = "Wisdom Level 2"
+    Wisdom3 = "Wisdom Level 3"
+    Wisdom4 = "Wisdom Level 4"
+    Wisdom5 = "Wisdom Level 5"
+    Wisdom6 = "Wisdom Level 6"
+    Wisdom7 = "Wisdom Level 7"
+    Limit2 = "Limit Level 2"
+    Limit3 = "Limit Level 3"
+    Limit4 = "Limit Level 4"
+    Limit5 = "Limit Level 5"
+    Limit6 = "Limit Level 6"
+    Limit7 = "Limit Level 7"
+    Master2 = "Master Level 2"
+    Master3 = "Master Level 3"
+    Master4 = "Master Level 4"
+    Master5 = "Master Level 5"
+    Master6 = "Master Level 6"
+    Master7 = "Master Level 7"
+    Final2 = "Final Level 2"
+    Final3 = "Final Level 3"
+    Final4 = "Final Level 4"
+    Final5 = "Final Level 5"
+    Final6 = "Final Level 6"
+    Final7 = "Final Level 7"
 
 
 def form_level(level: int, form: DriveForm, vanilla: Optional[InventoryItem] = None) -> KH2Location:
