@@ -152,6 +152,10 @@ class ItemPlacementHelpers:
     @staticmethod
     def need_promise_charm(inventory: list[int]) -> bool:
         return misc.PromiseCharm.id in inventory
+    
+    @staticmethod
+    def make_need_objectives_lambda(num_objectives_needed: int):
+        return lambda inventory : inventory.count(misc.ObjectiveItem.id) >= num_objectives_needed        
 
     @staticmethod
     def make_form_lambda(drive_form: DriveForm, form_level: int) -> RequirementFunction:

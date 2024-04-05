@@ -1558,11 +1558,11 @@ _all_settings = [
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label="Maximum Logic Length",
         standalone_label="Maximum Logic Chain Length",
-        minimum=10,
-        maximum=26,  # theoretical max
+        minimum=15,
+        maximum=70,  # theoretical max
         step=1,
         shared=True,
-        default=26,
+        default=50,
         tooltip="How many steps in the logic chain you'd like to do at most.",
     ),
     Toggle(

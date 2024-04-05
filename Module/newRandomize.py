@@ -662,6 +662,14 @@ class Randomizer:
         # assign items that have very restricted locations (boss depths, yeet, etc.)
         self.assign_plando_like_items(settings, item_pool, valid_locations)
 
+        # check for objective rando
+        if settings.objective_rando:
+            # get the objective pool
+            # filter down the pool based on what valid locations there are
+            # remove proof of nonexistence
+            # pick a number of objectives
+            # plando completion marks onto the selected objectives
+            pass
 
         if settings.chainLogic:
             self.assign_chain_logic(settings, item_pool, valid_locations)    
@@ -1065,17 +1073,21 @@ class Randomizer:
                 loc.InvalidChecks.append(itemType.GAUGE)
 
             # handle the easy depth options, restricted versions are handled specially
-            if not self.report_depths.is_valid(loc):
-                loc.InvalidChecks.append(itemType.REPORT)
+            if not self.report_depths.very_restricted_locations:
+                if not self.report_depths.is_valid(loc):
+                    loc.InvalidChecks.append(itemType.REPORT)
 
-            if not self.proof_depths.is_valid(loc):
-                loc.InvalidChecks.extend(proof.proof_item_types())
+            if not self.proof_depths.very_restricted_locations:
+                if not self.proof_depths.is_valid(loc):
+                    loc.InvalidChecks.extend(proof.proof_item_types())
 
-            if not self.story_depths.is_valid(loc):
-                loc.InvalidChecks.append(itemType.STORYUNLOCK)
+            if not self.story_depths.very_restricted_locations:
+                if not self.story_depths.is_valid(loc):
+                    loc.InvalidChecks.append(itemType.STORYUNLOCK)
 
-            if not self.promise_charm_depths.is_valid(loc):
-                loc.InvalidChecks.append(itemType.PROMISE_CHARM)
+            if not self.promise_charm_depths.very_restricted_locations:
+                if not self.promise_charm_depths.is_valid(loc):
+                    loc.InvalidChecks.append(itemType.PROMISE_CHARM)
 
             ''' Commenting this code out because new plando logic should account for this
             # if both reports and proofs are very restricted (only in 13 locations)

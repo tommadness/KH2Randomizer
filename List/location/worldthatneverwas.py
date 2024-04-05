@@ -71,7 +71,7 @@ class CheckLocation(str, Enum):
     DataXemnas = "Xemnas (Data) Power Boost"
 
 class TWTNWLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,keyblade_unlocks):
+    def __init__(self,reverse_rando,keyblade_unlocks,objectives_needed):
         DefaultLogicGraph.__init__(self,NodeId)
         keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_twtnw_keyblade(inv)
         self.logic[NodeId.FragmentCrossing][NodeId.FragmentCrossingChests] = keyblade_lambda
@@ -82,17 +82,19 @@ class TWTNWLogicGraph(DefaultLogicGraph):
         self.logic[NodeId.NaughtsSkyway][NodeId.NaughtsSkywayChests] = keyblade_lambda
         self.logic[NodeId.RuinAndCreationsPassage][NodeId.RuinAndCreationsPassageChests] = keyblade_lambda
 
-        self.logic[START_NODE][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_promise_charm(inv) and ItemPlacementHelpers.need_proofs(inv) 
+        self.logic[START_NODE][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_promise_charm(inv) and (ItemPlacementHelpers.need_proofs(inv) or ItemPlacementHelpers.make_need_objectives_lambda(objectives_needed))
         if not reverse_rando:
             self.logic[NodeId.FragmentCrossing][NodeId.Roxas] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Saix][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
+            self.logic[NodeId.Xemnas1][NodeId.FinalXemnas] = ItemPlacementHelpers.need_proofs
         else:
             self.logic[NodeId.FragmentCrossing][NodeId.Xemnas1] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Xigbar][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
+            self.logic[NodeId.Roxas][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_proofs(inv) or ItemPlacementHelpers.make_need_objectives_lambda(objectives_needed)
 
 def make_graph(graph: LocationGraphBuilder):
     twtnw = locationType.TWTNW
-    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests,graph.settings.num_objectives_needed)
     graph.add_logic(twtnw_logic)
 
     fragment_crossing_chests = graph.add_location(NodeId.FragmentCrossingChests, [
@@ -200,7 +202,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(saix, pre_xemnas_1_popup)
         graph.add_edge(pre_xemnas_1_popup, ruin_creations_passage)
         graph.add_edge(ruin_creations_passage, xemnas_1, RequirementEdge(battle=True))
-        graph.add_edge(xemnas_1, final_xemnas, RequirementEdge(battle=True, req=ItemPlacementHelpers.need_proofs, strict=False))
+        graph.add_edge(xemnas_1, final_xemnas, RequirementEdge(battle=True, strict=False))
         graph.add_edge(xemnas_1, data_xemnas, RequirementEdge(battle=True))
         graph.register_first_boss(xemnas_1)
         graph.register_last_story_boss(xemnas_1)
@@ -219,7 +221,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(xigbar, pre_xemnas_1_popup)
         graph.add_edge(pre_xemnas_1_popup, ruin_creations_passage)
         graph.add_edge(ruin_creations_passage, roxas, RequirementEdge(battle=True))
-        graph.add_edge(roxas, final_xemnas, RequirementEdge(battle=True, req=ItemPlacementHelpers.need_proofs, strict=False))
+        graph.add_edge(roxas, final_xemnas, RequirementEdge(battle=True, strict=False))
         graph.add_edge(roxas, data_xemnas, RequirementEdge(battle=True))
         graph.register_first_boss(roxas)
         graph.register_last_story_boss(roxas)

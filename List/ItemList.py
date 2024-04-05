@@ -267,7 +267,7 @@ class Items:
             KH2Item(misc.HadesCupTrophy, itemRarity.UNCOMMON),
             KH2Item(misc.UnknownDisk, itemRarity.UNCOMMON),
 
-            KH2Item(misc.CrystalOrb),
+            # KH2Item(misc.CrystalOrb), # removing for objectives
             KH2Item(misc.SeifersTrophy),
             KH2Item(misc.OlympusStone, itemRarity.UNCOMMON),
             KH2Item(misc.AuronsStatue),

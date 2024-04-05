@@ -542,6 +542,7 @@ class RandomizerSettings:
         self.journal_hints: str = ui_settings.get(settingkey.JOURNAL_HINTS_ABILITIES)
         self.objective_rando = False
         self.num_objectives_needed = 7
+        self.max_objectives_available = 13
 
         self.hintable_check_types: list[str] = [
             item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)
@@ -716,6 +717,11 @@ class RandomizerSettings:
             if proof.ProofOfNonexistence.id in self.starting_inventory_ids:
                 raise SettingsException(
                     "Cannot use chain logic if starting with Proof of Nonexistence"
+                )
+            
+            if self.objective_rando:
+                raise SettingsException(
+                    "Can't use chain logic and objective rando at the same time"
                 )
 
         if (
