@@ -6,7 +6,7 @@
     # Two vertical-ish effects on black background
     - colorable_areas:
         - id: misc_fx_1
-          name: Effect 1
+          name: Effect 01
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -81,7 +81,7 @@
     # Mostly white swirl, top-left heavy
     - colorable_areas:
         - id: misc_fx_2
-          name: Effect 2
+          name: Effect 02
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -146,7 +146,7 @@
     # Light burst from right side
     - colorable_areas:
         - id: misc_fx_3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -221,7 +221,7 @@
     # Single vine in middle with split in left
     - colorable_areas:
         - id: misc_fx_4
-          name: Effect 4
+          name: Effect 04
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -302,7 +302,7 @@
     # Double vines, top one split on left
     - colorable_areas:
         - id: misc_fx_5
-          name: Effect 5
+          name: Effect 05
           hue_start: 0
           hue_end: 360
           new_saturation: 75

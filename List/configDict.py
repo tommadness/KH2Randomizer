@@ -1,5 +1,11 @@
 from enum import Enum
 
+VANILLA = "vanilla"
+RANDOMIZE_ONE = "rand1"
+RANDOMIZE_ALL = "randAll"
+RANDOMIZE_IN_GAME_ONLY = "randInGameOnly"
+RANDOMIZE_CUSTOM_ONLY = "randCustomOnly"
+
 
 class locationType(str, Enum):
     LoD = "Land of Dragons"

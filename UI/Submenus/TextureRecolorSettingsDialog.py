@@ -14,9 +14,10 @@ from PySide6.QtWidgets import QDialog, QMenuBar, QMenu, QComboBox, QSpinBox, QLa
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
-from Module import texture, appconfig
+from Module import appconfig
 from Module.cosmetics import CosmeticsMod
-from Module.texture import TextureRecolorSettings, TextureRecolorizer, recolor_image, RecolorDefinition
+from Module.cosmeticsmods import texture
+from Module.cosmeticsmods.texture import TextureRecolorSettings, TextureRecolorizer, recolor_image, RecolorDefinition
 from UI.Submenus.SubMenu import KH2Submenu
 
 _model_tags_by_category_name = {

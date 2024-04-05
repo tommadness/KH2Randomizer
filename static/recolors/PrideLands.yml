@@ -112,7 +112,7 @@
   recolors:
     - colorable_areas:
         - id: fx5
-          name: Effect 5
+          name: Effect 05
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -122,7 +122,7 @@
 
     - colorable_areas:
         - id: fx6
-          name: Effect 6
+          name: Effect 06
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -132,7 +132,7 @@
 
     - colorable_areas:
         - id: fx9
-          name: Effect 9
+          name: Effect 09
           hue_start: 0
           hue_end: 360
           new_saturation: 75

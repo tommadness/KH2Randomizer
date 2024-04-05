@@ -8,8 +8,8 @@ from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QDialog, QGridLayout, QLabel, QLineEdit, QHBoxLayout, QSpinBox, QCheckBox, QPushButton
 from numpy import ndarray
 
-from Module.image import rgb_to_mask
-from Module.texture import make_matching_conditions, recolor_image, RecolorDefinition, TextureRecolorizer
+from Module.cosmeticsmods.image import rgb_to_mask
+from Module.cosmeticsmods.texture import make_matching_conditions, recolor_image, RecolorDefinition, TextureRecolorizer
 
 
 class DevCreateRecolorDialog(QDialog):

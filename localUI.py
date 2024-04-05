@@ -4,10 +4,10 @@ import os
 import random
 import re
 import string
+import subprocess
 import sys
 import textwrap
 import zipfile
-import subprocess
 from pathlib import Path
 
 import pyperclip as pc
@@ -25,7 +25,8 @@ from PySide6.QtWidgets import (
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
-from Module import appconfig, hashimage, version, field2d
+from List import configDict
+from Module import appconfig, hashimage, version
 from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
@@ -286,7 +287,7 @@ class KH2RandomizerApp(QMainWindow):
                 except Exception:
                     print('Unable to apply last settings - will use defaults')
 
-        CosmeticsMod.bootstrap_music_list_file()
+        CosmeticsMod.bootstrap_cosmetics_files()
 
         random.seed(str(datetime.datetime.now()))
 
@@ -740,19 +741,11 @@ class KH2RandomizerApp(QMainWindow):
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
             # disable all cosmetics, generate a spoiler log, but don't put it in the zip
-            extra_data = ExtraConfigurationData(
-                platform=platform,
-                command_menu_choice=field2d.VANILLA,
-                room_transition_choice=field2d.VANILLA,
-                tourney=True,
-                custom_cosmetics_executables=[],
-            )
+            extra_data = ExtraConfigurationData(platform=platform, tourney=True, custom_cosmetics_executables=[])
             self.genTourneySeeds(extra_data)
         else:
             extra_data = ExtraConfigurationData(
                 platform=platform,
-                command_menu_choice=self.settings.get(settingkey.COMMAND_MENU),
-                room_transition_choice=self.settings.get(settingkey.ROOM_TRANSITION_IMAGES),
                 tourney=False,
                 custom_cosmetics_executables=self.custom_cosmetics.collect_custom_files(),
             )

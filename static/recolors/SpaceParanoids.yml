@@ -143,7 +143,7 @@
   recolors:
     - colorable_areas:
         - id: fx3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -152,7 +152,7 @@
 
     - colorable_areas:
         - id: fx4
-          name: Effect 4
+          name: Effect 04
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -161,7 +161,7 @@
 
     - colorable_areas:
         - id: fx5
-          name: Effect 5
+          name: Effect 05
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -170,7 +170,7 @@
 
     - colorable_areas:
         - id: fx6
-          name: Effect 6
+          name: Effect 06
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -179,7 +179,7 @@
 
     - colorable_areas:
         - id: fx7
-          name: Effect 7
+          name: Effect 07
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -187,7 +187,7 @@
 
     - colorable_areas:
         - id: fx8
-          name: Effect 8
+          name: Effect 08
           hue_start: 0
           hue_end: 360
       image_groups:
@@ -195,7 +195,7 @@
 
     - colorable_areas:
         - id: fx9
-          name: Effect 9
+          name: Effect 09
           hue_start: 0
           hue_end: 90
       image_groups:
@@ -337,37 +337,61 @@
     - party
   recolors:
     - colorable_areas:
-        - id: glow
-          name: Glow
+        - id: blue
+          name: Blue
+          mask_files:
+            - static/recolors/masks/sora-sp/1_Blue.mask
+            - static/recolors/masks/sora-sp/0_Blue.mask
+            - static/recolors/masks/sora-sp/2_Blue.mask
+            - N/A
+        - id: circuit_inner
+          name: Circuit (Inner)
           mask_files:
             - N/A
+            - static/recolors/masks/sora-sp/0_CircuitInner.mask
+            - static/recolors/masks/sora-sp/2_CircuitInner.mask
             - N/A
+        - id: circuit_outer
+          name: Circuit (Outer)
+          mask_files:
             - N/A
-            - N/A
-            - N/A
-            - N/A
-            - N/A
+            - static/recolors/masks/sora-sp/0_CircuitOuter.mask
+            - static/recolors/masks/sora-sp/2_CircuitOuter.mask
             - static/recolors/masks/sora-sp/8_HUD-Base.mask
-          hue_start: 140
-          hue_end: 240
+        - id: grey_dark
+          name: Grey (Dark)
+          mask_files:
+            - N/A
+            - static/recolors/masks/sora-sp/0_GreyDark.mask
+            - N/A
+            - N/A
+          new_saturation: 50
+        - id: grey_light
+          name: Grey (Light)
+          mask_files:
+            - N/A
+            - static/recolors/masks/sora-sp/0_GreyLight.mask
+            - N/A
+            - N/A
+          new_saturation: 50
       image_groups:
         - - remastered/obj/H_EX500_TR.mdlx/-2.dds
           - remastered/obj/P_EX100_TR.mdlx/-1.dds
 
-        - - remastered/obj/H_EX500_TR.mdlx/-3.dds
+#        - - remastered/obj/H_EX500_TR.mdlx/-3.dds
 
         - - remastered/obj/P_EX100_TR.mdlx/-0.dds
 
-        - - remastered/obj/H_EX500_TR.mdlx/-4.dds
+#        - - remastered/obj/H_EX500_TR.mdlx/-4.dds
 
-        - - remastered/obj/H_EX500_TR.mdlx/-5.dds
+#        - - remastered/obj/H_EX500_TR.mdlx/-5.dds
 
         - - remastered/obj/P_EX100_TR.mdlx/-2.dds
 
-        - - remastered/obj/P_EX100_TR.mdlx/-4.dds
+#        - - remastered/obj/P_EX100_TR.mdlx/-4.dds
 
         - - remastered/obj/P_EX100_TR.a.us/-8.dds
-      previews: [ true, false, true, false, false, true, false, true ]
+      previews: [ true, true, true, true ]
 
 - id: sora_sp_valor
   name: Sora (Space Paranoids Valor Form)
