@@ -118,7 +118,8 @@ class MultiWorld():
             for ass in self.all_candidate_swaps[s.finder]:
                 # print(f"{ass.location == s.where_found} {ass.location}")
                 if ass.location == s.where_found:
-                    ass.item = Items.sharedMultiItem()
+                    # TODO(zaktherobot)
+                    # ass.item = Items.sharedMultiItem()
                     break
 
 

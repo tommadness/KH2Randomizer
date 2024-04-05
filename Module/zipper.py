@@ -386,6 +386,8 @@ class SeedZip:
                 mod.write_wardrobe_skip_assets()
             self.create_drop_rate_assets(mod)
             self.create_shop_rando_assets(mod)
+            if settings.objective_rando:
+                self.create_objective_rando_assets(mod,settings.num_objectives_needed)
             self.create_chest_visual_assets(mod)
             battle_level_spoiler = self.create_battle_level_rando_assets(mod)
             journal_hints_spoiler: dict[str, str] = {}
@@ -830,6 +832,26 @@ class SeedZip:
                         item_3=drop.item3,
                         item_3_percentage=drop.item3_chance,
                     )
+
+    def create_objective_rando_assets(self, mod: SeedModBuilder, num_objectives_needed: int):
+        mod.add_objective_randomization_mods(True,num_objectives_needed)
+        mod.items.add_item(
+            item_id=363,
+            item_type="Recipe",
+            flag_0=0,
+            flag_1=0,
+            rank="C",
+            stat_entry=0,
+            name=47883,
+            description=47884,
+            shop_buy=num_objectives_needed,
+            shop_sell=0,
+            command=0,
+            slot=189,
+            picture=226,
+            icon_1=0,
+            icon_2=2,
+        )
 
     def create_shop_rando_assets(self, mod: SeedModBuilder):
         shop_items = self.randomizer.shop_items

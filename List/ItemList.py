@@ -493,6 +493,10 @@ class Items:
         return KH2Item(misc.SharedMultiworldItem)
 
     @staticmethod
+    def objectiveItem() -> KH2Item:
+        return KH2Item(misc.ObjectiveItem)
+
+    @staticmethod
     def weaponslot_id_to_keyblade_item(location_id: int) -> Optional[Keyblade]:
         slot_id_to_keyblade = {
             weaponslot.LocationId.KingdomKeyD: None,

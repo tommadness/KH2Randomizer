@@ -190,6 +190,36 @@ class SeedModBuilder:
             ]
         )
 
+    def add_objective_randomization_mods(self, num_objectives_needed):
+        self.messages.add_message(
+            15115,
+            en="Completion Mark",
+            jp="Completion Mark", # TODO make actual text for this
+        )
+        self.messages.add_message(
+            15116,
+            en=f"An Objective Completion Mark.\nAwarded to those who complete given tasks.\n{num_objectives_needed} of these are required to open the door...",
+            jp=f"An Objective Completion Mark.\nAwarded to those who complete given tasks.\n{num_objectives_needed} of these are required to open the door...", # TODO make actual text for this
+        )
+        
+        mark_image_source = _relative_mod_file("objectives/completionmark.dds")
+
+        self.mod_yml.add_asset({
+            "name": "remastered/itempic/item-226.imd/-0.dds",
+            "method": "copy",
+            "platform": "pc",
+            "source": [
+                {
+                    "name": mark_image_source,
+                }
+            ]
+        })
+        self.out_zip.write(
+            resource_path("static/objectives/completionmark.dds"), mark_image_source
+        )
+
+
+
     def add_base_messages(self, seed_hash_icons: list[str], crit_mode: bool):
         """Adds messages that are included with every seed."""
         seed_hash_string = " ".join(

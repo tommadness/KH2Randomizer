@@ -540,6 +540,8 @@ class RandomizerSettings:
         self.revealComplete: bool = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode: str = ui_settings.get(settingkey.REPORTS_REVEAL)
         self.journal_hints: str = ui_settings.get(settingkey.JOURNAL_HINTS_ABILITIES)
+        self.objective_rando = False
+        self.num_objectives_needed = 7
 
         self.hintable_check_types: list[str] = [
             item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)

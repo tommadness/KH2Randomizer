@@ -163,6 +163,7 @@ class itemType(str, Enum):
     SYNTH = "SYNTH"
     MULTIWORLD = "MultiWorld"
     PIECE="Puzzle Piece"
+    OBJECTIVE="Objective"
 
 
 class itemRarity(str, Enum):
