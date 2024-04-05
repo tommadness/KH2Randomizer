@@ -27,7 +27,7 @@
   recolors:
     - colorable_areas:
         - id: effect_0
-          name: Effect 0
+          name: Effect 00
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -36,7 +36,7 @@
 
     - colorable_areas:
         - id: effect_1
-          name: Effect 1
+          name: Effect 01
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -45,7 +45,7 @@
 
     - colorable_areas:
         - id: effect_2
-          name: Effect 2
+          name: Effect 02
           hue_start: 0
           hue_end: 360
           new_saturation: 75
@@ -54,7 +54,7 @@
 
     - colorable_areas:
         - id: effect_3
-          name: Effect 3
+          name: Effect 03
           hue_start: 0
           hue_end: 360
           new_saturation: 75
