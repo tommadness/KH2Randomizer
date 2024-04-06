@@ -20,13 +20,13 @@ def generateSeed(
     for attempt in range(50):
         try:
             randomizer = Randomizer(settings)
-            unreachable_locations = newSeedValidation.validate_seed(
+            location_spheres = newSeedValidation.validate_seed(
                 settings, randomizer
             )
             # hints = Hints.generate_hints(randomizer, settings)
             hints = Hints.generate_hints_v2(randomizer, settings)
             zipper = SeedZip(
-                settings, randomizer, hints, extra_data, unreachable_locations
+                settings, randomizer, hints, extra_data, location_spheres
             )
             return zipper.create_zip()
         except RandomizerExceptions as e:
@@ -45,13 +45,13 @@ def generateSeedCLI(
     for attempt in range(50):
         try:
             randomizer = Randomizer(settings)
-            unreachable_locations = newSeedValidation.validate_seed(
+            location_spheres = newSeedValidation.validate_seed(
                 settings, randomizer, False
             )
             # hints = Hints.generate_hints(randomizer, settings)
             hints = Hints.generate_hints_v2(randomizer, settings)
             zipper = SeedZip(
-                settings, randomizer, hints, extra_data, unreachable_locations
+                settings, randomizer, hints, extra_data, location_spheres
             )
             return zipper.make_spoiler_without_zip()
         except RandomizerExceptions as e:

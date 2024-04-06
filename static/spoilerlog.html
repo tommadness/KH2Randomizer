@@ -165,9 +165,10 @@
         <div class="table-wrapper">
             <table class="styled-table" id="spoilerTable">
                 <tr>
-                    <th>World <input type="text" id="world_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for world.."></th>
-                    <th>Location &lt;Weight&gt; <input type="text" id="location_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for location.."></th>
-                    <th>Item <input type="text" id="item_search" onkeyup="tableFilter('world_search','location_search','item_search','spoilerTable')" placeholder="Search for item.."></th>
+                    <th>Sphere<br /><input type="text" size="2" id="sphere_search" onkeyup="tableFilter('sphere_search','world_search','location_search','item_search','spoilerTable')" placeholder="Sphere?"></th>
+                    <th>World<br /><input type="text" size="10" id="world_search" onkeyup="tableFilter('sphere_search','world_search','location_search','item_search','spoilerTable')" placeholder="World?"></th>
+                    <th>Location &lt;Depth&gt;<br /><input type="text" id="location_search" onkeyup="tableFilter('sphere_search','world_search','location_search','item_search','spoilerTable')" placeholder="Location?"></th>
+                    <th>Item<br /><input type="text" id="item_search" onkeyup="tableFilter('sphere_search','world_search','location_search','item_search','spoilerTable')" placeholder="Item?"></th>
                 </tr>
             </table>
         </div>
@@ -178,9 +179,10 @@
         <div class="table-wrapper">
             <table class="styled-table" id="partyItemTable">
                 <tr>
-                    <th>World <input type="text" id="party_world_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for world.."></th>
-                    <th>Location <input type="text" id="party_location_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for location.."></th>
-                    <th>Item <input type="text" id="party_item_search" onkeyup="tableFilter('party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Search for item.."></th>
+                    <th>Sphere<br /><input type="text" size="2" id="party_sphere_search" onkeyup="tableFilter('party_sphere_search','party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Sphere?"></th>
+                    <th>World<br /><input type="text" size="10" id="party_world_search" onkeyup="tableFilter('party_sphere_search','party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="World?"></th>
+                    <th>Location<br /><input type="text" id="party_location_search" onkeyup="tableFilter('party_sphere_search','party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Location?"></th>
+                    <th>Item<br /><input type="text" id="party_item_search" onkeyup="tableFilter('party_sphere_search','party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Item?"></th>
                 </tr>
             </table>
         </div>
@@ -562,17 +564,20 @@ function populateTable(container, data)
         {
             for (var i = 0; i < data[world].length; i++)
             {
+                var item_data = data[world][i]
                 var table_entry = document.createElement("tr");
                 var world_table_html = "";
-                world_table_html+="<td>"
-                world_table_html+=world
-                world_table_html+="</td>"
-                var item_data = data[world][i]
                 world_table_html+="<td>"
                 world_table_html+=item_data[0]
                 world_table_html+="</td>"
                 world_table_html+="<td>"
-                world_table_html+=item_data[1]["Name"];
+                world_table_html+=world
+                world_table_html+="</td>"
+                world_table_html+="<td>"
+                world_table_html+=item_data[1]
+                world_table_html+="</td>"
+                world_table_html+="<td>"
+                world_table_html+=item_data[2]["Name"];
                 world_table_html+="</td>"
                 table_entry.innerHTML += world_table_html;
                 container.appendChild(table_entry);
@@ -584,17 +589,20 @@ function populateTable(container, data)
     {
         for (var i = 0; i < data["Level"].length; i++)
         {
+            var level_data = data["Level"][i];
             var table_entry = document.createElement("tr");
             var world_table_html = "";
+            world_table_html+="<td>"
+            world_table_html+=level_data[0]
+            world_table_html+="</td>"
             world_table_html+="<td>";
             world_table_html+="Levels";
             world_table_html+="</td>";
-            var level_data = data["Level"][i];
             world_table_html+="<td>";
-            world_table_html+=level_data[0];
+            world_table_html+=level_data[1];
             world_table_html+="</td>";
             world_table_html+="<td>";
-            world_table_html+=level_data[1]["Name"];
+            world_table_html+=level_data[2]["Name"];
             world_table_html+="</td>";
             table_entry.innerHTML += world_table_html;
             container.appendChild(table_entry);
@@ -605,17 +613,20 @@ function populateTable(container, data)
     {
         for (var i = 0; i < data["Form Levels"].length; i++)
         {
+            var level_data = data["Form Levels"][i]
             var table_entry = document.createElement("tr");
             var world_table_html = "";
+            world_table_html+="<td>"
+            world_table_html+=level_data[0]
+            world_table_html+="</td>"
             world_table_html+="<td>";
             world_table_html+="Levels";
             world_table_html+="</td>";
-            var level_data = data["Form Levels"][i]
             world_table_html+="<td>";
-            world_table_html+=level_data[0];
+            world_table_html+=level_data[1];
             world_table_html+="</td>";
             world_table_html+="<td>";
-            world_table_html+=level_data[1]["Name"];
+            world_table_html+=level_data[2]["Name"];
             world_table_html+="</td>";
             table_entry.innerHTML += world_table_html;
             container.appendChild(table_entry);
@@ -626,17 +637,20 @@ function populateTable(container, data)
     {
         for (var i = 0; i <  data["Slot"].length; i++)
         {
+            var weapon = data["Slot"][i]
             var table_entry = document.createElement("tr");
             var world_table_html = "";
+            world_table_html+="<td>"
+            world_table_html+=weapon[0]
+            world_table_html+="</td>"
             world_table_html+="<td>";
             world_table_html+="Weapons";
             world_table_html+="</td>";
-            var weapon = data["Slot"][i]
             world_table_html+="<td>";
-            world_table_html+=weapon[0];
+            world_table_html+=weapon[1];
             world_table_html+="</td>";
             world_table_html+="<td>";
-            world_table_html+=weapon[1]["Name"];
+            world_table_html+=weapon[2]["Name"];
             world_table_html+="</td>";
             table_entry.innerHTML += world_table_html;
             container.appendChild(table_entry);
@@ -651,9 +665,11 @@ populateTable(mainContainer,sora_item_data)
 populateTable(partyTable,donald_item_data)
 populateTable(partyTable,goofy_item_data)
 
-function tableFilter(world_elem,location_elem,item_elem,table_to_search)
+function tableFilter(sphere_elem,world_elem,location_elem,item_elem,table_to_search)
 {
-    var input, world_filter, location_filter, item_filter, table, tr, td1, td2, td3, i, txtValue1, txtValue2, txtValue3;
+    var input, sphere_filter, world_filter, location_filter, item_filter, table, tr, td1, td2, td3, i, txtValue1, txtValue2, txtValue3, txtValue4;
+    input = document.getElementById(sphere_elem);
+    sphere_filter = input.value.toUpperCase();
     input = document.getElementById(world_elem);
     world_filter = input.value.toUpperCase();
     input = document.getElementById(location_elem);
@@ -670,6 +686,7 @@ function tableFilter(world_elem,location_elem,item_elem,table_to_search)
         td1 = tr[i].getElementsByTagName("td")[0];
         td2 = tr[i].getElementsByTagName("td")[1];
         td3 = tr[i].getElementsByTagName("td")[2];
+        td4 = tr[i].getElementsByTagName("td")[3];
 
         var found = false;
 
@@ -687,8 +704,12 @@ function tableFilter(world_elem,location_elem,item_elem,table_to_search)
         {
             txtValue3 = td3.textContent || td3.innerText;
         }
+        if(td4)
+        {
+            txtValue4 = td4.textContent || td4.innerText;
+        }
 
-        if (txtValue1.toUpperCase().indexOf(world_filter) > -1 && txtValue2.toUpperCase().indexOf(location_filter) > -1 && txtValue3.toUpperCase().indexOf(item_filter) > -1)
+        if ((sphere_filter=="" || txtValue1.toUpperCase()==sphere_filter) && txtValue2.toUpperCase().indexOf(world_filter) > -1 && txtValue3.toUpperCase().indexOf(location_filter) > -1 && txtValue4.toUpperCase().indexOf(item_filter) > -1)
         {
             found = true;
         }

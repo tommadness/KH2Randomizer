@@ -13,10 +13,10 @@ def item_spoiler_dictionary(
         starting_inventory_ids: Optional[list[int]] = None,
         shop_items: Optional[list[KH2Item]] = None,
         weights: LocationWeights = None,
-        unreachable_locations=None
+        location_spheres=None
 ) -> dict[locationType, list[tuple[str, KH2Item]]]:
-    # (depth for sort purposes, location id for sort purposes, spoiler log string, item)
-    out_dict: dict[locationType, list[tuple[int, int, str, KH2Item]]] = {}
+    # (depth for sort purposes, location id for sort purposes, sphere, spoiler log string, item)
+    out_dict: dict[locationType, list[tuple[int, int, int, str, KH2Item]]] = {}
 
     item_lookup = Items.sora_lookup_table()
     if starting_inventory_ids is not None:
@@ -24,7 +24,7 @@ def item_spoiler_dictionary(
         for index, starting_item_id in enumerate(starting_inventory_ids):
             item = item_lookup.get(starting_item_id)
             if item is not None:
-                item_spoiler.append((0, index, "Sora Starting Item", item))
+                item_spoiler.append((0, index, 0, "Sora Starting Item", item))
             else:
                 print(f"Could not find item with id {starting_item_id} to add to the spoiler log")
         if len(item_spoiler) > 0:
@@ -33,7 +33,7 @@ def item_spoiler_dictionary(
     if shop_items is not None:
         shop_spoiler = []
         for shop_item in shop_items:
-            shop_spoiler.append((0, 0, "Moogle Shop", shop_item))
+            shop_spoiler.append((0, 0, 0, "Moogle Shop", shop_item))
         if len(shop_spoiler) > 0:
             out_dict[locationType.SHOP] = shop_spoiler
 
@@ -52,8 +52,12 @@ def item_spoiler_dictionary(
         else:
             added_string = ""
 
-        if unreachable_locations and location in unreachable_locations:
+        sphere = 0
+        if location_spheres and location not in location_spheres:
             prepend_string = "Unreachable "
+        elif location_spheres and location in location_spheres:
+            prepend_string = ""
+            sphere = location_spheres[location]
         else:
             prepend_string = ""
 
@@ -64,17 +68,17 @@ def item_spoiler_dictionary(
             if location_type not in out_dict:
                 out_dict[location_type] = []
             if assignment.item.item != misc.NullItem:
-                out_dict[location_type].append((sort_depth, loc_id, spoiler_string, assignment.item))
+                out_dict[location_type].append((sort_depth, loc_id, sphere, spoiler_string, assignment.item))
             if assignment.item2 is not None:
-                out_dict[location_type].append((sort_depth, loc_id, spoiler_string, assignment.item2))
+                out_dict[location_type].append((sort_depth, loc_id, sphere, spoiler_string, assignment.item2))
 
-    result_dict: dict[locationType, list[tuple[str, KH2Item]]] = {}
+    result_dict: dict[locationType, list[tuple[int, str, KH2Item]]] = {}
     for location_type, entries in out_dict.items():
         # Sort first by the location ID (this will be the tiebreaker)
         entries.sort(key=lambda entry: entry[1])
         # Now sort by the depth
         entries.sort(key=lambda entry: entry[0])
-        result_dict[location_type] = [(entry[2], entry[3]) for entry in entries]
+        result_dict[location_type] = [(entry[2], entry[3], entry[4]) for entry in entries]
 
     return result_dict
 

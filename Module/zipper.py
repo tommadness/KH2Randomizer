@@ -296,14 +296,14 @@ class SeedZip:
         randomizer: Randomizer,
         hints: HintData,
         extra_data: ExtraConfigurationData,
-        unreachable_locations: list[KH2Location],
+        location_spheres: dict[KH2Location,int],
         multiworld: Optional[MultiWorldOutput] = None,
     ):
         self.settings = settings
         self.randomizer = randomizer
         self.hints = hints
         self.extra_data = extra_data
-        self.unreachable_locations = unreachable_locations
+        self.location_spheres = location_spheres
         self.multiworld = multiworld
 
     def make_spoiler_without_zip(self) -> str:
@@ -514,7 +514,7 @@ class SeedZip:
             starting_inventory_ids=randomizer.starting_item_ids,
             shop_items=randomizer.shop_items,
             weights=randomizer.location_weights,
-            unreachable_locations=self.unreachable_locations,
+            location_spheres=self.location_spheres,
         )
         donald_items_json = item_spoiler_dictionary(randomizer.donald_assignments)
         goofy_items_json = item_spoiler_dictionary(randomizer.goofy_assignments)

@@ -31,6 +31,7 @@ class LocationInformedSeedValidator:
     def __init__(self):
         self.location_requirements: dict[KH2Location, list[RequirementFunction]] = {}
         self.human_readable_lock_list: dict[locationType,Graph] = {}
+        self.location_spheres: dict[KH2Location, int] = {}
 
     def populate_possible_locking_item_list(self, regular_rando: bool):
         # STT
@@ -340,6 +341,7 @@ class LocationInformedSeedValidator:
 
             changed = False
             locations_to_remove = []
+            items_to_add_to_inventory = []
             for location, requirements in location_requirements.items():
                 if self.evaluate(inventory, requirements):
                     # find assigned item to location
@@ -348,21 +350,23 @@ class LocationInformedSeedValidator:
                         if assignment.location.name() == stt.CheckLocation.StruggleWinnerChampionBelt:
                             continue
                         if location == assignment.location:
-                            inventory.append(assignment.item.Id)
+                            items_to_add_to_inventory.append(assignment.item.Id)
                             if assignment.item2 is not None:
-                                inventory.append(assignment.item2.Id)
+                                items_to_add_to_inventory.append(assignment.item2.Id)
                             break
                     locations_to_remove.append(location)
+                    self.location_spheres[location] = depth-1
                     changed = True
             for shop_item in locations_to_remove:
                 location_requirements.pop(shop_item)
+            inventory.extend(items_to_add_to_inventory)
 
         if (settings.item_accessibility == ItemAccessibilityOption.ALL and results.full_clear) \
                 or (settings.item_accessibility == ItemAccessibilityOption.BEATABLE and results.any_percent):
             # we all good
             if verbose:
                 print(f"Unreachable locations {len(location_requirements)}")
-            return [i for i in location_requirements.keys()]
+            return self.location_spheres
         else:
             if verbose:
                 print("Failed seed, trying again")
