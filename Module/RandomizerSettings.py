@@ -409,13 +409,14 @@ class RandomizerSettings:
         self.statSanity: bool = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear: bool = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.chainLogic: bool = ui_settings.get(settingkey.CHAIN_LOGIC)
-        self.chainLogicIncludeTerra: bool = ui_settings.get(
-            settingkey.CHAIN_LOGIC_TERRA
-        )
-        self.chainLogicTerraLate: bool = ui_settings.get(
-            settingkey.CHAIN_LOGIC_MIN_TERRA
-        )
+        # self.chainLogicIncludeTerra: bool = ui_settings.get(
+        #     settingkey.CHAIN_LOGIC_TERRA
+        # )
+        # self.chainLogicTerraLate: bool = ui_settings.get(
+        #     settingkey.CHAIN_LOGIC_MIN_TERRA
+        # )
         self.chainLogicMinLength: int = ui_settings.get(settingkey.CHAIN_LOGIC_LENGTH)
+        self.chainLogicMaxLength: int = ui_settings.get(settingkey.MAX_CHAIN_LOGIC_LENGTH)
 
         if (
             self.proofDepth in [locationDepth.FirstVisit, locationDepth.FirstBoss]

@@ -41,8 +41,9 @@ class ItemPlacementMenu(KH2Submenu):
         self.start_group()
         self.add_option(settingkey.CHAIN_LOGIC)
         self.add_option(settingkey.CHAIN_LOGIC_LENGTH)
-        self.add_option(settingkey.CHAIN_LOGIC_TERRA)
-        self.add_option(settingkey.CHAIN_LOGIC_MIN_TERRA)
+        self.add_option(settingkey.MAX_CHAIN_LOGIC_LENGTH)
+        # self.add_option(settingkey.CHAIN_LOGIC_TERRA)
+        # self.add_option(settingkey.CHAIN_LOGIC_MIN_TERRA)
         self.end_group('Chain Logic')
         self.end_column()
 
@@ -60,8 +61,7 @@ class ItemPlacementMenu(KH2Submenu):
     def chain_logic(self):
         enabled = self.settings.get(settingkey.CHAIN_LOGIC)
         self.set_option_visibility(settingkey.CHAIN_LOGIC_LENGTH, enabled)
-        self.set_option_visibility(settingkey.CHAIN_LOGIC_TERRA, enabled)
-        self.set_option_visibility(settingkey.CHAIN_LOGIC_MIN_TERRA, enabled)
+        self.set_option_visibility(settingkey.MAX_CHAIN_LOGIC_LENGTH, enabled)
 
     def disable_widgets(self):
         self.disable_signal = True

@@ -117,11 +117,11 @@ class TTLogicGraph(DefaultLogicGraph):
         self.logic[NodeId.MansionDiningRoom][NodeId.MansionDiningRoomChests] = keyblade_lambda
         self.logic[NodeId.MansionLibrary][NodeId.MansionLibraryChests] = keyblade_lambda
         self.logic[NodeId.MansionBasement][NodeId.MansionBasementChests] = keyblade_lambda
-        #I wanted a different keyblade for MT but it would need extra logic (i think??) ex: you can't return till after 3rd visit or before getting 2nd visit lock
-        self.logic[NodeId.YenSidTower][NodeId.YenSidTowerChests] = keyblade_lambda
-        self.logic[NodeId.YenSidTowerEntryway][NodeId.YenSidTowerEntrywayChests] = keyblade_lambda
-        self.logic[NodeId.SorcerersLoft][NodeId.SorcerersLoftChests] = keyblade_lambda
-        self.logic[NodeId.TowerWardrobe][NodeId.TowerWardrobeChests] = keyblade_lambda
+        # making tower checks logically need 3 ice creams to prevent softlocking
+        self.logic[NodeId.YenSidTower][NodeId.YenSidTowerChests] = lambda inv: ItemPlacementHelpers.tt3_check(inv) and keyblade_lambda(inv)
+        self.logic[NodeId.YenSidTowerEntryway][NodeId.YenSidTowerEntrywayChests] = lambda inv: ItemPlacementHelpers.tt3_check(inv) and keyblade_lambda(inv)
+        self.logic[NodeId.SorcerersLoft][NodeId.SorcerersLoftChests] = lambda inv: ItemPlacementHelpers.tt3_check(inv) and keyblade_lambda(inv)
+        self.logic[NodeId.TowerWardrobe][NodeId.TowerWardrobeChests] = lambda inv: ItemPlacementHelpers.tt3_check(inv) and keyblade_lambda(inv)
         if not reverse_rando:
             self.logic[START_NODE][NodeId.OldMansion] = ItemPlacementHelpers.tt1_check
             self.logic[NodeId.ValorForm][NodeId.SeifersTrophy] = ItemPlacementHelpers.tt2_check

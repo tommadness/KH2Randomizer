@@ -45,15 +45,19 @@ class LocationInformedSeedValidator:
         hb_graph.add_node("HBChests",[keyblade.SleepingLion])
         hb_graph.add_node("HB2",[storyunlock.MembershipCard,storyunlock.MembershipCard])
         hb_graph.add_node("CoR",[keyblade.WinnersProof])
-        hb_graph.add_node("PoP",[proof.ProofOfPeace])
-        hb_graph.add_edge("HB1","HBChests")
         hb_graph.add_edge("HB1","HB2")
-        hb_graph.add_edge("HB2","HBChests")
         hb_graph.add_edge("HBChests","HB2")
+        hb_graph.add_edge("HBChests","CoR")
+        hb_graph.add_edge("CoR","HBChests")
+        hb_graph.add_edge("HB1","HBChests")
+        hb_graph.add_edge("HB2","HBChests")
         hb_graph.add_edge("HB2","CoR")
-        hb_graph.add_edge("HB2","PoP")
-        hb_graph.add_edge("CoR","PoP")
-        hb_graph.add_edge("PoP","CoR")
+        if regular_rando:
+            hb_graph.add_node("PoP",[proof.ProofOfPeace])
+            hb_graph.add_edge("PoP","HBChests")
+            hb_graph.add_edge("HB2","PoP")
+            hb_graph.add_edge("CoR","PoP")
+            hb_graph.add_edge("PoP","CoR")
         self.human_readable_lock_list[locationType.HB] = hb_graph
         # OC
         oc_graph = Graph()
@@ -104,7 +108,7 @@ class LocationInformedSeedValidator:
         sp_graph.add_edge("SP1","SP2")
         sp_graph.add_edge("SP2","SPChests")
         sp_graph.add_edge("SPChests","SP2")
-        self.human_readable_lock_list[locationType.HT] = sp_graph
+        self.human_readable_lock_list[locationType.SP] = sp_graph
         # Drives
         drive_graph = Graph()
         drive_graph.add_node("Valor",[form.ValorForm])
@@ -190,11 +194,12 @@ class LocationInformedSeedValidator:
         self.human_readable_lock_list[locationType.TWTNW] = twtnw_graph
         # Atlantica
         atlantica_graph = Graph()
-        atlantica_graph.add_node("Song2",[magic.Magnet])
         atlantica_graph.add_node("Song4",[magic.Magnet,magic.Magnet])
         atlantica_graph.add_node("Song5",[magic.Magnet,magic.Magnet,magic.Thunder,magic.Thunder,magic.Thunder])
-        atlantica_graph.add_edge("Song2","Song4")
         atlantica_graph.add_edge("Song4","Song5")
+        if not regular_rando:
+            atlantica_graph.add_node("Song2",[magic.Magnet])
+            atlantica_graph.add_edge("Song2","Song4")
         self.human_readable_lock_list[locationType.Atlantica] = atlantica_graph
         # AG
         if regular_rando:
@@ -241,13 +246,17 @@ class LocationInformedSeedValidator:
                     break
                 current_node = random.choice(candidate_nodes)
                 # repeat
+            if len(graph.node_list()) != len(current_item_data):
+                return None
             return current_item_data
 
 
         item_id_lock_list: dict[locationType,list[list[int]]] = {}
         for location_type,lock_graph in self.human_readable_lock_list.items():
             # convert this from graph to randomly ordered item id list
-            random_ordered_requirements = random_walk(lock_graph)
+            random_ordered_requirements = None
+            while random_ordered_requirements is None:
+                random_ordered_requirements = random_walk(lock_graph)
 
             new_list = []
             for lock_item_list in random_ordered_requirements:

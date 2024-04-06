@@ -708,11 +708,12 @@ class Randomizer:
 
         world_names_to_unlock = [w for w in item_locking_ids_per_world.keys() for _ in item_locking_ids_per_world[w]]
         random.shuffle(world_names_to_unlock)
+        world_names_to_unlock = [w for w in world_names_to_unlock if w in settings.enabledLocations]
 
         proof_nonexistence_assignment = self.assignment_for_item_id(proof.ProofOfNonexistence.id)
-        proof_of_nonexistence_last_world = None
         proof_of_nonexistence_last_unlock = None
 
+        second_pass_worlds = []
 
         if proof_nonexistence_assignment is not None:
             # find the world that has the proof, and how many items it takes to get it
@@ -726,31 +727,55 @@ class Randomizer:
                     raise GeneratorException("Chain logic couldn't make a seed that ended on proof of nonexistence. Try changing proof depths.")
                 proof_of_nonexistence_last_unlock = missing_items(items_needed,w)
                 items_needed.extend(proof_of_nonexistence_last_unlock)
-            proof_of_nonexistence_last_world = proof_world
 
             # confirmed location, check last instance of this world and move it last
             last_index = [i for i in range(len(world_names_to_unlock)) if world_names_to_unlock[i] == proof_world][-1]
             del world_names_to_unlock[last_index]
-            world_names_to_unlock.append(proof_world)            
+            second_pass_worlds = [proof_world]     
 
-        worlds_to_unlock = list(item_locking_ids_per_world.keys())
-        while item_depth < min_item_depth or (item_depth < max_item_depth and random.random() < 0.75): # 25% chance of breaking early
+        # this is checking for access into CoR, we'll need to simulate having the necessary movement
+        simulated_growth = [growth.HighJump1.id,growth.HighJump2.id,growth.HighJump3.id,
+                                                 growth.QuickRun1.id,growth.QuickRun2.id,growth.QuickRun3.id,
+                                                 growth.AerialDodge1.id,growth.AerialDodge2.id,growth.AerialDodge3.id,
+                                                 growth.Glide1.id,growth.Glide2.id,growth.Glide3.id,
+                                                 ]
+        history_of_items = []
+        # print("Starting chain....")
+        while (item_depth < min_item_depth or (item_depth < max_item_depth and random.random() < 0.75)): # 25% chance of breaking early
+            # print("--iter")
             # pick a world to unlock checks from
-            if len(worlds_to_unlock)==0:
+            if world_names_to_unlock is None:
                 break
-            chosen_world = world_names_to_unlock.pop(0)
+            if len(world_names_to_unlock) == 0:
+                break
+            chosen_world = world_names_to_unlock[0]
             chosen_checks = item_locking_ids_per_world[chosen_world][0]
-            item_locking_ids_per_world[chosen_world].pop(0)
-            if len(item_locking_ids_per_world[chosen_world])==0:
-                worlds_to_unlock.remove(chosen_world)
+            def pop_world_from_list():
+                nonlocal world_names_to_unlock
+                nonlocal second_pass_worlds
+                world_names_to_unlock.pop(0)
+                if len(world_names_to_unlock)==0:
+                    world_names_to_unlock = second_pass_worlds
+                    second_pass_worlds = None
+                item_locking_ids_per_world[chosen_world].pop(0)
             if contains(acquired_items,chosen_checks):
+                # print(chosen_world)
+                # print(f"--Already have these items {chosen_checks}")
+                pop_world_from_list()
                 continue
             chosen_checks = missing_items(acquired_items,chosen_checks)
-
-            sphere_1 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items + chosen_checks,loc) and loc not in accessible_locations]
-            if len(sphere_1):
+            sphere_1 = [loc for loc in valid_locations if locationType.Level not in loc.LocationTypes and validator.is_location_available(self.starting_item_ids + acquired_items + chosen_checks + simulated_growth,loc) and loc not in accessible_locations]
+            # print("*******************")
+            # print(acquired_items)
+            # print(chosen_checks)
+            # print([s.Description for s in sphere_1])
+            # print("*******************")
+            if len(sphere_1) and len(last_unlocked_sphere) >= len(chosen_checks):
+                pop_world_from_list()
                 # assign new items
+                history_of_items.append(chosen_checks)
                 for i in chosen_checks:
+                    # print(f"placing {i}")
                     i_data = next((it for it in item_pool if it.Id == i), None)
                     if i_data is not None:
                         # assign this item somewhere
@@ -759,10 +784,25 @@ class Randomizer:
                             valid_locations.remove(l)
                         item_pool.remove(i_data)
                     else:
-                        raise GeneratorException("Uh....chain logic couldn't find an item with the id from the unlock list. This shouldn't happen")
-                acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator)
+                        raise GeneratorException(f"Uh....chain logic couldn't find an item with the id {i} from the unlock list. This shouldn't happen. History {history_of_items}")
+                acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator, simulated_growth)
                 last_unlocked_sphere = sphere_1
                 item_depth+=1
+            else:
+                if chosen_world not in settings.enabledLocations:
+                    # print(f"{chosen_world} checks are disabled")
+                    pop_world_from_list()
+                else:
+                    # print(chosen_world)
+                    # print(f"{len(sphere_1)} and {len(last_unlocked_sphere) }>={len(chosen_checks)} {chosen_checks}")
+                    # print("--This item doesn't unlock enough right now, trying again later")
+                    world_names_to_unlock.pop(0)
+                    if second_pass_worlds is not None:
+                        second_pass_worlds.insert(0,chosen_world)              
+
+        if item_depth < min_item_depth:
+            raise GeneratorException("Couldn't generate a chain long enough, are enough worlds on?...")
+
         i_data = next((it for it in item_pool if it.Id == proof.ProofOfNonexistence.id), None)
         if i_data is not None:
             # assign this item somewhere
@@ -772,7 +812,7 @@ class Randomizer:
             item_pool.remove(i_data)
         else:
             # make sure we have access to nonexistence
-            acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator)
+            acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator, simulated_growth)
             if proof.ProofOfNonexistence.id not in acquired_items:
                 raise GeneratorException("Couldn't access proof of nonexistence in chain logic")
             
@@ -811,7 +851,9 @@ class Randomizer:
             else:
                 sphere_0_check = False
 
-    def get_accessible_locations(self, valid_locations, validator):
+    def get_accessible_locations(self, valid_locations, validator, aux_items = None):
+        if aux_items is None:
+            aux_items = []
         acquired_item_locations = []
         acquired_items = []
         sphere_0 = []
@@ -820,13 +862,14 @@ class Randomizer:
         while found_new_item:
             found_new_item = False
             # get unassigned locations that are available
-            sphere_0 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items,loc)]
+            sphere_0 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items + aux_items,loc)]
             # get already assigned items from available locations
             for assignment in self.assignments:
-                if assignment.location.LocationCategory is not locationCategory.WEAPONSLOT and assignment.location not in acquired_item_locations and validator.is_location_available(self.starting_item_ids + acquired_items, assignment.location):
-                    acquired_item_locations.append(assignment.location)
-                    acquired_items.extend([i.Id for i in assignment.items()])
-                    found_new_item = True
+                if assignment.location.LocationCategory is not locationCategory.WEAPONSLOT and assignment.location not in acquired_item_locations and validator.is_location_available(self.starting_item_ids + acquired_items + aux_items, assignment.location):
+                    if assignment.location.Description != stt.CheckLocation.StruggleWinnerChampionBelt:
+                        acquired_item_locations.append(assignment.location)
+                        acquired_items.extend([i.Id for i in assignment.items()])
+                        found_new_item = True
         return acquired_items,sphere_0
 
     def assign_plando_like_items(self, settings, item_pool, valid_locations):

@@ -1556,13 +1556,25 @@ _all_settings = [
     IntSpinner(
         name=settingkey.CHAIN_LOGIC_LENGTH,
         group=SettingGroup.ITEM_PLACEMENT,
+        ui_label="Minimum Logic Length",
+        standalone_label="Minimum Logic Chain Length",
+        minimum=15,
+        maximum=56,  # theoretical max
+        step=1,
+        shared=True,
+        default=30,
+        tooltip="How many steps in the logic chain you'd like to do at minimum.",
+    ),
+    IntSpinner(
+        name=settingkey.MAX_CHAIN_LOGIC_LENGTH,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label="Maximum Logic Length",
         standalone_label="Maximum Logic Chain Length",
         minimum=15,
-        maximum=70,  # theoretical max
+        maximum=56,  # theoretical max
         step=1,
         shared=True,
-        default=50,
+        default=30,
         tooltip="How many steps in the logic chain you'd like to do at most.",
     ),
     Toggle(
