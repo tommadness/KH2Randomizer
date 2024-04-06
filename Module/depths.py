@@ -82,7 +82,7 @@ class ItemDepths:
         # Default to yes, disable before and including first boss
         self._set_all_initial_values(locations, True)
         for first_boss_node in locations.first_boss_nodes:
-            for location in locations.locations_before(first_boss_node, include_self=True):
+            for location in locations.locations_before(first_boss_node, include_self=True, include_starting_node=True):
                 self.depth_classification[location] = False
 
     @staticmethod

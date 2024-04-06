@@ -1,4 +1,4 @@
-from typing import Iterator, Optional
+from typing import Iterator, List, Optional
 
 from altgraph.Graph import Graph
 
@@ -64,6 +64,30 @@ class Locations:
             for location in node_data.locations:
                 yield location
 
+    def _common_ancestor(self, node_id) -> List[KH2Location]:
+        result = [node_id]
+        current_node = node_id
+        graph = self.location_graph
+
+        while True:
+            in_nbrs = graph.inc_nbrs(current_node)
+            assert len(in_nbrs)==1
+            current_node = in_nbrs[0]
+            result.append(current_node)
+            if current_node==START_NODE:
+                break
+            # check all out edges
+            bfs_search = [current_node]
+            while len(bfs_search):
+                bfs_node = bfs_search.pop(0)
+                out_nbrs = graph.out_nbrs(bfs_node)
+                for o in out_nbrs:
+                    if o not in result:
+                        bfs_search.append(o)
+                        result.append(o)
+
+        return result
+
     def node_ids(self) -> list[str]:
         """ Returns a list of all the node IDs in the graph. """
         return self.location_graph.node_list()
@@ -74,7 +98,8 @@ class Locations:
         control whether the given node_id itself is included in the returned list, as well as the starting node.
         """
         result = []
-        for before_node_id in self.location_graph.back_bfs(node_id):
+        ancestors = self._common_ancestor(node_id)
+        for before_node_id in ancestors:
             if node_id == before_node_id and not include_self:
                 continue
             if before_node_id == START_NODE and not include_starting:

@@ -829,7 +829,7 @@ class Randomizer:
         validator.prep_requirements_list(settings, self)
 
         sphere_0_check = True
-        num_available_locations_needed_to_allow_random_assignment = 80 # TODO(zak) this is arbitrary and may need tuning
+        num_available_locations_needed_to_allow_random_assignment = 150 # TODO(zak) this is arbitrary and may need tuning
         while sphere_0_check:
             # calculate the available checks
             acquired_items, sphere_0 = self.get_accessible_locations(valid_locations, validator)
