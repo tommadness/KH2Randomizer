@@ -5,8 +5,6 @@ class ObjectiveType(str, Enum):
     BOSS = "Boss"
     WORLDPROGRESS = "WorldProgress"
     FIGHT = "Fight"
-    AS = "AS Fight"
-    DATA = "DATA"
 
 class ObjectiveDifficulty(str, Enum):
     EARLY = "Early"

@@ -538,10 +538,17 @@ class RandomizerSettings:
         self.emblems = False
         self.num_emblems_needed = 7
         self.max_emblems_available = 13
-        self.objective_rando = False
-        self.num_objectives_needed = 7
-        self.max_objectives_available = 13
+        self.objective_rando = ui_settings.get(settingkey.OBJECTIVE_RANDO)
+        self.num_objectives_needed = ui_settings.get(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED)
+        self.max_objectives_available = ui_settings.get(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
         self.available_objectives = ObjectiveList.get_full_objective_list()
+        if not ui_settings.get(settingkey.OBJECTIVE_RANDO_BOSSES):
+            self.available_objectives = [o for o in self.available_objectives if o.Type != ObjectiveList.ObjectiveType.BOSS]
+        if not ui_settings.get(settingkey.OBJECTIVE_RANDO_PROGRESS):
+            self.available_objectives = [o for o in self.available_objectives if o.Type != ObjectiveList.ObjectiveType.WORLDPROGRESS and o.Type != ObjectiveList.ObjectiveType.FIGHT]
+
+        if self.max_objectives_available > len(self.available_objectives):
+            raise SettingsException("Not enough enabled objectives for the requested available pool. Turn on more objectives or lower available")
 
         self.hintable_check_types: list[str] = [
             item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)

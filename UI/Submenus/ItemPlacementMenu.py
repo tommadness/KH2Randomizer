@@ -39,11 +39,16 @@ class ItemPlacementMenu(KH2Submenu):
 
         self.start_column()
         self.start_group()
+        self.add_option(settingkey.OBJECTIVE_RANDO)
+        self.add_option(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
+        self.add_option(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED)
+        self.add_option(settingkey.OBJECTIVE_RANDO_PROGRESS)
+        self.add_option(settingkey.OBJECTIVE_RANDO_BOSSES)
+        self.end_group('Objective Rando')
+        self.start_group()
         self.add_option(settingkey.CHAIN_LOGIC)
         self.add_option(settingkey.CHAIN_LOGIC_LENGTH)
         self.add_option(settingkey.MAX_CHAIN_LOGIC_LENGTH)
-        # self.add_option(settingkey.CHAIN_LOGIC_TERRA)
-        # self.add_option(settingkey.CHAIN_LOGIC_MIN_TERRA)
         self.end_group('Chain Logic')
         self.end_column()
 
@@ -51,6 +56,7 @@ class ItemPlacementMenu(KH2Submenu):
 
         settings.observe(settingkey.ENABLE_PROMISE_CHARM, self.promise_charm_enabled)
         settings.observe(settingkey.CHAIN_LOGIC, self.chain_logic)
+        settings.observe(settingkey.OBJECTIVE_RANDO, self.objective_rando)
 
     def promise_charm_enabled(self):
         promise_charm_toggle = self.settings.get(settingkey.ENABLE_PROMISE_CHARM)
@@ -62,6 +68,13 @@ class ItemPlacementMenu(KH2Submenu):
         enabled = self.settings.get(settingkey.CHAIN_LOGIC)
         self.set_option_visibility(settingkey.CHAIN_LOGIC_LENGTH, enabled)
         self.set_option_visibility(settingkey.MAX_CHAIN_LOGIC_LENGTH, enabled)
+
+    def objective_rando(self):
+        enabled = self.settings.get(settingkey.OBJECTIVE_RANDO)
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE, enabled)
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED, enabled)
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_PROGRESS, enabled)
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_BOSSES, enabled)
 
     def disable_widgets(self):
         self.disable_signal = True
