@@ -7,6 +7,7 @@ from Class.exceptions import HintException
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
 from List.LvupStats import DreamWeaponOffsets
+from List.ObjectiveList import KH2Objective
 from List.configDict import HintType, SoraLevelOption, itemType, locationCategory, locationType
 from List.inventory import ability, form, magic, misc, storyunlock, summon
 from List.inventory.item import InventoryItem
@@ -28,6 +29,7 @@ class CommonTrackerInfo:
         )
         self.important_check_list = settings.important_checks
         self.spoiler_reveal_list = settings.spoiler_reveal_checks
+        self.objective_mode = settings.objective_rando
         # remove any items that aren't enabled by settings
         if settings.promiseCharm:
             tracker_includes.append("PromiseCharm")

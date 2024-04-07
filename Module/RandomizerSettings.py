@@ -4,7 +4,7 @@ from itertools import chain
 from Class import settingkey
 from Class.exceptions import SettingsException
 from Class.seedSettings import SeedSettings, makeKHBRSettings
-from List import experienceValues
+from List import experienceValues, ObjectiveList
 from List.configDict import (
     locationType,
     itemType,
@@ -409,12 +409,6 @@ class RandomizerSettings:
         self.statSanity: bool = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear: bool = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.chainLogic: bool = ui_settings.get(settingkey.CHAIN_LOGIC)
-        # self.chainLogicIncludeTerra: bool = ui_settings.get(
-        #     settingkey.CHAIN_LOGIC_TERRA
-        # )
-        # self.chainLogicTerraLate: bool = ui_settings.get(
-        #     settingkey.CHAIN_LOGIC_MIN_TERRA
-        # )
         self.chainLogicMinLength: int = ui_settings.get(settingkey.CHAIN_LOGIC_LENGTH)
         self.chainLogicMaxLength: int = ui_settings.get(settingkey.MAX_CHAIN_LOGIC_LENGTH)
 
@@ -541,9 +535,13 @@ class RandomizerSettings:
         self.revealComplete: bool = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode: str = ui_settings.get(settingkey.REPORTS_REVEAL)
         self.journal_hints: str = ui_settings.get(settingkey.JOURNAL_HINTS_ABILITIES)
+        self.emblems = False
+        self.num_emblems_needed = 7
+        self.max_emblems_available = 13
         self.objective_rando = False
         self.num_objectives_needed = 7
         self.max_objectives_available = 13
+        self.available_objectives = ObjectiveList.get_full_objective_list()
 
         self.hintable_check_types: list[str] = [
             item_type for item_type in ui_settings.get(settingkey.HINTABLE_CHECKS)
@@ -574,6 +572,9 @@ class RandomizerSettings:
         self.hiscore_mode: bool = ui_settings.get(settingkey.SCORE_MODE)
 
         self.tracker_includes: list[str] = []
+        
+        if self.objective_rando:
+            self.tracker_includes.append("objectives")
         if self.progression_hints:
             self.tracker_includes.append("ProgressionHints")
         if self.vanilla_level_one:
@@ -723,6 +724,10 @@ class RandomizerSettings:
             if self.objective_rando:
                 raise SettingsException(
                     "Can't use chain logic and objective rando at the same time"
+                )
+            if self.emblems:
+                raise SettingsException(
+                    "Can't use chain logic and emblems at the same time"
                 )
 
         if (

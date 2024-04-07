@@ -1320,6 +1320,8 @@ class Hints:
         ]
         hint_data = common_tracker_data.to_dict()
         hint_data["level_data"] = world_items.level_checks
+        if settings.objective_rando:
+            hint_data["objective_list"] = [o.Name for o in randomizer.objectives]
         if settings.hintsType == HintType.SHANANAS:
             hint_data["world"] = world_items.world_to_item_ids()
         elif settings.hintsType == HintType.JSMARTEE:

@@ -1,11 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from List.location import (simulatedtwilighttown,twilighttown,hollowbastion,landofdragons,
-                           beastscastle,disneycastle,portroyal,agrabah,halloweentown,
-                           pridelands, spaceparanoids, worldthatneverwas, olympuscoliseum,
-                           hundredacrewood, atlantica, formlevel,puzzlereward)
-
 class ObjectiveType(str, Enum):
     BOSS = "Boss"
     WORLDPROGRESS = "WorldProgress"
@@ -27,6 +22,10 @@ class KH2Objective:
     Difficulty: ObjectiveDifficulty = ObjectiveDifficulty.EARLY
 
 def get_full_objective_list():
+    from List.location import (simulatedtwilighttown,twilighttown,hollowbastion,landofdragons,
+                            beastscastle,disneycastle,portroyal,agrabah,halloweentown,
+                            pridelands, spaceparanoids, worldthatneverwas, olympuscoliseum,
+                            hundredacrewood, atlantica, formlevel,puzzlereward)
     return [
         # STT
         KH2Objective("Defeat Twilight Thorn",simulatedtwilighttown.CheckLocation.TwilightThorn,ObjectiveType.BOSS),
@@ -148,7 +147,7 @@ def get_full_objective_list():
         KH2Objective("Defeat Data Xaldin",beastscastle.CheckLocation.DataXaldin,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),
         KH2Objective("Defeat Data Luxord",portroyal.CheckLocation.DataLuxordApBoost,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),
         KH2Objective("Defeat Data Xemnas",worldthatneverwas.CheckLocation.DataXemnas,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),
-        KH2Objective("Defeat Data Zexion",olympuscoliseum.CheckLocation.ZexionBonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),
+        KH2Objective("Defeat Data Zexion",olympuscoliseum.CheckLocation.DataZexionLostIllusion,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),
         KH2Objective("Defeat Data Vexen",halloweentown.CheckLocation.DataVexen,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),
         KH2Objective("Defeat Data Larxene",spaceparanoids.CheckLocation.DataLarxeneLostIllusion,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),
         KH2Objective("Defeat Data Lexaeus",agrabah.CheckLocation.DataLexaeus,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),

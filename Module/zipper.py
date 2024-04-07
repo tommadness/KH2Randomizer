@@ -831,7 +831,7 @@ class SeedZip:
                     )
 
     def create_objective_rando_assets(self, mod: SeedModBuilder, num_objectives_needed: int):
-        mod.add_objective_randomization_mods(True,num_objectives_needed)
+        mod.add_objective_randomization_mods(num_objectives_needed)
         mod.items.add_item(
             item_id=363,
             item_type="Recipe",

@@ -14,6 +14,7 @@ from Class.exceptions import (
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
 from Class.randomUtils import weighted_sample_without_replacement
+from List.ObjectiveList import KH2Objective
 from List.ItemList import Items
 from List.NewLocationList import Locations
 from List.configDict import (
@@ -186,6 +187,7 @@ class Randomizer:
         self.form_level_exp: list[FormExp] = []
         self.synthesis_recipes: list[SynthesisRecipe] = []
         self.shop_items: list[KH2Item] = []
+        self.objectives: list[KH2Objective] = []
         self.assign_sora_items(settings)
         if progress_bar_vis:
             return
@@ -603,7 +605,9 @@ class Randomizer:
         )
         self.num_available_items = (
             len(ability_pool)
-            + len(item_pool)
+            + len(item_pool) 
+            + (settings.max_objectives_available if settings.objective_rando else 0) 
+            + (settings.max_emblems_available if settings.emblems else 0)
             - (sum([len(l.VanillaItems) for l in locations_with_vanilla_items]))
         )
 
@@ -665,11 +669,30 @@ class Randomizer:
         # check for objective rando
         if settings.objective_rando:
             # get the objective pool
+            objective_pool = settings.available_objectives
             # filter down the pool based on what valid locations there are
+            valid_location_descriptions = [v.Description for v in valid_locations]
+            objective_pool = [o for o in objective_pool if o.Location in valid_location_descriptions]
             # remove proof of nonexistence
+            item_pool = [i for i in item_pool if i.Id != proof.ProofOfNonexistence.id]
+            # remove duplicates for AS/Data split
+            if locationType.AS in settings.enabledLocations and locationType.DataOrg in settings.enabledLocations:
+                if settings.as_data_split:
+                    # remove duplicates for ASs
+                    objective_pool = [o for o in objective_pool if "Defeat AS" not in o.Name]
+                else:
+                    # remove duplicates for Datas
+                    objective_pool = [o for o in objective_pool if not any(t in o.Name for t in ["Data Vexen","Data Zexion","Data Larxene","Data Lexaeus","Data Marluxia"])]
             # pick a number of objectives
+            self.objectives = random.sample(objective_pool,k=settings.max_objectives_available)
+            picked_objectives_location_names = [o.Location for o in self.objectives]
             # plando completion marks onto the selected objectives
-            pass
+            objective_locations = [v for v in valid_locations if v.Description in picked_objectives_location_names]
+            for o in objective_locations:
+                locations_to_remove = self.randomly_assign_single_item(Items.objectiveItem(),[o])
+                for l in locations_to_remove:
+                    valid_locations.remove(l)
+            
 
         if settings.chainLogic:
             self.assign_chain_logic(settings, item_pool, valid_locations)    

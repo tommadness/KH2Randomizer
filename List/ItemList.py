@@ -495,6 +495,10 @@ class Items:
     @staticmethod
     def objectiveItem() -> KH2Item:
         return KH2Item(misc.ObjectiveItem)
+    
+    @staticmethod
+    def emblemItem() -> KH2Item:
+        return KH2Item(misc.ObjectiveItem)
 
     @staticmethod
     def weaponslot_id_to_keyblade_item(location_id: int) -> Optional[Keyblade]:

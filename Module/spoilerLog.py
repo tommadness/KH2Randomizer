@@ -16,7 +16,7 @@ def item_spoiler_dictionary(
         location_spheres=None
 ) -> dict[locationType, list[tuple[str, KH2Item]]]:
     # (depth for sort purposes, location id for sort purposes, sphere, spoiler log string, item)
-    out_dict: dict[locationType, list[tuple[int, int, int, str, KH2Item]]] = {}
+    out_dict: dict[locationType, list[tuple[int, int, str, str, KH2Item]]] = {}
 
     item_lookup = Items.sora_lookup_table()
     if starting_inventory_ids is not None:
@@ -52,12 +52,12 @@ def item_spoiler_dictionary(
         else:
             added_string = ""
 
-        sphere = 0
+        sphere = "N/A"
         if location_spheres and location not in location_spheres:
             prepend_string = "Unreachable "
         elif location_spheres and location in location_spheres:
             prepend_string = ""
-            sphere = location_spheres[location]
+            sphere = str(location_spheres[location])
         else:
             prepend_string = ""
 
