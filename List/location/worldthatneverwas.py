@@ -86,7 +86,7 @@ class TWTNWLogicGraph(DefaultLogicGraph):
         if not reverse_rando:
             self.logic[NodeId.FragmentCrossing][NodeId.Roxas] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Saix][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
-            self.logic[NodeId.Xemnas1][NodeId.FinalXemnas] = ItemPlacementHelpers.need_proofs
+            self.logic[NodeId.Xemnas1][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_proofs(inv) or ItemPlacementHelpers.make_need_objectives_lambda(objectives_needed)
         else:
             self.logic[NodeId.FragmentCrossing][NodeId.Xemnas1] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Xigbar][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
