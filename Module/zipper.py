@@ -18,6 +18,7 @@ from List import ChestList
 from List.DropRateIds import id_to_enemy_name
 from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
+from List.ObjectiveList import KH2Objective
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
 from List.inventory import bonus
 from List.location import simulatedtwilighttown as stt
@@ -384,7 +385,7 @@ class SeedZip:
             self.create_drop_rate_assets(mod)
             self.create_shop_rando_assets(mod)
             if settings.objective_rando:
-                self.create_objective_rando_assets(mod,settings.num_objectives_needed)
+                self.create_objective_rando_assets(mod,settings.num_objectives_needed, self.randomizer.objectives)
             self.create_chest_visual_assets(mod)
             battle_level_spoiler = self.create_battle_level_rando_assets(mod)
             journal_hints_spoiler: dict[str, str] = {}
@@ -830,8 +831,8 @@ class SeedZip:
                         item_3_percentage=drop.item3_chance,
                     )
 
-    def create_objective_rando_assets(self, mod: SeedModBuilder, num_objectives_needed: int):
-        mod.add_objective_randomization_mods(num_objectives_needed)
+    def create_objective_rando_assets(self, mod: SeedModBuilder, num_objectives_needed: int, objective_list: list[KH2Objective]):
+        mod.add_objective_randomization_mods(num_objectives_needed, objective_list)
         mod.items.add_item(
             item_id=363,
             item_type="Recipe",
@@ -1152,6 +1153,7 @@ class SeedZip:
             + Items.getActionAbilityList()
             + Items.getSupportAbilityList()
             + [Items.getTT1Jailbreak()]
+            + [Items.objectiveReportItem()]
             + [Items.getPromiseCharm()]
         )
         reports = [i.Id for i in master_item_list if i.ItemType == itemType.REPORT]

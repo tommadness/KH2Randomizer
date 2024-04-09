@@ -44,7 +44,7 @@ def get_full_objective_list():
         # LoD
         KH2Objective("Climb the Mountain Trail",landofdragons.CheckLocation.VillageCaveAreaMap,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Fight the Enemies in Village Cave",landofdragons.CheckLocation.VillageCaveBonus,ObjectiveType.FIGHT),
-        KH2Objective("Defeat Shan-Yu",landofdragons.CheckLocation.ShanYuBonus,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
+        KH2Objective("Defeat Shan Yu",landofdragons.CheckLocation.ShanYuBonus,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Defeat Stormrider",landofdragons.CheckLocation.StormRiderBonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # BC
         KH2Objective("Defeat Thresholder",beastscastle.CheckLocation.Thresholder,ObjectiveType.BOSS),
@@ -54,7 +54,7 @@ def get_full_objective_list():
         # DC
         KH2Objective("Escort Queen Minnie",disneycastle.CheckLocation.MinnieEscort,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Fight through Windows of Time",disneycastle.CheckLocation.WindowOfTimeMap,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
-        KH2Objective("Stop Pete's Escape",disneycastle.CheckLocation.BoatPete,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.MIDDLE),
+        KH2Objective("Stop Pete from Escaping",disneycastle.CheckLocation.BoatPete,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Defeat Future Pete",disneycastle.CheckLocation.MinnieEscort,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # PR
         KH2Objective("Stall for time on Isla de Muerta",portroyal.CheckLocation.IslaDeMuertaMap,ObjectiveType.WORLDPROGRESS),
@@ -71,7 +71,7 @@ def get_full_objective_list():
         # HT
         KH2Objective("Defeat Prison Keeper",halloweentown.CheckLocation.PrisonKeeper,ObjectiveType.BOSS),
         KH2Objective("Defeat Oogie Boogie",halloweentown.CheckLocation.OogieBoogie,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
-        KH2Objective("Capture Lock, Shock, and Barrel",halloweentown.CheckLocation.LockShockBarrel,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.MIDDLE),
+        KH2Objective("Capture Lock Shock and Barrel",halloweentown.CheckLocation.LockShockBarrel,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Find the stolen presents",halloweentown.CheckLocation.Present,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Create decoy presents",halloweentown.CheckLocation.DecoyPresents,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Defeat the Experiment",halloweentown.CheckLocation.Experiment,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
@@ -79,7 +79,7 @@ def get_full_objective_list():
         KH2Objective("Reunite with Simba",pridelands.CheckLocation.CircleOfLife,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Rescue Timon and Pumbaa",pridelands.CheckLocation.Hyenas1,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Defeat Scar",pridelands.CheckLocation.Scar,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
-        KH2Objective("Get info about Scar's ghost from Hyenas",pridelands.CheckLocation.Hyenas2,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.MIDDLE),
+        KH2Objective("Get info about the ghost of Scar from Hyenas",pridelands.CheckLocation.Hyenas2,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Defeat Groundshaker",pridelands.CheckLocation.Groundshaker,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # SP
         KH2Objective("Survive the Dataspace Attack",spaceparanoids.CheckLocation.ScreensBonus,ObjectiveType.FIGHT),
@@ -94,13 +94,13 @@ def get_full_objective_list():
         KH2Objective("Defeat Xemnas",worldthatneverwas.CheckLocation.Xemnas1Bonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # OC
         KH2Objective("Defeat Cerberus",olympuscoliseum.CheckLocation.Cerberus,ObjectiveType.BOSS),
-        KH2Objective("Complete Phil's Training",olympuscoliseum.CheckLocation.Urns,ObjectiveType.WORLDPROGRESS),
+        KH2Objective("Train with Phil",olympuscoliseum.CheckLocation.Urns,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Defeat Pete at The Lock",olympuscoliseum.CheckLocation.PeteOlympusColiseum,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Defeat Hydra",olympuscoliseum.CheckLocation.Hydra,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
-        KH2Objective("Defeat the Ambush in Hades' Chamber",olympuscoliseum.CheckLocation.AuronssStatue,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
+        KH2Objective("Defeat the Ambush in Hades Chamber",olympuscoliseum.CheckLocation.AuronssStatue,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Defeat Hades",olympuscoliseum.CheckLocation.Hades,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # Cups
-        KH2Objective("Win the Pain & Panic Cup",olympuscoliseum.CheckLocation.PainPanicCupProtectBelt,ObjectiveType.FIGHT),
+        KH2Objective("Win the Pain and Panic Cup",olympuscoliseum.CheckLocation.PainPanicCupProtectBelt,ObjectiveType.FIGHT),
         KH2Objective("Win the Cerberus Cup",olympuscoliseum.CheckLocation.CerberusCupRisingDragon,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Win the Titan Cup",olympuscoliseum.CheckLocation.TitanCupGenjiShield,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Win the Goddess of Fate Cup",olympuscoliseum.CheckLocation.GoddessOfFateCupFatalCrest,ObjectiveType.FIGHT,ObjectiveDifficulty.LATE),

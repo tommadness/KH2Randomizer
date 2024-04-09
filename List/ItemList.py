@@ -19,6 +19,7 @@ class Items:
         full_list.extend(Items.getStatItems())
         full_list.append(Items.getPromiseCharm())
         full_list.append(Items.getTT1Jailbreak())
+        full_list.append(Items.objectiveReportItem())
         full_list.extend(Items.getSupportAbilityList())
         full_list.extend(Items.getActionAbilityList())
         full_list.extend(Items.getLevelAbilityList())
@@ -488,9 +489,13 @@ class Items:
     def getNullItem() -> KH2Item:
         return KH2Item(misc.NullItem)
 
+    # @staticmethod
+    # def sharedMultiItem() -> KH2Item:
+    #     return KH2Item(misc.SharedMultiworldItem)
     @staticmethod
-    def sharedMultiItem() -> KH2Item:
-        return KH2Item(misc.SharedMultiworldItem)
+    def objectiveReportItem() -> KH2Item:
+        return KH2Item(misc.ObjectiveReport)
+
 
     @staticmethod
     def objectiveItem() -> KH2Item:

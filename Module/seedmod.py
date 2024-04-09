@@ -1,4 +1,5 @@
 import io
+import textwrap
 import zipfile
 from dataclasses import dataclass
 from typing import Optional, Any
@@ -190,7 +191,12 @@ class SeedModBuilder:
             ]
         )
 
-    def add_objective_randomization_mods(self, num_objectives_needed):
+    def add_objective_randomization_mods(self, num_objectives_needed, objective_list):
+        def convert_string_to_unicode(string: str, newlines: int = 0):
+            return (
+                    "".join(r"\u{:04X}".format(ord(character)) for character in textwrap.fill(string, width=30))
+                    + "NEWLINE" * newlines
+            )
         self.messages.add_message(
             15115,
             en="Completion Mark",
@@ -201,8 +207,23 @@ class SeedModBuilder:
             en=f"An Objective Completion Mark.\nAwarded to those who complete given tasks.\n{num_objectives_needed} of these are required to open the door...",
             jp=f"An Objective Completion Mark.\nAwarded to those who complete given tasks.\n{num_objectives_needed} of these are required to open the door...", # TODO make actual text for this
         )
+        self.messages.add_message(
+            14260,
+            en="Objective List"
+        )        
+        listText = ''
+        counter = 1
+        for task in objective_list:
+            listText += convert_string_to_unicode(str(counter)+'. '+task.Name,1)
+            counter+=1
+
+        self.journal_txt.add_message(
+            message_id=14261,
+            en=listText
+        )
         
         mark_image_source = _relative_mod_file("objectives/completionmark.dds")
+        report_addition_bin = _relative_mod_file("objectives/ansem_modified.bin")
 
         self.mod_yml.add_asset({
             "name": "remastered/itempic/item-226.imd/-0.dds",
@@ -214,8 +235,32 @@ class SeedModBuilder:
                 }
             ]
         })
+        self.mod_yml.add_asset({
+            "name": "menu/fm/jiminy.bar",
+            "method": "binarc",
+            "multi": [
+                {"name":"menu/us/jiminy.bar"},
+                {"name":"menu/fr/jiminy.bar"},
+                {"name":"menu/gr/jiminy.bar"},
+                {"name":"menu/it/jiminy.bar"},
+                {"name":"menu/sp/jiminy.bar"},
+                {"name":"menu/uk/jiminy.bar"},
+            ],
+            "source": [
+                {
+                    "name": "anse",
+                    "method":"copy",
+                    "type":"jimidata",
+                    "source" : [{"name":report_addition_bin}]
+
+                }
+            ],
+        })
         self.out_zip.write(
             resource_path("static/objectives/completionmark.dds"), mark_image_source
+        )
+        self.out_zip.write(
+            resource_path("static/objectives/ansem_modified.bin"), report_addition_bin
         )
 
 

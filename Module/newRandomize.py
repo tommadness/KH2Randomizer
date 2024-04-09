@@ -340,6 +340,8 @@ class Randomizer:
 
         if settings.tt1_jailbreak:
             self.starting_item_ids.append(Items.getTT1Jailbreak().Id)
+        if settings.objective_rando:
+            self.starting_item_ids.append(Items.objectiveReportItem().Id)
 
     def initial_item_pool(self, settings: RandomizerSettings) -> list[KH2Item]:
         """
