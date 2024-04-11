@@ -210,7 +210,11 @@ class SeedModBuilder:
         self.journal_txt.add_message(
             14260,
             en=convert_string_to_unicode("Objective List")
-        )        
+        )       
+        self.journal_txt.add_message(
+            13945,
+            en=convert_string_to_unicode("Reports/Objectives")
+        )     
         listText = ''
         counter = 1
         for task in objective_list:
