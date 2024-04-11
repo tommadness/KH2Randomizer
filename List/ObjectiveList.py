@@ -55,7 +55,7 @@ def get_full_objective_list():
         KH2Objective("Escort Queen Minnie",disneycastle.CheckLocation.MinnieEscort,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Fight through Windows of Time",disneycastle.CheckLocation.WindowOfTimeMap,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Stop Pete from Escaping",disneycastle.CheckLocation.BoatPete,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.MIDDLE),
-        KH2Objective("Defeat Future Pete",disneycastle.CheckLocation.MinnieEscort,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
+        KH2Objective("Defeat Future Pete",disneycastle.CheckLocation.FuturePete,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # PR
         KH2Objective("Stall for time on Isla de Muerta",portroyal.CheckLocation.IslaDeMuertaMap,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Defend the Interceptor from pirates",portroyal.CheckLocation.BoatFight,ObjectiveType.FIGHT),
@@ -67,7 +67,7 @@ def get_full_objective_list():
         KH2Objective("Escort Abu",agrabah.CheckLocation.AbuEscort,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Survive the Treasure Room Ambush",agrabah.CheckLocation.TreasureRoomBonus,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Defeat the Elemental Lords",agrabah.CheckLocation.ElementalLordsBonus,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
-        KH2Objective("Defeat Genie Jafar",agrabah.CheckLocation.TreasureRoomBonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
+        KH2Objective("Defeat Genie Jafar",agrabah.CheckLocation.GenieJafarBonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # HT
         KH2Objective("Defeat Prison Keeper",halloweentown.CheckLocation.PrisonKeeper,ObjectiveType.BOSS),
         KH2Objective("Defeat Oogie Boogie",halloweentown.CheckLocation.OogieBoogie,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
@@ -83,9 +83,9 @@ def get_full_objective_list():
         KH2Objective("Defeat Groundshaker",pridelands.CheckLocation.Groundshaker,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # SP
         KH2Objective("Survive the Dataspace Attack",spaceparanoids.CheckLocation.ScreensBonus,ObjectiveType.FIGHT),
-        KH2Objective("Defeat Hostile Program",spaceparanoids.CheckLocation.ScreensBonus,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
+        KH2Objective("Defeat Hostile Program",spaceparanoids.CheckLocation.HostileProgramBonus,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
         KH2Objective("Ride the Solar Sailor",spaceparanoids.CheckLocation.SolarSailerBonus,ObjectiveType.FIGHT,ObjectiveDifficulty.MIDDLE),
-        KH2Objective("Defeat MCP",spaceparanoids.CheckLocation.ScreensBonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
+        KH2Objective("Defeat MCP",spaceparanoids.CheckLocation.McpBonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         # TWTNW
         KH2Objective("Defeat Roxas",worldthatneverwas.CheckLocation.Roxas,ObjectiveType.BOSS),
         KH2Objective("Defeat Xigbar",worldthatneverwas.CheckLocation.XigbarBonus,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),

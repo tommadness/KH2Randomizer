@@ -749,6 +749,12 @@ class RandomizerSettings:
             raise SettingsException(
                 f"Starting Ansem Reports + Ansem Reports in shop is more than {max_reports}"
             )
+        
+        if self.objective_rando and self.max_objectives_available < self.num_objectives_needed:
+            raise SettingsException(
+                f"Can't set required objectives {self.num_objectives_needed} less than objectives in the pool {self.max_objectives_available}"
+            )
+
 
         starting_visit_mode = self.starting_visit_mode
         starting_visit_items_count = 0
