@@ -11,13 +11,13 @@ from List.configDict import (
     locationDepth,
     StartingMovementOption,
     SoraLevelOption,
-    itemDifficulty,
     ItemAccessibilityOption,
     itemRarity,
     SoftlockPreventionOption,
     AbilityPoolOption,
     expCurve,
     StartingVisitMode,
+    FinalDoorRequirement,
 )
 from List.hashTextEntries import generate_hash_icons
 from List.inventory import report, proof, form, storyunlock
@@ -538,7 +538,9 @@ class RandomizerSettings:
         self.emblems = False
         self.num_emblems_needed = 7
         self.max_emblems_available = 13
-        self.objective_rando = ui_settings.get(settingkey.OBJECTIVE_RANDO)
+
+        final_door_requirement = FinalDoorRequirement[ui_settings.get(settingkey.FINAL_DOOR_REQUIREMENT)]
+        self.objective_rando: bool = final_door_requirement is FinalDoorRequirement.OBJECTIVES
         self.num_objectives_needed = ui_settings.get(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED)
         self.max_objectives_available = ui_settings.get(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
         self.available_objectives = ObjectiveList.get_full_objective_list()

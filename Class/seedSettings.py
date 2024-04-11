@@ -29,6 +29,7 @@ from List.configDict import (
     SoftlockPreventionOption,
     AbilityPoolOption,
     StartingVisitMode,
+    FinalDoorRequirement,
 )
 from List.inventory import ability, misc, proof, storyunlock
 from Module import encoding
@@ -63,7 +64,7 @@ class SettingGroup(str, Enum):
     HINTS = "Hints"
     KEYBLADES = "Keyblades"
     ITEM_POOL = "Item Pool"
-    ITEM_PLACEMENT = "Item Placement"
+    ITEM_PLACEMENT = "Rules/Placement"
     SEED_MODIFIERS = "Seed Modifiers"
     COMPANIONS = "Companions"
     BOSS_RANDO = "Randomized Bosses"
@@ -1520,13 +1521,21 @@ _all_settings = [
         tooltip="How far above or below normal battle levels to choose.",
         randomizable=[0, 20],
     ),
-    Toggle(
-        name=settingkey.OBJECTIVE_RANDO,
+    SingleSelect(
+        name=settingkey.FINAL_DOOR_REQUIREMENT,
         group=SettingGroup.ITEM_PLACEMENT,
-        ui_label="Objective Rando",
+        ui_label="Requirement",
+        standalone_label="Final Door Requirement",
+        choices={option.name: option.value for option in list(FinalDoorRequirement)},
         shared=True,
-        default=False,
-        tooltip="Instead of three proofs unlocking the final door, you must complete a set of other objectives.",
+        default=FinalDoorRequirement.THREE_PROOF.name,
+        tooltip="""
+        Conditions required to unlock the final door.
+        
+        Three Proofs - Obtain the three Proofs (Connection, Nonexistence, and Peace).
+        
+        Objectives - Complete a set of objectives.
+        """,
     ),
     IntSpinner(
         name=settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE,
@@ -1537,7 +1546,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=13,
-        tooltip="How many objectives should be placed in the seed",
+        tooltip="How many objectives should be placed in the seed.",
     ),
     IntSpinner(
         name=settingkey.OBJECTIVE_RANDO_NUM_REQUIRED,
@@ -1548,7 +1557,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=7,
-        tooltip="How many objectives should be required to enter the final door",
+        tooltip="How many objectives should be required to enter the final door.",
     ),
     Toggle(
         name=settingkey.OBJECTIVE_RANDO_PROGRESS,
@@ -1556,7 +1565,7 @@ _all_settings = [
         ui_label="Include World Progress Objectives",
         shared=True,
         default=True,
-        tooltip="Objectives related to world progress are included in the objective pool",
+        tooltip="If enabled, objectives related to world progress are included in the objective pool.",
     ),
     Toggle(
         name=settingkey.OBJECTIVE_RANDO_BOSSES,
@@ -1564,7 +1573,7 @@ _all_settings = [
         ui_label="Include Boss Objectives",
         shared=True,
         default=True,
-        tooltip="Objectives related to bosses are included in the objective pool",
+        tooltip="If enabled, objectives related to bosses are included in the objective pool.",
     ),
     Toggle(
         name=settingkey.YEET_THE_BEAR,
@@ -1572,7 +1581,7 @@ _all_settings = [
         ui_label="Yeet The Bear Required",
         shared=True,
         default=False,
-        tooltip="Forces the Proof of Nonexistence onto the Starry Hill popup in 100 Acre Wood",
+        tooltip="Forces the Proof of Nonexistence onto the Starry Hill popup in 100 Acre Wood.",
     ),
     Toggle(
         name=settingkey.CHAIN_LOGIC,
@@ -2394,7 +2403,7 @@ _all_settings = [
     SingleSelect(
         name=settingkey.STARTING_VISIT_MODE,
         group=SettingGroup.LOCATIONS,
-        ui_label="Mode",
+        ui_label="Availability",
         standalone_label="Visit Availability",
         choices={option.name: option.value for option in list(StartingVisitMode)},
         shared=True,
@@ -2611,7 +2620,7 @@ _all_settings = [
         
         100% Locations - All locations must be reachable, and nothing will be permanently locked.
         
-        Beatable - The 3 Proofs must be reachable, but nothing else is guaranteed. 
+        Beatable - The Final Door Requirement must be reachable, but nothing else is guaranteed. 
         """,
     ),
     SingleSelect(

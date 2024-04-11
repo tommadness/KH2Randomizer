@@ -244,3 +244,8 @@ class StartingVisitMode(str, Enum):
     NONE = "No Visits"
     RANDOM = "Random Visits"
     SPECIFIC = "Specific Visits"
+
+
+class FinalDoorRequirement(str, Enum):
+    THREE_PROOF = "Three Proofs"
+    OBJECTIVES = "Objectives"

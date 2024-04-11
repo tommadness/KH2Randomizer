@@ -1,20 +1,31 @@
 from Class import settingkey
 from Class.seedSettings import SeedSettings
+from List.configDict import FinalDoorRequirement
 from UI.Submenus.SubMenu import KH2Submenu
 
 
 class ItemPlacementMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Item Placement', settings=settings)
+        super().__init__(title='Rules/Placement', settings=settings)
         self.disable_signal = False
 
         self.start_column()
+        self.start_group()
+        self.add_option(settingkey.FINAL_DOOR_REQUIREMENT)
+        self.add_option(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED)
+        self.add_option(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
+        self.add_option(settingkey.OBJECTIVE_RANDO_PROGRESS)
+        self.add_option(settingkey.OBJECTIVE_RANDO_BOSSES)
+        self.end_group("Final Door Requirement")
         self.start_group()
         self.add_option(settingkey.ACCESSIBILITY)
         self.add_option(settingkey.SOFTLOCK_CHECKING)
         self.add_option(settingkey.NIGHTMARE_LOGIC)
         self.end_group('Where Items Can Go')
+        self.end_column()
+
+        self.start_column()
         self.start_group()
         self.add_option(settingkey.STORY_UNLOCK_DEPTH)
         self.add_option(settingkey.REPORT_DEPTH)
@@ -22,9 +33,6 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.PROMISE_CHARM_DEPTH)
         self.add_option(settingkey.YEET_THE_BEAR)
         self.end_group('Guaranteed Restrictions')
-        self.end_column()
-
-        self.start_column()
         self.start_group()
         self.add_option(settingkey.WEIGHTED_FORMS)
         self.add_option(settingkey.WEIGHTED_UNLOCKS)
@@ -39,13 +47,6 @@ class ItemPlacementMenu(KH2Submenu):
 
         self.start_column()
         self.start_group()
-        self.add_option(settingkey.OBJECTIVE_RANDO)
-        self.add_option(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
-        self.add_option(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED)
-        self.add_option(settingkey.OBJECTIVE_RANDO_PROGRESS)
-        self.add_option(settingkey.OBJECTIVE_RANDO_BOSSES)
-        self.end_group('Objective Rando')
-        self.start_group()
         self.add_option(settingkey.CHAIN_LOGIC)
         self.add_option(settingkey.CHAIN_LOGIC_LENGTH)
         self.add_option(settingkey.MAX_CHAIN_LOGIC_LENGTH)
@@ -56,7 +57,7 @@ class ItemPlacementMenu(KH2Submenu):
 
         settings.observe(settingkey.ENABLE_PROMISE_CHARM, self.promise_charm_enabled)
         settings.observe(settingkey.CHAIN_LOGIC, self.chain_logic)
-        settings.observe(settingkey.OBJECTIVE_RANDO, self.objective_rando)
+        settings.observe(settingkey.FINAL_DOOR_REQUIREMENT, self._final_door_requirement_changed)
 
     def promise_charm_enabled(self):
         promise_charm_toggle = self.settings.get(settingkey.ENABLE_PROMISE_CHARM)
@@ -69,12 +70,13 @@ class ItemPlacementMenu(KH2Submenu):
         self.set_option_visibility(settingkey.CHAIN_LOGIC_LENGTH, enabled)
         self.set_option_visibility(settingkey.MAX_CHAIN_LOGIC_LENGTH, enabled)
 
-    def objective_rando(self):
-        enabled = self.settings.get(settingkey.OBJECTIVE_RANDO)
-        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE, enabled)
-        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED, enabled)
-        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_PROGRESS, enabled)
-        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_BOSSES, enabled)
+    def _final_door_requirement_changed(self):
+        requirement = FinalDoorRequirement[self.settings.get(settingkey.FINAL_DOOR_REQUIREMENT)]
+        objectives_enabled = requirement is FinalDoorRequirement.OBJECTIVES
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE, objectives_enabled)
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED, objectives_enabled)
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_PROGRESS, objectives_enabled)
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_BOSSES, objectives_enabled)
 
     def disable_widgets(self):
         self.disable_signal = True
