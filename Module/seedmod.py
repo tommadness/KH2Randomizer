@@ -207,9 +207,9 @@ class SeedModBuilder:
             en=f"An Objective Completion Mark.\nAwarded to those who complete given tasks.\n{num_objectives_needed} of these are required to open the door...",
             jp=f"An Objective Completion Mark.\nAwarded to those who complete given tasks.\n{num_objectives_needed} of these are required to open the door...", # TODO make actual text for this
         )
-        self.messages.add_message(
+        self.journal_txt.add_message(
             14260,
-            en="Objective List"
+            en=convert_string_to_unicode("Objective List")
         )        
         listText = ''
         counter = 1
