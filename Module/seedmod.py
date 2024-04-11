@@ -227,6 +227,7 @@ class SeedModBuilder:
         )
         
         mark_image_source = _relative_mod_file("objectives/completionmark.dds")
+        emu_mark_image_source = _relative_mod_file("objectives/completionmark.imd")
         report_addition_bin = _relative_mod_file("objectives/ansem_modified.bin")
 
         self.mod_yml.add_asset({
@@ -236,6 +237,16 @@ class SeedModBuilder:
             "source": [
                 {
                     "name": mark_image_source,
+                }
+            ]
+        })
+        self.mod_yml.add_asset({
+            "name": "itempic/item-226.imd",
+            "method": "copy",
+            "platform": "ps2",
+            "source": [
+                {
+                    "name": emu_mark_image_source,
                 }
             ]
         })
@@ -262,6 +273,9 @@ class SeedModBuilder:
         })
         self.out_zip.write(
             resource_path("static/objectives/completionmark.dds"), mark_image_source
+        )
+        self.out_zip.write(
+            resource_path("static/objectives/completionmark.imd"), emu_mark_image_source
         )
         self.out_zip.write(
             resource_path("static/objectives/ansem_modified.bin"), report_addition_bin
