@@ -1321,7 +1321,11 @@ class Hints:
         hint_data = common_tracker_data.to_dict()
         hint_data["level_data"] = world_items.level_checks
         if settings.objective_rando:
+            objective_locations = [o.Location for o in randomizer.objectives]
+            # find these locations in location_item_tuples
+            objective_tuples = [{"category":l_i[0].LocationCategory, "location_id":l_i[0].LocationId} for l_i in location_item_tuples if l_i[0].Description in objective_locations]
             hint_data["objective_list"] = [o.Name for o in randomizer.objectives]
+            hint_data["objective_locations"] = objective_tuples
         if settings.hintsType == HintType.SHANANAS:
             hint_data["world"] = world_items.world_to_item_ids()
         elif settings.hintsType == HintType.JSMARTEE:
