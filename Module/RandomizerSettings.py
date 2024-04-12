@@ -535,14 +535,14 @@ class RandomizerSettings:
         self.revealComplete: bool = ui_settings.get(settingkey.REVEAL_COMPLETE)
         self.revealMode: str = ui_settings.get(settingkey.REPORTS_REVEAL)
         self.journal_hints: str = ui_settings.get(settingkey.JOURNAL_HINTS_ABILITIES)
-        self.emblems = False
-        self.num_emblems_needed = 7
-        self.max_emblems_available = 13
 
         final_door_requirement = FinalDoorRequirement[ui_settings.get(settingkey.FINAL_DOOR_REQUIREMENT)]
         self.objective_rando: bool = final_door_requirement is FinalDoorRequirement.OBJECTIVES
+        self.emblems: bool = final_door_requirement is FinalDoorRequirement.EMBLEMS
         self.num_objectives_needed = ui_settings.get(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED)
         self.max_objectives_available = ui_settings.get(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
+        self.num_emblems_needed = ui_settings.get(settingkey.EMBLEM_NUM_REQUIRED)
+        self.max_emblems_available = ui_settings.get(settingkey.EMBLEM_NUM_AVAILABLE)
         self.available_objectives = ObjectiveList.get_full_objective_list()
         if not ui_settings.get(settingkey.OBJECTIVE_RANDO_BOSSES):
             self.available_objectives = [o for o in self.available_objectives if o.Type != ObjectiveList.ObjectiveType.BOSS]
@@ -755,6 +755,10 @@ class RandomizerSettings:
         if self.objective_rando and self.max_objectives_available < self.num_objectives_needed:
             raise SettingsException(
                 f"Can't set required objectives {self.num_objectives_needed} less than objectives in the pool {self.max_objectives_available}"
+            )
+        if self.emblems and self.max_emblems_available < self.num_emblems_needed:
+            raise SettingsException(
+                f"Can't set required emblems {self.num_emblems_needed} less than emblems in the pool {self.max_emblems_available}"
             )
 
 

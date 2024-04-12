@@ -15,6 +15,7 @@ NullItem = MiscItem(0, "", itemType.SYNTH)
 TornPages = MiscItem(32, "Torn Pages", itemType.TORN_PAGE)
 MunnyPouchOlette = MiscItem(362, "Munny Pouch", itemType.MUNNY_POUCH)
 ObjectiveItem = MiscItem(363, "Objective Completion Item", itemType.OBJECTIVE) # previously crystal orb
+EmblemItem = MiscItem(363, "Emblem", itemType.OBJECTIVE) # previously crystal orb
 SeifersTrophy = MiscItem(364, "Seifer's Trophy", itemType.KEYITEM)
 Poster = MiscItem(366, "Poster", itemType.KEYITEM)
 OlympusStone = MiscItem(370, "Olympus Stone", itemType.OCSTONE)

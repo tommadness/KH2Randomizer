@@ -503,7 +503,7 @@ class Items:
     
     @staticmethod
     def emblemItem() -> KH2Item:
-        return KH2Item(misc.ObjectiveItem)
+        return KH2Item(misc.EmblemItem)
 
     @staticmethod
     def weaponslot_id_to_keyblade_item(location_id: int) -> Optional[Keyblade]:

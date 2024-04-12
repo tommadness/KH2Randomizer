@@ -17,6 +17,8 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
         self.add_option(settingkey.OBJECTIVE_RANDO_PROGRESS)
         self.add_option(settingkey.OBJECTIVE_RANDO_BOSSES)
+        self.add_option(settingkey.EMBLEM_NUM_REQUIRED)
+        self.add_option(settingkey.EMBLEM_NUM_AVAILABLE)
         self.end_group("Final Door Requirement")
         self.start_group()
         self.add_option(settingkey.ACCESSIBILITY)
@@ -73,10 +75,13 @@ class ItemPlacementMenu(KH2Submenu):
     def _final_door_requirement_changed(self):
         requirement = FinalDoorRequirement[self.settings.get(settingkey.FINAL_DOOR_REQUIREMENT)]
         objectives_enabled = requirement is FinalDoorRequirement.OBJECTIVES
+        emblems_enabled = requirement is FinalDoorRequirement.EMBLEMS
         self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE, objectives_enabled)
         self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED, objectives_enabled)
         self.set_option_visibility(settingkey.OBJECTIVE_RANDO_PROGRESS, objectives_enabled)
         self.set_option_visibility(settingkey.OBJECTIVE_RANDO_BOSSES, objectives_enabled)
+        self.set_option_visibility(settingkey.EMBLEM_NUM_AVAILABLE, emblems_enabled)
+        self.set_option_visibility(settingkey.EMBLEM_NUM_REQUIRED, emblems_enabled)
 
     def disable_widgets(self):
         self.disable_signal = True

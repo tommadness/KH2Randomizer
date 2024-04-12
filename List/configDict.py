@@ -249,3 +249,4 @@ class StartingVisitMode(str, Enum):
 class FinalDoorRequirement(str, Enum):
     THREE_PROOF = "Three Proofs"
     OBJECTIVES = "Objectives"
+    EMBLEMS = "Emblems"

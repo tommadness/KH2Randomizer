@@ -1534,7 +1534,9 @@ _all_settings = [
         
         Three Proofs - Obtain the three Proofs (Connection, Nonexistence, and Peace).
         
-        Objectives - Complete a set of objectives.
+        Objectives - Complete a set of objectives from a given list.
+
+        Emblems - Collect a certain number of emblems that have been randomly assigned.
         """,
     ),
     IntSpinner(
@@ -1558,6 +1560,28 @@ _all_settings = [
         shared=True,
         default=7,
         tooltip="How many objectives should be required to enter the final door.",
+    ),
+    IntSpinner(
+        name=settingkey.EMBLEM_NUM_AVAILABLE,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label="Emblems Available",
+        minimum=4,
+        maximum=75,  # theoretical max
+        step=1,
+        shared=True,
+        default=30,
+        tooltip="How many emblems should be placed in the seed.",
+    ),
+    IntSpinner(
+        name=settingkey.EMBLEM_NUM_REQUIRED,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label="Emblems Required",
+        minimum=4,
+        maximum=75,  # theoretical max
+        step=1,
+        shared=True,
+        default=20,
+        tooltip="How many emblems should be required to enter the final door.",
     ),
     Toggle(
         name=settingkey.OBJECTIVE_RANDO_PROGRESS,

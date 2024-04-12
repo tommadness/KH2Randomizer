@@ -30,6 +30,7 @@ class CommonTrackerInfo:
         self.important_check_list = settings.important_checks
         self.spoiler_reveal_list = settings.spoiler_reveal_checks
         self.objective_mode = settings.objective_rando
+        self.emblem_mode = settings.emblems
         # remove any items that aren't enabled by settings
         if settings.promiseCharm:
             tracker_includes.append("PromiseCharm")

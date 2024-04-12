@@ -648,6 +648,10 @@ class Randomizer:
         item_pool.extend(vanilla_abilities)
         item_pool.extend(randomizable_abilities)
         item_pool.extend(valid_junk)
+        if settings.emblems:
+            item_pool.extend([Items.emblemItem() for _ in range(settings.max_emblems_available)])
+            # remove proof of nonexistence
+            item_pool = [i for i in item_pool if i.Id != proof.ProofOfNonexistence.id]
         random.shuffle(item_pool)
 
         # vanilla location item assignment

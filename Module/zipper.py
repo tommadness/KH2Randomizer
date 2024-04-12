@@ -386,6 +386,8 @@ class SeedZip:
             self.create_shop_rando_assets(mod)
             if settings.objective_rando:
                 self.create_objective_rando_assets(mod,settings.num_objectives_needed, self.randomizer.objectives)
+            if settings.emblems:
+                self.create_emblem_rando_assets(mod,settings.num_emblems_needed)
             self.create_chest_visual_assets(mod)
             battle_level_spoiler = self.create_battle_level_rando_assets(mod)
             journal_hints_spoiler: dict[str, str] = {}
@@ -843,6 +845,25 @@ class SeedZip:
             name=47883,
             description=47884,
             shop_buy=num_objectives_needed,
+            shop_sell=0,
+            command=0,
+            slot=189,
+            picture=226,
+            icon_1=0,
+            icon_2=2,
+        )
+    def create_emblem_rando_assets(self, mod: SeedModBuilder, num_emblems_needed: int):
+        mod.add_emblem_randomization_mods(num_emblems_needed)
+        mod.items.add_item(
+            item_id=363,
+            item_type="Recipe",
+            flag_0=0,
+            flag_1=0,
+            rank="C",
+            stat_entry=0,
+            name=47883,
+            description=47884,
+            shop_buy=num_emblems_needed,
             shop_sell=0,
             command=0,
             slot=189,

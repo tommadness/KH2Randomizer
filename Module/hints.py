@@ -1320,6 +1320,9 @@ class Hints:
         ]
         hint_data = common_tracker_data.to_dict()
         hint_data["level_data"] = world_items.level_checks
+        if settings.emblems:
+            hint_data["emblems"] = {"max_emblems_available":settings.max_emblems_available,"num_emblems_needed":settings.num_emblems_needed}
+
         if settings.objective_rando:
             objective_locations = [o.Location for o in randomizer.objectives]
             # find these locations in location_item_tuples

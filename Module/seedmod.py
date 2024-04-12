@@ -190,6 +190,46 @@ class SeedModBuilder:
                 },
             ]
         )
+    def add_emblem_randomization_mods(self, num_emblems_needed):
+        self.messages.add_message(
+            15115,
+            en="Lucky Emblem",
+            jp="Lucky Emblem", # TODO make actual text for this
+        )
+        self.messages.add_message(
+            15116,
+            en=f"A Lucky Emblem.\nThe King left these for you to find.\n{num_emblems_needed} of these are required to open the door...",
+            jp=f"A Lucky Emblem.\nThe King left these for you to find.\n{num_emblems_needed} of these are required to open the door...", # TODO make actual text for this
+        )
+        mark_image_source = _relative_mod_file("objectives/completionmark.dds")
+        emu_mark_image_source = _relative_mod_file("objectives/completionmark.imd")
+        self.mod_yml.add_asset({
+            "name": "remastered/itempic/item-226.imd/-0.dds",
+            "method": "copy",
+            "platform": "pc",
+            "source": [
+                {
+                    "name": mark_image_source,
+                }
+            ]
+        })
+        self.mod_yml.add_asset({
+            "name": "itempic/item-226.imd",
+            "method": "copy",
+            "platform": "ps2",
+            "source": [
+                {
+                    "name": emu_mark_image_source,
+                }
+            ]
+        })
+        self.out_zip.write(
+            resource_path("static/objectives/completionmark.dds"), mark_image_source
+        )
+        self.out_zip.write(
+            resource_path("static/objectives/completionmark.imd"), emu_mark_image_source
+        )
+
 
     def add_objective_randomization_mods(self, num_objectives_needed, objective_list):
         def convert_string_to_unicode(string: str, newlines: int = 0):
