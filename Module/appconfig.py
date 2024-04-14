@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 from typing import Optional
 
+import yaml
+
 AUTOSAVE_FOLDER = "auto-save"
 PRESET_FOLDER = "presets"
 
@@ -75,3 +77,23 @@ def read_custom_visuals_path() -> Optional[Path]:
 
 def write_custom_visuals_path(selected_directory):
     update_app_config('custom_visuals_folder', selected_directory)
+
+
+def extracted_data_path() -> Optional[Path]:
+    """Returns the path to extracted game data."""
+    openkh_path = read_openkh_path()
+    if openkh_path is None:
+        return None
+
+    mods_manager_yml_path = openkh_path / "mods-manager.yml"
+    if not mods_manager_yml_path.is_file():
+        return None
+
+    with open(mods_manager_yml_path, encoding="utf-8") as mod_manager_file:
+        mod_manager_yaml = yaml.safe_load(mod_manager_file)
+        game_data_path = mod_manager_yaml.get("gameDataPath", "to-nowhere")
+        extracted_data = Path(game_data_path)
+        if extracted_data.is_dir():
+            return extracted_data
+        else:
+            return None

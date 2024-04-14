@@ -10,6 +10,7 @@ from Class.exceptions import RandomizerExceptions
 from Class.seedSettings import SeedSettings, ExtraConfigurationData
 from Module import appconfig
 from Module.RandomizerSettings import RandomizerSettings
+from Module.cosmeticsmods.keyblade import KeybladeRandomizer
 from Module.generate import generateSeed, generateMultiWorldSeed
 from Module.zipper import BossEnemyOnlyZip, CosmeticsOnlyZip, SeedZipResult
 
@@ -383,3 +384,116 @@ class BossEnemyZipWorker:
                 outfile_name += ".zip"
             with open(outfile_name, "wb") as out_zip:
                 out_zip.write(zip_file.getbuffer())
+
+
+class ExtractVanillaKeybladesThread(QThread):
+    finished = Signal(object)
+    failed = Signal(Exception)
+
+    def run(self):
+        try:
+            result = KeybladeRandomizer.extract_game_models()
+            self.finished.emit(result)
+        except Exception as e:
+            self.failed.emit(e)
+
+
+class ExtractVanillaKeybladesWorker:
+    def __init__(self, parent: QWidget):
+        self.parent = parent
+        self.progress: Optional[QProgressDialog] = None
+        self.thread: Optional[ExtractVanillaKeybladesThread] = None
+
+    def extract_keyblades(self):
+        self.progress = QProgressDialog("Extracting vanilla keyblades", "Cancel", 0, 0, None)
+        self.progress.setWindowTitle("Please wait...")
+        self.progress.setModal(True)
+        self.progress.show()
+
+        self.thread = ExtractVanillaKeybladesThread()
+        self.thread.finished.connect(self._handle_result)
+        self.thread.failed.connect(self._handle_failure)
+        self.progress.canceled.connect(lambda: self.thread.terminate())
+        self.thread.start()
+
+    def _handle_result(self, result: Path):
+        self.progress.close()
+        self.progress = None
+
+        message = QMessageBox(text=f"Extracted keyblades to [{str(result.absolute())}]")
+        message.setWindowTitle("Keyblade Extraction")
+        message.exec()
+
+        self.thread = None
+
+    def _handle_failure(self, failure: Exception):
+        if self.progress is not None:
+            self.progress.close()
+        self.progress = None
+
+        message = QMessageBox(text=str(repr(failure)))
+        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        message.setWindowTitle("Keyblade Extraction Error")
+        message.exec()
+
+        self.thread = None
+
+
+class ImportCustomKeybladesThread(QThread):
+    finished = Signal(object)
+    failed = Signal(Exception)
+
+    def __init__(self, keyblade_file_paths: list[str]):
+        super().__init__()
+        self.keyblade_file_paths = keyblade_file_paths
+
+    def run(self):
+        try:
+            count = len(self.keyblade_file_paths)
+            if count > 0:
+                for keyblade_file_path in self.keyblade_file_paths:
+                    KeybladeRandomizer.import_keyblade(keyblade_file_path)
+            self.finished.emit(count)
+        except Exception as e:
+            self.failed.emit(e)
+
+
+class ImportCustomKeybladesWorker:
+    def __init__(self, parent: QWidget):
+        self.parent = parent
+        self.progress: Optional[QProgressDialog] = None
+        self.thread: Optional[ImportCustomKeybladesThread] = None
+
+    def import_keyblades(self, keyblade_file_paths: list[str]):
+        self.progress = QProgressDialog("Importing keyblade(s)", "Cancel", 0, 0, None)
+        self.progress.setWindowTitle("Please wait...")
+        self.progress.setModal(True)
+        self.progress.show()
+
+        self.thread = ImportCustomKeybladesThread(keyblade_file_paths)
+        self.thread.finished.connect(self._handle_result)
+        self.thread.failed.connect(self._handle_failure)
+        self.progress.canceled.connect(lambda: self.thread.terminate())
+        self.thread.start()
+
+    def _handle_result(self, result: int):
+        self.progress.close()
+        self.progress = None
+
+        message = QMessageBox(text=f"Imported {result} keyblade(s).")
+        message.setWindowTitle("Keyblade Import")
+        message.exec()
+
+        self.thread = None
+
+    def _handle_failure(self, failure: Exception):
+        if self.progress is not None:
+            self.progress.close()
+        self.progress = None
+
+        message = QMessageBox(text=str(repr(failure)))
+        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        message.setWindowTitle("Keyblade Import Error")
+        message.exec()
+
+        self.thread = None

@@ -2,9 +2,6 @@ import json
 import os
 import random
 from pathlib import Path
-from typing import Optional
-
-import yaml
 
 from Class import settingkey
 from Class.openkhmod import Asset
@@ -14,6 +11,7 @@ from Module.cosmeticsmods import music
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
 from Module.cosmeticsmods.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.cosmeticsmods.itempic import ItempicRandomizer
+from Module.cosmeticsmods.keyblade import KeybladeRandomizer
 
 
 class CustomCosmetics:
@@ -36,7 +34,7 @@ class CustomCosmetics:
     def add_custom_executable(self, path_str: str):
         self.external_executables.append(path_str)
 
-    def remove_at_index(self, index: int):
+    def remove_executable_at_index(self, index: int):
         del self.external_executables[index]
 
     def write_file(self):
@@ -46,31 +44,11 @@ class CustomCosmetics:
             }
             json.dump(raw_json, config_file, indent=4)
 
-    def collect_custom_files(self) -> list[str]:
+    def collect_custom_executable_files(self) -> list[str]:
         return [custom_file for custom_file in self.external_executables]
 
 
 class CosmeticsMod:
-
-    @staticmethod
-    def extracted_data_path() -> Optional[Path]:
-        """Returns the path to extracted game data"""
-        openkh_path = appconfig.read_openkh_path()
-        if openkh_path is None:
-            return None
-
-        mods_manager_yml_path = openkh_path / 'mods-manager.yml'
-        if not mods_manager_yml_path.is_file():
-            return None
-
-        with open(mods_manager_yml_path, encoding='utf-8') as mod_manager_file:
-            mod_manager_yaml = yaml.safe_load(mod_manager_file)
-            game_data_path = mod_manager_yaml.get('gameDataPath', 'to-nowhere')
-            extracted_data_path = Path(game_data_path)
-            if extracted_data_path.is_dir():
-                return extracted_data_path
-            else:
-                return None
 
     @staticmethod
     def bootstrap_cosmetics_files():
@@ -109,6 +87,12 @@ class CosmeticsMod:
         return CosmeticsMod._get_music_assets(ui_settings)
 
     @staticmethod
+    def get_keyblade_summary() -> dict[str, int]:
+        vanilla = KeybladeRandomizer.collect_vanilla_keyblades()
+        custom = KeybladeRandomizer.collect_custom_keyblades()
+        return {"In-Game": len(vanilla), "Custom": len(custom)}
+
+    @staticmethod
     def get_music_summary(settings: SeedSettings) -> dict[str, int]:
         music_files = CosmeticsMod._collect_music_files(settings)
 
@@ -143,7 +127,7 @@ class CosmeticsMod:
                             result[resolved_category] = []
                         result[resolved_category] += category_songs
 
-        extracted_data_path = CosmeticsMod.extracted_data_path()
+        extracted_data_path = appconfig.extracted_data_path()
         if extracted_data_path is not None:
             def add_game_song(song_file_path: Path, category: str, song_dmca: bool):
                 if not categorize:
@@ -276,6 +260,18 @@ class CosmeticsMod:
             itempic_categories.extend(itempic.types)
         for category in set(itempic_categories):
             (item_pictures_path / category.lower()).mkdir(exist_ok=True)
+
+    @staticmethod
+    def randomize_keyblades(seed_settings: SeedSettings) -> tuple[list[Asset], dict[str, str]]:
+        """
+        Randomizes keyblades, returning a list of assets to be added to the seed mod and a dictionary of which keyblade
+        was replaced by which replacement.
+        """
+        return KeybladeRandomizer.randomize_keyblades(
+            setting=seed_settings.get(settingkey.KEYBLADE_RANDO),
+            include_effects=seed_settings.get(settingkey.KEYBLADE_RANDO_INCLUDE_EFFECTS),
+            allow_duplicate_replacement=seed_settings.get(settingkey.KEYBLADE_RANDO_ALLOW_DUPLICATES)
+        )
 
     @staticmethod
     def randomize_field2d(seed_settings: SeedSettings) -> list[Asset]:

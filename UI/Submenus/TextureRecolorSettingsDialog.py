@@ -38,7 +38,7 @@ class TextureRecolorSettingsDialog(QDialog):
         self.seed_settings = seed_settings
         self.texture_recolor_settings = TextureRecolorSettings(seed_settings.get(settingkey.TEXTURE_RECOLOR_SETTINGS))
 
-        self.base_path = CosmeticsMod.extracted_data_path() / "kh2"
+        self.base_path = appconfig.extracted_data_path() / "kh2"
         if not self.base_path.is_dir():
             # Really shouldn't be able to get here without something weird going on, just note it and return
             print(f"Could not find extracted data at {self.base_path}")

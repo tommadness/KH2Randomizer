@@ -14,8 +14,7 @@ from numpy import ndarray
 from Class import settingkey
 from Class.openkhmod import Asset
 from Class.seedSettings import SeedSettings
-from Module import version
-from Module.cosmetics import CosmeticsMod
+from Module import version, appconfig
 from Module.cosmeticsmods.image import rgb_to_hsv, hsv_to_rgb
 from Module.resources import resource_path
 
@@ -330,7 +329,7 @@ class TextureRecolorizer:
         if not self.settings.get(settingkey.RECOLOR_TEXTURES):
             return assets
 
-        base_path = CosmeticsMod.extracted_data_path() / "kh2"
+        base_path = appconfig.extracted_data_path() / "kh2"
         if not base_path.is_dir():
             print(f"Could not find extracted data at {base_path} - not recoloring textures")
             return assets

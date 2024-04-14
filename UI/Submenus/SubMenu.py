@@ -90,6 +90,9 @@ class KH2Submenu(QWidget):
             if widget_tooltip != '':
                 label.setToolTip(widget_tooltip)
 
+        if widget.toolTip() == "":
+            widget.setToolTip(label.toolTip())
+
         if self.pending_column:
             layout = QHBoxLayout()
             layout.setContentsMargins(0, 0, 0, 0)
