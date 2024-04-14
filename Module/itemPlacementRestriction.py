@@ -244,6 +244,41 @@ class ItemPlacementHelpers:
 
         return lambda inventory: False
 
+
+    @staticmethod
+    def make_form_lambda_nightmare_no_anti(drive_form: DriveForm, form_level: int) -> RequirementFunction:
+        def max_form_level(inventory: list[int]) -> int:
+            base_count = ItemPlacementHelpers.count_forms(inventory) + 2
+            return base_count
+
+        if drive_form == form.ValorForm:
+            return lambda inventory: (ItemPlacementHelpers.has_valor_form(inventory)
+                                      or ItemPlacementHelpers.has_auto_valor(inventory)) \
+                                     and ItemPlacementHelpers.can_level_valor(inventory) \
+                                     and max_form_level(inventory) >= form_level
+        if drive_form == form.WisdomForm:
+            return lambda inventory: (ItemPlacementHelpers.has_wisdom_form(inventory)
+                                      or ItemPlacementHelpers.has_auto_wisdom(inventory)) \
+                                     and ItemPlacementHelpers.can_level_wisdom(inventory) \
+                                     and max_form_level(inventory) >= form_level
+        if drive_form == form.LimitForm:
+            return lambda inventory: (ItemPlacementHelpers.has_limit_form(inventory)
+                                      or ItemPlacementHelpers.has_auto_limit(inventory)) \
+                                     and ItemPlacementHelpers.can_level_limit(inventory) \
+                                     and max_form_level(inventory) >= form_level
+        if drive_form == form.MasterForm:
+            return lambda inventory: (ItemPlacementHelpers.has_master_form(inventory)
+                                      or ItemPlacementHelpers.has_auto_master(inventory)) \
+                                     and ItemPlacementHelpers.can_level_master(inventory) \
+                                     and max_form_level(inventory) >= form_level
+        if drive_form == form.FinalForm:
+            return lambda inventory: (ItemPlacementHelpers.has_final_form(inventory)
+                                      or ItemPlacementHelpers.has_auto_final(inventory)) \
+                                     and ItemPlacementHelpers.can_level_final(inventory) \
+                                     and max_form_level(inventory) >= form_level
+
+        return lambda inventory: False
+
     @staticmethod
     def make_form_lambda_nightmare_no_final(drive_form: DriveForm, form_level: int) -> RequirementFunction:
         def final_possible_but_not_obtained(_: list[int]) -> bool:

@@ -110,6 +110,8 @@ def make_graph(graph: LocationGraphBuilder):
     extended_placement_logic = settings.extended_placement_logic
     if extended_placement_logic and settings.disable_final_form:
         form_helper = ItemPlacementHelpers.make_form_lambda_nightmare_no_final
+    elif extended_placement_logic and settings.disable_antiform:
+        form_helper = ItemPlacementHelpers.make_form_lambda_nightmare_no_anti
     elif extended_placement_logic:
         form_helper = ItemPlacementHelpers.make_form_lambda_nightmare
 

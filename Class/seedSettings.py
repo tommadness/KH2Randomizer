@@ -14,6 +14,7 @@ from Class.exceptions import SettingsException
 from List import configDict
 from List.ItemList import Items
 from List.configDict import (
+    DisableFinalOption,
     HintType,
     expCurve,
     itemBias,
@@ -2359,16 +2360,25 @@ _all_settings = [
         default=False,
         tooltip="Allows Roxas to use magic, Sora's movement abilities, and Trinity Limit in Simulated Twilight Town.",
     ),
-    Toggle(
+    SingleSelect(
         name=settingkey.DISABLE_FINAL_FORM,
         group=SettingGroup.SEED_MODIFIERS,
-        ui_label="Disable Final Form",
+        ui_label="Final Form Restrictions",
+        choices={
+            DisableFinalOption.DEFAULT: "None",
+            DisableFinalOption.NO_ANTIFORM: "No Random Chance",
+            DisableFinalOption.NO_FINAL: "No Final Form",
+        },
         shared=True,
-        default=False,
+        default=DisableFinalOption.DEFAULT,
         tooltip="""
-        Disables going into Final Form in any way.
-        Final Form can still be found to let other forms level up and for Final Genie.
-        All items from Final Form are replaced with junk.
+        Restrictions on how Final Form works
+        
+        None - The default setting. No changes are done to how final works in the rando.
+        
+        No Random Chance - Turns off random anti-form, which means it's not possible to force Final Form without Light & Darkness
+        
+        No Final Form - Disables going into Final Form in any way. Final Form can still be obtained to increase max form levels, but no checks will be found on final form.
         """,
     ),
     Toggle(

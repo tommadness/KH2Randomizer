@@ -212,6 +212,10 @@ class SoftlockPreventionOption(str, Enum):
     REVERSE = "reverse"
     BOTH = "both"
 
+class DisableFinalOption(str, Enum):
+    DEFAULT  = "default"
+    NO_ANTIFORM = "no_antiform"
+    NO_FINAL = "no_final"
 
 class BattleLevelOption(str, Enum):
     NORMAL = "Normal"
