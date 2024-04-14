@@ -370,6 +370,8 @@ class SeedZip:
             self.create_synth_assets(mod)
             if settings.as_data_split:
                 mod.write_as_data_split_assets()
+            if settings.disable_antiform:
+                self.disable_antiform(mod)
             if settings.skip_carpet_escape:
                 mod.write_skip_carpet_escape_assets()
             if settings.pr_map_skip:
@@ -1365,6 +1367,9 @@ class SeedZip:
                 general_resistance=100,
                 unknown=0,
             )
+
+    def disable_antiform(self, mod: SeedModBuilder):
+        mod.form_levels.turn_off_anti()
 
     def assign_form_levels(self, mod: SeedModBuilder):
         form_dict = {

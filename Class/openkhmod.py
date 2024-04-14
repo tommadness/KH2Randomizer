@@ -129,6 +129,36 @@ class FormLevels:
             }
         )
 
+    def turn_off_anti(self):
+        self.data["Antiform"] = []
+        self.data["Antiform"].append(
+            {
+                "FormId": 6,
+                "FormLevel": 1,
+                "Experience": 0,
+                "Ability": 0,
+                "GrowthAbilityLevel": 0,
+            }
+        )
+        self.data["Antiform"].append(
+            {
+                "FormId": 6,
+                "FormLevel": 2,
+                "Experience": 0,
+                "Ability": 0,
+                "GrowthAbilityLevel": 0,
+            }
+        )
+        self.data["Antiform"].append(
+            {
+                "FormId": 6,
+                "FormLevel": 3,
+                "Experience": 0,
+                "Ability": 0,
+                "GrowthAbilityLevel": 0,
+            }
+        )
+
     def write_to_zip_file(self, zip_file: ZipFile):
         write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=False)
 

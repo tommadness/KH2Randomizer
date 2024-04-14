@@ -722,6 +722,7 @@ class HintUtils:
     ) -> dict[int, dict[str, Any]]:
         # output all the data as sequential reports
         report_assignments = {}
+        random.shuffle(jsmartee_data)
         for chosen_report, hint_data in enumerate(jsmartee_data):
             if chosen_report < 13:
                 location = world_items.report_information[chosen_report + 1]["FoundIn"]
@@ -770,9 +771,12 @@ class HintUtils:
         for _ in range(50):
             report_assignments = {}
             report_numbers = list(range(1, 14))
+            # shuffle first 13 reports
             random.shuffle(report_numbers)
             if progression_hints:
                 report_numbers = report_numbers + list(range(14, len(all_data) + 1))
+                # make sure all worlds with no items are last
+                all_data = [p for p in all_data if p.num_items > 0] + [p for p in all_data if p.num_items == 0]
             for index, report_number in enumerate(report_numbers):
                 if index < 13:
                     location = world_items.report_information[report_number]["FoundIn"]
@@ -798,10 +802,15 @@ class HintUtils:
     ) -> dict[int, dict[str, Any]]:
         worlds_to_hint = copy.deepcopy(hintable_worlds)
         if tracker_data.progression_settings is not None:
-            # report locations don't matter
+            # report locations don't matter, but we'll populate the report locations anyway
             data = {}
+            random.shuffle(worlds_to_hint)
             for index, w in enumerate(worlds_to_hint):
-                data[index + 1] = {"World": w, "Location": ""}
+                if index < 13:
+                    location = world_items.report_information[index + 1]["FoundIn"]
+                else:
+                    location = ""
+                data[index + 1] = {"World": w, "Location": location}
             return data
 
         for _ in range(50):
@@ -815,14 +824,12 @@ class HintUtils:
                 ):
                     data[index + 1] = {
                         "World": w,
-                        "Location": world_items.report_information[index + 1][
-                            "FoundIn"
-                        ],
+                        "Location": world_items.report_information[index + 1]["FoundIn"],
                     }
             if len(data) == 13:
                 return data
 
-        raise HintException("Can't find valid Jsmartee hint assignment")
+        raise HintException("Can't find valid spoiler hint assignment")
 
     @staticmethod
     def location_hint_user_friendly_text(location: locationType) -> str:

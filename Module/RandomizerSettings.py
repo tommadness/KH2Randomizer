@@ -436,6 +436,7 @@ class RandomizerSettings:
         self.roxas_abilities_enabled: bool = ui_settings.get(
             settingkey.ROXAS_ABILITIES_ENABLED
         )
+        self.disable_antiform: bool = False
         self.disable_final_form: bool = ui_settings.get(settingkey.DISABLE_FINAL_FORM)
         self.block_cor_skip: bool = ui_settings.get(settingkey.BLOCK_COR_SKIP)
         self.block_shan_yu_skip: bool = ui_settings.get(settingkey.BLOCK_SHAN_YU_SKIP)

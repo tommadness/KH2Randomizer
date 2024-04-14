@@ -1331,6 +1331,10 @@ class Hints:
             hint_data["objective_locations"] = objective_tuples
         if settings.hintsType == HintType.SHANANAS:
             hint_data["world"] = world_items.world_to_item_ids()
+            if common_tracker_data.progression_settings is not None:
+                world_list = list(hint_data["world"].keys())
+                random.shuffle(world_list)
+                hint_data["world_order"] = world_list
         elif settings.hintsType == HintType.JSMARTEE:
             jsmartee_data = []
             for world in hintable_worlds:
@@ -1345,6 +1349,10 @@ class Hints:
                 )
         elif settings.hintsType == HintType.POINTS:
             hint_data["world"] = world_items.world_to_item_ids()
+            if common_tracker_data.progression_settings is not None:
+                world_list = list(hint_data["world"].keys())
+                random.shuffle(world_list)
+                hint_data["world_order"] = world_list
             point_data = []
             for world in hintable_worlds:
                 point_data.append(
