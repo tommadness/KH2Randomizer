@@ -25,10 +25,10 @@ from PySide6.QtWidgets import (
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
-from List import configDict
 from Module import appconfig, hashimage, version
 from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
+from Module.cosmeticsmods.keyblade import KeybladeRandomizer
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
 from Module.generate import generateSeed
 from Module.newRandomize import Randomizer
@@ -46,12 +46,13 @@ from UI.Submenus.DevCreateRecolorDialog import DevCreateRecolorDialog
 from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
 from UI.Submenus.ItemPoolMenu import ItemPoolMenu
+from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog
 from UI.Submenus.KeybladeMenu import KeybladeMenu
 from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
-from UI.worker import GenerateSeedWorker
+from UI.worker import GenerateSeedWorker, ExtractVanillaKeybladesWorker, ImportCustomKeybladesWorker
 
 
 class Logger(object):
@@ -401,9 +402,15 @@ class KH2RandomizerApp(QMainWindow):
         self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
         self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
         self.config_menu = QMenu('Configure')
-        self.config_menu.addAction('Find OpenKH Folder (for randomized cosmetics)', self.openkh_folder_getter)
-        self.config_menu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
-        self.config_menu.addAction('Choose Custom Visuals Folder', self.custom_visuals_folder_getter)
+        cosmetic_submenu = QMenu("Cosmetics")
+        cosmetic_submenu.addAction('Find OpenKH Folder', self.openkh_folder_getter)
+        cosmetic_submenu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
+        cosmetic_submenu.addAction('Choose Custom Visuals Folder', self.custom_visuals_folder_getter)
+        cosmetic_submenu.addSeparator()
+        cosmetic_submenu.addAction("Extract Vanilla Keyblades", self._extract_vanilla_keyblades)
+        cosmetic_submenu.addAction("Package External Keyblade", self._show_keyblade_packager)
+        cosmetic_submenu.addAction("Import External Keyblade(s)", self._import_keyblades)
+        self.config_menu.addMenu(cosmetic_submenu)
         if version.debug_mode():
             self.config_menu.addSeparator()
             self.config_menu.addAction("Create Texture Recolor (Dev Only)", self._dev_create_recolor)
@@ -747,7 +754,7 @@ class KH2RandomizerApp(QMainWindow):
             extra_data = ExtraConfigurationData(
                 platform=platform,
                 tourney=False,
-                custom_cosmetics_executables=self.custom_cosmetics.collect_custom_files(),
+                custom_cosmetics_executables=self.custom_cosmetics.collect_custom_executable_files(),
             )
 
             rando_settings = self.make_rando_settings()
@@ -989,7 +996,7 @@ class KH2RandomizerApp(QMainWindow):
         else:
             appconfig.write_openkh_path(selected_directory)
 
-            self.cosmetics_menu.reload_music_widgets()
+            self.cosmetics_menu.reload_cosmetic_widgets()
 
     def custom_music_folder_getter(self):
         save_file_widget = QFileDialog()
@@ -1001,7 +1008,7 @@ class KH2RandomizerApp(QMainWindow):
         CosmeticsMod.bootstrap_custom_music_folder(Path(selected_directory))
         appconfig.write_custom_music_path(selected_directory)
 
-        self.cosmetics_menu.reload_music_widgets()
+        self.cosmetics_menu.reload_cosmetic_widgets()
 
     def custom_visuals_folder_getter(self):
         save_file_widget = QFileDialog()
@@ -1013,7 +1020,7 @@ class KH2RandomizerApp(QMainWindow):
         CosmeticsMod.bootstrap_custom_visuals_folder(Path(selected_directory))
         appconfig.write_custom_visuals_path(selected_directory)
 
-        self.cosmetics_menu.reload_visual_widgets()
+        self.cosmetics_menu.reload_cosmetic_widgets()
 
     def show_luabackend_configuration(self):
         dialog = LuaBackendSetupDialog(self)
@@ -1038,12 +1045,30 @@ Thank you to all contributors, testers, and advocates.<br><br>
         message.setWindowIcon(QIcon(resource_path("Module/icon.png")))
         message.exec()
 
+    def _extract_vanilla_keyblades(self):
+        worker = ExtractVanillaKeybladesWorker(self)
+        worker.extract_keyblades()
+
+    def _show_keyblade_packager(self):
+        KeybladePackageDialog(self, self.settings).exec()
+
+    def _import_keyblades(self):
+        file_dialog = QFileDialog(self)
+        outfile_names, _ = file_dialog.getOpenFileNames(self, filter="Randomizer Keyblades (*.kh2randokb)")
+        if len(outfile_names) > 0:
+            worker = ImportCustomKeybladesWorker(self)
+            worker.import_keyblades(outfile_names)
+        else:
+            msg = QMessageBox(text=f"No keyblades selected.")
+            msg.setWindowTitle("Import Keyblade(s)")
+            msg.exec()
+
     @staticmethod
     def _dev_create_recolor():
         DevCreateRecolorDialog().exec()
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     app = QApplication([])
 
     QtGui.QFontDatabase.addApplicationFont(resource_path('static/KHMenu.otf'))

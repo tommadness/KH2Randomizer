@@ -37,6 +37,7 @@ from Module import knockbackTypes
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
 from Module.cosmeticsmods.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.cosmeticsmods.itempic import ItempicRandomizer
+from Module.cosmeticsmods.keyblade import KeybladeRandomizer
 from Module.knockbackTypes import KnockbackTypes
 from Module.progressionPoints import ProgressionPoints
 
@@ -2803,6 +2804,52 @@ _all_settings = [
         shared=False,
         default={},
     ),
+    SingleSelect(
+        name=settingkey.KEYBLADE_RANDO,
+        group=SettingGroup.COSMETICS,
+        ui_label="Keyblades",
+        standalone_label="Keyblade Cosmetics",
+        choices=KeybladeRandomizer.keyblade_rando_options(),
+        shared=False,
+        default=configDict.VANILLA,
+        tooltip="""
+    Controls the appearance of keyblades.
+
+    Vanilla - Keyblades will have their normal appearance.
+
+    Randomize (in-game only) - Randomizes keyblades among in-game options.
+
+    Randomize (custom only) - Randomizes keyblades using only custom options.
+
+    Randomize (in-game + custom) - Randomizes keyblades using in-game and custom options.
+    """,
+    ),
+    Toggle(
+        name=settingkey.KEYBLADE_RANDO_ALLOW_DUPLICATES,
+        group=SettingGroup.COSMETICS,
+        ui_label="Allow Duplicate Replacements",
+        standalone_label="Allow Duplicate Keyblade Replacements",
+        shared=False,
+        default=False,
+        tooltip="""
+        If enabled, keyblade replacements are used multiple times if there aren't enough replacements for every
+        keyblade.
+
+        If disabled, replacement keyblades are only used once, and some keyblades will stay un-randomized if there
+        aren't enough replacements.
+        """,
+    ),
+    Toggle(
+        name=settingkey.KEYBLADE_RANDO_INCLUDE_EFFECTS,
+        group=SettingGroup.COSMETICS,
+        ui_label="Replace Keyblade Effects (Beta)",
+        shared=False,
+        default=False,
+        tooltip="""
+        If enabled, replaces keyblade effects (such as swing trails and sound effects) in addition to textures.
+        If disabled, only replaces the keyblade textures.
+        """,
+    ),
     Toggle(
         name=settingkey.MUSIC_RANDO_ENABLED_PC,
         group=SettingGroup.COSMETICS,
@@ -2832,6 +2879,7 @@ _all_settings = [
         name=settingkey.MUSIC_RANDO_PC_ALLOW_DUPLICATES,
         group=SettingGroup.COSMETICS,
         ui_label="Allow Duplicate Replacements",
+        standalone_label="Allow Duplicate Music Replacements",
         shared=False,
         default=False,
         tooltip="""

@@ -1536,6 +1536,10 @@ class CosmeticsModAppender:
         self.mod_yml.add_assets(music_assets)
         self._write_music_replacements(music_replacements)
 
+    def write_keyblade_rando_assets(self, keyblade_assets: list[Asset], keyblade_replacements: dict[str, str]):
+        self.mod_yml.add_assets(keyblade_assets)
+        self._write_keyblade_replacements(keyblade_replacements)
+
     def write_rando_themed_texture_assets(self):
         """Adds assets and files to the mod for 'Add Randomizer-Themed Textures'."""
         goa_computer_source_name = _relative_mod_file("textures/goa/randomizer-themed-computer.dds")
@@ -1596,6 +1600,13 @@ class CosmeticsModAppender:
             resource_path("static/textures/final-arena/randomizer-logo.dds"),
             final_arena_logo_source_name,
         )
+
+    def _write_keyblade_replacements(self, replacements: dict[str, str]):
+        if len(replacements) > 0:
+            keyblade_replacements_string = ""
+            for original, replacement in replacements.items():
+                keyblade_replacements_string += f"[{original}] was replaced by [{replacement}]\n"
+            self.out_zip.writestr("keyblade-replacement-list.txt", keyblade_replacements_string)
 
     def _write_music_replacements(self, replacements: dict[str, str]):
         if len(replacements) > 0:

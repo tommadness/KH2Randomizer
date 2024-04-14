@@ -120,6 +120,9 @@ def _add_cosmetics(out_zip: ZipFile, mod_yml: ModYml, settings: SeedSettings):
     mod_yml.add_assets(CosmeticsMod.randomize_itempics(settings))
     mod_yml.add_assets(CosmeticsMod.randomize_end_screen(settings))
 
+    keyblade_assets, keyblade_replacements = CosmeticsMod.randomize_keyblades(settings)
+    appender.write_keyblade_rando_assets(keyblade_assets, keyblade_replacements)
+
     music_assets, music_replacements = CosmeticsMod.randomize_music(settings)
     appender.write_music_rando_assets(music_assets, music_replacements)
 
