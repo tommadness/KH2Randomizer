@@ -593,7 +593,7 @@ class RandomizerSettings:
             self.tracker_includes.append("objectives")
         if self.progression_hints:
             self.tracker_includes.append("ProgressionHints")
-        if self.vanilla_level_one:
+        if self.vanilla_level_one or locationType.Level in self.disabledLocations:
             self.tracker_includes.append("Level1Mode")
         self.tracker_includes.append(level_setting)
         if self.roxas_abilities_enabled:
