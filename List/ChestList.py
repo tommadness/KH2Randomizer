@@ -464,7 +464,7 @@ def chest_visual_id(location_types: list[locationType], item_type: itemType) -> 
         chest_type_id += 6
     elif item_type == itemType.SUMMON:
         chest_type_id += 7
-    elif item_type in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE]:
+    elif item_type in [itemType.STORYUNLOCK, itemType.MANUFACTORYUNLOCK, itemType.TROPHY, itemType.OCSTONE, itemType.OBJECTIVE]:
         chest_type_id += 8
     elif item_type in [itemType.KEYBLADE, itemType.SHIELD, itemType.STAFF]:
         chest_type_id += 9
