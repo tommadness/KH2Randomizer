@@ -16,6 +16,7 @@ from List.ItemList import Items
 from List.configDict import (
     DisableFinalOption,
     HintType,
+    ObjectivePoolOption,
     expCurve,
     itemBias,
     itemRarity,
@@ -545,6 +546,18 @@ _depth_options_text = textwrap.dedent(
 """
 )
 
+_objective_pool_text = textwrap.dedent(
+    """
+
+        All Objectives - All available world progress checkpoints, drive levels, and bosses.
+
+        Bosses Only - Only allows bosses to be in the pool, story and superbosses.
+
+        Everything but Bosses - All world prorgress checkpoints and drive levels.
+
+        Spike Hitlist - Popularized by SpikeVegeta, this list of objectives is all Superbosses (AS's if enabled instead of Data versions), a level 7 drive form, and starry hill as goals.
+"""
+)
 
 def _location_unlock_setting(key: str, location: locationType) -> IntSpinner:
     unlock = storyunlock.story_unlock_for_location(location)
@@ -1585,21 +1598,14 @@ _all_settings = [
         default=20,
         tooltip="How many emblems should be required to enter the final door.",
     ),
-    Toggle(
-        name=settingkey.OBJECTIVE_RANDO_PROGRESS,
+    SingleSelect(
+        name=settingkey.OBJECTIVE_RANDO_POOL,
         group=SettingGroup.ITEM_PLACEMENT,
-        ui_label="Include World Progress Objectives",
+        ui_label="Objective Pool",
+        choices={option.name: option.value for option in list(ObjectivePoolOption)},
         shared=True,
-        default=True,
-        tooltip="If enabled, objectives related to world progress are included in the objective pool.",
-    ),
-    Toggle(
-        name=settingkey.OBJECTIVE_RANDO_BOSSES,
-        group=SettingGroup.ITEM_PLACEMENT,
-        ui_label="Include Boss Objectives",
-        shared=True,
-        default=True,
-        tooltip="If enabled, objectives related to bosses are included in the objective pool.",
+        default=ObjectivePoolOption.ALL.name,
+        tooltip=_objective_pool_text,
     ),
     Toggle(
         name=settingkey.YEET_THE_BEAR,

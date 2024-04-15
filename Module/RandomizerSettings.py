@@ -6,6 +6,8 @@ from Class.exceptions import SettingsException
 from Class.seedSettings import SeedSettings, makeKHBRSettings
 from List import experienceValues, ObjectiveList
 from List.configDict import (
+    DisableFinalOption,
+    ObjectivePoolOption,
     locationType,
     itemType,
     locationDepth,
@@ -436,8 +438,8 @@ class RandomizerSettings:
         self.roxas_abilities_enabled: bool = ui_settings.get(
             settingkey.ROXAS_ABILITIES_ENABLED
         )
-        self.disable_antiform: bool = False
-        self.disable_final_form: bool = ui_settings.get(settingkey.DISABLE_FINAL_FORM)
+        self.disable_antiform: bool = ui_settings.get(settingkey.DISABLE_FINAL_FORM) == DisableFinalOption.NO_ANTIFORM
+        self.disable_final_form: bool = ui_settings.get(settingkey.DISABLE_FINAL_FORM) == DisableFinalOption.NO_FINAL
         self.block_cor_skip: bool = ui_settings.get(settingkey.BLOCK_COR_SKIP)
         self.block_shan_yu_skip: bool = ui_settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
         self.pr_map_skip: bool = ui_settings.get(settingkey.PR_MAP_SKIP)
@@ -545,10 +547,14 @@ class RandomizerSettings:
         self.num_emblems_needed = ui_settings.get(settingkey.EMBLEM_NUM_REQUIRED)
         self.max_emblems_available = ui_settings.get(settingkey.EMBLEM_NUM_AVAILABLE)
         self.available_objectives = ObjectiveList.get_full_objective_list()
-        if not ui_settings.get(settingkey.OBJECTIVE_RANDO_BOSSES):
+
+        self.objective_pool_type = ui_settings.get(settingkey.OBJECTIVE_RANDO_POOL)
+        if self.objective_pool_type == ObjectivePoolOption.BOSSES.name:
             self.available_objectives = [o for o in self.available_objectives if o.Type != ObjectiveList.ObjectiveType.BOSS]
-        if not ui_settings.get(settingkey.OBJECTIVE_RANDO_PROGRESS):
+        elif self.objective_pool_type == ObjectivePoolOption.NOBOSSES.name:
             self.available_objectives = [o for o in self.available_objectives if o.Type != ObjectiveList.ObjectiveType.WORLDPROGRESS and o.Type != ObjectiveList.ObjectiveType.FIGHT]
+        elif self.objective_pool_type == ObjectivePoolOption.HITLIST.name:
+            self.available_objectives = [o for o in self.available_objectives if o.Difficulty==ObjectiveList.ObjectiveDifficulty.LATEST ]
 
         if self.max_objectives_available > len(self.available_objectives):
             raise SettingsException("Not enough enabled objectives for the requested available pool. Turn on more objectives or lower available")

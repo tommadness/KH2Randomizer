@@ -18,6 +18,7 @@ from List.ObjectiveList import KH2Objective
 from List.ItemList import Items
 from List.NewLocationList import Locations
 from List.configDict import (
+    ObjectivePoolOption,
     locationCategory,
     itemRarity,
     itemType,
@@ -689,6 +690,14 @@ class Randomizer:
                 else:
                     # remove duplicates for Datas
                     objective_pool = [o for o in objective_pool if not any(t in o.Name for t in ["Data Vexen","Data Zexion","Data Larxene","Data Lexaeus","Data Marluxia"])]
+            if settings.objective_pool_type==ObjectivePoolOption.HITLIST.name:
+                # remove all but one of the form objectives
+                form_objectives = [o for o in objective_pool if "Level 7" in o.Name]
+                objective_pool = [o for o in objective_pool if "Level 7" not in o.Name] + [random.choice(form_objectives)]
+
+            if len(objective_pool) < settings.max_objectives_available:
+                raise SettingsException("Not enough objective locations available to allow the max number of objectives to be placed.")
+
             # pick a number of objectives
             self.objectives = random.sample(objective_pool,k=settings.max_objectives_available)
             picked_objectives_location_names = [o.Location for o in self.objectives]

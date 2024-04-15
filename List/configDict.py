@@ -225,6 +225,11 @@ class BattleLevelOption(str, Enum):
     RANDOM_MAX_50 = "Random (Max 50)"
     SCALE_TO_50 = "Scale to 50"
 
+class ObjectivePoolOption(str, Enum):
+    ALL = "All Objectives"
+    BOSSES = "Bosses Only"
+    NOBOSSES = "Everything but Bosses"
+    HITLIST = "Spike Hitlist"
 
 class LevelUpStatBonus(str, Enum):
     STRENGTH = "Strength"

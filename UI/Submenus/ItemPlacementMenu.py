@@ -15,8 +15,7 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.FINAL_DOOR_REQUIREMENT)
         self.add_option(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED)
         self.add_option(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
-        self.add_option(settingkey.OBJECTIVE_RANDO_PROGRESS)
-        self.add_option(settingkey.OBJECTIVE_RANDO_BOSSES)
+        self.add_option(settingkey.OBJECTIVE_RANDO_POOL)
         self.add_option(settingkey.EMBLEM_NUM_REQUIRED)
         self.add_option(settingkey.EMBLEM_NUM_AVAILABLE)
         self.end_group("Final Door Requirement")
@@ -78,8 +77,7 @@ class ItemPlacementMenu(KH2Submenu):
         emblems_enabled = requirement is FinalDoorRequirement.EMBLEMS
         self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE, objectives_enabled)
         self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED, objectives_enabled)
-        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_PROGRESS, objectives_enabled)
-        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_BOSSES, objectives_enabled)
+        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_POOL, objectives_enabled)
         self.set_option_visibility(settingkey.EMBLEM_NUM_AVAILABLE, emblems_enabled)
         self.set_option_visibility(settingkey.EMBLEM_NUM_REQUIRED, emblems_enabled)
 
