@@ -22,7 +22,7 @@ from List.configDict import (
     FinalDoorRequirement,
 )
 from List.hashTextEntries import generate_hash_icons
-from List.inventory import report, proof, form, storyunlock
+from List.inventory import report, proof, form, storyunlock, magic, misc
 from List.inventory.keyblade import get_locking_keyblade_names
 from Module.modifier import SeedModifier
 from Module.progressionPoints import ProgressionPoints
@@ -217,6 +217,15 @@ class RandomizerSettings:
         self.starting_inventory_ids: list[int] = [
             int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)
         ]
+
+        self.starting_inventory_ids.extend([magic.Fire.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_FIRE))])
+        self.starting_inventory_ids.extend([magic.Blizzard.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_BLIZZARD))])
+        self.starting_inventory_ids.extend([magic.Thunder.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_THUNDER))])
+        self.starting_inventory_ids.extend([magic.Cure.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_CURE))])
+        self.starting_inventory_ids.extend([magic.Magnet.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_MAGNET))])
+        self.starting_inventory_ids.extend([magic.Reflect.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_REFLECT))])
+        self.starting_inventory_ids.extend([misc.TornPages.id for _ in range(ui_settings.get(settingkey.STARTING_PAGES))])
+
         self.starting_growth_option = StartingMovementOption(
             ui_settings.get(settingkey.STARTING_MOVEMENT)
         )

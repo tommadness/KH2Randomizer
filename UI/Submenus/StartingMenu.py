@@ -19,6 +19,13 @@ class StartingMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.STARTING_INVENTORY)
+        self.add_option(settingkey.STARTING_MAGIC_FIRE)
+        self.add_option(settingkey.STARTING_MAGIC_BLIZZARD)
+        self.add_option(settingkey.STARTING_MAGIC_THUNDER)
+        self.add_option(settingkey.STARTING_MAGIC_CURE)
+        self.add_option(settingkey.STARTING_MAGIC_MAGNET)
+        self.add_option(settingkey.STARTING_MAGIC_REFLECT)
+        self.add_option(settingkey.STARTING_PAGES)
         self.end_group('Starting Inventory')
         self.end_column(stretch_at_end=False)
 

@@ -21,6 +21,7 @@ from List.configDict import (
     itemBias,
     itemRarity,
     itemDifficulty,
+    itemType,
     locationType,
     locationDepth,
     BattleLevelOption,
@@ -574,6 +575,19 @@ def _location_unlock_setting(key: str, location: locationType) -> IntSpinner:
         tooltip=f"Number of visits to unlock in {location}. Visits are unlocked with {unlock.name}.",
     )
 
+def _starting_inventory_setting(key: str, name: str,item_type: itemType, max_number: int) -> IntSpinner:
+    return IntSpinner(
+        name=key,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label=f"{name}",
+        standalone_label=f"Starting {name}s",
+        shared=True,
+        minimum=0,
+        maximum=max_number,
+        step=1,
+        default=0,
+        tooltip=f"Number of Starting {name}s.",
+    )
 
 def _weighted_item_setting(key: str, item_type: str):
     return SingleSelect(
@@ -960,6 +974,13 @@ _all_settings = [
         randomizable=[0, 1, 2, 3],
         tooltip="Start with this number of Ansem Reports already obtained.",
     ),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_FIRE,"Fire",itemType.FIRE,3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_BLIZZARD,"Blizzard",itemType.BLIZZARD,3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_THUNDER,"Thunder",itemType.THUNDER,3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_CURE,"Cure",itemType.CURE,3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_MAGNET,"Magnet",itemType.MAGNET,3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_REFLECT,"Reflect",itemType.REFLECT,3),
+    _starting_inventory_setting(settingkey.STARTING_PAGES,"Torn Page",itemType.TORN_PAGE,5),
     MultiSelect(
         name=settingkey.STARTING_INVENTORY,
         group=SettingGroup.STARTING_INVENTORY,

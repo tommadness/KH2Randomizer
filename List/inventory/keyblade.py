@@ -38,6 +38,19 @@ UltimaWeapon = Keyblade(500, "Ultima Weapon", weaponslot_id=weaponslot.LocationI
 TwoBecomeOne = Keyblade(543, "Two Become One", weaponslot_id=weaponslot.LocationId.TwoBecomeOne)
 WinnersProof = Keyblade(544, "Winner's Proof", weaponslot_id=weaponslot.LocationId.WinnersProof)
 
+def get_all_keyblades() -> list[Keyblade]:
+    return get_locking_keyblades() + [
+        Oblivion, 
+        Pureblood,
+        StarSeeker,
+        GullWing,
+        GuardianSoul,
+        MysteriousAbyss,
+        FatalCrest,
+        Fenrir,
+        UltimaWeapon,
+    ]
+
 
 def get_locking_keyblade_names() -> list[str]:
     return [i.name for i in get_locking_keyblades()]
