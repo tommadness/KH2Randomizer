@@ -214,10 +214,15 @@ class RandomizerSettings:
         self.battle_level_offset: int = ui_settings.get(settingkey.BATTLE_LEVEL_OFFSET)
         self.battle_level_range: int = ui_settings.get(settingkey.BATTLE_LEVEL_RANGE)
 
-        self.starting_inventory_ids: list[int] = [
-            int(value) for value in ui_settings.get(settingkey.STARTING_INVENTORY)
-        ]
-
+        self.starting_inventory_ids: list[int] = []
+        self.starting_inventory_ids.extend([
+            int(value) for value in ui_settings.get(settingkey.STARTING_KEYBLADES)])
+        self.starting_inventory_ids.extend([
+            int(value) for value in ui_settings.get(settingkey.STARTING_DRIVES)])
+        self.starting_inventory_ids.extend([
+            int(value) for value in ui_settings.get(settingkey.STARTING_ITEMS)])
+        self.starting_inventory_ids.extend([
+            int(value) for value in ui_settings.get(settingkey.STARTING_ABILITIES)])
         self.starting_inventory_ids.extend([magic.Fire.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_FIRE))])
         self.starting_inventory_ids.extend([magic.Blizzard.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_BLIZZARD))])
         self.starting_inventory_ids.extend([magic.Thunder.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_THUNDER))])

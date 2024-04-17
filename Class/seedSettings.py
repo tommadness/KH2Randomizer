@@ -34,7 +34,8 @@ from List.configDict import (
     StartingVisitMode,
     FinalDoorRequirement,
 )
-from List.inventory import ability, misc, proof, storyunlock
+from List.inventory import ability, misc, proof, storyunlock, form
+from List.inventory.keyblade import get_all_keyblades
 from Module import encoding
 from Module import knockbackTypes
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
@@ -981,6 +982,66 @@ _all_settings = [
     _starting_inventory_setting(settingkey.STARTING_MAGIC_MAGNET,"Magnet",itemType.MAGNET,3),
     _starting_inventory_setting(settingkey.STARTING_MAGIC_REFLECT,"Reflect",itemType.REFLECT,3),
     _starting_inventory_setting(settingkey.STARTING_PAGES,"Torn Page",itemType.TORN_PAGE,5),
+    MultiSelect(
+        name=settingkey.STARTING_KEYBLADES,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Starting Keyblades",
+        choices={
+            str(k.id):k.name for k in get_all_keyblades()
+        },
+        shared=True,
+        default=[],
+        tooltip="Start with keyblades in your inventory, can be useful for keyblades locking chests.",
+    ),    
+    MultiSelect(
+        name=settingkey.STARTING_DRIVES,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Starting Drive Forms",
+        choices={
+            str(form.ValorForm.id):form.ValorForm.name,
+            str(form.WisdomForm.id):form.WisdomForm.name,
+            str(form.LimitForm.id):form.LimitForm.name,
+            str(form.MasterForm.id):form.MasterForm.name,
+            str(form.FinalForm.id):form.FinalForm.name,
+            str(form.AntiForm.id):form.AntiForm.name,
+        },
+        shared=True,
+        default=[],
+        tooltip="Start with drives in your inventory.",
+    ),
+    MultiSelect(
+        name=settingkey.STARTING_ABILITIES,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Starting Abilities",
+        choices={
+            str(ability.Scan.id): ability.Scan.name,
+            str(ability.NoExperience.id): ability.NoExperience.name,
+            str(ability.AerialRecovery.id): ability.AerialRecovery.name,
+            str(ability.Guard.id): ability.Guard.name,
+            str(ability.FinishingPlus.id): ability.FinishingPlus.name,
+        },
+        shared=True,
+        default=[],
+        tooltip="Start with the selected abilities already obtained.",
+    ),
+    MultiSelect(
+        name=settingkey.STARTING_ITEMS,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Starting Inventory",
+        choices={
+            str(proof.ProofOfConnection.id): proof.ProofOfConnection.name,
+            str(proof.ProofOfNonexistence.id): proof.ProofOfNonexistence.name,
+            str(proof.ProofOfPeace.id): proof.ProofOfPeace.name,
+            # TODO: misc.PromiseCharm.name is "PromiseCharm", need to see if that matters before committing to change
+            str(misc.PromiseCharm.id): "Promise Charm",
+            str(misc.HadesCupTrophy.id): misc.HadesCupTrophy.name,
+            str(misc.OlympusStone.id): misc.OlympusStone.name,
+            str(misc.UnknownDisk.id): misc.UnknownDisk.name,
+        },
+        shared=True,
+        default=[],
+        tooltip="Start with the selected items already obtained.",
+    ),
     MultiSelect(
         name=settingkey.STARTING_INVENTORY,
         group=SettingGroup.STARTING_INVENTORY,
