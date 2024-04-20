@@ -1178,6 +1178,8 @@ class SeedZip:
             Items.getItemList()
             + Items.getActionAbilityList()
             + Items.getSupportAbilityList()
+            + Items.getKeybladeAbilityList()
+            + Items.getLevelAbilityList()
             + [Items.getTT1Jailbreak()]
             + [Items.objectiveReportItem()]
             + [Items.getPromiseCharm()]
@@ -1185,6 +1187,13 @@ class SeedZip:
         reports = [i.Id for i in master_item_list if i.ItemType == itemType.REPORT]
         story_unlocks = [
             i.Id for i in master_item_list if i.ItemType == itemType.STORYUNLOCK
+        ]
+        growth_abilities = [
+            i.Id
+            for i in master_item_list
+            if (
+                i.ItemType == itemType.GROWTH_ABILITY
+            )
         ]
         sora_abilities = [
             i.Id
@@ -1344,6 +1353,13 @@ class SeedZip:
         )
 
         ability_equip = 0x8000 if settings.auto_equip_abilities else 0
+        sora_bdscript_abilities = [
+            i
+            for i in randomizer.starting_item_ids
+            if i in sora_abilities and i not in growth_abilities
+        ]
+
+        mod.add_sora_ability_bdscript(sora_bdscript_abilities,settings.auto_equip_abilities)
 
         sora_starting_items = [
             l.item.Id
@@ -1353,7 +1369,7 @@ class SeedZip:
         ] + [
             i + ability_equip
             for i in randomizer.starting_item_ids
-            if i in sora_abilities
+            if i in sora_abilities and i in growth_abilities
         ]
         pad_items(sora_starting_items)
         mod.player_params.add_player(

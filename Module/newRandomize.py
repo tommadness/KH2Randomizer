@@ -424,7 +424,7 @@ class Randomizer:
         modifier = SeedModifier.ability_list_modifier(settings.ability_pool_option)
         ability_pool: list[KH2Item] = modifier(
             Items.getActionAbilityList(),
-            Items.getSupportAbilityList() + Items.getLevelAbilityList(),
+            Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList(),
         )
 
         # Remove any starting abilities from the pool

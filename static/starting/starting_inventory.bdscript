@@ -1,0 +1,58 @@
+---
+WorkSize: 0
+StackSize: 512
+TempSize: 512
+Triggers:
+- Key: 2
+  Addr: TR2
+Name: give
+
+---
+; codeLabels: 
+; codeRevealer: 
+ section .text
+TR2:
+ ITEM_LIST_GOES_HERE
+D23:
+TXT23:
+ db 'btl_normal',0,0
+TXT29:
+ db 'near',0,0
+TXT32:
+ db 'btl_hard',0,0
+TXT37:
+ db 'btl_super_hard',0,0
+TXT45:
+ db 'btl_attack',0,0
+TXT51:
+ db 'near_wait',0
+TXT56:
+ db 'btl_short',0
+TXT61:
+ db 'rvg_normal',0,0
+TXT67:
+ db 'leave',0
+TXT70:
+ db 'btl_long',0,0
+TXT75:
+ db 'rvg_hard',0,0
+TXT80:
+ db 'rvg_super_hard',0,0
+TXT88:
+ db 'rvg_short',0
+TXT93:
+ db 'rvg_long',0,0
+TXT98:
+ db 'rst_normal',0,0
+TXT104:
+ db 'jump start',0,0
+TXT110:
+ db 'mode_battle',0
+TXT116:
+ db 'rst_hard',0,0
+TXT121:
+ db 'jump end',0,0
+TXT126:
+ db 'rst_super_hard',0,0
+SAMDEBUG:
+ db 'SAMDEBUGSAMDEBUG',0,0

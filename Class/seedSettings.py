@@ -1014,11 +1014,8 @@ _all_settings = [
         group=SettingGroup.STARTING_INVENTORY,
         ui_label="Starting Abilities",
         choices={
-            str(ability.Scan.id): ability.Scan.name,
-            str(ability.NoExperience.id): ability.NoExperience.name,
-            str(ability.AerialRecovery.id): ability.AerialRecovery.name,
-            str(ability.Guard.id): ability.Guard.name,
-            str(ability.FinishingPlus.id): ability.FinishingPlus.name,
+            str(item.Id): item.Name
+            for item in Items.getSupportAbilityList() + Items.getLevelAbilityList() + Items.getActionAbilityList()
         },
         shared=True,
         default=[],
@@ -1641,7 +1638,7 @@ _all_settings = [
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label="Objectives Available",
         minimum=4,
-        maximum=110,  # theoretical max
+        maximum=105,  # theoretical max
         step=1,
         shared=True,
         default=13,
@@ -1918,7 +1915,7 @@ _all_settings = [
         ui_label="Support Keyblade-Eligible Abilities",
         choices={
             str(item.Id): item.Name
-            for item in Items.getSupportAbilityList() + Items.getLevelAbilityList()
+            for item in Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
         },
         shared=True,
         default=list(
@@ -1926,6 +1923,7 @@ _all_settings = [
                 [
                     str(item.Id)
                     for item in Items.getSupportAbilityList()
+                    + Items.getKeybladeAbilityList()
                     + Items.getLevelAbilityList()
                 ]
             )

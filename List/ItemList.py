@@ -21,6 +21,7 @@ class Items:
         full_list.append(Items.getTT1Jailbreak())
         full_list.append(Items.objectiveReportItem())
         full_list.extend(Items.getSupportAbilityList())
+        full_list.extend(Items.getKeybladeAbilityList())
         full_list.extend(Items.getActionAbilityList())
         full_list.extend(Items.getLevelAbilityList())
         full_list.extend(Items.getJunkList(betterJunk=False))
@@ -377,52 +378,57 @@ class Items:
     def getSupportAbilityList() -> list[KH2Item]:
         return [
             KH2Item(ability.Scan),
-            KH2Item(ability.Scan),
             KH2Item(ability.AerialRecovery),
             KH2Item(ability.ComboMaster, itemRarity.RARE),
             KH2Item(ability.ComboPlus),
             KH2Item(ability.ComboPlus),
+            KH2Item(ability.AirComboPlus),
+            KH2Item(ability.AirComboPlus),
+            KH2Item(ability.ReactionBoost),
+            KH2Item(ability.FinishingPlus, itemRarity.RARE),
+            KH2Item(ability.FormBoost, itemRarity.UNCOMMON),
+            KH2Item(ability.FormBoost, itemRarity.UNCOMMON),
+            KH2Item(ability.SummonBoost),
+            KH2Item(ability.Draw, itemRarity.UNCOMMON),
+            KH2Item(ability.Draw, itemRarity.UNCOMMON),
+            KH2Item(ability.LuckyLucky),
+            KH2Item(ability.LuckyLucky),
+            KH2Item(ability.LuckyLucky),
+            KH2Item(ability.MpRage),
+            KH2Item(ability.MpHaste),
+            KH2Item(ability.MpHastera),
+            KH2Item(ability.MpHastega),
+            KH2Item(ability.Defender),
+            KH2Item(ability.NoExperience),
+        ]
+    @staticmethod
+    def getKeybladeAbilityList() -> list[KH2Item]:
+        return [
+            KH2Item(ability.Scan),
             KH2Item(ability.ComboPlus),
-            KH2Item(ability.AirComboPlus),
-            KH2Item(ability.AirComboPlus),
             KH2Item(ability.AirComboPlus),
             KH2Item(ability.ComboBoost, itemRarity.UNCOMMON),
             KH2Item(ability.AirComboBoost, itemRarity.UNCOMMON),
             KH2Item(ability.ReactionBoost),
-            KH2Item(ability.ReactionBoost),
-            KH2Item(ability.FinishingPlus, itemRarity.RARE),
             KH2Item(ability.FinishingPlus, itemRarity.RARE),
             KH2Item(ability.NegativeCombo, itemRarity.RARE),
             KH2Item(ability.BerserkCharge, itemRarity.UNCOMMON),
             KH2Item(ability.DamageDrive),
             KH2Item(ability.DriveBoost),
             KH2Item(ability.FormBoost, itemRarity.UNCOMMON),
-            KH2Item(ability.FormBoost, itemRarity.UNCOMMON),
-            KH2Item(ability.FormBoost, itemRarity.UNCOMMON),
-            KH2Item(ability.SummonBoost),
             KH2Item(ability.ExperienceBoost, itemRarity.RARE),
             KH2Item(ability.Draw, itemRarity.UNCOMMON),
-            KH2Item(ability.Draw, itemRarity.UNCOMMON),
-            KH2Item(ability.Draw, itemRarity.UNCOMMON),
             KH2Item(ability.Jackpot),
-            KH2Item(ability.LuckyLucky),
-            KH2Item(ability.LuckyLucky),
-            KH2Item(ability.LuckyLucky),
             KH2Item(ability.DriveConverter, itemRarity.UNCOMMON),
             KH2Item(ability.FireBoost),
             KH2Item(ability.BlizzardBoost),
             KH2Item(ability.ThunderBoost),
             KH2Item(ability.ItemBoost, itemRarity.UNCOMMON),
             KH2Item(ability.MpRage),
-            KH2Item(ability.MpRage),
             KH2Item(ability.MpHaste),
-            KH2Item(ability.MpHaste),
-            KH2Item(ability.MpHastera),
             KH2Item(ability.MpHastera),
             KH2Item(ability.MpHastega),
-            KH2Item(ability.Defender),
             KH2Item(ability.DamageControl),
-            KH2Item(ability.NoExperience),
             KH2Item(ability.NoExperience),
             KH2Item(ability.LightAndDarkness, itemRarity.RARE),
         ]

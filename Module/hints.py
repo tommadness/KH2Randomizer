@@ -1327,6 +1327,9 @@ class Hints:
             objective_locations = [o.Location for o in randomizer.objectives]
             # find these locations in location_item_tuples
             objective_tuples = [{"category":l_i[0].LocationCategory, "location_id":l_i[0].LocationId} for l_i in location_item_tuples if l_i[0].Description in objective_locations]
+            # remove duplicates
+            objective_tuples = [dict(t) for t in {tuple(d.items()) for d in objective_tuples}]
+            
             hint_data["objective_list"] = [o.Name for o in randomizer.objectives]
             hint_data["objective_locations"] = objective_tuples
         if settings.hintsType == HintType.SHANANAS:

@@ -322,6 +322,66 @@ class SeedModBuilder:
         )
 
 
+    def add_sora_ability_bdscript(self,ability_ids,equipped):
+        if len(ability_ids)==0:
+            return
+        preamble = "pushImm 1\n" \
+        "syscall 0, 61 ; trap_saveram_get_partram (1 in, 1 out)\n" \
+        "popToSp 0\n"
+        item_string = "pushFromFSp 0\n"\
+        "pushImm ITEM_ID\n"\
+        "pushImm EQUIPPED\n"\
+        "syscall 0, 99 ; trap_partram_add_ability (3 in, 0 out)\n"
+        postamble = "ret\n"
+
+        item_script = ""
+        item_script+=preamble
+        for id in ability_ids:
+            item_script+=item_string.replace("ITEM_ID",str(id)).replace("EQUIPPED",str(int(equipped)))
+        item_script+=postamble
+
+        with open(resource_path("static/starting/starting_inventory.bdscript"),"r") as infile:
+            full_item_script = infile.read()
+
+        full_item_script = full_item_script.replace("ITEM_LIST_GOES_HERE",item_script)
+        starting_item_bdscript = _relative_mod_file("starting_items/starting_inventory.bdscript")
+        starting_item_evt = _relative_mod_file("starting_items/starting_item_event.script")
+
+        self.mod_yml.add_asset({
+            "name": "ard/tt32.ard",
+            "method": "binarc",
+            "multi": [
+                {"name":"ard/us/tt32.ard"},
+                {"name":"ard/fr/tt32.ard"},
+                {"name":"ard/gr/tt32.ard"},
+                {"name":"ard/it/tt32.ard"},
+                {"name":"ard/sp/tt32.ard"},
+                {"name":"ard/uk/tt32.ard"},
+            ],
+            "source": [
+                {
+                    "name": "evt",
+                    "method":"areadatascript",
+                    "type":"areadatascript",
+                    "source" : [{"name":starting_item_evt}]
+
+                },
+                {
+                    "name": "starting_abilities",
+                    "method":"bdscript",
+                    "type":"Bdx",
+                    "source" : [{"name":starting_item_bdscript}]
+
+                }
+            ],
+        })
+        
+        self.out_zip.writestr(starting_item_bdscript, full_item_script)
+        self.out_zip.write(
+            resource_path("static/starting/starting_item_event.script"), starting_item_evt
+        )
+
+
 
     def add_base_messages(self, seed_hash_icons: list[str], crit_mode: bool):
         """Adds messages that are included with every seed."""

@@ -31,13 +31,13 @@ from Module.modifier import SeedModifier
 class Tests(unittest.TestCase):
     def test_default_ability_pool(self):
         all_action = Items.getActionAbilityList()
-        all_support = Items.getSupportAbilityList() + Items.getLevelAbilityList()
+        all_support = Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
         pool = SeedModifier.default_ability_pool(action=all_action, support=all_support)
         self.assertCountEqual(all_action + all_support, pool)
 
     def test_random_ability_pool(self):
         all_action = Items.getActionAbilityList()
-        all_support = Items.getSupportAbilityList() + Items.getLevelAbilityList()
+        all_support = Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
         for _ in range(1000):
             pool = SeedModifier.random_ability_pool(
                 action=all_action, support=all_support
@@ -52,7 +52,7 @@ class Tests(unittest.TestCase):
 
     def test_random_support_ability_pool(self):
         all_action = Items.getActionAbilityList()
-        all_support = Items.getSupportAbilityList() + Items.getLevelAbilityList()
+        all_support = Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
         for _ in range(1000):
             pool = SeedModifier.random_support_ability_pool(
                 action=all_action, support=all_support
@@ -69,7 +69,7 @@ class Tests(unittest.TestCase):
 
     def test_random_stackable_ability_pool(self):
         all_action = Items.getActionAbilityList()
-        all_support = Items.getSupportAbilityList() + Items.getLevelAbilityList()
+        all_support = Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
         for _ in range(1000):
             pool = SeedModifier.random_stackable_ability_pool(
                 action=all_action, support=all_support
