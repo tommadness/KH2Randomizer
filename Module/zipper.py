@@ -1184,10 +1184,6 @@ class SeedZip:
             + [Items.objectiveReportItem()]
             + [Items.getPromiseCharm()]
         )
-        reports = [i.Id for i in master_item_list if (i.ItemType == itemType.REPORT or i.ItemType == itemType.TORN_PAGE)]
-        story_unlocks = [
-            i.Id for i in master_item_list if i.ItemType == itemType.STORYUNLOCK
-        ]
         growth_abilities = [
             i.Id
             for i in master_item_list
@@ -1204,35 +1200,6 @@ class SeedZip:
                 or i.ItemType == itemType.SUPPORT_ABILITY
             )
         ]
-        jack_handled_items = [
-            i.Id
-            for i in master_item_list
-            if (
-                i.ItemType == itemType.FIRE
-                or i.ItemType == itemType.BLIZZARD
-                or i.ItemType == itemType.THUNDER
-                or i.ItemType == itemType.CURE
-                or i.ItemType == itemType.MAGNET
-                or i.ItemType == itemType.REFLECT
-            )
-        ]
-
-        tron_handled_items = [
-            i.Id
-            for i in master_item_list
-            if (
-                i.ItemType == itemType.KEYBLADE
-            )
-        ]
-
-
-        party_handled = reports + story_unlocks + jack_handled_items + tron_handled_items
-
-        riku_handled = [
-            i.Id
-            for i in master_item_list
-            if i.Id not in party_handled and i.Id not in sora_abilities
-        ]
 
         donald_starting_items = (
             [1 + 0x8000, 3 + 0x8000]
@@ -1242,9 +1209,7 @@ class SeedZip:
                     randomizer.donald_assignments, [locationType.Free]
                 )
             ]
-            + [i for i in randomizer.starting_item_ids if i in reports]
         )
-        pad_items(donald_starting_items)
         mod.player_params.add_player(
             character_id=2,  # Donald Starting Items
             identifier=0,
@@ -1270,9 +1235,7 @@ class SeedZip:
                     randomizer.goofy_assignments, [locationType.Free]
                 )
             ]
-            + [i for i in randomizer.starting_item_ids if i in story_unlocks]
         )
-        pad_items(goofy_starting_items)
         mod.player_params.add_player(
             character_id=3,  # Goofy Starting Items
             identifier=0,
@@ -1286,80 +1249,19 @@ class SeedZip:
             padding=[0] * 52,
         )
 
-        riku_starting_items = (
-            [
-                i + 0x8000
-                for i in [1, 1, 1, 1, 3, 3, 438, 436, 187, 208, 411, 422, 414, 415, 416]
-            ]
-            + [417, 419]
-            + [i for i in randomizer.starting_item_ids if i in riku_handled]
-        )
-        pad_items(riku_starting_items)
-        mod.player_params.add_player(
-            character_id=13,  # Riku Starting Items
-            identifier=0,
-            hp=20,
-            mp=100,
-            ap=28,
-            armor_slot_max=2,
-            accessory_slot_max=1,
-            item_slot_max=6,
-            items=riku_starting_items,
-            padding=[0] * 52,
-        )
-
-        jack_starting_items = (
-            [
-                i  + 0x8000
-                for i in [1,3,3,431,432,433,206,407,408,421,420]
-            ]
-            + [409,410,417]
-            + [i for i in randomizer.starting_item_ids if i in jack_handled_items]
-        )
-        pad_items(jack_starting_items)
-        mod.player_params.add_player(
-            character_id=10,  # Jack Starting Items
-            identifier=0,
-            hp=20,
-            mp=100,
-            ap=25,
-            armor_slot_max=0,
-            accessory_slot_max=2,
-            item_slot_max=3,
-            items=jack_starting_items,
-            padding=[0] * 52,
-        )
-
-        tron_starting_items = (
-            [
-                i + 0x8000
-                for i in [1,3,406,411]
-            ]
-            + [418]
-            + [i for i in randomizer.starting_item_ids if i in tron_handled_items]
-        )
-        pad_items(tron_starting_items)
-        mod.player_params.add_player(
-            character_id=12,  # Tron Starting Items
-            identifier=0,
-            hp=20,
-            mp=100,
-            ap=25,
-            armor_slot_max=1,
-            accessory_slot_max=1,
-            item_slot_max=2,
-            items=tron_starting_items,
-            padding=[0] * 52,
-        )
-
         ability_equip = 0x8000 if settings.auto_equip_abilities else 0
         sora_bdscript_abilities = [
             i
             for i in randomizer.starting_item_ids
             if i in sora_abilities and i not in growth_abilities
         ]
+        sora_bdscript_items = [
+            i
+            for i in randomizer.starting_item_ids
+            if i not in sora_abilities
+        ]
 
-        mod.add_sora_ability_bdscript(sora_bdscript_abilities,settings.auto_equip_abilities)
+        mod.add_sora_bdscript(sora_bdscript_items,sora_bdscript_abilities,settings.auto_equip_abilities)
 
         sora_starting_items = [
             l.item.Id

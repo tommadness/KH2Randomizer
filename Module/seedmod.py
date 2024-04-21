@@ -322,22 +322,29 @@ class SeedModBuilder:
         )
 
 
-    def add_sora_ability_bdscript(self,ability_ids,equipped):
-        if len(ability_ids)==0:
+    def add_sora_bdscript(self,item_ids,ability_ids,equipped):
+        if len(ability_ids)==0 and len(item_ids)==0:
             return
         preamble = "pushImm 1\n" \
         "syscall 0, 61 ; trap_saveram_get_partram (1 in, 1 out)\n" \
         "popToSp 0\n"
-        item_string = "pushFromFSp 0\n"\
+        ability_string = "pushFromFSp 0\n"\
         "pushImm ITEM_ID\n"\
         "pushImm EQUIPPED\n"\
         "syscall 0, 99 ; trap_partram_add_ability (3 in, 0 out)\n"
+        item_string = "pushImm ITEM_ID\n"\
+        "pushImm 100\n"\
+        "syscall 0, 63 ; trap_item_get (2 in, 0 out)\n"
         postamble = "ret\n"
 
         item_script = ""
-        item_script+=preamble
-        for id in ability_ids:
-            item_script+=item_string.replace("ITEM_ID",str(id)).replace("EQUIPPED",str(int(equipped)))
+        if len(ability_ids)!=0:
+            item_script+=preamble
+            for id in ability_ids:
+                item_script+=ability_string.replace("ITEM_ID",str(id)).replace("EQUIPPED",str(int(equipped)))
+        if len(item_ids)!=0:
+            for id in item_ids:
+                item_script+=item_string.replace("ITEM_ID",str(id))
         item_script+=postamble
 
         with open(resource_path("static/starting/starting_inventory.bdscript"),"r") as infile:
