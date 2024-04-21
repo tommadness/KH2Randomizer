@@ -151,12 +151,16 @@
 
 - id: lexaeus
   name: Lexaeus
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
+          mask_files:
+            - N/A
+            - static/recolors/masks/lexaeus/1_Coat.mask
           value_start: 0
           value_end: 75
           new_saturation: 50

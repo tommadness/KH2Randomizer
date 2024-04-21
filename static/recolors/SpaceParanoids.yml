@@ -106,14 +106,15 @@
 
 - id: larxene
   name: Larxene
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
-          value_start: 0
-          value_end: 75
+          mask_files:
+            - static/recolors/masks/larxene/0_Coat.mask
           new_saturation: 50
           value_offset: 15
       image_groups:

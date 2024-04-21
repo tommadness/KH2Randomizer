@@ -1,13 +1,14 @@
 - id: axel
   name: Axel
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
-          value_start: 0
-          value_end: 75
+          mask_files:
+            - static/recolors/masks/axel/0_Coat.mask
           new_saturation: 50
           value_offset: 15
       image_groups:
@@ -402,23 +403,28 @@
 
 - id: roxas
   name: Roxas
+  version: 2
   tags:
     - character
     - party
   recolors:
     - colorable_areas:
-        - id: shirt_pants
-          name: Shirt/Pants
-          saturation_start: 0
-          saturation_end: 50
-          value_start: 25
-          value_end: 100
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/roxas/0_Shirt.mask
+          new_saturation: 50
+          value_offset: -5
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/roxas/0_Pants.mask
           new_saturation: 50
           value_offset: -10
         - id: trim
           name: Trim
-          hue_start: 0
-          hue_end: 20
+          mask_files:
+            - static/recolors/masks/roxas/0_Trim.mask
       image_groups:
         - - remastered/obj/H_EX510.mdlx/-1.dds
           - remastered/obj/P_EX110.mdlx/-0.dds
@@ -816,12 +822,20 @@
 
 - id: roxas_coat
   name: Roxas (Coat)
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
+          mask_files:
+            - static/recolors/masks/roxas-coat/B_EX390_1_Coat.mask
+            - N/A
+            - N/A
+            - static/recolors/masks/roxas-coat/N_EX820_1_Coat.mask
+            - N/A
+            - static/recolors/masks/roxas-coat/N_EX830_0_Coat.mask
           value_start: 0
           value_end: 75
           new_saturation: 50
@@ -833,9 +847,11 @@
 
         - - remastered/obj/H_EX650.mdlx/-1.dds
 
-        - - remastered/obj/N_EX820_BTL.mdlx/-1.dds
+        - - remastered/obj/N_EX820.mdlx/-1.dds
+          - remastered/obj/N_EX820_BTL.mdlx/-1.dds
 
-        - - remastered/obj/N_EX820_BTL.mdlx/-2.dds
+        - - remastered/obj/N_EX820.mdlx/-2.dds
+          - remastered/obj/N_EX820_BTL.mdlx/-2.dds
 
         - - remastered/obj/N_EX830.mdlx/-0.dds
       previews: [ true, true, true, false, false, true ]

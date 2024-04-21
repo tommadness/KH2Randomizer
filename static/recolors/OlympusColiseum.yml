@@ -210,12 +210,16 @@
 
 - id: zexion
   name: Zexion
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
+          mask_files:
+            - static/recolors/masks/zexion/0_Coat.mask
+            - N/A
           value_start: 0
           value_end: 75
           new_saturation: 50

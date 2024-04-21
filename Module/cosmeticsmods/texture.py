@@ -346,6 +346,12 @@ class TextureRecolorizer:
 
         for model in recolorable_models:
             model_id: str = model["id"]
+
+            model_version: int = model.get("version", 1)
+            model_version_suffix = ""
+            if model_version > 1:
+                model_version_suffix = f"-v{model_version}"
+
             available_image_group_ids: list[str] = _available_group_ids()
             model_cache_folder = recolors_cache_folder / model_id
 
@@ -383,7 +389,8 @@ class TextureRecolorizer:
 
                     combined_hues = "-".join(chosen_filename_hues)
                     _, image_ext = os.path.splitext(group[0])
-                    destination_path = model_cache_folder / f"{model_id}-{group_id}-{combined_hues}{image_ext}"
+                    destination_file_name = f"{model_id}{model_version_suffix}-{group_id}-{combined_hues}{image_ext}"
+                    destination_path = model_cache_folder / destination_file_name
 
                     asset: Asset = {
                         "platform": "pc",

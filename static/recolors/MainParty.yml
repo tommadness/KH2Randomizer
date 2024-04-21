@@ -33,6 +33,7 @@
 
 - id: goofy
   name: Goofy
+  version: 2
   tags:
     - character
     - party
@@ -40,8 +41,24 @@
     - colorable_areas:
         - id: hat_pants
           name: Hat/Pants
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - static/recolors/masks/goofy/2_HUD_Hat.mask
           hue_start: 28
           hue_end: 52
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+            - N/A
+          hue_start: 60
+          hue_end: 95
       image_groups:
         - - remastered/obj/H_ZZ030.mdlx/-2.dds
           - remastered/obj/MENU_FRIEND_2.mdlx/-0.dds
@@ -50,14 +67,7 @@
 
         - - remastered/obj/P_EX030_NOBG_RTN.mdlx/-0.dds
           - remastered/obj/P_EX030_WM.mdlx/-0.dds
-      previews: [ true, false ]
 
-    - colorable_areas:
-        - id: shirt
-          name: Shirt
-          hue_start: 60
-          hue_end: 95
-      image_groups:
         - - remastered/obj/H_ZZ030.mdlx/-1.dds
           - remastered/obj/MENU_FRIEND_2.mdlx/-1.dds
           - remastered/obj/P_EX030.mdlx/-1.dds
@@ -67,7 +77,7 @@
           - remastered/obj/P_EX030_WM.mdlx/-1.dds
 
         - - remastered/obj/P_EX030.a.us/-2.dds
-      previews: [ true, false, true ]
+      previews: [ true, false, true, false, true ]
 
 
 - id: sora
