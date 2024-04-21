@@ -1332,6 +1332,7 @@ class Hints:
             
             hint_data["objective_list"] = [o.Name for o in randomizer.objectives]
             hint_data["objective_locations"] = objective_tuples
+            hint_data["num_objectives_needed"] = settings.num_objectives_needed
         if settings.hintsType == HintType.SHANANAS:
             hint_data["world"] = world_items.world_to_item_ids()
             if common_tracker_data.progression_settings is not None:

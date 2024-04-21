@@ -1184,7 +1184,7 @@ class SeedZip:
             + [Items.objectiveReportItem()]
             + [Items.getPromiseCharm()]
         )
-        reports = [i.Id for i in master_item_list if i.ItemType == itemType.REPORT]
+        reports = [i.Id for i in master_item_list if (i.ItemType == itemType.REPORT or i.ItemType == itemType.TORN_PAGE)]
         story_unlocks = [
             i.Id for i in master_item_list if i.ItemType == itemType.STORYUNLOCK
         ]
