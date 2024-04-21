@@ -69,14 +69,17 @@
 
 - id: luxord
   name: Luxord
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
-          value_start: 0
-          value_end: 75
+          mask_files:
+            - static/recolors/masks/luxord/0_Coat.mask
+            - static/recolors/masks/luxord/1_Coat.mask
+            - static/recolors/masks/luxord/1_Coat.mask
           new_saturation: 50
           value_offset: 15
       image_groups:

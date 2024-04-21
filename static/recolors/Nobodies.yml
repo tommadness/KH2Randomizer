@@ -32,17 +32,19 @@
 
 - id: bomb_bell
   name: Bomb Bell
+  version: 2
   tags:
     - nobody
   recolors:
     - colorable_areas:
         - id: main
           name: Main Color
-          hue_start: 0
-          hue_end: 360
+          mask_files:
+            - static/recolors/masks/bomb-bell/0_Main.mask
           new_saturation: 50
       image_groups:
         - - remastered/obj/EH_G_EX250.mdlx/-0.dds
+          - remastered/obj/EH_G_EX250_FLY.mdlx/-0.dds
 
 
 - id: creeper

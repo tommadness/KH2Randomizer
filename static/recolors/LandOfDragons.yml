@@ -70,18 +70,20 @@
 
 - id: riku_hooded
   name: Riku (Hooded)
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
-          value_start: 0
-          value_end: 75
+          mask_files:
+            - static/recolors/masks/riku-coat/0_Coat.mask
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/N_EX940_BTL.mdlx/-0.dds
+        - - remastered/obj/N_EX940.mdlx/-0.dds
+          - remastered/obj/N_EX940_BTL.mdlx/-0.dds
 
 
 - id: shan_yu
@@ -159,12 +161,17 @@
 
 - id: xigbar
   name: Xigbar
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
+          mask_files:
+            - N/A
+            - static/recolors/masks/xigbar/1_Coat.mask
+            - static/recolors/masks/xigbar/2_Coat.mask
           value_start: 0
           value_end: 75
           new_saturation: 50

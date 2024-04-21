@@ -18,11 +18,6 @@
           - remastered/obj/N_NM070_BTL_TOY.mdlx/-0.dds
           - remastered/obj/N_NM070_RTN.mdlx/-0.dds
 
-        - - remastered/obj/N_NM070_BTL.mdlx/-1.dds
-          - remastered/obj/N_NM070_BTL_2.mdlx/-1.dds
-          - remastered/obj/N_NM070_BTL_TOY.mdlx/-1.dds
-          - remastered/obj/N_NM070_RTN.mdlx/-1.dds
-
 
 - id: donald_ct
   name: Donald (Christmas Town)
@@ -142,24 +137,26 @@
 
 - id: lock
   name: Lock
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: main
           name: Main Color
-          hue_start: 300
-          hue_end: 30
+          mask_files:
+            - static/recolors/masks/lock/0_Main.mask
+            - N/A
+        - id: mask
+          name: Mask
+          mask_files:
+            - static/recolors/masks/lock/0_Mask.mask
+            - N/A
       image_groups:
         - - remastered/obj/N_NM050_BTL.mdlx/-0.dds
           - remastered/obj/N_NM050_BTL_2.mdlx/-0.dds
           - remastered/obj/N_NM050_BTL_TOY.mdlx/-0.dds
           - remastered/obj/N_NM050_RTN.mdlx/-0.dds
-
-        - - remastered/obj/N_NM050_BTL.mdlx/-2.dds
-          - remastered/obj/N_NM050_BTL_2.mdlx/-2.dds
-          - remastered/obj/N_NM050_BTL_TOY.mdlx/-2.dds
-          - remastered/obj/N_NM050_RTN.mdlx/-2.dds
 
 
 - id: santa
@@ -214,14 +211,16 @@
 
 - id: vexen
   name: Vexen
+  version: 2
   tags:
     - character
   recolors:
     - colorable_areas:
         - id: coat
           name: Coat
-          value_start: 0
-          value_end: 75
+          mask_files:
+            - static/recolors/masks/vexen/0_Coat.mask
+            - N/A
           new_saturation: 50
           value_offset: 15
       image_groups:
