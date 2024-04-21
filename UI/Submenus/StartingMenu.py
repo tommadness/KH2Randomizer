@@ -16,7 +16,7 @@ class StartingMenu(KH2Submenu):
         self.add_option(settingkey.STARTING_ITEMS)
         self.add_option(settingkey.STARTING_DRIVES)
         self.end_group('Starting Inventory Options')
-        self.end_column()
+        self.end_column(stretch_at_end=True)
 
         self.start_column()
         self.start_group()

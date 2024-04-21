@@ -34,7 +34,7 @@ from List.configDict import (
     StartingVisitMode,
     FinalDoorRequirement,
 )
-from List.inventory import ability, misc, proof, storyunlock, form
+from List.inventory import ability, misc, proof, storyunlock, form, summon
 from List.inventory.keyblade import get_all_keyblades
 from Module import encoding
 from Module import knockbackTypes
@@ -996,8 +996,12 @@ _all_settings = [
     MultiSelect(
         name=settingkey.STARTING_DRIVES,
         group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Starting Drive Forms",
+        ui_label="Starting Forms/Summons",
         choices={
+            str(summon.BaseballCharm.id):summon.BaseballCharm.name,
+            str(summon.LampCharm.id):summon.LampCharm.name,
+            str(summon.UkuleleCharm.id):summon.UkuleleCharm.name,
+            str(summon.FeatherCharm.id):summon.FeatherCharm.name,
             str(form.ValorForm.id):form.ValorForm.name,
             str(form.WisdomForm.id):form.WisdomForm.name,
             str(form.LimitForm.id):form.LimitForm.name,
@@ -1007,7 +1011,7 @@ _all_settings = [
         },
         shared=True,
         default=[],
-        tooltip="Start with drives in your inventory.",
+        tooltip="Start with drives/summons in your inventory.",
     ),
     MultiSelect(
         name=settingkey.STARTING_ABILITIES,
@@ -2449,7 +2453,7 @@ _all_settings = [
     SingleSelect(
         name=settingkey.DISABLE_FINAL_FORM,
         group=SettingGroup.SEED_MODIFIERS,
-        ui_label="Final Form Restrictions",
+        ui_label="Restrict Final Form",
         choices={
             DisableFinalOption.DEFAULT: "None",
             DisableFinalOption.NO_ANTIFORM: "No Random Chance",
