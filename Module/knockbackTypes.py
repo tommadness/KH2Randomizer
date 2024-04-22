@@ -1,6 +1,6 @@
 JUST_DAMAGE = "Just Damage"
-DAMAGE_STUN = "Damage + Stun"
-DAMAGE_STUN_KNOCKBACK = "Damage + Stun + Knockback"
+DAMAGE_STUN = "Stun"
+DAMAGE_STUN_KNOCKBACK = "Stun/Knockback"
 
 
 class KnockbackTypes:
@@ -13,8 +13,8 @@ class KnockbackTypes:
     def knockback_options() -> dict[str, str]:
         return {
             JUST_DAMAGE: "Just Damage",
-            DAMAGE_STUN: "Damage + Stun",
-            DAMAGE_STUN_KNOCKBACK: "Damage + Stun + Knockback",
+            DAMAGE_STUN: "Stun",
+            DAMAGE_STUN_KNOCKBACK: "Knockback",
         }
 
     @staticmethod
@@ -35,7 +35,7 @@ class KnockbackTypes:
         Just Damage: Enemies won't be phased (except for certain things like Goofy Tornado which have
         a second attack effect for pulling enemies in).
         
-        Damage + Stun: Enemies will be stunned, but won't move very much or at all from their position.
+        Damage/Stun: Enemies will be stunned, but won't move very much or at all from their position.
         
-        Damage + Stun + Knockback: Like above, but will also be moved.
+        Damage/Stun/Knockback: Like above, but will also be moved.
         """
