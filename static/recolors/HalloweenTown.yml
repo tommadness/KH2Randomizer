@@ -190,8 +190,177 @@
           - remastered/obj/N_NM060_RTN.mdlx/-0.dds
 
 
+- id: sora_ct
+  name: Sora (Christmas Town)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ct/0_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ct/1_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM.mdlx/-1.dds
+
+
+- id: sora_ct_valor
+  name: Sora (Christmas Town Valor Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ct/0_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_BTLF.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ct/1_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_BTLF.mdlx/-1.dds
+
+
+- id: sora_ct_wisdom
+  name: Sora (Christmas Town Wisdom Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ct/0_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_MAGF.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ct/1_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_MAGF.mdlx/-1.dds
+
+
+- id: sora_ct_limit
+  name: Sora (Christmas Town Limit Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ct/0_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_KH1F.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ct/1_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_KH1F.mdlx/-1.dds
+
+
+- id: sora_ct_master
+  name: Sora (Christmas Town Master Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ct/0_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_TRIF.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ct/1_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_TRIF.mdlx/-1.dds
+
+
+- id: sora_ct_final
+  name: Sora (Christmas Town Final Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ct/0_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_ULTF.mdlx/-0.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ct/1_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_XM_ULTF.mdlx/-1.dds
+
+
 - id: sora_ht
   name: Sora (Halloween Town)
+  version: 2
   tags:
     - character
     - party
@@ -207,6 +376,226 @@
         - - remastered/obj/H_EX500_NM.mdlx/-2.dds
           - remastered/obj/H_EX501.mdlx/-2.dds
       previews: [ true, false ]
+
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ht/4_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ht/5_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM.mdlx/-5.dds
+
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          mask_files:
+            - static/recolors/masks/sora-ht/7_Vest.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM.mdlx/-7.dds
+
+
+- id: sora_ht_valor
+  name: Sora (Halloween Town Valor Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ht/4_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_BTLF.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ht/5_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_BTLF.mdlx/-5.dds
+
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          mask_files:
+            - static/recolors/masks/sora-ht/7_Vest.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_BTLF.mdlx/-7.dds
+
+
+- id: sora_ht_wisdom
+  name: Sora (Halloween Town Wisdom Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ht/4_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_MAGF.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ht/5_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_MAGF.mdlx/-5.dds
+
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          mask_files:
+            - static/recolors/masks/sora-ht/7_Vest.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_MAGF.mdlx/-7.dds
+
+
+- id: sora_ht_limit
+  name: Sora (Halloween Town Limit Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ht/4_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_KH1F.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ht/5_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_KH1F.mdlx/-5.dds
+
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          mask_files:
+            - static/recolors/masks/sora-ht/7_Vest.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_KH1F.mdlx/-7.dds
+
+
+- id: sora_ht_master
+  name: Sora (Halloween Town Master Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ht/4_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_TRIF.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ht/5_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_TRIF.mdlx/-5.dds
+
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          mask_files:
+            - static/recolors/masks/sora-ht/7_Vest.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_TRIF.mdlx/-7.dds
+
+
+- id: sora_ht_final
+  name: Sora (Halloween Town Final Form)
+  version: 2
+  tags:
+    - character
+    - party
+  recolors:
+    - colorable_areas:
+        - id: shirt
+          name: Shirt
+          mask_files:
+            - static/recolors/masks/sora-ht/4_Shirt.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_ULTF.mdlx/-4.dds
+
+    - colorable_areas:
+        - id: pants
+          name: Pants
+          mask_files:
+            - static/recolors/masks/sora-ht/5_Pants.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_ULTF.mdlx/-5.dds
+
+    - colorable_areas:
+        - id: vest
+          name: Vest
+          mask_files:
+            - static/recolors/masks/sora-ht/7_Vest.mask
+          new_saturation: 50
+          value_offset: 15
+      image_groups:
+        - - remastered/obj/P_EX100_NM_ULTF.mdlx/-7.dds
 
 
 - id: vexen

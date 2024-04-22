@@ -128,6 +128,27 @@ class RecolorDefinition:
             self.value_offset = value_offset / 100.0 * 256.0
 
 
+class PendingRecolor:
+    """Staging object for a recolor until it needs a full RecolorDefinition."""
+
+    def __init__(
+            self,
+            model_id: str,
+            area_id: str,
+            colorable_area: dict[str, Any],
+            new_hue: int,
+            new_saturation: Optional[int] = None,
+            value_offset: Optional[int] = None,
+    ):
+        super().__init__()
+        self.model_id = model_id
+        self.area_id = area_id
+        self.colorable_area = colorable_area
+        self.new_hue = new_hue
+        self.new_saturation = new_saturation
+        self.value_offset = value_offset
+
+
 def make_matching_conditions(
         masks: list[Optional[ndarray]],
         hue_range: Optional[tuple[int, int]],
@@ -284,44 +305,6 @@ class TextureRecolorizer:
                         mask[y, x] = True
             return mask
 
-    @staticmethod
-    def conditions_from_colorable_area(colorable_area: dict[str, Any]) -> PixelMatchingConditions:
-        """Returns color conditions defined by properties of the specified colorable_area."""
-        mask_files: Optional[list[str]] = colorable_area.get("mask_files")
-        masks: list[Optional[ndarray]] = []
-        if mask_files is not None:
-            for mask_file_str in mask_files:
-                mask_file_path = Path(resource_path(mask_file_str))
-                if mask_file_path.is_file():
-                    masks.append(TextureRecolorizer.mask_file_to_mask(mask_file_path))
-                else:
-                    masks.append(None)
-
-        hue_start: Optional[int] = colorable_area.get("hue_start")
-        hue_end: Optional[int] = colorable_area.get("hue_end")
-        hue_range: Optional[tuple[int, int]] = None
-        if hue_start is not None and hue_end is not None:
-            hue_range = (hue_start, hue_end)
-
-        saturation_start: Optional[int] = colorable_area.get("saturation_start")
-        saturation_end: Optional[int] = colorable_area.get("saturation_end")
-        saturation_range: Optional[tuple[int, int]] = None
-        if saturation_start is not None and saturation_end is not None:
-            saturation_range = (saturation_start, saturation_end)
-
-        value_start: Optional[int] = colorable_area.get("value_start")
-        value_end: Optional[int] = colorable_area.get("value_end")
-        value_range: Optional[tuple[int, int]] = None
-        if value_start is not None and value_end is not None:
-            value_range = (value_start, value_end)
-
-        return make_matching_conditions(
-            masks=masks,
-            hue_range=hue_range,
-            saturation_range=saturation_range,
-            value_range=value_range
-        )
-
     def recolor_textures(self) -> list[Asset]:
         """Returns a list of mod assets (if any) that recolor textures based on settings."""
         assets: list[Asset] = []
@@ -344,6 +327,8 @@ class TextureRecolorizer:
             if not self.settings.get(settingkey.RECOLOR_TEXTURES_KEEP_CACHE):
                 shutil.rmtree(recolors_cache_folder)
 
+        conditions_loader = TextureConditionsLoader()
+
         for model in recolorable_models:
             model_id: str = model["id"]
 
@@ -358,31 +343,35 @@ class TextureRecolorizer:
             for recolor in model["recolors"]:
                 colorable_areas: list[dict[str, Any]] = recolor["colorable_areas"]
 
-                recolor_definitions: list[RecolorDefinition] = []
+                pending_recolors: list[PendingRecolor] = []
                 chosen_filename_hues: list[str] = []
 
                 for colorable_area in colorable_areas:
-                    chosen_hue = self._choose_hue(model_id=model_id, colorable_area=colorable_area)
+                    area_id = colorable_area["id"]
+
+                    chosen_hue = self._choose_hue(model_id=model_id, area_id=area_id, colorable_area=colorable_area)
                     if chosen_hue < 0:  # Keep it vanilla
                         chosen_filename_hues.append("v")
                         continue
 
                     chosen_filename_hues.append(str(chosen_hue))
 
-                    recolor_definition = RecolorDefinition(
-                        conditions=self.conditions_from_colorable_area(colorable_area),
+                    pending_recolor = PendingRecolor(
+                        model_id=model_id,
+                        area_id=area_id,
+                        colorable_area=colorable_area,
                         new_hue=chosen_hue,
                         new_saturation=colorable_area.get("new_saturation"),
                         value_offset=colorable_area.get("value_offset")
                     )
-                    recolor_definitions.append(recolor_definition)
+                    pending_recolors.append(pending_recolor)
 
                 image_groups: list[list[str]] = recolor["image_groups"]
                 for index, group in enumerate(image_groups):
                     # Each group gets a unique ID
                     group_id = available_image_group_ids.pop(0)
 
-                    if len(recolor_definitions) == 0:
+                    if len(pending_recolors) == 0:
                         # Everything was vanilla for this group, can save a little time and space by doing nothing
                         # (but we still need the pop above to make sure the group IDs still line up)
                         continue
@@ -414,6 +403,22 @@ class TextureRecolorizer:
 
                     destination_path.parent.mkdir(parents=True, exist_ok=True)
 
+                    # We deliberately delay creating the full RecolorDefinitions until we know for sure we will need
+                    # them. This allows us to avoid the overhead of loading mask files as long as possible.
+                    recolor_definitions: list[RecolorDefinition] = []
+                    for pending_recolor in pending_recolors:
+                        conditions = conditions_loader.conditions_from_colorable_area(
+                            model_id=pending_recolor.model_id,
+                            area_id=pending_recolor.area_id,
+                            colorable_area=pending_recolor.colorable_area
+                        )
+                        recolor_definitions.append(RecolorDefinition(
+                            conditions=conditions,
+                            new_hue=pending_recolor.new_hue,
+                            new_saturation=pending_recolor.new_saturation,
+                            value_offset=pending_recolor.value_offset,
+                        ))
+
                     # Just use the first one as the canonical representation
                     with Image.open(Path(base_path) / group[0]) as original_image:
                         image_array = np.array(original_image.convert("RGBA"))
@@ -423,10 +428,10 @@ class TextureRecolorizer:
 
         return assets
 
-    def _choose_hue(self, model_id: str, colorable_area: dict[str, Any]) -> int:
+    def _choose_hue(self, model_id: str, area_id: str, colorable_area: dict[str, Any]) -> int:
         """Returns the hue to use for the colorable area, or -1 to leave vanilla."""
         recolor_settings = self.recolor_settings
-        area_setting = recolor_settings.setting_for_area(model_id, colorable_area["id"])
+        area_setting = recolor_settings.setting_for_area(model_id=model_id, area_id=area_id)
         if area_setting == VANILLA:
             return -1
         elif area_setting == RANDOM:
@@ -477,3 +482,65 @@ def _available_group_ids() -> list[str]:
     for c in ascii_characters:
         result.extend(f"{c}{c2}" for c2 in ascii_characters)
     return result
+
+
+class TextureConditionsLoader:
+    """Handles loading of PixelMatchingConditions for colorable areas. Keeps a cache of already loaded conditions."""
+
+    def __init__(self):
+        super().__init__()
+        self.conditions: dict[str, PixelMatchingConditions] = {}
+
+    def conditions_from_colorable_area(
+            self,
+            model_id: str,
+            area_id: str,
+            colorable_area: dict[str, Any]
+    ) -> PixelMatchingConditions:
+        """Returns color conditions defined by properties of the specified colorable_area."""
+
+        cache_key = f"{model_id}-{area_id}"
+        cached_conditions = self.conditions.get(cache_key, None)
+        if cached_conditions is not None:
+            return cached_conditions
+        else:
+            new_conditions = self._make_conditions(colorable_area)
+            self.conditions[cache_key] = new_conditions
+            return new_conditions
+
+    @staticmethod
+    def _make_conditions(colorable_area: dict[str, Any]) -> PixelMatchingConditions:
+        mask_files: Optional[list[str]] = colorable_area.get("mask_files")
+        masks: list[Optional[ndarray]] = []
+        if mask_files is not None:
+            for mask_file_str in mask_files:
+                mask_file_path = Path(resource_path(mask_file_str))
+                if mask_file_path.is_file():
+                    masks.append(TextureRecolorizer.mask_file_to_mask(mask_file_path))
+                else:
+                    masks.append(None)
+
+        hue_start: Optional[int] = colorable_area.get("hue_start")
+        hue_end: Optional[int] = colorable_area.get("hue_end")
+        hue_range: Optional[tuple[int, int]] = None
+        if hue_start is not None and hue_end is not None:
+            hue_range = (hue_start, hue_end)
+
+        saturation_start: Optional[int] = colorable_area.get("saturation_start")
+        saturation_end: Optional[int] = colorable_area.get("saturation_end")
+        saturation_range: Optional[tuple[int, int]] = None
+        if saturation_start is not None and saturation_end is not None:
+            saturation_range = (saturation_start, saturation_end)
+
+        value_start: Optional[int] = colorable_area.get("value_start")
+        value_end: Optional[int] = colorable_area.get("value_end")
+        value_range: Optional[tuple[int, int]] = None
+        if value_start is not None and value_end is not None:
+            value_range = (value_start, value_end)
+
+        return make_matching_conditions(
+            masks=masks,
+            hue_range=hue_range,
+            saturation_range=saturation_range,
+            value_range=value_range
+        )

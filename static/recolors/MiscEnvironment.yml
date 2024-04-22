@@ -20,48 +20,6 @@
         # Deliberately not coloring the door emblem since it can be replaced by a rando-themed one
 
 
-- id: save_point
-  name: Save Point
-  tags:
-    - environment
-  recolors:
-    - colorable_areas:
-        - id: effect_0
-          name: Effect 00
-          hue_start: 0
-          hue_end: 360
-          new_saturation: 75
-      image_groups:
-        - - remastered/obj/WORLD_POINT.a.us/-0.dds
-
-    - colorable_areas:
-        - id: effect_1
-          name: Effect 01
-          hue_start: 0
-          hue_end: 360
-          new_saturation: 75
-      image_groups:
-        - - remastered/obj/WORLD_POINT.a.us/-1.dds
-
-    - colorable_areas:
-        - id: effect_2
-          name: Effect 02
-          hue_start: 0
-          hue_end: 360
-          new_saturation: 75
-      image_groups:
-        - - remastered/obj/SAVE_POINT.a.us/-0.dds
-
-    - colorable_areas:
-        - id: effect_3
-          name: Effect 03
-          hue_start: 0
-          hue_end: 360
-          new_saturation: 75
-      image_groups:
-        - - remastered/obj/SAVE_POINT.a.us/-1.dds
-
-
 - id: drops
   name: Drops
   tags:
@@ -123,3 +81,45 @@
           hue_end: 60
       image_groups:
         - - remastered/obj/PRIZE_BOX_YELLOW.mdlx/-0.dds
+
+
+- id: save_point
+  name: Save Point
+  tags:
+    - environment
+  recolors:
+    - colorable_areas:
+        - id: effect_0
+          name: Effect 00
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/WORLD_POINT.a.us/-0.dds
+
+    - colorable_areas:
+        - id: effect_1
+          name: Effect 01
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/WORLD_POINT.a.us/-1.dds
+
+    - colorable_areas:
+        - id: effect_2
+          name: Effect 02
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/SAVE_POINT.a.us/-0.dds
+
+    - colorable_areas:
+        - id: effect_3
+          name: Effect 03
+          hue_start: 0
+          hue_end: 360
+          new_saturation: 75
+      image_groups:
+        - - remastered/obj/SAVE_POINT.a.us/-1.dds
