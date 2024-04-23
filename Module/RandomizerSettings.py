@@ -564,9 +564,9 @@ class RandomizerSettings:
 
         self.objective_pool_type = ui_settings.get(settingkey.OBJECTIVE_RANDO_POOL)
         if self.objective_pool_type == ObjectivePoolOption.BOSSES.name:
-            self.available_objectives = [o for o in self.available_objectives if o.Type != ObjectiveList.ObjectiveType.BOSS]
+            self.available_objectives = [o for o in self.available_objectives if o.Type == ObjectiveList.ObjectiveType.BOSS]
         elif self.objective_pool_type == ObjectivePoolOption.NOBOSSES.name:
-            self.available_objectives = [o for o in self.available_objectives if o.Type != ObjectiveList.ObjectiveType.WORLDPROGRESS and o.Type != ObjectiveList.ObjectiveType.FIGHT]
+            self.available_objectives = [o for o in self.available_objectives if o.Type == ObjectiveList.ObjectiveType.WORLDPROGRESS or o.Type == ObjectiveList.ObjectiveType.FIGHT]
         elif self.objective_pool_type == ObjectivePoolOption.HITLIST.name:
             self.available_objectives = [o for o in self.available_objectives if o.Difficulty==ObjectiveList.ObjectiveDifficulty.LATEST ]
 

@@ -696,7 +696,28 @@ class Randomizer:
                 objective_pool = [o for o in objective_pool if "Level 7" not in o.Name] + [random.choice(form_objectives)]
 
             if len(objective_pool) < settings.max_objectives_available:
-                raise SettingsException("Not enough objective locations available to allow the max number of objectives to be placed.")
+                raise SettingsException(f"Not enough objective locations ({len(objective_pool)}) available to allow the max number of objectives ({settings.max_objectives_available}) to be placed.")
+
+            # remove duplicate form levels of the same level just to hope we don't have too many objectives on forms
+            non_form_objectives = [o for o in objective_pool if "Level" not in o.Name]
+            form_3_objectives = [o for o in objective_pool if "Level 3" in o.Name]
+            form_5_objectives = [o for o in objective_pool if "Level 5" in o.Name]
+            form_7_objectives = [o for o in objective_pool if "Level 7" in o.Name]
+            random.shuffle(form_3_objectives)
+            random.shuffle(form_5_objectives)
+            random.shuffle(form_7_objectives)
+            all_form_objectives = form_3_objectives + form_5_objectives + form_7_objectives
+            all_form_objectives[::3] = form_3_objectives
+            all_form_objectives[1::3] = form_5_objectives
+            all_form_objectives[2::3] = form_7_objectives
+            # if the pool isn't going to be big enough, we need to fill with form levels
+            if settings.max_objectives_available > len(non_form_objectives):
+                non_form_objectives.extend(all_form_objectives[0:(settings.max_objectives_available-len(non_form_objectives))])
+            else:
+                # pick first 3
+                non_form_objectives.extend(all_form_objectives[0:3])
+            objective_pool = non_form_objectives
+                
 
             # pick a number of objectives
             self.objectives = random.sample(objective_pool,k=settings.max_objectives_available)
