@@ -20,6 +20,10 @@ class CompanionMenu(KH2Submenu):
         
         self.start_column()
         self.start_group()
+        self.add_option(settingkey.DONALD_AP)
+        self.add_option(settingkey.GOOFY_AP)
+        self.end_group("AP")
+        self.start_group()
         self.add_option(settingkey.COMPANION_DAMAGE_TOGGLE)
         self.add_option(settingkey.COMPANION_KILL_BOSS)
         self.end_group("All Companions")
@@ -44,7 +48,6 @@ class CompanionMenu(KH2Submenu):
 
         self.start_column()
         self.start_group()
-        self.add_option(settingkey.DONALD_AP)
         self.add_option(settingkey.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE)
         self.add_option(settingkey.DONALD_FIRE_KNOCKBACK_TYPE)
         self.add_option(settingkey.DONALD_BLIZZARD_KNOCKBACK_TYPE)
@@ -70,7 +73,6 @@ class CompanionMenu(KH2Submenu):
 
         self.start_column()
         self.start_group()
-        self.add_option(settingkey.GOOFY_AP)
         self.add_option(settingkey.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE)
         self.add_option(settingkey.GOOFY_BASH_KNOCKBACK_TYPE)
         self.add_option(settingkey.GOOFY_TURBO_KNOCKBACK_TYPE)
