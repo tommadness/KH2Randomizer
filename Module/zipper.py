@@ -12,7 +12,7 @@ from Class import settingkey
 from Class.exceptions import GeneratorException
 from Class.itemClass import ItemEncoder
 from Class.newLocationClass import KH2Location
-from Class.openkhmod import ATKPObject, AttackEntriesOrganizer, LevelUps, ModYml
+from Class.openkhmod import ATKPObject, AttackEntriesOrganizer, ModYml
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, makeKHBRSettings
 from List import ChestList
 from List.DropRateIds import id_to_enemy_name
@@ -21,7 +21,6 @@ from List.LvupStats import DreamWeaponOffsets
 from List.ObjectiveList import KH2Objective
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
 from List.inventory import bonus
-from List.inventory.ability import ExperienceBoost
 from List.location import simulatedtwilighttown as stt
 from Module import hashimage
 from Module.RandomizerSettings import RandomizerSettings
