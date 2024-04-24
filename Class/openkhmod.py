@@ -255,8 +255,11 @@ class LevelUps:
     """YAML builder for listpatch for level ups. See https://openkh.dev/kh2/file/type/00battle.html#lvup."""
 
     def __init__(self, source_name: str):
-        self.data: dict[str, dict[int, dict[str, Any]]] = {"Sora": {}}
+        self.data: dict[str, dict[int, dict[str, Any]]] = {"Sora": {}, "Donald": {}, "Goofy": {}, "PingMulan": {}, "Beast": {}, "Sparrow": {}, "Aladdin": {}, "Jack": {}, "Auron": {}, "Simba": {}, "Tron": {}, "Riku": {},}
         self.source_name = source_name
+        with open(resource_path("static/LvupList.yml"), "r") as file:
+            list_data = yaml.safe_load(file)
+        self.yaml_list_data = list_data
 
     def add_sora_level(
         self,
@@ -284,6 +287,36 @@ class LevelUps:
             "StaffAbility": staff_ability,
             "Padding": padding,
         }
+
+    def add_companion_level(
+        self,
+        level: int,
+        experience: int,
+        strength: int,
+        magic: int,
+        defense: int,
+        ap: int,
+        companion_name: string,
+        padding: int,
+    ):
+        self.data[companion_name][level] = {
+            "Character": companion_name,
+            "Level": level,
+            "Exp": experience,
+            "Strength": strength,
+            "Magic": magic,
+            "Defense": defense,
+            "Ap": ap,
+            "SwordAbility": 0,
+            "ShieldAbility": 0,
+            "StaffAbility": 0,
+            "Padding": padding,
+        }
+
+    def get_companion_levels(self, companion_name: str):
+        for entry in self.yaml_list_data:
+            if entry == companion_name:
+                return self.yaml_list_data[entry]
 
     def write_to_zip_file(self, zip_file: ZipFile):
         write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=True)

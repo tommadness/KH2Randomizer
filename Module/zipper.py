@@ -1551,6 +1551,150 @@ class SeedZip:
                 staff_ability=item_id[2],
                 padding=0,
             )
+            
+        companion_levels = mod.level_ups.get_companion_levels("Donald")
+        companion_exp = settings.companion_exp()
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Donald",
+                padding=0
+            )
+        
+        companion_levels = mod.level_ups.get_companion_levels("Goofy")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Goofy",
+                padding=0
+            )
+            
+        companion_levels = mod.level_ups.get_companion_levels("PingMulan")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="PingMulan",
+                padding=0
+            )
+
+        companion_levels = mod.level_ups.get_companion_levels("Beast")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Beast",
+                padding=0
+            )
+
+        companion_levels = mod.level_ups.get_companion_levels("Auron")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Auron",
+                padding=0
+            )
+            
+        companion_levels = mod.level_ups.get_companion_levels("Sparrow")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Sparrow",
+                padding=0
+            )
+
+        companion_levels = mod.level_ups.get_companion_levels("Aladdin")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Aladdin",
+                padding=0
+            )
+            
+        companion_levels = mod.level_ups.get_companion_levels("Jack")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Jack",
+                padding=0
+            )
+            
+        companion_levels = mod.level_ups.get_companion_levels("Simba")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Simba",
+                padding=0
+            )
+
+        companion_levels = mod.level_ups.get_companion_levels("Tron")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Tron",
+                padding=0
+            )
+            
+        companion_levels = mod.level_ups.get_companion_levels("Riku")
+        for level in companion_levels:
+            mod.level_ups.add_companion_level(
+                level=level,
+                experience=companion_exp[level],
+                strength=companion_levels[level]["Strength"],
+                magic=companion_levels[level]["Magic"],
+                defense=companion_levels[level]["Defense"],
+                ap=companion_levels[level]["Ap"],
+                companion_name="Riku",
+                padding=0
+            )
 
     def assign_treasures(self, mod: SeedModBuilder):
         treasures = _assignment_subset(
