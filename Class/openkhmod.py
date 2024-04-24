@@ -296,7 +296,7 @@ class LevelUps:
         magic: int,
         defense: int,
         ap: int,
-        companion_name: string,
+        companion_name: str,
         padding: int,
     ):
         self.data[companion_name][level] = {
