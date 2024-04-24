@@ -837,6 +837,11 @@ class RandomizerSettings:
             self.max_level_checks, self.sora_exp_multiplier, self.sora_exp_curve
         )
 
+    def companion_exp(self) -> list[int]:
+        return experienceValues.get_companion_exp(
+            self.sora_exp_multiplier
+        )
+
     def valor_exp(self) -> list[int]:
         return experienceValues.get_form_exp(
             form.ValorForm, self.valor_exp_multiplier, self.valor_exp_curve

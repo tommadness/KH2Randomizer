@@ -686,7 +686,7 @@ _all_settings = [
     FloatSpinner(
         name=settingkey.SORA_EXP_MULTIPLIER,
         group=SettingGroup.EXP_STATS,
-        ui_label="Sora",
+        ui_label="Levels",
         standalone_label="Sora EXP Multiplier",
         minimum=0.5,
         maximum=10.0,

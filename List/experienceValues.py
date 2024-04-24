@@ -230,6 +230,11 @@ def get_sora_exp(max_level_checks: int, rate: float, curve: expCurve) -> list[in
         raise SettingsException(f"Incorrect exp curve value {curve}")
     return [math.ceil(a / b) for a, b in zip(exp_list, [rate] * 100)]
 
+# For now, not considering DAWN, MIDDAY or DUSK shenanigans
+def get_companion_exp(rate: float) -> list[int]:
+    exp_list = vanilla_sora_exp()
+    return [math.ceil(a / b) for a, b in zip(exp_list, [rate] * 100)]
+
 
 def get_form_exp(drive_form: DriveForm, rate: float, curve: expCurve) -> list[int]:
     if curve == expCurve.DAWN:
