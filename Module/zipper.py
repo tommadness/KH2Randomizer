@@ -37,6 +37,7 @@ from Module.spoilerLog import (
     levelStatsDictionary,
     synth_recipe_dictionary,
     weapon_stats_dictionary,
+    objectives_dictionary,
 )
 
 
@@ -491,6 +492,9 @@ class SeedZip:
         randomizer = self.randomizer
         platform = self.extra_data.platform
 
+        if platform == "Both":
+            platform = "PC/PCSX2"
+
         exp_multipliers_json = {
             "Summon": {
                 "multiplier": settings.summon_exp_multiplier,
@@ -536,39 +540,26 @@ class SeedZip:
             goofy_assignments=randomizer.goofy_assignments,
             weapons=randomizer.weapon_stats,
         )
+        objectives_json = objectives_dictionary(randomizer.objectives)
 
         with open(resource_path("static/spoilerlog.html")) as spoiler_site:
             return (
                 spoiler_site.read()
                 .replace("{SEED_NAME_STRING}", settings.random_seed)
                 .replace("{SEED_STRING}", settings.seed_string)
-                .replace("{PLATFORM_GENERATED}",platform)
-                .replace(
-                    "{LEVEL_STATS_JSON}",
-                    json.dumps(levelStatsDictionary(randomizer.level_stats)),
-                )
+                .replace("{PLATFORM_GENERATED}", platform)
+                .replace("{LEVEL_STATS_JSON}", json.dumps(levelStatsDictionary(randomizer.level_stats)))
                 .replace("{FORM_EXP_JSON}", json.dumps(exp_multipliers_json))
-                .replace(
-                    "{DEPTH_VALUES_JSON}",
-                    json.dumps(randomizer.location_weights.weights),
-                )
-                .replace(
-                    "{SORA_ITEM_JSON}",
-                    json.dumps(sora_items_json, indent=4, cls=ItemEncoder),
-                )
-                .replace(
-                    "{DONALD_ITEM_JSON}",
-                    json.dumps(donald_items_json, indent=4, cls=ItemEncoder),
-                )
-                .replace(
-                    "{GOOFY_ITEM_JSON}",
-                    json.dumps(goofy_items_json, indent=4, cls=ItemEncoder),
-                )
+                .replace("{DEPTH_VALUES_JSON}", json.dumps(randomizer.location_weights.weights))
+                .replace("{SORA_ITEM_JSON}", json.dumps(sora_items_json, indent=4, cls=ItemEncoder))
+                .replace("{DONALD_ITEM_JSON}", json.dumps(donald_items_json, indent=4, cls=ItemEncoder))
+                .replace("{GOOFY_ITEM_JSON}", json.dumps(goofy_items_json, indent=4, cls=ItemEncoder))
                 .replace("{BOSS_ENEMY_JSON}", json.dumps(enemy_spoilers_json))
                 .replace("{BATTLE_LEVEL_JSON}", json.dumps(battle_level_spoiler))
                 .replace("{SYNTHESIS_RECIPE_JSON}", json.dumps(synthesis_recipe_json))
                 .replace("{WEAPON_STATS_JSON}", json.dumps(weapon_stats_spoiler))
                 .replace("{JOURNAL_HINTS_JSON}", json.dumps(journal_hints_spoiler))
+                .replace("{OBJECTIVES_JSON}", json.dumps(objectives_json))
                 .replace("{SETTINGS_JSON}", json.dumps(settings_spoiler_json))
                 .replace("PromiseCharm", "Promise Charm")
             )

@@ -343,7 +343,7 @@ class ItempicRandomizer:
             Itempic("223", "Feather Charm", types=["FeatherCharm"]),
             Itempic("224", "Baseball Charm", types=["BaseballCharm"]),
             Itempic("225", "Munny Pouch", types=["MunnyPouch"]),
-            Itempic("226", "Crystal Orb", types=["OtherItem", "OtherItem", "Wild"]),
+            Itempic("226", "Lucky Emblem", types=["LuckyEmblem"]),
             Itempic("227", "Struggle Trophy", types=["OtherItem", "OtherItem", "Wild"]),
             Itempic("228", "Struggle Poster", types=["OtherItem", "OtherItem", "Wild"]),
             Itempic("229", "Poster", types=["OtherItem", "OtherItem", "Wild"]),

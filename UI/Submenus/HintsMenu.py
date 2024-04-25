@@ -27,8 +27,8 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.SCORE_MODE)
         self.add_option(settingkey.REPORTS_REVEAL)
         self.add_option(settingkey.PREVENT_SELF_HINTING)
-        self.add_option(settingkey.ALLOW_PROOF_HINTING)
-        self.add_option(settingkey.ALLOW_REPORT_HINTING)
+        # self.add_option(settingkey.ALLOW_PROOF_HINTING)
+        # self.add_option(settingkey.ALLOW_REPORT_HINTING)
         self.add_option(settingkey.REVEAL_COMPLETE)
         self.end_group()
 
@@ -38,6 +38,9 @@ class HintsMenu(KH2Submenu):
         self.end_column()
 
         self.start_column()
+        self.start_group()
+        self.add_option(settingkey.SPOILER_REVEAL_TYPES)
+        self.end_group(title="Reports Reveal Items", group_id=_SPOILED_ITEMS)
         self.start_group()
         self.add_option(settingkey.POINTS_REPORT)
         self.add_option(settingkey.POINTS_PROOF)
@@ -68,9 +71,6 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_VISIT_COLLECT)
         self.add_option(settingkey.POINTS_POUCHES_COLLECT)
         self.end_group(title="Set Bonuses", group_id=_SET_BONUSES)
-        self.start_group()
-        self.add_option(settingkey.SPOILER_REVEAL_TYPES)
-        self.end_group(title="Reports Reveal Items", group_id=_SPOILED_ITEMS)
         self.end_column()
 
         self.start_column()
@@ -130,12 +130,12 @@ class HintsMenu(KH2Submenu):
             settingkey.SCORE_MODE,
             visible=hint_system in ["JSmartee", "Shananas", "Spoiler", "Path"],
         )
-        self.set_option_visibility(
-            settingkey.ALLOW_PROOF_HINTING, visible=hint_system == "Points"
-        )
-        self.set_option_visibility(
-            settingkey.ALLOW_REPORT_HINTING, visible=hint_system == "Points"
-        )
+        # self.set_option_visibility(
+        #     settingkey.ALLOW_PROOF_HINTING, visible=hint_system == "Points"
+        # )
+        # self.set_option_visibility(
+        #     settingkey.ALLOW_REPORT_HINTING, visible=hint_system == "Points"
+        # )
 
         self.set_group_visibility(
             group_id=_ITEM_POINT_VALUES, visible=score_mode_enabled

@@ -1,11 +1,11 @@
 import itertools
-from typing import Optional
+from typing import Optional, Iterable
 
 from Class.itemClass import KH2Item
 from List.configDict import itemRarity
-from List.inventory import ability, accessory, armor, bonus, consumable, form, growth, keyblade, magic,\
+from List.inventory import ability, accessory, armor, bonus, consumable, form, growth, keyblade, magic, \
     misc, map, proof, recipe, report, shield, staff, storyunlock, summon, synth
-from List.inventory.ability import DonaldAbilities, GoofyAbilities
+from List.inventory.ability import DonaldAbilities, GoofyAbilities, Ability
 from List.inventory.keyblade import Keyblade
 from List.location import weaponslot
 
@@ -490,6 +490,16 @@ class Items:
             KH2Item(ability.AutoSummon, itemRarity.UNCOMMON),
             KH2Item(ability.TrinityLimit, itemRarity.RARE),
         ]
+
+    @staticmethod
+    def sort_ability_items(abilities: Iterable[KH2Item]) -> list[KH2Item]:
+        def key_function(ability_item: KH2Item) -> int:
+            inventory_item = ability_item.item
+            if isinstance(inventory_item, Ability):
+                return inventory_item.sort_index
+            else:
+                return 999999
+        return sorted(abilities, key=key_function)
 
     @staticmethod
     def getNullItem() -> KH2Item:

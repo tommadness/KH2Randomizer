@@ -452,14 +452,17 @@ class KeybladeRandomizer:
     def _itempic_assets(vanilla: VanillaKeyblade, replacement: ReplacementKeyblade) -> list[Asset]:
         assets: list[Asset] = []
 
-        original_itempic = replacement.original_itempic()
-        if original_itempic is not None:
-            assets.append({
-                "name": f"itempic/item-{vanilla.itempic_index}.imd",
-                "platform": "pc",
-                "method": "copy",
-                "source": [{"name": str(original_itempic)}]
-            })
+        # TODO: This was crashing with at least one itempic (Fresh Faces keyblade).
+        #   Since these really shouldn't matter on PC, just not bothering for now.
+        #   If someone else wants to try to figure this out, feel free.
+        # original_itempic = replacement.original_itempic()
+        # if original_itempic is not None:
+        #     assets.append({
+        #         "name": f"itempic/item-{vanilla.itempic_index}.imd",
+        #         "platform": "pc",
+        #         "method": "copy",
+        #         "source": [{"name": str(original_itempic)}]
+        #     })
 
         remastered_itempic = replacement.remastered_itempic()
         if remastered_itempic is not None:

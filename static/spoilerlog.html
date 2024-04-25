@@ -15,6 +15,7 @@
         synthesis_recipe_data = {SYNTHESIS_RECIPE_JSON}
         weapon_stats_data = {WEAPON_STATS_JSON}
         journal_hints_data = {JOURNAL_HINTS_JSON}
+        objectives_data = {OBJECTIVES_JSON}
         settings_data = {SETTINGS_JSON}
     </script>
 
@@ -183,6 +184,20 @@
                     <th>World<br /><input type="text" size="10" id="party_world_search" onkeyup="tableFilter('party_sphere_search','party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="World?"></th>
                     <th>Location<br /><input type="text" id="party_location_search" onkeyup="tableFilter('party_sphere_search','party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Location?"></th>
                     <th>Item<br /><input type="text" id="party_item_search" onkeyup="tableFilter('party_sphere_search','party_world_search','party_location_search','party_item_search','partyItemTable')" placeholder="Item?"></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button class="accordion" id="objectivesHeader">Objectives</button>
+    <div class="panel" id="objectivesPanel">
+        <div class="table-wrapper">
+            <table class="styled-table" id="objectivesTable">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Difficulty</th>
                 </tr>
             </table>
         </div>
@@ -488,6 +503,34 @@ for (var reportNumber in journal_hints_data)
     journalHtml += "</pre></td>"
     rowEntry.innerHTML += journalHtml;
     journalHintsTable.appendChild(rowEntry);
+}
+
+var objectivesCount = objectives_data.length;
+if (objectivesCount == 0) {
+    document.getElementById("objectivesHeader").style.display = "none";
+    document.getElementById("objectivesPanel").style.display = "none";
+} else {
+    var objectivesTable = document.getElementById("objectivesTable");
+    for (var i = 0; i < objectivesCount; i++) {
+        var objective = objectives_data[i];
+
+        var table_entry = document.createElement("tr");
+        var objective_html = "";
+        objective_html += "<td>"
+        objective_html += objective["name"]
+        objective_html += "</td>"
+        objective_html += "<td>"
+        objective_html += objective["type"]
+        objective_html += "</td>"
+        objective_html += "<td>"
+        objective_html += objective["location"]
+        objective_html += "</td>"
+        objective_html += "<td>"
+        objective_html += objective["difficulty"]
+        objective_html += "</td>"
+        table_entry.innerHTML += objective_html;
+        objectivesTable.appendChild(table_entry);
+    }
 }
 
 var settingsTable = document.getElementById("settingsTable");

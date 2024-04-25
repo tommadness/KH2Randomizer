@@ -15,9 +15,9 @@ from PySide6.QtWidgets import QDialog, QMenuBar, QMenu, QComboBox, QSpinBox, QLa
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from Module import appconfig
-from Module.cosmetics import CosmeticsMod
 from Module.cosmeticsmods import texture
-from Module.cosmeticsmods.texture import TextureRecolorSettings, TextureRecolorizer, recolor_image, RecolorDefinition
+from Module.cosmeticsmods.texture import TextureRecolorSettings, TextureRecolorizer, recolor_image, RecolorDefinition, \
+    TextureConditionsLoader
 from UI.Submenus.SubMenu import KH2Submenu
 
 _model_tags_by_category_name = {
@@ -26,6 +26,7 @@ _model_tags_by_category_name = {
     "Nobodies": "nobody",
     "Environment": "environment",
     "Effects": "effects",
+    "Interface": "interface",
 }
 
 
@@ -37,6 +38,7 @@ class TextureRecolorSettingsDialog(QDialog):
 
         self.seed_settings = seed_settings
         self.texture_recolor_settings = TextureRecolorSettings(seed_settings.get(settingkey.TEXTURE_RECOLOR_SETTINGS))
+        self.conditions_loader = TextureConditionsLoader()
 
         self.base_path = appconfig.extracted_data_path() / "kh2"
         if not self.base_path.is_dir():
@@ -252,6 +254,7 @@ class TextureRecolorSettingsDialog(QDialog):
         self._update_preview()
 
     def _update_preview(self):
+        model_id = self._selected_model()["id"]
         recolor = self.recolors_by_area_name[self._selected_colorable_area()["name"]]
 
         colorable_areas: list[dict[str, Any]] = recolor["colorable_areas"]
@@ -259,10 +262,7 @@ class TextureRecolorSettingsDialog(QDialog):
         random_hue_index = int(time.time())
         for colorable_area in colorable_areas:
             area_id = colorable_area["id"]
-            setting = self.texture_recolor_settings.setting_for_area(
-                model_id=self._selected_model()["id"],
-                area_id=area_id
-            )
+            setting = self.texture_recolor_settings.setting_for_area(model_id=model_id, area_id=area_id)
 
             if setting == texture.VANILLA:
                 continue
@@ -274,7 +274,11 @@ class TextureRecolorSettingsDialog(QDialog):
             else:  # Custom
                 chosen_hue = int(setting)
 
-            conditions = TextureRecolorizer.conditions_from_colorable_area(colorable_area)
+            conditions = self.conditions_loader.conditions_from_colorable_area(
+                model_id=model_id,
+                area_id=area_id,
+                colorable_area=colorable_area
+            )
             new_saturation = colorable_area.get("new_saturation")
             value_offset = colorable_area.get("value_offset")
             recolor_definitions.append(RecolorDefinition(conditions, chosen_hue, new_saturation, value_offset))

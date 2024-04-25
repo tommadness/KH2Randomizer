@@ -590,6 +590,7 @@
             - static/recolors/masks/sora-master/1_Grey.mask
             - static/recolors/masks/sora-master/1_Grey.mask
             - N/A
+          new_saturation: 50
       image_groups:
         - - remastered/obj/H_EX500_TRIF.mdlx/-3.dds
 
