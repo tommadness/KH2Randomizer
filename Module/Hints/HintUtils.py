@@ -217,8 +217,10 @@ class PointHintData:
         world_to_hint: locationType,
     ):
         self.prevent_self_hinting = settings.prevent_self_hinting
-        self.allow_proof_hinting = settings.allow_proof_hinting
-        self.allow_report_hinting = settings.allow_report_hinting
+        self.report_reveal_items = settings.spoiler_reveal_checks
+
+        # self.allow_proof_hinting = settings.allow_proof_hinting
+        # self.allow_report_hinting = settings.allow_report_hinting
         self.world = world_to_hint
         unique_items = []
         ic_list = common_tracker_data.important_check_list
@@ -229,20 +231,8 @@ class PointHintData:
 
     def candidate_hints(self) -> list[KH2Item]:
         candidate_items: list[KH2Item] = []
-        proofs = {
-            itemType.PROOF_OF_PEACE,
-            itemType.PROOF_OF_CONNECTION,
-            itemType.PROOF_OF_NONEXISTENCE,
-            itemType.PROMISE_CHARM
-        }
         for item in self.unique_items:
-            if item.ItemType in proofs:
-                if self.allow_proof_hinting:
-                    candidate_items.append(item)
-            elif item.ItemType is itemType.REPORT:
-                if self.allow_report_hinting:
-                    candidate_items.append(item)
-            else:
+            if item.ItemType in self.report_reveal_items:
                 candidate_items.append(item)
         return candidate_items
 

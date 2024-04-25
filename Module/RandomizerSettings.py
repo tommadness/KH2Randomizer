@@ -569,6 +569,8 @@ class RandomizerSettings:
             self.available_objectives = [o for o in self.available_objectives if o.Type == ObjectiveList.ObjectiveType.WORLDPROGRESS or o.Type == ObjectiveList.ObjectiveType.FIGHT]
         elif self.objective_pool_type == ObjectivePoolOption.HITLIST.name:
             self.available_objectives = [o for o in self.available_objectives if o.Difficulty==ObjectiveList.ObjectiveDifficulty.LATEST ]
+        elif self.objective_pool_type == ObjectivePoolOption.HITLIST.name:
+            self.available_objectives = [o for o in self.available_objectives if o.Difficulty==ObjectiveList.ObjectiveDifficulty.LATEST ]
 
         if self.max_objectives_available > len(self.available_objectives):
             raise SettingsException("Not enough enabled objectives for the requested available pool. Turn on more objectives or lower available")

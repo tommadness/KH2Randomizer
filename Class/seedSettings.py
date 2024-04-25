@@ -555,7 +555,9 @@ _objective_pool_text = textwrap.dedent(
 
         Bosses Only - Only allows bosses to be in the pool, story and superbosses.
 
-        Everything but Bosses - All world prorgress checkpoints and drive levels.
+        Last Story Check - Only allows the checkpoints for the end of world story.
+
+        Everything but Bosses - All world progress checkpoints and drive levels.
 
         Spike Hitlist - Popularized by SpikeVegeta, this list of objectives is all Superbosses (AS's if enabled instead of Data versions), a level 7 drive form, and starry hill as goals.
 """

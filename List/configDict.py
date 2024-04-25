@@ -228,6 +228,7 @@ class BattleLevelOption(str, Enum):
 class ObjectivePoolOption(str, Enum):
     ALL = "All Objectives"
     BOSSES = "Bosses Only"
+    LASTSTORY = "Last Story Check"
     NOBOSSES = "Everything but Bosses"
     HITLIST = "Spike Hitlist"
 

@@ -34,7 +34,7 @@ class HintsMenu(KH2Submenu):
 
         self.start_group()
         self.add_option(settingkey.HINTABLE_CHECKS)
-        self.end_group(title="Hintable Items", group_id=_HINTABLE_ITEMS)
+        self.end_group(title="Trackable Items", group_id=_HINTABLE_ITEMS)
         self.end_column()
 
         self.start_column()
@@ -70,7 +70,7 @@ class HintsMenu(KH2Submenu):
         self.end_group(title="Set Bonuses", group_id=_SET_BONUSES)
         self.start_group()
         self.add_option(settingkey.SPOILER_REVEAL_TYPES)
-        self.end_group(title="Spoiled Items", group_id=_SPOILED_ITEMS)
+        self.end_group(title="Reports Reveal Items", group_id=_SPOILED_ITEMS)
         self.end_column()
 
         self.start_column()
@@ -155,7 +155,7 @@ class HintsMenu(KH2Submenu):
             settingkey.REPORTS_REVEAL, visible=hint_system == "Spoiler"
         )
         self.set_group_visibility(
-            group_id=_SPOILED_ITEMS, visible=hint_system == "Spoiler"
+            group_id=_SPOILED_ITEMS, visible=hint_system == "Spoiler" or hint_system == "Points"
         )
         if hint_system != "Spoiler":
             setting, widget = self.widgets_and_settings_by_name[
