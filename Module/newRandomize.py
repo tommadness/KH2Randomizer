@@ -707,15 +707,16 @@ class Randomizer:
             random.shuffle(form_5_objectives)
             random.shuffle(form_7_objectives)
             all_form_objectives = form_3_objectives + form_5_objectives + form_7_objectives
-            all_form_objectives[::3] = form_3_objectives
-            all_form_objectives[1::3] = form_5_objectives
-            all_form_objectives[2::3] = form_7_objectives
+            if len(all_form_objectives) > 3:
+                all_form_objectives[::3] = form_3_objectives
+                all_form_objectives[1::3] = form_5_objectives
+                all_form_objectives[2::3] = form_7_objectives
             # if the pool isn't going to be big enough, we need to fill with form levels
             if settings.max_objectives_available > len(non_form_objectives):
                 non_form_objectives.extend(all_form_objectives[0:(settings.max_objectives_available-len(non_form_objectives))])
             else:
                 # pick first 3
-                non_form_objectives.extend(all_form_objectives[0:3])
+                non_form_objectives.extend(all_form_objectives[0:min(3, len(all_form_objectives))])
             objective_pool = non_form_objectives
                 
 
