@@ -2,6 +2,7 @@ from typing import Optional
 
 from Class.itemClass import KH2Item
 from List.ItemList import Items
+from List.ObjectiveList import KH2Objective
 from List.configDict import locationType
 from List.inventory import misc
 from Module.newRandomize import ItemAssignment, SynthesisRecipe, WeaponStats
@@ -132,5 +133,17 @@ def weapon_stats_dictionary(
             "strength": weapon.strength,
             "magic": weapon.magic,
             "item": assignment.item.Name
+        })
+    return result
+
+
+def objectives_dictionary(objectives: list[KH2Objective]) -> list[dict[str, str]]:
+    result: list[dict[str, str]] = []
+    for objective in objectives:
+        result.append({
+            "name": objective.Name,
+            "type": objective.Type.value,
+            "location": objective.Location.value,
+            "difficulty": objective.Difficulty.value,
         })
     return result

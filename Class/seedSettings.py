@@ -531,9 +531,8 @@ _depth_options_text = textwrap.dedent(
 
         Anywhere - No restriction.
 
-        Non-Superboss - Cannot be on a superboss (Data Organization/Absent Silhouette/Sephiroth/Terra).
-        All other locations are possible.
-        
+        Non-Superboss - Cannot be on a superboss; all other locations are possible.
+
         First Visit - Force into a first visit (only for the 13 main hub worlds with portals).
         
         First Visit Boss - Force onto the first visit boss of a world (only for the 13 main hub worlds with portals).
@@ -543,23 +542,11 @@ _depth_options_text = textwrap.dedent(
         Last Story Boss - Force onto the last boss of a world (only for the 13 main hub worlds with portals).
         
         Superbosses - Force onto superbosses only (Data Organization/Absent Silhouette/Sephiroth/Terra).
-        
-        Non First Visits - Opposite of the first visit depth. Anywhere but the first visit of the 13 portal worlds (can include drives/levels/100 acre).
+
+        Non First Visits - Opposite of the first visit depth. Anywhere but the first visit of the 13 portal worlds (can include Drive Forms/Levels/100 Acre Wood).
 """
 )
 
-_objective_pool_text = textwrap.dedent(
-    """
-
-        All Objectives - All available world progress checkpoints, drive levels, and bosses.
-
-        Bosses Only - Only allows bosses to be in the pool, story and superbosses.
-
-        Everything but Bosses - All world prorgress checkpoints and drive levels.
-
-        Spike Hitlist - Popularized by SpikeVegeta, this list of objectives is all Superbosses (AS's if enabled instead of Data versions), a level 7 drive form, and starry hill as goals.
-"""
-)
 
 def _location_unlock_setting(key: str, location: locationType) -> IntSpinner:
     unlock = storyunlock.story_unlock_for_location(location)
@@ -576,11 +563,12 @@ def _location_unlock_setting(key: str, location: locationType) -> IntSpinner:
         tooltip=f"Number of visits to unlock in {location}. Visits are unlocked with {unlock.name}.",
     )
 
-def _starting_inventory_setting(key: str, name: str,item_type: itemType, max_number: int) -> IntSpinner:
+
+def _starting_inventory_setting(key: str, name: str, item_type: itemType, max_number: int) -> IntSpinner:
     return IntSpinner(
         name=key,
         group=SettingGroup.STARTING_INVENTORY,
-        ui_label=f"{name}",
+        ui_label=f"{name}s",
         standalone_label=f"Starting {name}s",
         shared=True,
         minimum=0,
@@ -589,6 +577,7 @@ def _starting_inventory_setting(key: str, name: str,item_type: itemType, max_num
         default=0,
         tooltip=f"Number of Starting {name}s.",
     )
+
 
 def _weighted_item_setting(key: str, item_type: str):
     return SingleSelect(
@@ -925,7 +914,8 @@ _all_settings = [
     SingleSelect(
         name=settingkey.STARTING_MOVEMENT,
         group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Growth Ability Starting Level",
+        ui_label="Growth Abilities",
+        standalone_label="Starting Growth Abilities",
         choices={
             StartingMovementOption.DISABLED: "None",
             StartingMovementOption.RANDOM_3: "3 Random",
@@ -965,7 +955,7 @@ _all_settings = [
     IntSpinner(
         name=settingkey.STARTING_REPORTS,
         group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Starting Ansem Reports",
+        ui_label="Ansem Reports",
         standalone_label="# Starting Ansem Reports",
         minimum=0,
         maximum=13,
@@ -975,51 +965,53 @@ _all_settings = [
         randomizable=[0, 1, 2, 3],
         tooltip="Start with this number of Ansem Reports already obtained.",
     ),
-    _starting_inventory_setting(settingkey.STARTING_MAGIC_FIRE,"Fire",itemType.FIRE,3),
-    _starting_inventory_setting(settingkey.STARTING_MAGIC_BLIZZARD,"Blizzard",itemType.BLIZZARD,3),
-    _starting_inventory_setting(settingkey.STARTING_MAGIC_THUNDER,"Thunder",itemType.THUNDER,3),
-    _starting_inventory_setting(settingkey.STARTING_MAGIC_CURE,"Cure",itemType.CURE,3),
-    _starting_inventory_setting(settingkey.STARTING_MAGIC_MAGNET,"Magnet",itemType.MAGNET,3),
-    _starting_inventory_setting(settingkey.STARTING_MAGIC_REFLECT,"Reflect",itemType.REFLECT,3),
-    _starting_inventory_setting(settingkey.STARTING_PAGES,"Torn Page",itemType.TORN_PAGE,5),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_FIRE, "Fire", itemType.FIRE, 3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_BLIZZARD, "Blizzard", itemType.BLIZZARD, 3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_THUNDER, "Thunder", itemType.THUNDER, 3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_CURE, "Cure", itemType.CURE, 3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_MAGNET, "Magnet", itemType.MAGNET, 3),
+    _starting_inventory_setting(settingkey.STARTING_MAGIC_REFLECT, "Reflect", itemType.REFLECT, 3),
+    _starting_inventory_setting(settingkey.STARTING_PAGES, "Torn Page", itemType.TORN_PAGE, 5),
     MultiSelect(
         name=settingkey.STARTING_KEYBLADES,
         group=SettingGroup.STARTING_INVENTORY,
         ui_label="Starting Keyblades",
         choices={
-            str(k.id):k.name for k in get_all_keyblades()
+            str(k.id): k.name for k in get_all_keyblades()
         },
         shared=True,
         default=[],
-        tooltip="Start with keyblades in your inventory, can be useful for keyblades locking chests.",
-    ),    
+        tooltip="Start with the selected keyblades in your inventory.",
+    ),
     MultiSelect(
         name=settingkey.STARTING_DRIVES,
         group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Starting Forms/Summons",
+        ui_label="Summons / Drive Forms",
+        standalone_label="Starting Summons / Drive Forms",
         choices={
-            str(summon.BaseballCharm.id):summon.BaseballCharm.name,
-            str(summon.LampCharm.id):summon.LampCharm.name,
-            str(summon.UkuleleCharm.id):summon.UkuleleCharm.name,
-            str(summon.FeatherCharm.id):summon.FeatherCharm.name,
-            str(form.ValorForm.id):form.ValorForm.name,
-            str(form.WisdomForm.id):form.WisdomForm.name,
-            str(form.LimitForm.id):form.LimitForm.name,
-            str(form.MasterForm.id):form.MasterForm.name,
-            str(form.FinalForm.id):form.FinalForm.name,
-            str(form.AntiForm.id):form.AntiForm.name,
+            str(summon.BaseballCharm.id): summon.BaseballCharm.name,
+            str(summon.LampCharm.id): summon.LampCharm.name,
+            str(summon.UkuleleCharm.id): summon.UkuleleCharm.name,
+            str(summon.FeatherCharm.id): summon.FeatherCharm.name,
+            str(form.ValorForm.id): form.ValorForm.name,
+            str(form.WisdomForm.id): form.WisdomForm.name,
+            str(form.LimitForm.id): form.LimitForm.name,
+            str(form.MasterForm.id): form.MasterForm.name,
+            str(form.FinalForm.id): form.FinalForm.name,
+            str(form.AntiForm.id): form.AntiForm.name,
         },
         shared=True,
         default=[],
-        tooltip="Start with drives/summons in your inventory.",
+        tooltip="Start with the selected summons and Drive Forms in your inventory.",
     ),
     MultiSelect(
         name=settingkey.STARTING_ABILITIES,
         group=SettingGroup.STARTING_INVENTORY,
         ui_label="Starting Abilities",
         choices={
-            str(item.Id): item.Name
-            for item in Items.getSupportAbilityList() + Items.getLevelAbilityList() + Items.getActionAbilityList()
+            str(item.Id): item.Name for item in Items.sort_ability_items(
+                Items.getSupportAbilityList() + Items.getLevelAbilityList() + Items.getActionAbilityList()
+            )
         },
         shared=True,
         default=[],
@@ -1510,8 +1502,7 @@ _all_settings = [
         choices=location_depth_choices(),
         shared=True,
         default=locationDepth.NonSuperboss,
-        tooltip="The set of locations in which Ansem Reports are allowed to be placed."
-        + _depth_options_text,
+        tooltip="The set of locations in which Ansem Reports are allowed to be placed." + _depth_options_text,
         randomizable=[
             locationDepth.SecondVisitOnly,
             locationDepth.NonSuperboss,
@@ -1526,8 +1517,7 @@ _all_settings = [
         choices=location_depth_choices(),
         shared=True,
         default=locationDepth.Anywhere,
-        tooltip="The set of locations in which Proofs are allowed to be placed."
-        + _depth_options_text,
+        tooltip="The set of locations in which Proofs are allowed to be placed." + _depth_options_text,
         randomizable=[
             locationDepth.SecondVisitOnly,
             locationDepth.NonSuperboss,
@@ -1537,13 +1527,13 @@ _all_settings = [
     ),
     SingleSelect(
         name=settingkey.PROMISE_CHARM_DEPTH,
-        group=SettingGroup.ITEM_POOL,
+        group=SettingGroup.ITEM_PLACEMENT,
         ui_label="Promise Charm Depth",
         choices=location_depth_choices(),
         shared=True,
         default=locationDepth.Anywhere,
         tooltip="The set of locations in which the Promise Charm is allowed to be placed (if enabled)."
-        + _depth_options_text,
+                + _depth_options_text,
         randomizable=[
             locationDepth.SecondVisitOnly,
             locationDepth.NonSuperboss,
@@ -1558,8 +1548,7 @@ _all_settings = [
         choices=location_depth_choices(),
         shared=True,
         default=locationDepth.Anywhere,
-        tooltip="The set of locations in which Visit Unlocks are allowed to be placed."
-        + _depth_options_text,
+        tooltip="The set of locations in which Visit Unlocks are allowed to be placed." + _depth_options_text,
         randomizable=[
             locationDepth.FirstVisit,
             locationDepth.NonSuperboss,
@@ -1688,7 +1677,18 @@ _all_settings = [
         choices={option.name: option.value for option in list(ObjectivePoolOption)},
         shared=True,
         default=ObjectivePoolOption.ALL.name,
-        tooltip=_objective_pool_text,
+        tooltip="""
+        The type of objectives that are available.
+
+        All Objectives - All available world progress checkpoints, Drive Form levels, and bosses.
+
+        Bosses Only - Only allows bosses to be in the pool (both story and superbosses).
+
+        Everything but Bosses - All world progress checkpoints and Drive Form levels.
+
+        Spike Hit List - Popularized by Spikevegeta, this pool of objectives contains all superbosses, a level 7 Drive
+        Form, and Starry Hill. For the superbosses, those that have Absent Silhouettes places the objective there.
+        """,
     ),
     Toggle(
         name=settingkey.YEET_THE_BEAR,
@@ -1918,19 +1918,15 @@ _all_settings = [
         group=SettingGroup.KEYBLADES,
         ui_label="Support Keyblade-Eligible Abilities",
         choices={
-            str(item.Id): item.Name
-            for item in Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
+            str(item.Id): item.Name for item in Items.sort_ability_items(
+                Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
+            )
         },
         shared=True,
         default=list(
-            set(
-                [
-                    str(item.Id)
-                    for item in Items.getSupportAbilityList()
-                    + Items.getKeybladeAbilityList()
-                    + Items.getLevelAbilityList()
-                ]
-            )
+            set([str(item.Id) for item in Items.sort_ability_items(
+                Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
+            )])
         ),
         tooltip="Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.",
     ),
@@ -1938,7 +1934,7 @@ _all_settings = [
         name=settingkey.KEYBLADE_ACTION_ABILITIES,
         group=SettingGroup.KEYBLADES,
         ui_label="Action Keyblade-Eligible Abilities",
-        choices={str(item.Id): item.Name for item in Items.getActionAbilityList()},
+        choices={str(item.Id): item.Name for item in Items.sort_ability_items(Items.getActionAbilityList())},
         shared=True,
         default=[],
         tooltip="Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.",
@@ -2462,13 +2458,15 @@ _all_settings = [
         shared=True,
         default=DisableFinalOption.DEFAULT,
         tooltip="""
-        Restrictions on how Final Form works
-        
-        None - The default setting. No changes are done to how final works in the rando.
-        
-        No Random Chance - Turns off random anti-form, which means it's not possible to force Final Form without Light & Darkness
-        
-        No Final Form - Disables going into Final Form in any way. Final Form can still be obtained to increase max form levels, but no checks will be found on final form.
+        Restrictions on how Final Form works.
+
+        None - The default setting. No changes are done to how Final Form works in the randomizer.
+
+        No Random Chance - Turns off random Antiform, which means it's not possible to force Final Form without Light &
+        Darkness.
+
+        No Final Form - Disables going into Final Form in any way. Final Form can still be obtained to increase maximum
+        Drive Form levels, but no checks will be found on Final Form.
         """,
     ),
     Toggle(
@@ -2501,7 +2499,7 @@ _all_settings = [
     ),
     Toggle(
         name=settingkey.KEYBLADES_LOCK_CHESTS,
-        group=SettingGroup.LOCATIONS,
+        group=SettingGroup.SEED_MODIFIERS,
         ui_label="Keyblades Unlock Chests",
         shared=True,
         default=False,
@@ -3519,22 +3517,13 @@ class SeedSettings:
             value = self._values[name]
             if isinstance(setting, Toggle):
                 flags.append(value)
-            elif (
-                isinstance(setting, SingleSelect)
-                and len(setting.choice_keys) <= SHORT_SELECT_LIMIT
-            ):
+            elif isinstance(setting, SingleSelect) and len(setting.choice_keys) <= SHORT_SELECT_LIMIT:
                 index = setting.choice_keys.index(value)
                 short_select_values += single_select_chars[index]
-            elif (
-                isinstance(setting, IntSpinner)
-                and len(setting.selectable_values) <= SHORT_SELECT_LIMIT
-            ):
+            elif isinstance(setting, IntSpinner) and len(setting.selectable_values) <= SHORT_SELECT_LIMIT:
                 index = setting.selectable_values.index(value)
                 short_select_values += single_select_chars[index]
-            elif (
-                isinstance(setting, FloatSpinner)
-                and len(setting.selectable_values) <= SHORT_SELECT_LIMIT
-            ):
+            elif isinstance(setting, FloatSpinner) and len(setting.selectable_values) <= SHORT_SELECT_LIMIT:
                 index = setting.selectable_values.index(value)
                 short_select_values += single_select_chars[index]
             else:
@@ -3551,9 +3540,7 @@ class SeedSettings:
 
         return DELIMITER.join(values)
 
-    def apply_settings_string(
-        self, settings_string: str, include_private: bool = False
-    ):
+    def apply_settings_string(self, settings_string: str, include_private: bool = False):
         parts = settings_string.split(DELIMITER)
 
         # The first part is an encoded representation of all the toggle/flag settings
@@ -3569,20 +3556,11 @@ class SeedSettings:
             setting = settings_by_name[name]
             if isinstance(setting, Toggle):
                 toggle_settings.append(setting)
-            elif (
-                isinstance(setting, SingleSelect)
-                and len(setting.choice_keys) <= SHORT_SELECT_LIMIT
-            ):
+            elif isinstance(setting, SingleSelect) and len(setting.choice_keys) <= SHORT_SELECT_LIMIT:
                 short_select_settings.append(setting)
-            elif (
-                isinstance(setting, IntSpinner)
-                and len(setting.selectable_values) <= SHORT_SELECT_LIMIT
-            ):
+            elif isinstance(setting, IntSpinner) and len(setting.selectable_values) <= SHORT_SELECT_LIMIT:
                 short_select_settings.append(setting)
-            elif (
-                isinstance(setting, FloatSpinner)
-                and len(setting.selectable_values) <= SHORT_SELECT_LIMIT
-            ):
+            elif isinstance(setting, FloatSpinner) and len(setting.selectable_values) <= SHORT_SELECT_LIMIT:
                 short_select_settings.append(setting)
             else:
                 self.set(name, setting.parse_settings_string(parts[used_index]))
@@ -3699,17 +3677,9 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
         else:
             random_choices[r.name] = random.choice(setting_choices[r.name])
 
-    if (
-        settingkey.KEYBLADE_MIN_STAT in random_choices
-        and settingkey.KEYBLADE_MAX_STAT in random_choices
-    ):
-        if (
-            random_choices[settingkey.KEYBLADE_MIN_STAT]
-            > random_choices[settingkey.KEYBLADE_MAX_STAT]
-        ):
-            random_choices[settingkey.KEYBLADE_MAX_STAT] = random_choices[
-                settingkey.KEYBLADE_MIN_STAT
-            ]
+    if settingkey.KEYBLADE_MIN_STAT in random_choices and settingkey.KEYBLADE_MAX_STAT in random_choices:
+        if random_choices[settingkey.KEYBLADE_MIN_STAT] > random_choices[settingkey.KEYBLADE_MAX_STAT]:
+            random_choices[settingkey.KEYBLADE_MAX_STAT] = random_choices[settingkey.KEYBLADE_MIN_STAT]
 
     for r in randomizable_settings:
         real_settings_object.set(r.name, random_choices[r.name])

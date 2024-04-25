@@ -1,0 +1,343 @@
+- id: camp_menu
+  name: Menu (Camp)
+  tags:
+    - interface
+  recolors:
+    - colorable_areas:
+        - id: logo_outline
+          name: Logo Outline
+          mask_files:
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+        - id: scrollbar
+          name: Scrollbar
+          mask_files:
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+          new_saturation: 50
+        - id: drop_shadows
+          name: Drop Shadows
+          mask_files:
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+          new_saturation: 75
+      image_groups:
+        - - remastered/menu/fr/camp.2ld/FR_camp_2ld0.png
+
+        - - remastered/menu/gr/camp.2ld/GR_camp_2ld0.png
+
+        - - remastered/menu/it/camp.2ld/IT_camp_2ld0.png
+
+        - - remastered/menu/sp/camp.2ld/SP_camp_2ld0.png
+
+        - - remastered/menu/uk/camp.2ld/UK_camp_2ld0.png
+
+        - - remastered/menu/us/camp.2ld/US_camp_2ld0.png
+
+      previews: [ false, false, false, false, false, true ]
+
+
+- id: hud_0
+  name: Heads-Up Display 0
+  tags:
+    - interface
+  recolors:
+    - colorable_areas:
+        - id: text
+          name: Text
+          mask_files:
+            - static/recolors/masks/hud-0/Text.mask
+            - static/recolors/masks/hud-0/Text.mask
+            - static/recolors/masks/hud-0/Text.mask
+            - static/recolors/masks/hud-0/Text.mask
+            - static/recolors/masks/hud-0/Text.mask
+          new_saturation: 50
+          value_offset: 25
+      image_groups:
+        - - remastered/field2d/fr/al0field.2dd/FR_al0field_2dd0.png
+          - remastered/field2d/fr/bb0field.2dd/FR_bb0field_2dd0.png
+          - remastered/field2d/fr/ca0field.2dd/FR_ca0field_2dd0.png
+          - remastered/field2d/fr/dc0field.2dd/FR_dc0field_2dd0.png
+          - remastered/field2d/fr/di0field.2dd/FR_di0field_2dd0.png
+          - remastered/field2d/fr/eh0field.2dd/FR_eh0field_2dd0.png
+          - remastered/field2d/fr/es0field.2dd/FR_es0field_2dd0.png
+          - remastered/field2d/fr/hb0field.2dd/FR_hb0field_2dd0.png
+          - remastered/field2d/fr/he0field.2dd/FR_he0field_2dd0.png
+          - remastered/field2d/fr/lk0field.2dd/FR_lk0field_2dd0.png
+          - remastered/field2d/fr/lm0field.2dd/FR_lm0field_2dd0.png
+          - remastered/field2d/fr/mu0field.2dd/FR_mu0field_2dd0.png
+          - remastered/field2d/fr/nm0field.2dd/FR_nm0field_2dd0.png
+          - remastered/field2d/fr/po0field.2dd/FR_po0field_2dd0.png
+          - remastered/field2d/fr/tr0field.2dd/FR_tr0field_2dd0.png
+          - remastered/field2d/fr/tt0field.2dd/FR_tt0field_2dd0.png
+          - remastered/field2d/fr/wi0field.2dd/FR_wi0field_2dd0.png
+          - remastered/field2d/fr/wm0field.2dd/FR_wm0field_2dd0.png
+          - remastered/field2d/fr/zz0field.2dd/FR_zz0field_2dd0.png
+
+        - - remastered/field2d/gr/al0field.2dd/GR_al0field_2dd0.png
+          - remastered/field2d/gr/bb0field.2dd/GR_bb0field_2dd0.png
+          - remastered/field2d/gr/ca0field.2dd/GR_ca0field_2dd0.png
+          - remastered/field2d/gr/dc0field.2dd/GR_dc0field_2dd0.png
+          - remastered/field2d/gr/di0field.2dd/GR_di0field_2dd0.png
+          - remastered/field2d/gr/eh0field.2dd/GR_eh0field_2dd0.png
+          - remastered/field2d/gr/es0field.2dd/GR_es0field_2dd0.png
+          - remastered/field2d/gr/hb0field.2dd/GR_hb0field_2dd0.png
+          - remastered/field2d/gr/he0field.2dd/GR_he0field_2dd0.png
+          - remastered/field2d/gr/lk0field.2dd/GR_lk0field_2dd0.png
+          - remastered/field2d/gr/lm0field.2dd/GR_lm0field_2dd0.png
+          - remastered/field2d/gr/mu0field.2dd/GR_mu0field_2dd0.png
+          - remastered/field2d/gr/nm0field.2dd/GR_nm0field_2dd0.png
+          - remastered/field2d/gr/po0field.2dd/GR_po0field_2dd0.png
+          - remastered/field2d/gr/tr0field.2dd/GR_tr0field_2dd0.png
+          - remastered/field2d/gr/tt0field.2dd/GR_tt0field_2dd0.png
+          - remastered/field2d/gr/wi0field.2dd/GR_wi0field_2dd0.png
+          - remastered/field2d/gr/wm0field.2dd/GR_wm0field_2dd0.png
+          - remastered/field2d/gr/zz0field.2dd/GR_zz0field_2dd0.png
+
+        - - remastered/field2d/it/al0field.2dd/IT_al0field_2dd0.png
+          - remastered/field2d/it/bb0field.2dd/IT_bb0field_2dd0.png
+          - remastered/field2d/it/ca0field.2dd/IT_ca0field_2dd0.png
+          - remastered/field2d/it/dc0field.2dd/IT_dc0field_2dd0.png
+          - remastered/field2d/it/di0field.2dd/IT_di0field_2dd0.png
+          - remastered/field2d/it/eh0field.2dd/IT_eh0field_2dd0.png
+          - remastered/field2d/it/es0field.2dd/IT_es0field_2dd0.png
+          - remastered/field2d/it/hb0field.2dd/IT_hb0field_2dd0.png
+          - remastered/field2d/it/he0field.2dd/IT_he0field_2dd0.png
+          - remastered/field2d/it/lk0field.2dd/IT_lk0field_2dd0.png
+          - remastered/field2d/it/lm0field.2dd/IT_lm0field_2dd0.png
+          - remastered/field2d/it/mu0field.2dd/IT_mu0field_2dd0.png
+          - remastered/field2d/it/nm0field.2dd/IT_nm0field_2dd0.png
+          - remastered/field2d/it/po0field.2dd/IT_po0field_2dd0.png
+          - remastered/field2d/it/tr0field.2dd/IT_tr0field_2dd0.png
+          - remastered/field2d/it/tt0field.2dd/IT_tt0field_2dd0.png
+          - remastered/field2d/it/wi0field.2dd/IT_wi0field_2dd0.png
+          - remastered/field2d/it/wm0field.2dd/IT_wm0field_2dd0.png
+          - remastered/field2d/it/zz0field.2dd/IT_zz0field_2dd0.png
+
+        - - remastered/field2d/sp/al0field.2dd/SP_al0field_2dd0.png
+          - remastered/field2d/sp/bb0field.2dd/SP_bb0field_2dd0.png
+          - remastered/field2d/sp/ca0field.2dd/SP_ca0field_2dd0.png
+          - remastered/field2d/sp/dc0field.2dd/SP_dc0field_2dd0.png
+          - remastered/field2d/sp/di0field.2dd/SP_di0field_2dd0.png
+          - remastered/field2d/sp/eh0field.2dd/SP_eh0field_2dd0.png
+          - remastered/field2d/sp/es0field.2dd/SP_es0field_2dd0.png
+          - remastered/field2d/sp/hb0field.2dd/SP_hb0field_2dd0.png
+          - remastered/field2d/sp/he0field.2dd/SP_he0field_2dd0.png
+          - remastered/field2d/sp/lk0field.2dd/SP_lk0field_2dd0.png
+          - remastered/field2d/sp/lm0field.2dd/SP_lm0field_2dd0.png
+          - remastered/field2d/sp/mu0field.2dd/SP_mu0field_2dd0.png
+          - remastered/field2d/sp/nm0field.2dd/SP_nm0field_2dd0.png
+          - remastered/field2d/sp/po0field.2dd/SP_po0field_2dd0.png
+          - remastered/field2d/sp/tr0field.2dd/SP_tr0field_2dd0.png
+          - remastered/field2d/sp/tt0field.2dd/SP_tt0field_2dd0.png
+          - remastered/field2d/sp/wi0field.2dd/SP_wi0field_2dd0.png
+          - remastered/field2d/sp/wm0field.2dd/SP_wm0field_2dd0.png
+          - remastered/field2d/sp/zz0field.2dd/SP_zz0field_2dd0.png
+
+        - - remastered/field2d/us/al0field.2dd/US_al0field_2dd0.png
+          - remastered/field2d/us/bb0field.2dd/US_bb0field_2dd0.png
+          - remastered/field2d/us/ca0field.2dd/US_ca0field_2dd0.png
+          - remastered/field2d/us/dc0field.2dd/US_dc0field_2dd0.png
+          - remastered/field2d/us/di0field.2dd/US_di0field_2dd0.png
+          - remastered/field2d/us/eh0field.2dd/US_eh0field_2dd0.png
+          - remastered/field2d/us/es0field.2dd/US_es0field_2dd0.png
+          - remastered/field2d/us/hb0field.2dd/US_hb0field_2dd0.png
+          - remastered/field2d/us/he0field.2dd/US_he0field_2dd0.png
+          - remastered/field2d/us/lk0field.2dd/US_lk0field_2dd0.png
+          - remastered/field2d/us/lm0field.2dd/US_lm0field_2dd0.png
+          - remastered/field2d/us/mu0field.2dd/US_mu0field_2dd0.png
+          - remastered/field2d/us/nm0field.2dd/US_nm0field_2dd0.png
+          - remastered/field2d/us/po0field.2dd/US_po0field_2dd0.png
+          - remastered/field2d/us/tr0field.2dd/US_tr0field_2dd0.png
+          - remastered/field2d/us/tt0field.2dd/US_tt0field_2dd0.png
+          - remastered/field2d/us/wi0field.2dd/US_wi0field_2dd0.png
+          - remastered/field2d/us/wm0field.2dd/US_wm0field_2dd0.png
+          - remastered/field2d/us/zz0field.2dd/US_zz0field_2dd0.png
+
+      previews: [ false, false, false, false, true ]
+
+
+- id: hud_1
+  name: Heads-Up Display 1
+  tags:
+    - interface
+  recolors:
+    - colorable_areas:
+        - id: drive_gauge_1
+          name: Drive Gauge 1
+          mask_files:
+            - static/recolors/masks/hud-1/DriveGauge1.mask
+            - static/recolors/masks/hud-1/DriveGauge1.mask
+            - static/recolors/masks/hud-1/DriveGauge1.mask
+            - static/recolors/masks/hud-1/DriveGauge1.mask
+            - static/recolors/masks/hud-1/DriveGauge1.mask
+          new_saturation: 75
+        - id: drive_gauge_2
+          name: Drive Gauge 2
+          mask_files:
+            - static/recolors/masks/hud-1/DriveGauge2.mask
+            - static/recolors/masks/hud-1/DriveGauge2.mask
+            - static/recolors/masks/hud-1/DriveGauge2.mask
+            - static/recolors/masks/hud-1/DriveGauge2.mask
+            - static/recolors/masks/hud-1/DriveGauge2.mask
+          new_saturation: 75
+        - id: gauges_hp
+          name: Gauges (HP)
+          mask_files:
+            - static/recolors/masks/hud-1/HPGauges.mask
+            - static/recolors/masks/hud-1/HPGauges.mask
+            - static/recolors/masks/hud-1/HPGauges.mask
+            - static/recolors/masks/hud-1/HPGauges.mask
+            - static/recolors/masks/hud-1/HPGauges.mask
+          new_saturation: 75
+        - id: message_boxes_tint
+          name: Msg Box 1 Tint
+          mask_files:
+            - static/recolors/masks/hud-1/MessageBoxes.mask
+            - static/recolors/masks/hud-1/MessageBoxes.mask
+            - static/recolors/masks/hud-1/MessageBoxes.mask
+            - static/recolors/masks/hud-1/MessageBoxes.mask
+            - static/recolors/masks/hud-1/MessageBoxes.mask
+          new_saturation: 75
+        - id: message_boxes_2_tint
+          name: Msg Box 2 Tint
+          mask_files:
+            - static/recolors/masks/hud-1/MessageBoxes2.mask
+            - static/recolors/masks/hud-1/MessageBoxes2.mask
+            - static/recolors/masks/hud-1/MessageBoxes2.mask
+            - static/recolors/masks/hud-1/MessageBoxes2.mask
+            - static/recolors/masks/hud-1/MessageBoxes2.mask
+          new_saturation: 75
+          value_offset: 10
+        - id: gauges_mp
+          name: Gauges (MP)
+          mask_files:
+            - static/recolors/masks/hud-1/MPGauges.mask
+            - static/recolors/masks/hud-1/MPGauges.mask
+            - static/recolors/masks/hud-1/MPGauges.mask
+            - static/recolors/masks/hud-1/MPGauges.mask
+            - static/recolors/masks/hud-1/MPGauges.mask
+          new_saturation: 75
+        - id: text
+          name: Text
+          mask_files:
+            - static/recolors/masks/hud-1/Text.mask
+            - static/recolors/masks/hud-1/Text.mask
+            - static/recolors/masks/hud-1/Text.mask
+            - static/recolors/masks/hud-1/Text.mask
+            - static/recolors/masks/hud-1/Text.mask
+          new_saturation: 50
+      image_groups:
+        - - remastered/field2d/fr/al0field.2dd/FR_al0field_2dd1.png
+          - remastered/field2d/fr/bb0field.2dd/FR_bb0field_2dd1.png
+          - remastered/field2d/fr/ca0field.2dd/FR_ca0field_2dd1.png
+          - remastered/field2d/fr/dc0field.2dd/FR_dc0field_2dd1.png
+          - remastered/field2d/fr/di0field.2dd/FR_di0field_2dd1.png
+          - remastered/field2d/fr/eh0field.2dd/FR_eh0field_2dd1.png
+          - remastered/field2d/fr/es0field.2dd/FR_es0field_2dd1.png
+          - remastered/field2d/fr/hb0field.2dd/FR_hb0field_2dd1.png
+          - remastered/field2d/fr/he0field.2dd/FR_he0field_2dd1.png
+          - remastered/field2d/fr/lk0field.2dd/FR_lk0field_2dd1.png
+          - remastered/field2d/fr/lm0field.2dd/FR_lm0field_2dd1.png
+          - remastered/field2d/fr/mu0field.2dd/FR_mu0field_2dd1.png
+          - remastered/field2d/fr/nm0field.2dd/FR_nm0field_2dd1.png
+          - remastered/field2d/fr/po0field.2dd/FR_po0field_2dd1.png
+          - remastered/field2d/fr/tr0field.2dd/FR_tr0field_2dd1.png
+          - remastered/field2d/fr/tt0field.2dd/FR_tt0field_2dd1.png
+          - remastered/field2d/fr/wi0field.2dd/FR_wi0field_2dd1.png
+          - remastered/field2d/fr/wm0field.2dd/FR_wm0field_2dd1.png
+          - remastered/field2d/fr/zz0field.2dd/FR_zz0field_2dd1.png
+
+        - - remastered/field2d/gr/al0field.2dd/GR_al0field_2dd1.png
+          - remastered/field2d/gr/bb0field.2dd/GR_bb0field_2dd1.png
+          - remastered/field2d/gr/ca0field.2dd/GR_ca0field_2dd1.png
+          - remastered/field2d/gr/dc0field.2dd/GR_dc0field_2dd1.png
+          - remastered/field2d/gr/di0field.2dd/GR_di0field_2dd1.png
+          - remastered/field2d/gr/eh0field.2dd/GR_eh0field_2dd1.png
+          - remastered/field2d/gr/es0field.2dd/GR_es0field_2dd1.png
+          - remastered/field2d/gr/hb0field.2dd/GR_hb0field_2dd1.png
+          - remastered/field2d/gr/he0field.2dd/GR_he0field_2dd1.png
+          - remastered/field2d/gr/lk0field.2dd/GR_lk0field_2dd1.png
+          - remastered/field2d/gr/lm0field.2dd/GR_lm0field_2dd1.png
+          - remastered/field2d/gr/mu0field.2dd/GR_mu0field_2dd1.png
+          - remastered/field2d/gr/nm0field.2dd/GR_nm0field_2dd1.png
+          - remastered/field2d/gr/po0field.2dd/GR_po0field_2dd1.png
+          - remastered/field2d/gr/tr0field.2dd/GR_tr0field_2dd1.png
+          - remastered/field2d/gr/tt0field.2dd/GR_tt0field_2dd1.png
+          - remastered/field2d/gr/wi0field.2dd/GR_wi0field_2dd1.png
+          - remastered/field2d/gr/wm0field.2dd/GR_wm0field_2dd1.png
+          - remastered/field2d/gr/zz0field.2dd/GR_zz0field_2dd1.png
+
+        - - remastered/field2d/it/al0field.2dd/IT_al0field_2dd1.png
+          - remastered/field2d/it/bb0field.2dd/IT_bb0field_2dd1.png
+          - remastered/field2d/it/ca0field.2dd/IT_ca0field_2dd1.png
+          - remastered/field2d/it/dc0field.2dd/IT_dc0field_2dd1.png
+          - remastered/field2d/it/di0field.2dd/IT_di0field_2dd1.png
+          - remastered/field2d/it/eh0field.2dd/IT_eh0field_2dd1.png
+          - remastered/field2d/it/es0field.2dd/IT_es0field_2dd1.png
+          - remastered/field2d/it/hb0field.2dd/IT_hb0field_2dd1.png
+          - remastered/field2d/it/he0field.2dd/IT_he0field_2dd1.png
+          - remastered/field2d/it/lk0field.2dd/IT_lk0field_2dd1.png
+          - remastered/field2d/it/lm0field.2dd/IT_lm0field_2dd1.png
+          - remastered/field2d/it/mu0field.2dd/IT_mu0field_2dd1.png
+          - remastered/field2d/it/nm0field.2dd/IT_nm0field_2dd1.png
+          - remastered/field2d/it/po0field.2dd/IT_po0field_2dd1.png
+          - remastered/field2d/it/tr0field.2dd/IT_tr0field_2dd1.png
+          - remastered/field2d/it/tt0field.2dd/IT_tt0field_2dd1.png
+          - remastered/field2d/it/wi0field.2dd/IT_wi0field_2dd1.png
+          - remastered/field2d/it/wm0field.2dd/IT_wm0field_2dd1.png
+          - remastered/field2d/it/zz0field.2dd/IT_zz0field_2dd1.png
+
+        - - remastered/field2d/sp/al0field.2dd/SP_al0field_2dd1.png
+          - remastered/field2d/sp/bb0field.2dd/SP_bb0field_2dd1.png
+          - remastered/field2d/sp/ca0field.2dd/SP_ca0field_2dd1.png
+          - remastered/field2d/sp/dc0field.2dd/SP_dc0field_2dd1.png
+          - remastered/field2d/sp/di0field.2dd/SP_di0field_2dd1.png
+          - remastered/field2d/sp/eh0field.2dd/SP_eh0field_2dd1.png
+          - remastered/field2d/sp/es0field.2dd/SP_es0field_2dd1.png
+          - remastered/field2d/sp/hb0field.2dd/SP_hb0field_2dd1.png
+          - remastered/field2d/sp/he0field.2dd/SP_he0field_2dd1.png
+          - remastered/field2d/sp/lk0field.2dd/SP_lk0field_2dd1.png
+          - remastered/field2d/sp/lm0field.2dd/SP_lm0field_2dd1.png
+          - remastered/field2d/sp/mu0field.2dd/SP_mu0field_2dd1.png
+          - remastered/field2d/sp/nm0field.2dd/SP_nm0field_2dd1.png
+          - remastered/field2d/sp/po0field.2dd/SP_po0field_2dd1.png
+          - remastered/field2d/sp/tr0field.2dd/SP_tr0field_2dd1.png
+          - remastered/field2d/sp/tt0field.2dd/SP_tt0field_2dd1.png
+          - remastered/field2d/sp/wi0field.2dd/SP_wi0field_2dd1.png
+          - remastered/field2d/sp/wm0field.2dd/SP_wm0field_2dd1.png
+          - remastered/field2d/sp/zz0field.2dd/SP_zz0field_2dd1.png
+
+        - - remastered/field2d/us/al0field.2dd/US_al0field_2dd1.png
+          - remastered/field2d/us/bb0field.2dd/US_bb0field_2dd1.png
+          - remastered/field2d/us/ca0field.2dd/US_ca0field_2dd1.png
+          - remastered/field2d/us/dc0field.2dd/US_dc0field_2dd1.png
+          - remastered/field2d/us/di0field.2dd/US_di0field_2dd1.png
+          - remastered/field2d/us/eh0field.2dd/US_eh0field_2dd1.png
+          - remastered/field2d/us/es0field.2dd/US_es0field_2dd1.png
+          - remastered/field2d/us/hb0field.2dd/US_hb0field_2dd1.png
+          - remastered/field2d/us/he0field.2dd/US_he0field_2dd1.png
+          - remastered/field2d/us/lk0field.2dd/US_lk0field_2dd1.png
+          - remastered/field2d/us/lm0field.2dd/US_lm0field_2dd1.png
+          - remastered/field2d/us/mu0field.2dd/US_mu0field_2dd1.png
+          - remastered/field2d/us/nm0field.2dd/US_nm0field_2dd1.png
+          - remastered/field2d/us/po0field.2dd/US_po0field_2dd1.png
+          - remastered/field2d/us/tr0field.2dd/US_tr0field_2dd1.png
+          - remastered/field2d/us/tt0field.2dd/US_tt0field_2dd1.png
+          - remastered/field2d/us/wi0field.2dd/US_wi0field_2dd1.png
+          - remastered/field2d/us/wm0field.2dd/US_wm0field_2dd1.png
+          - remastered/field2d/us/zz0field.2dd/US_zz0field_2dd1.png
+
+      previews: [ false, false, false, false, true ]
