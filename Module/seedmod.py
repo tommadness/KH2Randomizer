@@ -291,23 +291,35 @@ class SeedModBuilder:
             ]
         })
 
-        self.mod_yml.add_asset_source("menu/fm/jiminy.bar",
-                {
+        source_data = {
                     "name": "anse",
                     "method":"copy",
                     "type":"jimidata",
                     "source" : [{"name":report_addition_bin}]
+                }
 
-                })
-        self.mod_yml.add_asset_source("menu/us/jiminy.bar",
+        if self.mod_yml.find_asset("menu/fm/jiminy.bar") is not None:
+            self.mod_yml.add_asset_source("menu/fm/jiminy.bar",source_data)
+            self.mod_yml.add_asset_source("menu/us/jiminy.bar",source_data)
+        else:
+            self.mod_yml.add_asset(
+                {"name": "menu/fm/jiminy.bar", "method": "binarc", "source": [source_data]}
+            )
+            self.mod_yml.add_asset(
                 {
-                    "name": "anse",
-                    "method":"copy",
-                    "type":"jimidata",
-                    "source" : [{"name":report_addition_bin}]
-
-                })
-
+                    "name": "menu/us/jiminy.bar",
+                    "platform": "pc",
+                    "multi": [
+                        {"name": "menu/fr/jiminy.bar"},
+                        {"name": "menu/gr/jiminy.bar"},
+                        {"name": "menu/it/jiminy.bar"},
+                        {"name": "menu/sp/jiminy.bar"},
+                        {"name": "menu/uk/jiminy.bar"},
+                    ],
+                    "method": "binarc",
+                    "source": [source_data],
+                }
+            )
         self.out_zip.write(
             resource_path("static/objectives/completionmark.dds"), mark_image_source
         )
