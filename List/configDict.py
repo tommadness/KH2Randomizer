@@ -217,13 +217,15 @@ class DisableFinalOption(str, Enum):
     NO_ANTIFORM = "no_antiform"
     NO_FINAL = "no_final"
 
+
 class BattleLevelOption(str, Enum):
     NORMAL = "Normal"
     SHUFFLE = "Shuffle"
     OFFSET = "Offset"
     RANDOM_WITHIN_RANGE = "Within Range of Normal"
-    RANDOM_MAX_50 = "Random (Max 50)"
+    RANDOM_MAX_50 = "Random"  # Old enum naming kept for compatibility
     SCALE_TO_50 = "Scale to 50"
+
 
 class ObjectivePoolOption(str, Enum):
     ALL = "All Objectives"

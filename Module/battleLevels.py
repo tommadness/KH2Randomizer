@@ -59,8 +59,14 @@ class BtlvViewer():
         with open(resource_path(btlv_file), "rb") as btlvBar:
             self.binaryContent = bytearray(btlvBar.read())
         self._make_btlv_vanilla()
-    
-    def use_setting(self, setting_name: str, battle_level_offset: int = None, battle_level_range: int = None):
+
+    def use_setting(
+            self,
+            setting_name: str,
+            battle_level_offset: int,
+            battle_level_range: int,
+            battle_level_random_min_max: tuple[int, int],
+    ):
         self.random_option = setting_name
         self.battle_level_range = battle_level_range
         self.random_option = self.random_option.upper()
@@ -78,7 +84,8 @@ class BtlvViewer():
             self._make_btlv_vanilla()
             self._variance_btlv()
         elif self.random_option == BattleLevelOption.RANDOM_MAX_50.name:
-            self._pure_random_btlv()
+            battle_level_random_min, battle_level_random_max = battle_level_random_min_max
+            self._pure_random_btlv(battle_level_random_min, battle_level_random_max)
         elif self.random_option == BattleLevelOption.SCALE_TO_50.name:
             self._make_btlv_vanilla()
             self._scale_btlv(50)
@@ -140,11 +147,11 @@ class BtlvViewer():
                 btlv_change = random.randint(-level_range, level_range)
                 self._set_battle_level(world,visit_flag_list[visit_number][0],visit_number,current_btlvs[visit_number]+btlv_change)
 
-    def _pure_random_btlv(self):
-        for world,visit_flag_list in self.visit_flags.items():
+    def _pure_random_btlv(self, btlv_minimum: int, btlv_maximum: int):
+        for world, visit_flag_list in self.visit_flags.items():
             for visit_number in range(len(visit_flag_list)):
-                btlv_change = random.randint(1,50)
-                self._set_battle_level(world,visit_flag_list[visit_number][0],visit_number,btlv_change)
+                btlv_change = random.randint(btlv_minimum, btlv_maximum)
+                self._set_battle_level(world, visit_flag_list[visit_number][0], visit_number, btlv_change)
 
     def _shuffle_btlv(self):
         battle_level_list = []

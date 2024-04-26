@@ -58,6 +58,8 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.BATTLE_LEVEL_RANDO)
         self.add_option(settingkey.BATTLE_LEVEL_OFFSET)
         self.add_option(settingkey.BATTLE_LEVEL_RANGE)
+        self.add_option(settingkey.BATTLE_LEVEL_RANDOM_MIN)
+        self.add_option(settingkey.BATTLE_LEVEL_RANDOM_MAX)
         self.full_world_level_layout = QGridLayout()
         self.add_battle_level_info(locationType.STT)
         self.add_battle_level_info(locationType.TT)
@@ -82,8 +84,10 @@ class SeedModMenu(KH2Submenu):
         settings.observe(settingkey.BATTLE_LEVEL_RANDO, self._btlv_setting_change)
         settings.observe(settingkey.BATTLE_LEVEL_OFFSET, self._btlv_setting_change)
         settings.observe(settingkey.BATTLE_LEVEL_RANGE, self._btlv_setting_change)
+        settings.observe(settingkey.BATTLE_LEVEL_RANDOM_MIN, self._btlv_setting_change)
+        settings.observe(settingkey.BATTLE_LEVEL_RANDOM_MAX, self._btlv_setting_change)
         settings.observe(settingkey.SOFTLOCK_CHECKING, self.reverse_rando_checking)
-        
+
         self.finalizeMenu()
 
     def reverse_rando_checking(self):
@@ -100,10 +104,17 @@ class SeedModMenu(KH2Submenu):
         self.disable_signal = True
         super().disable_widgets()
 
+    def _sanity_check_battle_level_random_min_max(self):
+        min_random = self.settings.get(settingkey.BATTLE_LEVEL_RANDOM_MIN)
+        if min_random > self.settings.get(settingkey.BATTLE_LEVEL_RANDOM_MAX):
+            self.settings.set(settingkey.BATTLE_LEVEL_RANDOM_MAX, min_random)
+            self.update_widget(settingkey.BATTLE_LEVEL_RANDOM_MAX)
+
     def _btlv_setting_change(self):
+        # Sanity checking before doing anything else
+        self._sanity_check_battle_level_random_min_max()
+
         btlv_setting = self.settings.get(settingkey.BATTLE_LEVEL_RANDO)
-        btlv_offset = self.settings.get(settingkey.BATTLE_LEVEL_OFFSET)
-        btlv_range = self.settings.get(settingkey.BATTLE_LEVEL_RANGE)
         self.set_option_visibility(
             settingkey.BATTLE_LEVEL_OFFSET,
             visible=(btlv_setting == BattleLevelOption.OFFSET.name)
@@ -112,15 +123,42 @@ class SeedModMenu(KH2Submenu):
             settingkey.BATTLE_LEVEL_RANGE,
             visible=(btlv_setting == BattleLevelOption.RANDOM_WITHIN_RANGE.name)
         )
+        self.set_option_visibility(
+            settingkey.BATTLE_LEVEL_RANDOM_MIN,
+            visible=(btlv_setting == BattleLevelOption.RANDOM_MAX_50.name)
+        )
+        self.set_option_visibility(
+            settingkey.BATTLE_LEVEL_RANDOM_MAX,
+            visible=(btlv_setting == BattleLevelOption.RANDOM_MAX_50.name)
+        )
 
-        self.update_battle_level_display(btlv_setting, btlv_offset=btlv_offset, btlv_range=btlv_range)
+        self.update_battle_level_display(
+            btlv_setting,
+            btlv_offset=self.settings.get(settingkey.BATTLE_LEVEL_OFFSET),
+            btlv_range=self.settings.get(settingkey.BATTLE_LEVEL_RANGE),
+            btlv_random_min_max=(
+                self.settings.get(settingkey.BATTLE_LEVEL_RANDOM_MIN),
+                self.settings.get(settingkey.BATTLE_LEVEL_RANDOM_MAX)
+            )
+        )
 
-    def update_battle_level_display(self, setting_name: str, btlv_offset: int, btlv_range: int):
-        self.battle_levels.use_setting(setting_name, battle_level_offset=btlv_offset, battle_level_range=btlv_range)
+    def update_battle_level_display(
+            self,
+            setting_name: str,
+            btlv_offset: int,
+            btlv_range: int,
+            btlv_random_min_max: tuple[int, int]
+    ):
+        self.battle_levels.use_setting(
+            setting_name,
+            battle_level_offset=btlv_offset,
+            battle_level_range=btlv_range,
+            battle_level_random_min_max=btlv_random_min_max,
+        )
 
         for world, label_list in self.world_level_labels.items():
             for x in range(len(label_list)):
-                if setting_name in [BattleLevelOption.SHUFFLE.name, BattleLevelOption.RANDOM_MAX_50.name]:
+                if setting_name == BattleLevelOption.SHUFFLE.name:
                     label_list[x].setText("?")
                 elif setting_name == BattleLevelOption.RANDOM_WITHIN_RANGE.name:
                     vanilla_level = self.vanilla_battle_levels.get_battle_levels(world)[x]
@@ -129,19 +167,22 @@ class SeedModMenu(KH2Submenu):
                     else:
                         minimum_level = max(vanilla_level - btlv_range, 1)
                         maximum_level = min(vanilla_level + btlv_range, 99)
-                        label_list[x].setText('{}-{}'.format(minimum_level, maximum_level))
+                        label_list[x].setText(f"{minimum_level}-{maximum_level}")
+                elif setting_name == BattleLevelOption.RANDOM_MAX_50.name:
+                    minimum_level, maximum_level = btlv_random_min_max
+                    label_list[x].setText(f"{minimum_level}-{maximum_level}")
                 else:
                     label_list[x].setText(str(self.battle_levels.get_battle_levels(world)[x]))
-        
-    def add_battle_level_info(self,world):
+
+    def add_battle_level_info(self, world):
         world_label = QLabel(world.value)
         self.world_level_labels[world] = []
         world_row = len(self.world_level_labels)
-        self.full_world_level_layout.addWidget(world_label,world_row,0)
+        self.full_world_level_layout.addWidget(world_label, world_row, 0)
 
         btlvs = self.battle_levels.get_battle_levels(world)
 
         for x in range(len(btlvs)):
             world_level_label = QLabel(str(btlvs[x]))
-            self.full_world_level_layout.addWidget(world_level_label,world_row,1+x)
+            self.full_world_level_layout.addWidget(world_level_label, world_row, 1 + x)
             self.world_level_labels[world].append(world_level_label)
