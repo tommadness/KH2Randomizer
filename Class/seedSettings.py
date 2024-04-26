@@ -1574,7 +1574,7 @@ _all_settings = [
         
         Within Range of Normal - Vary battle levels of all visits within a set number above or below normal.
         
-        Random (Max 50) - All battle levels are random, with a maximum level of 50.
+        Random - All battle levels are random, within configurable limits.
         
         Scale to 50 - All last visits are level 50, with previous visits scaled proportionally.
         """,
@@ -1606,6 +1606,30 @@ _all_settings = [
         standalone_label="Battle Level Range (if chosen)",
         tooltip="How far above or below normal battle levels to choose.",
         randomizable=[0, 20],
+    ),
+    IntSpinner(
+        name=settingkey.BATTLE_LEVEL_RANDOM_MIN,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label="Minimum Battle Level",
+        standalone_label="Min Random Battle Level",
+        shared=True,
+        minimum=1,
+        maximum=99,
+        step=1,
+        default=1,
+        tooltip="Minimum battle level to allow when randomizing battle level.",
+    ),
+    IntSpinner(
+        name=settingkey.BATTLE_LEVEL_RANDOM_MAX,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label="Maximum Battle Level",
+        standalone_label="Max Random Battle Level",
+        shared=True,
+        minimum=1,
+        maximum=99,
+        step=1,
+        default=50,
+        tooltip="Maximum battle level to allow when randomizing battle level.",
     ),
     SingleSelect(
         name=settingkey.FINAL_DOOR_REQUIREMENT,
@@ -2201,7 +2225,7 @@ _all_settings = [
     SingleSelect(
         name=settingkey.REVENGE_LIMIT_RANDO,
         group=SettingGroup.SEED_MODIFIERS,
-        ui_label="Randomize Revenge Limit Maximum (Beta)",
+        ui_label="Revenge Limit Maximum (Beta)",
         shared=True,
         choices={
             "Vanilla": "Vanilla",

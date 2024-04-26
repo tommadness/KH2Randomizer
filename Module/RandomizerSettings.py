@@ -213,6 +213,10 @@ class RandomizerSettings:
         self.battle_level_rando: str = ui_settings.get(settingkey.BATTLE_LEVEL_RANDO)
         self.battle_level_offset: int = ui_settings.get(settingkey.BATTLE_LEVEL_OFFSET)
         self.battle_level_range: int = ui_settings.get(settingkey.BATTLE_LEVEL_RANGE)
+        self.battle_level_random_min_max: tuple[int, int] = (
+            ui_settings.get(settingkey.BATTLE_LEVEL_RANDOM_MIN),
+            ui_settings.get(settingkey.BATTLE_LEVEL_RANDOM_MAX)
+        )
 
         self.starting_inventory_ids: list[int] = []
         self.starting_inventory_ids.extend([

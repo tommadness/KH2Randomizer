@@ -322,6 +322,7 @@ class SeedZip:
             btlv_option_name,
             battle_level_offset=settings.battle_level_offset,
             battle_level_range=settings.battle_level_range,
+            battle_level_random_min_max=settings.battle_level_random_min_max,
         )
         battle_level_spoiler = btlv.get_spoiler()
         journal_hints_spoiler = {}
@@ -581,6 +582,7 @@ class SeedZip:
             btlv_option_name,
             battle_level_offset=settings.battle_level_offset,
             battle_level_range=settings.battle_level_range,
+            battle_level_random_min_max=settings.battle_level_random_min_max,
         )
         if (
             (btlv_option_name == BattleLevelOption.NORMAL.name)
