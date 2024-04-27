@@ -21,12 +21,7 @@ class CommonTrackerInfo:
     def __init__(self, settings: RandomizerSettings):
         self.hintsType = settings.hintsType
         self.generatorVersion = settings.ui_version
-        tracker_includes = settings.tracker_includes + (
-            []
-            if not settings.shop_hintable
-            or locationType.SYNTH.value in settings.tracker_includes
-            else [locationType.SYNTH.value]
-        )
+        tracker_includes = settings.tracker_includes
         self.important_check_list = settings.important_checks
         self.spoiler_reveal_list = settings.spoiler_reveal_checks
         self.objective_mode = settings.objective_rando

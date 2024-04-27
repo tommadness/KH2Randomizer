@@ -1964,7 +1964,7 @@ class SeedZip:
                     ability_entry[0], ability_entry[1]
                 )
                 entry_object: ATKPObject
-                entry_object.EnemyReaction = melee_ability_knockback_types_list[i]
+                entry_object.EnemyReaction = melee_ability_knockback_types_list[i+1]
                 entry_object.Flags = kill_boss
                 companion_ability_objects.append(entry_object)
 
