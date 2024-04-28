@@ -2701,13 +2701,7 @@ _all_settings = [
         },
         shared=True,
         default=itemDifficulty.NORMAL,
-        randomizable=[
-            itemDifficulty.EASY,
-            itemDifficulty.SLIGHTLY_EASY,
-            itemDifficulty.NORMAL,
-            itemDifficulty.SLIGHTLY_HARD,
-            itemDifficulty.HARD,
-        ],
+        randomizable=False,
         tooltip="""
         Bias the placement of items based on how difficult/easy you would like the seed to be. 
         Items have 4 categories (Common, Uncommon, Rare, Mythic) that influence what bias each item gets when placing those items. 
@@ -2728,7 +2722,7 @@ _all_settings = [
         ui_label="Extended Item Placement Logic",
         shared=True,
         default=False,
-        tooltip="Enables weighting for keyblades with good abilities, and puts auto forms and final forcing `in-logic` meaning they may be required to complete the seed.",
+        tooltip="Puts auto forms and final forcing `in-logic` meaning they may be required to complete the seed.",
         randomizable=True,
     ),
     SingleSelect(
@@ -3492,6 +3486,28 @@ boss_settings, enemy_settings = _get_boss_enemy_settings()
 for boss_enemy_setting in boss_settings + enemy_settings:
     _all_settings.append(boss_enemy_setting)
 
+_all_settings.extend([
+    MultiSelect(
+        name=settingkey.RANDOMIZED_SETTINGS,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label="Randomized Settings",
+        choices={
+            setting.name : setting.name for setting in _all_settings if setting.randomizable
+        },
+        shared=True,
+        default=[],
+        tooltip="USERS SHOULDN'T SEE THIS, THIS IS INTERNAL SETTING WITH CUSTOM UI",
+    ),
+    Toggle(
+        name=settingkey.RANDOMIZED_SETTINGS_ENABLED,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label="Randomized Settings Enabled",
+        shared=True,
+        default=False,
+        tooltip="USERS SHOULDN'T SEE THIS, THIS IS INTERNAL SETTING WITH CUSTOM UI",
+    ),
+])
+
 settings_by_name = {setting.name: setting for setting in _all_settings}
 
 DELIMITER = "-"
@@ -3707,6 +3723,7 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
             random_choices[settingkey.KEYBLADE_MAX_STAT] = random_choices[settingkey.KEYBLADE_MIN_STAT]
 
     for r in randomizable_settings:
+        print(f"{r.name} : {random_choices[r.name]}")
         real_settings_object.set(r.name, random_choices[r.name])
 
 

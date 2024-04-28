@@ -198,6 +198,8 @@ class RandomSettingsDialog(QDialog):
         super().__init__()
         self.passed_settings = settings
         self.random_choices = self.passed_settings._randomizable
+        self.stored_random_settings = self.passed_settings.get(settingkey.RANDOMIZED_SETTINGS)
+        self.random_settings_enabled = self.passed_settings.get(settingkey.RANDOMIZED_SETTINGS_ENABLED)
         self.setWindowTitle("Randomized Settings")
         self.setMinimumWidth(850)
         self.setMinimumHeight(800)
@@ -217,8 +219,12 @@ class RandomSettingsDialog(QDialog):
         self.settings_list_widget.setViewMode(QListView.IconMode)
         self.settings_list_widget.setWordWrap(True)
         self.settings_list_widget.setTextElideMode(Qt.ElideNone)
+        random_setting_counter = 0
         for c in self.random_choices:
             self.settings_list_widget.addItem(c.standalone_label)
+            random_setting_counter+=1
+            if c.name in self.stored_random_settings:
+                self.settings_list_widget.item(random_setting_counter-1).setSelected(True)
         for i in range(len(self.random_choices)):
             self.settings_list_widget.item(i).setSizeHint(QSize(160, 48))
         self.settings_list_widget.setDragEnabled(False)
@@ -233,13 +239,13 @@ class RandomSettingsDialog(QDialog):
         select_buttons.addWidget(select_all_button)
         select_buttons.addWidget(select_none_button)
 
-        cancel_button = QPushButton("Cancel")
-        choose_button = QPushButton("Randomize Selected Settings")
-        cancel_button.clicked.connect(self.reject)
+        choose_button = QPushButton("Save Selected Settings")
         choose_button.clicked.connect(self.accept)
+        self.enable_checkbox = QCheckBox("Randomize Settings Enabled")
+        self.enable_checkbox.setChecked(self.random_settings_enabled)
 
         confirm_buttons = QHBoxLayout()
-        confirm_buttons.addWidget(cancel_button)
+        confirm_buttons.addWidget(self.enable_checkbox)
         confirm_buttons.addWidget(choose_button)
 
         box.addLayout(select_buttons)
@@ -256,7 +262,11 @@ class RandomSettingsDialog(QDialog):
             self.settings_list_widget.item(index).setSelected(False)
 
     def save(self):
-        return [self.random_choices[p.row()].name for p in self.settings_list_widget.selectedIndexes()]
+        # save the settings
+        randomized_settings_selected = [self.random_choices[p.row()].name for p in self.settings_list_widget.selectedIndexes()]
+        self.passed_settings.set(settingkey.RANDOMIZED_SETTINGS,randomized_settings_selected)  
+        self.passed_settings.set(settingkey.RANDOMIZED_SETTINGS_ENABLED,self.enable_checkbox.isChecked())
+        return randomized_settings_selected
 
 class KH2RandomizerApp(QMainWindow):
     def __init__(self):
@@ -668,7 +678,11 @@ class KH2RandomizerApp(QMainWindow):
             self.seedName.setText(seedString)
 
         try:
+            backup_settings = self.randomize_the_settings()
             rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
+            if backup_settings:
+                self.settings.apply_settings_string(backup_settings)
+            self.recalculate = True
             # update the seed hash display
             self.update_ui_hash_icons(rando_settings)
 
@@ -840,49 +854,18 @@ class KH2RandomizerApp(QMainWindow):
                 message.exec()
 
     def randoRando(self):
-        preset_select_dialog = RandomSettingsDialog(self.settings)
-        if preset_select_dialog.exec():
-            backup_settings = self.settings.settings_string()
-            selected_random_settings = preset_select_dialog.save()
-            if len(selected_random_settings) == 0:
-                message = QMessageBox(text="No randomized settings chosen, doing nothing")
-                message.setWindowTitle("KH2 Seed Generator")
-                message.exec()
-                return
+        rando_rando_dialog = RandomSettingsDialog(self.settings)
+        if rando_rando_dialog.exec():
+            rando_rando_dialog.save()
 
-            valid_seed = False
-            invalid_seed_count = 0
-            last_exception = None
-            while not valid_seed and invalid_seed_count < 10:
-                try:
-                    #randomize
-                    self.recalculate = False
-                    randomize_settings(self.settings,selected_random_settings)
-                    self.make_rando_settings(catch_exception=False)
-                    self.recalculate = True
-                    self.get_num_enabled_locations()
-                    self.recalculate = False
-                    if self.num_locations_to_fill < self.num_items_to_place:
-                        self.settings.apply_settings_string(backup_settings)
-                        continue
-                    valid_seed = True
-                except RandomizerExceptions as e:
-                    # we got exception, so try again
-                    invalid_seed_count+=1
-                    self.settings.apply_settings_string(backup_settings)
-                    last_exception = e
-            
-            for widget in self.widgets:
-                widget.update_widgets()
-            self.recalculate = True
-            self.get_num_enabled_locations()
+    def randomize_the_settings(self):
+        if self.settings.get(settingkey.RANDOMIZED_SETTINGS_ENABLED):
             self.recalculate = False
-            if valid_seed:
-                message = QMessageBox(text=f"Randomized your settings, don't forget to generate your seed.")
-                message.setWindowTitle("KH2 Seed Generator")
-                message.exec()
-            else:
-                self.handleFailure(last_exception)
+            selected_random_settings = self.settings.get(settingkey.RANDOMIZED_SETTINGS)
+            backup_settings = self.settings.settings_string()
+            randomize_settings(self.settings,selected_random_settings)
+            return backup_settings
+        return None
 
     def openPresetFolder(self):
         os.startfile(appconfig.PRESET_FOLDER)

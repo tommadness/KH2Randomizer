@@ -314,6 +314,7 @@ class RandomizerSettings:
         )
         self.tt1_jailbreak: bool = True  # ui_settings.get(settingkey.TT1_JAILBREAK)
         self.pureblood: bool = True  # ui_settings.get(settingkey.PUREBLOOD)
+        self.randoRandoEnabled = ui_settings.get(settingkey.RANDOMIZED_SETTINGS_ENABLED)
         self.antiform: bool = ui_settings.get(settingkey.ANTIFORM)
         self.fifty_ap: bool = ui_settings.get(settingkey.FIFTY_AP_BOOSTS)
         self.hintsType: str = ui_settings.get(settingkey.HINT_SYSTEM)
@@ -664,7 +665,10 @@ class RandomizerSettings:
             if l.value in self.enabledLocations:
                 if l.value != "Level":  # don't duplicate the level info
                     self.tracker_includes.append(l.value)
-            if l.value in self.vanillaLocations:
+            elif l.value in self.vanillaLocations:
+                if l.value != "Level":  # don't duplicate the level info
+                    self.tracker_includes.append(l.value)
+            elif self.randoRandoEnabled:
                 if l.value != "Level":  # don't duplicate the level info
                     self.tracker_includes.append(l.value)
 
