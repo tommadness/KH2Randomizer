@@ -353,13 +353,13 @@ class KH2RandomizerApp(QMainWindow):
 
         self.widgets = [
             RewardLocationsMenu(self.settings),
-            SoraMenu(self.settings),
-            StartingMenu(self.settings),
-            HintsMenu(self.settings),
-            KeybladeMenu(self.settings),
-            ItemPoolMenu(self.settings),
             ItemPlacementMenu(self.settings),
+            HintsMenu(self.settings),
+            ItemPoolMenu(self.settings),
+            StartingMenu(self.settings),
             SeedModMenu(self.settings),
+            SoraMenu(self.settings),
+            KeybladeMenu(self.settings),
             CompanionMenu(self.settings),
             BossEnemyMenu(self.settings, seed_name_getter=lambda: self.seedName.text()),
             self.cosmetics_menu,

@@ -1,7 +1,9 @@
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QPushButton
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
+from UI.Submenus.ProgressionPointsDialog import ProgressionPointsDialog
 from UI.Submenus.SubMenu import KH2Submenu
 
 _HINTABLE_ITEMS = "Hintable Items"
@@ -13,6 +15,7 @@ _SPOILED_ITEMS = "Spoiled Items"
 
 
 class HintsMenu(KH2Submenu):
+
     def __init__(self, settings: SeedSettings):
         super().__init__(title="Hints", settings=settings)
 
@@ -21,6 +24,9 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.HINT_SYSTEM)
         self.add_option(settingkey.JOURNAL_HINTS_ABILITIES)
         self.add_option(settingkey.PROGRESSION_HINTS)
+        self.configure_progression_points = QPushButton("Configure Progression Points")
+        self.configure_progression_points.clicked.connect(self._configure_progression_points)
+        self.pending_group.addWidget(self.configure_progression_points)
         self.add_option(settingkey.PROGRESSION_HINTS_REVEAL_END)
         self.add_option(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS)
         self.add_option(settingkey.PROGRESSION_HINTS_REPORT_BONUS)
@@ -53,10 +59,6 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.POINTS_KEYBLADES)
         self.add_option(settingkey.POINTS_AUX)
         self.end_group(title="Item Point Values", group_id=_ITEM_POINT_VALUES)
-
-        self.start_group()
-        self.add_option(settingkey.PROGRESSION_POINT_SELECT)
-        self.end_group(title="Progression Points", group_id=_PROGRESSION_POINTS)
         self.end_column()
 
         self.start_column()
@@ -96,16 +98,10 @@ class HintsMenu(KH2Submenu):
     def _progression_toggle(self):
         progression_on = self.settings.get(settingkey.PROGRESSION_HINTS)
 
-        self.set_option_visibility(
-            settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on
-        )
-        self.set_option_visibility(
-            settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on
-        )
-        self.set_option_visibility(
-            settingkey.PROGRESSION_HINTS_REVEAL_END, visible=progression_on
-        )
-        self.set_group_visibility(group_id=_PROGRESSION_POINTS, visible=progression_on)
+        self.configure_progression_points.setVisible(progression_on)
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on)
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on)
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS_REVEAL_END, visible=progression_on)
 
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)
@@ -176,3 +172,7 @@ class HintsMenu(KH2Submenu):
                     widget.item(index).setFlags(
                         Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled
                     )
+
+    def _configure_progression_points(self):
+        dialog = ProgressionPointsDialog(self, self.settings)
+        dialog.exec()
