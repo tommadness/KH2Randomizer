@@ -415,9 +415,9 @@ class SeedZip:
             if settings.keyblades_unlock_chests:
                 mod.write_keyblade_locking_lua()
 
-            if "beta" in LOCAL_UI_VERSION:
-                print("Writing beta stuff")
-                mod.write_goa_lua()
+            # if "beta" in LOCAL_UI_VERSION:
+            #     print("Writing beta stuff")
+            #     mod.write_goa_lua()
 
             self.add_cmd_list_modifications(mod)
 
