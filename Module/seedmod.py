@@ -716,6 +716,21 @@ class SeedModBuilder:
             resource_path("static/keyblade_locking/keyblade.lua"), keyblade_lua_name
         )
 
+    def write_goa_lua(self):
+        goa_lua_name = _relative_mod_file("beta_files/F266B00B GoA ROM.lua")
+        assets = [
+            {
+                "name": "scripts/F266B00B GoA ROM.lua",
+                "method": "copy",
+                "source": [{"name": goa_lua_name}],
+            },
+        ]
+        self.mod_yml.add_assets(assets)
+
+        self.out_zip.write(
+            resource_path("static/F266B00B GoA ROM.lua"), goa_lua_name
+        )
+
 
     def write_better_stt_assets(self, boss_enabled: bool):
         """Adds assets and files to the mod for 'Better STT'."""
