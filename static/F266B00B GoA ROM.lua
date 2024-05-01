@@ -1,5 +1,5 @@
 --ROM Version
---Last Update: BAR() function implementation
+--Last Update: Objective rando compatibility
 --Todo: Maybe item-based progress flags
 
 LUAGUI_NAME = 'GoA ROM Randomizer Build'
@@ -7,7 +7,7 @@ LUAGUI_AUTH = 'SonicShadowSilver2 (Ported by Num)'
 LUAGUI_DESC = 'A GoA build for use with the Randomizer. Requires ROM patching.'
 
 function _OnInit()
-print('GoA v1.53.5 beta from Generator')
+print('GoA v1.53.6')
 GoAOffset = 0x7C
 if (GAME_ID == 0xF266B00B or GAME_ID == 0xFAF99301) and ENGINE_TYPE == "ENGINE" then --PCSX2
 	if ENGINE_VERSION < 3.0 then
@@ -86,6 +86,7 @@ elseif GAME_ID == 0x431219CC and ENGINE_TYPE == 'BACKEND' then --PC
 	Menu1    = 0x2A0E7D0 - 0x56450E
 	NextMenu = 0x8
 end
+SeedCleared = false
 --[[Slot2  = Slot1 - NextSlot
 Slot3  = Slot2 - NextSlot
 Slot4  = Slot3 - NextSlot
@@ -142,11 +143,11 @@ return Address
 end
 
 function BitOr(Address,Bit,Abs)
-WriteByte(Address,ReadByte(Address)|Bit,Abs and OnPC)
+WriteByte(Address, ReadByte(Address, Abs and OnPC)|Bit, Abs and OnPC)
 end
 
 function BitNot(Address,Bit,Abs)
-WriteByte(Address,ReadByte(Address)&~Bit,Abs and OnPC)
+WriteByte(Address, ReadByte(Address, Abs and OnPC)&~Bit, Abs and OnPC)
 end
 
 function Faster(Toggle)
@@ -172,6 +173,15 @@ WriteShort(Save+0x2110,0) --Tunnelway
 WriteShort(Save+0x2114,0) --Station Plaza
 WriteShort(Save+0x211C,0) --The Old Mansion
 WriteShort(Save+0x2120,0) --Mansion Foyer
+end
+
+function VisitLock(ItemAddress, RequiredCount, Address, Bit)
+	local ItemCount = ReadByte(ItemAddress)
+	if ItemCount < RequiredCount then
+		BitNot(Address, Bit)
+	elseif ReadByte(Address) & Bit == 0 then
+		BitOr(Address, Bit)
+	end
 end
 
 function _OnFrame()
@@ -248,34 +258,28 @@ if Place == 0x2002 and Events(0x01,Null,0x01) then --Station of Serenity Weapons
 	WriteShort(Save+0x4270,0x1FF) --Pause Menu Tutorial Prompts Seen Flags
 	WriteShort(Save+0x4274,0x1FF) --Status Form & Summon Seen Flags
 	BitOr(Save+0x49F0,0x03) --Shop Tutorial Prompt Flags (1=Big Shops, 2=Small Shops)
-    BitNot(Save+0x1CD2,0x10)--tt1
-    BitNot(Save+0x1D1B,0x08)--hb
-    BitNot(Save+0x1D31,0x08)--bc
-    BitNot(Save+0x1D53,0x20)--oc
-    BitNot(Save+0x1D73,0x02)--ag
-    BitNot(Save+0x1D91,0x01)--lod
-    BitNot(Save+0x1DD5,0x04)--proud fang
-    BitNot(Save+0x1E56,0x08)--ht
-    BitNot(Save+0x1E99,0x04)--pr1
-    BitNot(Save+0x1EB5,0x20)--tr
-    BitNot(Save+0x1E12,0x8)--dc
-    BitNot(Save+0x1CD0,0x1)--stt (tt_start1)
 end
 end
 
 function GoA()
---Garden of Assemblage Rearrangement
-if Place == 0x1A04 then
-	local count = ReadShort(BAR(Sys3,0x6,0x4F4),OnPC) -- Crystal Orb buy Price
-	--Open Promise Charm Path
-	if count == 0 then	
-		if ReadByte(Save+0x36B2) > 0 and ReadByte(Save+0x36B3) > 0 and ReadByte(Save+0x36B4) > 0 and ReadByte(Save+0x3694) > 0 then --All Proofs & Promise Charm
-			WriteShort(BAR(ARD,0x06,0x05C),0x77A,OnPC) --Text
+--Clear Conditions
+if not SeedCleared then
+	local ObjectiveCount = ReadShort(BAR(Sys3,0x6,0x4F4),OnPC)
+	if ObjectiveCount == 0 then
+		if ReadByte(Save+0x36B2) > 0 and ReadByte(Save+0x36B3) > 0 and ReadByte(Save+0x36B4) > 0 then --All Proofs Obtained
+			SeedCleared = true
 		end
 	else
-		if ReadByte(Save+0x363D) >= count and ReadByte(Save+0x3694) > 0 then
-			WriteShort(BAR(ARD,0x06,0x05C),0x77A,OnPC) --Text
+		if ReadByte(Save+0x363D) >= ObjectiveCount then --Requisite Objective Count Achieved
+			SeedCleared = true
 		end
+	end
+end
+--Garden of Assemblage Rearrangement
+if Place == 0x1A04 then
+	--Open Promise Charm Path
+	if SeedCleared and ReadByte(Save+0x3694) > 0 then --Seed Cleared & Promise Charm
+		WriteShort(BAR(ARD,0x06,0x05C),0x77A,OnPC) --Text
 	end
 	--Demyx's Portal Text
 	if ReadByte(Save+0x1D2E) > 0 then --Hollow Bastion Cleared
@@ -318,103 +322,90 @@ if Place == 0x000F then
 		Warp(0x04,0x1A,WarpDoor)
 	end
 end
---Visits Unlock
+--Visit Locks
 if true then
-	if ReadByte(Save+0x3649) > 0 then --Ice Cream 
-		BitOr(Save+0x1CD2,0x10)--TT_INIT
-		if ReadByte(Save+0x3649) > 1 then --Ice Cream
-			BitOr(Save+0x1C92,0x08) --ZZ_TT_CHECK_1_GOA
-			if ReadByte(Save+0x3649) > 2 then --Ice Cream
-				BitOr(Save+0x1C92,0x10) --ZZ_TT_CHECK_2_GOA
-			end
-		end
-	end
-	if ReadByte(Save+0x3643) > 0 then --Membership Card
-		BitOr(Save+0x1D1B,0x08)
-		if ReadByte(Save+0x3643) > 1 then
-			BitOr(Save+0x1C92,0x20) --ZZ_HB_CHECK_1_GOA
-			BitOr(Save+0x1C92,0x40) --ZZ_HB_CHECK_2_GOA
-		end	
-	end  
-	if ReadByte(Save+0x1EDF)==3 then
-		if ReadByte(Save+0x35C1) > 1 and ReadByte(Save+0x1B62)==0 then--way to the dawn
-		        WriteByte(Save+0x1B62,2)
-		elseif ReadByte(Save+0x1B62)==2 and ReadByte(Save+0x35C1) < 2 then
-		        WriteByte(Save+0x1B62,0)        
-		end
-	end
-	if ReadByte(Save+0x35B3) > 0 then --Beast's Claw
-		BitOr(Save+0x1D31,0x08)
-		if ReadByte(Save+0x35B3) > 1 then 
-			BitOr(Save+0x1C92,0x80) --ZZ_BB_CHECK_GOA
-		end	
-	end
-	if ReadByte(Save+0x35AE) > 0 then --Battlefields of War
-		BitOr(Save+0x1D53,0x20)
-		if ReadByte(Save+0x35AE) > 1 then
-			BitOr(Save+0x1C93,0x01) --ZZ_HE_CHECK_GOA
-		end	
-	end
-	if ReadByte(Save+0x35C0) > 0 then --Scimitar
-		BitOr(Save+0x1D73,0x02)
-		if ReadByte(Save+0x35C0) > 1 then
-		BitOr(Save+0x1C93,0x02) --ZZ_AL_CHECK_GOA
-		end
-	end
-	if ReadByte(Save+0x35AF) > 0 then --Sword of the Ancestors
-		BitOr(Save+0x1D91,0x01)
-		if ReadByte(Save+0x35AF) > 1 then 
-			BitOr(Save+0x1C93,0x04) --ZZ_MU_CHECK_GOA
-		end
-	end
-	if ReadByte(Save+0x35B5) > 0 then --Proud Fang
-		BitOr(Save+0x1DD5,0x04)
-		if ReadByte(Save+0x35B5) > 1 then
-			BitOr(Save+0x1C94,0x01) --ZZ_LK_CHECK_GOA
-		end	
-	end
-	if ReadByte(Save+0x35B4) > 0 then --Bone Fist
-		BitOr(Save+0x1E56,0x08)
-		if ReadByte(Save+0x35B4) > 1 then
-			BitOr(Save+0x1C94,0x40) --ZZ_NM_CHECK_GOA
-		end	
-	end
-	if ReadByte(Save+0x35B6) > 0 then --Skill and Crossbones
-		BitOr(Save+0x1E99,0x04)
-		if ReadByte(Save+0x35B6) > 1 then
-			BitOr(Save+0x1C94,0x80) --ZZ_CA_CHECK_GOA
-		end	
-	end
-	if ReadByte(Save+0x35C2) > 0 then --Identity Disk
-		BitOr(Save+0x1EB5,0x20)
-		if ReadByte(Save+0x35C2) > 1 then
-			BitOr(Save+0x1C95,0x01) --ZZ_TR_CHECK_GOA
-		end	
-	end
-	if ReadByte(Save+0x365D)>0 then--dummy 13
-		BitOr(Save+0x1E12,0x8)--disney castle portal
-		
-	end
-	---if ReadByte(Save+0x3642)>3 then --namine sketches
-	---	BitOr(Save+0x1E12,0x8)--Num will get back to me
-	---end
-	--if ReadByte(Save+0x1D0E)==0 then--day 5 progress
-	if ReadByte(Save+0x3642)>0 then 
-		BitOr(Save+0x1CD0,0x1)
-	end	
+	--Namine's Sketches
+	VisitLock(Save+0x3642, 1, Save+0x1CD0, 0x01) --TT_START_1
+	--Ice Cream
+	VisitLock(Save+0x3649, 1, Save+0x1CD2, 0x10) --TT_INIT
+	VisitLock(Save+0x3649, 2, Save+0x1C92, 0x08) --ZZ_TT_CHECK_1_GOA
+	VisitLock(Save+0x3649, 3, Save+0x1C92, 0x10) --ZZ_TT_CHECK_2_GOA
+	--Membership Card
+	VisitLock(Save+0x3643, 1, Save+0x1D1B, 0x08) --HB_INIT
+	VisitLock(Save+0x3643, 2, Save+0x1C92, 0x20) --ZZ_HB_CHECK_1_GOA
+	VisitLock(Save+0x3643, 0, Save+0x1C92, 0x40) --ZZ_HB_CHECK_2_GOA
+	--Beast's Claw
+	VisitLock(Save+0x35B3, 1, Save+0x1D31, 0x08) --BB_INIT
+	VisitLock(Save+0x35B3, 2, Save+0x1C92, 0x80) --ZZ_BB_CHECK_GOA
+	--Battlefields of War
+	VisitLock(Save+0x35AE, 1, Save+0x1D53, 0x20) --HE_INIT
+	VisitLock(Save+0x35AE, 2, Save+0x1C93, 0x01) --ZZ_HE_CHECK_GOA
+	--Scimitar
+	VisitLock(Save+0x35C0, 1, Save+0x1D73, 0x02) --AL_INIT
+	VisitLock(Save+0x35C0, 2, Save+0x1C93, 0x02) --ZZ_AL_CHECK_GOA
+	--Sword of the Ancestors
+	VisitLock(Save+0x35AF, 1, Save+0x1D91, 0x01) --MU_INIT
+	VisitLock(Save+0x35AF, 2, Save+0x1C93, 0x04) --ZZ_MU_CHECK_GOA
+	--Proud Fang
+	VisitLock(Save+0x35B5, 1, Save+0x1DD5, 0x04) --LK_INIT
+	VisitLock(Save+0x35B5, 2, Save+0x1C94, 0x01) --ZZ_LK_CHECK_GOA
+	--Royal Summons (DUMMY 13)
+	VisitLock(Save+0x365D, 1, Save+0x1E12, 0x08) --DC_INIT
+	VisitLock(Save+0x365D, 2, Save+0x1C94, 0x20) --ZZ_DC_CHECK_GOA
+	--Bone Fist
+	VisitLock(Save+0x35B4, 1, Save+0x1E56, 0x08) --NM_INIT
+	VisitLock(Save+0x35B4, 2, Save+0x1C94, 0x40) --ZZ_NM_CHECK_GOA
+	--Skill and Crossbones
+	VisitLock(Save+0x35B6, 1, Save+0x1E99, 0x04) --CA_INIT
+	VisitLock(Save+0x35B6, 2, Save+0x1C94, 0x80) --ZZ_CA_CHECK_GOA
+	--Identity Disk
+	VisitLock(Save+0x35C2, 1, Save+0x1EB5, 0x20) --TR_INIT
+	VisitLock(Save+0x35C2, 2, Save+0x1C95, 0x01) --ZZ_TR_CHECK_GOA
+	--Way to the Dawn
+	VisitLock(Save+0x3642, 1, Save+0x1C95, 0x02) --ZZ_EH_CHECK_1_GOA
+	VisitLock(Save+0x3642, 2, Save+0x1C95, 0x04) --ZZ_EH_CHECK_2_GOA
 else --Remove the item requirements
-	BitOr(Save+0x1C92,0x08) --ZZ_TT_CHECK_1_GOA
-	BitOr(Save+0x1C92,0x10) --ZZ_TT_CHECK_2_GOA
-	BitOr(Save+0x1C92,0x20) --ZZ_HB_CHECK_1_GOA
-	BitOr(Save+0x1C92,0x40) --ZZ_HB_CHECK_2_GOA
-	BitOr(Save+0x1C92,0x80) --ZZ_BB_CHECK_GOA
-	BitOr(Save+0x1C93,0x01) --ZZ_HE_CHECK_GOA
-	BitOr(Save+0x1C93,0x02) --ZZ_AL_CHECK_GOA
-	BitOr(Save+0x1C93,0x04) --ZZ_MU_CHECK_GOA
-	BitOr(Save+0x1C94,0x01) --ZZ_LK_CHECK_GOA
-	BitOr(Save+0x1C94,0x40) --ZZ_NM_CHECK_GOA
-	BitOr(Save+0x1C94,0x80) --ZZ_CA_CHECK_GOA
-	BitOr(Save+0x1C95,0x01) --ZZ_TR_CHECK_GOA
+	--Namine's Sketches
+	VisitLock(Save+0x3642, 0, Save+0x1CD0, 0x01) --TT_START_1
+	--Ice Cream
+	VisitLock(Save+0x3649, 0, Save+0x1CD2, 0x10) --TT_INIT
+	VisitLock(Save+0x3649, 0, Save+0x1C92, 0x08) --ZZ_TT_CHECK_1_GOA
+	VisitLock(Save+0x3649, 0, Save+0x1C92, 0x10) --ZZ_TT_CHECK_2_GOA
+	--Membership Card
+	VisitLock(Save+0x3643, 0, Save+0x1D1B, 0x08) --HB_INIT
+	VisitLock(Save+0x3643, 0, Save+0x1C92, 0x20) --ZZ_HB_CHECK_1_GOA
+	VisitLock(Save+0x3643, 0, Save+0x1C92, 0x40) --ZZ_HB_CHECK_2_GOA
+	--Beast's Claw
+	VisitLock(Save+0x35B3, 0, Save+0x1D31, 0x08) --BB_INIT
+	VisitLock(Save+0x35B3, 0, Save+0x1C92, 0x80) --ZZ_BB_CHECK_GOA
+	--Battlefields of War
+	VisitLock(Save+0x35AE, 0, Save+0x1D53, 0x20) --HE_INIT
+	VisitLock(Save+0x35AE, 0, Save+0x1C93, 0x01) --ZZ_HE_CHECK_GOA
+	--Scimitar
+	VisitLock(Save+0x35C0, 0, Save+0x1D73, 0x02) --AL_INIT
+	VisitLock(Save+0x35C0, 0, Save+0x1C93, 0x02) --ZZ_AL_CHECK_GOA
+	--Sword of the Ancestors
+	VisitLock(Save+0x35AF, 0, Save+0x1D91, 0x01) --MU_INIT
+	VisitLock(Save+0x35AF, 0, Save+0x1C93, 0x04) --ZZ_MU_CHECK_GOA
+	--Proud Fang
+	VisitLock(Save+0x35B5, 0, Save+0x1DD5, 0x04) --LK_INIT
+	VisitLock(Save+0x35B5, 0, Save+0x1C94, 0x01) --ZZ_LK_CHECK_GOA
+	--Royal Summons (DUMMY 13)
+	VisitLock(Save+0x365D, 0, Save+0x1E12, 0x08) --DC_INIT
+	VisitLock(Save+0x365D, 0, Save+0x1C94, 0x20) --ZZ_DC_CHECK_GOA
+	--Bone Fist
+	VisitLock(Save+0x35B4, 0, Save+0x1E56, 0x08) --NM_INIT
+	VisitLock(Save+0x35B4, 0, Save+0x1C94, 0x40) --ZZ_NM_CHECK_GOA
+	--Skill and Crossbones
+	VisitLock(Save+0x35B6, 0, Save+0x1E99, 0x04) --CA_INIT
+	VisitLock(Save+0x35B6, 0, Save+0x1C94, 0x80) --ZZ_CA_CHECK_GOA
+	--Identity Disk
+	VisitLock(Save+0x35C2, 0, Save+0x1EB5, 0x20) --TR_INIT
+	VisitLock(Save+0x35C2, 0, Save+0x1C95, 0x01) --ZZ_TR_CHECK_GOA
+	--Way to the Dawn
+	VisitLock(Save+0x3642, 0, Save+0x1C95, 0x02) --ZZ_EH_CHECK_1_GOA
+	VisitLock(Save+0x3642, 0, Save+0x1C95, 0x04) --ZZ_EH_CHECK_2_GOA
+
 	--Disable GoA Visit Skip
 	--BitOr(Save+0x1CED,0x01) --TT_MISTERY_SKIP_GOA
 	--BitOr(Save+0x1D20,0x20) --HB_SCENARIO_5_SKIP_GOA
@@ -802,6 +793,23 @@ elseif ReadLong(0x2F9302-0x56454E) == 0x43B70F0D74D68541 then --Global
 elseif ReadLong(0x2F9142-0x56454E) == 0x43B70F0D74D68541 then --JP
 	WriteByte(0x2F9146 - 0x56454E,0)
 end
+--Alternate Party Models (adding new UCM using MEMT causes problems when shopping)
+if World == 0x0C and Place ~= 0x070C then --Mage & Knight (KH I)
+	WriteString(Obj0+0x16F0,'P_EX020_DC\0',OnPC)
+	WriteString(Obj0+0x1750,'P_EX030_DC\0',OnPC)
+	WriteString(Obj0+0x3250,'P_EX020_DC_ANGRY_NPC\0',OnPC)
+	WriteString(Obj0+0x40F0,'H_ZZ020_DC\0',OnPC)
+	WriteString(Obj0+0x4150,'H_ZZ030_DC\0',OnPC)
+elseif Place == 0x2004 or Place == 0x2104 or Place == 0x2204 or Place == 0x2604 then --Casual (CoM)
+	WriteString(Obj0+0x16F0,'P_EX020_CM\0',OnPC)
+	WriteString(Obj0+0x1750,'P_EX030_CM\0',OnPC)
+elseif ReadString(Obj0+0x16F0,8,OnPC) ~= 'P_EX020\0' then --Revert costume changes
+	WriteString(Obj0+0x16F0,'P_EX020\0',OnPC)
+	WriteString(Obj0+0x1750,'P_EX030\0',OnPC)
+	WriteString(Obj0+0x3250,'P_EX020_ANGRY_NPC\0',OnPC)
+	WriteString(Obj0+0x40F0,'H_ZZ020\0',OnPC)
+	WriteString(Obj0+0x4150,'H_ZZ030\0',OnPC)
+end
 --Navigational Map Unlocks Valor Form
 if ReadByte(Save+0x36C0)&0x80 == 0x80 then
 	BitOr(Save+0x36C0,0x02)
@@ -884,25 +892,8 @@ if ReadByte(Save+0x1EDE) > 0 then
 	end
 end
 --Final Door Requirements
-if Place == 0x1212 then
-	local count = ReadShort(BAR(Sys3,0x6,0x4F4),OnPC) -- Crystal Orb buy Price
-	if count == 0 then	
-		if ReadByte(Save+0x36B2) > 0 and ReadByte(Save+0x36B3) > 0 and ReadByte(Save+0x36B4) > 0 then --All Proofs Obtained
-			WriteShort(BAR(ARD,0x05,0x060),0x13D,OnPC) --Spawn Door RC
-		else
-			WriteShort(BAR(ARD,0x05,0x060),0x000,OnPC) --Despawn Door RC
-		end
-	else
-		if ReadByte(Save+0x363D) >= count then
-			WriteShort(BAR(ARD,0x05,0x060),0x13D,OnPC) --Spawn Door RC
-		else
-			WriteShort(BAR(ARD,0x05,0x060),0x000,OnPC) --Despawn Door RC
-		end
-	end
-end
--- roxas wrong warp
-if Place==786 and World==18 and Room==3 and ReadByte(Save+0x35C1) < 1 and PrevPlace==530 then
-        Warp(18,1)
+if ReadShort(Save+0x1B7C) == 0x04 and SeedCleared then
+	WriteShort(Save+0x1B7C, 0x0D) --The Altar of Naught MAP (Door RC Available)
 end
 end
 
@@ -1993,8 +1984,9 @@ if Place == 0x060C and Events(Null,Null,0x01) then --There's Something Strange G
 	WriteByte(Save+0x1E1F,1)
 elseif Place == 0x030C and Events(Null,Null,0x01) then --Welcome to Disney Castle
 	WriteByte(Save+0x1E1F,2)
-elseif Place == 0x040C and Events(Null,Null,0x02) then --The Strange Door
+elseif Place == 0x040C and Events(Null,Null,0x01) then --The Cornerstone of Light
 	WriteByte(Save+0x1E1F,3)
+elseif Place == 0x040C and Events(Null,Null,0x02) then --The Strange Door
 	WriteArray(Save+0x065E,ReadArray(Save+0x0664,6)) --Load Merlin's House Spawn ID
 elseif Place == 0x000D and Events(Null,Null,0x07) then --Back to Their Own World
 elseif Place == 0x050C and Events(Null,Null,0x01) then --The Castle is Secure
@@ -2017,11 +2009,12 @@ if ReadByte(Save+0x1E1E) > 0 then
 		WriteByte(Save+0x1E1E,3)
 	end
 end
-if Place == 0x040C and Evt == 0x03 then --Hall of the Cornerstone (Dark) right before entering TR.
-	if ReadByte(Save+0x365D)<2 then 
-		WriteShort(BAR(ARD,0x07,0x034),0,OnPC) --Remove RC
-	end	
-  end
+--Restore Royal Summons Taken by Moogles
+if ReadByte(Save+0x365D) > ReadByte(Save+0x1CF7) then --Obtained new copies
+	WriteByte(Save+0x1CF7, ReadByte(Save+0x365D)) --Store amount
+elseif ReadByte(Save+0x365D) < ReadByte(Save+0x1CF7) then --Taken in synth shop
+	WriteByte(Save+0x365D, ReadByte(Save+0x1CF7)) --Restore amount
+end
 end
 
 function SP()
@@ -2497,7 +2490,9 @@ function Data()
 --Music Change - Final Fights
 if ReadShort(Save+0x03D6) == 0x02 then
 	if Place == 0x1B12 then --Part I
-		WriteShort(BAR(ARD,0x06,0x0A4),0x09C,OnPC) --Guardando nel buio
+		WriteShort(BAR(ARD,0x07,0x059A),0x09C,OnPC) --Guardando nel buio
+		WriteShort(BAR(ARD,0x07,0x1C46),0x09C,OnPC)
+		WriteShort(BAR(ARD,0x06,0x0A4),0x09C,OnPC)
 		WriteShort(BAR(ARD,0x06,0x0A6),0x09C,OnPC)
 	elseif Place == 0x1C12 then --Part II
 		WriteShort(BAR(ARD,0x07,0x008),0x09C,OnPC)
@@ -2527,6 +2522,7 @@ end
 [Save+0x066A,Save+0x066F] Borough Spawn IDs
 Save+0x06B2 Genie Crash Fix
 Save+0x1CF1 STT Dodge Roll, Unknown Disk, Twilight Thorn
+Save+0x1CF7 Royal Summons
 Save+0x1CF8 STT Struggle Weapon
 [Save+0x1CF9,Save+0x1CFA] STT Keyblade
 Save+0x1CFD TT Post-Story Save
