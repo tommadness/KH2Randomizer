@@ -17,6 +17,7 @@ class Items:
         """ Returns an _attempt_ at a comprehensive lookup table of item ID to item. May not include everything. """
         full_list = Items.getItemList()
         full_list.extend(Items.getStatItems())
+        full_list.extend(Items.getDummyFormItems())
         full_list.append(Items.getPromiseCharm())
         full_list.append(Items.getTT1Jailbreak())
         full_list.append(Items.objectiveReportItem())
@@ -369,6 +370,11 @@ class Items:
             KH2Item(form.DummyFinalForm, Rarity=itemRarity.MYTHIC),
             KH2Item(form.DummyValorForm, Rarity=itemRarity.MYTHIC)
         ]
+    
+    @staticmethod
+    def getFormToDummyMap() -> dict[int,int]:
+        return {form.ValorForm.id:form.DummyValorForm.id,
+                form.FinalForm.id:form.DummyFinalForm.id,}
 
     @staticmethod
     def getTT1Jailbreak() -> KH2Item:

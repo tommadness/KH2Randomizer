@@ -358,6 +358,10 @@ class SeedZip:
                     for dummy_form_item in Items.getDummyFormItems():
                         if a.item.Name == dummy_form_item.Name:
                             a.item = dummy_form_item
+                # if valor/final in starting inventory, swap their ids
+                orig_to_dummy = Items.getFormToDummyMap()
+                for orig_id,dummy_id in orig_to_dummy.items():
+                    self.randomizer.starting_item_ids[:] = [dummy_id if x==orig_id else x for x in self.randomizer.starting_item_ids]
 
             self.assign_treasures(mod)
             self.assign_levels(mod)

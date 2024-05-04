@@ -277,13 +277,14 @@ class Hints:
 
     @staticmethod
     def write_hints(hint_data: HintData, out_zip: ZipFile):
-        if hint_data["hintsType"] != HintType.DISABLED:
-            json_bytes = json.dumps(hint_data).encode("utf-8")
-            if version.debug_mode():
-                out_zip.writestr("HintFile_DebugHints.json", json_bytes)
-            out_zip.writestr(
-                "HintFile.Hints", base64.b64encode(json_bytes).decode("utf-8")
-            )
+        # too many things in unhinted now to not send the tracker a file
+        # if hint_data["hintsType"] != HintType.DISABLED:
+        json_bytes = json.dumps(hint_data).encode("utf-8")
+        if version.debug_mode():
+            out_zip.writestr("HintFile_DebugHints.json", json_bytes)
+        out_zip.writestr(
+            "HintFile.Hints", base64.b64encode(json_bytes).decode("utf-8")
+        )
 
     @staticmethod
     def write_hint_text(hint_data: HintData, mod: SeedModBuilder, journal_hints_spoiler: dict[str, str]):
