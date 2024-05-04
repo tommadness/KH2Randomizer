@@ -158,20 +158,20 @@ class HintsMenu(KH2Submenu):
                 settingkey.REPORTS_REVEAL
             ]
             widget.setCurrentIndex(0)
-        if (
-            hint_system in ["JSmartee", "Points", "Spoiler", "Path"]
-            and not progression_points
-        ):
-            setting, widget = self.widgets_and_settings_by_name[
-                settingkey.HINTABLE_CHECKS
-            ]
-            for selected in setting.choice_keys:
-                if selected == "report":
-                    index = setting.choice_keys.index(selected)
-                    widget.item(index).setSelected(True)
-                    widget.item(index).setFlags(
-                        Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled
-                    )
+        # if (
+        #     hint_system in ["JSmartee", "Points", "Spoiler", "Path"]
+        #     and not progression_points
+        # ):
+        #     setting, widget = self.widgets_and_settings_by_name[
+        #         settingkey.HINTABLE_CHECKS
+        #     ]
+        #     for selected in setting.choice_keys:
+        #         if selected == "report":
+        #             index = setting.choice_keys.index(selected)
+        #             widget.item(index).setSelected(True)
+        #             widget.item(index).setFlags(
+        #                 Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled
+        #             )
 
     def _configure_progression_points(self):
         dialog = ProgressionPointsDialog(self, self.settings)

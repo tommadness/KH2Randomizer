@@ -3727,7 +3727,7 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
             random_choices[settingkey.KEYBLADE_MAX_STAT] = random_choices[settingkey.KEYBLADE_MIN_STAT]
 
     for r in randomizable_settings:
-        print(f"{r.name} : {random_choices[r.name]}")
+        # print(f"{r.name} : {random_choices[r.name]}")
         real_settings_object.set(r.name, random_choices[r.name])
 
 

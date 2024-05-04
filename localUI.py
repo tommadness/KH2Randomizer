@@ -671,11 +671,8 @@ class KH2RandomizerApp(QMainWindow):
             makeSpoilerLog = self.spoiler_log.isChecked()
 
         # seed
-        seedString = self.seedName.text()
-        if seedString == "":
-            characters = string.ascii_letters + string.digits
-            seedString = (''.join(random.choice(characters) for i in range(30)))
-            self.seedName.setText(seedString)
+        self.validate_seed_name()
+        random.seed(self.seedName.text())
 
         rando_rando_counter = 0
         last_exception = None
@@ -683,7 +680,7 @@ class KH2RandomizerApp(QMainWindow):
             rando_rando_counter+=1
             backup_settings = self.randomize_the_settings()
             try:
-                rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
+                rando_settings = RandomizerSettings(self.seedName.text(),makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
                 if backup_settings:
                     self.settings.apply_settings_string(backup_settings)
                 self.recalculate = True
@@ -848,17 +845,20 @@ class KH2RandomizerApp(QMainWindow):
                 message.setWindowTitle("KH2 Seed Generator")
                 message.exec()
             else:
-                seedString = self.seedName.text()
-                if seedString == "":
-                    characters = string.ascii_letters + string.digits
-                    seedString = (''.join(random.choice(characters) for i in range(30)))
-                    self.seedName.setText(seedString)
+                self.validate_seed_name()
                 random.seed(self.seedName.text())
                 selected_preset = random.choice(random_preset_list)
                 self.usePreset(selected_preset)
                 message = QMessageBox(text=f"Picked {selected_preset}")
                 message.setWindowTitle("KH2 Seed Generator")
                 message.exec()
+
+    def validate_seed_name(self):
+        seedString = self.seedName.text()
+        if seedString == "":
+            characters = string.ascii_letters + string.digits
+            seedString = (''.join(random.choice(characters) for i in range(30)))
+            self.seedName.setText(seedString)
 
     def randoRando(self):
         rando_rando_dialog = RandomSettingsDialog(self.settings)
@@ -899,11 +899,8 @@ class KH2RandomizerApp(QMainWindow):
         self.fixSeedName()
 
         # if seed hasn't been set yet, make one
+        self.validate_seed_name()
         current_seed = self.seedName.text()
-        if current_seed == "":
-            characters = string.ascii_letters + string.digits
-            current_seed = (''.join(random.choice(characters) for i in range(30)))
-            self.seedName.setText(current_seed)
 
         shared_seed = SharedSeed(
             generator_version=LOCAL_UI_VERSION,
@@ -962,8 +959,15 @@ class KH2RandomizerApp(QMainWindow):
         post_shared_seed = SharedSeed.from_share_string(local_generator_version=LOCAL_UI_VERSION,share_string = self.createSharedString())
 
         if post_shared_seed.seed_name != shared_seed.seed_name or post_shared_seed.spoiler_log != shared_seed.spoiler_log or post_shared_seed.settings_string != shared_seed.settings_string:
-            print(shared_seed.settings_string)
+            print(post_shared_seed.seed_name)
+            print(shared_seed.seed_name)
+            print(post_shared_seed.seed_name != shared_seed.seed_name)
+            print(post_shared_seed.spoiler_log)
+            print(shared_seed.spoiler_log)
+            print(post_shared_seed.spoiler_log != shared_seed.spoiler_log)
             print(post_shared_seed.settings_string)
+            print(shared_seed.settings_string)
+            print(post_shared_seed.settings_string != shared_seed.settings_string)
             message = QMessageBox(text="There was an error getting the correct settings, try restarting the generator and trying again. If that fails, ask for the zip from the sharer.")
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()

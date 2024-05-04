@@ -151,6 +151,7 @@ class RandomizerSettings:
         seed_string: str,
     ):
         self.ui_settings = ui_settings
+        self.settings_spoiler_json = ui_settings.settings_spoiler_json()
         self.seed_string = seed_string
         self.crit_mode = ui_settings.get(settingkey.CRITICAL_BONUS_REWARDS)
         self.item_accessibility = ItemAccessibilityOption(
@@ -776,6 +777,14 @@ class RandomizerSettings:
         ):
             pass
             # raise SettingsException("Currently can't do randomized ability pools and vanilla worlds. Sorry about that. ")
+
+        if "report" not in self.hintable_check_types:
+            if (
+                self.hintsType in ["JSmartee", "Points", "Spoiler", "Path"]
+                and not self.progression_hints
+                and self.revealMode != "Disabled"
+            ):
+                raise SettingsException(f"The selected hint system {'Progression' if self.progression_hints else ''} {self.hintsType}  needs to have reports trackable")
 
         max_reports = len(report.all_reports())
         if self.starting_report_count + self.shop_reports > max_reports:

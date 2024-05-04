@@ -543,7 +543,7 @@ class SeedZip:
         synthesis_recipe_json = synth_recipe_dictionary(
             randomizer.assignments, randomizer.synthesis_recipes
         )
-        settings_spoiler_json = self.settings.ui_settings.settings_spoiler_json()
+        settings_spoiler_json = self.settings.settings_spoiler_json
         weapon_stats_spoiler = weapon_stats_dictionary(
             sora_assignments=randomizer.assignments,
             donald_assignments=randomizer.donald_assignments,
