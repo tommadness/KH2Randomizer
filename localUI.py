@@ -677,22 +677,29 @@ class KH2RandomizerApp(QMainWindow):
             seedString = (''.join(random.choice(characters) for i in range(30)))
             self.seedName.setText(seedString)
 
-        try:
+        rando_rando_counter = 0
+        last_exception = None
+        while rando_rando_counter < 10:
+            rando_rando_counter+=1
             backup_settings = self.randomize_the_settings()
-            rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
-            if backup_settings:
-                self.settings.apply_settings_string(backup_settings)
-            self.recalculate = True
-            # update the seed hash display
-            self.update_ui_hash_icons(rando_settings)
+            try:
+                rando_settings = RandomizerSettings(seedString,makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
+                if backup_settings:
+                    self.settings.apply_settings_string(backup_settings)
+                self.recalculate = True
+                # update the seed hash display
+                self.update_ui_hash_icons(rando_settings)
 
-            return rando_settings
-        except RandomizerExceptions as e:
-            if catch_exception:
-                self.handleFailure(e)
-                return None
-            else:
-                raise e
+                return rando_settings
+            except RandomizerExceptions as e:
+                if backup_settings:
+                    self.settings.apply_settings_string(backup_settings)
+                last_exception = e
+        if catch_exception and last_exception is not None:
+            self.handleFailure(last_exception)
+            return None
+        else:
+            raise last_exception
 
     def update_ui_hash_icons(self, rando_settings):
         self.hash_icon_names.clear()
@@ -860,6 +867,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def randomize_the_settings(self):
         if self.settings.get(settingkey.RANDOMIZED_SETTINGS_ENABLED):
+            print("randomizing settings")
             self.recalculate = False
             selected_random_settings = self.settings.get(settingkey.RANDOMIZED_SETTINGS)
             backup_settings = self.settings.settings_string()
