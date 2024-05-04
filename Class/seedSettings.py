@@ -2778,16 +2778,20 @@ _all_settings = [
         shared=True,
         default=AbilityPoolOption.DEFAULT,
         tooltip="""
-        Configures the ability pool randomization.
-    
-        Randomize Ability Pool - Picks Sora\'s action/support abilities at random
-        (guaranteed to have 1 Second Chance and 1 Once More).
-         
-        Randomize Support Ability Pool - Leaves action abilities alone, but will randomize the support abilities
-        (still guaranteed to have 1 Second Chance and 1 Once More).
+        Controls the inclusion and quantity of abilities in the randomized pool.
         
-        Randomize Stackable Abilities - Gives 1 of each ability that works on its own, but randomizes how many of
-        the stackable abilities you can get (guaranteeing at least 1 of each).
+        Default Abilities - Includes the default set of action and support abilities, with their default quantities.
+    
+        Randomize Ability Pool - Picks Sora's obtainable action and support abilities at random (guaranteed to have 1
+        Second Chance and 1 Once More). Some other abilities may not be included at all, and some support abilities may
+        have several copies.
+         
+        Randomize Support Ability Pool - Includes the default set of action abilities, but will pick support abilities
+        at random (still guaranteed to have 1 Second Chance and 1 Once More). Some other support abilities may not be
+        included at all, and others may have several copies.
+        
+        Randomize Stackable Abilities - Guarantees 1 copy of each ability that works on its own, but randomizes how many
+        copies of the stackable support abilities you can get (guaranteeing at least 1 copy of each).
         """,
         randomizable=["default", "randomize support", "randomize stackable"],
     ),

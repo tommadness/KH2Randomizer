@@ -1551,9 +1551,9 @@ class SeedZip:
             )
             
         companion_names = ["Donald","Goofy","PingMulan","Beast","Auron","Sparrow","Aladdin","Jack","Simba","Tron","Riku"]
+        companion_exp = settings.companion_exp()
         for c_name in companion_names:
             companion_levels = mod.level_ups.get_companion_levels(c_name)
-            companion_exp = settings.companion_exp()
             for level in companion_levels:
                 mod.level_ups.add_companion_level(
                     level=level,

@@ -253,15 +253,17 @@ rewards are randomized.
 
 **Armor** - If enabled, all armor items are included in the item pool.
 
-**Ability Pool** - Controls the presence and amount of abilities in the randomized pool.
+**Ability Pool** - Controls the inclusion and quantity of abilities in the randomized pool.
 
-* Default Abilities - Uses the default set of action and support abilities.
-* Randomize Ability Pool - Chooses Sora's action/support abilities at random (guaranteed to have one Second Chance and
-  one Once More ability).
-* Randomize Support Ability Pool - Leaves Sora's action abilities alone, but will randomize the support abilities (still
-  guaranteed to have one Second Chance and one Once More).
-* Randomize Stackable Abilities - Always includes 1 of each ability that works on its own, but will randomize how many
-  of the stackable abilities you can get (guaranteeing at least 1 of each).
+* Default Abilities - Includes the default set of action and support abilities, with their default quantities.
+* Randomize Ability Pool - Picks Sora's obtainable action and support abilities at random (guaranteed to have 1
+  Second Chance and 1 Once More). Some other abilities may not be included at all, and some support abilities may have
+  several copies.
+* Randomize Support Ability Pool - Includes the default set of action abilities, but will pick support abilities
+  at random (still guaranteed to have 1 Second Chance and 1 Once More). Some other support abilities may not be
+  included at all, and others may have several copies.
+* Randomize Stackable Abilities - Guarantees 1 copy of each ability that works on its own, but randomizes how many
+  copies of the stackable support abilities you can get (guaranteeing at least 1 copy of each).
 
 ### Randomized Shop
 
