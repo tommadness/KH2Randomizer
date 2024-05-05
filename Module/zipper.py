@@ -1816,6 +1816,10 @@ class SeedZip:
         )
         companion_melee_objects = []
         for melee_entry in companion_melee_ids:
+            if len(melee_entry) == 3:
+                companion_melee_objects.append(
+                    atkp_organizer.get_attack_using_ids_plus_switch(melee_entry[0], melee_entry[1], melee_entry[2])    
+                )
             companion_melee_objects.append(
                 atkp_organizer.get_attack_using_ids(melee_entry[0], melee_entry[1])
             )
@@ -1829,10 +1833,10 @@ class SeedZip:
         )
         companion_ability_objects = []
         for i in range(len(companion_ability_ids)):
-            # The third entry is for when we need the power field to distinguish different entries for the same attack (like goofy tornado)
+            # The third entry is for when we need the switch field to distinguish different entries for the same attack (like goofy tornado)
             for ability_entry in companion_ability_ids[i]:
                 if len(ability_entry) == 3:
-                    entry_object = atkp_organizer.get_attack_using_ids_plus_power(
+                    entry_object = atkp_organizer.get_attack_using_ids_plus_switch(
                         ability_entry[0], ability_entry[1], ability_entry[2]
                     )
                     entry_object: ATKPObject
@@ -1864,22 +1868,22 @@ class SeedZip:
             return [
                 [[0, 1163], [2, 1163], [0, 1716], [2, 1716]],
                 [[0, 1164], [0, 1717]],
-                [[0, 1165], [0, 1165], [0, 1718], [0, 1718]],
-            ]  # There are two entries in atkp for thunder that have same Id, SubId and Power...
+                [[0, 1165, 1], [0, 1165, 2], [0, 1718, 1], [0, 1718, 2]],
+            ]
         elif companion_name == "Goofy/PL_Goofy":
             if id_group == "Melee":
                 return [[0, 146], [1, 146], [0, 156], [0, 157], [0, 158], [0, 159], [0, 1942], [1, 1942], [0, 85], [0, 86], [0, 87], [0, 95]]
             return [
                 [[0, 1161]],
                 [[0, 1162], [0, 1253]],
-                [[0, 1160, 25], [0, 1258, 25]],
-            ]  # Third entry in last one is for power
+                [[0, 1160, 1], [0, 1258, 1]],
+            ]
         elif companion_name == "Jack Skellington":
             if id_group == "Melee":
                 return [[0, 224], [0, 895], [0, 225], [0, 563], [0,564], [0, 565], [0, 273], [1, 273], [0, 274]]
             return [
                 [[0, 1176]],
-                [[0, 1176], [0, 1176]], # Same as Donald Thunder
+                [[0, 1177, 1], [0, 1177, 2]],
                 [[0, 1178]],
             ]
         elif companion_name == "Simba":
@@ -1936,7 +1940,7 @@ class SeedZip:
             if id_group == "Melee":
                 return [[0, 193], [0, 194], [0, 195], [0, 196]]
             return [
-                [[0, 1272], [1, 1272], [0, 1576]],
+                [[0, 1272], [1, 1272], [0, 1576]], # Divider spans over 2 parent ids
             ]
 
 

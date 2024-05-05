@@ -625,12 +625,12 @@ class AttackEntriesOrganizer:
             if attack_entry["SubId"] == SubId and attack_entry["Id"] == Id:
                 return self.attack_entry_constructor(attack_entry)
 
-    # Used specifically for moves with two Ids that have the same number and same SubId but with different power and uses (like goofy tornado)
-    def get_attack_using_ids_plus_power(self, SubId, Id, Power):
+    # Used specifically for entries that have the same Id and SubId
+    def get_attack_using_ids_plus_switch(self, SubId, Id, Switch):
         for attack_entry in self.yaml_list_data:
             if (
                 attack_entry["SubId"] == SubId
                 and attack_entry["Id"] == Id
-                and attack_entry["Power"] == Power
+                and attack_entry["Switch"] == Switch
             ):
                 return self.attack_entry_constructor(attack_entry)
