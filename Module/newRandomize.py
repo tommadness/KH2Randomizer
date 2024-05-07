@@ -665,9 +665,9 @@ class Randomizer:
                 if vanilla_item is None:
                     # if we don't have the item, it means that we started with the item, or it was randomized away
                     continue
-                if vanilla_item.ItemType not in loc_with_vanilla.InvalidChecks:
+                if True: #vanilla_item.ItemType not in loc_with_vanilla.InvalidChecks:
                     item_pool.remove(vanilla_item)
-                    if self.assign_item(loc_with_vanilla, vanilla_item):
+                    if self.assign_item(loc_with_vanilla, vanilla_item, override_invalid=True):
                         invalid_locations.remove(loc_with_vanilla)
 
         # assign items that have very restricted locations (boss depths, yeet, etc.)
@@ -1360,6 +1360,7 @@ class Randomizer:
         location: KH2Location,
         item: KH2Item,
         party_member_assigned_items: Optional[list[ItemAssignment]] = None,
+        override_invalid = False,
     ) -> bool:
         """
         Assigns the given item to the given location. Returns True if the location has all needed items assigned, or
@@ -1374,7 +1375,7 @@ class Randomizer:
         if assigned_items is None:
             assigned_items = self.assignments
 
-        if item.ItemType in location.InvalidChecks:
+        if item.ItemType in location.InvalidChecks and not override_invalid:
             raise GeneratorException(
                 f"Trying to assign {item} to {location} even though it's invalid."
             )
