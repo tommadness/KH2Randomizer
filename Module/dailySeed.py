@@ -365,6 +365,15 @@ dailyHardModifiers = [
         ),
     ),
     DailyModifier(
+        name="Keyblades are keys?",
+        initMod=None,
+        description="Chests from Worlds need specific keyblades acquired to open them.",
+        categories={"progression"},
+        local_modifier=lambda settings: settings.set(
+            settingkey.KEYBLADES_LOCK_CHESTS, True
+        ),
+    ),
+    DailyModifier(
         name="No Skipping :)",
         initMod=None,
         description="You can't skip into CoR or Throne Room. Get there normally :)",
