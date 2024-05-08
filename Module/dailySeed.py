@@ -80,7 +80,7 @@ def corOn(seed_settings: SeedSettings):
 
 
 def lockedVisitsHard(seed_settings: SeedSettings):
-    seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.SPECIFIC.name)
+    seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.RANDOM.name)
     seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 5)
     seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MIN, 3)
     seed_settings.set(settingkey.WEIGHTED_UNLOCKS, itemBias.LATE)
@@ -322,14 +322,14 @@ dailyHardModifiers = [
     DailyModifier(
         name="Biased Checks Even Later",
         initMod=None,
-        description="Using the Hard item bias, good stuff is likely to be pushed even later.",
+        description="Using the Late item bias, good stuff is likely to be pushed even later.",
         categories={"placement"},
         local_modifier=lambda settings: mimic_item_placement_difficulty(settings, itemDifficulty.HARD),
     ),
     DailyModifier(
         name="Biased Checks Way Later",
         initMod=None,
-        description="Using the Very Hard item bias, good stuff is likely to be pushed way later.",
+        description="Using the Very Late item bias, good stuff is likely to be pushed way later.",
         categories={"placement"},
         local_modifier=lambda settings: mimic_item_placement_difficulty(settings, itemDifficulty.VERYHARD),
     ),

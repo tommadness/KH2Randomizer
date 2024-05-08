@@ -678,9 +678,11 @@ class KH2RandomizerApp(QMainWindow):
         last_exception = None
         while rando_rando_counter < 10:
             rando_rando_counter+=1
-            backup_settings = self.randomize_the_settings()
+            backup_settings, shared_string = self.randomize_the_settings()
             try:
-                rando_settings = RandomizerSettings(self.seedName.text(),makeSpoilerLog,LOCAL_UI_VERSION,self.settings,self.createSharedString())
+                if shared_string is None:
+                    shared_string = self.createSharedString()
+                rando_settings = RandomizerSettings(self.seedName.text(),makeSpoilerLog,LOCAL_UI_VERSION,self.settings,shared_string)
                 if backup_settings:
                     self.settings.apply_settings_string(backup_settings)
                 self.recalculate = True
@@ -870,10 +872,11 @@ class KH2RandomizerApp(QMainWindow):
             print("randomizing settings")
             self.recalculate = False
             selected_random_settings = self.settings.get(settingkey.RANDOMIZED_SETTINGS)
+            backup_shared_string = self.createSharedString()
             backup_settings = self.settings.settings_string()
             randomize_settings(self.settings,selected_random_settings)
-            return backup_settings
-        return None
+            return backup_settings, backup_shared_string
+        return None,None
 
     def openPresetFolder(self):
         os.startfile(appconfig.PRESET_FOLDER)
