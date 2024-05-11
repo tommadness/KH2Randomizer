@@ -283,6 +283,7 @@ class KH2RandomizerApp(QMainWindow):
         self.num_tourney_seeds = 0
         self.num_items_to_place = None
         self.num_locations_to_fill = None
+        self.disable_emu_warnings = False
 
         self.settings = SeedSettings()
         self.custom_cosmetics = CustomCosmetics()
@@ -427,6 +428,8 @@ class KH2RandomizerApp(QMainWindow):
         self.config_menu.addSeparator()
         self.remember_window_position_action = self.config_menu.addAction('Remember Window Size/Position')
         self.remember_window_position_action.setCheckable(True)
+        self.emu_warning_toggle = self.config_menu.addAction('Disable Emulator Warnings')
+        self.emu_warning_toggle.setCheckable(True)
         self.config_menu.addSeparator()
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
 
@@ -556,6 +559,10 @@ class KH2RandomizerApp(QMainWindow):
             appconfig.update_app_config('window_position', obj)
         else:
             appconfig.remove_app_config('window_position')
+        if self.emu_warning_toggle.isChecked():
+            appconfig.update_app_config('emu_warnings', True)
+        else:
+            appconfig.remove_app_config('emu_warnings')
 
         e.accept()
 
@@ -726,6 +733,7 @@ class KH2RandomizerApp(QMainWindow):
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DARK_THORN)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DFX)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_CUTSCENES)
+                split_pc_emu = split_pc_emu or self.settings.get(settingkey.KEYBLADES_LOCK_CHESTS)
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_COR_SKIP)
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
                 split_pc_emu = split_pc_emu or rando_settings.enemy_options["boss"] != "Disabled"
@@ -768,13 +776,14 @@ class KH2RandomizerApp(QMainWindow):
             message.setWindowTitle("KH2 Seed Generator")
             message.exec()
             # disable all cosmetics, generate a spoiler log, but don't put it in the zip
-            extra_data = ExtraConfigurationData(platform=platform, tourney=True, custom_cosmetics_executables=[])
+            extra_data = ExtraConfigurationData(platform=platform, tourney=True, custom_cosmetics_executables=[],disable_emu_warning=self.disable_emu_warnings)
             self.genTourneySeeds(extra_data)
         else:
             extra_data = ExtraConfigurationData(
                 platform=platform,
                 tourney=False,
                 custom_cosmetics_executables=self.custom_cosmetics.collect_custom_executable_files(),
+                disable_emu_warning=self.disable_emu_warnings,
             )
 
             rando_settings = self.make_rando_settings()
@@ -1113,6 +1122,9 @@ if __name__ == "__main__":
     window.show()
 
     app_config = appconfig.read_app_config()
+    
+    if 'emu_warnings' in app_config:
+        window.disable_emu_warnings = True
 
     if 'window_position' in app_config:
         window.remember_window_position_action.setChecked(True)

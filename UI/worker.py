@@ -55,6 +55,17 @@ def _download_seed(parent: QWidget, seed_zip_result: SeedZipResult):
 
         last_seed_folder_txt.write_text(str(Path(outfile_name).parent))
 
+def _emu_warnings(rando_settings: RandomizerSettings,extra_data: ExtraConfigurationData):
+    if not extra_data.disable_emu_warning and rando_settings.keyblades_unlock_chests and extra_data.platform=="PCSX2":
+        from UI import theme
+        explainer_text = f'''You've generated a seed for PCSX2 with the setting for locking chests with keyblades. <br><br>
+This requires running the lua file included in the seed zip. This means, either move the lua file manually to your scripts folder, or reconfigure PCSX2 to use the folder made by the mod manager.<br><br>
+A tutorial to do so can be found here: <a href="LINK_HERE" style="color: {theme.LinkColor}">Tutorial</a><br><br>
+'''
+        message = QMessageBox(text=explainer_text)
+        message.setTextFormat(Qt.RichText)
+        message.setWindowTitle("KH2 Seed Generator")
+        message.exec()
 
 class GenerateSeedThread(QThread):
     finished = Signal(object)
@@ -119,6 +130,7 @@ class GenerateSeedWorker:
             else "<html>No spoiler log generated</html>"
         )
         _download_seed(self.parent, (zip_file, spoiler_log_output, enemy_log_output))
+        _emu_warnings(self.rando_settings,self.extra_data)
         self.thread = None
 
     def _handle_failure(self, failure: Exception):
