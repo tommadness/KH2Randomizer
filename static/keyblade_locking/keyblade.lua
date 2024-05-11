@@ -1,4 +1,5 @@
 function _OnInit()
+print('Keyblade Locking Lua from Seed Generator')
 if (GAME_ID == 0xF266B00B or GAME_ID == 0xFAF99301) and ENGINE_TYPE == "ENGINE" then --PCSX2
 	if ENGINE_VERSION < 3.0 then
 		print('LuaEngine is Outdated. Things might not work properly.')
