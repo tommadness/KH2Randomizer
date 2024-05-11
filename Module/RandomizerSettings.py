@@ -531,9 +531,13 @@ class RandomizerSettings:
         self.shop_hintable = (
             (self.shop_unlocks > 0)
             or (self.shop_reports > 0)
+            or self.shop_keyblades
             or locationType.Puzzle in include_list
             or locationType.SYNTH in include_list
         )
+        if (self.shop_unlocks > 0) or (self.shop_reports > 0) or self.shop_keyblades:
+            include_list.append(locationType.SYNTH)
+
         prog_points = ProgressionPoints()
         prog_points.set_uncompressed(
             ui_settings.get(settingkey.PROGRESSION_POINT_SELECT)
@@ -631,6 +635,8 @@ class RandomizerSettings:
             self.tracker_includes.append("ScoreMode")
         if self.split_levels:
             self.tracker_includes.append("Dream Weapon Matters")
+        if self.shop_hintable:
+            self.tracker_includes.append(locationType.SYNTH)
 
         if (
             self.hintsType in ["JSmartee", "Path"]

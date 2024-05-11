@@ -393,7 +393,7 @@ class Randomizer:
             if item_to_remove is not None:
                 item_pool.remove(item_to_remove)
 
-        # Reports and visit unlocks in the shop (these do affect the item pool)
+        # Reports, visit unlocks, and keyblades in the shop (these do affect the item pool)
         if settings.shop_reports > 0:
             report_pool = [i for i in item_pool if i.ItemType == itemType.REPORT]
             num_reports_in_shop = min(settings.shop_reports, len(report_pool))
@@ -417,6 +417,13 @@ class Randomizer:
             for chosen_unlock in chosen_unlocks:
                 item_pool.remove(chosen_unlock)
 
+        if settings.shop_keyblades:
+            keyblade_item_pool = [
+                i for i in item_pool if i.ItemType == itemType.KEYBLADE
+            ]
+            self.shop_items.extend(keyblade_item_pool)
+            for keyblade_item in keyblade_item_pool:
+                item_pool.remove(keyblade_item)
         return item_pool
 
     def initial_ability_pool(self, settings: RandomizerSettings) -> list[KH2Item]:
@@ -546,11 +553,6 @@ class Randomizer:
         ability_pool = self.initial_ability_pool(settings)
 
         # Items in the shop that don't affect the item pool.
-        # In particular, the keyblades in the shop don't get removed from the pool.
-        if settings.shop_keyblades:
-            self.shop_items.extend(
-                item for item in item_pool if item.ItemType == itemType.KEYBLADE
-            )
         if settings.shop_elixirs:
             self.shop_items.append(KH2Item(consumable.Elixir))
             self.shop_items.append(KH2Item(consumable.Megalixir))
@@ -889,7 +891,7 @@ class Randomizer:
         validator.prep_requirements_list(settings, self)
 
         sphere_0_check = True
-        num_available_locations_needed_to_allow_random_assignment = 150 # TODO(zak) this is arbitrary and may need tuning
+        num_available_locations_needed_to_allow_random_assignment = 125 # TODO(zak) this is arbitrary and may need tuning
         while sphere_0_check:
             # calculate the available checks
             acquired_items, sphere_0 = self.get_accessible_locations(valid_locations, validator)
