@@ -283,7 +283,9 @@ class KH2RandomizerApp(QMainWindow):
         self.num_tourney_seeds = 0
         self.num_items_to_place = None
         self.num_locations_to_fill = None
-        self.disable_emu_warnings = False
+        
+        app_config = appconfig.read_app_config()
+        self.disable_emu_warnings = "disable_emu_warnings" in app_config
 
         self.settings = SeedSettings()
         self.custom_cosmetics = CustomCosmetics()
@@ -430,6 +432,7 @@ class KH2RandomizerApp(QMainWindow):
         self.remember_window_position_action.setCheckable(True)
         self.emu_warning_toggle = self.config_menu.addAction('Disable Emulator Warnings')
         self.emu_warning_toggle.setCheckable(True)
+        self.emu_warning_toggle.setChecked(self.disable_emu_warnings)
         self.config_menu.addSeparator()
         self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
 
@@ -560,9 +563,9 @@ class KH2RandomizerApp(QMainWindow):
         else:
             appconfig.remove_app_config('window_position')
         if self.emu_warning_toggle.isChecked():
-            appconfig.update_app_config('emu_warnings', True)
+            appconfig.update_app_config('disable_emu_warnings', True)
         else:
-            appconfig.remove_app_config('emu_warnings')
+            appconfig.remove_app_config('disable_emu_warnings')
 
         e.accept()
 
@@ -1122,9 +1125,6 @@ if __name__ == "__main__":
     window.show()
 
     app_config = appconfig.read_app_config()
-    
-    if 'emu_warnings' in app_config:
-        window.disable_emu_warnings = True
 
     if 'window_position' in app_config:
         window.remember_window_position_action.setChecked(True)

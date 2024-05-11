@@ -59,7 +59,8 @@ def _emu_warnings(rando_settings: RandomizerSettings,extra_data: ExtraConfigurat
     if not extra_data.disable_emu_warning and rando_settings.keyblades_unlock_chests and extra_data.platform=="PCSX2":
         from UI import theme
         explainer_text = f'''You've generated a seed for PCSX2 with the setting for locking chests with keyblades. <br><br>
-This requires running the lua file included in the seed zip. This means, either move the lua file manually to your scripts folder, or reconfigure PCSX2 to use the folder made by the mod manager.<br><br>
+This requires running the lua file included in the seed zip. This means, either move the lua file from the zip 
+(randoseed-mod-files/keyblade_locking/keyblade.lua) manually to your scripts folder, or reconfigure PCSX2 to use the folder made by the mod manager.<br><br>
 A tutorial to do so can be found here: <a href="LINK_HERE" style="color: {theme.LinkColor}">Tutorial</a><br><br>
 '''
         message = QMessageBox(text=explainer_text)
