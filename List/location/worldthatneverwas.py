@@ -82,19 +82,28 @@ class TWTNWLogicGraph(DefaultLogicGraph):
         self.logic[NodeId.NaughtsSkyway][NodeId.NaughtsSkywayChests] = keyblade_lambda
         self.logic[NodeId.RuinAndCreationsPassage][NodeId.RuinAndCreationsPassageChests] = keyblade_lambda
 
-        self.logic[START_NODE][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_promise_charm(inv) and (ItemPlacementHelpers.need_proofs(inv) or ItemPlacementHelpers.make_need_objectives_lambda(objectives_needed))
+        completion_lambda = lambda inv : ItemPlacementHelpers.need_proofs(inv)
+        if objectives_needed > 0:
+            completion_lambda = ItemPlacementHelpers.make_need_objectives_lambda(objectives_needed)
+
+        self.logic[START_NODE][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_promise_charm(inv) and completion_lambda(inv)
         if not reverse_rando:
             self.logic[NodeId.FragmentCrossing][NodeId.Roxas] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Saix][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
-            self.logic[NodeId.Xemnas1][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_proofs(inv) or ItemPlacementHelpers.make_need_objectives_lambda(objectives_needed)
+            self.logic[NodeId.Xemnas1][NodeId.FinalXemnas] = completion_lambda
         else:
             self.logic[NodeId.FragmentCrossing][NodeId.Xemnas1] = ItemPlacementHelpers.twtnw_roxas_check
             self.logic[NodeId.Xigbar][NodeId.PreXemnas1Popup] = ItemPlacementHelpers.twtnw_post_saix_check
-            self.logic[NodeId.Roxas][NodeId.FinalXemnas] = lambda inv : ItemPlacementHelpers.need_proofs(inv) or ItemPlacementHelpers.make_need_objectives_lambda(objectives_needed)
+            self.logic[NodeId.Roxas][NodeId.FinalXemnas] = completion_lambda
 
 def make_graph(graph: LocationGraphBuilder):
     twtnw = locationType.TWTNW
-    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests,graph.settings.num_objectives_needed)
+    objectives_needed = 0
+    if graph.settings.objective_rando:
+        objectives_needed = graph.settings.num_objectives_needed
+    if graph.settings.emblems:
+        objectives_needed = graph.settings.num_emblems_needed
+    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests,objectives_needed)
     graph.add_logic(twtnw_logic)
 
     fragment_crossing_chests = graph.add_location(NodeId.FragmentCrossingChests, [

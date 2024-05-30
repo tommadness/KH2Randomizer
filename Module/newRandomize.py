@@ -682,8 +682,6 @@ class Randomizer:
             # filter down the pool based on what valid locations there are
             valid_location_descriptions = [v.Description for v in valid_locations]
             objective_pool = [o for o in objective_pool if o.Location in valid_location_descriptions]
-            # remove proof of nonexistence
-            item_pool = [i for i in item_pool if i.Id != proof.ProofOfNonexistence.id]
             # remove duplicates for AS/Data split
             if locationType.AS in settings.enabledLocations and locationType.DataOrg in settings.enabledLocations:
                 if settings.as_data_split:

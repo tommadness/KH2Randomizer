@@ -217,12 +217,12 @@ class PointHintData:
         # self.allow_proof_hinting = settings.allow_proof_hinting
         # self.allow_report_hinting = settings.allow_report_hinting
         self.world = world_to_hint
-        unique_items = []
+        self.unique_items = []
         ic_list = common_tracker_data.important_check_list
         for item in world_items.world_to_item_list[world_to_hint]:
             if item.ItemType in ic_list or item.Name in ic_list:
-                unique_items.append(item)
-        self.unique_items = set(unique_items)
+                if item not in self.unique_items:
+                    self.unique_items.append(item)
 
     def candidate_hints(self) -> list[KH2Item]:
         candidate_items: list[KH2Item] = []
