@@ -16,6 +16,18 @@ def read_app_config() -> dict:
     else:
         return {}
 
+def read_boss_enemy_override_files() -> str:
+    result_string = ""
+    location_override_path = Path('override_enemies.yaml').absolute()
+    if location_override_path.is_file():
+        with open(location_override_path, encoding='utf-8') as location_override:
+            result_string += location_override.read()
+    enemy_override_path = Path('override_enemies.yaml').absolute()
+    if enemy_override_path.is_file():
+        with open(enemy_override_path, encoding='utf-8') as enemy_override:
+            result_string += enemy_override.read()
+    return result_string
+            
 
 def write_app_config(config: dict):
     config_path = Path('randomizer-config.json').absolute()

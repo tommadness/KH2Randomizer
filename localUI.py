@@ -303,6 +303,9 @@ class KH2RandomizerApp(QMainWindow):
 
         CosmeticsMod.bootstrap_cosmetics_files()
 
+        # using this to change settings when these files are provided
+        self.boss_enemy_overrides = appconfig.read_boss_enemy_override_files()
+
         random.seed(str(datetime.datetime.now()))
 
         debug_string = ""
@@ -692,7 +695,7 @@ class KH2RandomizerApp(QMainWindow):
             try:
                 if shared_string is None:
                     shared_string = self.createSharedString()
-                rando_settings = RandomizerSettings(self.seedName.text(),makeSpoilerLog,LOCAL_UI_VERSION,self.settings,shared_string)
+                rando_settings = RandomizerSettings(self.seedName.text(),makeSpoilerLog,LOCAL_UI_VERSION,self.settings,shared_string,self.boss_enemy_overrides)
                 if backup_settings:
                     self.settings.apply_settings_string(backup_settings)
                 self.recalculate = True

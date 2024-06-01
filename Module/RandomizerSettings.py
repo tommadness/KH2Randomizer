@@ -149,6 +149,7 @@ class RandomizerSettings:
         ui_version: str,
         ui_settings: SeedSettings,
         seed_string: str,
+        boss_enemy_overrides: str = None, 
     ):
         self.ui_settings = ui_settings
         self.settings_spoiler_json = ui_settings.settings_spoiler_json()
@@ -425,6 +426,7 @@ class RandomizerSettings:
         self.random_seed: str = seed_name
         self.spoiler_log: bool = spoiler_log
         self.ui_version: str = ui_version
+        self.boss_enemy_overrides: str = boss_enemy_overrides if boss_enemy_overrides and (self.enemy_options["boss"] != "Disabled" or self.enemy_options["enemy"] != "Disabled") else ""
         self.create_full_seed_string()
         self.seedHashIcons: list[str] = generate_hash_icons()
 

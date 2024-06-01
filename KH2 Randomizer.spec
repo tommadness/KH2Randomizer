@@ -104,7 +104,7 @@ a = Analysis(
         'presets/*.*',
         'Module/icon.png',
         'extracted_data.zip'
-       ]) + external_data_recursive([khbrpath+"/**/*.*"]),
+       ]) + external_data_recursive([khbrpath+"/**/*"]),
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
