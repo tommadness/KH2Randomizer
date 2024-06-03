@@ -14,7 +14,10 @@ The randomizer community has the primary tracker as well as some novelty ones fo
 
 When playing the randomizer, it can be helpful to see everything you collect, what worlds you found the checks in, and your in-game stats. Everything that the tracker can display is annotated in the image below and will be referenced throughout the remainder of this page. If you want a complete summary of all the possible check locations in game, please refer to [Xtreone's summary](https://docs.google.com/spreadsheets/u/1/d/1XMUNvlLNSHX8f38_rm__eWByZA3whqh0tgHBGHWNfb8/edit#gid=1519464140).
 
-<img src="static/annotated_tracker.png" width="600">
+<p align="center">
+   <img src="static/annotated_tracker.png" width="600">
+</p>
+
 <u>Note</u>: The exact layout and check inclusions are subject to change from version to version.
 
 ### World Labels
