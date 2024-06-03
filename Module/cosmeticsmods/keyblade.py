@@ -321,7 +321,7 @@ class KeybladeRandomizer:
         remastered_obj_path = extracted_data_path / "remastered" / "obj"
 
         vanilla_keys_path = Path("cache/vanilla-keyblades")
-        vanilla_keys_path.mkdir(exist_ok=True)
+        vanilla_keys_path.mkdir(parents=True, exist_ok=True)
 
         for vanilla_key in _vanilla_keyblades():
             if vanilla_key.custom:
