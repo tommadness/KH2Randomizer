@@ -2,15 +2,13 @@ The randomizer community has the primary tracker as well as some novelty ones fo
 
 * [KhTracker](#KHTracker)
     * [Instructions](#Instructions)
-* [Battleship Tracker](#Battleship-Tracker)
-    * [Step 1](#Step-1)
-       * [Battleship Instructions](#Instructions)
-       * [Bingo Instructions](#Instructions-for-Bingo)
-       * [Boss Enemy Instructions](#Instructions-for-Boss-Enemy)
-       * [Maze Mode Instructions](#Instructions-for-Maze-Mode)
-       * [Hitlist Instructions](#Instructions-for-Hitlist)
-    * [Step 2](#Step-2)
-    * [Step 4](#Step-4)
+    * [Auto-Saving](#Auto-Saving)
+    * [Saving + Loading Seeds](#Saving-and-Loading-Seeds)
+* [Grid Tracker](#Grid-Tracker)
+    * [Getting Started](#General-Information)
+    * [Options](#Options)
+    * [Game Modes](#Game-Modes)
+* [Objectives Tracker](#Objective-Tracker)
 
 # KHTracker
 
@@ -43,64 +41,107 @@ The tracker comes decked out with many styling features. These features do not c
 
 The tracker can be downloaded from [here](https://github.com/Dee-Ayy/KH2Tracker/releases) if you do not have it already. Scroll to the version you want to download and download the ".exe" file only. In the event your computer tries to protect you from the file, select "More Info" and then "Run anyway."
 
-To use the KH2 Tracker, open the tracker by clicking on the KhTracker ".exe" file. Once the tracker loads, go to "Options > Load Hints" and select the appropriate hints extension (most likely Kh2 Randomizer seed). Select the appropriate file once the file explorer window opens (most likely the randoseed zip you just generated). Once the seed is loaded in, launch KH2. It's good practice to confirm that the seed hash displayed in the start game menu matches the seed hash displayed on the tracker once the seed is loaded in. After this, go to "Options" > "Start [Method] Tracking" where [Method] is the version (PCSX2/PC Port) of KH2 you are playing on. Make sure the tracker confirms that the autotracking has started. You will be able to tell because either the PCSX2 or PC icon (in green) will show up. Now you're good to start a seed!
+To use the KH2 Tracker, open the tracker by clicking on the KhTracker ".exe" file. Once the tracker loads, go to "Options > Hint Loading..." and select the appropriate hints extension (most likely Kh2 Randomizer Seed). Select the appropriate file once the file explorer window opens (most likely the randoseed zip you just generated). Once the seed is loaded in, launch KH2. It's good practice to confirm that the seed hash displayed in the start game menu matches the seed hash displayed on the tracker once the seed is loaded in. After this, go to "Options" > "Start Auto-Tracking". Make sure the tracker confirms that the autotracking has started. You will be able to tell because either the PCSX2 or PC icon (in green) will show up. Now you're good to start a seed!
+
+### Auto-Saving
+
+Occassionaly, the tracker could crash or get accidentally closed. You can have your tracker create auto-saves in the event that this happens. To do so, ensure that "Auto-Save Tracker Progress on Tracker Exit" and "Auto-Save Tracker Progress on Connection Loss" are toggled ON in the Options menu.
+
+To load one of these autosaves, go to Options -> Load Tracker Progress and navigate to your KhTrackerAutoSaves directory which should be located in the same folder as your KH2Tracker. Select the most recently saved .tsv file, and your tracker should populate with the autosave information.
 
 #### Saving and Loading Seeds
 
 In the event you want to save your randomizer progress to continue it at a later time, go to "Options" > "Save Current Progress" and save the resulting ".txt" file in a location you'll remember. Later on, to load it back into the tracker, go to "Options" > "Load Tracker Progress." If you have not done a new randomizer seed since saving, you can use the autosave mod to load back into your seed. Otherwise, make sure to make a hard save in KH2 before closing out your randomizer.
 
-# Battleship Tracker
+# Grid Tracker
 
-The randomizer community has found several new ways to enjoy the randomizer that calls for some novelty trackers. At the moment, the only documented one is the Battleship Tracker though others may arise in the future. The Battleship tracker can be used to play custom game modes such as (but not limited to) Battleships, Boss Enemy Bingo, and Hitlist. The tracker can be found and installed [here](https://github.com/roromaniac/KH2FM-Rando-Battleship/releases). Unless you want to playtest the newest version of the tracker, it is recommended you utilize the latest stable release.
+### General Information
 
-In general, the instructions are as follows: 
+The grid tracker is a tracker that lays out several trackable items and progression events in a grid. The checks and events will be autotracked once they are collected and completed, respectively. To access it, go to Options -> Grid Tracker.
 
-   1. Setup the tracker to your liking.
-   2. Send the settings of the tracker to all racers.
-   3. Launch KH2
-   4. Autotrack if you do not have autodetect turned on.
+To grid uses card settings to generate new random grids. To customize the card settings to include certain checks, open the grid options window by going to Options -> Grid Settings in the Grid Tracker. This should pull up a window like the one showcased below gives you a ton of ways to customize what can populate the grid.
 
+<img src="static/grid_tracker_options.png" width="480">
 
-The following sub-sections detail step 1 instructions. **You will still need to do all of Steps 2-4 for the tracker to work**.
+To save these settings, select "Save These Settings" in the bottom left of the grid tracker options window. To generate a new card with the new settings select "Generate Card with These Settings" in the bottom right of the grid tracker options window.
 
-# Step 1
+Once you have the card settings you are satisfied with, load the seed into the tracker. **Note**: The rando seed changes the grid layout upon loading it into the tracker, so ensure that your tracker settings are set **before** loading in the randoseed.
 
-### Instructions for Battleship
+You can switch between the simple and game icon styles in the grid tracker to make the icons more recognizable to you in the Image Visuals menu. Additionally, while the generator comes with a color label for every type of marked cell, you can change away from the default colors in the Options -> Color Settings menu.
 
-Battleship has various placement modes to choose from: 
+With the exception of a hidden cell with Fog of War ON (the setting that hides your checks), hovering over a cell on the grid will reveal a description of what the check represents (example shown below). 
 
-   1. Same Board Mode
-   2. Blind Mode
-   3. Visible Mode
+<img src="static/tooltip.png" width="480">
 
-"Same Board Mode" means that once you and any other players have the same card, selecting "Placement" > "Same Board Mode" will create the same randomly generated battleship board with the ships of your choosing. 
+### Options
 
-"Place Blind Mode" will hide all the checks and it is up to you to place your ships on the grid. Once you are happy with the placements, go to "Actions" > "Save Ship Layout". This should open up a file explorer window where you can see your ships folder. Go into that folder and you'll see a file called "encrypted_ships.txt". Send this file to your opponent(s). Your opponent should send you their encrypted ships too. Load them in by clicking "Actions" > "Load Ship Layout". If you want to confirm that their ships are valid, you can click "Validate" > "Validate Opponent/Shared Ships". Load the card by entering the card seedname in "Customize" > "Change Seed Name" or just generating a new card if you have for some reason already done this step.
+The grid tracker allows for a lot of customizability. Here we outline the grid tracker settings.
 
-"Place Visible Mode" will keep your current board as is but will allow you to place your ships on the specific checks/events that you desire. It is important that you and your opponent(s) are on the same card at this point (in other words do Step 2 before Step 1 for this game mode). If you want to validate your own ships match the setting expectations you can do so by going to "Validate" > "Validate Your Ships". Once you are happy with the placements, go to "Actions" > "Save Ship Layout". This should open up a file explorer window where you can see your ships folder. Go into that folder and you'll see a file called "encrypted_ships.txt". Send this file to your opponent(s). Your opponent should send you their encrypted ships too. Load them in by clicking "Actions" > "Load Ship Layout". If you want to confirm that their ships are valid, you can click "Validate" > "Validate Opponent/Shared Ships". 
+1. **Board Size:**
 
-If you would like to change the number of ships and what checks they can contain, you can do so under "Customize" > "Change Ship Size" and "Customize" > "Set Ship Restrictions".
+These settings customize the number of rows and cells to include in the grid. Note that these values will adjust if the number of squares on the grid exceeds the number of allowed checks.
 
-### Instructions for Bingo
+2. **Bingo Logic:**
 
-To play bingo (regardless of if it is boss enemy or not), the board must be square. Certain presets already have this option included, but if you want to play bingo with your own custom checks included, you can include the bingo logic by ticking it on in "Customize" > "Bingo Mode". Cells will change from the marking color to the bingo color once you achieve a bingo.
+Turning Bingo Logic ON will record when rows, columns, or diagonals are completed.
 
-### Instructions for Boss Enemy
+3. **Battleship Logic:**
 
-For any seeds that are generated with boss enemy randomization (One to One mode only), the tracker can autotrack the replacement bosses. To make this happen, before you start your seed, go to "Actions" > "Load Boss Enemy Seed" and select your boss enemy rando seed. Ensure that you get a popup that confirms the boss replacements were successfully loaded. You may see a popup that warns you of a replacement known to crash the game. If this happens, it is recommended that you generate a new boss enemy seed, though nothing will prevent you from playing the seed anyways if you so choose.
+Including battleship logic will attempt to place the number of ships specified in the options. If Random Ship Count is OFF, then each comma separated value represents a ship size to place on the grid. If Random Ship Count is ON, then a random number of ships will be selected and can have a random size included in the comma separated values. Some examples are displayed below:
 
-### Instructions for Maze Mode
+| Ship Sizes     | Random Ship Count | Outcome                                                                                                    |
+|----------------|-------------------|------------------------------------------------------------------------------------------------------------|
+| 2,3,4,5        | OFF               | 4 ships, one of each size.                                                                                 |
+| 2,3,4,5        | ON                | Random number of ships, each ship being equally likely to be 2, 3, 4, or 5 in size.                        |
+| 2,3,3,3,4,5    | OFF               | 6 ships, one of each size, except for ships of size 3, of which there are three.                           |
+| 2,3,3,3,4,5    | ON                | Random number of ships, with ships of size 3 being 3 times more likely to be selected than any other size. |
 
-While this mode is still in beta, you can generate a maze out of the checks displayed on the tracker. To add a maze to the tracker simply navigate to "Customize" > "Maze Mode". This will generate a maze with the top left (border will be red) being the starting square and the bottom right (border will be green) being the ending square.
+4. **Bunter Logic:**
 
-### Instructions for Hitlist
+Including bunter logic removes certain "duplicate" bosses from the card. In the Bunter format, the story/AS vs. Data version of the organization members as well as the 2 Pete fights are considered the same boss. If bunter logic is OFF, then both the AS or a Data are fair game for the card.
 
-To generate a hitlist seed, open the tracker and navigate to "Actions" > "Load Preset". An explorer window should open up in your presets folder. Select "hitlist.txt". For your first time loading in the preset, the tracker will not change size and the images may appear stretched. Resize the tracker window so that the images are of the appropriate size; resizing the tracker window will save the tracker size and position for each particular preset, so your hitlist tracker will default to the new position and sizing the next time you elect to play hitlist. Hitlist autotracking development _has_ been developed but will only work if you use the hitlist preset or if that preset was the last one you opened. **This means that creating your own preset to play hitlist will not work.**
+For example, suppose AS Marluxia replaces AS Vexen and Data Marluxia replaces Data Vexen. If bunter logic is ON, only AS Marluxia will be a valid icon on the card. If bunter logic is OFF, then both versions of Marluxia are fair game.
 
-# Step 2
+5. **Fog of War Logic:**
 
-To send a card with the appropriate setting to other racers, go to "Actions" > "Save Board Settings". This should open your file explorer. Send the settings.txt to all other racers. If you're the one receiving the settings.txt. You can load the settings into your tracker by "Actions" > "Load Board Settings" and select the settings.txt you downloaded from the sender.
+Toggling this setting on will hide all the checks at the start of a seed. If ON, the number of neighboring cells that get revealed can be customized. 
 
-# Step 4
+### Game Modes
 
-After launching KH2 (Step 3), if you don't have autodetect turned on (in Customize menu), go to "Actions" > "Start Autotracking" to start autotracking. The tracker title bar window will change "Not tracking." to "Autotracking!"once the tracker successfully connects to the game.
+Below are examples common game mode supported by the grid tracker, but this list is not exhaustive and the grid tracker is versatile enough 
+to support your own custom win conditions!
+
+### Example: (Spike's) Hitlist
+
+Spike's Hitlist is a high skill super-boss/objective rush that requires defeating some set of superbosses as quickly as possible. In his specific version, the goals are absent silhouetts, datas (that don't have absent silhouetts), Yeeting the Bear, All 7 Drives, Sephiroth, and Lingering Will. [Here](static/spikes_hitlist.json) is the card setting file to play this exact version!
+
+You can further customize it by changing what the goals are, how many you need to collect, how many of the total goals are available on the card, etc.
+
+### Example: Battleships
+
+Just like the classic board game, the grid tracker can place battleships for you to find and sink! The goal is to sink all of the ships.
+
+The tracker will inform you when you have sunk all ships. This feature is especailly useful if you are playing with a random number of ships, as the "Sunk All Ships" confirms you have sunk ALL the ships and there are no additional undiscovered ships still floating around. [Here](static/standard_battleships.json) is a starter battleship card setting!
+
+You can further customize battleships by changing the grid-allowed checks, the grid size, the number of ships, the ship sizes, randomizing the number of ships, etc.
+
+### Example: Bingo
+
+As the name implies, bingo arranges any assortment of checks you want onto the grid and if "Bingo Logic" is ticked on in the grid options window, the grid will actually highlight your bingos as you complete them. [Here](static/CJ_IC_Bingo.json) is an initial card setting inspired by CJ_2123's important check bingo!
+
+You can further customize bingo by changing the grid size, allowed checks, etc. 
+
+### Example: Boss Enemy Bingo (aka Bunter)
+
+A common boss enemy format is boss enemy bingo where the objective is to get 3 bingos on a grid of 5x5 bosses, all of them in randomized arenas. If a boss enemy seed is loaded into the tracker, the tracker knows to track the replaced bosses. [Here](static/bunter.json) is the card setting to play Zeddikus' bunter format.
+
+# Objective Tracker
+
+When the win condition is based on objectives (instead of proofs or emblems), the objective tracker conveniently lists all of the objectives available and autotracks them upon completion. To access it, go to Options -> Objectives Tracker.
+
+The objective window will also display how many of the available objectives must be completed to open the door to final fights as well as how many objectives you have currently completed. For example, in the image below, there are 13 available objectives, and 7 are required to open the door to final fights. As checks get collected, the checks count up from 0.
+
+<img src="static/objectives_tracker.png" width="480">
+
+If you are specifically playing the 1 Hour Challenge, ensure to toggle on the "Enable 1Hour Mode Changes" to see the 1 Hour specific objectives with their associated point values. 
+
