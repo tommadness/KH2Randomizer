@@ -97,7 +97,7 @@ These settings customize the number of rows and cells to include in the grid. No
 Turning Bingo Logic ON will record when rows, columns, or diagonals are completed.
 
 <p align="center">
-   <img src="static/bingo.png">
+   <img src="static/bingo.png" width="480">
 </p>
 
 3. **Battleship Logic:**
