@@ -66,7 +66,7 @@ In the event you want to save your randomizer progress to continue it at a later
 
 The grid tracker is a tracker that lays out several trackable items and progression events in a grid. The checks and events will be autotracked once they are collected and completed, respectively. To access it, go to Options -> Grid Tracker.
 
-To grid uses card settings to generate new random grids. To customize the card settings to include certain checks, open the grid options window by going to Options -> Grid Settings in the Grid Tracker. This should pull up a window like the one showcased below gives you a ton of ways to customize what can populate the grid.
+The grid uses card settings to generate new random grids. To customize the card settings to include certain checks, open the grid options window by going to Options -> Grid Settings in the Grid Tracker. This should pull up a window like the one showcased below, giving you a ton of ways to customize what can populate the grid.
 
 <p align="center">
    <img src="static/grid_tracker_options.png" width="480">
@@ -78,7 +78,7 @@ Once you have the card settings you are satisfied with, load the seed into the t
 
 You can switch between the simple and game icon styles in the grid tracker to make the icons more recognizable to you in the Image Visuals menu. Additionally, while the generator comes with a color label for every type of marked cell, you can change away from the default colors in the Options -> Color Settings menu.
 
-With the exception of a hidden cell with Fog of War ON (the setting that hides your checks), hovering over a cell on the grid will reveal a description of what the check represents (example shown below). 
+With the exception of settings where a cell is purposefully hidden, hovering over a cell on the grid will reveal a description of what the check represents (example shown below). 
 
 <p align="center">
    <img src="static/tooltip.png" width="480">
@@ -96,9 +96,13 @@ These settings customize the number of rows and cells to include in the grid. No
 
 Turning Bingo Logic ON will record when rows, columns, or diagonals are completed.
 
+<p align="center">
+   <img src="static/bingo.png">
+</p>
+
 3. **Battleship Logic:**
 
-Including battleship logic will attempt to place the number of ships specified in the options. If Random Ship Count is OFF, then each comma separated value represents a ship size to place on the grid. If Random Ship Count is ON, then a random number of ships will be selected and can have a random size included in the comma separated values. Some examples are displayed below:
+Including battleship logic will attempt to place a specified number of ships specified in the options. If Random Ship Count is OFF, then each comma separated value represents a ship size to place on the grid. If Random Ship Count is ON, then a random number of ships will be selected and can have a random size included in the comma separated values. Some examples are displayed below:
 
 | Ship Sizes     | Random Ship Count | Outcome                                                                                                    |
 |----------------|-------------------|------------------------------------------------------------------------------------------------------------|
@@ -109,7 +113,9 @@ Including battleship logic will attempt to place the number of ships specified i
 
 4. **Bunter Logic:**
 
-Including bunter logic removes certain "duplicate" bosses from the card. In the Bunter format, the story/AS vs. Data version of the organization members as well as the 2 Pete fights are considered the same boss. If bunter logic is OFF, then both the AS or a Data are fair game for the card.
+This setting only applies when boss randomization is turned on.
+
+Including bunter (short for boss hunter) logic removes certain "duplicate" bosses from the card. In the bunter format, the story/AS vs. Data version of the organization members as well as the 2 Pete fights are considered the same boss. If bunter logic is OFF, then both the AS or a Data are fair game for the card.
 
 For example, suppose AS Marluxia replaces AS Vexen and Data Marluxia replaces Data Vexen. If bunter logic is ON, only AS Marluxia will be a valid icon on the card. If bunter logic is OFF, then both versions of Marluxia are fair game.
 
@@ -142,9 +148,9 @@ As the name implies, bingo arranges any assortment of checks you want onto the g
 
 You can further customize bingo by changing the grid size, allowed checks, etc. 
 
-### Example: Boss Enemy Bingo (aka Bunter)
+### Example: Boss + Enemy Randomized Bingo (aka Bunter)
 
-A common boss enemy format is boss enemy bingo where the objective is to get 3 bingos on a grid of 5x5 bosses, all of them in randomized arenas. If a boss enemy seed is loaded into the tracker, the tracker knows to track the replaced bosses. [Here](static/bunter.json) is the card setting to play Zeddikus' bunter format.
+A common format utilizing the grid tracker is Boss + Enemy Randomized Bingo where the objective is to get 3 bingos on a grid of 5x5 bosses, all of them shuffled into randomized arenas. If a seed with randomized bosses is loaded into the tracker, the tracker knows to track the newly randomized boss. [Here](static/bunter.json) is the card setting to play Zeddikus' bunter format!
 
 # Objective Tracker
 
