@@ -128,12 +128,6 @@ Toggling this setting on will hide all the checks at the start of a seed. If ON,
 Below are examples common game mode supported by the grid tracker, but this list is not exhaustive and the grid tracker is versatile enough 
 to support your own custom win conditions!
 
-### Example: (Spike's) Hitlist
-
-Spike's Hitlist is a high skill super-boss/objective rush that requires defeating some set of superbosses as quickly as possible. In his specific version, the goals are absent silhouetts, datas (that don't have absent silhouetts), Yeeting the Bear, All 7 Drives, Sephiroth, and Lingering Will. [Here](static/spikes_hitlist.json) is the card setting file to play this exact version!
-
-You can further customize it by changing what the goals are, how many you need to collect, how many of the total goals are available on the card, etc.
-
 ### Example: Battleships
 
 Just like the classic board game, the grid tracker can place battleships for you to find and sink! The goal is to sink all of the ships.
