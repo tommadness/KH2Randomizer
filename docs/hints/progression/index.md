@@ -1,115 +1,87 @@
+# Glossary
+
+* [Summary](#Summary)
+* [Shananas Progression Hints](#Shananas-Progression-Hints)
+* [JSmartee Progression Hints](#JSmartee-Progression-Hints)
+* [Points Progression Hints](#Points-Progression-Hints)
+* [Path Progression Hints](#Path-Progression-Hints)
+* [Spoiler Progression Hints](#Spoiler-Progression-Hints)
+* [Extra Progression Information](#Extra-Progression-Information)
+
 # Progression Hints
 
 ## Summary
 
-Progression Hints is a hint system modification for all currently existing hint systems. The main goal of Progression
-Hints is simply defined as "Do Game Content, Get Game Info".
+Progression Hints is a hint system modification for all hint systems. The main goal of Progression Hints is simply defined as "Do Content, Get Hint Info". Progression Hints serves as an alternative to Report-Based hint systems.
 
-Progress in a world is defined on the tracker as the small icons next to a world's main icon. For instance, when you
-first enter a world, a chest icon will appear. If you go into Pride Lands and talk to Simba in the Oasis, the icon
-changes to a Simba one. Each of these progress points for each world is given a point value (that you can change), then
-every set amount of points information about the seed is revealed.
+You can enable Progression Hints by going to the Hints Tab then clicking on the box:
+![Enable Progression Hints](https://github.com/roromaniac/KH2Randomizer/assets/155425660/4c82b2d3-6ed9-49a2-bec3-994cc90018ac)
 
-The cost to reveal the next hint for the seed can also be adjusted per hint, so difficulty to unlock more hints can
-scale depending on how you want to play it. For races and those interested in racing with Progression Hints, the order
-of hints will be the same for all racers. If players are clearing content at all throughout the game, initially hints
-will be given at roughly the same time for each player. The information received from hints is the same, what players do
-with that information will be the only difference.
 
-Points can be modified so that certain goals and fights are incentivized to route around as well to gain more info.
+World Progression is represented on the Tracker by the Icon located to the top-right above a World Icon.
+![Prog Example](https://github.com/roromaniac/KH2Randomizer/assets/155425660/58b24cd8-91f9-4390-882e-466b7a16cfd4)
 
-Here is a more detailed breakdown of how each current hint system behaves with Progression Hints:
+Each world has a predetermined list of World Progression which is typically dictated by updates within the Story. Whenever you reach one of the moments that updates this icon, you will receive between 0-7 Progression Points.
+The amount of points given will vary between each kind of Story Progression and this is configurable within the seed generator.
 
-## All Hint Systems
 
-### Report Bonus
+When using Progression Hints, your Important Check Count/Current Points will be replaced with the Progression Points Tracker.
+![Current Progression Points](https://github.com/roromaniac/KH2Randomizer/assets/155425660/85ad5d9a-c458-4c40-a479-c4807687b6bc)
 
-For any seed where reports are enabled on the tracker, getting a report in a world will give a Progression Point. This
-Report Bonus can be set to 0 to "disable" it.
+The number to the left of the slash indicates how many current Progression Points you have.
+The number to the right of the slash indicates how many Progression Points are required to reveal the next Hint(s) (referred to as a Hint Cost or Hint Threshold).
+Whenever you reach/exceed the Hint Cost, a Hint will be displayed based upon the Hint System selected. You can read the sections below to see how a Hint Reveal is shown per each current hint system.
+The amount of Hints and how much each Hint Cost requires is configurable within the seed generator.
 
-### Leveling Bonus
+The Hint Order is randomly determined per seed and is consistent per seed. For example, this means that if two people play the same seed but do different starting content, their first hint will be the same regardless of what either player did.
 
-Leveling Sora and each Drive Form also gives extra progression points which be can defined in the seed generator as
-well.
 
-For Sora, this is defined for every 10 level-ups from 10 to 50 (10, 20, 30, 40, 50).
+## Shananas Progression Hints
 
-For Drive Forms, this is defined for each form for every level-up from 2 to 7 (2, 3, 4, 5, 6, 7).
+At the beginning of the seed, all worlds will start off as question marks. When you reach the Hint Threshold, the hinted world's Important Check Count will change from a question mark to the current amount.
+![Shananas Prog Update](https://github.com/roromaniac/KH2Randomizer/assets/155425660/da315643-7bcb-4787-aead-e31f651c04bd)
 
-### World Completion Point Bonus
+After a world is hinted, its Important Check Count will turn from White to Blue when the world's last Important Check is found (like in a non-Progression Shananas Hints seed).
 
-A complicated but fun addition, if you make progress in a world that is already confirmed done/finished, you get an
-additional bonus point in addition to what you would normally get.
+## JSmartee Progression Hints
 
-For example, let's say that TWTNW is complete at the start of a seed and that the World Complete Progression Bonus is
-set to "2". If you defeat Roxas, you will get the progression points for defeating Roxas (2 points) AND the World
-Complete Progression Bonus (2 points) as well, giving you 4 points total.
+At the beginning of the seed, all worlds will start off as question marks. When you reach the Hint Threshold, the hinted world's Important Check Count will change from a question mark to the total amount of Important Checks the world has.
+![Jsmartee Prog Update](https://github.com/roromaniac/KH2Randomizer/assets/155425660/2af54788-9651-45ad-a7ee-9ae2d922344a)
 
-These bonuses are also "banked" in all worlds where you don't immediately know if a world is complete or not. For
-example, let's say that TWTNW is still hidden/not revealed and you defeat Roxas. You will receive the normal point
-amount for defeating Roxas (2 points). If you find out later from a Progression Hint that TWTNW was complete before you
-defeated Roxas, then you will recieve the "banked" 2 points immediately.
+Because Progression Hints is not Report-Based, JSmartee Progression Hints does not have Hinted Hint logic. It is recommended that you disable Ansem Reports from being Trackable (this can be done in the Hints tab of the seed generator).
 
-## Shananas Hints
+## Points Progression Hints
 
-At the beginning of the seed, all worlds will start off as "?". Every time a hint is revealed with Progression Hints, a
-world's current Important Check count is revealed changing the "?" to the current amount.
+At the beginning of the seed, all worlds will start off as question marks. When you reach the Hint Threshold, the hinted world's Point Total will change from a question mark to the actual Point Total/Remainer the world has.
+![Points Prog Update](https://github.com/roromaniac/KH2Randomizer/assets/155425660/68a9fffa-4814-406c-853a-aa75903cb218)
 
-For example, let's say you go into Twilight Town and find a Fire and a Torn Page. If the first hint you reveal is
-"Twilight Town is now unhidden!", the "?" in Twilight Town will become a "2". The tracker does not indicate the world as
-complete, meaning Twilight Town still contains more important checks.
+For Points Progression Hints, Reports still retain their secondary function of hinting random Important Checks from worlds.
+![Points Prog Report Example](https://github.com/roromaniac/KH2Randomizer/assets/155425660/c71fc48c-d2d2-4a83-8696-7eb6d81e2bc5)
 
-Let's say you go into Agrabah and find a Torn Page. If the next hint you reveal is "Agrabah is now unhidden!", the "?"
-in Agrabah will become a "1". The tracker does indicate the world as complete, meaning Agrabah contains no more
-important checks.
+After a world is hinted, its Important Check Count will turn from White/Green to Blue when the world's last Important Check is found (like in a non-Progression Points Hints seed).
 
-## JSmartee Hints
+## Path Progression Hints
 
-At the beginning of the seed, all worlds will start off as "?". Every time a hint is revealed with Progression Hints, a
-world's Important Check count is revealed changing the "?" to the correct amount.
+At the beginning of the seed, all worlds will have their current Important Check counts shown. When you reach the Hint Threshold, the hinted world will have its Path Hint revealed.
+![Path Prog Update](https://github.com/roromaniac/KH2Randomizer/assets/155425660/5698d108-3571-4d03-971e-b762531e99a0)
 
-For example, if the first hint you reveal is "Twilight Town has 3 Important Checks", the "?" in TT will become a "3".
+After a world is hinted, its Important Check Count will turn from White to Blue when the world's last Important Check is found (like in a non-Progression Path Hints seed).
 
-Because logic is no longer tied to where reports belong, the Hinted Hint logic has been removed. This also means
-Ansem Reports no longer provide information towards the seed. This can be addressed by either disabling Ansem Reports or
-letting Ansem Reports give Progression Points.
+Because Progression Hints is not Report-Based, it is recommended that you disable Ansem Reports from being Trackable (this can be done in the Hints tab of the seed generator).
 
-## Points Hints
+For Path Progression Hints specifically, worlds that are initially revealed to have no Important Checks (Blue "0" Worlds) will be hinted last in the Reveal Order.
+If there are multiple, they will all be hinted last.
 
-At the beginning of the seed, all worlds will start off as "?". Every time a hint is revealed with Progression Hints, a
-world's remaining point total is revealed changing the "?" to the remaining amount.
+## Spoiler Progression Hints
 
-For example, let's say we're using the Spring League 2022 Points distribution. We go to Twilight Town and find only a
-Blizzard. If the first hint you reveal is "Twilight Town is now unhidden!", the "?" in TT becomes a "10", meaning that
-there are 10 points of remaining items left.
+At the beginning of the seed, all worlds will start off as question marks. When you reach the Hint Threshold, the hinted world's Important Check Count will change from a question mark to the current amount and all Items listed under "Reports Reveal Items" will be revealed.
+![Spoiler Prog Update](https://github.com/roromaniac/KH2Randomizer/assets/155425660/6323b5a0-ce92-43b8-826c-d4e813004ac1)
 
-If you go to Twilight Town later and find a Fire, then the point total will go down to "3".
+After a world is hinted, its Important Check Count will turn from White/Green to Blue when the world's last Important Check is found (like in a non-Progression Spoiler Hints seed).
 
-For this hint system, Ansem Reports will still tell you where a single important check is.
+When setting up Spoiler Progression Hints, please ensure that you set the Report Reveal Mode to "Reports". The seed will not generate as intended if not done so.
 
-## Path Hints
-
-At the beginning of the seed, all worlds will have their current Important Check counts shown. Every time a hint is
-revealed with Progression Hints, a Path Hint is revealed.
-
-For example, let's say you get the last progression point for the next hint by beating Bailey, the hint might say
-"Twilight Town is on the path to Peace".
-
-This means Ansem Reports no longer provide information towards the seed. This can be addressed by either disabling
-Ansem Reports or letting Ansem Reports give Progression Points.
-
-## Spoiler Hints
-
-At the beginning of the seed, all worlds will start off as "?". Every time a hint is revealed with Progression Hints, a
-world's current Important Check count is revealed changing the "?" to the current amount. In addition, all the items in
-that world (as designated by the seed generator to be hinted) are revealed as well as ghost checks.
-
-For example, let's say you go into Twilight Town and find a Reflect. If the first hint you reveal is "Twilight Town is
-now unhidden!", the "?" in TT will become a "1". Then say a Fire, Final Form, and Proof of Peace are hinted there as
-ghost checks.
-
-This means Ansem Reports no longer provide information towards the seed. This can be addressed by either disabling
-Ansem Reports or letting Ansem Reports give Progression Points.
+![Report Reveal Mode](https://github.com/roromaniac/KH2Randomizer/assets/155425660/c73cc531-af98-4793-8836-f3a9e5fc1acc)
 
 ### Boss Replacement Hints (to be supported in the future)
 
@@ -121,3 +93,50 @@ with Progression Hints, a Boss Replacement hint will be given.
 For example, the Progression Hint would say "Thresholder replaced Prison Keeper".
 
 For this variation, the Hint Costs may be static.
+
+## Extra Progression Information
+
+Here are some extra options and details related to Progression Hints.
+
+### Auto-Tracking Requirement
+
+Unlike Report-Based hint system which allow you to place items manually on the tracker and place reports for hints,
+Progression Hints relies on the Auto-Tracking functionality to update the World Progression and track Progression Points.
+Please ensure that you are auto-tracking before playing a seed. If you make progress in a world but are not auto-tracking,
+then you will not be able to claim any missed Progression Points.
+
+### Progression World Complete Reward
+
+When you get a Progression Point(s) in a world that is completed (the last important check is found/the world's Important Check Count is Blue), you will gain bonus Progression Point(s) based on the value set.
+
+For example, let's say that TWTNW is complete at the start of a seed and that the World Complete Progression Bonus is set to "2".
+If you defeat Roxas, you will get the progression points for defeating him (for example, 3 points) and the Progression World Complete Reward (2 points) as well, giving you 5 points total.
+
+Note: if you were to get 0 points normally from World Progression, you will still gain 0 Progression Points even with the Progression World Complete Reward configured.
+
+These bonuses are "banked" in worlds where you don't immediately know if a world is complete or not.
+For example, let's say that the current Hint System is Progression Points Hints and TWTNW is still hidden/not revealed and you defeat Roxas then leave the world immediately after.
+You will receive the normal point amount for defeating Roxas (for example, 3 points). If you later reveal from a Progression Hint that TWTNW was complete before you had defeated Roxas,
+then you will recieve the "banked" 2 points when TWTNW is hinted by Progression Hints.
+
+### Report Bonus
+
+For any seed where reports are listed as Trackable, obtaining a report will give you a Progression Point(s) based on the set amount. If you do not want Reports to give Progression Points, leave the value as "0".
+
+### Leveling Bonus
+
+For Progression Hints, leveling up Sora and Drives will allow you to gain Progression Points.
+
+For Sora Levels, Progression is set every 10 Levels from level 10 to 50 (Level 10, Level 20, Level 30, Level 40, & Level 50)
+
+For Drive Forms, Progression is set every level-up from drive level 2 to 7 (2, 3, 4, 5, 6, 7).
+
+### Starting With Hints
+
+When setting up the Hint Thresholds/Hint Costs list, if you set the first threshold to 0, upon auto-tracking you will be given the first Progression Hint right away.
+If you set multiple 0's, then you will get multiple initial hints.
+
+### Revealing Multiple Hints
+
+When setting up the Hint Thresholds/Hint Costs list, if you set a hint threshold to 0, then that hint will be revealed at the same time as the previous hint.
+This allows you you get multiple hints from a single Hint Threshold.
