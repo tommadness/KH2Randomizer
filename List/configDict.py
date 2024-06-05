@@ -212,8 +212,9 @@ class SoftlockPreventionOption(str, Enum):
     REVERSE = "reverse"
     BOTH = "both"
 
+
 class DisableFinalOption(str, Enum):
-    DEFAULT  = "default"
+    DEFAULT = "default"
     NO_ANTIFORM = "no_antiform"
     NO_FINAL = "no_final"
 
@@ -232,7 +233,8 @@ class ObjectivePoolOption(str, Enum):
     BOSSES = "Bosses Only"
     LASTSTORY = "Last Story Check"
     NOBOSSES = "Everything but Bosses"
-    HITLIST = "Spike Hitlist"
+    HITLIST = "Spike Hit List"
+
 
 class LevelUpStatBonus(str, Enum):
     STRENGTH = "Strength"

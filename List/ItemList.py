@@ -65,8 +65,8 @@ class Items:
             KH2Item(storyunlock.IceCream, story_unlocking_rarity),
             KH2Item(storyunlock.IceCream, story_unlocking_rarity),
             KH2Item(storyunlock.IceCream, story_unlocking_rarity),
-            KH2Item(storyunlock.DisneyCastleKey, story_unlocking_rarity),
-            KH2Item(storyunlock.DisneyCastleKey, story_unlocking_rarity),
+            KH2Item(storyunlock.RoyalSummons, story_unlocking_rarity),
+            KH2Item(storyunlock.RoyalSummons, story_unlocking_rarity),
             KH2Item(storyunlock.NaminesSketches, story_unlocking_rarity),
 
             KH2Item(report.AnsemReport1, itemRarity.UNCOMMON),

@@ -5,12 +5,12 @@ this website is intended to be community-maintained. Feel free to submit an edit
 GitHub issue containing your proposed changes, or post some proposed changes in Discord if you're not comfortable with
 those other things. The website is hosted using [GitHub Pages](https://pages.github.com/), with the website-specific
 files located at
-[https://github.com/tommadness/KH2Randomizer/tree/2.0/docs](https://github.com/tommadness/KH2Randomizer/tree/2.0/docs).
+[https://github.com/tommadness/KH2Randomizer/tree/master/docs](https://github.com/tommadness/KH2Randomizer/tree/master/docs).
 
 Additionally, listed below are code repositories of just some of the projects involved in the randomizer. Many, if not
 all of them, are open for contributions (small or large).
 
-* [tommadness/KH2Randomizer](https://github.com/tommadness/KH2Randomizer/tree/2.0)
+* [tommadness/KH2Randomizer](https://github.com/tommadness/KH2Randomizer)
     * the randomizer seed generator
     * the source Markdown for this website (as mentioned above)
 * [OpenKH/OpenKh](https://github.com/OpenKH/OpenKh)

@@ -88,8 +88,8 @@ class Tests(unittest.TestCase):
     def test_lingering_will(self):
         """ Verifies Proof of Connection is required to access Lingering Will. """
         lingering_will = [disneycastle.NodeId.LingeringWill]
-        self._collect(storyunlock.DisneyCastleKey)
-        self._collect(storyunlock.DisneyCastleKey)
+        self._collect(storyunlock.RoyalSummons)
+        self._collect(storyunlock.RoyalSummons)
         self._assert_unavailable(lingering_will)
         self._collect(proof.ProofOfNonexistence)
         self._assert_unavailable(lingering_will)

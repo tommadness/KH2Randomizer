@@ -202,7 +202,7 @@ class Tests(unittest.TestCase):
                     self.assertEqual(1, self._starting_count(randomizer, [unlock]))
                     self.assertEqual(0, self._shop_count(randomizer, [unlock]))
                     self.assertEqual(1, self._assignment_count(randomizer, [unlock]))
-                elif unlock == storyunlock.DisneyCastleKey:
+                elif unlock == storyunlock.RoyalSummons:
                     self.assertEqual(2, self._starting_count(randomizer, [unlock]))
                     self.assertEqual(0, self._shop_count(randomizer, [unlock]))
                     self.assertEqual(0, self._assignment_count(randomizer, [unlock]))

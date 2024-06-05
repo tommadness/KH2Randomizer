@@ -28,7 +28,6 @@ from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_s
 from Module import appconfig, hashimage, version
 from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
-from Module.cosmeticsmods.keyblade import KeybladeRandomizer
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
 from Module.generate import generateSeed
 from Module.newRandomize import Randomizer
@@ -46,12 +45,13 @@ from UI.Submenus.DevCreateRecolorDialog import DevCreateRecolorDialog
 from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
 from UI.Submenus.ItemPoolMenu import ItemPoolMenu
-from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog
 from UI.Submenus.KeybladeMenu import KeybladeMenu
+from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog
 from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
+from UI.Submenus.about import AboutDialog
 from UI.worker import GenerateSeedWorker, ExtractVanillaKeybladesWorker, ImportCustomKeybladesWorker
 
 
@@ -460,7 +460,7 @@ class KH2RandomizerApp(QMainWindow):
         
         menu_bar.addMenu(self.config_menu)
 
-        menu_bar.addAction("About", self.showAbout)
+        menu_bar.addAction("About", self.show_about)
 
     def _update_generator(self):
         #invoke the update exe
@@ -1039,24 +1039,9 @@ class KH2RandomizerApp(QMainWindow):
         dialog = LuaBackendSetupDialog(self)
         dialog.exec()
 
-    def showAbout(self):
-        aboutText = f'''
-Kingdom Hearts II Final Mix Zip Seed Generator Version {LOCAL_UI_VERSION}<br>
-Created by Equations19, Thundrio, Tommadness, and ZakTheRobot<br><br>
-
-Thank you to all contributors, testers, and advocates.<br><br>
-
-<a href="https://tommadness.github.io/KH2Randomizer" style="color: {theme.LinkColor}">Website</a><br>
-<a href="https://github.com/tommadness/KH2Randomizer" style="color: {theme.LinkColor}">Github Link</a><br>
-<a href="https://discord.gg/KH2FMRando" style="color: {theme.LinkColor}">KH2 Randomizer Discord</a><br><br>
-
-<a href="https://github.com/tommadness/KH2Randomizer#acknowledgements" style="color: {theme.LinkColor}">Acknowledgements</a><br><br>
-'''
-        message = QMessageBox(text=aboutText)
-        message.setTextFormat(Qt.RichText)
-        message.setWindowTitle("About")
-        message.setWindowIcon(QIcon(resource_path("Module/icon.png")))
-        message.exec()
+    def show_about(self):
+        dialog = AboutDialog(self)
+        dialog.exec()
 
     def _extract_vanilla_keyblades(self):
         worker = ExtractVanillaKeybladesWorker(self)

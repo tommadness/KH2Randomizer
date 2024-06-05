@@ -3,8 +3,8 @@
 This page includes explanations of some common jargon and abbreviations often used by the KH2 and/or randomizer
 community.
 
-[1](#1) [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [G](#g) [H](#h) [I](#i) [J](#j) [L](#l) [M](#m) [O](#o) [P](#p)
-[R](#r) [S](#s) [T](#t) [U](#u) [V](#v) [W](#w) [Y](#y)
+[1](#1) [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i) [J](#j) [L](#l) [M](#m) [O](#o) [P](#p)
+[R](#r) [S](#s) [T](#t) [U](#u) [V](#v) [Y](#y)
 
 ## 1
 
@@ -105,6 +105,21 @@ referred to as "getting domed".
 
 A common phrase synonymous with [Shan-Yu Skip](#shan-yu-skip).
 
+### Emblems
+
+A Final Door Requirement option that places a configurable number of special Emblem items throughout the game. Once the
+required number of Emblems has been obtained, the door to final fights is unlocked.
+
+## F
+
+### Final Door Requirement
+
+Conditions required to unlock the final door at the Altar of Naught (the door leading to Final Xemnas). The randomizer
+seed generator contains settings for customizing the Final Door Requirement for each seed.
+
+The basic/original Final Door Requirement is [Three Proofs](#three-proofs). Other options are [Objectives](#objectives)
+and [Emblems](#emblems).
+
 ## G
 
 ### Garden of Assemblage
@@ -141,10 +156,10 @@ See [Hint Systems](../hints/index.md).
 
 See [What are "hinted hints"? Why do they matter?](../hints/jsmartee/index.md#what-are-hinted-hints-why-do-they-matter)
 
-### Hitlist
+### Hit List
 
 A win condition for the randomizer that requires the player fulfill certain objectives. See
-[Hitlist](../overview/index.md#hitlist) for more.
+[Hit List](../overview/index.md#hit-list) for more.
 
 ### HT
 
@@ -204,6 +219,11 @@ item pool.
 
 ## O
 
+### Objectives
+
+A Final Door Requirement option that gives the player a set of objectives to complete. Each objective rewards the player
+with a special item. Once the required number of objectives have been completed, the door to final fights is unlocked.
+
 ### OC
 
 A common abbreviation for Olympus Coliseum.
@@ -240,8 +260,9 @@ A common abbreviation for Port Royal.
 ### Promise Charm
 
 An item that, if enabled for a randomized game, can open an alternate path to the final boss fights. Once the Promise
-Charm and all 3 Proofs are obtained, interacting with the computer in the Garden of Assemblage leads to the alternate
-path. This alternate path includes several Bulky Vendor enemies that give large amounts of experience.
+Charm is obtained and the Final Door Requirement is satisfied, interacting with the computer in the Garden of Assemblage
+leads to the alternate path. This alternate path includes several Bulky Vendor enemies that give large amounts of
+experience.
 
 ### Proof
 
@@ -256,7 +277,7 @@ One of three items normally given as rewards for defeating difficult challenges.
   item in randomizer has no specific effect.
 
 In randomizer, these three items, collectively, unlock the door at the Altar of Naught that leads to the final boss
-fights.
+fights (when using Three Proofs as the Final Door Requirement).
 
 ### Push The Mouse
 
@@ -363,6 +384,11 @@ A common abbreviation for [Simulated Twilight Town](#simulated-twilight-town).
 
 ## T
 
+### Three Proofs
+
+A Final Door Requirement option that requires the player to find the three Proof items (Proof of Connection, Proof of
+Nonexistence, and Proof of Peace). Once all three have been obtained, the door to final fights is unlocked.
+
 ### Throne Room Skip
 
 A common synonym for [Shan-Yu Skip](#shan-yu-skip).
@@ -398,23 +424,10 @@ Radiant Garden earlier than it is normally available.
 Second visits to many worlds are "locked" by the Garden of Assemblage mod utilized by the randomizer. In order to unlock
 the second visits, you will need to obtain certain "visit unlock" items.
 
-A table of which visits are unlocked by which items is below.
-
-![Visit Unlock Table](../seed-generator/locks.png)
+A table of which visits are unlocked by which items is located at [Visit Unlock Items](../unlocks/index.md).
 
 > Quick Tip: To make sure the game can update story flags when you collect a visit unlock, you need to trigger a
 > cutscene or enter The World that Never Was. That will update the game, and you can continue to the next visit.
-
-## W
-
-### Wavedashing
-
-A term, borrowed from _Super Smash Bros._, commonly used to describe Roxas's movement when using the Quick Run ability.
-Since Roxas's character model was not programmed with an animation for Quick Run, he soft of hops along the ground and
-this has been dubbed "wavedashing".
-
-As of release 2.1, the randomizer seed generator has a "Roxas Magic/Movement/Trinity" option that ports Sora's movement
-animations to Roxas, therefore allowing Roxas to Quick Run properly.
 
 ## Y
 

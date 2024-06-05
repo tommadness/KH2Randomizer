@@ -25,9 +25,16 @@ class ItemEncoder(JSONEncoder):
     def default(self, o):
         # Keep the JSON the same as it was previously even though we changed the structure a bit
         if isinstance(o, KH2Item):
+            spoiler_name = o.Name
+
+            # Don't love this hack, but it keeps us from creating an entire architecture around having separate
+            # "tracker name" vs. "spoiler log name" for items
+            if spoiler_name == "Disney Castle Key":
+                spoiler_name = "Royal Summons"
+
             return {
                 "Id": o.Id,
-                "Name": o.Name,
+                "Name": spoiler_name,
                 "ItemType": o.ItemType,
                 "Rarity": o.Rarity
             }
