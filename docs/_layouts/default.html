@@ -15,10 +15,34 @@
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
 
-    <header class="page-header" role="banner" style="padding: 1rem 6rem">
-      <h1 class="project-name">
-          <a href="{{ site.github.url }}">Kingdom Hearts 2 Randomizer</a>
-      </h1>
+    <header class="page-header" role="banner">
+        <a href="{{ site.github.url }}"><img src="{{ '/assets/image/randomizer-header.png' | relative_url }}" height="48" alt="Kingdom Hearts 2 Randomizer"/></a>
+        <nav class="top-nav-internal">
+            <ul>
+                <li><a href="{{ '/downloads/' | relative_url }}">Downloads</a></li>
+                <li>
+                    <a href="#">Setup</a>
+                    <ul>
+                        <li><a href="{{ '/setup/Panacea-ModLoader/' | relative_url }}">PC (Epic Games)</a></li>
+                        <li><a href="{{ '/setup/pcsx2-ex-setup/pcsx2-ex-setup.html' | relative_url }}">Emulator (PCSX2)</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Help</a>
+                    <ul>
+                        <li><a href="{{ '/overview/' | relative_url }}">Overview</a></li>
+                        <li><a href="{{ '/settings/' | relative_url }}">Settings</a></li>
+                        <li><a href="{{ '/hints/' | relative_url }}">Hint Systems</a></li>
+                        <li><a href="{{ '/troubleshooting/' | relative_url }}">Troubleshooting</a></li>
+                        <li><a href="{{ '/glossary/' | relative_url }}">Glossary</a></li>
+                        <li><a href="{{ '/changelog/' | relative_url }}">Changelog</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <pre class="top-nav-right" style="margin-right: 16px;"></pre>
+        <a href="https://discord.com/invite/KH2FMRando"><img src="{{ '/assets/image/discord-mark-white.png' | relative_url }}" height="36" alt="Discord" style="margin: 4px;"/></a>
+        <a href="https://github.com/tommadness/KH2Randomizer"><img src="{{ '/assets/image/github-mark-white.png' | relative_url }}" height="36" alt="GitHub" style="margin: 4px;"/></a>
     </header>
 
     <main id="content" class="main-content" role="main">

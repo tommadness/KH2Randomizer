@@ -62,9 +62,11 @@ class ItemPlacementMenu(KH2Submenu):
 
     def promise_charm_enabled(self):
         promise_charm_toggle = self.settings.get(settingkey.ENABLE_PROMISE_CHARM)
-        _, widget = self.widgets_and_settings_by_name[settingkey.PROMISE_CHARM_DEPTH]
+        _, depth_widget = self.widgets_and_settings_by_name[settingkey.PROMISE_CHARM_DEPTH]
+        _, bias_widget = self.widgets_and_settings_by_name[settingkey.WEIGHTED_PROMISE_CHARM]
         if not self.disable_signal:
-            widget.setEnabled(promise_charm_toggle)
+            depth_widget.setEnabled(promise_charm_toggle)
+            bias_widget.setEnabled(promise_charm_toggle)
 
     def chain_logic(self):
         enabled = self.settings.get(settingkey.CHAIN_LOGIC)

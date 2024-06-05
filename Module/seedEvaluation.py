@@ -162,9 +162,9 @@ class LocationInformedSeedValidator:
         self.human_readable_lock_list[locationType.HUNDREDAW] = haw_graph
         # DC
         dc_graph = Graph()
-        dc_graph.add_node("DC1",[storyunlock.DisneyCastleKey])
+        dc_graph.add_node("DC1", [storyunlock.RoyalSummons])
         dc_graph.add_node("DCChests",[keyblade.Monochrome])
-        dc_graph.add_node("DC2",[storyunlock.DisneyCastleKey,storyunlock.DisneyCastleKey])
+        dc_graph.add_node("DC2", [storyunlock.RoyalSummons, storyunlock.RoyalSummons])
         dc_graph.add_node("PoC",[proof.ProofOfConnection])
         dc_graph.add_edge("DC1","DCChests")
         dc_graph.add_edge("DC1","DC2")

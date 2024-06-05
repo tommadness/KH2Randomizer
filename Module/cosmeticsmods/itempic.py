@@ -168,7 +168,7 @@ class ItempicRandomizer:
 
             Itempic("021", "Torn Pages", types=["TornPage"]),
 
-            Itempic("031", "Dummy 13 (Disney Castle Key)", types=["DisneyCastleKey"], custom=True),
+            Itempic("031", "Dummy 13 (Royal Summons)", types=["RoyalSummons"], custom=True),
 
             consumable("033", "Tent"),
             consumable("034", "Power Boost"),

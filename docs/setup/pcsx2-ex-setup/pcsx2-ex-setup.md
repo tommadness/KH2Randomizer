@@ -8,7 +8,7 @@ This guide will help you set up Randomizer Mod for the PCSX2-EX (PS2 Emulator) v
 
 To set up Rando, Extract, Download and/or Install the following:
 
-- [Custom Build of OpenKH Mod Manager](https://github.com/aliosgaming/OpenKh/releases/latest/download/OpenKH.Mod.Manager.zip)
+- [Custom Build of OpenKH Mods Manager](https://github.com/aliosgaming/OpenKh/releases/latest/download/OpenKH.Mod.Manager.zip)
     - OpenKH Pre-requisite: [.NET Desktop Runtime 6](https://download.visualstudio.microsoft.com/download/pr/52d6ef78-d4ec-4713-9e01-eb8e77276381/e58f307cda1df61e930209b13ecb47a4/windowsdesktop-runtime-6.0.25-win-x64.exe)
 - A copy of KINGDOM HEARTS II FINAL MIX+, ripped in an ISO format. (will not be provided here for legal reasons)
 - [PCSX2-EX](https://github.com/shananas/PCSX2-EX/releases/download/V1/PCSX2-EX.v3.10.0.zip)
@@ -18,12 +18,13 @@ To set up Rando, Extract, Download and/or Install the following:
 
 I prefer to have them saved in a single folder (for this guide, I’ll be placing them in the `C:\KH2FMRando-PS2` folder on my computer for simplicity reasons).
 
-__Do not install PCSX2 or the Mod Manager under a Microsoft "OneDrive" directory or an external hard drive. Mods won't load correctly and lua scripts will fail if you do.__
+__Do not install PCSX2 or the Mods Manager under a Microsoft "OneDrive" directory or an external hard drive. Mods won't load correctly and Lua scripts will fail if you do.__
 
 ---
 
 ## Step 1: PCSX2-EX Setup ##
-PCSX2-EX looks and works similarly to vanilla PCSX2, with the added support of LUA Engine and LUA-based mods. With that in mind, PCSX2-EX’s settings and menus should look familiar if you have ever used the original before. Use this time to set up your controllers, graphics settings, memory cards, etc.
+
+PCSX2-EX looks and works similarly to vanilla PCSX2, with the added support of LuaEngine and Lua-based mods. With that in mind, PCSX2-EX’s settings and menus should look familiar if you have ever used the original before. Use this time to set up your controllers, graphics settings, memory cards, etc.
 
 Although, for the Randomizer to work, the **Cheats and LuaEngine settings must be enabled**, so don’t forget to turn them on. They're under `System > Enable LuaEngine` and `System > Enable Cheats` under the main PCSX2-EX Window.
 
@@ -45,11 +46,11 @@ TL;DR, its:
 
 ## Step 2: OpenKH Mods Manager Setup ##
 
-Download and extract the latest OpenKH release into a place you would be most comfortable with. (For this guide, its going to be `C:\KH2FMRando-PS2\OpenKH`) and look for the `OpenKH.Tools.ModsManager.exe` file. We will be configuring and running the Randomizer via the Mods Manager, so it would be wise to make a shortcut of this on your Desktop so that you won’t have to dive in the folder every time you want to play the Randomizer.
+Download and extract the latest OpenKH release into a place you would be most comfortable with. (For this guide, it's going to be `C:\KH2FMRando-PS2\OpenKH`) and look for the `OpenKH.Tools.ModsManager.exe` file. We will be configuring and running the Randomizer via the Mods Manager, so it would be wise to make a shortcut of this on your Desktop so that you won’t have to dive in the folder every time you want to play the Randomizer.
 
 ![Send a shortcut to the Desktop!](./diagram1.png)
 
-When running the Mod Manager for the first time you will be greeted with the setup wizard. It is fairly straightforward but the steps with images are provided down below:
+When running the Mods Manager for the first time you will be greeted with the setup wizard. It is fairly straightforward but the steps with images are provided down below:
 
 1.	At the welcome screen click `Next`.
 
@@ -101,9 +102,9 @@ Open the KH2FM Randomizer Seed Generator executable file (for this guide, its `C
 
 ![Seed Generator Window](./Seed%20Generator.png)
 
-On the Seed Generator Window, it’s time to create a seed. There are way too many things to tweak around in making a seed that I might’ve made a novel if I enumerated it all here one-by-one, so [here's](../../seed-generator/index.md) the round-up of all the seed generator's features. Otherwise, to check what each setting does, hover your mouse on that area and read the tooltip that shows up.
+On the Seed Generator Window, it's time to create a seed. There are way too many things to tweak around in making a seed that I might’ve made a novel if I enumerated it all here one-by-one, so [here's](../../settings/index.md) the round-up of all the seed generator's features. Otherwise, to check what each setting does, hover your mouse on that area and read the tooltip that shows up.
 
-Once you have created your flavor of a rando seed, its time to make the seed. Click on `Generate Seed (PCSX2/PC)` (or `Generate Seed (PCSX2)` if you have enabled a setting that splits the Generate Seed button for PC and PCSX2) and save the zip file that it generates on the folder of your choice (for this guide, I have saved it to `C:\KH2FMRando-PS2`).
+Once you have created your flavor of a rando seed, it's time to make the seed. Click on `Generate Seed (PC/PCSX2)` (or `Generate Seed (PCSX2)` if you have enabled a setting that splits the Generate Seed button for PC and PCSX2) and save the zip file that it generates on the folder of your choice (for this guide, I have saved it to `C:\KH2FMRando-PS2`).
 
 Then, open the OpenKH Mods Manager program, click the green + icon, but instead of typing up a mod, click on `Select and install Mod Archive or Lua Script`. From there, point it to the zip file that the Seed Generator has created.
 

@@ -19,47 +19,112 @@
 }
 
 body {
-    background-color: #31363b;
+    background-color: #232629;
     color: #FFFFFF;
 }
 
-h1 {
-    > a {
-        color: #FFFFFF;
-    	font-family: khtitle;
-    	text-decoration: none;
-    }
-
-    > a:hover {
-    	text-decoration: none;
-    }
-}
-
 a {
-    color: #4dd0e1;
+    color: #63c6f5;
     font-family: khmenu;
 }
 
 .page-header {
+    position: sticky;
+    top: 0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+
+    display: flex;
+    align-items: center;
+
+    line-height: 1.0;
+
     background-image: linear-gradient(0deg, #000040, #000020);
 }
 
+.page-header a {
+    color: white;
+    text-decoration: none;
+}
+
+.page-header a:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transition: 0.25s;
+}
+
+.top-nav-internal {
+    position: relative;
+}
+
+.top-nav-internal ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.top-nav-internal li {
+    display: inline-block;
+}
+
+.top-nav-internal li a {
+    display: block;
+    padding: 8px;
+    color: white;
+}
+
+.top-nav-internal ul ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    min-width: 240px;
+    border: 1px solid #666666;
+    background-color: #232629;
+}
+
+.top-nav-internal ul ul li {
+    display: block;
+    padding: 4px;
+    text-align: left;
+}
+
+.top-nav-internal li:hover ul {
+    display: block;
+}
+
+.top-nav-internal ul ul li a:hover {
+    text-decoration: none;
+}
+
+.top-nav-right {
+    margin-left: auto;
+}
+
 .main-content {
-    h1,
+    background-color: #31363b;
+
+    h1 {
+        padding-left: 4px;
+        padding-right: 4px;
+        background-color: #503c00;
+        color:#fff34b;
+        font-family: khmenu;
+    }
     h2 {
-        color:#FFE500;
-        font-family: khgummi;
+        color:#fff34b;
+        font-family: khmenu;
     }
 
     h3,
     h4,
     h5,
     h6 {
-        color:#FFE500;
-        font-family: khmenu;
+        color:#fff34b;
     }
 
-    code {
+    blockquote, code {
         background-color: #111111;
         color: #DDDDDD;
     }

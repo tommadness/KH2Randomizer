@@ -347,11 +347,11 @@ class ItemPlacementHelpers:
     
     @staticmethod
     def dc1_check(inventory: list[int]) -> bool:
-        return inventory.count(storyunlock.DisneyCastleKey.id)>=1
+        return inventory.count(storyunlock.RoyalSummons.id)>=1
 
     @staticmethod
     def dc2_check(inventory: list[int]) -> bool:
-        return inventory.count(storyunlock.DisneyCastleKey.id)==2
+        return inventory.count(storyunlock.RoyalSummons.id)==2
 
     @staticmethod
     def oc1_check(inventory: list[int]) -> bool:

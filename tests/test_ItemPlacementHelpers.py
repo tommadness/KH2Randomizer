@@ -434,7 +434,7 @@ class Tests(unittest.TestCase):
         restriction = ItemPlacementHelpers.dc1_check
         self.assertFalse(restriction(inventory))
         
-        inventory.append(storyunlock.DisneyCastleKey.id)
+        inventory.append(storyunlock.RoyalSummons.id)
         self.assertTrue(restriction(inventory))
 
     def test_dc2_check(self):
@@ -443,10 +443,10 @@ class Tests(unittest.TestCase):
         restriction = ItemPlacementHelpers.dc2_check
         self.assertFalse(restriction(inventory))
 
-        inventory.append(storyunlock.DisneyCastleKey.id)
+        inventory.append(storyunlock.RoyalSummons.id)
         self.assertFalse(restriction(inventory))
 
-        inventory.append(storyunlock.DisneyCastleKey.id)
+        inventory.append(storyunlock.RoyalSummons.id)
         self.assertTrue(restriction(inventory))
 
     def test_stt_check(self):

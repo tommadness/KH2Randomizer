@@ -79,7 +79,7 @@ class Tests(unittest.TestCase):
         # self.assertEqual({locationType.TT}, set(lookup[storyunlock.Picture]))
         self.assertEqual({locationType.TT}, set(lookup[storyunlock.IceCream]))
         self.assertEqual({locationType.TWTNW}, set(lookup[storyunlock.WayToTheDawn]))
-        self.assertEqual({locationType.DC}, set(lookup[storyunlock.DisneyCastleKey]))
+        self.assertEqual({locationType.DC}, set(lookup[storyunlock.RoyalSummons]))
 
 
 if __name__ == '__main__':

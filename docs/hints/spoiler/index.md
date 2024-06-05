@@ -57,6 +57,6 @@ as demonstrated in the gif above.
 If enabled, the tracker will indicate when all Important Checks in a world are found (with default settings, the world's
 number will turn blue).
 
-### Spoiled Items
+### Reports Reveal Items
 
 Configures the type(s) of items that can be revealed by spoiler hints.

@@ -22,9 +22,14 @@ In the screenshot above, 2 Important Checks were found in Land of Dragons but th
 Checks there with a combined value of 15 points. Additionally, 3 Important Checks were found on Sora's Levels, and since
 the number is now zero and the world is indicated as complete, no more Important Checks are located there.
 
-## Reports As Hints
+## Settings
 
-In this hint system, each Ansem Report gives information on the location of a single Important Check.
+There are some seed generator settings specific to this hint system. 
+
+## Reports Reveal Items
+
+In this hint system, each Ansem Report can give information on the location of a single Important Check. This setting
+controls the types of items that can be revealed.
 
 ![Tracker with Hint](points_tracker_hint.png)
 
@@ -35,17 +40,3 @@ In the screenshot above, Ansem Report 3 (found in Twilight Town) reveals that Hu
 * The tracker can optionally be configured to perform "auto-math" to update the world's score to account for the hinted
   item. When this occurs, the tracker updates the world's number to indicate such (with default settings, the world's
   number turns green).
-
-## Settings
-
-There are some seed generator settings specific to this hint system. 
-
-### Reports can Reveal Proofs
-
-If enabled, Ansem Reports have a chance of revealing the locations of Proofs.
-
-> Note: Even with this setting on, reports are not _guaranteed_ to hint all or even any Proofs.
-
-### Reports can Reveal other Reports
-
-If enabled, Ansem Reports have a chance of revealing the locations of other Ansem Reports. 
