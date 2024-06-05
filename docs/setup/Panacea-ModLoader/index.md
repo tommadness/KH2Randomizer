@@ -71,7 +71,7 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Install New Mod](../images/Panacea-ModLoader/Install%20New%20Mod.png)
 
-3. In the `Add a new mod from Github` section, type in `KH2FM-Mods-Num/GoA-ROM-Edition`. This will download the GoA mod from its hosted Github repo
+3. In the `Add a new mod from GitHub` section, type in `KH2FM-Mods-Num/GoA-ROM-Edition`. This will download the GoA mod from its hosted GitHub repo
 	- You can find more mods posted in the KH2 Rando Discord Server [HERE](https://discord.com/channels/712837252279173150/975234023926399027)
 
     ![Install GoA ROM](../images/Panacea-ModLoader/Install%20GoA%20ROM.png)
