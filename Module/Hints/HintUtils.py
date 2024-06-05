@@ -403,7 +403,7 @@ class HintUtils:
                 misc.TornPages,
                 magic.Reflect,
                 form.WisdomForm,
-                storyunlock.DisneyCastleKey
+                storyunlock.RoyalSummons
             ],
             locationType.HUNDREDAW: [
                 magic.Cure,

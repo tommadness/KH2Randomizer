@@ -54,8 +54,8 @@ look similar (but not identical) to this screenshot:
 
 If that window does not appear, it's likely the LuaBackend Hook is missing, is in the wrong location, or is an incorrect
 version
-* See [LuaBackend Hook Setup](../luabackend-hook-setup/index.md) or the
-  [PC Setup Guide](../setup/Panacea-ModLoader/index.md#lua-backend-installation-) for additional instructions
+* See the [PC Setup Guide](../setup/Panacea-ModLoader/index.md#setting-up-openkh-mods-manager) for additional
+  instructions
 
 If the Lua scripts window _does_ appear, and you're still having trouble, verify that you have only one Garden of
 Assemblage Lua script. It's fine to have other Lua scripts such as soft reset, auto-save, etc., but only one GoA script

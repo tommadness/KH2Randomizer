@@ -14,12 +14,22 @@ systems work.
 ## How do I use hints?
 
 When choosing options for generating a seed, choose which hint system to use on the Hints tab. Once generated, your seed
-zip file can be loaded into the [Item Tracker](https://github.com/Dee-Ayy/KH2Tracker) either by dragging the seed zip
-file onto the tracker window, or by choosing `Load KH2Randomizer Seed` from the menu and browsing to the seed zip file.
+zip file can be loaded into the [KH2 Tracker](../trackers/index.md#instructions) either by dragging the seed zip file
+onto the tracker window, or by choosing `Load KH2Randomizer Seed` from the menu and browsing to the seed zip file.
 
 ## Common Settings
 
 There are some settings common between many of the hint systems.
+
+### Abilities in Journal Reports
+
+If enabled, Ansem Reports in Jiminy's Journal reveal the locations of many useful abilities.
+
+* Off - No ability locations are revealed.
+* World of Ability - Ansem Reports in the Journal reveal which world contains each hinted ability. For example,
+  "Berserk Charge is in Olympus Coliseum."
+* Exact Location - Ansem Reports in the Journal reveal the exact location of each hinted ability. For example,
+  "Berserk Charge is at Olympus Coliseum - Urns."
 
 ### Progression Hint Mode
 
@@ -36,6 +46,6 @@ When enabled, several other settings appear allowing you to configure point valu
 
 If enabled, prevents an Ansem Report from revealing information about the same world in which the report was found.
 
-### Hintable Items
+### Trackable Items
 
 Configures what is considered an _Important Check_ for the purposes of the various hint systems.

@@ -50,6 +50,14 @@ General estimates of hue values:
 * 270 - Purple
 * 330 - Pink
 
+### Other
+
+**Keep Previously Generated Textures** - If enabled, previously generated textures will be kept around to speed up
+future recolors. This will potentially use large amounts of disk space, but improves performance. Disable this option to
+minimize disk space usage, but recoloring will take longer for each seed.
+
+**Re-Randomize Preview Colors** - Causes colors to be re-randomized for purposes of the recolor previews.
+
 ## Other Notes
 
 - Coloring the textures is done by applying color hues to the base game textures found in your extracted game files.

@@ -29,12 +29,14 @@ IceCream = StoryUnlock(375, "Ice Cream", locationType.TT, visit_count=3)
 # TODO(zaktherobot): leaving out picture for now, may revisit if there's no confusion that picture doesn't unlock TT2 anymore
 # Picture = StoryUnlock(376, "Picture")
 NaminesSketches = StoryUnlock(368, "Namine's Sketches", locationType.STT, visit_count=1)
-DisneyCastleKey = StoryUnlock(460, "Disney Castle Key", locationType.DC, visit_count=2)  # Dummy 13
+# Note: The display name is kept as "Disney Castle Key" for tracker interop purposes.
+#   We have a hack in place to change the name to "Royal Summons" for the spoiler log for now in itemClass.py.
+RoyalSummons = StoryUnlock(460, "Disney Castle Key", locationType.DC, visit_count=2)  # Dummy 13
 
 
 def all_story_unlocks() -> list[StoryUnlock]:
     return [BattlefieldsOfWar, SwordOfTheAncestor, BeastsClaw, BoneFist, ProudFang, SkillAndCrossbones, Scimitar,
-            WayToTheDawn, IdentityDisk, MembershipCard, IceCream, NaminesSketches, DisneyCastleKey]
+            WayToTheDawn, IdentityDisk, MembershipCard, IceCream, NaminesSketches, RoyalSummons]
 
 
 def all_individual_story_unlocks() -> list[StoryUnlock]:
