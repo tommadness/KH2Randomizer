@@ -679,7 +679,7 @@ class HintUtils:
                     report_world = world_items.report_information[chosen_report][
                         "FoundIn"
                     ]
-                    if report_world not in priorities:
+                    if report_world not in priorities and report_world != "Garden of Assemblage":
                         priorities.append(report_world)
                     if any(inner_w not in selected_worlds for inner_w in priorities):
                         break
