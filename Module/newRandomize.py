@@ -1285,22 +1285,6 @@ class Randomizer:
             ability_pool.remove(random_ability)
             eligible_abilities.remove(random_ability)
 
-            if settings.extended_placement_logic and random_ability.Rarity in [
-                itemRarity.RARE,
-                itemRarity.MYTHIC,
-            ]:
-                # change the rarity of the keyblade item to the rarity of the ability
-                keyblade_inventory_item = Items.weaponslot_id_to_keyblade_item(
-                    key.LocationId
-                )
-                if keyblade_inventory_item is not None:
-                    keyblade_id = keyblade_inventory_item.id
-                    keyblade_item = next(
-                        key for key in item_pool if key.Id == keyblade_id
-                    )
-                    item_pool.remove(keyblade_item)
-                    item_pool.append(KH2Item(keyblade_item.item, random_ability.Rarity))
-
         # Assign draws to struggle weapons
         for weapon in weaponslot.struggle_weapon_slots():
             self.assign_item(weapon, KH2Item(ability.Draw))
