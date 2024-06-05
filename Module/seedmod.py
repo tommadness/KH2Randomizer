@@ -702,10 +702,10 @@ class SeedModBuilder:
         self.out_zip.writestr(source_name, modified_battle_level_binary)
 
     def write_keyblade_locking_lua(self):
-        keyblade_lua_name = _relative_mod_file("keyblade_locking/keyblade.lua")
+        keyblade_lua_name = _relative_mod_file("keyblade_locking/F266B00B Keyblade Locking.lua")
         assets = [
             {
-                "name": "scripts/keyblade.lua",
+                "name": "scripts/F266B00B Keyblade Locking.lua",
                 "method": "copy",
                 "source": [{"name": keyblade_lua_name}],
             },
