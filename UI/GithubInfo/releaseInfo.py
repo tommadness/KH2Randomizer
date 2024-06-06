@@ -49,17 +49,21 @@ class KH2RandomizerGithubReleases:
     def __init__(self):
         self.infos = []
         self.potential_updates = []
-        response = requests.get("https://api.github.com/repos/tommadness/KH2Randomizer/releases",timeout=10)
-        if response.ok:
-            for release_info in response.json():
-                self.infos.append(GithubReleaseInfo(release_info))
-            # get info about current generator version
-            # THIS LINE IS FOR TESTING PURPOSES ONLY
-            # self.current_version = version.parse("2.2.0")
-            self.current_version = version.parse(LOCAL_UI_VERSION)
-            # if we have a version that is higher than current version, add it to update list
-            for info in self.infos:
-                if self.current_version < info.version:
-                    self.potential_updates.append(info)
+        try:
+            response = requests.get("https://api.github.com/repos/tommadness/KH2Randomizer/releases",timeout=5)
+            if response.ok:
+                for release_info in response.json():
+                    self.infos.append(GithubReleaseInfo(release_info))
+                # get info about current generator version
+                # THIS LINE IS FOR TESTING PURPOSES ONLY
+                # self.current_version = version.parse("2.2.0")
+                self.current_version = version.parse(LOCAL_UI_VERSION)
+                # if we have a version that is higher than current version, add it to update list
+                for info in self.infos:
+                    if self.current_version < info.version:
+                        self.potential_updates.append(info)
+        except:
+            # not doing anything if we can't connect to internet or other error occurs
+            pass
     def get_update_infos(self):
         return self.potential_updates
