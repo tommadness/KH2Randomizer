@@ -150,7 +150,6 @@ def make_graph(graph: LocationGraphBuilder):
 
     graph.register_superboss(data_marluxia)
     graph.register_superboss(lingering_will)
-    graph.register_first_boss(wisdom_popup)
     graph.register_last_story_boss(wisdom_popup)
     
     graph.add_edge(courtyard, courtyard_chests)
@@ -175,6 +174,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(marluxia, data_marluxia)
         graph.add_edge(wisdom_popup, lingering_will, RequirementEdge(battle=True))
 
+        graph.register_first_boss(minnie_escort)
         graph.register_superboss(marluxia)
     else:
         graph.add_edge(START_NODE, cornerstone_hill)
@@ -191,3 +191,4 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(minnie_escort, wisdom_popup)
         graph.add_edge(wisdom_popup, data_marluxia, RequirementEdge(battle=True))
         graph.add_edge(wisdom_popup, lingering_will,RequirementEdge(battle=True))
+        graph.register_first_boss(future_pete)

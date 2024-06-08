@@ -213,7 +213,7 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(ruin_creations_passage, xemnas_1, RequirementEdge(battle=True))
         graph.add_edge(xemnas_1, final_xemnas, RequirementEdge(battle=True, strict=False))
         graph.add_edge(xemnas_1, data_xemnas, RequirementEdge(battle=True))
-        graph.register_first_boss(xemnas_1)
+        graph.register_first_boss(saix)
         graph.register_last_story_boss(xemnas_1)
     else:
         graph.add_edge(START_NODE, fragment_crossing)
@@ -232,5 +232,5 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(ruin_creations_passage, roxas, RequirementEdge(battle=True))
         graph.add_edge(roxas, final_xemnas, RequirementEdge(battle=True, strict=False))
         graph.add_edge(roxas, data_xemnas, RequirementEdge(battle=True))
-        graph.register_first_boss(roxas)
+        graph.register_first_boss(xigbar)
         graph.register_last_story_boss(roxas)
