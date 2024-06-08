@@ -57,6 +57,8 @@ class Hints:
             for report_num in range(1, 14):
                 hint_data["Reports"][report_num] = {}
         for report_num in range(1, 14):
+            if report_num not in hint_data["Reports"]:
+                hint_data["Reports"][report_num] = {}
             hint_data["Reports"][report_num]["JournalText"] = journal_data[report_num]
 
     @staticmethod
@@ -263,6 +265,7 @@ class Hints:
                 world_items,
                 path_data,
                 common_tracker_data,
+                hintable_worlds,
             )
         elif settings.hintsType == HintType.DISABLED:
             # don't need to do anything extra

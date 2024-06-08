@@ -725,6 +725,7 @@ class HintUtils:
         world_items: WorldItems,
         path_data: list[PathHintData],
         tracker_data: CommonTrackerInfo,
+        hintable_worlds: list[locationType],
     ) -> dict[int, dict[str, Any]]:
         progression_hints = tracker_data.progression_settings is not None
         must_hint = list(
@@ -760,8 +761,10 @@ class HintUtils:
             random.shuffle(report_numbers)
             if progression_hints:
                 report_numbers = report_numbers + list(range(14, len(all_data) + 1))
-                # make sure all worlds with no items are last
-                all_data = [p for p in all_data if p.num_items > 0] + [p for p in all_data if p.num_items == 0]
+                # make sure all worlds with no items are last, and worlds that are enabled are before disabled ones
+                all_data = [p for p in all_data if p.num_items > 0] + \
+                            [p for p in all_data if p.num_items == 0 and p.world in hintable_worlds] + \
+                            [p for p in all_data if p.num_items == 0 and p.world not in hintable_worlds]
             for index, report_number in enumerate(report_numbers):
                 if index < 13:
                     location = world_items.report_information[report_number]["FoundIn"]
