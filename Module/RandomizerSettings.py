@@ -628,17 +628,12 @@ class RandomizerSettings:
             self.tracker_includes.append("better_stt")
         if self.as_data_split:
             self.tracker_includes.append("Data Split")
-        # TODO: Tracker is going to need something different here
-        # if len(ui_settings.get(settingkey.STARTING_STORY_UNLOCKS)) < 11:
-        #     self.tracker_includes.append("visit_locking")
         if self.starting_report_count == 13:
             self.tracker_includes.append("library")
         if self.hiscore_mode:
             self.tracker_includes.append("ScoreMode")
         if self.split_levels:
             self.tracker_includes.append("Dream Weapon Matters")
-        if self.shop_hintable:
-            self.tracker_includes.append(locationType.SYNTH)
 
         if (
             self.hintsType in ["JSmartee", "Path"]
