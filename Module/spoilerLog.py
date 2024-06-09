@@ -4,6 +4,7 @@ from Class.itemClass import KH2Item
 from List.ItemList import Items
 from List.ObjectiveList import KH2Objective
 from List.configDict import locationType
+from List.inventory import misc
 from Module.newRandomize import ItemAssignment, SynthesisRecipe, WeaponStats
 from Module.weighting import LocationWeights
 
