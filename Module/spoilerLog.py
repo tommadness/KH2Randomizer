@@ -4,7 +4,6 @@ from Class.itemClass import KH2Item
 from List.ItemList import Items
 from List.ObjectiveList import KH2Objective
 from List.configDict import locationType
-from List.inventory import misc
 from Module.newRandomize import ItemAssignment, SynthesisRecipe, WeaponStats
 from Module.weighting import LocationWeights
 
@@ -54,13 +53,13 @@ def item_spoiler_dictionary(
             added_string = ""
 
         sphere = "N/A"
-        if location_spheres and location not in location_spheres:
-            prepend_string = "Unreachable "
-        elif location_spheres and location in location_spheres:
-            prepend_string = ""
+        prepend_string = ""
+        if location_spheres:
+            if location not in location_spheres:
+                prepend_string = "Unreachable "
+            elif location in location_spheres:
+                prepend_string = ""
             sphere = str(location_spheres[location])
-        else:
-            prepend_string = ""
 
         spoiler_string = prepend_string + location.Description + added_string
 

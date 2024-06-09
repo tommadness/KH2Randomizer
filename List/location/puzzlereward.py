@@ -24,7 +24,7 @@ class CheckLocation(str, Enum):
     SunsetGrandRibbon = "Sunset (Grand Ribbon)"
 
 class PuzzleLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,first_visit_locks):
+    def __init__(self,reverse_rando,keyblades_unlock_chests):
         DefaultLogicGraph.__init__(self,NodeId)
 
         if not reverse_rando:
