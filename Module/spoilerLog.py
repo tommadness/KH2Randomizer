@@ -60,7 +60,7 @@ def item_spoiler_dictionary(
                 prepend_string = "Unreachable "
             elif location in location_spheres:
                 prepend_string = ""
-            sphere = str(location_spheres[location])
+                sphere = str(location_spheres[location])
 
         spoiler_string = prepend_string + location.Description + added_string
 
