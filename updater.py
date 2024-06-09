@@ -51,7 +51,7 @@ class KH2RandoUpdater(QMainWindow):
             update_info : GithubReleaseInfo = self.updates[index.row()]
             result = update_info.download_release()
             if result:
-                process = subprocess.Popen("KH2 Randomizer.exe")
+                process = subprocess.Popen("KH2.Randomizer.exe")
                 sys.exit()
     
 
