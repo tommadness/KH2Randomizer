@@ -83,14 +83,14 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Build Only](../images/Panacea-ModLoader/Build%20and%20Run.png)
 
-![First Warning](../images/Panacea-ModLoader/Second_warning.png)
+![Second Warning](../images/Panacea-ModLoader/Second_warning.png)
 
 ## Installing a new seed to play:
 1. Choose your seed settings in the generator window and then click on `Generate Seed` in the bottom right.
 
     ![Generate Seed](../images/Panacea-ModLoader/Generate%20New%20Seed.png)
 
-![First Warning](../images/Panacea-ModLoader/Third_warning.png)
+![Third Warning](../images/Panacea-ModLoader/Third_warning.png)
 
 3. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
 4. Once saved, open up the Mods Manager and click on `Mods`, then `Install a New Mod`
@@ -105,15 +105,14 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Enable New Seed](../images/Panacea-ModLoader/Enable%20New%20Seed.png)
 
-> [!IMPORTANT]
-> **MOD ORDER MATTERS:** It is a general rule that the `Seed` goes at the :arrow_up:**TOP** of the list and `GoA ROM` goes at the :arrow_down:**BOTTOM** unless a mod's description says otherwise. If mods have files that overlap then the mods above will overwrite the files of those below.
+![Fourth Warning](../images/Panacea-ModLoader/Fourth_warning.png)
 
+![Tip](../images/Panacea-ModLoader/Tip.png)
 
-> [!TIP]
-> I heavily recommend you install the below two mods to help provide a better experience when playing rando:
-> * `KH2FM-Mods-equations19/auto-save` - This mod auto saves the game for you as you enter rooms. Be sure to make at least 1 regular save in game, then if you ever crash or your game closes unexpectedly, just hold the `SELECT` button while loading a save, and the auto-save will be loaded instead.
-> * `KH2FM-Mods-equations19/soft-reset` - Hold `L1+L2+R1+R2+Start` at the same time to immediately reset the game to the start screen. Very useful if you accidentally softlock in boss/enemy rando, or just to restart the game faster!
-> * [KH2 Rando Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest) - Not an OpenKH mod but instead a full fledged automated tracker program for the Important Checks in game. Checkout [Hint Systems](https://kh2rando.com/hints) for info about different ways to play Rando!
+I heavily recommend you install the below two mods to help provide a better experience when playing rando:
+* `KH2FM-Mods-equations19/auto-save` - This mod auto saves the game for you as you enter rooms. Be sure to make at least 1 regular save in game, then if you ever crash or your game closes unexpectedly, just hold the `SELECT` button while loading a save, and the auto-save will be loaded instead.
+* `KH2FM-Mods-equations19/soft-reset` - Hold `L1+L2+R1+R2+Start` at the same time to immediately reset the game to the start screen. Very useful if you accidentally softlock in boss/enemy rando, or just to restart the game faster!
+* [KH2 Rando Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest) - Not an OpenKH mod but instead a full fledged automated tracker program for the Important Checks in game. Checkout [Hint Systems](https://kh2rando.com/hints) for info about different ways to play Rando!
 
 You Mods Manager should look like this when you are done:
 
