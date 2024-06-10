@@ -24,11 +24,10 @@
 ## Installing OpenKH Mods Manager and Seed Generator
 1. Install .NET6 Runtime by running the `windowsdesktop-runtime-6.0.25-win-x64.exe` executable you just downloaded
 2. Create a KH2 Rando folder on the same hard drive you have the game installed (this is where you will install all your randomizer tools)
-> [!WARNING]
-> **Do NOT create this folder in:**
-> `A directory that uses Microsoft OneDrive`
-> `An External Hard Drive`
-4. Extract OpenKH Mods Manager to this new folder 
+
+![First Warning](../images/Panacea-ModLoader/First_warning.png)
+
+3. Extract OpenKH Mods Manager to this new folder 
 	- It's recommended to give each app its own subfolder to make navigating their files easier (See screenshot)
 
 ![Rando Folder](../images/Panacea-ModLoader/KH2%20Rando%20Folder.png)
@@ -83,16 +82,15 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 5. Then click `Mod Loader` and then `Build and Run` which will build your new mod and run the game for you automatically
 
     ![Build Only](../images/Panacea-ModLoader/Build%20and%20Run.png)
-> [!NOTE]
-> *Newly enabled mods won't show up in game unless you `Build` or `Build and Run` after enabling them* 
+
+![First Warning](../images/Panacea-ModLoader/Second_warning.png)
 
 ## Installing a new seed to play:
 1. Choose your seed settings in the generator window and then click on `Generate Seed` in the bottom right.
 
     ![Generate Seed](../images/Panacea-ModLoader/Generate%20New%20Seed.png)
 
-> [!NOTE]
-> *Some settings act differently between PCSX2 and the PC versions of the game. When a settings like this is enabled, the `Generate Seed` button will split into separate PCSX2 and PC options. Be sure to click the one that correlates to your version of the game.*
+![First Warning](../images/Panacea-ModLoader/Third_warning.png)
 
 3. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
 4. Once saved, open up the Mods Manager and click on `Mods`, then `Install a New Mod`
