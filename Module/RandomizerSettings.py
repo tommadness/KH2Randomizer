@@ -817,8 +817,17 @@ class RandomizerSettings:
         elif starting_visit_mode is StartingVisitMode.SPECIFIC:
             for _, count in self.starting_unlocks_per_world.items():
                 starting_visit_items_count = starting_visit_items_count + count
+        elif starting_visit_mode is StartingVisitMode.CUSTOM:
+            for _, count in self.starting_unlocks_per_world.items():
+                starting_visit_items_count = starting_visit_items_count + count
+            starting_visit_items_count = starting_visit_items_count + self.starting_visit_random_range[1]
 
         max_unlocks = len(storyunlock.all_individual_story_unlocks())
+        if starting_visit_items_count > max_unlocks:
+            raise SettingsException(
+                f"Starting Visit Unlocks plus Maximum Visits Available is more than {max_unlocks}"
+            )
+
         if starting_visit_items_count + self.shop_unlocks > max_unlocks:
             raise SettingsException(
                 f"Starting Visit Unlocks plus Visit Unlocks in shop is more than {max_unlocks}"
