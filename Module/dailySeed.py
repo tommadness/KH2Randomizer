@@ -5,6 +5,7 @@ from Class import settingkey
 from Class.seedSettings import SeedSettings
 from List.configDict import (
     BattleLevelOption,
+    DisableFinalOption,
     expCurve,
     itemBias,
     itemDifficulty,
@@ -361,7 +362,7 @@ dailyHardModifiers = [
         description="You are unable to use final form. You can find it for more drive levels and Genie, but you can't go into the form",
         categories={"dol"},
         local_modifier=lambda settings: settings.set(
-            settingkey.DISABLE_FINAL_FORM, True
+            settingkey.DISABLE_FINAL_FORM, DisableFinalOption.NO_FINAL
         ),
     ),
     DailyModifier(
