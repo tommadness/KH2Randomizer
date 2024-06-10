@@ -258,6 +258,7 @@ class StartingVisitMode(str, Enum):
     NONE = "No Visits"
     RANDOM = "Random Visits"
     SPECIFIC = "Specific Visits"
+    CUSTOM = "Custom"
 
 
 class FinalDoorRequirement(str, Enum):

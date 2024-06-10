@@ -2570,6 +2570,9 @@ _all_settings = [
         Random Visits - Unlock a random set of visits by starting with random visit unlock items.
 
         Specific Visits - Unlock a specific set of visits by starting with specific visit unlock items.
+
+        Custom - Combination of the "Random Visits" and "Specific Visits" modes. Unlock a specific set of
+        visits, and then additionally unlock a random set of visits.
         """,
     ),
     IntSpinner(
