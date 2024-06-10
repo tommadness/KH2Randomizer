@@ -32,13 +32,13 @@ class GithubReleaseInfo:
         with requests.get(self.download_link, stream=True) as response:
             num_bytes = int(response.headers["Content-Length"])
             bytes_downloaded = 0
-            with open("KH2 Randomizer.exe.tmp", mode="wb") as file:
+            with open("KH2.Randomizer.exe.tmp", mode="wb") as file:
                 release_chunk_size = 50 * 1024
                 for chunk in response.iter_content(chunk_size=release_chunk_size):
                     bytes_downloaded += release_chunk_size
                     progress.setValue(bytes_downloaded*100.0/num_bytes)
                     file.write(chunk)
-        os.replace("KH2 Randomizer.exe.tmp", "KH2 Randomizer.exe")
+        os.replace("KH2.Randomizer.exe.tmp", "KH2.Randomizer.exe")
         progress.close()
         return True
     
