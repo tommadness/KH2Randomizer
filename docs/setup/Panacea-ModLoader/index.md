@@ -106,8 +106,7 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
     ![Enable New Seed](../images/Panacea-ModLoader/Enable%20New%20Seed.png)
 
 ![Fourth Warning](../images/Panacea-ModLoader/Fourth_warning.png)
-
-![Tip](../images/Panacea-ModLoader/Tip.png)
+    ![Tip](../images/Panacea-ModLoader/Tip.png)
 
 **I heavily recommend you install the below two mods to help provide a better experience when playing rando:**
 * `KH2FM-Mods-equations19/auto-save` - This mod auto saves the game for you as you enter rooms. Be sure to make at least 1 regular save in game, then if you ever crash or your game closes unexpectedly, just hold the `SELECT` button while loading a save, and the auto-save will be loaded instead.
