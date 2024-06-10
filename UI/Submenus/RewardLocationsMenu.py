@@ -77,11 +77,11 @@ class RewardLocationsMenu(KH2Submenu):
     def _starting_visit_mode_changed(self):
         mode = StartingVisitMode[self.settings.get(settingkey.STARTING_VISIT_MODE)]
 
-        random = mode is StartingVisitMode.RANDOM
+        random = (mode is StartingVisitMode.RANDOM) or (mode is StartingVisitMode.CUSTOM) 
         self.set_option_visibility(settingkey.STARTING_VISIT_RANDOM_MIN, random)
         self.set_option_visibility(settingkey.STARTING_VISIT_RANDOM_MAX, random)
 
-        specific = mode is StartingVisitMode.SPECIFIC
+        specific = (mode is StartingVisitMode.SPECIFIC) or (mode is StartingVisitMode.CUSTOM)
         self.set_option_visibility(settingkey.STARTING_UNLOCKS_STT, specific)
         self.set_option_visibility(settingkey.STARTING_UNLOCKS_HB, specific)
         self.set_option_visibility(settingkey.STARTING_UNLOCKS_OC, specific)

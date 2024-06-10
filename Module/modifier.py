@@ -229,5 +229,16 @@ class SeedModifier:
             for location, count in specific_unlocks.items():
                 result.extend([storyunlock.story_unlock_for_location(location)] * count)
             return result
+        elif mode is StartingVisitMode.CUSTOM:
+            result: list[StoryUnlock] = []
+            random_pool: list[StoryUnlock] = []
+            for unlock in storyunlock.all_story_unlocks():
+                specific_count = specific_unlocks[unlock.location]
+                result.extend([unlock] * specific_count)
+                random_pool.extend([unlock] * (unlock.visit_count - specific_count))
+            random_min, random_max = random_range
+            random_count = random.randint(random_min, random_max)
+            result.extend(random.sample(random_pool, k=random_count))
+            return result
         else:
             raise GeneratorException(f"Unknown mode {mode}")
