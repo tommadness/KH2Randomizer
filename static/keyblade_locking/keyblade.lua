@@ -13,9 +13,15 @@ elseif GAME_ID == 0x431219CC and ENGINE_TYPE == 'BACKEND' then --PC
 		ConsolePrint('LuaBackend is Outdated. Things might not work properly.',2)
 	end
 	OnPC = true
-	Now = 0x0714DB8 - 0x56454E
-	Save = 0x09A7070 - 0x56450E
-	Sys3Pointer = 0x2AE3550 - 0x56454E
+	if ReadString(0x09A92F0,4) == 'KH2J' then --EGS
+		Now = 0x0716DF8
+		Save = 0x09A92F0
+		Sys3Pointer = 0x2AE5890
+	elseif ReadString(0x09A9830,4) == 'KH2J' then --Steam
+		Now = 0x0717008
+		Save = 0x09A9830
+		Sys3Pointer = 0x2AE5DD0
+	end
 end
 end
 
