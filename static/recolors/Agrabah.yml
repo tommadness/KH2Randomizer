@@ -151,7 +151,7 @@
 
 - id: lexaeus
   name: Lexaeus
-  version: 2
+  version: 3
   tags:
     - character
   recolors:

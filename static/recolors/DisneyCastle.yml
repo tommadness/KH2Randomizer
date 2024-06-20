@@ -379,6 +379,7 @@
 
 - id: minnie
   name: Minnie
+  version: 2
   tags:
     - character
   recolors:
