@@ -4,6 +4,8 @@ title: Home
 
 <p align="center"><img src="assets/image/randomizer-header.png" alt="Randomizer Logo" /></p>
 
+## As of the update on 6/13/2024, the Epic Games Store version of randomizer is not compatible with the existing tools. Same can be said for the new Steam release. Please be patient as the developers update the tools to bring compatibility back. For more information, please head to the discord. 
+
 Kingdom Hearts 2 Randomizer takes items from their normal game locations and places them in random locations. Logic is
 used to ensure all necessary items are obtainable.
 
