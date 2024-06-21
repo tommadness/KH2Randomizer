@@ -5,7 +5,7 @@ has the ability to recolor most playable characters, many non-playable character
 (including bosses).
 
 > Due to the way textures are applied, this option will only work properly when using Panacea for loading mods into the
-> PC Epic Games Store version of the game.
+> PC versions of the game.
 
 ## Texture Recolor Settings
 
@@ -20,7 +20,9 @@ texture.
 **Presets** - Contains options for setting all colors to vanilla, all colors to random, as well as the ability to save
 and load presets similar to presets for seed settings.
 
-**Category** - Contains options to set colors for all models in the selected category to vanilla or random.
+**Category** - Contains options to set all colors for all models in the selected category to vanilla or random.
+
+**Model** - Contains options to set colors for all colorable areas of the selected model to vanilla or random.
 
 ### Area To Color
 
@@ -56,15 +58,17 @@ General estimates of hue values:
 future recolors. This will potentially use large amounts of disk space, but improves performance. Disable this option to
 minimize disk space usage, but recoloring will take longer for each seed.
 
-**Re-Randomize Preview Colors** - Causes colors to be re-randomized for purposes of the recolor previews.
+**Refresh Preview(s)** - Displays or refreshes the preview image(s) that help show what the texture recoloring will look
+like when applied. Depending on the texture and your machine's performance, this can take a few seconds or more.
 
 ## Other Notes
 
 - Coloring the textures is done by applying color hues to the base game textures found in your extracted game files.
-  Because of this, texture coloring is only available if you have extracted your KH2 game files using OpenKH Mods Manager.
+  Because of this, texture coloring is only available if you have extracted your KH2 game files using OpenKH Mods
+  Manager.
 - Texture coloring will cause seeds (or cosmetics-only mods) to take longer to generate, relative to the number of
   recolored textures. However, the generator stores off copies of each recolored texture it creates to speed up future
-  generations. So over time, the generation speed will improve.
+  generations. So over time, the generation speed will improve (at the expense of disk space).
 - Previously generated texture recolors are kept in a `cache/texture-recolors` folder next to where the seed generator
   is located. This folder can be safely deleted for disk space concerns, but as described above, doing so will cause
-  seeds with texture recoloring enabled to take longer to generate.
+  seeds/mods with texture recoloring enabled to take longer to generate.
