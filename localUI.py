@@ -437,7 +437,7 @@ class KH2RandomizerApp(QMainWindow):
         self.emu_warning_toggle.setCheckable(True)
         self.emu_warning_toggle.setChecked(self.disable_emu_warnings)
         self.config_menu.addSeparator()
-        self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
+        # self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
 
         github_releases = KH2RandomizerGithubReleases()
         infos = github_releases.get_update_infos()

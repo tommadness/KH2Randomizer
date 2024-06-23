@@ -3736,7 +3736,7 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
 
 def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
     enemy_options = {
-        "seed_name": seed_name,
+        "seed_name": seed_name + ui_settings.settings_string(),
         "remove_damage_cap": ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
         "cups_give_xp": ui_settings.get(settingkey.CUPS_GIVE_XP),
         "retry_data_final_xemnas": ui_settings.get(settingkey.RETRY_DFX),
