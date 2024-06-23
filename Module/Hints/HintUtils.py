@@ -160,18 +160,18 @@ class WorldItems:
         for location, item in location_item_tuples:
             if item.ItemType in important_checks or item.Name in important_checks:
                 if locationType.Level in location.LocationTypes:
-                    self.level_checks[locationCategory.LEVEL]["Sword"][location.LocationId] = item.Name
+                    self.level_checks[locationCategory.LEVEL]["Sword"][location.LocationId] = item.Id
                     if not dream_weapon_matters:
-                        self.level_checks[locationCategory.LEVEL]["Staff"][location.LocationId] = item.Name
-                        self.level_checks[locationCategory.LEVEL]["Shield"][location.LocationId] = item.Name
+                        self.level_checks[locationCategory.LEVEL]["Staff"][location.LocationId] = item.Id
+                        self.level_checks[locationCategory.LEVEL]["Shield"][location.LocationId] = item.Id
                     if dream_weapon_matters:
-                        self.level_checks[locationCategory.LEVEL]["Staff"][offsets.get_staff_level(max_level,location.LocationId)] = item.Name
-                        self.level_checks[locationCategory.LEVEL]["Shield"][offsets.get_shield_level(max_level,location.LocationId)] = item.Name
+                        self.level_checks[locationCategory.LEVEL]["Staff"][offsets.get_staff_level(max_level,location.LocationId)] = item.Id
+                        self.level_checks[locationCategory.LEVEL]["Shield"][offsets.get_shield_level(max_level,location.LocationId)] = item.Id
 
                 if locationType.FormLevel in location.LocationTypes:
                     for form_category in self.level_checks.keys():
                         if form_category is location.LocationCategory:
-                            self.level_checks[form_category][location.LocationId] = item.Name
+                            self.level_checks[form_category][location.LocationId] = item.Id
 
     def world_to_item_ids(self) -> dict[locationType, list[int]]:
         """
@@ -547,7 +547,7 @@ class HintUtils:
                     raise HintException("Improper data computation for point hints")
                 report_assignments[report_num] = {
                     "World": selected_world,
-                    "check": selected_item.Name,
+                    "check": selected_item.Id,
                     "Location": world_items.report_information[report_num]["FoundIn"],
                 }
                 data = reduce_list(report_num, selected_world, selected_item, data)
