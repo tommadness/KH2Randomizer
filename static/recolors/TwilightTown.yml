@@ -1,6 +1,6 @@
 - id: axel
   name: Axel
-  version: 2
+  version: 3
   tags:
     - character
   recolors:
@@ -403,7 +403,7 @@
 
 - id: roxas
   name: Roxas
-  version: 2
+  version: 3
   tags:
     - character
     - party
@@ -822,7 +822,7 @@
 
 - id: roxas_coat
   name: Roxas (Coat)
-  version: 2
+  version: 3
   tags:
     - character
   recolors:

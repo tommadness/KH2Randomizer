@@ -1,5 +1,9 @@
+# Notes:
+# - The Camp menu has some UK folders but the sizes don't match up
+
 - id: camp_menu
   name: Menu (Camp)
+  version: 2
   tags:
     - interface
   recolors:
@@ -13,9 +17,37 @@
             - static/recolors/masks/menu-camp/Logo_Outline.mask
             - static/recolors/masks/menu-camp/Logo_Outline.mask
             - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
+            - static/recolors/masks/menu-camp/Logo_Outline.mask
         - id: scrollbar
           name: Scrollbar
           mask_files:
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
+            - static/recolors/masks/menu-camp/Scrollbar.mask
             - static/recolors/masks/menu-camp/Scrollbar.mask
             - static/recolors/masks/menu-camp/Scrollbar.mask
             - static/recolors/masks/menu-camp/Scrollbar.mask
@@ -32,25 +64,68 @@
             - static/recolors/masks/menu-camp/Drop_Shadows.mask
             - static/recolors/masks/menu-camp/Drop_Shadows.mask
             - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
+            - static/recolors/masks/menu-camp/Drop_Shadows.mask
           new_saturation: 75
       image_groups:
         - - remastered/menu/fr/camp.2ld/FR_camp_2ld0.png
 
+        - - remastered/menu/fr/camp.2ld/FR_camp_2ld1.png
+
+        - - remastered/menu/fr/camp.2ld/FR_camp_2ld2.png
+
+        - - remastered/menu/fr/camp.2ld/FR_camp_2ld3.png
+
         - - remastered/menu/gr/camp.2ld/GR_camp_2ld0.png
+
+        - - remastered/menu/gr/camp.2ld/GR_camp_2ld1.png
+
+        - - remastered/menu/gr/camp.2ld/GR_camp_2ld2.png
+
+        - - remastered/menu/gr/camp.2ld/GR_camp_2ld3.png
 
         - - remastered/menu/it/camp.2ld/IT_camp_2ld0.png
 
+        - - remastered/menu/it/camp.2ld/IT_camp_2ld1.png
+
+        - - remastered/menu/it/camp.2ld/IT_camp_2ld2.png
+
+        - - remastered/menu/it/camp.2ld/IT_camp_2ld3.png
+
         - - remastered/menu/sp/camp.2ld/SP_camp_2ld0.png
 
-        - - remastered/menu/uk/camp.2ld/UK_camp_2ld0.png
+        - - remastered/menu/sp/camp.2ld/SP_camp_2ld1.png
+
+        - - remastered/menu/sp/camp.2ld/SP_camp_2ld2.png
+
+        - - remastered/menu/sp/camp.2ld/SP_camp_2ld3.png
 
         - - remastered/menu/us/camp.2ld/US_camp_2ld0.png
 
-      previews: [ false, false, false, false, false, true ]
+        - - remastered/menu/us/camp.2ld/US_camp_2ld1.png
+
+        - - remastered/menu/us/camp.2ld/US_camp_2ld2.png
+
+        - - remastered/menu/us/camp.2ld/US_camp_2ld3.png
+
+      previews: [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false ]
 
 
 - id: hud_0
   name: Heads-Up Display 0
+  version: 2
   tags:
     - interface
   recolors:

@@ -32,7 +32,7 @@
 
 - id: bomb_bell
   name: Bomb Bell
-  version: 2
+  version: 3
   tags:
     - nobody
   recolors:
@@ -49,6 +49,7 @@
 
 - id: creeper
   name: Creeper
+  version: 2
   tags:
     - nobody
   recolors:
@@ -111,6 +112,7 @@
 
 - id: dusk
   name: Dusk
+  version: 2
   tags:
     - nobody
   recolors:

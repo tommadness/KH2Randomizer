@@ -82,6 +82,7 @@
 
 - id: sora
   name: Sora
+  version: 2
   tags:
     - character
     - party
@@ -221,6 +222,7 @@
 
 - id: sora_valor
   name: Sora (Valor Form)
+  version: 2
   tags:
     - character
     - party
@@ -321,6 +323,7 @@
 
 - id: sora_wisdom
   name: Sora (Wisdom Form)
+  version: 2
   tags:
     - character
     - party
@@ -421,6 +424,7 @@
 
 - id: sora_limit
   name: Sora (Limit Form)
+  version: 2
   tags:
     - character
     - party
@@ -521,6 +525,7 @@
 
 - id: sora_master
   name: Sora (Master Form)
+  version: 2
   tags:
     - character
     - party
@@ -606,6 +611,7 @@
 
 - id: sora_final
   name: Sora (Final Form)
+  version: 2
   tags:
     - character
     - party

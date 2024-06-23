@@ -210,7 +210,7 @@
 
 - id: zexion
   name: Zexion
-  version: 2
+  version: 3
   tags:
     - character
   recolors:

@@ -213,7 +213,7 @@
 
 - id: wardrobe
   name: Wardrobe
-  version: 2
+  version: 3
   tags:
     - character
   recolors:
@@ -232,7 +232,7 @@
 
 - id: xaldin
   name: Xaldin
-  version: 2
+  version: 3
   tags:
     - character
   recolors:
