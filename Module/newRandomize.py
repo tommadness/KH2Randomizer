@@ -1002,7 +1002,7 @@ class Randomizer:
         if restricted_reports:
             remaining_reports = [i for i in item_pool if i.ItemType is itemType.REPORT]
             # pick N valid locations for these items
-            valid_for_reports = [loc for loc in valid_locations if self.story_depths.is_valid(loc)]
+            valid_for_reports = [loc for loc in valid_locations if self.report_depths.is_valid(loc)]
             number_of_choices = min(len(remaining_reports),len(valid_for_reports))
             chosen_locations = random.sample(valid_for_reports,k=number_of_choices)
             for index,c in enumerate(chosen_locations):
