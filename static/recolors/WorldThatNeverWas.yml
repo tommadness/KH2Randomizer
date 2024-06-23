@@ -1240,7 +1240,7 @@
 
 - id: xemnas_black_coat
   name: Xemnas (Black Coat)
-  version: 2
+  version: 3
   tags:
     - character
   recolors:
@@ -1264,6 +1264,7 @@
 # Final Xemnas has cutscene textures that are different, so we'd need different masks if we want to recolor those
 - id: xemnas_final
   name: Xemnas (Final)
+  version: 2
   tags:
     - character
   recolors:

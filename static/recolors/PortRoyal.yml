@@ -69,7 +69,7 @@
 
 - id: luxord
   name: Luxord
-  version: 2
+  version: 3
   tags:
     - character
   recolors:

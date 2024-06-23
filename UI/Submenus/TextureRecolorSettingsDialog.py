@@ -147,8 +147,8 @@ class TextureRecolorSettingsDialog(QDialog):
 
         hue_picker.valueChanged.connect(self._setting_changed)
 
-        reroll_button = QPushButton("Re-Randomize Preview Colors")
-        reroll_button.clicked.connect(self._new_random_color)
+        reroll_button = QPushButton("Refresh Preview(s) (can take awhile)")
+        reroll_button.clicked.connect(self._update_preview)
 
         main = QVBoxLayout()
         main.setContentsMargins(0, 0, 0, 0)
@@ -251,7 +251,6 @@ class TextureRecolorSettingsDialog(QDialog):
             area_id=self._selected_colorable_area()["id"],
             setting=setting_string
         )
-        self._update_preview()
 
     def _update_preview(self):
         model_id = self._selected_model()["id"]
@@ -337,7 +336,6 @@ class TextureRecolorSettingsDialog(QDialog):
             self.setting_picker.setCurrentIndex(2)
             self.hue_picker.setValue(int(setting))
             self.hue_picker.setEnabled(True)
-        self._update_preview()
 
     @staticmethod
     def _texture_recolors_presets_folder() -> Path:
@@ -417,8 +415,3 @@ class TextureRecolorSettingsDialog(QDialog):
             for area_id, setting in model_settings.items():
                 live_settings.put_setting(model_id, area_id, setting)
         self._update_ui_for_selected_area()
-
-    def _new_random_color(self):
-        selected_setting = self.setting_picker.currentIndex()
-        if selected_setting == 1:
-            self._update_preview()

@@ -70,7 +70,7 @@
 
 - id: riku_hooded
   name: Riku (Hooded)
-  version: 2
+  version: 3
   tags:
     - character
   recolors:
@@ -161,7 +161,7 @@
 
 - id: xigbar
   name: Xigbar
-  version: 2
+  version: 3
   tags:
     - character
   recolors:

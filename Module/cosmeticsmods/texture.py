@@ -376,6 +376,18 @@ class TextureRecolorizer:
                         # (but we still need the pop above to make sure the group IDs still line up)
                         continue
 
+                    # Safeguard and make sure there's at least one of the original images in the group present
+                    # (with multiple PC game versions, just in case the game files are different between them)
+                    original_image_path: Optional[Path] = None
+                    for group_member in group:
+                        candidate = Path(base_path) / group_member
+                        if candidate.is_file():
+                            original_image_path = candidate
+                            break
+                    if original_image_path is None:
+                        print(f"Could not find one of the vanilla images to recolor for {model_id}, skipping")
+                        continue
+
                     combined_hues = "-".join(chosen_filename_hues)
                     _, image_ext = os.path.splitext(group[0])
                     destination_file_name = f"{model_id}{model_version_suffix}-{group_id}-{combined_hues}{image_ext}"
@@ -419,8 +431,8 @@ class TextureRecolorizer:
                             value_offset=pending_recolor.value_offset,
                         ))
 
-                    # Just use the first one as the canonical representation
-                    with Image.open(Path(base_path) / group[0]) as original_image:
+                    # Use the found image in the group as the canonical representation
+                    with Image.open(original_image_path) as original_image:
                         image_array = np.array(original_image.convert("RGBA"))
                         recolored_array = recolor_image(image_array, recolor_definitions, group_index=index)
                         with Image.fromarray(recolored_array, "RGBA") as new_image:
