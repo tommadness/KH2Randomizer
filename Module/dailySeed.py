@@ -6,6 +6,7 @@ from Class.seedSettings import SeedSettings
 from List.configDict import (
     BattleLevelOption,
     DisableFinalOption,
+    HintType,
     expCurve,
     itemBias,
     itemDifficulty,
@@ -155,6 +156,17 @@ def modifyShutOut(daily: DailyModifier):
     )
     return daily
 
+def spoilerHints(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.HINT_SYSTEM, HintType.SPOILER)
+    seed_settings.set(settingkey.HINTABLE_CHECKS, seed_settings.get(settingkey.HINTABLE_CHECKS) + ["report"])
+
+def pathHints(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.HINT_SYSTEM, HintType.PATH)
+    seed_settings.set(settingkey.HINTABLE_CHECKS, seed_settings.get(settingkey.HINTABLE_CHECKS) + ["report"])
+
+def keybladeLocking(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.KEYBLADES_LOCK_CHESTS, True)
+    seed_settings.set(settingkey.HINTABLE_CHECKS, seed_settings.get(settingkey.HINTABLE_CHECKS) + ["keyblade"])
 
 dailyModifiers = [
     DailyModifier(
@@ -176,14 +188,14 @@ dailyModifiers = [
         initMod=None,
         description="Path Hints will guide you to the proofs",
         categories={"hints"},
-        local_modifier=lambda settings: settings.set(settingkey.HINT_SYSTEM, "Path"),
+        local_modifier=pathHints,
     ),
     DailyModifier(
         name="Spoiler Hints",
         initMod=None,
         description="Spoiler Hints will guide you to the proofs",
         categories={"hints"},
-        local_modifier=lambda settings: settings.set(settingkey.HINT_SYSTEM, "Spoiler"),
+        local_modifier=spoilerHints,
     ),
     DailyModifier(
         name="Locked Second Visits",
@@ -370,9 +382,7 @@ dailyHardModifiers = [
         initMod=None,
         description="Chests from Worlds need specific keyblades acquired to open them.",
         categories={"progression"},
-        local_modifier=lambda settings: settings.set(
-            settingkey.KEYBLADES_LOCK_CHESTS, True
-        ),
+        local_modifier=keybladeLocking,
     ),
     DailyModifier(
         name="No Skipping :)",
