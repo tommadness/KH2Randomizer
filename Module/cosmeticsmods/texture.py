@@ -1,3 +1,4 @@
+import concurrent.futures
 import gzip
 import os
 import random
@@ -200,14 +201,19 @@ def make_matching_conditions(
 def recolor_image(rgb_array: ndarray, recolor_definitions: list[RecolorDefinition], group_index: int) -> ndarray:
     """Applies recoloring(s) configured in recolor_definitions to the image represented by rgb_array"""
     hsv_array = rgb_to_hsv(rgb_array)
+    
+    hues = hsv_array[..., _HUE_INDEX]
+    saturations = hsv_array[..., _SATURATION_INDEX]
+    values = hsv_array[..., _VALUE_INDEX]
+    alphas = hsv_array[..., _ALPHA_INDEX]
 
     x_dimension, y_dimension, _ = hsv_array.shape
     for x in range(x_dimension):
         for y in range(y_dimension):
-            hue: Optional[float] = hsv_array[x, y, _HUE_INDEX]
-            saturation: Optional[float] = hsv_array[x, y, _SATURATION_INDEX]
-            value: Optional[float] = hsv_array[x, y, _VALUE_INDEX]
-            alpha: Optional[float] = hsv_array[x, y, _ALPHA_INDEX]
+            hue: Optional[float] = hues[x, y]
+            saturation: Optional[float] = saturations[x, y]
+            value: Optional[float] = values[x, y]
+            alpha: Optional[float] = alphas[x, y]
             for recolor_definition in recolor_definitions:
                 matches = recolor_definition.conditions.matches(
                     x=x,
@@ -219,15 +225,19 @@ def recolor_image(rgb_array: ndarray, recolor_definitions: list[RecolorDefinitio
                     alpha=alpha,
                 )
                 if matches:
-                    hsv_array[x, y, _HUE_INDEX] = recolor_definition.new_hue
+                    hues[x, y] = recolor_definition.new_hue
 
                     new_saturation = recolor_definition.new_saturation
                     if new_saturation is not None:
-                        hsv_array[x, y, _SATURATION_INDEX] = new_saturation
+                        saturations[x, y] = new_saturation
 
-                    hsv_array[x, y, _VALUE_INDEX] = hsv_array[x, y, _VALUE_INDEX] + recolor_definition.value_offset
+                    values[x, y] += recolor_definition.value_offset
 
                     break
+
+    hsv_array[..., _HUE_INDEX] = hues
+    hsv_array[..., _SATURATION_INDEX] = saturations
+    hsv_array[..., _VALUE_INDEX] = values
 
     return hsv_to_rgb(hsv_array)
 
@@ -328,6 +338,10 @@ class TextureRecolorizer:
                 shutil.rmtree(recolors_cache_folder)
 
         conditions_loader = TextureConditionsLoader()
+
+        import time    
+        start_time = time.perf_counter_ns()
+        pooled_job_data = []
 
         for model in recolorable_models:
             model_id: str = model["id"]
@@ -431,12 +445,26 @@ class TextureRecolorizer:
                             value_offset=pending_recolor.value_offset,
                         ))
 
-                    # Use the found image in the group as the canonical representation
-                    with Image.open(original_image_path) as original_image:
-                        image_array = np.array(original_image.convert("RGBA"))
-                        recolored_array = recolor_image(image_array, recolor_definitions, group_index=index)
-                        with Image.fromarray(recolored_array, "RGBA") as new_image:
-                            new_image.save(destination_path)
+                    pooled_job_data.append((original_image_path,recolor_definitions,index,destination_path))
+
+        # original_image_path, recolor_definitions, group_index, destination_path
+        for arg_tuple in pooled_job_data:
+            # def recolor_wrapper(arg_tuple):
+            # Use the found image in the group as the canonical representation
+            original_image_path = arg_tuple[0]
+            recolor_definitions = arg_tuple[1]
+            index = arg_tuple[2]
+            destination_path = arg_tuple[3]
+            image_array = np.array(Image.open(original_image_path).convert("RGBA"))
+            recolored_array = recolor_image(image_array, recolor_definitions, group_index=index)
+            Image.fromarray(recolored_array, "RGBA").save(destination_path)
+
+        # TODO(zaktherobot) Threading disables ability to preemptively stop
+        # with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        #     executor.map(recolor_wrapper,pooled_job_data)
+
+        end_time = time.perf_counter_ns()
+        print(f"Total Time {(end_time-start_time)/1e9} s")
 
         return assets
 

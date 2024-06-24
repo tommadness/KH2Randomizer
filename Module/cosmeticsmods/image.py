@@ -15,15 +15,18 @@ def rgb_to_hsv(rgb: ndarray) -> ndarray:
     minc = np.min(rgb[..., :3], axis=-1)
     hsv[..., 2] = maxc
     mask = maxc != minc
-    hsv[mask, 1] = (maxc - minc)[mask] / maxc[mask]
+    diff = (maxc - minc)[mask]
+    hsv[mask, 1] = diff / maxc[mask]
     rc = np.zeros_like(r)
     gc = np.zeros_like(g)
     bc = np.zeros_like(b)
-    rc[mask] = (maxc - r)[mask] / (maxc - minc)[mask]
-    gc[mask] = (maxc - g)[mask] / (maxc - minc)[mask]
-    bc[mask] = (maxc - b)[mask] / (maxc - minc)[mask]
+    rc[mask] = (maxc - r)[mask] / diff
+    gc[mask] = (maxc - g)[mask] / diff
+    bc[mask] = (maxc - b)[mask] / diff
+    r_condition = (r == maxc)
+    g_condition = (g == maxc)
     hsv[..., 0] = np.select(
-        [r == maxc, g == maxc], [bc - gc, 2.0 + rc - bc], default=4.0 + gc - rc)
+        [r_condition, g_condition], [bc - gc, 2.0 + rc - bc], default=4.0 + gc - rc)
     hsv[..., 0] = (hsv[..., 0] / 6.0) % 1.0
     return hsv
 
@@ -50,13 +53,8 @@ def hsv_to_rgb(hsv: ndarray) -> ndarray:
 
 
 def rgb_to_mask(rgb: ndarray) -> ndarray:
-    y_dimension, x_dimension, _ = rgb.shape
-    result = np.zeros(shape=(y_dimension, x_dimension), dtype="bool")
-    for y in range(y_dimension):
-        for x in range(x_dimension):
-            # Matching on pixels that have red but no green or blue
-            if rgb[y, x, 0] > 0 and rgb[y, x, 1] == 0 and rgb[y, x, 2] == 0:
-                result[y, x] = True
-            else:
-                result[y, x] = False
+    red = rgb[..., 0]
+    green = rgb[..., 1]
+    blue = rgb[..., 2]
+    result = (red > 0) & (green == 0) & (blue == 0)
     return result
