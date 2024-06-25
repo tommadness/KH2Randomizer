@@ -1,7 +1,7 @@
-# PC New Setup Guide
+# PC - Steam and Epic Setup Guide
 
 * [Heads up!](#heads-up)
-* [Downloads](#resources-needed)
+* [Downloads](#downloads)
 * [Installing the Mods Manager & Seed Generator](#installing-openkh-mods-manager-and-seed-generator)
 * [Setting up the Mods Manager](#setting-up-openkh-mods-manager)
 * [Installing the GoA mod](#garden-of-assemblage-mod-installation)
@@ -11,19 +11,25 @@
 ## Heads up!
 * Feel free to go to the [Discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated #help channel where you can find people to assist you if you're facing any difficulties. (P.S. Please be polite)
 * `You must run the game once` before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
-* `VERIFY GAME FILES` through the Epic Games Launcher for Kingdom Hearts 1.5 + 2.5 Remix (v1.0.0.8_WW), they need to be clean/unpatched files for the extraction process to work.
-* If you have EVER installed the KH2 Randomizer before then please check your `C:\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2 folder` (if you have one) and EMPTY IT.
-* Unofficial copies of the game are not supported, it is strongly recommended you buy and install the game directly from the Epic Games Store.
+* `VERIFY GAME FILES` through Steam/Epic for Kingdom Hearts 1.5 + 2.5 Remix (v1.0.0.9_WW), they need to be clean/unpatched files for the extraction process to work.
+* If you have EVER installed the KH2 Randomizer before then please check if you have a folder at `C:\Documents\My Games\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2` (for Steam) or `C:\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2 folder` (for Epic) and EMPTY IT. You may have outdated lua files located there.
+* Unofficial copies of the game are not supported. It is strongly recommended you buy and install the game directly from either the Steam or Epic Games stores.
 
-## Resources Needed:
+## Downloads:
 * [OpenKH Mods Manager](https://github.com/aliosgaming/OpenKh/releases/latest/download/OpenKH.Mod.Manager.zip)
+  - The program you will be downloading and installing mods to. It can directly download mods hosted on github, as well as locally downloaded mods with the `lua`, `.zip`, and `.kh2pcpatch` file types (other KH game .pcpatch files are also supported)
 * [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/KH2.Randomizer.exe)
-* [.NET6 Desktop Runtime](https://download.visualstudio.microsoft.com/download/pr/52d6ef78-d4ec-4713-9e01-eb8e77276381/e58f307cda1df61e930209b13ecb47a4/windowsdesktop-runtime-6.0.25-win-x64.exe
-)
+  - The program that generates KH2 Randomizer seeds. In the app you can see detailed descriptions about each setting by hovering over them with your mouse, or you can read more about them on the "Settings" page [here](https://tommadness.github.io/KH2Randomizer/settings/)
+* [.NET6 Desktop Runtime](https://download.visualstudio.microsoft.com/download/pr/a1da19dc-d781-4981-84e9-ffa0c05e00e9/46f3cd2015c27a0e93d7c102a711577e/windowsdesktop-runtime-6.0.31-win-x64.exe)
+  - Software required to run the OpenKH Mods Manager
+
+> [!NOTE]
+> The `Mods Manager` and the `Seed Generator` are compatible with both the Steam and Epic versions of the KH ports. 
 
 ## Installing OpenKH Mods Manager and Seed Generator
-1. Install .NET6 Runtime by running the `windowsdesktop-runtime-6.0.25-win-x64.exe` executable you just downloaded
-2. Create a KH2 Rando folder on the same hard drive you have the game installed (this is where you will install all your randomizer tools)
+1. Start by downloading the 3 programs from the download links above
+2. Install .NET6 Runtime by running the `windowsdesktop-runtime-6.0.25-win-x64.exe` executable you just downloaded
+3. Create a `KH2 Rando` folder (you may give it any name) on the same hard drive you have the game installed. This is where we will be installing the `Mods Manager` and `Seed Generator`
 
 ![First Warning](../images/Panacea-ModLoader/First_warning.png)
 
