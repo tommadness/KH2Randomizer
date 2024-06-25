@@ -91,6 +91,7 @@
 
 - id: jack_ht
   name: Jack Skellington
+  version: 2
   tags:
     - character
     - party
@@ -98,6 +99,8 @@
     - colorable_areas:
         - id: outfit
           name: Outfit
+          hue_start: 0
+          hue_end: 360
           new_saturation: 50
       image_groups:
         - - remastered/obj/H_NM000.mdlx/-1.dds
