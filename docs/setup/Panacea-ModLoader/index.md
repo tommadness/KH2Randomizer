@@ -24,7 +24,7 @@
   - Software required to run the OpenKH Mods Manager
 
 > [!NOTE]
-> The `Mods Manager` and the `Seed Generator` are compatible with both the Steam and Epic versions of the KH ports. 
+> The `Mods Manager` and the `Seed Generator` are compatible with both the Steam and Epic versions of the game
 
 ## Installing OpenKH Mods Manager and Seed Generator
 1. Start by downloading the 3 programs from the download links above
@@ -33,13 +33,14 @@
 
 ![First Warning](../images/Panacea-ModLoader/First_warning.png)
 
-3. Extract OpenKH Mods Manager to this new folder 
+4. Extract the `OpenKH Mods Manager` to the "KH2 Rando" folder 
 	- It's recommended to give each app its own subfolder to make navigating their files easier (See screenshot)
+5. Place the `Seed Generator` exe into its own "Seed Generator" folder in the "KH2 Rando" folder. When we run the Seed Generator for the first time later in this guide, it will place a few new files and folders into its directory and we don't want to get them mixed up with our other stuff
 
 ![Rando Folder](../images/Panacea-ModLoader/KH2%20Rando%20Folder.png)
 
 ## Setting Up OpenKH Mods Manager:
-1. Run the `OpenKh.Tools.ModsManager.exe` in the OpenKH folder 
+1. Find and run the `OpenKh.Tools.ModsManager.exe` from inside the OpenKH installation folder 
 	- The Setup Wizard will open automatically, click `Next` to start
 2. Change game edition to `PC Release Via Epic Games Store`
 3. Then click the folder icon and navigate to your KH1.5_2.5 installation folder (The default is `C:\Program Files\Epic Games\KH_1.5_2.5` but this may differ from your own)
