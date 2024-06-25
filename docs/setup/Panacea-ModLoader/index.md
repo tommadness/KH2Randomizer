@@ -49,27 +49,27 @@
    * If the wizard fails to automatically detect your game install folder you will need to manually navigate to it by clicking the folder icon on the right of the input line
 5. Once your game folder is found, click `Next`
 
-    ![Setup Wizard-Game Edition](../images/Panacea-ModLoader/Game%20Edition%20Window.png)
+    ![Setup Wizard-Game Edition](../updating/Setup_Wizard_Page_2.png)
 
 6. On the `Panacea` installation page, first set the `Game Collection` drop-down menu to `KINGDOM HEARTS 1.5 + 2.5 ReMIX`
 7. Then, click the `Install Panacea for Windows` button. This will install `Panacea` (a real time mod loader) to your game installation folder. Then click `Next`
 	- If you want to verify it was added successfully, check your game's install folder for a file called `DBGHELP.DLL` and a folder called `Dependencies`
 
-    ![Panacea Wizard Window](../images/Panacea-ModLoader/Panacea%20Install%20Window.png)
+    ![Panacea Wizard Window](../updating/Setup_Wizard_Page_3.png)
 
 8. On the `Install LuaBackend` page, verify the `Game Collection` is set to `KINGDOM HEARTS 1.5 + 2.5 ReMIX`
 9. Then enable the `KH2` check box and click `Install and Configure Lua Backend`
 	- You may enable the other games now if you want, or re-run the setup wizard at any time to add support for the rest in the future.
 10. Once the LuaBackend install is complete click `Next`
 
-    ![LuaBackend Install Window](../images/Panacea-ModLoader/Install%20Lua%20Backend.png)
+    ![LuaBackend Install Window](../updating/Setup_Wizard_Page_4.png)
 
 > [!NOTE]
 > The Mods Manager now has the option to extract multiple games from the KH 1.5+2.5 collection. For the purposes of this guide you only need to extract KH2, but feel free to extract the others as well if you plan on modding those games. *A warning that, due to the increase in file size from the upscaled textures, the base game is now `70GB` and the KH2 extraction takes up another `40GB` of disk space. Make sure you have room on your hard drive before starting the extraction*
 
 12. Leave the extraction location as default, then press the `Extract Game Data` button to begin. The upscaled textures have increased the time needed to extract all of the game files. It may take anywhere from 15-30 minutes to fully extract KH2 so please be patient. The progress bar *may* sit around the 75% mark for a few minutes so make sure to wait for the page to say the extraction is done before continuing.
 
-    ![Extraction Window](../images/Panacea-ModLoader/Extraction%20Window.png)
+    ![Extraction Window](../updating/Setup_Wizard_Page_5.png)
 
 11. Once the extraction is complete, click on `Next` and on the final window click `Finish`. You have successfully installed the Mods Manager!
 
