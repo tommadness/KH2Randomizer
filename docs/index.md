@@ -28,7 +28,7 @@ See the various pages on this site for additional information about the randomiz
 * [Emulator (PCSX2)](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) by gameaddict
 
 ### Updating your Installation
-* [Update Epic KH2 Randomizer Installation after the Steam Release](setup/updating/index.md) by Alios
+* [Epic Update Guide Post Steam Release](setup/updating/index.md) by Alios
 
 ### Resources
 
