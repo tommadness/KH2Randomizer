@@ -4,8 +4,6 @@ title: Home
 
 <p align="center"><img src="assets/image/randomizer-header.png" alt="Randomizer Logo" /></p>
 
-## As of the update on 6/13/2024, the Epic Games Store version of randomizer is not compatible with the existing tools. Same can be said for the new Steam release. Please be patient as the developers update the tools to bring compatibility back. For more information, please head to the discord. 
-
 Kingdom Hearts 2 Randomizer takes items from their normal game locations and places them in random locations. Logic is
 used to ensure all necessary items are obtainable.
 
@@ -24,10 +22,13 @@ See the various pages on this site for additional information about the randomiz
 * [Troubleshooting](troubleshooting/index.md)
 * [Glossary](glossary/index.md)
 
-### First-Time Setup
+### First-Time Setup Tutorials
 
-* [PC (Epic Games)](setup/Panacea-ModLoader/index.md) by Alios
+* [PC (Epic/Steam)](setup/Panacea-ModLoader/index.md) by Alios
 * [Emulator (PCSX2)](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) by gameaddict
+
+### Updating your Installation
+* [How to update Epic Rando Installation after the Steam Release](setup/updating/index.md)
 
 ### Resources
 
