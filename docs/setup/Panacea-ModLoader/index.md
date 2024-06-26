@@ -62,7 +62,7 @@
 	- You may enable the other games now if you want, or re-run the setup wizard at any time to add support for the rest in the future.
 10. Once the LuaBackend install is complete click `Next`
 
-    ![LuaBackend Install Window](../updating/Setup_Wizard_Page_4.png)
+    ![LuaBackend Install Window](Setup_Wizard_Lua_Backend.png)
 
 > [!NOTE]
 > The Mods Manager now has the option to extract multiple games from the KH 1.5+2.5 collection. For the purposes of this guide you only need to extract KH2, but feel free to extract the others as well if you plan on modding those games. *A warning that, due to the increase in file size from the upscaled textures, the base game is now `70GB` and the KH2 extraction takes up another `40GB` of disk space. Make sure you have room on your hard drive before starting the extraction*
