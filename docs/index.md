@@ -28,7 +28,7 @@ See the various pages on this site for additional information about the randomiz
 * [Emulator (PCSX2)](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) by gameaddict
 
 ### Updating your Installation
-* [How to update Epic Rando Installation after the Steam Release](setup/updating/index.md)
+* [How to update Epic Rando Installation after the Steam Release](setup/updating/index.md) by Alios
 
 ### Resources
 
