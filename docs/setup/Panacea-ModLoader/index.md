@@ -40,8 +40,7 @@
 1. Find and run the `OpenKh.Tools.ModsManager.exe` from inside the OpenKH installation folder 
 	- The Setup Wizard will open automatically, click `Next` to start
 
-> [!IMPORTANT]
-> Settings chosen on the first page of the Setup Wizard will be **different** depending on which version of the game you own. The text and images in this guide will be referencing the `Epic` version of the installation process. I will mention when an option would be different for a `Steam` installation in the relevant steps below
+![Wizard Differences](Wizard_Settings_Warning.png)
 
 2. Click on the `Game Edition` drop-down menu and select `PC Release`
 3. In the next drop-down menu, choose `Epic Games Store` as your launcher (or `Steam` if you have the Steam version)
