@@ -18,7 +18,7 @@ Most of these steps are built into the guided `Setup Wizard`, however there are 
 
 2. A popup should appear that informs you an update is available. Click `Yes` to begin the update
 
-![Click Yes](Click_Yes.png)
+![Click Yes](OpenKH_Update_Message.png)
 
 3. The Mods Manager will close, the new update will be downloaded and applied over your current installation, and when it is complete, the Mods Manager Setup Wizard should open automatically
    * If the `Setup Wizard` does *not* open automatically, then open up the `Mods Manager` manually and immediately run the `Setup Wizard` found under the `Settings` tab
@@ -72,6 +72,6 @@ Most of these steps are built into the guided `Setup Wizard`, however there are 
 1. Find `GoA ROM` in your Mods Manager main window. If you haven't updated it already, there should be a notification that says `Update Available`
 2. Click on the `GoA ROM` mod, then on the right side of the window, an `Update Mod` button should appear. Click the button and you're done!
 
-![Update GoA](Update_GoA.png)
+![Update GoA](Goa_Update.png)
 
 After you have Updated GoA, try a `Build and Run`. At the game title screen, press F2 on your keyboard and the LuaBackend console should come up with a line saying that GoA 1.54.1 has loaded. If so, then congratulations, you have successfully updated. 
