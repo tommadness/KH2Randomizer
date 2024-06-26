@@ -73,3 +73,5 @@ Most of these steps are built into the guided `Setup Wizard`, however there are 
 2. Click on the `GoA ROM` mod, then on the right side of the window, an `Update Mod` button should appear. Click the button and you're done!
 
 ![Update GoA](Update_GoA.png)
+
+After you have Updated GoA, try a `Build and Run`. At the game title screen, press F2 on your keyboard and the LuaBackend console should come up with a line saying that GoA 1.54.1 has loaded. If so, then congratulations, you have successfully updated. 
