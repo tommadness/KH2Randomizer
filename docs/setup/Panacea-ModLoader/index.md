@@ -63,8 +63,7 @@
 
     ![LuaBackend Install Window](Setup_Wizard_Lua_Backend.png)
 
-> [!NOTE]
-> The Mods Manager now has the option to extract multiple games from the KH 1.5+2.5 collection. For the purposes of this guide you only need to extract KH2, but feel free to extract the others as well if you plan on modding those games. *A warning that, due to the increase in file size from the upscaled textures, the base game is now `70GB` and the KH2 extraction takes up another `40GB` of disk space. Make sure you have room on your hard drive before starting the extraction*
+![Extraction Note](Extraction_Note.png)
 
 12. Leave the extraction location as default, then press the `Extract Game Data` button to begin. The upscaled textures have increased the time needed to extract all of the game files. It may take anywhere from 15-30 minutes to fully extract KH2 so please be patient. The progress bar *may* sit around the 75% mark for a few minutes so make sure to wait for the page to say the extraction is done before continuing.
 
