@@ -27,7 +27,7 @@ See the various pages on this site for additional information about the randomiz
 * [PC (Epic/Steam)](setup/Panacea-ModLoader/index.md) by Alios
 * [Emulator (PCSX2)](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) by gameaddict
 
-### Updating your Installation
+### Updating Your Installation
 * [Epic Update Guide Post Steam Release](setup/updating/index.md) by Alios
 
 ### Resources
