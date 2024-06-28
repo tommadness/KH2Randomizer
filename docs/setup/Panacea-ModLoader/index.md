@@ -28,7 +28,7 @@
 2. Install .NET6 Runtime by running the `windowsdesktop-runtime-6.0.25-win-x64.exe` executable you just downloaded
 3. Create a `KH2 Rando` folder (you may give it any name) on the same hard drive you have the game installed. This is where we will be installing the `Mods Manager` and `Seed Generator`
 
-![First Warning](../images/Panacea-ModLoader/First_warning.png)
+![First Warning](Folder_Warning.png)
 
 4. Extract the `OpenKH Mods Manager` to the "KH2 Rando" folder 
 	- It's recommended to give each app its own subfolder to make navigating their files easier (See screenshot)
