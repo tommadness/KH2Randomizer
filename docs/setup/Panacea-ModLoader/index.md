@@ -92,7 +92,7 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Build Only](../images/Panacea-ModLoader/Build%20and%20Run.png)
 
-![Second Warning](../images/Panacea-ModLoader/Second_warning.png)
+![Second Warning](Build_Note.png)
 
 ## Installing a new seed to play:
 1. Open the Seed Generator app by double clicking the `KH2.Randomizer.exe` program you downloaded earlier. If this is your first time starting the program, it may take some time to open as it extracts the necessary folders and files it uses to run.
@@ -100,7 +100,7 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Generate Seed](../images/Panacea-ModLoader/Generate%20New%20Seed.png)
 
-![Third Warning](../images/Panacea-ModLoader/Third_warning.png)
+![Third Warning](Seed_Note.png)
 
 3. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
 4. Once saved, return to the Mods Manager and click on `Mods`, then `Install a New Mod`
@@ -110,7 +110,7 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Target New Seed](../images/Panacea-ModLoader/Target%20New%20Seed.png)
 
- ![Fourth Warning](../images/Panacea-ModLoader/Fourth_warning.png)
+ ![Fourth Warning](Mod_Order_Important.png)
 
 7. Be sure to click on the check box next to the seed, then click on `Build` and `Build and Run` to enable the mod in game. Note the 5 buttons to the right of the mod list. The first button places a mod at the top of the list. The second moves a mod up the list one space, the third moves it down the list by one space. The green '+' icon is a shortcut to install a new mod, while the red "-" icon is a shortcut to deleting a mod
 	- `How to install a new seed in the future:` Create a new zip seed file using the generator. Delete the current seed from your Mods Manager. Add the new zip seed to your Mods Manager. Enable the seed and then `Build and Run`
