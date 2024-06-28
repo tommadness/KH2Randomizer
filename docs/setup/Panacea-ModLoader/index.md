@@ -12,7 +12,7 @@
 * Feel free to go to the [Discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated #help channel where you can find people to assist you if you're facing any difficulties. (P.S. Please be polite)
 * `You must run the game once` before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
 * `VERIFY GAME FILES` through Steam/Epic for Kingdom Hearts 1.5 + 2.5 Remix (v1.0.0.9_WW), they need to be clean/unpatched files for the extraction process to work.
-* If you have EVER installed the KH2 Randomizer before then please check if you have a folder at `C:\Documents\My Games\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2` (for Steam) or `C:\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2 folder` (for Epic) and EMPTY IT. You may have outdated lua files located there.
+* If you have EVER installed the KH2 Randomizer before then please check if you have a folder at `C:\Documents\My Games\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2` (for Steam) or `C:\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2` (for Epic) and EMPTY IT. You may have outdated lua files located there.
 * Unofficial copies of the game are not supported. It is strongly recommended you buy and install the game directly from either the Steam or Epic Games stores.
 
 ## Downloads:
@@ -28,7 +28,7 @@
 2. Install .NET6 Runtime by running the `windowsdesktop-runtime-6.0.25-win-x64.exe` executable you just downloaded
 3. Create a `KH2 Rando` folder (you may give it any name) on the same hard drive you have the game installed. This is where we will be installing the `Mods Manager` and `Seed Generator`
 
-![First Warning](../images/Panacea-ModLoader/First_warning.png)
+![First Warning](Folder_Warning.png)
 
 4. Extract the `OpenKH Mods Manager` to the "KH2 Rando" folder 
 	- It's recommended to give each app its own subfolder to make navigating their files easier (See screenshot)
@@ -92,7 +92,7 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Build Only](../images/Panacea-ModLoader/Build%20and%20Run.png)
 
-![Second Warning](../images/Panacea-ModLoader/Second_warning.png)
+![Second Warning](Build_Note.png)
 
 ## Installing a new seed to play:
 1. Open the Seed Generator app by double clicking the `KH2.Randomizer.exe` program you downloaded earlier. If this is your first time starting the program, it may take some time to open as it extracts the necessary folders and files it uses to run.
@@ -100,7 +100,7 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Generate Seed](../images/Panacea-ModLoader/Generate%20New%20Seed.png)
 
-![Third Warning](../images/Panacea-ModLoader/Third_warning.png)
+![Third Warning](Seed_Note.png)
 
 3. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
 4. Once saved, return to the Mods Manager and click on `Mods`, then `Install a New Mod`
@@ -110,14 +110,14 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
     ![Target New Seed](../images/Panacea-ModLoader/Target%20New%20Seed.png)
 
- ![Fourth Warning](../images/Panacea-ModLoader/Fourth_warning.png)
+ ![Fourth Warning](Mod_Order_Important.png)
 
 7. Be sure to click on the check box next to the seed, then click on `Build` and `Build and Run` to enable the mod in game. Note the 5 buttons to the right of the mod list. The first button places a mod at the top of the list. The second moves a mod up the list one space, the third moves it down the list by one space. The green '+' icon is a shortcut to install a new mod, while the red "-" icon is a shortcut to deleting a mod
 	- `How to install a new seed in the future:` Create a new zip seed file using the generator. Delete the current seed from your Mods Manager. Add the new zip seed to your Mods Manager. Enable the seed and then `Build and Run`
 
     ![Enable New Seed](../images/Panacea-ModLoader/Enable%20New%20Seed.png)
 
-![Tip](../images/Panacea-ModLoader/Tip.png)
+![Tip](Extra_Mods_Note.png)
 * `KH2FM-Mods-equations19/auto-save` - This mod auto saves the game for you as you enter rooms. Be sure to make at least 1 regular save in game, then if you ever crash or your game closes unexpectedly, just hold the `SELECT` button while loading a save, and the auto-save will be loaded instead.
 * `KH2FM-Mods-equations19/soft-reset` - Hold `L1+L2+R1+R2+Start` at the same time to immediately reset the game to the start screen. Very useful if you accidentally softlock in boss/enemy rando, or just to restart the game faster!
 * [KH2 Rando Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest) - Not an OpenKH mod but instead a full fledged automated tracker program for the Important Checks in game. Checkout [Hint Systems](https://kh2rando.com/hints) for info about different ways to play Rando!
