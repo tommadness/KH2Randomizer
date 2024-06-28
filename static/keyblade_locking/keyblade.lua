@@ -21,6 +21,8 @@ elseif GAME_ID == 0x431219CC and ENGINE_TYPE == 'BACKEND' then --PC
 		Now = 0x0717008
 		Save = 0x09A9830
 		Sys3Pointer = 0x2AE5DD0
+	else
+		ConsolePrint("Unable to detect version of PC running")
 	end
 end
 end
@@ -91,7 +93,11 @@ if true then --Define current values for common addresses
 			MSN = 0x04FA440
 		else
 			Sys3 = ReadLong(Sys3Pointer)
-			MSN = 0x0BF08C0 - 0x56450E
+			if ReadString(0x09A92F0,4) == 'KH2J' then --EGS
+				MSN = 0x0BF2C40
+			elseif ReadString(0x09A9830,4) == 'KH2J' then --Steam
+				MSN = 0x0BF3340
+			end
 		end
 	end
 end

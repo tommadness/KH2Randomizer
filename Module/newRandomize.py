@@ -886,11 +886,13 @@ class Randomizer:
         validator = LocationInformedSeedValidator()
         validator.prep_requirements_list(settings, self)
 
+        shop_item_ids = [i.Id for i in self.shop_items]
+
         sphere_0_check = True
         num_available_locations_needed_to_allow_random_assignment = 125 # TODO(zak) this is arbitrary and may need tuning
         while sphere_0_check:
             # calculate the available checks
-            acquired_items, sphere_0 = self.get_accessible_locations(valid_locations, validator)
+            acquired_items, sphere_0 = self.get_accessible_locations(valid_locations, validator, shop_item_ids)
             if len(sphere_0) < num_available_locations_needed_to_allow_random_assignment:
                 # pick a locking item we don't have, assign it somewhere valid, repeat
                 unlocks = [] + [s.id for s in storyunlock.all_story_unlocks()] + [k.id for k in keyblade.get_locking_keyblades()]
