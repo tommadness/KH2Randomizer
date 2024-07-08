@@ -200,9 +200,8 @@ A common abbreviation for Lingering Will.
 
 ### Map Crash
 
-On the PC Epic Games Store version of the game, the game sometimes crashes when choosing a location on the map
-(commonly known as "map crash"). It is recommended to save anytime you're about to talk to Jack on the ship to choose a
-destination.
+On the PC versions of the game, the game sometimes crashes when choosing a location on the map (commonly known as "map
+crash"). It is recommended to save anytime you're about to talk to Jack on the ship to choose a destination.
 
 As of release 2.1, the randomizer seed generator has a "Remove Port Royal Map Select" option that, when enabled,
 replaces the map location selection screen with simple text options, hopefully preventing the crash altogether.
@@ -240,7 +239,7 @@ A common abbreviation for the Once More ability.
 
 A program from the OpenKH project that can apply modifications to an extracted version of the KH2 game.
 
-This works for both the PCSX2 emulated version of the game and the PC Epic Games Store version.
+This works for the PC versions of the game, as well as the PCSX2 emulated version.
 
 ## P
 

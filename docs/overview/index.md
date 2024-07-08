@@ -190,9 +190,8 @@ Some of these issues exist in the base game, while others are specific to the ra
 
 ### Port Royal
 
-* On the PC Epic Games Store version of the game, the game sometimes crashes when choosing a location on the map
-  (commonly known as "map crash"). It is recommended to save anytime you're about to talk to Jack on the ship to choose
-  a destination.
+* On the PC versions of the game, the game sometimes crashes when choosing a location on the map (commonly known as
+  "map crash"). It is recommended to save anytime you're about to talk to Jack on the ship to choose a destination.
     * As of release 2.1, the randomizer seed generator has a "Remove Port Royal Map Select" option that, when enabled,
       replaces the map location selection screen with simple text options, hopefully preventing the crash altogether.
 
