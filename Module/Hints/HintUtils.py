@@ -549,6 +549,7 @@ class HintUtils:
                     "World": selected_world,
                     "check": selected_item.Id,
                     "Location": world_items.report_information[report_num]["FoundIn"],
+                    "itemName": selected_item.Name,
                 }
                 data = reduce_list(report_num, selected_world, selected_item, data)
             if len(report_assignments) == 13:
