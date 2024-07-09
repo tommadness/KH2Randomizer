@@ -3,9 +3,9 @@
 This hint system aims to leverage knowledge of where items are found in the original game to provide information about
 where proofs may reside. This system is loosely inspired by Path to Reward hints from Ocarina of Time Randomizer.
 
-As a baseline, the Shananas style tracking is in place, meaning that once you have collected all the hintable items in a
-world, the tracker will indicate the world's completion (with default settings, the world's number turns blue). As long
-as the world is not indicated as complete, there is something else "important" there.
+As a baseline, the Shananas style tracking is in place, meaning that once you have collected all the trackable items in
+a world, the tracker will indicate the world's completion (with default settings, the world's number turns blue). As
+long as the world is not indicated as complete, there is something else "important" there.
 
 Path hints make use of the Ansem Reports in a way to point you toward proof locations. When you collect an Ansem Report,
 a hint text will appear, telling you about zero to three proofs, and references a world. As an example, consider this
@@ -52,13 +52,13 @@ Feel free to save these onto your computer for reference.
 
 ## Notable Callouts
 
-* Simulated Twilight Town and Twilight Town share the same original items for purposes of the hints, except for the 
-  Picture and Ice Cream items that unlock Twilight Town's second and third visits respectively.
+* Simulated Twilight Town and Twilight Town share the same original items for purposes of the hints, except for their
+  respective visit unlock items.
 * Drive Forms' original items are the Drive Forms themselves, for purposes of the hints.
 * 100 Acre Wood includes Torn Pages as an original item, in addition to the worlds where the Torn Pages are normally
   located, for purposes of the hints.
 * The party member weapons used as keys for locking second visits are attributed to the world where that party member
   exists.
 * Puzzles/Synthesis don't have any original items for the hints.
-* The Ansem Reports, proofs, Unknown Disk, Olympus Stone, and Hades Cup Trophy do not belong to any particular locations
-  for purposes of the hints.
+* The Ansem Reports, Proofs, Promise Charm, Munny Pouches, Unknown Disk, Olympus Stone, and Hades Cup Trophy do not
+  belong to any particular locations for purposes of the hints.
