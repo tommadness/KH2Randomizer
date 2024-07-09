@@ -18,7 +18,7 @@
 
 * You may be using an incorrect version of LuaBackend Hook. See [Troubleshooting GoA (PC)](#troubleshooting-goa-pc).
 * You may be running an incorrect version of the game. Randomizer only supports an up-to-date, legitimately purchased
-  copy of the game from Epic Games Store.
+  copy of the game from Steam or the Epic Games Store.
 
 ### (PC) Why does the game crash when interacting with the Moogle in the Garden of Assemblage?
 

@@ -19,10 +19,10 @@ all of them, are open for contributions (small or large).
 * [KH2FM-Mods-Num/GoA-ROM-Edition](https://github.com/KH2FM-Mods-Num/GoA-ROM-Edition)
     * the PC ROM version of the Garden of Assemblage mod
 * [Sirius902/LuaBackend](https://github.com/Sirius902/LuaBackend)
-    * the LuaBackend Hook (allows Lua scripts to be run on the PC Epic Games Store version of the game)
+    * the LuaBackend Hook (allows Lua scripts to be run on the PC versions of the game)
 * [Dee-Ayy/KH2Tracker](https://github.com/Dee-Ayy/KH2Tracker)
     * the most commonly used item tracker
 * [aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER](https://github.com/aliosgaming/KH2FM_Load_Remover-FOR-RANDOMIZER)
     * the LiveSplit load remover script
 * [Denhonator/KHPCSpeedrunTools](https://github.com/Denhonator/KHPCSpeedrunTools)
-    * various Lua scripts for the PC Epic Games Store version of the game
+    * various Lua scripts for the PC versions of the game
