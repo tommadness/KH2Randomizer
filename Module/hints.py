@@ -313,7 +313,7 @@ class Hints:
             if "ProgressionSettings" in hint_data:
                 if hint_data["hintsType"] == HintType.POINTS:
                     hinted_world = report_data["World"]
-                    hint_text.append(f"{hinted_world_text(hinted_world)} has {report_data['check']}.")
+                    hint_text.append(f"{hinted_world_text(hinted_world)} has {report_data['itemName']}.")
             else:
                 if hint_data["hintsType"] == HintType.JSMARTEE:
                     hinted_world = report_data["World"]
@@ -328,7 +328,7 @@ class Hints:
 
                 if hint_data["hintsType"] == HintType.POINTS:
                     hinted_world = report_data["World"]
-                    hint_text.append(f"{hinted_world_text(hinted_world)} has {report_data['check']}.")
+                    hint_text.append(f"{hinted_world_text(hinted_world)} has {report_data['itemName']}.")
 
                 if hint_data["hintsType"] == HintType.SPOILER:
                     hinted_world = report_data["World"]
