@@ -13,9 +13,13 @@
           new_saturation: 75
           value_offset: 10
       image_groups:
-        - - remastered/obj/F_WI550.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/F_WI550.mdlx/-0.dds
 
-        - - remastered/obj/F_WI550.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/F_WI550.mdlx/-1.dds
 
         # Deliberately not coloring the door emblem since it can be replaced by a rando-themed one
 
@@ -32,7 +36,9 @@
           hue_end: 360
           new_saturation: 50
       image_groups:
-        - - remastered/obj/PRIZE.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/PRIZE.mdlx/-1.dds
 
     - colorable_areas:
         - id: blue_item_main
@@ -44,7 +50,9 @@
           hue_start: 30
           hue_end: 90
       image_groups:
-        - - remastered/obj/PRIZE_BOX_BLUE.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/PRIZE_BOX_BLUE.mdlx/-0.dds
 
     - colorable_areas:
         - id: green_item_main
@@ -56,7 +64,9 @@
           hue_start: 60
           hue_end: 145
       image_groups:
-        - - remastered/obj/PRIZE_BOX_GREEN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/PRIZE_BOX_GREEN.mdlx/-0.dds
 
     - colorable_areas:
         - id: red_item_main
@@ -68,7 +78,9 @@
           hue_start: 26
           hue_end: 90
       image_groups:
-        - - remastered/obj/PRIZE_BOX_RED.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/PRIZE_BOX_RED.mdlx/-0.dds
 
     - colorable_areas:
         - id: yellow_item_main
@@ -80,7 +92,9 @@
           hue_start: 0
           hue_end: 60
       image_groups:
-        - - remastered/obj/PRIZE_BOX_YELLOW.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/PRIZE_BOX_YELLOW.mdlx/-0.dds
 
 
 - id: save_point
@@ -95,7 +109,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/WORLD_POINT.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/WORLD_POINT.a.us/-0.dds
 
     - colorable_areas:
         - id: effect_1
@@ -104,7 +120,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/WORLD_POINT.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/WORLD_POINT.a.us/-1.dds
 
     - colorable_areas:
         - id: effect_2
@@ -113,7 +131,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/SAVE_POINT.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/SAVE_POINT.a.us/-0.dds
 
     - colorable_areas:
         - id: effect_3
@@ -122,4 +142,6 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/SAVE_POINT.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/SAVE_POINT.a.us/-1.dds

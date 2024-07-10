@@ -2910,6 +2910,33 @@ _all_settings = [
         """,
     ),
     Toggle(
+        name=settingkey.RECOLOR_TEXTURES_COMPRESS,
+        group=SettingGroup.COSMETICS,
+        ui_label="Compress Textures (Experimental)",
+        shared=False,
+        default=False,
+        tooltip="""
+        If enabled, recolored textures will use image compression. This saves a **large** amount of disk space, but
+        could have performance impacts on the game, and causes recolored textures to take slightly longer to generate.
+        
+        This setting is considered experimental until more testing is done.
+        """,
+    ),
+    Toggle(
+        name=settingkey.RECOLOR_TEXTURES_INCLUDE_EXTRAS,
+        group=SettingGroup.COSMETICS,
+        ui_label="Include Extra Textures",
+        shared=False,
+        default=False,
+        tooltip="""
+        If enabled, additional textures (such as high-resolution cutscene textures) will also be recolored. This uses
+        additional disk space and causes generation to take longer.
+
+        If you play rando with a cutscene skipper or always skip cutscenes, it's recommended to leave this setting
+        disabled.
+        """,
+    ),
+    Toggle(
         name=settingkey.RECOLOR_TEXTURES_KEEP_CACHE,
         group=SettingGroup.COSMETICS,
         ui_label="Keep Previously Generated Textures",

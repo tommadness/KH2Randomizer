@@ -10,34 +10,52 @@
           hue_start: 140
           hue_end: 240
       image_groups:
-        - - remastered/obj/H_ZZ020_TR.mdlx/-0.dds
-          - remastered/obj/P_EX020_TR.mdlx/-0.dds
-          - remastered/obj/P_EX020_TR_RTN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/H_ZZ020_TR.mdlx/-0.dds
+            - remastered/obj/P_EX020_TR.mdlx/-0.dds
+            - remastered/obj/P_EX020_TR_RTN.mdlx/-0.dds
 
-        - - remastered/obj/H_ZZ020_TR.mdlx/-1.dds
-          - remastered/obj/P_EX020_TR.mdlx/-1.dds
-          - remastered/obj/P_EX020_TR_RTN.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_ZZ020_TR.mdlx/-1.dds
+            - remastered/obj/P_EX020_TR.mdlx/-1.dds
+            - remastered/obj/P_EX020_TR_RTN.mdlx/-1.dds
 
-        - - remastered/obj/H_ZZ020_TR.mdlx/-2.dds
-          - remastered/obj/P_EX020_TR.mdlx/-4.dds
-          - remastered/obj/P_EX020_TR_RTN.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/H_ZZ020_TR.mdlx/-2.dds
+            - remastered/obj/P_EX020_TR.mdlx/-4.dds
+            - remastered/obj/P_EX020_TR_RTN.mdlx/-4.dds
 
-        - - remastered/obj/H_ZZ020_TR.mdlx/-3.dds
-          - remastered/obj/P_EX020_TR.mdlx/-5.dds
-          - remastered/obj/P_EX020_TR_RTN.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/H_ZZ020_TR.mdlx/-3.dds
+            - remastered/obj/P_EX020_TR.mdlx/-5.dds
+            - remastered/obj/P_EX020_TR_RTN.mdlx/-5.dds
 
-        - - remastered/obj/H_ZZ020_TR.mdlx/-4.dds
+        - required: false
+          images:
+            - remastered/obj/H_ZZ020_TR.mdlx/-4.dds
 
-        - - remastered/obj/H_ZZ020_TR.mdlx/-5.dds
+        - required: false
+          images:
+            - remastered/obj/H_ZZ020_TR.mdlx/-5.dds
 
-        - - remastered/obj/P_EX020_TR.mdlx/-2.dds
-          - remastered/obj/P_EX020_TR_RTN.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX020_TR.mdlx/-2.dds
+            - remastered/obj/P_EX020_TR_RTN.mdlx/-2.dds
 
-        - - remastered/obj/P_EX020_TR.mdlx/-3.dds
-          - remastered/obj/P_EX020_TR_RTN.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX020_TR.mdlx/-3.dds
+            - remastered/obj/P_EX020_TR_RTN.mdlx/-3.dds
 
-        - - remastered/obj/P_EX020_TR.a.us/-6.dds
-      previews: [ true, true, true, true, true, false, true, true, true ]
+        - required: true
+          images:
+            - remastered/obj/P_EX020_TR.a.us/-6.dds
+      previews: [ true, true, true, true, false, false, true, true, true ]
 
 - id: goofy_sp
   name: Goofy (Space Paranoids)
@@ -51,28 +69,41 @@
           hue_start: 140
           hue_end: 240
       image_groups:
-        - - remastered/obj/H_ZZ030_TR.mdlx/-1.dds
-          - remastered/obj/P_EX030_TR.mdlx/-0.dds
-          - remastered/obj/P_EX030_TR_RTN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/H_ZZ030_TR.mdlx/-1.dds
+            - remastered/obj/P_EX030_TR.mdlx/-0.dds
+            - remastered/obj/P_EX030_TR_RTN.mdlx/-0.dds
 
-        - - remastered/obj/H_ZZ030_TR.mdlx/-2.dds
+        - required: false
+          images:
+            - remastered/obj/H_ZZ030_TR.mdlx/-2.dds
 
-        - - remastered/obj/P_EX030_TR.mdlx/-1.dds
-          - remastered/obj/P_EX030_TR_RTN.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX030_TR.mdlx/-1.dds
+            - remastered/obj/P_EX030_TR_RTN.mdlx/-1.dds
 
-        - - remastered/obj/H_ZZ030_TR.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/H_ZZ030_TR.mdlx/-3.dds
 
-        - - remastered/obj/P_EX030_TR.mdlx/-2.dds
-          - remastered/obj/P_EX030_TR_RTN.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX030_TR.mdlx/-2.dds
+            - remastered/obj/P_EX030_TR_RTN.mdlx/-2.dds
 
-        - - remastered/obj/P_EX030_TR.a.us/-2.dds
-      previews: [ true, true, false, false, true, true ]
+        - required: true
+          images:
+            - remastered/obj/P_EX030_TR.a.us/-2.dds
+      previews: [ true, false, false, false, true, true ]
 
 
 - id: hostile_program
   name: Hostile Program
   tags:
     - heartless
+    - boss
   recolors:
     - colorable_areas:
         - id: body
@@ -84,24 +115,43 @@
           hue_start: 301
           hue_end: 30
       image_groups:
-        - - remastered/obj/B_TR000.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_TR000.mdlx/-0.dds
 
-        - - remastered/obj/B_TR000_GM.mdlx/-0.dds
+        - required: false
+          images:
+            - remastered/obj/B_TR000_GM.mdlx/-0.dds
 
-        - - remastered/obj/B_TR000.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_TR000.mdlx/-1.dds
 
-        - - remastered/obj/B_TR000_GM.mdlx/-1.dds
+        - required: false
+          images:
+            - remastered/obj/B_TR000_GM.mdlx/-1.dds
 
-        - - remastered/obj/B_TR000.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_TR000.mdlx/-2.dds
 
-        - - remastered/obj/B_TR000_GM.mdlx/-2.dds
+        - required: false
+          images:
+            - remastered/obj/B_TR000_GM.mdlx/-2.dds
 
-        - - remastered/obj/B_TR000.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_TR000.mdlx/-3.dds
 
-        - - remastered/obj/B_TR000_GM.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/B_TR000_GM.mdlx/-3.dds
 
-        - - remastered/obj/B_TR000.mdlx/-4.dds
-          - remastered/obj/B_TR000_GM.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/B_TR000.mdlx/-4.dds
+            - remastered/obj/B_TR000_GM.mdlx/-4.dds
+      previews: [ true, false, true, false, true, false, true, false, true ]
 
 
 - id: larxene
@@ -109,6 +159,8 @@
   version: 3
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: coat
@@ -118,9 +170,11 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/B_EX400.mdlx/-0.dds
-          - remastered/obj/N_CM010.mdlx/-0.dds
-          - remastered/obj/N_CM010_BTL.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.mdlx/-0.dds
+            - remastered/obj/N_CM010.mdlx/-0.dds
+            - remastered/obj/N_CM010_BTL.mdlx/-0.dds
 
     - colorable_areas:
         - id: weapon_main
@@ -132,9 +186,11 @@
           hue_start: 91
           hue_end: 300
       image_groups:
-        - - remastered/obj/B_EX400.mdlx/-5.dds
-          - remastered/obj/N_CM010.mdlx/-5.dds
-          - remastered/obj/N_CM010_BTL.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.mdlx/-5.dds
+            - remastered/obj/N_CM010.mdlx/-5.dds
+            - remastered/obj/N_CM010_BTL.mdlx/-5.dds
 
 
 - id: larxene_fx
@@ -149,7 +205,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-3.dds
 
     - colorable_areas:
         - id: fx4
@@ -158,7 +216,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-4.dds
 
     - colorable_areas:
         - id: fx5
@@ -167,7 +227,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-5.dds
 
     - colorable_areas:
         - id: fx6
@@ -176,7 +238,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-6.dds
 
     - colorable_areas:
         - id: fx7
@@ -184,7 +248,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-7.dds
 
     - colorable_areas:
         - id: fx8
@@ -192,7 +258,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-8.dds
 
     - colorable_areas:
         - id: fx9
@@ -200,7 +268,9 @@
           hue_start: 0
           hue_end: 90
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-9.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-9.dds
 
     - colorable_areas:
         - id: fx11
@@ -209,7 +279,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-11.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-11.dds
 
     - colorable_areas:
         - id: fx12
@@ -218,7 +290,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-12.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-12.dds
 
     - colorable_areas:
         - id: fx13
@@ -226,7 +300,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-13.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-13.dds
 
     - colorable_areas:
         - id: fx14
@@ -235,7 +311,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-14.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-14.dds
 
     - colorable_areas:
         - id: fx15
@@ -243,7 +321,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-15.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-15.dds
 
     - colorable_areas:
         - id: fx16
@@ -252,7 +332,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-16.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-16.dds
 
     - colorable_areas:
         - id: fx17
@@ -261,7 +343,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-17.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-17.dds
 
     - colorable_areas:
         - id: fx18
@@ -270,7 +354,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-18.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-18.dds
 
     - colorable_areas:
         - id: fx19
@@ -278,13 +364,17 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/B_EX400.a.us/-19.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX400.a.us/-19.dds
 
 
 - id: mcp
   name: MCP
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -292,15 +382,20 @@
           hue_start: 340
           hue_end: 60
       image_groups:
-        - - remastered/obj/B_TR020.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_TR020.mdlx/-0.dds
 
-        - - remastered/obj/B_TR020.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_TR020.mdlx/-1.dds
 
 
 - id: sark
   name: Sark
   tags:
     - character
+    - boss
   recolors:
     - colorable_areas:
         - id: main
@@ -308,27 +403,39 @@
           hue_start: 350
           hue_end: 20
       image_groups:
-        - - remastered/obj/N_TR010_BTL.mdlx/-0.dds
-          - remastered/obj/N_TR010_BTL_L.mdlx/-0.dds
-          - remastered/obj/N_TR010_TSURU.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_TR010_BTL.mdlx/-0.dds
+            - remastered/obj/N_TR010_BTL_L.mdlx/-0.dds
+            - remastered/obj/N_TR010_TSURU.mdlx/-0.dds
 
-        - - remastered/obj/N_TR010_BTL.mdlx/-1.dds
-          - remastered/obj/N_TR010_BTL_L.mdlx/-1.dds
-          - remastered/obj/N_TR010_TSURU.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/N_TR010_BTL.mdlx/-1.dds
+            - remastered/obj/N_TR010_BTL_L.mdlx/-1.dds
+            - remastered/obj/N_TR010_TSURU.mdlx/-1.dds
 
-        - - remastered/obj/N_TR010_BTL.mdlx/-2.dds
-          - remastered/obj/N_TR010_BTL_L.mdlx/-2.dds
-          - remastered/obj/N_TR010_TSURU.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/N_TR010_BTL.mdlx/-2.dds
+            - remastered/obj/N_TR010_BTL_L.mdlx/-2.dds
+            - remastered/obj/N_TR010_TSURU.mdlx/-2.dds
 
-        - - remastered/obj/N_TR010_BTL.mdlx/-3.dds
-          - remastered/obj/N_TR010_BTL_L.mdlx/-3.dds
-          - remastered/obj/N_TR010_TSURU.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/N_TR010_BTL.mdlx/-3.dds
+            - remastered/obj/N_TR010_BTL_L.mdlx/-3.dds
+            - remastered/obj/N_TR010_TSURU.mdlx/-3.dds
 
-        - - remastered/obj/N_TR010_BTL.mdlx/-4.dds
-          - remastered/obj/N_TR010_BTL_L.mdlx/-4.dds
-          - remastered/obj/N_TR010_TSURU.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/N_TR010_BTL.mdlx/-4.dds
+            - remastered/obj/N_TR010_BTL_L.mdlx/-4.dds
+            - remastered/obj/N_TR010_TSURU.mdlx/-4.dds
 
-        - - remastered/obj/N_TR010_BTL_L.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/N_TR010_BTL_L.mdlx/-5.dds
 
 
 - id: sora_sp
@@ -337,6 +444,7 @@
   tags:
     - character
     - party
+    - baseline
   recolors:
     - colorable_areas:
         - id: blue
@@ -377,22 +485,30 @@
             - N/A
           new_saturation: 50
       image_groups:
-        - - remastered/obj/H_EX500_TR.mdlx/-2.dds
-          - remastered/obj/P_EX100_TR.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX500_TR.mdlx/-2.dds
+            - remastered/obj/P_EX100_TR.mdlx/-1.dds
 
-#        - - remastered/obj/H_EX500_TR.mdlx/-3.dds
+        #          - remastered/obj/H_EX500_TR.mdlx/-3.dds
 
-        - - remastered/obj/P_EX100_TR.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR.mdlx/-0.dds
 
-#        - - remastered/obj/H_EX500_TR.mdlx/-4.dds
+        #          - remastered/obj/H_EX500_TR.mdlx/-4.dds
 
-#        - - remastered/obj/H_EX500_TR.mdlx/-5.dds
+        #          - remastered/obj/H_EX500_TR.mdlx/-5.dds
 
-        - - remastered/obj/P_EX100_TR.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR.mdlx/-2.dds
 
-#        - - remastered/obj/P_EX100_TR.mdlx/-4.dds
+        #          - remastered/obj/P_EX100_TR.mdlx/-4.dds
 
-        - - remastered/obj/P_EX100_TR.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR.a.us/-8.dds
       previews: [ true, true, true, true ]
 
 - id: sora_sp_valor
@@ -416,22 +532,38 @@
           hue_start: 330
           hue_end: 10
       image_groups:
-        - - remastered/obj/H_EX500_TR_BTLF.mdlx/-2.dds
-          - remastered/obj/P_EX100_TR_BTLF.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX500_TR_BTLF.mdlx/-2.dds
+            - remastered/obj/P_EX100_TR_BTLF.mdlx/-1.dds
 
-        - - remastered/obj/H_EX500_TR_BTLF.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_BTLF.mdlx/-3.dds
 
-        - - remastered/obj/H_EX500_TR_BTLF.mdlx/-4.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_BTLF.mdlx/-4.dds
 
-        - - remastered/obj/H_EX500_TR_BTLF.mdlx/-5.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_BTLF.mdlx/-5.dds
 
-        - - remastered/obj/P_EX100_TR_BTLF.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_BTLF.mdlx/-0.dds
 
-        - - remastered/obj/P_EX100_TR_BTLF.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_BTLF.mdlx/-2.dds
 
-        - - remastered/obj/P_EX100_TR_BTLF.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_BTLF.mdlx/-4.dds
 
-        - - remastered/obj/P_EX100_TR_BTLF.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_BTLF.a.us/-4.dds
       previews: [ true, false, false, false, true, true, false, true ]
 
 
@@ -455,20 +587,34 @@
           hue_start: 230
           hue_end: 270
       image_groups:
-        - - remastered/obj/H_EX500_TR_MAGF.mdlx/-2.dds
-          - remastered/obj/P_EX100_TR_MAGF.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX500_TR_MAGF.mdlx/-2.dds
+            - remastered/obj/P_EX100_TR_MAGF.mdlx/-1.dds
 
-        - - remastered/obj/H_EX500_TR_MAGF.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_MAGF.mdlx/-3.dds
 
-        - - remastered/obj/H_EX500_TR_MAGF.mdlx/-4.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_MAGF.mdlx/-4.dds
 
-        - - remastered/obj/P_EX100_TR_MAGF.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_MAGF.mdlx/-0.dds
 
-        - - remastered/obj/P_EX100_TR_MAGF.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_MAGF.mdlx/-2.dds
 
-        - - remastered/obj/P_EX100_TR_MAGF.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_MAGF.mdlx/-4.dds
 
-        - - remastered/obj/P_EX100_TR_MAGF.a.us/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_MAGF.a.us/-2.dds
       previews: [ true, false, false, true, true, false, true ]
 
 
@@ -484,12 +630,18 @@
           hue_start: 350
           hue_end: 30
       image_groups:
-        - - remastered/obj/H_EX500_TR_KH1F.mdlx/-2.dds
-          - remastered/obj/P_EX100_TR_KH1F.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX500_TR_KH1F.mdlx/-2.dds
+            - remastered/obj/P_EX100_TR_KH1F.mdlx/-1.dds
 
-        - - remastered/obj/H_EX500_TR_KH1F.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_KH1F.mdlx/-3.dds
 
-        - - remastered/obj/P_EX100_TR_KH1F.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_KH1F.mdlx/-0.dds
       previews: [ true, false, true ]
 
 
@@ -514,22 +666,38 @@
           hue_start: 30
           hue_end: 70
       image_groups:
-        - - remastered/obj/H_EX500_TR_TRIF.mdlx/-2.dds
-          - remastered/obj/P_EX100_TR_TRIF.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX500_TR_TRIF.mdlx/-2.dds
+            - remastered/obj/P_EX100_TR_TRIF.mdlx/-1.dds
 
-        - - remastered/obj/H_EX500_TR_TRIF.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_TRIF.mdlx/-3.dds
 
-        - - remastered/obj/H_EX500_TR_TRIF.mdlx/-4.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_TRIF.mdlx/-4.dds
 
-        - - remastered/obj/H_EX500_TR_TRIF.mdlx/-5.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_TRIF.mdlx/-5.dds
 
-        - - remastered/obj/P_EX100_TR_TRIF.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_TRIF.mdlx/-0.dds
 
-        - - remastered/obj/P_EX100_TR_TRIF.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_TRIF.mdlx/-2.dds
 
-        - - remastered/obj/P_EX100_TR_TRIF.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_TRIF.mdlx/-4.dds
 
-        - - remastered/obj/P_EX100_TR_TRIF.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_TRIF.a.us/-5.dds
       previews: [ true, false, false, false, true, true, false, true ]
 
 
@@ -551,14 +719,22 @@
           hue_end: 360
           new_saturation: 50
       image_groups:
-        - - remastered/obj/H_EX500_TR_ULTF.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/H_EX500_TR_ULTF.mdlx/-3.dds
 
-        - - remastered/obj/P_EX100_TR_ULTF.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_ULTF.mdlx/-0.dds
 
-        - - remastered/obj/H_EX500_TR_ULTF.mdlx/-2.dds
-          - remastered/obj/P_EX100_TR_ULTF.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX500_TR_ULTF.mdlx/-2.dds
+            - remastered/obj/P_EX100_TR_ULTF.mdlx/-1.dds
 
-        - - remastered/obj/P_EX100_TR_ULTF.a.us/-10.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-10.dds
       previews: [ false, true, true, true ]
 
 
@@ -567,6 +743,7 @@
   tags:
     - character
     - party
+    - baseline
   recolors:
     - colorable_areas:
         - id: glow
@@ -574,24 +751,34 @@
           hue_start: 140
           hue_end: 240
       image_groups:
-        - - remastered/obj/H_TR010.mdlx/-1.dds
-          - remastered/obj/H_TR010_TSURU.mdlx/-1.dds
-          - remastered/obj/P_TR000.mdlx/-0.dds
-          - remastered/obj/P_TR000_RTN.mdlx/-0.dds
-          - remastered/obj/P_TR000_TSURU.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/H_TR010.mdlx/-1.dds
+            - remastered/obj/H_TR010_TSURU.mdlx/-1.dds
+            - remastered/obj/P_TR000.mdlx/-0.dds
+            - remastered/obj/P_TR000_RTN.mdlx/-0.dds
+            - remastered/obj/P_TR000_TSURU.mdlx/-0.dds
 
-        - - remastered/obj/H_TR010.mdlx/-2.dds
-          - remastered/obj/H_TR010_TSURU.mdlx/-2.dds
-          - remastered/obj/P_TR000.mdlx/-3.dds
-          - remastered/obj/P_TR000_RTN.mdlx/-3.dds
-          - remastered/obj/P_TR000_TSURU.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/H_TR010.mdlx/-2.dds
+            - remastered/obj/H_TR010_TSURU.mdlx/-2.dds
+            - remastered/obj/P_TR000.mdlx/-3.dds
+            - remastered/obj/P_TR000_RTN.mdlx/-3.dds
+            - remastered/obj/P_TR000_TSURU.mdlx/-3.dds
 
-        - - remastered/obj/H_TR010.mdlx/-4.dds
-          - remastered/obj/H_TR010_TSURU.mdlx/-4.dds
+        - required: false
+          images:
+            - remastered/obj/H_TR010.mdlx/-4.dds
+            - remastered/obj/H_TR010_TSURU.mdlx/-4.dds
 
-        - - remastered/obj/P_TR000.mdlx/-4.dds
-          - remastered/obj/P_TR000_RTN.mdlx/-4.dds
-          - remastered/obj/P_TR000_TSURU.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_TR000.mdlx/-4.dds
+            - remastered/obj/P_TR000_RTN.mdlx/-4.dds
+            - remastered/obj/P_TR000_TSURU.mdlx/-4.dds
 
-        - - remastered/obj/P_TR000.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_TR000.a.us/-3.dds
       previews: [ true, true, false, true, true ]

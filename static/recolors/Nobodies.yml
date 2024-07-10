@@ -9,7 +9,9 @@
           value_start: 10
           value_end: 100
       image_groups:
-        - - remastered/obj/M_EX900.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX900.mdlx/-0.dds
 
 
 - id: berserker
@@ -23,11 +25,17 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX940.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX940.mdlx/-0.dds
 
-        - - remastered/obj/M_EX940.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX940.mdlx/-1.dds
 
-        - - remastered/obj/M_EX940.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX940.mdlx/-2.dds
 
 
 - id: bomb_bell
@@ -35,6 +43,7 @@
   version: 3
   tags:
     - nobody
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -43,8 +52,10 @@
             - static/recolors/masks/bomb-bell/0_Main.mask
           new_saturation: 50
       image_groups:
-        - - remastered/obj/EH_G_EX250.mdlx/-0.dds
-          - remastered/obj/EH_G_EX250_FLY.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/EH_G_EX250.mdlx/-0.dds
+            - remastered/obj/EH_G_EX250_FLY.mdlx/-0.dds
 
 
 - id: creeper
@@ -52,6 +63,7 @@
   version: 2
   tags:
     - nobody
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -62,13 +74,16 @@
           value_end: 100
           new_saturation: 50
       image_groups:
-        - - remastered/obj/M_EX880.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX880.mdlx/-0.dds
 
 
 - id: dancer
   name: Dancer
   tags:
     - nobody
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -77,7 +92,9 @@
           hue_end: 360
           new_saturation: 50
       image_groups:
-        - - remastered/obj/M_EX930.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX930.mdlx/-1.dds
 
     - colorable_areas:
         - id: pants
@@ -85,7 +102,9 @@
           hue_start: 330
           hue_end: 60
       image_groups:
-        - - remastered/obj/M_EX930.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX930.mdlx/-0.dds
 
 
 - id: dragoon
@@ -99,7 +118,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX890.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX890.mdlx/-0.dds
 
     - colorable_areas:
         - id: accent
@@ -107,7 +128,9 @@
           hue_start: 300
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX890.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX890.mdlx/-1.dds
 
 
 - id: dusk
@@ -115,6 +138,7 @@
   version: 2
   tags:
     - nobody
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -137,23 +161,33 @@
             - static/recolors/masks/dusk/1_Lights.mask
             - N/A
       image_groups:
-        - - remastered/obj/H_EX990.mdlx/-0.dds
-          - remastered/obj/M_EX990.mdlx/-0.dds
-          - remastered/obj/M_EX990_RTN.mdlx/-0.dds
-          - remastered/obj/M_EX990_RTN_FIXCOLOR.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX990.mdlx/-0.dds
+            - remastered/obj/M_EX990.mdlx/-0.dds
+            - remastered/obj/M_EX990_RTN.mdlx/-0.dds
+            - remastered/obj/M_EX990_RTN_FIXCOLOR.mdlx/-0.dds
 
-        - - remastered/obj/M_EX990_E_CROWD.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX990_E_CROWD.mdlx/-0.dds
 
-        - - remastered/obj/M_EX990_ZIPPER_RTN.mdlx/-0.dds
+        - required: false
+          images:
+            - remastered/obj/M_EX990_ZIPPER_RTN.mdlx/-0.dds
 
-        - - remastered/obj/H_EX990.mdlx/-1.dds
-          - remastered/obj/M_EX990.mdlx/-1.dds
-          - remastered/obj/M_EX990_RTN.mdlx/-1.dds
-          - remastered/obj/M_EX990_RTN_FIXCOLOR.mdlx/-1.dds
-          - remastered/obj/M_EX990_ZIPPER_RTN.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX990.mdlx/-1.dds
+            - remastered/obj/M_EX990.mdlx/-1.dds
+            - remastered/obj/M_EX990_RTN.mdlx/-1.dds
+            - remastered/obj/M_EX990_RTN_FIXCOLOR.mdlx/-1.dds
+            - remastered/obj/M_EX990_ZIPPER_RTN.mdlx/-1.dds
 
-        - - remastered/obj/H_EX990.mdlx/-2.dds
-      previews: [ true, true, false, true, false ]
+        - required: false
+          images:
+            - remastered/obj/H_EX990.mdlx/-2.dds
+      previews: [ true, false, false, true, false ]
 
 - id: gambler
   name: Gambler
@@ -166,9 +200,13 @@
           hue_start: 300
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX950.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX950.mdlx/-0.dds
 
-        - - remastered/obj/M_EX950.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX950.mdlx/-1.dds
 
 
 - id: samurai
@@ -182,9 +220,13 @@
           value_start: 10
           value_end: 100
       image_groups:
-        - - remastered/obj/M_EX910.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX910.mdlx/-0.dds
 
-        - - remastered/obj/M_EX910.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX910.mdlx/-1.dds
 
 
 - id: sniper
@@ -198,9 +240,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX920.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX920.mdlx/-1.dds
 
-        - - remastered/obj/M_EX920.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX920.mdlx/-2.dds
 
 
     - colorable_areas:
@@ -212,7 +258,9 @@
           saturation_end: 100
           new_saturation: 50
       image_groups:
-        - - remastered/obj/M_EX920.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX920.mdlx/-0.dds
 
     - colorable_areas:
         - id: weapon
@@ -220,7 +268,9 @@
           hue_start: 150
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX920.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX920.mdlx/-3.dds
 
 
 - id: sorcerer
@@ -235,6 +285,10 @@
           hue_end: 360
           new_saturation: 50
       image_groups:
-        - - remastered/obj/M_EX960.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX960.mdlx/-0.dds
 
-        - - remastered/obj/M_EX960.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX960.mdlx/-1.dds

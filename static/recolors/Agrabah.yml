@@ -15,8 +15,10 @@
           saturation_start: 70
           saturation_end: 100
       image_groups:
-        - - remastered/obj/N_AL030_RTN.mdlx/-0.dds
-          - remastered/obj/N_AL090_BTL.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL030_RTN.mdlx/-0.dds
+            - remastered/obj/N_AL090_BTL.mdlx/-0.dds
 
 
 - id: aladdin
@@ -24,6 +26,7 @@
   tags:
     - character
     - party
+    - baseline
   recolors:
     - colorable_areas:
         - id: vest
@@ -31,9 +34,11 @@
           hue_start: 276
           hue_end: 296
       image_groups:
-        - - remastered/obj/H_AL010_MATSU.mdlx/-2.dds
-          - remastered/obj/P_AL000.mdlx/-3.dds
-          - remastered/obj/P_AL000_RTN.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/H_AL010_MATSU.mdlx/-2.dds
+            - remastered/obj/P_AL000.mdlx/-3.dds
+            - remastered/obj/P_AL000_RTN.mdlx/-3.dds
 
     - colorable_areas:
         - id: pants
@@ -45,9 +50,11 @@
           new_saturation: 50
           value_offset: -25
       image_groups:
-        - - remastered/obj/H_AL010_MATSU.mdlx/-3.dds
-          - remastered/obj/P_AL000.mdlx/-4.dds
-          - remastered/obj/P_AL000_RTN.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/H_AL010_MATSU.mdlx/-3.dds
+            - remastered/obj/P_AL000.mdlx/-4.dds
+            - remastered/obj/P_AL000_RTN.mdlx/-4.dds
 
 
 - id: carpet
@@ -65,15 +72,19 @@
           hue_start: 21
           hue_end: 55
       image_groups:
-        - - remastered/obj/AL14_CARPET.mdlx/-1.dds
-          - remastered/obj/N_AL010_BTL.mdlx/-1.dds
-          - remastered/obj/N_AL010_MATSU.mdlx/-1.dds
-          - remastered/obj/N_AL010_RTN.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/AL14_CARPET.mdlx/-1.dds
+            - remastered/obj/N_AL010_BTL.mdlx/-1.dds
+            - remastered/obj/N_AL010_MATSU.mdlx/-1.dds
+            - remastered/obj/N_AL010_RTN.mdlx/-1.dds
 
-        - - remastered/obj/AL14_CARPET.mdlx/-0.dds
-          - remastered/obj/N_AL010_BTL.mdlx/-0.dds
-          - remastered/obj/N_AL010_MATSU.mdlx/-0.dds
-          - remastered/obj/N_AL010_RTN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/AL14_CARPET.mdlx/-0.dds
+            - remastered/obj/N_AL010_BTL.mdlx/-0.dds
+            - remastered/obj/N_AL010_MATSU.mdlx/-0.dds
+            - remastered/obj/N_AL010_RTN.mdlx/-0.dds
 
 
 - id: iago
@@ -91,7 +102,9 @@
           hue_start: 180
           hue_end: 300
       image_groups:
-        - - remastered/obj/N_AL020_RTN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL020_RTN.mdlx/-0.dds
 
 
 - id: jafar
@@ -105,14 +118,18 @@
           hue_start: 350
           hue_end: 20
       image_groups:
-        - - remastered/obj/H_AL020_MATSU.mdlx/-2.dds
-          - remastered/obj/N_AL070_MATSU.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/H_AL020_MATSU.mdlx/-2.dds
+            - remastered/obj/N_AL070_MATSU.mdlx/-2.dds
 
 
 - id: jafar_genie
   name: Jafar (Genie)
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -120,15 +137,25 @@
           hue_start: 350
           hue_end: 25
       image_groups:
-        - - remastered/obj/B_AL020.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_AL020.mdlx/-0.dds
 
-        - - remastered/obj/B_AL020.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_AL020.mdlx/-2.dds
 
-        - - remastered/obj/B_AL020.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_AL020.mdlx/-3.dds
 
-        - - remastered/obj/B_AL020.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/B_AL020.mdlx/-4.dds
 
-        - - remastered/obj/B_AL020.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/B_AL020.mdlx/-5.dds
 
 
 - id: jasmine
@@ -142,11 +169,15 @@
           hue_start: 160
           hue_end: 200
       image_groups:
-        - - remastered/obj/H_AL040.mdlx/-3.dds
-          - remastered/obj/N_AL040_RTN.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/H_AL040.mdlx/-3.dds
+            - remastered/obj/N_AL040_RTN.mdlx/-5.dds
 
-        - - remastered/obj/H_AL040.mdlx/-4.dds
-          - remastered/obj/N_AL040_RTN.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/H_AL040.mdlx/-4.dds
+            - remastered/obj/N_AL040_RTN.mdlx/-4.dds
 
 
 - id: lexaeus
@@ -154,6 +185,8 @@
   version: 3
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: coat
@@ -166,10 +199,14 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/H_CM020.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/H_CM020.mdlx/-3.dds
 
-        - - remastered/obj/N_CM020.mdlx/-1.dds
-          - remastered/obj/N_CM020_BTL.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020.mdlx/-1.dds
+            - remastered/obj/N_CM020_BTL.mdlx/-1.dds
       previews: [ false, true ]
 
     - colorable_areas:
@@ -182,10 +219,14 @@
           hue_start: 21
           hue_end: 100
       image_groups:
-        - - remastered/obj/H_CM020.mdlx/-2.dds
-          - remastered/obj/N_CM020.mdlx/-5.dds
+        - required: false
+          images:
+            - remastered/obj/H_CM020.mdlx/-2.dds
+            - remastered/obj/N_CM020.mdlx/-5.dds
 
-        - - remastered/obj/N_CM020_BTL.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.mdlx/-5.dds
       previews: [ false, true ]
 
 
@@ -193,6 +234,7 @@
   name: Lexaeus (Effects)
   tags:
     - effects
+    - boss
   recolors:
     - colorable_areas:
         - id: rocks_1
@@ -201,11 +243,15 @@
           hue_end: 360
           new_saturation: 50
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-3.dds
 
-        - - remastered/obj/N_CM020_BTL.a.us/-4.dds
-          - remastered/obj/N_CM020_BTL.a.us/-16.dds
-          - remastered/obj/N_CM020_BTL.a.us/-25.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-4.dds
+            - remastered/obj/N_CM020_BTL.a.us/-16.dds
+            - remastered/obj/N_CM020_BTL.a.us/-25.dds
 
     - colorable_areas:
         - id: rocks_2
@@ -214,8 +260,10 @@
           hue_end: 360
           new_saturation: 50
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-5.dds
-          - remastered/obj/N_CM020_BTL.a.us/-15.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-5.dds
+            - remastered/obj/N_CM020_BTL.a.us/-15.dds
 
     - colorable_areas:
         - id: fx6
@@ -224,7 +272,9 @@
           hue_end: 360
           new_saturation: 50
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-6.dds
 
     - colorable_areas:
         - id: fx7
@@ -233,7 +283,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-7.dds
 
     - colorable_areas:
         - id: fx8
@@ -242,7 +294,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-8.dds
 
     - colorable_areas:
         - id: fx9
@@ -251,7 +305,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-9.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-9.dds
 
     - colorable_areas:
         - id: fx10
@@ -260,7 +316,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-10.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-10.dds
 
     - colorable_areas:
         - id: fx11
@@ -269,7 +327,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-11.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-11.dds
 
     - colorable_areas:
         - id: fx12
@@ -278,7 +338,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-12.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-12.dds
 
     - colorable_areas:
         - id: fx13
@@ -287,7 +349,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-13.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-13.dds
 
     - colorable_areas:
         - id: fx14
@@ -296,7 +360,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-14.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-14.dds
 
     - colorable_areas:
         - id: fx17
@@ -305,7 +371,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-17.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-17.dds
 
     - colorable_areas:
         - id: fx18
@@ -314,7 +382,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-18.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-18.dds
 
     - colorable_areas:
         - id: fx19
@@ -323,7 +393,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-19.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-19.dds
 
     - colorable_areas:
         - id: fx20
@@ -332,7 +404,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-20.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-20.dds
 
     - colorable_areas:
         - id: fx21
@@ -341,7 +415,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-21.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-21.dds
 
     - colorable_areas:
         - id: fx22
@@ -350,7 +426,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-22.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-22.dds
 
     - colorable_areas:
         - id: fx23
@@ -359,7 +437,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-23.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-23.dds
 
     - colorable_areas:
         - id: fx24
@@ -368,7 +448,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-24.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-24.dds
 
     - colorable_areas:
         - id: fx26
@@ -377,7 +459,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-26.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-26.dds
 
     - colorable_areas:
         - id: fx27
@@ -386,7 +470,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-27.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-27.dds
 
     - colorable_areas:
         - id: fx28
@@ -395,7 +481,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM020_BTL.a.us/-28.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM020_BTL.a.us/-28.dds
 
 
 - id: peddler
@@ -409,4 +497,6 @@
           hue_start: 180
           hue_end: 250
       image_groups:
-        - - remastered/obj/N_AL080_RTN.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL080_RTN.mdlx/-3.dds

@@ -9,9 +9,11 @@
           hue_start: 240
           hue_end: 340
       image_groups:
-        - - remastered/obj/H_EX700.mdlx/-3.dds
-          - remastered/obj/N_EX560.mdlx/-3.dds
-          - remastered/obj/N_EX560_RTN.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX700.mdlx/-3.dds
+            - remastered/obj/N_EX560.mdlx/-3.dds
+            - remastered/obj/N_EX560_RTN.mdlx/-3.dds
 
     - colorable_areas:
         - id: dress
@@ -19,9 +21,11 @@
           hue_start: 355
           hue_end: 45
       image_groups:
-        - - remastered/obj/H_EX700.mdlx/-4.dds
-          - remastered/obj/N_EX560.mdlx/-7.dds
-          - remastered/obj/N_EX560_RTN.mdlx/-7.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX700.mdlx/-4.dds
+            - remastered/obj/N_EX560.mdlx/-7.dds
+            - remastered/obj/N_EX560_RTN.mdlx/-7.dds
 
 
 - id: mickey
@@ -35,10 +39,12 @@
           hue_start: 10
           hue_end: 70
       image_groups:
-        - - remastered/obj/H_EX610.mdlx/-0.dds
-          - remastered/obj/P_EX220.mdlx/-0.dds
-          - remastered/obj/P_EX220_RTN.mdlx/-0.dds
-          - remastered/obj/P_EX230.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX610.mdlx/-0.dds
+            - remastered/obj/P_EX220.mdlx/-0.dds
+            - remastered/obj/P_EX220_RTN.mdlx/-0.dds
+            - remastered/obj/P_EX230.mdlx/-0.dds
 
     - colorable_areas:
         - id: outfit
@@ -46,10 +52,12 @@
           hue_start: 350
           hue_end: 20
       image_groups:
-        - - remastered/obj/H_EX610.mdlx/-1.dds
-          - remastered/obj/P_EX220.mdlx/-1.dds
-          - remastered/obj/P_EX220_RTN.mdlx/-1.dds
-          - remastered/obj/P_EX230.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX610.mdlx/-1.dds
+            - remastered/obj/P_EX220.mdlx/-1.dds
+            - remastered/obj/P_EX220_RTN.mdlx/-1.dds
+            - remastered/obj/P_EX230.mdlx/-1.dds
 
 
 - id: moogle
@@ -63,10 +71,14 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/N_EX640_MOOGLE_RTN.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/N_EX640_MOOGLE_RTN.mdlx/-1.dds
 
-        - - remastered/obj/N_EX640_SHOP_RTN.mdlx/-1.dds
-          - remastered/obj/SHOP_POINT_SUB.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/N_EX640_SHOP_RTN.mdlx/-1.dds
+            - remastered/obj/SHOP_POINT_SUB.mdlx/-1.dds
       previews: [ true, false ]
 
 
@@ -81,9 +93,13 @@
           hue_start: 240
           hue_end: 30
       image_groups:
-        - - remastered/obj/SHOP_POINT.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/SHOP_POINT.mdlx/-3.dds
 
-        - - remastered/obj/SHOP_POINT.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/SHOP_POINT.mdlx/-4.dds
 
     - colorable_areas:
         - id: sign
@@ -91,15 +107,21 @@
           hue_start: 180
           hue_end: 300
       image_groups:
-        - - remastered/obj/SHOP_POINT.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/SHOP_POINT.mdlx/-5.dds
 
-        - - remastered/obj/SHOP_POINT.mdlx/-6.dds
+        - required: true
+          images:
+            - remastered/obj/SHOP_POINT.mdlx/-6.dds
 
 
 - id: pete
   name: Pete
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: shirt
@@ -111,13 +133,15 @@
           hue_start: 180
           hue_end: 300
       image_groups:
-        - - remastered/obj/H_EX590.mdlx/-0.dds
-          - remastered/obj/N_EX760.mdlx/-0.dds
-          - remastered/obj/N_EX760_BTL.mdlx/-0.dds
-          - remastered/obj/N_EX760_BTL_CLSM.mdlx/-0.dds
-          - remastered/obj/N_EX760_BTL_HERCULES.mdlx/-0.dds
-          - remastered/obj/N_EX760_BTL_MEGARA.mdlx/-0.dds
-          - remastered/obj/N_EX760_RTN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX590.mdlx/-0.dds
+            - remastered/obj/N_EX760.mdlx/-0.dds
+            - remastered/obj/N_EX760_BTL.mdlx/-0.dds
+            - remastered/obj/N_EX760_BTL_CLSM.mdlx/-0.dds
+            - remastered/obj/N_EX760_BTL_HERCULES.mdlx/-0.dds
+            - remastered/obj/N_EX760_BTL_MEGARA.mdlx/-0.dds
+            - remastered/obj/N_EX760_RTN.mdlx/-0.dds
 
     - colorable_areas:
         - id: accent
@@ -125,10 +149,12 @@
           hue_start: 240
           hue_end: 300
       image_groups:
-        - - remastered/obj/H_EX590.mdlx/-2.dds
-          - remastered/obj/N_EX760.mdlx/-3.dds
-          - remastered/obj/N_EX760_BTL.mdlx/-3.dds
-          - remastered/obj/N_EX760_BTL_CLSM.mdlx/-3.dds
-          - remastered/obj/N_EX760_BTL_HERCULES.mdlx/-3.dds
-          - remastered/obj/N_EX760_BTL_MEGARA.mdlx/-3.dds
-          - remastered/obj/N_EX760_RTN.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/H_EX590.mdlx/-2.dds
+            - remastered/obj/N_EX760.mdlx/-3.dds
+            - remastered/obj/N_EX760_BTL.mdlx/-3.dds
+            - remastered/obj/N_EX760_BTL_CLSM.mdlx/-3.dds
+            - remastered/obj/N_EX760_BTL_HERCULES.mdlx/-3.dds
+            - remastered/obj/N_EX760_BTL_MEGARA.mdlx/-3.dds
+            - remastered/obj/N_EX760_RTN.mdlx/-3.dds
