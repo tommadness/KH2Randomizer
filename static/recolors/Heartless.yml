@@ -13,7 +13,9 @@
           hue_start: 205
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_EX780_HB.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX780_HB.mdlx/-1.dds
 
     - colorable_areas:
         - id: accent
@@ -21,9 +23,13 @@
           hue_start: 330
           hue_end: 35
       image_groups:
-        - - remastered/obj/M_EX780_HB.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX780_HB.mdlx/-0.dds
 
-        - - remastered/obj/M_EX780_HB.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX780_HB.mdlx/-2.dds
 
 
 - id: aerial_knocker
@@ -37,7 +43,9 @@
           hue_start: 215
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_EX780.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX780.mdlx/-1.dds
 
     - colorable_areas:
         - id: accent
@@ -45,9 +53,13 @@
           hue_start: 25
           hue_end: 90
       image_groups:
-        - - remastered/obj/M_EX780.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX780.mdlx/-0.dds
 
-        - - remastered/obj/M_EX780.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX780.mdlx/-2.dds
 
 
 - id: aerial_viking
@@ -65,7 +77,9 @@
           hue_start: 0
           hue_end: 60
       image_groups:
-        - - remastered/obj/M_EX210_HB.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX210_HB.mdlx/-3.dds
 
 
 - id: aeroplane
@@ -80,7 +94,9 @@
           hue_end: 120
           new_saturation: 50
       image_groups:
-        - - remastered/obj/M_EX540.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX540.mdlx/-0.dds
 
     - colorable_areas:
         - id: side
@@ -88,7 +104,9 @@
           hue_start: 50
           hue_end: 120
       image_groups:
-        - - remastered/obj/M_EX540.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX540.mdlx/-3.dds
 
 
 - id: air_pirate
@@ -110,13 +128,21 @@
           hue_start: 21
           hue_end: 60
       image_groups:
-        - - remastered/obj/M_EX210.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX210.mdlx/-0.dds
 
-        - - remastered/obj/M_EX210.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX210.mdlx/-1.dds
 
-        - - remastered/obj/M_EX210.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX210.mdlx/-2.dds
 
-        - - remastered/obj/M_EX210.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX210.mdlx/-3.dds
 
 
 - id: armored_knight
@@ -130,15 +156,21 @@
           hue_start: 180
           hue_end: 300
       image_groups:
-        - - remastered/obj/M_EX760.mdlx/-0.dds
-          - remastered/obj/M_EX760_NPC.mdlx/-0.dds
-          - remastered/obj/M_EX760_RAW.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX760.mdlx/-0.dds
+            - remastered/obj/M_EX760_NPC.mdlx/-0.dds
+            - remastered/obj/M_EX760_RAW.mdlx/-0.dds
 
-        - - remastered/obj/M_EX760.mdlx/-1.dds
-          - remastered/obj/M_EX760_NPC.mdlx/-1.dds
-          - remastered/obj/M_EX760_RAW.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX760.mdlx/-1.dds
+            - remastered/obj/M_EX760_NPC.mdlx/-1.dds
+            - remastered/obj/M_EX760_RAW.mdlx/-1.dds
 
-        - - remastered/obj/M_EX760_CROWD.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX760_CROWD.mdlx/-0.dds
 
 
 - id: armored_knight_ht
@@ -152,9 +184,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX760_NM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX760_NM.mdlx/-0.dds
 
-        - - remastered/obj/M_EX760_NM.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX760_NM.mdlx/-1.dds
 
 
 - id: assault_rider
@@ -172,11 +208,17 @@
           hue_start: 30
           hue_end: 90
       image_groups:
-        - - remastered/obj/M_EX570.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX570.mdlx/-0.dds
 
-        - - remastered/obj/M_EX570.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX570.mdlx/-1.dds
 
-        - - remastered/obj/M_EX570.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX570.mdlx/-2.dds
 
 
 - id: beffudler
@@ -190,7 +232,9 @@
           hue_start: 120
           hue_end: 330
       image_groups:
-        - - remastered/obj/M_EX520_HB.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX520_HB.mdlx/-0.dds
 
 
 - id: bolt_tower
@@ -204,13 +248,19 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX800.mdlx/-1.dds
-          - remastered/obj/M_EX800_DC.mdlx/-1.dds
-          - remastered/obj/M_EX800_RAW.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX800.mdlx/-1.dds
+            - remastered/obj/M_EX800_DC.mdlx/-1.dds
+            - remastered/obj/M_EX800_RAW.mdlx/-1.dds
 
-        - - remastered/obj/M_EX800_CROWD.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX800_CROWD.mdlx/-0.dds
 
-        - - remastered/obj/M_EX800_E_CROWD.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX800_E_CROWD.mdlx/-0.dds
 
 
 - id: bolt_tower_lod
@@ -224,8 +274,10 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX800_MU.mdlx/-1.dds
-          - remastered/obj/M_EX800_MU_RAW.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX800_MU.mdlx/-1.dds
+            - remastered/obj/M_EX800_MU_RAW.mdlx/-1.dds
 
 
 - id: bookmaster
@@ -239,7 +291,9 @@
           hue_start: 330
           hue_end: 90
       image_groups:
-        - - remastered/obj/M_EX530.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX530.mdlx/-0.dds
 
 
 - id: bookmaster_sp
@@ -253,9 +307,13 @@
           hue_start: 300
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX530_TR.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX530_TR.mdlx/-0.dds
 
-        - - remastered/obj/M_EX530_TR.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX530_TR.mdlx/-1.dds
 
 
 - id: bulky_vendor
@@ -269,7 +327,9 @@
           hue_start: 180
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_EX590.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX590.mdlx/-0.dds
 
 
 - id: camo_cannon
@@ -283,7 +343,9 @@
           hue_start: 30
           hue_end: 120
       image_groups:
-        - - remastered/obj/M_EX650_HB.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX650_HB.mdlx/-1.dds
 
 
 - id: cannon_gun
@@ -297,7 +359,9 @@
           hue_start: 330
           hue_end: 35
       image_groups:
-        - - remastered/obj/M_EX650.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX650.mdlx/-1.dds
 
 
 - id: cannon_gun_sp
@@ -311,7 +375,9 @@
           hue_start: 30
           hue_end: 120
       image_groups:
-        - - remastered/obj/M_EX650_TR.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX650_TR.mdlx/-1.dds
 
 
 - id: creeper_plant
@@ -331,7 +397,9 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX750.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX750.mdlx/-1.dds
 
 
 - id: creeper_plant_ht
@@ -349,7 +417,9 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX750_NM.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX750_NM.mdlx/-1.dds
 
 
 - id: crescendo
@@ -363,7 +433,9 @@
           hue_start: 150
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_EX740.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX740.mdlx/-0.dds
 
     - colorable_areas:
         - id: accent
@@ -371,7 +443,9 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX740.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX740.mdlx/-1.dds
 
 
 - id: crimson_jazz
@@ -389,11 +463,15 @@
           hue_start: 31
           hue_end: 90
       image_groups:
-        - - remastered/obj/M_EX130.mdlx/-0.dds
-          - remastered/obj/M_EX130_AL.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX130.mdlx/-0.dds
+            - remastered/obj/M_EX130_AL.mdlx/-0.dds
 
-        - - remastered/obj/M_EX130.mdlx/-1.dds
-          - remastered/obj/M_EX130_AL.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX130.mdlx/-1.dds
+            - remastered/obj/M_EX130_AL.mdlx/-1.dds
 
 
 - id: devastator
@@ -407,11 +485,17 @@
           hue_start: 240
           hue_end: 300
       image_groups:
-        - - remastered/obj/M_EX680.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX680.mdlx/-0.dds
 
-        - - remastered/obj/M_EX680.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX680.mdlx/-2.dds
 
-        - - remastered/obj/M_EX680.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX680.mdlx/-3.dds
 
 
 - id: driller_mole
@@ -425,7 +509,9 @@
           hue_start: 300
           hue_end: 90
       image_groups:
-        - - remastered/obj/M_EX700.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX700.mdlx/-0.dds
 
 
 - id: driller_mole_ht
@@ -439,7 +525,9 @@
           hue_start: 300
           hue_end: 90
       image_groups:
-        - - remastered/obj/M_EX700_NM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX700_NM.mdlx/-0.dds
 
 
 - id: emerald_blues
@@ -457,7 +545,9 @@
           hue_start: 90
           hue_end: 210
       image_groups:
-        - - remastered/obj/M_EX120.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX120.mdlx/-0.dds
 
 
 - id: fat_bandit
@@ -475,7 +565,9 @@
           hue_start: 180
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_EX060.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX060.mdlx/-0.dds
 
 
 - id: fiery_globe
@@ -489,15 +581,18 @@
           hue_start: 300
           hue_end: 35
       image_groups:
-        - - remastered/obj/M_AL020_FIRE.mdlx/-0.dds
-          - remastered/obj/M_AL020_FIRE_RAW.mdlx/-0.dds
-          - remastered/obj/M_AL020_FIRE2.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_AL020_FIRE.mdlx/-0.dds
+            - remastered/obj/M_AL020_FIRE_RAW.mdlx/-0.dds
+            - remastered/obj/M_AL020_FIRE2.mdlx/-0.dds
 
 
 - id: fortuneteller
   name: Fortuneteller
   tags:
     - heartless
+    - baseline
   recolors:
     - colorable_areas:
         - id: hat
@@ -506,8 +601,10 @@
           hue_end: 90
           new_saturation: 50
       image_groups:
-        - - remastered/obj/M_EX620.mdlx/-0.dds
-          - remastered/obj/M_EX620_AL.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX620.mdlx/-0.dds
+            - remastered/obj/M_EX620_AL.mdlx/-0.dds
 
 
 - id: gargoyle_knight
@@ -521,9 +618,13 @@
           hue_start: 150
           hue_end: 300
       image_groups:
-        - - remastered/obj/M_BB010_SWORD.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_BB010_SWORD.mdlx/-0.dds
 
-        - - remastered/obj/M_BB010_SWORD.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_BB010_SWORD.mdlx/-1.dds
 
 
 - id: gargoyle_warrior
@@ -537,9 +638,13 @@
           hue_start: 150
           hue_end: 300
       image_groups:
-        - - remastered/obj/M_BB010_AX.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_BB010_AX.mdlx/-0.dds
 
-        - - remastered/obj/M_BB010_AX.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_BB010_AX.mdlx/-1.dds
 
 
 - id: hammer_frame
@@ -553,13 +658,16 @@
           hue_start: 29
           hue_end: 80
       image_groups:
-        - - remastered/obj/M_EX560.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX560.mdlx/-1.dds
 
 
 - id: hook_bat
   name: Hook Bat
   tags:
     - heartless
+    - baseline
   recolors:
     - colorable_areas:
         - id: body
@@ -567,8 +675,10 @@
           hue_start: 300
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX520.mdlx/-0.dds
-          - remastered/obj/M_EX520_AL.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX520.mdlx/-0.dds
+            - remastered/obj/M_EX520_AL.mdlx/-0.dds
 
 
 - id: icy_cube
@@ -582,20 +692,33 @@
           hue_start: 180
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_AL020_ICEE.mdlx/-0.dds
-          - remastered/obj/M_AL020_ICEE_RAW.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_AL020_ICEE.mdlx/-0.dds
+            - remastered/obj/M_AL020_ICEE_RAW.mdlx/-0.dds
 
-        - - remastered/obj/M_AL020_ICEE2.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_AL020_ICEE2.mdlx/-0.dds
 
-        - - remastered/obj/M_AL020_ICEE.mdlx/-1.dds
-          - remastered/obj/M_AL020_ICEE_RAW.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_AL020_ICEE.mdlx/-1.dds
+            - remastered/obj/M_AL020_ICEE_RAW.mdlx/-1.dds
 
-        - - remastered/obj/M_AL020_ICEE2.mdlx/-1.png
+        - required: true
+          images:
+            - remastered/obj/M_AL020_ICEE2.mdlx/-1.png
 
-        - - remastered/obj/M_AL020_ICEE.mdlx/-2.dds
-          - remastered/obj/M_AL020_ICEE_RAW.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_AL020_ICEE.mdlx/-2.dds
+            - remastered/obj/M_AL020_ICEE_RAW.mdlx/-2.dds
 
-        - - remastered/obj/M_AL020_ICEE2.mdlx/-2.png
+        - required: true
+          images:
+            - remastered/obj/M_AL020_ICEE2.mdlx/-2.png
+      previews: [ true, false, true, false, true, false ]
 
 
 - id: illuminator
@@ -609,9 +732,13 @@
           hue_start: 120
           hue_end: 240
       image_groups:
-        - - remastered/obj/B_CA000.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_CA000.mdlx/-0.dds
 
-        - - remastered/obj/B_CA000.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_CA000.mdlx/-1.dds
 
 
 - id: iron_hammer
@@ -625,9 +752,13 @@
           hue_start: 120
           hue_end: 180
       image_groups:
-        - - remastered/obj/M_EX560_HB.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX560_HB.mdlx/-0.dds
 
-        - - remastered/obj/M_EX560_HB.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX560_HB.mdlx/-3.dds
 
 
 - id: lance_soldier
@@ -641,11 +772,17 @@
           hue_start: 210
           hue_end: 330
       image_groups:
-        - - remastered/obj/M_EX690.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX690.mdlx/-0.dds
 
-        - - remastered/obj/M_EX690.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX690.mdlx/-1.dds
 
-        - - remastered/obj/M_EX690.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX690.mdlx/-2.dds
 
 
 - id: lance_warrior
@@ -659,17 +796,24 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX690_HB.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX690_HB.mdlx/-0.dds
 
-        - - remastered/obj/M_EX690_HB.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX690_HB.mdlx/-1.dds
 
-        - - remastered/obj/M_EX690_HB.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX690_HB.mdlx/-2.dds
 
 
 - id: large_body
   name: Large Body
   tags:
     - heartless
+    - baseline
   recolors:
     - colorable_areas:
         - id: accent
@@ -677,7 +821,9 @@
           hue_start: 20
           hue_end: 60
       image_groups:
-        - - remastered/obj/M_EX050.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX050.mdlx/-0.dds
 
 
 - id: living_bone
@@ -691,7 +837,9 @@
           hue_start: 300
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX670.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX670.mdlx/-2.dds
 
 
 - id: luna_bandit
@@ -705,7 +853,9 @@
           hue_start: 300
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX630.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX630.mdlx/-1.dds
 
     - colorable_areas:
         - id: hat_shoes
@@ -713,9 +863,13 @@
           hue_start: 120
           hue_end: 210
       image_groups:
-        - - remastered/obj/M_EX630.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX630.mdlx/-0.dds
 
-        - - remastered/obj/M_EX630.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX630.mdlx/-3.dds
 
 
 - id: mad_ride
@@ -729,9 +883,13 @@
           hue_start: 330
           hue_end: 15
       image_groups:
-        - - remastered/obj/M_EX640_HB.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX640_HB.mdlx/-1.dds
 
-        - - remastered/obj/M_EX640_HB.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX640_HB.mdlx/-2.dds
 
 
 - id: magic_phantom
@@ -745,11 +903,15 @@
           hue_start: 210
           hue_end: 60
       image_groups:
-        - - remastered/obj/M_EX500_HB.mdlx/-0.dds
-          - remastered/obj/M_EX500_HB_GM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX500_HB.mdlx/-0.dds
+            - remastered/obj/M_EX500_HB_GM.mdlx/-0.dds
 
-        - - remastered/obj/M_EX500_HB.mdlx/-3.dds
-          - remastered/obj/M_EX500_HB_GM.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX500_HB.mdlx/-3.dds
+            - remastered/obj/M_EX500_HB_GM.mdlx/-3.dds
 
 
 - id: magnum_loader
@@ -763,7 +925,9 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX600.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600.mdlx/-0.dds
 
 
 - id: magnum_loader_blue
@@ -777,9 +941,13 @@
           hue_start: 180
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX600_LC_ATK.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600_LC_ATK.mdlx/-0.dds
 
-        - - remastered/obj/M_EX600_LC_ATK.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600_LC_ATK.mdlx/-1.dds
 
 
 - id: magnum_loader_green
@@ -793,9 +961,13 @@
           hue_start: 60
           hue_end: 150
       image_groups:
-        - - remastered/obj/M_EX600_LC_GRD.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600_LC_GRD.mdlx/-0.dds
 
-        - - remastered/obj/M_EX600_LC_GRD.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600_LC_GRD.mdlx/-1.dds
 
 
 - id: magnum_loader_white
@@ -810,9 +982,13 @@
           hue_end: 360
           new_saturation: 50
       image_groups:
-        - - remastered/obj/M_EX600_LC.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600_LC.mdlx/-0.dds
 
-        - - remastered/obj/M_EX600_LC.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600_LC.mdlx/-1.dds
 
 
 - id: magnum_loader_yellow
@@ -826,9 +1002,13 @@
           hue_start: 30
           hue_end: 90
       image_groups:
-        - - remastered/obj/M_EX600_LC_CHG.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600_LC_CHG.mdlx/-0.dds
 
-        - - remastered/obj/M_EX600_LC_CHG.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX600_LC_CHG.mdlx/-1.dds
 
 
 - id: minute_bomb
@@ -849,13 +1029,16 @@
           hue_start: 330
           hue_end: 35
       image_groups:
-        - - remastered/obj/M_EX550.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX550.mdlx/-0.dds
 
 
 - id: morning_star
   name: Morning Star
   tags:
     - heartless
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -867,9 +1050,13 @@
           hue_start: 257
           hue_end: 300
       image_groups:
-        - - remastered/obj/M_EX710.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX710.mdlx/-0.dds
 
-        - - remastered/obj/M_EX710.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX710.mdlx/-1.dds
 
 
 - id: necromancer
@@ -883,11 +1070,17 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX720_HB.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX720_HB.mdlx/-0.dds
 
-        - - remastered/obj/M_EX720_HB.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX720_HB.mdlx/-1.dds
 
-        - - remastered/obj/M_EX720_HB.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX720_HB.mdlx/-2.dds
 
 
 - id: neoshadow
@@ -903,9 +1096,13 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/M_EX420.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX420.mdlx/-0.dds
 
-        - - remastered/obj/M_EX420.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX420.mdlx/-1.dds
 
 
 - id: neoshadow_ht
@@ -921,15 +1118,20 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/M_EX420_NM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX420_NM.mdlx/-0.dds
 
-        - - remastered/obj/M_EX420_NM.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX420_NM.mdlx/-1.dds
 
 
 - id: nightwalker
   name: Nightwalker
   tags:
     - heartless
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -941,9 +1143,13 @@
           hue_start: 240
           hue_end: 300
       image_groups:
-        - - remastered/obj/M_EX580.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX580.mdlx/-0.dds
 
-        - - remastered/obj/M_EX580.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX580.mdlx/-2.dds
 
 
 - id: rabid_dog
@@ -957,7 +1163,9 @@
           hue_start: 300
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX510.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX510.mdlx/-0.dds
 
 
 - id: rapid_thruster
@@ -971,12 +1179,16 @@
           hue_start: 17
           hue_end: 60
       image_groups:
-        - - remastered/obj/M_EX660.mdlx/-1.dds
-          - remastered/obj/M_EX660_AL.mdlx/-1.dds
-          - remastered/obj/M_EX660_RAW.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX660.mdlx/-1.dds
+            - remastered/obj/M_EX660_AL.mdlx/-1.dds
+            - remastered/obj/M_EX660_RAW.mdlx/-1.dds
 
-        - - remastered/obj/M_EX660_CROWD.mdlx/-0.dds
-          - remastered/obj/M_EX660_E_CROWD.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX660_CROWD.mdlx/-0.dds
+            - remastered/obj/M_EX660_E_CROWD.mdlx/-0.dds
 
 
 - id: reckless
@@ -990,9 +1202,13 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX680_HB.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX680_HB.mdlx/-0.dds
 
-        - - remastered/obj/M_EX680_HB.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX680_HB.mdlx/-3.dds
 
 
 - id: runemaster
@@ -1006,13 +1222,16 @@
           hue_start: 15
           hue_end: 90
       image_groups:
-        - - remastered/obj/M_EX530_HB.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX530_HB.mdlx/-0.dds
 
 
 - id: shadow
   name: Shadow
   tags:
     - heartless
+    - baseline
   recolors:
     - colorable_areas:
         - id: body
@@ -1022,8 +1241,10 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/M_EX020.mdlx/-0.dds
-          - remastered/obj/M_EX020_RAW.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX020.mdlx/-0.dds
+            - remastered/obj/M_EX020_RAW.mdlx/-0.dds
 
 
 - id: shadow_ht
@@ -1039,8 +1260,10 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/M_EX020_NM.mdlx/-0.dds
-          - remastered/obj/M_EX020_NM_RAW.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX020_NM.mdlx/-0.dds
+            - remastered/obj/M_EX020_NM_RAW.mdlx/-0.dds
 
 
 - id: shaman
@@ -1058,9 +1281,13 @@
           hue_start: 150
           hue_end: 229
       image_groups:
-        - - remastered/obj/M_EX720.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX720.mdlx/-0.dds
 
-        - - remastered/obj/M_EX720.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX720.mdlx/-1.dds
 
 
 - id: silver_rock
@@ -1078,13 +1305,16 @@
           new_saturation: 50
           value_offset: -15
       image_groups:
-        - - remastered/obj/M_EX110.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX110.mdlx/-0.dds
 
 
 - id: soldier
   name: Soldier
   tags:
     - heartless
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -1094,11 +1324,17 @@
           saturation_start: 0
           saturation_end: 60
       image_groups:
-        - - remastered/obj/M_EX010.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX010.mdlx/-0.dds
 
-        - - remastered/obj/M_EX010.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX010.mdlx/-2.dds
 
-        - - remastered/obj/M_EX010.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX010.mdlx/-3.dds
 
     - colorable_areas:
         - id: helmet
@@ -1106,7 +1342,9 @@
           hue_start: 30
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_EX010.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX010.mdlx/-1.dds
 
 
 - id: soldier_ht
@@ -1120,7 +1358,9 @@
           hue_start: 30
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_EX010_NM.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX010_NM.mdlx/-1.dds
 
 
 - id: spring_metal
@@ -1134,7 +1374,9 @@
           hue_start: 60
           hue_end: 240
       image_groups:
-        - - remastered/obj/M_EX120_HB.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX120_HB.mdlx/-0.dds
 
 
 - id: strafer
@@ -1148,9 +1390,13 @@
           hue_start: 30
           hue_end: 120
       image_groups:
-        - - remastered/obj/M_EX610.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX610.mdlx/-0.dds
 
-        - - remastered/obj/M_EX610.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX610.mdlx/-1.dds
 
 
 - id: surveillance_robot
@@ -1164,11 +1410,15 @@
           hue_start: 20
           hue_end: 60
       image_groups:
-        - - remastered/obj/M_EX770.mdlx/-0.dds
-          - remastered/obj/M_EX770_NPC.mdlx/-0.dds
-          - remastered/obj/M_EX770_RAW.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX770.mdlx/-0.dds
+            - remastered/obj/M_EX770_NPC.mdlx/-0.dds
+            - remastered/obj/M_EX770_RAW.mdlx/-0.dds
 
-        - - remastered/obj/M_EX760_CROWD.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX760_CROWD.mdlx/-1.dds
 
 
 - id: surveillance_robot_sp
@@ -1182,7 +1432,9 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/M_EX770_TR.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX770_TR.mdlx/-0.dds
 
 
 - id: tornado_step
@@ -1196,7 +1448,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX730.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX730.mdlx/-0.dds
 
 
 - id: toy_soldier_ct
@@ -1214,9 +1468,13 @@
           hue_start: 31
           hue_end: 60
       image_groups:
-        - - remastered/obj/M_EX790_CHRISTMAS_NM.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX790_CHRISTMAS_NM.mdlx/-2.dds
 
-        - - remastered/obj/M_EX790_CHRISTMAS_NM.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX790_CHRISTMAS_NM.mdlx/-3.dds
 
 
 - id: trick_ghost
@@ -1230,11 +1488,15 @@
           hue_start: 60
           hue_end: 150
       image_groups:
-        - - remastered/obj/M_EX500.mdlx/-0.dds
-          - remastered/obj/M_EX500_GM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX500.mdlx/-0.dds
+            - remastered/obj/M_EX500_GM.mdlx/-0.dds
 
-        - - remastered/obj/M_EX500.mdlx/-3.dds
-          - remastered/obj/M_EX500_GM.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX500.mdlx/-3.dds
+            - remastered/obj/M_EX500_GM.mdlx/-3.dds
 
 
 - id: trick_ghost_ht
@@ -1248,15 +1510,20 @@
           hue_start: 75
           hue_end: 150
       image_groups:
-        - - remastered/obj/M_EX500_NM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX500_NM.mdlx/-0.dds
 
-        - - remastered/obj/M_EX500_NM.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX500_NM.mdlx/-3.dds
 
 
 - id: wight_knight_ht
   name: Wight Knight (Halloween Town)
   tags:
     - heartless
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -1264,6 +1531,10 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/M_EX200_NM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX200_NM.mdlx/-0.dds
 
-        - - remastered/obj/M_EX200_NM.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/M_EX200_NM.mdlx/-1.dds

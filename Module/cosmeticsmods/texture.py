@@ -337,6 +337,9 @@ class TextureRecolorizer:
             if not self.settings.get(settingkey.RECOLOR_TEXTURES_KEEP_CACHE):
                 shutil.rmtree(recolors_cache_folder)
 
+        compress_textures = self.settings.get(settingkey.RECOLOR_TEXTURES_COMPRESS)
+        include_extra_textures = self.settings.get(settingkey.RECOLOR_TEXTURES_INCLUDE_EXTRAS)
+
         conditions_loader = TextureConditionsLoader()
 
         import time    
@@ -380,10 +383,16 @@ class TextureRecolorizer:
                     )
                     pending_recolors.append(pending_recolor)
 
-                image_groups: list[list[str]] = recolor["image_groups"]
-                for index, group in enumerate(image_groups):
+                image_groups: list[dict[str, Any]] = recolor["image_groups"]
+                for index, image_group in enumerate(image_groups):
                     # Each group gets a unique ID
                     group_id = available_image_group_ids.pop(0)
+
+                    group_images: list[str]
+                    if image_group["required"] or include_extra_textures:
+                        group_images = image_group["images"]
+                    else:
+                        continue
 
                     if len(pending_recolors) == 0:
                         # Everything was vanilla for this group, can save a little time and space by doing nothing
@@ -393,7 +402,7 @@ class TextureRecolorizer:
                     # Safeguard and make sure there's at least one of the original images in the group present
                     # (with multiple PC game versions, just in case the game files are different between them)
                     original_image_path: Optional[Path] = None
-                    for group_member in group:
+                    for group_member in group_images:
                         candidate = Path(base_path) / group_member
                         if candidate.is_file():
                             original_image_path = candidate
@@ -403,16 +412,20 @@ class TextureRecolorizer:
                         continue
 
                     combined_hues = "-".join(chosen_filename_hues)
-                    _, image_ext = os.path.splitext(group[0])
-                    destination_file_name = f"{model_id}{model_version_suffix}-{group_id}-{combined_hues}{image_ext}"
-                    destination_path = model_cache_folder / destination_file_name
+
+                    _, cached_extension = os.path.splitext(group_images[0])
+                    if compress_textures:
+                        cached_extension = ".png"
+
+                    destination_name = f"{model_id}{model_version_suffix}-{group_id}-{combined_hues}{cached_extension}"
+                    destination_path = model_cache_folder / destination_name
 
                     asset: Asset = {
                         "platform": "pc",
-                        "name": group[0]
+                        "name": group_images[0]
                     }
-                    if len(group) > 1:
-                        asset["multi"] = [{"name": image} for image in group[1:]]
+                    if len(group_images) > 1:
+                        asset["multi"] = [{"name": image} for image in group_images[1:]]
                     asset["method"] = "copy"
                     asset["source"] = [
                         {"name": f"{destination_path.absolute()}"}
@@ -423,11 +436,6 @@ class TextureRecolorizer:
                         if version.debug_mode():
                             print(f"Already generated texture recolor for {destination_path}")
                         continue
-
-                    if version.debug_mode():
-                        print(f"Generating texture recolor for {destination_path}")
-
-                    destination_path.parent.mkdir(parents=True, exist_ok=True)
 
                     # We deliberately delay creating the full RecolorDefinitions until we know for sure we will need
                     # them. This allows us to avoid the overhead of loading mask files as long as possible.
@@ -445,7 +453,7 @@ class TextureRecolorizer:
                             value_offset=pending_recolor.value_offset,
                         ))
 
-                    pooled_job_data.append((original_image_path,recolor_definitions,index,destination_path))
+                    pooled_job_data.append((original_image_path, recolor_definitions, index, destination_path))
 
         # original_image_path, recolor_definitions, group_index, destination_path
         for arg_tuple in pooled_job_data:
@@ -455,6 +463,12 @@ class TextureRecolorizer:
             recolor_definitions = arg_tuple[1]
             index = arg_tuple[2]
             destination_path = arg_tuple[3]
+
+            destination_path.parent.mkdir(parents=True, exist_ok=True)
+
+            if version.debug_mode():
+                print(f"Generating texture recolor for {destination_path}")
+
             image_array = np.array(Image.open(original_image_path).convert("RGBA"))
             recolored_array = recolor_image(image_array, recolor_definitions, group_index=index)
             Image.fromarray(recolored_array, "RGBA").save(destination_path)

@@ -54,9 +54,18 @@ General estimates of hue values:
 
 ### Other
 
+**Include Extra Textures** - If enabled, additional textures (such as high-resolution cutscene textures) will also be
+recolored. This uses additional disk space and causes generation to take longer.
+
+If you play rando with a cutscene skipper or always skip cutscenes, it's recommended to leave this setting disabled.
+
 **Keep Previously Generated Textures** - If enabled, previously generated textures will be kept around to speed up
 future recolors. This will potentially use large amounts of disk space, but improves performance. Disable this option to
 minimize disk space usage, but recoloring will take longer for each seed.
+
+**Compress Textures** - If enabled, recolored textures will use image compression. This saves a **large** amount of disk
+space, but could have performance impacts on the game, and causes recolored textures to take slightly longer to
+generate. This setting is considered experimental until more testing is done.
 
 **Refresh Preview(s)** - Displays or refreshes the preview image(s) that help show what the texture recoloring will look
 like when applied. Depending on the texture and your machine's performance, this can take a few seconds or more.

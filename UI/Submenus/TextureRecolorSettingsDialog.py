@@ -56,7 +56,7 @@ class TextureRecolorSettingsDialog(QDialog):
         presets_menu = QMenu("Presets")
         presets_menu.addAction("All Vanilla", self._all_vanilla_preset)
         presets_menu.addAction("All Random", self._all_random_preset)
-        presets_menu.addAction("Randomize Party Members Only", self._random_party_only)
+        presets_menu.addAction("Randomize Most Relevant", self._randomize_baseline)
         presets_menu.addSeparator()
         presets_menu.addAction("Open Preset Folder", self._open_preset_folder)
         presets_menu.addAction("Save Settings as New Preset", self._save_preset)
@@ -172,7 +172,9 @@ class TextureRecolorSettingsDialog(QDialog):
 
         submenu_layout.start_column()
         submenu_layout.start_group()
+        submenu_layout.add_option(settingkey.RECOLOR_TEXTURES_INCLUDE_EXTRAS)
         submenu_layout.add_option(settingkey.RECOLOR_TEXTURES_KEEP_CACHE)
+        submenu_layout.add_option(settingkey.RECOLOR_TEXTURES_COMPRESS)
         submenu_layout.pending_group.addWidget(reroll_button)
         submenu_layout.end_group("Other")
         submenu_layout.end_column()
@@ -282,7 +284,7 @@ class TextureRecolorSettingsDialog(QDialog):
             value_offset = colorable_area.get("value_offset")
             recolor_definitions.append(RecolorDefinition(conditions, chosen_hue, new_saturation, value_offset))
 
-        image_groups: list[list[str]] = recolor["image_groups"]
+        image_groups: list[dict[str, Any]] = recolor["image_groups"]
         preview_images: list[bool] = recolor.get("previews", [True] * len(image_groups))
 
         preview_count = len(self.base_images)
@@ -296,7 +298,10 @@ class TextureRecolorSettingsDialog(QDialog):
             if not preview_images[group_index]:
                 continue
 
-            full_path = self.base_path / image_groups[group_index][0]
+            group = image_groups[group_index]
+            group_images: list[str] = group["images"]
+
+            full_path = self.base_path / group_images[0]
             with Image.open(full_path) as base_image:
                 self.base_images[current_preview].setPixmap(base_image.toqpixmap())
 
@@ -377,19 +382,21 @@ class TextureRecolorSettingsDialog(QDialog):
     def _all_in_model_to_random(self):
         self._apply_setting_to_models([self._selected_model()], texture.RANDOM)
 
-    def _random_party_only(self):
+    def _randomize_specific_tag(self, target_tag: str):
         for recolorable_model in self.all_models:
             model_id = recolorable_model["id"]
             recolors = recolorable_model["recolors"]
             tags = recolorable_model["tags"]
-            setting = texture.VANILLA
-            if "party" in tags:
-                setting = texture.RANDOM
+            if target_tag not in tags:
+                continue
             for recolor in recolors:
                 for colorable_area in recolor["colorable_areas"]:
                     area_id = colorable_area["id"]
-                    self.texture_recolor_settings.put_setting(model_id, area_id, setting)
+                    self.texture_recolor_settings.put_setting(model_id, area_id, texture.RANDOM)
         self._update_ui_for_selected_area()
+
+    def _randomize_baseline(self):
+        self._randomize_specific_tag(target_tag="baseline")
 
     def _apply_setting_to_models(self, recolorable_models: list[dict[str, Any]], setting: str):
         for recolorable_model in recolorable_models:

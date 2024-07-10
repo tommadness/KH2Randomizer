@@ -12,9 +12,13 @@
           hue_start: 210
           hue_end: 330
       image_groups:
-        - - remastered/map/dc00.map/-1.dds
+        - required: true
+          images:
+            - remastered/map/dc00.map/-1.dds
 
-        - - remastered/map/dc02.map/-58.dds
+        - required: true
+          images:
+            - remastered/map/dc02.map/-58.dds
 
     - colorable_areas:
         - id: carpet_main
@@ -26,16 +30,26 @@
           hue_start: 26
           hue_end: 90
       image_groups:
-        - - remastered/map/dc00.map/-10.dds
-          - remastered/map/dc02.map/-33.dds
+        - required: true
+          images:
+            - remastered/map/dc00.map/-10.dds
+            - remastered/map/dc02.map/-33.dds
 
-        - - remastered/map/dc00.map/-14.dds
+        - required: true
+          images:
+            - remastered/map/dc00.map/-14.dds
 
-        - - remastered/map/dc03.map/-10.dds
+        - required: true
+          images:
+            - remastered/map/dc03.map/-10.dds
 
-        - - remastered/map/dc04.map/-16.dds
+        - required: true
+          images:
+            - remastered/map/dc04.map/-16.dds
 
-        - - remastered/map/dc05.map/-23.dds
+        - required: true
+          images:
+            - remastered/map/dc05.map/-23.dds
 
     - colorable_areas:
         - id: pillar
@@ -43,9 +57,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/map/dc00.map/-6.dds
+        - required: true
+          images:
+            - remastered/map/dc00.map/-6.dds
 
-        - - remastered/map/dc02.map/-35.dds
+        - required: true
+          images:
+            - remastered/map/dc02.map/-35.dds
 
     - colorable_areas:
         - id: banner
@@ -53,9 +71,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/map/dc00.map/-28.dds
+        - required: true
+          images:
+            - remastered/map/dc00.map/-28.dds
 
-        - - remastered/map/dc02.map/-12.dds
+        - required: true
+          images:
+            - remastered/map/dc02.map/-12.dds
 
     - colorable_areas:
         - id: chamber_door
@@ -63,10 +85,14 @@
           hue_start: 210
           hue_end: 330
       image_groups:
-        - - remastered/map/dc00.map/-2.dds
+        - required: true
+          images:
+            - remastered/map/dc00.map/-2.dds
 
-        - - remastered/map/dc02.map/-15.dds
-          - remastered/map/dc02.map/-17.dds
+        - required: true
+          images:
+            - remastered/map/dc02.map/-15.dds
+            - remastered/map/dc02.map/-17.dds
 
 
 - id: dc_library
@@ -81,7 +107,9 @@
           hue_end: 360
           new_saturation: 60
       image_groups:
-        - - remastered/map/dc01.map/-8.dds
+        - required: true
+          images:
+            - remastered/map/dc01.map/-8.dds
 
     - colorable_areas:
         - id: wall_main
@@ -90,7 +118,9 @@
           hue_end: 360
           new_saturation: 60
       image_groups:
-        - - remastered/map/dc01.map/-21.dds
+        - required: true
+          images:
+            - remastered/map/dc01.map/-21.dds
 
     - colorable_areas:
         - id: wall_trim
@@ -99,13 +129,17 @@
           hue_end: 360
           new_saturation: 60
       image_groups:
-        - - remastered/map/dc01.map/-6.dds
+        - required: true
+          images:
+            - remastered/map/dc01.map/-6.dds
 
 
 - id: lingering_will
   name: Lingering Will
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: armor_gold
@@ -117,9 +151,13 @@
           hue_start: 350
           hue_end: 20
       image_groups:
-        - - remastered/obj/B_EX420.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX420.mdlx/-0.dds
 
-        - - remastered/obj/B_EX420.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX420.mdlx/-1.dds
 
     - colorable_areas:
         - id: keyblade
@@ -131,13 +169,16 @@
           hue_start: 155
           hue_end: 205
       image_groups:
-        - - remastered/obj/B_EX420.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX420.mdlx/-2.dds
 
 
 - id: marluxia_fx
   name: Marluxia (Effects)
   tags:
     - effects
+    - boss
   recolors:
     - colorable_areas:
         - id: petals
@@ -145,17 +186,21 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-3.dds
 
-        - - remastered/obj/N_CM000_BTL.a.us/-12.dds
-          - remastered/obj/N_CM000_BTL.a.us/-14.dds
-          - remastered/obj/N_CM000_BTL.a.us/-15.dds
-          - remastered/obj/N_CM000_BTL.a.us/-17.dds
-          - remastered/obj/N_CM000_BTL.a.us/-21.dds
-          - remastered/obj/N_CM000_BTL.a.us/-25.dds
-          - remastered/obj/N_CM000_BTL.a.us/-29.dds
-          - remastered/obj/N_CM000_BTL.a.us/-31.dds
-          - remastered/obj/N_CM000_BTL.a.us/-35.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-12.dds
+            - remastered/obj/N_CM000_BTL.a.us/-14.dds
+            - remastered/obj/N_CM000_BTL.a.us/-15.dds
+            - remastered/obj/N_CM000_BTL.a.us/-17.dds
+            - remastered/obj/N_CM000_BTL.a.us/-21.dds
+            - remastered/obj/N_CM000_BTL.a.us/-25.dds
+            - remastered/obj/N_CM000_BTL.a.us/-29.dds
+            - remastered/obj/N_CM000_BTL.a.us/-31.dds
+            - remastered/obj/N_CM000_BTL.a.us/-35.dds
 
     - colorable_areas:
         - id: vines
@@ -164,11 +209,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-5.dds
-          - remastered/obj/N_CM000_BTL.a.us/-18.dds
-          - remastered/obj/N_CM000_BTL.a.us/-24.dds
-          - remastered/obj/N_CM000_BTL.a.us/-27.dds
-          - remastered/obj/N_CM000_BTL.a.us/-30.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-5.dds
+            - remastered/obj/N_CM000_BTL.a.us/-18.dds
+            - remastered/obj/N_CM000_BTL.a.us/-24.dds
+            - remastered/obj/N_CM000_BTL.a.us/-27.dds
+            - remastered/obj/N_CM000_BTL.a.us/-30.dds
 
     - colorable_areas:
         - id: fx4
@@ -177,7 +224,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-4.dds
 
     - colorable_areas:
         - id: fx6
@@ -185,7 +234,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-6.dds
 
     - colorable_areas:
         - id: fx7
@@ -194,7 +245,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-7.dds
 
     - colorable_areas:
         - id: fx8
@@ -203,7 +256,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-8.dds
 
     - colorable_areas:
         - id: fx9
@@ -212,7 +267,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-9.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-9.dds
 
     - colorable_areas:
         - id: fx10
@@ -221,7 +278,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-10.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-10.dds
 
     - colorable_areas:
         - id: fx11
@@ -230,7 +289,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-11.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-11.dds
 
     - colorable_areas:
         - id: fx13
@@ -239,7 +300,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-13.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-13.dds
 
     - colorable_areas:
         - id: fx16
@@ -248,7 +311,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-16.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-16.dds
 
     - colorable_areas:
         - id: fx19
@@ -257,7 +322,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-19.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-19.dds
 
     - colorable_areas:
         - id: fx20
@@ -266,7 +333,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-20.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-20.dds
 
     - colorable_areas:
         - id: fx22
@@ -275,7 +344,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-22.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-22.dds
 
     - colorable_areas:
         - id: fx23
@@ -284,7 +355,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-23.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-23.dds
 
     - colorable_areas:
         - id: fx28
@@ -293,7 +366,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-28.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-28.dds
 
     - colorable_areas:
         - id: fx32
@@ -302,7 +377,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-32.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-32.dds
 
     - colorable_areas:
         - id: fx33
@@ -311,7 +388,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-33.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-33.dds
 
     - colorable_areas:
         - id: fx34
@@ -320,7 +399,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-34.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-34.dds
 
     - colorable_areas:
         - id: fx36
@@ -329,7 +410,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-36.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-36.dds
 
     - colorable_areas:
         - id: fx37
@@ -338,7 +421,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-37.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-37.dds
 
     - colorable_areas:
         - id: fx38
@@ -347,7 +432,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-38.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-38.dds
 
     - colorable_areas:
         - id: fx39
@@ -356,7 +443,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-39.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-39.dds
 
     - colorable_areas:
         - id: fx40
@@ -365,7 +454,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-40.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-40.dds
 
     - colorable_areas:
         - id: fx41
@@ -374,7 +465,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_CM000_BTL.a.us/-41.dds
+        - required: true
+          images:
+            - remastered/obj/N_CM000_BTL.a.us/-41.dds
 
 
 - id: minnie
@@ -382,6 +475,7 @@
   version: 2
   tags:
     - character
+    - baseline
   recolors:
     - colorable_areas:
         - id: dress
@@ -389,9 +483,11 @@
           hue_start: 340
           hue_end: 20
       image_groups:
-        - - remastered/obj/H_DC010.mdlx/-1.dds
-          - remastered/obj/N_DC010_BTL.mdlx/-4.dds
-          - remastered/obj/N_DC010_RTN.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/H_DC010.mdlx/-1.dds
+            - remastered/obj/N_DC010_BTL.mdlx/-4.dds
+            - remastered/obj/N_DC010_RTN.mdlx/-4.dds
 
     - colorable_areas:
         - id: bow
@@ -400,5 +496,7 @@
             - static/recolors/masks/minnie/3_Bow.mask
             - static/recolors/masks/minnie/3_Bow.mask
       image_groups:
-        - - remastered/obj/N_DC010_BTL.mdlx/-3.dds
-          - remastered/obj/N_DC010_RTN.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/N_DC010_BTL.mdlx/-3.dds
+            - remastered/obj/N_DC010_RTN.mdlx/-3.dds

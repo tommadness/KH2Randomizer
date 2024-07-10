@@ -17,9 +17,12 @@ A grouping of texture images that will be colored using the same rules.
 
 **colorable_areas** - A list of [Colorable Areas](#colorable-area) that apply to all images in this recolor definition.
 
-**image_groups** - A list of lists of images to color using the same replacement color(s). Each image group contains
+**image_groups** - A list of groups of images to color using the same replacement color(s). Each image group contains
 only texture images that are _visually identical_ in the base game assets. Note that some texture images are very
 similar, but not visually identical. Such images that are visually similar should be placed in their own group.
+
+An image group has a list of **images** and a **required** property that configures whether that group is necessary or
+optional. This is used for filtering out "extra" textures such as high-resolution cutscene textures.
 
 ### Colorable Area
 
@@ -97,26 +100,32 @@ Recolor` menu option (only available in a special debug build of the seed genera
         # are not the same, the generator will create 3 individual recolored images and will apply them appropriately in
         # the mod using Mod Manager's `multi` capabilities (as opposed to needing to create an individual recolored
         # image for every one of these).
-        - - remastered/obj/ACTOR_SORA.mdlx/-0.dds
-          - remastered/obj/ACTOR_SORA_H.mdlx/-3.dds
-          - remastered/obj/AL14_PLAYER.mdlx/-0.dds
-          - remastered/obj/DEAD_BOSS.mdlx/-0.dds
-          - remastered/obj/LAST_ATTACKER.mdlx/-0.dds
-          - remastered/obj/LAST_GIMMICK.mdlx/-0.dds
-          - remastered/obj/LAST_HITMARK.mdlx/-0.dds
-          - remastered/obj/PO06_PLAYER.mdlx/-0.dds
-          - remastered/obj/PO07_PLAYER.mdlx/-0.dds
-          - remastered/obj/PO08_PLAYER.mdlx/-0.dds
-          - remastered/obj/WM_EX100.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/ACTOR_SORA.mdlx/-0.dds
+            - remastered/obj/ACTOR_SORA_H.mdlx/-3.dds
+            - remastered/obj/AL14_PLAYER.mdlx/-0.dds
+            - remastered/obj/DEAD_BOSS.mdlx/-0.dds
+            - remastered/obj/LAST_ATTACKER.mdlx/-0.dds
+            - remastered/obj/LAST_GIMMICK.mdlx/-0.dds
+            - remastered/obj/LAST_HITMARK.mdlx/-0.dds
+            - remastered/obj/PO06_PLAYER.mdlx/-0.dds
+            - remastered/obj/PO07_PLAYER.mdlx/-0.dds
+            - remastered/obj/PO08_PLAYER.mdlx/-0.dds
+            - remastered/obj/WM_EX100.mdlx/-0.dds
 
-        - - remastered/obj/H_EX500.mdlx/-3.dds
+        - required: false  # This is a high-resolution cutscene texture so it's optional
+          images:
+            - remastered/obj/H_EX500.mdlx/-3.dds
 
-        - - remastered/obj/P_EX100.mdlx/-0.dds
-          - remastered/obj/P_EX100_AL_CARPET.mdlx/-0.dds
-          - remastered/obj/P_EX100_LAST.mdlx/-0.dds
-          - remastered/obj/P_EX100_MEMO.mdlx/-0.dds
-          - remastered/obj/P_EX100_NPC.mdlx/-0.dds
-          - remastered/obj/P_EX100_WM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.mdlx/-0.dds
+            - remastered/obj/P_EX100_AL_CARPET.mdlx/-0.dds
+            - remastered/obj/P_EX100_LAST.mdlx/-0.dds
+            - remastered/obj/P_EX100_MEMO.mdlx/-0.dds
+            - remastered/obj/P_EX100_NPC.mdlx/-0.dds
+            - remastered/obj/P_EX100_WM.mdlx/-0.dds
 
     # The accent color on Sora's side is in a separate set of texture images, so that's a separate "recolor definition".
     # The only colorable area we have defined for this is a shade of red that's easy to isolate by a hue range.
@@ -129,27 +138,35 @@ Recolor` menu option (only available in a special debug build of the seed genera
 
         # The image groups here are similar to above, but there's actually a fourth visually distinct image, so we need
         # 4 image groups for this one.
-        - - remastered/obj/ACTOR_SORA.mdlx/-1.dds
-          - remastered/obj/AL14_PLAYER.mdlx/-1.dds
-          - remastered/obj/DEAD_BOSS.mdlx/-1.dds
-          - remastered/obj/LAST_ATTACKER.mdlx/-1.dds
-          - remastered/obj/LAST_GIMMICK.mdlx/-1.dds
-          - remastered/obj/LAST_HITMARK.mdlx/-1.dds
-          - remastered/obj/PO06_PLAYER.mdlx/-1.dds
-          - remastered/obj/PO07_PLAYER.mdlx/-1.dds
-          - remastered/obj/PO08_PLAYER.mdlx/-1.dds
-          - remastered/obj/WM_EX100.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/ACTOR_SORA.mdlx/-1.dds
+            - remastered/obj/AL14_PLAYER.mdlx/-1.dds
+            - remastered/obj/DEAD_BOSS.mdlx/-1.dds
+            - remastered/obj/LAST_ATTACKER.mdlx/-1.dds
+            - remastered/obj/LAST_GIMMICK.mdlx/-1.dds
+            - remastered/obj/LAST_HITMARK.mdlx/-1.dds
+            - remastered/obj/PO06_PLAYER.mdlx/-1.dds
+            - remastered/obj/PO07_PLAYER.mdlx/-1.dds
+            - remastered/obj/PO08_PLAYER.mdlx/-1.dds
+            - remastered/obj/WM_EX100.mdlx/-1.dds
 
-        - - remastered/obj/ACTOR_SORA_H.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/ACTOR_SORA_H.mdlx/-0.dds
 
-        - - remastered/obj/H_EX500.mdlx/-0.dds
+        - required: false  # This is a high-resolution cutscene texture so it's optional
+          images:
+            - remastered/obj/H_EX500.mdlx/-0.dds
 
-        - - remastered/obj/P_EX100.mdlx/-1.dds
-          - remastered/obj/P_EX100_AL_CARPET.mdlx/-1.dds
-          - remastered/obj/P_EX100_LAST.mdlx/-1.dds
-          - remastered/obj/P_EX100_MEMO.mdlx/-1.dds
-          - remastered/obj/P_EX100_NPC.mdlx/-1.dds
-          - remastered/obj/P_EX100_WM.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.mdlx/-1.dds
+            - remastered/obj/P_EX100_AL_CARPET.mdlx/-1.dds
+            - remastered/obj/P_EX100_LAST.mdlx/-1.dds
+            - remastered/obj/P_EX100_MEMO.mdlx/-1.dds
+            - remastered/obj/P_EX100_NPC.mdlx/-1.dds
+            - remastered/obj/P_EX100_WM.mdlx/-1.dds
 ```
 
 ### Mask files example
@@ -197,12 +214,18 @@ Recolor` menu option (only available in a special debug build of the seed genera
             - static/recolors/masks/xemnas-final/2_Trim.mask
           new_saturation: 50
       image_groups:
-        - - remastered/obj/B_EX170_LAST.mdlx/-0.dds
-          - remastered/obj/B_EX170_LAST_LV99.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX170_LAST.mdlx/-0.dds
+            - remastered/obj/B_EX170_LAST_LV99.mdlx/-0.dds
 
-        - - remastered/obj/B_EX170_LAST.mdlx/-1.dds
-          - remastered/obj/B_EX170_LAST_LV99.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX170_LAST.mdlx/-1.dds
+            - remastered/obj/B_EX170_LAST_LV99.mdlx/-1.dds
 
-        - - remastered/obj/B_EX170_LAST.mdlx/-2.dds
-          - remastered/obj/B_EX170_LAST_LV99.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX170_LAST.mdlx/-2.dds
+            - remastered/obj/B_EX170_LAST_LV99.mdlx/-2.dds
 ```

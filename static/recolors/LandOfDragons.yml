@@ -13,8 +13,10 @@
           hue_start: 300
           hue_end: 19
       image_groups:
-        - - remastered/obj/N_MU050_RTN.mdlx/-0.dds
-          - remastered/obj/N_MU050_QSATO.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_MU050_RTN.mdlx/-0.dds
+            - remastered/obj/N_MU050_QSATO.mdlx/-0.dds
 
 
 - id: mulan
@@ -22,6 +24,7 @@
   tags:
     - character
     - party
+    - baseline
   recolors:
     - colorable_areas:
         - id: outfit_main
@@ -35,13 +38,17 @@
           hue_start: 60
           hue_end: 180
       image_groups:
-        - - remastered/obj/H_MU020.mdlx/-1.dds
-          - remastered/obj/P_MU000.mdlx/-4.dds
-          - remastered/obj/P_MU000_RTN.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/H_MU020.mdlx/-1.dds
+            - remastered/obj/P_MU000.mdlx/-4.dds
+            - remastered/obj/P_MU000_RTN.mdlx/-4.dds
 
-        - - remastered/obj/H_MU020.mdlx/-2.dds
-          - remastered/obj/P_MU000.mdlx/-3.dds
-          - remastered/obj/P_MU000_RTN.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/H_MU020.mdlx/-2.dds
+            - remastered/obj/P_MU000.mdlx/-3.dds
+            - remastered/obj/P_MU000_RTN.mdlx/-3.dds
 
 
 - id: ping
@@ -49,6 +56,7 @@
   tags:
     - character
     - party
+    - baseline
   recolors:
     - colorable_areas:
         - id: vest
@@ -56,16 +64,25 @@
           hue_start: 125
           hue_end: 155
       image_groups:
-        - - remastered/obj/H_MU030.mdlx/-1.dds
+        - required: false
+          images:
+            - remastered/obj/H_MU030.mdlx/-1.dds
 
-        - - remastered/obj/H_MU030.mdlx/-2.dds
-          - remastered/obj/P_MU010.mdlx/-0.dds
-          - remastered/obj/P_MU010_RTN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/H_MU030.mdlx/-2.dds
+            - remastered/obj/P_MU010.mdlx/-0.dds
+            - remastered/obj/P_MU010_RTN.mdlx/-0.dds
 
-        - - remastered/obj/P_MU010.mdlx/-1.dds
-          - remastered/obj/P_MU010_RTN.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_MU010.mdlx/-1.dds
+            - remastered/obj/P_MU010_RTN.mdlx/-1.dds
 
-        - - remastered/obj/P_MU010.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_MU010.a.us/-0.dds
+      previews: [ false, true, true, true ]
 
 
 - id: riku_hooded
@@ -73,6 +90,7 @@
   version: 3
   tags:
     - character
+    - boss
   recolors:
     - colorable_areas:
         - id: coat
@@ -82,14 +100,18 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/N_EX940.mdlx/-0.dds
-          - remastered/obj/N_EX940_BTL.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_EX940.mdlx/-0.dds
+            - remastered/obj/N_EX940_BTL.mdlx/-0.dds
 
 
 - id: shan_yu
   name: Shan-Yu
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: coat_accent
@@ -97,14 +119,20 @@
           hue_start: 25
           hue_end: 200
       image_groups:
-        - - remastered/obj/B_MU100.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_MU100.mdlx/-3.dds
 
-        - - remastered/obj/B_MU100_GM.mdlx/-2.dds
-          - remastered/obj/B_MU100_HOOD.mdlx/-3.dds
-          - remastered/obj/B_MU100_RTN.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_MU100_GM.mdlx/-2.dds
+            - remastered/obj/B_MU100_HOOD.mdlx/-3.dds
+            - remastered/obj/B_MU100_RTN.mdlx/-3.dds
 
-        - - remastered/obj/H_MU050.mdlx/-4.dds
-          - remastered/obj/H_MU050_HOOD.mdlx/-4.dds
+        - required: false
+          images:
+            - remastered/obj/H_MU050.mdlx/-4.dds
+            - remastered/obj/H_MU050_HOOD.mdlx/-4.dds
       previews: [ true, false, false ]
 
 
@@ -119,20 +147,27 @@
           hue_start: 350
           hue_end: 30
       image_groups:
-        - - remastered/obj/H_MU010.mdlx/-2.dds
+        - required: false
+          images:
+            - remastered/obj/H_MU010.mdlx/-2.dds
 
-        - - remastered/obj/H_MU010.mdlx/-5.dds
+        - required: false
+          images:
+            - remastered/obj/H_MU010.mdlx/-5.dds
 
-        - - remastered/obj/N_MU010_QSATO.mdlx/-2.dds
-          - remastered/obj/N_MU010_QSATO_2.mdlx/-2.dds
-          - remastered/obj/N_MU010_RTN.mdlx/-2.dds
-      previews: [ false, true, true ]
+        - required: true
+          images:
+            - remastered/obj/N_MU010_QSATO.mdlx/-2.dds
+            - remastered/obj/N_MU010_QSATO_2.mdlx/-2.dds
+            - remastered/obj/N_MU010_RTN.mdlx/-2.dds
+      previews: [ false, false, true ]
 
 
 - id: storm_rider
   name: Storm Rider
   tags:
     - heartless
+    - boss
   recolors:
     - colorable_areas:
         - id: main
@@ -140,23 +175,35 @@
           hue_start: 300
           hue_end: 90
       image_groups:
-        - - remastered/obj/B_MU120.mdlx/-0.dds
-          - remastered/obj/B_MU120_GM.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_MU120.mdlx/-0.dds
+            - remastered/obj/B_MU120_GM.mdlx/-0.dds
 
-        - - remastered/obj/B_MU120.mdlx/-1.dds
-          - remastered/obj/B_MU120_GM.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_MU120.mdlx/-1.dds
+            - remastered/obj/B_MU120_GM.mdlx/-1.dds
 
-        - - remastered/obj/B_MU120.mdlx/-2.dds
-          - remastered/obj/B_MU120_GM.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_MU120.mdlx/-2.dds
+            - remastered/obj/B_MU120_GM.mdlx/-2.dds
 
-        - - remastered/obj/B_MU120.mdlx/-3.dds
-          - remastered/obj/B_MU120_GM.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_MU120.mdlx/-3.dds
+            - remastered/obj/B_MU120_GM.mdlx/-3.dds
 
-        - - remastered/obj/B_MU120.mdlx/-4.dds
-          - remastered/obj/B_MU120_GM.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/B_MU120.mdlx/-4.dds
+            - remastered/obj/B_MU120_GM.mdlx/-4.dds
 
-        - - remastered/obj/B_MU120.mdlx/-5.dds
-          - remastered/obj/B_MU120_GM.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/B_MU120.mdlx/-5.dds
+            - remastered/obj/B_MU120_GM.mdlx/-5.dds
 
 
 - id: xigbar
@@ -164,6 +211,8 @@
   version: 3
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: coat
@@ -177,20 +226,26 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/B_EX140.mdlx/-0.dds
-          - remastered/obj/B_EX140_GM.mdlx/-0.dds
-          - remastered/obj/B_EX140_LV99.mdlx/-0.dds
-          - remastered/obj/H_EX570.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.mdlx/-0.dds
+            - remastered/obj/B_EX140_GM.mdlx/-0.dds
+            - remastered/obj/B_EX140_LV99.mdlx/-0.dds
+            - remastered/obj/H_EX570.mdlx/-1.dds
 
-        - - remastered/obj/B_EX140.mdlx/-1.dds
-          - remastered/obj/B_EX140_GM.mdlx/-1.dds
-          - remastered/obj/B_EX140_LV99.mdlx/-1.dds
-          - remastered/obj/H_EX570.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.mdlx/-1.dds
+            - remastered/obj/B_EX140_GM.mdlx/-1.dds
+            - remastered/obj/B_EX140_LV99.mdlx/-1.dds
+            - remastered/obj/H_EX570.mdlx/-5.dds
 
-        - - remastered/obj/B_EX140.mdlx/-2.dds
-          - remastered/obj/B_EX140_GM.mdlx/-2.dds
-          - remastered/obj/B_EX140_LV99.mdlx/-2.dds
-          - remastered/obj/H_EX570.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.mdlx/-2.dds
+            - remastered/obj/B_EX140_GM.mdlx/-2.dds
+            - remastered/obj/B_EX140_LV99.mdlx/-2.dds
+            - remastered/obj/H_EX570.mdlx/-0.dds
 
     - colorable_areas:
         - id: weapon_main
@@ -202,15 +257,18 @@
           hue_start: 0
           hue_end: 75
       image_groups:
-        - - remastered/obj/B_EX140.mdlx/-7.dds
-          - remastered/obj/B_EX140_LV99.mdlx/-7.dds
-          - remastered/obj/H_EX570.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.mdlx/-7.dds
+            - remastered/obj/B_EX140_LV99.mdlx/-7.dds
+            - remastered/obj/H_EX570.mdlx/-2.dds
 
 
 - id: xigbar_fx
   name: Xigbar (Effects)
   tags:
     - effects
+    - boss
   recolors:
     - colorable_areas:
         - id: fx3
@@ -219,12 +277,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-3.dds
-          - remastered/obj/B_EX140.a.gr/-3.dds
-          - remastered/obj/B_EX140.a.it/-3.dds
-          - remastered/obj/B_EX140.a.sp/-3.dds
-          - remastered/obj/B_EX140.a.us/-3.dds
-          - remastered/obj/B_EX140_LV99.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-3.dds
+            - remastered/obj/B_EX140.a.gr/-3.dds
+            - remastered/obj/B_EX140.a.it/-3.dds
+            - remastered/obj/B_EX140.a.sp/-3.dds
+            - remastered/obj/B_EX140.a.us/-3.dds
+            - remastered/obj/B_EX140_LV99.a.us/-3.dds
 
     - colorable_areas:
         - id: fx4
@@ -233,12 +293,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-4.dds
-          - remastered/obj/B_EX140.a.gr/-4.dds
-          - remastered/obj/B_EX140.a.it/-4.dds
-          - remastered/obj/B_EX140.a.sp/-4.dds
-          - remastered/obj/B_EX140.a.us/-4.dds
-          - remastered/obj/B_EX140_LV99.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-4.dds
+            - remastered/obj/B_EX140.a.gr/-4.dds
+            - remastered/obj/B_EX140.a.it/-4.dds
+            - remastered/obj/B_EX140.a.sp/-4.dds
+            - remastered/obj/B_EX140.a.us/-4.dds
+            - remastered/obj/B_EX140_LV99.a.us/-4.dds
 
     - colorable_areas:
         - id: fx5
@@ -247,12 +309,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-5.dds
-          - remastered/obj/B_EX140.a.gr/-5.dds
-          - remastered/obj/B_EX140.a.it/-5.dds
-          - remastered/obj/B_EX140.a.sp/-5.dds
-          - remastered/obj/B_EX140.a.us/-5.dds
-          - remastered/obj/B_EX140_LV99.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-5.dds
+            - remastered/obj/B_EX140.a.gr/-5.dds
+            - remastered/obj/B_EX140.a.it/-5.dds
+            - remastered/obj/B_EX140.a.sp/-5.dds
+            - remastered/obj/B_EX140.a.us/-5.dds
+            - remastered/obj/B_EX140_LV99.a.us/-5.dds
 
     - colorable_areas:
         - id: fx6
@@ -261,12 +325,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-6.dds
-          - remastered/obj/B_EX140.a.gr/-6.dds
-          - remastered/obj/B_EX140.a.it/-6.dds
-          - remastered/obj/B_EX140.a.sp/-6.dds
-          - remastered/obj/B_EX140.a.us/-6.dds
-          - remastered/obj/B_EX140_LV99.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-6.dds
+            - remastered/obj/B_EX140.a.gr/-6.dds
+            - remastered/obj/B_EX140.a.it/-6.dds
+            - remastered/obj/B_EX140.a.sp/-6.dds
+            - remastered/obj/B_EX140.a.us/-6.dds
+            - remastered/obj/B_EX140_LV99.a.us/-6.dds
 
     - colorable_areas:
         - id: fx7
@@ -275,12 +341,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-7.dds
-          - remastered/obj/B_EX140.a.gr/-7.dds
-          - remastered/obj/B_EX140.a.it/-7.dds
-          - remastered/obj/B_EX140.a.sp/-7.dds
-          - remastered/obj/B_EX140.a.us/-7.dds
-          - remastered/obj/B_EX140_LV99.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-7.dds
+            - remastered/obj/B_EX140.a.gr/-7.dds
+            - remastered/obj/B_EX140.a.it/-7.dds
+            - remastered/obj/B_EX140.a.sp/-7.dds
+            - remastered/obj/B_EX140.a.us/-7.dds
+            - remastered/obj/B_EX140_LV99.a.us/-7.dds
 
     - colorable_areas:
         - id: fx8
@@ -289,12 +357,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-8.dds
-          - remastered/obj/B_EX140.a.gr/-8.dds
-          - remastered/obj/B_EX140.a.it/-8.dds
-          - remastered/obj/B_EX140.a.sp/-8.dds
-          - remastered/obj/B_EX140.a.us/-8.dds
-          - remastered/obj/B_EX140_LV99.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-8.dds
+            - remastered/obj/B_EX140.a.gr/-8.dds
+            - remastered/obj/B_EX140.a.it/-8.dds
+            - remastered/obj/B_EX140.a.sp/-8.dds
+            - remastered/obj/B_EX140.a.us/-8.dds
+            - remastered/obj/B_EX140_LV99.a.us/-8.dds
 
     - colorable_areas:
         - id: fx9
@@ -303,12 +373,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-9.dds
-          - remastered/obj/B_EX140.a.gr/-9.dds
-          - remastered/obj/B_EX140.a.it/-9.dds
-          - remastered/obj/B_EX140.a.sp/-9.dds
-          - remastered/obj/B_EX140.a.us/-9.dds
-          - remastered/obj/B_EX140_LV99.a.us/-9.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-9.dds
+            - remastered/obj/B_EX140.a.gr/-9.dds
+            - remastered/obj/B_EX140.a.it/-9.dds
+            - remastered/obj/B_EX140.a.sp/-9.dds
+            - remastered/obj/B_EX140.a.us/-9.dds
+            - remastered/obj/B_EX140_LV99.a.us/-9.dds
 
     - colorable_areas:
         - id: fx10
@@ -317,12 +389,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-10.dds
-          - remastered/obj/B_EX140.a.gr/-10.dds
-          - remastered/obj/B_EX140.a.it/-10.dds
-          - remastered/obj/B_EX140.a.sp/-10.dds
-          - remastered/obj/B_EX140.a.us/-10.dds
-          - remastered/obj/B_EX140_LV99.a.us/-10.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-10.dds
+            - remastered/obj/B_EX140.a.gr/-10.dds
+            - remastered/obj/B_EX140.a.it/-10.dds
+            - remastered/obj/B_EX140.a.sp/-10.dds
+            - remastered/obj/B_EX140.a.us/-10.dds
+            - remastered/obj/B_EX140_LV99.a.us/-10.dds
 
     - colorable_areas:
         - id: fx11
@@ -331,12 +405,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-11.dds
-          - remastered/obj/B_EX140.a.gr/-11.dds
-          - remastered/obj/B_EX140.a.it/-11.dds
-          - remastered/obj/B_EX140.a.sp/-11.dds
-          - remastered/obj/B_EX140.a.us/-11.dds
-          - remastered/obj/B_EX140_LV99.a.us/-11.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-11.dds
+            - remastered/obj/B_EX140.a.gr/-11.dds
+            - remastered/obj/B_EX140.a.it/-11.dds
+            - remastered/obj/B_EX140.a.sp/-11.dds
+            - remastered/obj/B_EX140.a.us/-11.dds
+            - remastered/obj/B_EX140_LV99.a.us/-11.dds
 
     - colorable_areas:
         - id: fx12
@@ -345,12 +421,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-12.dds
-          - remastered/obj/B_EX140.a.gr/-12.dds
-          - remastered/obj/B_EX140.a.it/-12.dds
-          - remastered/obj/B_EX140.a.sp/-12.dds
-          - remastered/obj/B_EX140.a.us/-12.dds
-          - remastered/obj/B_EX140_LV99.a.us/-12.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-12.dds
+            - remastered/obj/B_EX140.a.gr/-12.dds
+            - remastered/obj/B_EX140.a.it/-12.dds
+            - remastered/obj/B_EX140.a.sp/-12.dds
+            - remastered/obj/B_EX140.a.us/-12.dds
+            - remastered/obj/B_EX140_LV99.a.us/-12.dds
 
     - colorable_areas:
         - id: fx13
@@ -359,12 +437,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-13.dds
-          - remastered/obj/B_EX140.a.gr/-13.dds
-          - remastered/obj/B_EX140.a.it/-13.dds
-          - remastered/obj/B_EX140.a.sp/-13.dds
-          - remastered/obj/B_EX140.a.us/-13.dds
-          - remastered/obj/B_EX140_LV99.a.us/-13.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-13.dds
+            - remastered/obj/B_EX140.a.gr/-13.dds
+            - remastered/obj/B_EX140.a.it/-13.dds
+            - remastered/obj/B_EX140.a.sp/-13.dds
+            - remastered/obj/B_EX140.a.us/-13.dds
+            - remastered/obj/B_EX140_LV99.a.us/-13.dds
 
     - colorable_areas:
         - id: fx14
@@ -373,12 +453,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-14.dds
-          - remastered/obj/B_EX140.a.gr/-14.dds
-          - remastered/obj/B_EX140.a.it/-14.dds
-          - remastered/obj/B_EX140.a.sp/-14.dds
-          - remastered/obj/B_EX140.a.us/-14.dds
-          - remastered/obj/B_EX140_LV99.a.us/-14.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-14.dds
+            - remastered/obj/B_EX140.a.gr/-14.dds
+            - remastered/obj/B_EX140.a.it/-14.dds
+            - remastered/obj/B_EX140.a.sp/-14.dds
+            - remastered/obj/B_EX140.a.us/-14.dds
+            - remastered/obj/B_EX140_LV99.a.us/-14.dds
 
     - colorable_areas:
         - id: fx15
@@ -387,12 +469,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-15.dds
-          - remastered/obj/B_EX140.a.gr/-15.dds
-          - remastered/obj/B_EX140.a.it/-15.dds
-          - remastered/obj/B_EX140.a.sp/-15.dds
-          - remastered/obj/B_EX140.a.us/-15.dds
-          - remastered/obj/B_EX140_LV99.a.us/-15.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-15.dds
+            - remastered/obj/B_EX140.a.gr/-15.dds
+            - remastered/obj/B_EX140.a.it/-15.dds
+            - remastered/obj/B_EX140.a.sp/-15.dds
+            - remastered/obj/B_EX140.a.us/-15.dds
+            - remastered/obj/B_EX140_LV99.a.us/-15.dds
 
     - colorable_areas:
         - id: fx16
@@ -401,12 +485,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-16.dds
-          - remastered/obj/B_EX140.a.gr/-16.dds
-          - remastered/obj/B_EX140.a.it/-16.dds
-          - remastered/obj/B_EX140.a.sp/-16.dds
-          - remastered/obj/B_EX140.a.us/-16.dds
-          - remastered/obj/B_EX140_LV99.a.us/-16.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-16.dds
+            - remastered/obj/B_EX140.a.gr/-16.dds
+            - remastered/obj/B_EX140.a.it/-16.dds
+            - remastered/obj/B_EX140.a.sp/-16.dds
+            - remastered/obj/B_EX140.a.us/-16.dds
+            - remastered/obj/B_EX140_LV99.a.us/-16.dds
 
     - colorable_areas:
         - id: fx17
@@ -415,12 +501,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-17.dds
-          - remastered/obj/B_EX140.a.gr/-17.dds
-          - remastered/obj/B_EX140.a.it/-17.dds
-          - remastered/obj/B_EX140.a.sp/-17.dds
-          - remastered/obj/B_EX140.a.us/-17.dds
-          - remastered/obj/B_EX140_LV99.a.us/-17.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-17.dds
+            - remastered/obj/B_EX140.a.gr/-17.dds
+            - remastered/obj/B_EX140.a.it/-17.dds
+            - remastered/obj/B_EX140.a.sp/-17.dds
+            - remastered/obj/B_EX140.a.us/-17.dds
+            - remastered/obj/B_EX140_LV99.a.us/-17.dds
 
     - colorable_areas:
         - id: fx18
@@ -429,12 +517,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-18.dds
-          - remastered/obj/B_EX140.a.gr/-18.dds
-          - remastered/obj/B_EX140.a.it/-18.dds
-          - remastered/obj/B_EX140.a.sp/-18.dds
-          - remastered/obj/B_EX140.a.us/-18.dds
-          - remastered/obj/B_EX140_LV99.a.us/-18.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-18.dds
+            - remastered/obj/B_EX140.a.gr/-18.dds
+            - remastered/obj/B_EX140.a.it/-18.dds
+            - remastered/obj/B_EX140.a.sp/-18.dds
+            - remastered/obj/B_EX140.a.us/-18.dds
+            - remastered/obj/B_EX140_LV99.a.us/-18.dds
 
     - colorable_areas:
         - id: fx19
@@ -443,12 +533,14 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-19.dds
-          - remastered/obj/B_EX140.a.gr/-19.dds
-          - remastered/obj/B_EX140.a.it/-19.dds
-          - remastered/obj/B_EX140.a.sp/-19.dds
-          - remastered/obj/B_EX140.a.us/-19.dds
-          - remastered/obj/B_EX140_LV99.a.us/-19.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-19.dds
+            - remastered/obj/B_EX140.a.gr/-19.dds
+            - remastered/obj/B_EX140.a.it/-19.dds
+            - remastered/obj/B_EX140.a.sp/-19.dds
+            - remastered/obj/B_EX140.a.us/-19.dds
+            - remastered/obj/B_EX140_LV99.a.us/-19.dds
 
     - colorable_areas:
         - id: fx20
@@ -457,9 +549,11 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX140.a.fr/-20.dds
-          - remastered/obj/B_EX140.a.gr/-20.dds
-          - remastered/obj/B_EX140.a.it/-20.dds
-          - remastered/obj/B_EX140.a.sp/-20.dds
-          - remastered/obj/B_EX140.a.us/-20.dds
-          - remastered/obj/B_EX140_LV99.a.us/-20.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX140.a.fr/-20.dds
+            - remastered/obj/B_EX140.a.gr/-20.dds
+            - remastered/obj/B_EX140.a.it/-20.dds
+            - remastered/obj/B_EX140.a.sp/-20.dds
+            - remastered/obj/B_EX140.a.us/-20.dds
+            - remastered/obj/B_EX140_LV99.a.us/-20.dds

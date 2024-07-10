@@ -3,6 +3,7 @@
   tags:
     - character
     - party
+    - baseline
   recolors:
     - colorable_areas:
         - id: cape
@@ -10,20 +11,26 @@
           hue_start: 245
           hue_end: 345
       image_groups:
-        - - remastered/obj/H_BB010.mdlx/-0.dds
-          - remastered/obj/H_BB010_TSURU.mdlx/-0.dds
-          - remastered/obj/P_BB000.mdlx/-1.dds
-          - remastered/obj/P_BB000_BTL.mdlx/-1.dds
-          - remastered/obj/P_BB000_RTN.mdlx/-1.dds
-          - remastered/obj/P_BB000_TSURU.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/H_BB010.mdlx/-0.dds
+            - remastered/obj/H_BB010_TSURU.mdlx/-0.dds
+            - remastered/obj/P_BB000.mdlx/-1.dds
+            - remastered/obj/P_BB000_BTL.mdlx/-1.dds
+            - remastered/obj/P_BB000_RTN.mdlx/-1.dds
+            - remastered/obj/P_BB000_TSURU.mdlx/-1.dds
 
-        - - remastered/obj/H_BB010.mdlx/-2.dds
-          - remastered/obj/H_BB010_TSURU.mdlx/-2.dds
+        - required: false
+          images:
+            - remastered/obj/H_BB010.mdlx/-2.dds
+            - remastered/obj/H_BB010_TSURU.mdlx/-2.dds
 
-        - - remastered/obj/P_BB000.mdlx/-0.dds
-          - remastered/obj/P_BB000_BTL.mdlx/-0.dds
-          - remastered/obj/P_BB000_RTN.mdlx/-0.dds
-          - remastered/obj/P_BB000_TSURU.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_BB000.mdlx/-0.dds
+            - remastered/obj/P_BB000_BTL.mdlx/-0.dds
+            - remastered/obj/P_BB000_RTN.mdlx/-0.dds
+            - remastered/obj/P_BB000_TSURU.mdlx/-0.dds
       previews: [ true, false, true ]
 
     - colorable_areas:
@@ -32,13 +39,17 @@
           hue_start: 165
           hue_end: 215
       image_groups:
-        - - remastered/obj/H_BB010.mdlx/-5.dds
-          - remastered/obj/H_BB010_TSURU.mdlx/-5.dds
+        - required: false
+          images:
+            - remastered/obj/H_BB010.mdlx/-5.dds
+            - remastered/obj/H_BB010_TSURU.mdlx/-5.dds
 
-        - - remastered/obj/P_BB000.mdlx/-8.dds
-          - remastered/obj/P_BB000_BTL.mdlx/-8.dds
-          - remastered/obj/P_BB000_RTN.mdlx/-8.dds
-          - remastered/obj/P_BB000_TSURU.mdlx/-8.dds
+        - required: true
+          images:
+            - remastered/obj/P_BB000.mdlx/-8.dds
+            - remastered/obj/P_BB000_BTL.mdlx/-8.dds
+            - remastered/obj/P_BB000_RTN.mdlx/-8.dds
+            - remastered/obj/P_BB000_TSURU.mdlx/-8.dds
       previews: [ false, true ]
 
 
@@ -53,10 +64,14 @@
           hue_start: 230
           hue_end: 300
       image_groups:
-        - - remastered/obj/H_BB020_TSURU.mdlx/-2.dds
+        - required: false
+          images:
+            - remastered/obj/H_BB020_TSURU.mdlx/-2.dds
 
-        - - remastered/obj/N_BB020_RTN.mdlx/-0.dds
-          - remastered/obj/N_BB020_TSURU.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_BB020_RTN.mdlx/-0.dds
+            - remastered/obj/N_BB020_TSURU.mdlx/-0.dds
       previews: [ true, false ]
 
 
@@ -71,20 +86,28 @@
           hue_start: 190
           hue_end: 230
       image_groups:
-        - - remastered/obj/H_BB030.mdlx/-2.dds
+        - required: false
+          images:
+            - remastered/obj/H_BB030.mdlx/-2.dds
 
-        - - remastered/obj/H_BB030.mdlx/-5.dds
+        - required: false
+          images:
+            - remastered/obj/H_BB030.mdlx/-5.dds
 
-        - - remastered/obj/H_BB030_TSURU.mdlx/-2.dds
-          - remastered/obj/N_BB010_RTN.mdlx/-4.dds
-          - remastered/obj/N_BB010_SIT_RTN.mdlx/-4.dds
-          - remastered/obj/N_BB010_TSURU.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/H_BB030_TSURU.mdlx/-2.dds
+            - remastered/obj/N_BB010_RTN.mdlx/-4.dds
+            - remastered/obj/N_BB010_SIT_RTN.mdlx/-4.dds
+            - remastered/obj/N_BB010_TSURU.mdlx/-4.dds
 
-        - - remastered/obj/H_BB030_TSURU.mdlx/-5.dds
-          - remastered/obj/N_BB010_RTN.mdlx/-7.dds
-          - remastered/obj/N_BB010_SIT_RTN.mdlx/-7.dds
-          - remastered/obj/N_BB010_TSURU.mdlx/-7.dds
-      previews: [ true, true, false, false ]
+        - required: true
+          images:
+            - remastered/obj/H_BB030_TSURU.mdlx/-5.dds
+            - remastered/obj/N_BB010_RTN.mdlx/-7.dds
+            - remastered/obj/N_BB010_SIT_RTN.mdlx/-7.dds
+            - remastered/obj/N_BB010_TSURU.mdlx/-7.dds
+      previews: [ false, false, true, true ]
 
 
 - id: belle_ball
@@ -98,15 +121,18 @@
           hue_start: 15
           hue_end: 75
       image_groups:
-        - - remastered/obj/H_BB040_TSURU.mdlx/-2.dds
-          - remastered/obj/N_BB090_RTN.mdlx/-4.dds
-          - remastered/obj/N_BB090_TSURU.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/H_BB040_TSURU.mdlx/-2.dds
+            - remastered/obj/N_BB090_RTN.mdlx/-4.dds
+            - remastered/obj/N_BB090_TSURU.mdlx/-4.dds
 
 
 - id: dark_thorn
   name: Dark Thorn
   tags:
     - heartless
+    - boss
   recolors:
     - colorable_areas:
         - id: accent_1
@@ -114,7 +140,9 @@
           hue_start: 150
           hue_end: 240
       image_groups:
-        - - remastered/obj/B_BB110.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_BB110.mdlx/-0.dds
 
     - colorable_areas:
         - id: accent_2
@@ -122,7 +150,9 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/B_BB110.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_BB110.mdlx/-2.dds
 
 
 - id: lumiere
@@ -136,13 +166,17 @@
           hue_start: 5
           hue_end: 55
       image_groups:
-        - - remastered/obj/N_BB060_BTL.mdlx/-2.dds
-          - remastered/obj/N_BB060_RTN.mdlx/-2.dds
-          - remastered/obj/N_BB060_TSURU.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/N_BB060_BTL.mdlx/-2.dds
+            - remastered/obj/N_BB060_RTN.mdlx/-2.dds
+            - remastered/obj/N_BB060_TSURU.mdlx/-2.dds
 
-        - - remastered/obj/N_BB060_BTL.mdlx/-3.dds
-          - remastered/obj/N_BB060_RTN.mdlx/-3.dds
-          - remastered/obj/N_BB060_TSURU.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/N_BB060_BTL.mdlx/-3.dds
+            - remastered/obj/N_BB060_RTN.mdlx/-3.dds
+            - remastered/obj/N_BB060_TSURU.mdlx/-3.dds
 
 
 - id: mrs_potts
@@ -160,19 +194,24 @@
           hue_start: 355
           hue_end: 85
       image_groups:
-        - - remastered/obj/N_BB070_BTL.mdlx/-0.dds
-          - remastered/obj/N_BB070_RTN.mdlx/-0.dds
-          - remastered/obj/N_BB070_TSURU.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_BB070_BTL.mdlx/-0.dds
+            - remastered/obj/N_BB070_RTN.mdlx/-0.dds
+            - remastered/obj/N_BB070_TSURU.mdlx/-0.dds
 
-        - - remastered/obj/N_BB070_BTL.mdlx/-1.dds
-          - remastered/obj/N_BB070_RTN.mdlx/-1.dds
-          - remastered/obj/N_BB070_TSURU.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/N_BB070_BTL.mdlx/-1.dds
+            - remastered/obj/N_BB070_RTN.mdlx/-1.dds
+            - remastered/obj/N_BB070_TSURU.mdlx/-1.dds
 
 
 - id: shadowstalker
   name: Shadowstalker
   tags:
     - heartless
+    - boss
   recolors:
     - colorable_areas:
         - id: body
@@ -180,19 +219,29 @@
           hue_start: 150
           hue_end: 240
       image_groups:
-        - - remastered/obj/B_BB120.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_BB120.mdlx/-0.dds
 
-        - - remastered/obj/B_BB120_GM.mdlx/-0.dds
+        - required: false
+          images:
+            - remastered/obj/B_BB120_GM.mdlx/-0.dds
 
-        - - remastered/obj/B_BB120.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_BB120.mdlx/-1.dds
 
-        - - remastered/obj/B_BB120_GM.mdlx/-1.dds
+        - required: false
+          images:
+            - remastered/obj/B_BB120_GM.mdlx/-1.dds
+      previews: [ true, false, true, false ]
 
 
 - id: thresholder
   name: Thresholder
   tags:
     - heartless
+    - boss
   recolors:
     - colorable_areas:
         - id: main
@@ -200,15 +249,24 @@
           hue_start: 180
           hue_end: 300
       image_groups:
-        - - remastered/obj/B_BB100.mdlx/-0.dds
-          - remastered/obj/B_BB100_TSURU.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_BB100.mdlx/-0.dds
+            - remastered/obj/B_BB100_TSURU.mdlx/-2.dds
 
-        - - remastered/obj/B_BB100_GM.mdlx/-0.dds
+        - required: false
+          images:
+            - remastered/obj/B_BB100_GM.mdlx/-0.dds
 
-        - - remastered/obj/B_BB100.mdlx/-1.dds
-          - remastered/obj/B_BB100_TSURU.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_BB100.mdlx/-1.dds
+            - remastered/obj/B_BB100_TSURU.mdlx/-1.dds
 
-        - - remastered/obj/B_BB100_GM.mdlx/-1.dds
+        - required: false
+          images:
+            - remastered/obj/B_BB100_GM.mdlx/-1.dds
+      previews: [ true, false, true, false ]
 
 
 - id: wardrobe
@@ -223,10 +281,12 @@
           mask_files:
             - static/recolors/masks/wardrobe/4_Doors.mask
       image_groups:
-        - - remastered/obj/N_BB080_BTL.mdlx/-4.dds
-          - remastered/obj/N_BB080_RTN.mdlx/-4.dds
-          - remastered/obj/N_BB080_TSURU.mdlx/-4.dds
-          - remastered/obj/N_BB080_TSURU1.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/N_BB080_BTL.mdlx/-4.dds
+            - remastered/obj/N_BB080_RTN.mdlx/-4.dds
+            - remastered/obj/N_BB080_TSURU.mdlx/-4.dds
+            - remastered/obj/N_BB080_TSURU1.mdlx/-4.dds
       previews: [ true ]
 
 
@@ -235,6 +295,8 @@
   version: 3
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: coat
@@ -245,11 +307,15 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/B_EX130.mdlx/-4.dds
-          - remastered/obj/B_EX130_LV99.mdlx/-4.dds
-          - remastered/obj/H_EX670.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.mdlx/-4.dds
+            - remastered/obj/B_EX130_LV99.mdlx/-4.dds
+            - remastered/obj/H_EX670.mdlx/-4.dds
 
-        - - remastered/obj/B_EX130_GM.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/B_EX130_GM.mdlx/-3.dds
       previews: [ true, false ]
 
     - colorable_areas:
@@ -258,16 +324,19 @@
           hue_start: 150
           hue_end: 300
       image_groups:
-        - - remastered/obj/B_EX130.mdlx/-5.dds
-          - remastered/obj/B_EX130_GM.mdlx/-4.dds
-          - remastered/obj/B_EX130_LV99.mdlx/-5.dds
-          - remastered/obj/H_EX670.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.mdlx/-5.dds
+            - remastered/obj/B_EX130_GM.mdlx/-4.dds
+            - remastered/obj/B_EX130_LV99.mdlx/-5.dds
+            - remastered/obj/H_EX670.mdlx/-1.dds
 
 
 - id: xaldin_fx
   name: Xaldin (Effects)
   tags:
     - effects
+    - boss
   recolors:
     - colorable_areas:
         - id: fx3
@@ -276,8 +345,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-3.dds
-          - remastered/obj/B_EX130_LV99.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-3.dds
+            - remastered/obj/B_EX130_LV99.a.us/-3.dds
 
     - colorable_areas:
         - id: fx4
@@ -286,8 +357,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-4.dds
-          - remastered/obj/B_EX130_LV99.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-4.dds
+            - remastered/obj/B_EX130_LV99.a.us/-4.dds
 
     - colorable_areas:
         - id: fx5
@@ -296,8 +369,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-5.dds
-          - remastered/obj/B_EX130_LV99.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-5.dds
+            - remastered/obj/B_EX130_LV99.a.us/-5.dds
 
     - colorable_areas:
         - id: fx6
@@ -306,8 +381,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-6.dds
-          - remastered/obj/B_EX130_LV99.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-6.dds
+            - remastered/obj/B_EX130_LV99.a.us/-6.dds
 
     - colorable_areas:
         - id: fx7
@@ -316,8 +393,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-7.dds
-          - remastered/obj/B_EX130_LV99.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-7.dds
+            - remastered/obj/B_EX130_LV99.a.us/-7.dds
 
     - colorable_areas:
         - id: fx8
@@ -325,8 +404,10 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-8.dds
-          - remastered/obj/B_EX130_LV99.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-8.dds
+            - remastered/obj/B_EX130_LV99.a.us/-8.dds
 
     - colorable_areas:
         - id: fx10
@@ -335,8 +416,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-10.dds
-          - remastered/obj/B_EX130_LV99.a.us/-10.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-10.dds
+            - remastered/obj/B_EX130_LV99.a.us/-10.dds
 
     - colorable_areas:
         - id: fx11
@@ -344,8 +427,10 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-11.dds
-          - remastered/obj/B_EX130_LV99.a.us/-11.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-11.dds
+            - remastered/obj/B_EX130_LV99.a.us/-11.dds
 
     - colorable_areas:
         - id: fx12
@@ -353,8 +438,10 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-12.dds
-          - remastered/obj/B_EX130_LV99.a.us/-12.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-12.dds
+            - remastered/obj/B_EX130_LV99.a.us/-12.dds
 
     - colorable_areas:
         - id: fx13
@@ -363,8 +450,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-13.dds
-          - remastered/obj/B_EX130_LV99.a.us/-13.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-13.dds
+            - remastered/obj/B_EX130_LV99.a.us/-13.dds
 
     - colorable_areas:
         - id: fx14
@@ -373,8 +462,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-14.dds
-          - remastered/obj/B_EX130_LV99.a.us/-14.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-14.dds
+            - remastered/obj/B_EX130_LV99.a.us/-14.dds
 
     - colorable_areas:
         - id: fx15
@@ -383,5 +474,7 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX130.a.us/-15.dds
-          - remastered/obj/B_EX130_LV99.a.us/-15.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX130.a.us/-15.dds
+            - remastered/obj/B_EX130_LV99.a.us/-15.dds

@@ -3,6 +3,7 @@
   tags:
     - character
     - party
+    - baseline
   recolors:
     - colorable_areas:
         - id: hat_body
@@ -10,8 +11,10 @@
           hue_start: 185
           hue_end: 215
       image_groups:
-        - - remastered/obj/P_LK020.mdlx/-0.dds
-          - remastered/obj/P_LK020_RTN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_LK020.mdlx/-0.dds
+            - remastered/obj/P_LK020_RTN.mdlx/-0.dds
 
     - colorable_areas:
         - id: wingtips
@@ -19,8 +22,10 @@
           hue_start: 205
           hue_end: 235
       image_groups:
-        - - remastered/obj/P_LK020.mdlx/-1.dds
-          - remastered/obj/P_LK020_RTN.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_LK020.mdlx/-1.dds
+            - remastered/obj/P_LK020_RTN.mdlx/-1.dds
 
 
 - id: goofy_pl
@@ -28,6 +33,7 @@
   tags:
     - character
     - party
+    - baseline
   recolors:
     - colorable_areas:
         - id: shell
@@ -35,8 +41,10 @@
           hue_start: 5
           hue_end: 85
       image_groups:
-        - - remastered/obj/P_LK030.mdlx/-0.dds
-          - remastered/obj/P_LK030_RTN.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_LK030.mdlx/-0.dds
+            - remastered/obj/P_LK030_RTN.mdlx/-0.dds
 
     - colorable_areas:
         - id: hat
@@ -44,8 +52,10 @@
           hue_start: 55
           hue_end: 85
       image_groups:
-        - - remastered/obj/P_LK030.mdlx/-1.dds
-          - remastered/obj/P_LK030_RTN.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_LK030.mdlx/-1.dds
+            - remastered/obj/P_LK030_RTN.mdlx/-1.dds
 
 
 - id: saix
@@ -53,6 +63,8 @@
   version: 3
   tags:
     - character
+    - boss
+    - baseline
   recolors:
     - colorable_areas:
         - id: coat
@@ -63,15 +75,19 @@
           new_saturation: 50
           value_offset: 15
       image_groups:
-        - - remastered/obj/B_EX160.mdlx/-0.dds
-          - remastered/obj/B_EX160_GM.mdlx/-0.dds
-          - remastered/obj/B_EX160_LV99.mdlx/-0.dds
-          - remastered/obj/H_EX680.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.mdlx/-0.dds
+            - remastered/obj/B_EX160_GM.mdlx/-0.dds
+            - remastered/obj/B_EX160_LV99.mdlx/-0.dds
+            - remastered/obj/H_EX680.mdlx/-2.dds
 
-        - - remastered/obj/B_EX160.mdlx/-1.dds
-          - remastered/obj/B_EX160_GM.mdlx/-1.dds
-          - remastered/obj/B_EX160_LV99.mdlx/-1.dds
-          - remastered/obj/H_EX680.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.mdlx/-1.dds
+            - remastered/obj/B_EX160_GM.mdlx/-1.dds
+            - remastered/obj/B_EX160_LV99.mdlx/-1.dds
+            - remastered/obj/H_EX680.mdlx/-3.dds
 
     - colorable_areas:
         - id: claymore_main
@@ -83,10 +99,12 @@
           hue_start: 0
           hue_end: 120
       image_groups:
-        - - remastered/obj/B_EX160.mdlx/-8.dds
-          - remastered/obj/B_EX160_GM.mdlx/-8.dds
-          - remastered/obj/B_EX160_LV99.mdlx/-8.dds
-          - remastered/obj/H_EX680.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.mdlx/-8.dds
+            - remastered/obj/B_EX160_GM.mdlx/-8.dds
+            - remastered/obj/B_EX160_LV99.mdlx/-8.dds
+            - remastered/obj/H_EX680.mdlx/-0.dds
 
 
 - id: saix_arena
@@ -104,7 +122,9 @@
           hue_start: 201
           hue_end: 300
       image_groups:
-        - - remastered/map/eh15.map/-54.dds
+        - required: true
+          images:
+            - remastered/map/eh15.map/-54.dds
 
 
 - id: saix_fx
@@ -119,8 +139,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX160.a.us/-5.dds
-          - remastered/obj/B_EX160_LV99.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.a.us/-5.dds
+            - remastered/obj/B_EX160_LV99.a.us/-5.dds
 
     - colorable_areas:
         - id: fx6
@@ -129,8 +151,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX160.a.us/-6.dds
-          - remastered/obj/B_EX160_LV99.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.a.us/-6.dds
+            - remastered/obj/B_EX160_LV99.a.us/-6.dds
 
     - colorable_areas:
         - id: fx9
@@ -139,10 +163,12 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX160.a.us/-9.dds
-          - remastered/obj/B_EX160_LV99.a.us/-9.dds
-          - remastered/obj/B_EX160.a.us/-10.dds
-          - remastered/obj/B_EX160_LV99.a.us/-10.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.a.us/-9.dds
+            - remastered/obj/B_EX160_LV99.a.us/-9.dds
+            - remastered/obj/B_EX160.a.us/-10.dds
+            - remastered/obj/B_EX160_LV99.a.us/-10.dds
 
     - colorable_areas:
         - id: fx13
@@ -151,8 +177,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX160.a.us/-13.dds
-          - remastered/obj/B_EX160_LV99.a.us/-13.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.a.us/-13.dds
+            - remastered/obj/B_EX160_LV99.a.us/-13.dds
 
     - colorable_areas:
         - id: fx14
@@ -161,8 +189,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX160.a.us/-14.dds
-          - remastered/obj/B_EX160_LV99.a.us/-14.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.a.us/-14.dds
+            - remastered/obj/B_EX160_LV99.a.us/-14.dds
 
     - colorable_areas:
         - id: fx15
@@ -171,8 +201,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX160.a.us/-15.dds
-          - remastered/obj/B_EX160_LV99.a.us/-15.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.a.us/-15.dds
+            - remastered/obj/B_EX160_LV99.a.us/-15.dds
 
     - colorable_areas:
         - id: fx16
@@ -181,5 +213,7 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/B_EX160.a.us/-16.dds
-          - remastered/obj/B_EX160_LV99.a.us/-16.dds
+        - required: true
+          images:
+            - remastered/obj/B_EX160.a.us/-16.dds
+            - remastered/obj/B_EX160_LV99.a.us/-16.dds

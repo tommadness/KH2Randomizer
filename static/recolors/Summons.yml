@@ -3,6 +3,7 @@
   tags:
     - character
     - summon
+    - baseline
   recolors:
     - colorable_areas:
         - id: shirt
@@ -10,13 +11,17 @@
           hue_start: 55
           hue_end: 95
       image_groups:
-        - - remastered/obj/P_EX350.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX350.mdlx/-0.dds
 
-        - - remastered/obj/P_EX350.a.fr/-15.png
-          - remastered/obj/P_EX350.a.gr/-15.png
-          - remastered/obj/P_EX350.a.it/-15.png
-          - remastered/obj/P_EX350.a.sp/-15.png
-          - remastered/obj/P_EX350.a.us/-15.png
+        - required: true
+          images:
+            - remastered/obj/P_EX350.a.fr/-15.png
+            - remastered/obj/P_EX350.a.gr/-15.png
+            - remastered/obj/P_EX350.a.it/-15.png
+            - remastered/obj/P_EX350.a.sp/-15.png
+            - remastered/obj/P_EX350.a.us/-15.png
 
 
 - id: chicken_little_fx
@@ -38,11 +43,13 @@
           hue_start: 330
           hue_end: 30
       image_groups:
-        - - remastered/obj/P_EX350.a.fr/-0.png
-          - remastered/obj/P_EX350.a.gr/-0.png
-          - remastered/obj/P_EX350.a.it/-0.png
-          - remastered/obj/P_EX350.a.sp/-0.png
-          - remastered/obj/P_EX350.a.us/-0.png
+        - required: true
+          images:
+            - remastered/obj/P_EX350.a.fr/-0.png
+            - remastered/obj/P_EX350.a.gr/-0.png
+            - remastered/obj/P_EX350.a.it/-0.png
+            - remastered/obj/P_EX350.a.sp/-0.png
+            - remastered/obj/P_EX350.a.us/-0.png
 
     - colorable_areas:
         - id: effect_1
@@ -51,11 +58,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX350.a.fr/-1.png
-          - remastered/obj/P_EX350.a.gr/-1.png
-          - remastered/obj/P_EX350.a.it/-1.png
-          - remastered/obj/P_EX350.a.sp/-1.png
-          - remastered/obj/P_EX350.a.us/-1.png
+        - required: true
+          images:
+            - remastered/obj/P_EX350.a.fr/-1.png
+            - remastered/obj/P_EX350.a.gr/-1.png
+            - remastered/obj/P_EX350.a.it/-1.png
+            - remastered/obj/P_EX350.a.sp/-1.png
+            - remastered/obj/P_EX350.a.us/-1.png
 
     - colorable_areas:
         - id: effect_2
@@ -64,11 +73,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX350.a.fr/-2.png
-          - remastered/obj/P_EX350.a.gr/-2.png
-          - remastered/obj/P_EX350.a.it/-2.png
-          - remastered/obj/P_EX350.a.sp/-2.png
-          - remastered/obj/P_EX350.a.us/-2.png
+        - required: true
+          images:
+            - remastered/obj/P_EX350.a.fr/-2.png
+            - remastered/obj/P_EX350.a.gr/-2.png
+            - remastered/obj/P_EX350.a.it/-2.png
+            - remastered/obj/P_EX350.a.sp/-2.png
+            - remastered/obj/P_EX350.a.us/-2.png
 
     - colorable_areas:
         - id: effect_3
@@ -77,11 +88,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX350.a.fr/-3.png
-          - remastered/obj/P_EX350.a.gr/-3.png
-          - remastered/obj/P_EX350.a.it/-3.png
-          - remastered/obj/P_EX350.a.sp/-3.png
-          - remastered/obj/P_EX350.a.us/-3.png
+        - required: true
+          images:
+            - remastered/obj/P_EX350.a.fr/-3.png
+            - remastered/obj/P_EX350.a.gr/-3.png
+            - remastered/obj/P_EX350.a.it/-3.png
+            - remastered/obj/P_EX350.a.sp/-3.png
+            - remastered/obj/P_EX350.a.us/-3.png
 
     - colorable_areas:
         - id: effect_4
@@ -90,11 +103,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX350.a.fr/-4.png
-          - remastered/obj/P_EX350.a.gr/-4.png
-          - remastered/obj/P_EX350.a.it/-4.png
-          - remastered/obj/P_EX350.a.sp/-4.png
-          - remastered/obj/P_EX350.a.us/-4.png
+        - required: true
+          images:
+            - remastered/obj/P_EX350.a.fr/-4.png
+            - remastered/obj/P_EX350.a.gr/-4.png
+            - remastered/obj/P_EX350.a.it/-4.png
+            - remastered/obj/P_EX350.a.sp/-4.png
+            - remastered/obj/P_EX350.a.us/-4.png
 
     - colorable_areas:
         - id: effect_6
@@ -103,11 +118,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX350.a.fr/-6.png
-          - remastered/obj/P_EX350.a.gr/-6.png
-          - remastered/obj/P_EX350.a.it/-6.png
-          - remastered/obj/P_EX350.a.sp/-6.png
-          - remastered/obj/P_EX350.a.us/-6.png
+        - required: true
+          images:
+            - remastered/obj/P_EX350.a.fr/-6.png
+            - remastered/obj/P_EX350.a.gr/-6.png
+            - remastered/obj/P_EX350.a.it/-6.png
+            - remastered/obj/P_EX350.a.sp/-6.png
+            - remastered/obj/P_EX350.a.us/-6.png
 
 
 - id: genie
@@ -115,6 +132,7 @@
   tags:
     - character
     - summon
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -122,40 +140,74 @@
           hue_start: 190
           hue_end: 240
       image_groups:
-        - - remastered/obj/H_AL030.mdlx/-0.dds
+        - required: false
+          images:
+            - remastered/obj/H_AL030.mdlx/-0.dds
 
-        - - remastered/obj/N_AL050_MATSU.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL050_MATSU.mdlx/-3.dds
 
-        - - remastered/obj/H_AL030.mdlx/-1.dds
+        - required: false
+          images:
+            - remastered/obj/H_AL030.mdlx/-1.dds
 
-        - - remastered/obj/N_AL050_MATSU.mdlx/-6.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL050_MATSU.mdlx/-6.dds
 
-        - - remastered/obj/H_AL030.mdlx/-2.dds
+        - required: false
+          images:
+            - remastered/obj/H_AL030.mdlx/-2.dds
 
-        - - remastered/obj/N_AL050_MATSU.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL050_MATSU.mdlx/-0.dds
 
-        - - remastered/obj/H_AL030.mdlx/-3.dds
+        - required: false
+          images:
+            - remastered/obj/H_AL030.mdlx/-3.dds
 
-        - - remastered/obj/N_AL050_MATSU.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL050_MATSU.mdlx/-5.dds
 
-        - - remastered/obj/H_AL030.mdlx/-4.dds
+        - required: false
+          images:
+            - remastered/obj/H_AL030.mdlx/-4.dds
 
-        - - remastered/obj/N_AL050_MATSU.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL050_MATSU.mdlx/-1.dds
 
-        - - remastered/obj/P_AL010.mdlx/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.mdlx/-3.dds
 
-        - - remastered/obj/H_AL030.mdlx/-6.dds
+        - required: false
+          images:
+            - remastered/obj/H_AL030.mdlx/-6.dds
 
-        - - remastered/obj/N_AL050_MATSU.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL050_MATSU.mdlx/-2.dds
 
-        - - remastered/obj/P_AL010.mdlx/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.mdlx/-4.dds
 
-        - - remastered/obj/N_AL050_MATSU.mdlx/-7.dds
+        - required: true
+          images:
+            - remastered/obj/N_AL050_MATSU.mdlx/-7.dds
 
-        - - remastered/obj/P_AL010.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.mdlx/-2.dds
 
-        - - remastered/obj/P_AL010.a.us/-21.dds
-      previews: [ false, false, true, false, true, false, false, false, true, false, false, false, false, false, false, false, true ]
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-21.dds
+      previews: [ false, true, false, false, true, false, false, false, true, false, false, false, false, false, false, false, true ]
 
     - colorable_areas:
         - id: valor
@@ -163,7 +215,9 @@
           hue_start: 350
           hue_end: 30
       image_groups:
-        - - remastered/obj/P_AL010.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.mdlx/-1.dds
 
     - colorable_areas:
         - id: wisdom
@@ -171,7 +225,9 @@
           hue_start: 190
           hue_end: 230
       image_groups:
-        - - remastered/obj/P_AL010.mdlx/-9.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.mdlx/-9.dds
 
     - colorable_areas:
         - id: master
@@ -179,7 +235,9 @@
           hue_start: 10
           hue_end: 90
       image_groups:
-        - - remastered/obj/P_AL010.mdlx/-10.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.mdlx/-10.dds
 
 
 - id: genie_fx
@@ -194,9 +252,11 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-0.dds
-          - remastered/obj/P_AL010.a.us/-10.dds
-          - remastered/obj/P_AL010.a.us/-17.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-0.dds
+            - remastered/obj/P_AL010.a.us/-10.dds
+            - remastered/obj/P_AL010.a.us/-17.dds
 
     - colorable_areas:
         - id: effect_1
@@ -204,8 +264,10 @@
           hue_start: 180
           hue_end: 270
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-1.dds
-          - remastered/obj/P_AL010.a.us/-16.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-1.dds
+            - remastered/obj/P_AL010.a.us/-16.dds
 
     - colorable_areas:
         - id: effect_2
@@ -214,7 +276,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-2.dds
 
     - colorable_areas:
         - id: effect_3
@@ -223,7 +287,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-3.dds
 
     - colorable_areas:
         - id: effect_4
@@ -232,7 +298,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-4.dds
 
     - colorable_areas:
         - id: effect_5
@@ -241,7 +309,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-5.dds
 
     - colorable_areas:
         - id: effect_6
@@ -249,8 +319,10 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-6.dds
-          - remastered/obj/P_AL010.a.us/-12.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-6.dds
+            - remastered/obj/P_AL010.a.us/-12.dds
 
     - colorable_areas:
         - id: effect_7
@@ -259,7 +331,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-7.dds
 
     - colorable_areas:
         - id: effect_8
@@ -268,8 +342,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-8.dds
-          - remastered/obj/P_AL010.a.us/-19.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-8.dds
+            - remastered/obj/P_AL010.a.us/-19.dds
 
     - colorable_areas:
         - id: effect_9
@@ -278,7 +354,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-9.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-9.dds
 
     - colorable_areas:
         - id: effect_11
@@ -286,7 +364,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-11.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-11.dds
 
     - colorable_areas:
         - id: effect_13
@@ -295,7 +375,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-13.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-13.dds
 
     - colorable_areas:
         - id: effect_14
@@ -304,7 +386,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-14.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-14.dds
 
     - colorable_areas:
         - id: effect_15
@@ -313,7 +397,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-15.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-15.dds
 
     - colorable_areas:
         - id: effect_18
@@ -321,7 +407,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-18.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-18.dds
 
     - colorable_areas:
         - id: effect_20
@@ -329,7 +417,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/P_AL010.a.us/-20.dds
+        - required: true
+          images:
+            - remastered/obj/P_AL010.a.us/-20.dds
 
 
 - id: peter_pan
@@ -337,6 +427,7 @@
   tags:
     - character
     - summon
+    - baseline
   recolors:
     - colorable_areas:
         - id: outfit
@@ -344,13 +435,21 @@
           hue_start: 50
           hue_end: 119
       image_groups:
-        - - remastered/obj/P_EX330.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.mdlx/-0.dds
 
-        - - remastered/obj/P_EX330.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.mdlx/-1.dds
 
-        - - remastered/obj/P_EX330.mdlx/-5.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.mdlx/-5.dds
 
-        - - remastered/obj/P_EX330.a.us/-10.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.a.us/-10.dds
 
 
 - id: peter_pan_fx
@@ -366,7 +465,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX330.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.a.us/-1.dds
 
     - colorable_areas:
         - id: effect_5
@@ -375,7 +476,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX330.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.a.us/-5.dds
 
     - colorable_areas:
         - id: effect_6
@@ -384,7 +487,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX330.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.a.us/-6.dds
 
     - colorable_areas:
         - id: effect_7
@@ -393,7 +498,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX330.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.a.us/-7.dds
 
     - colorable_areas:
         - id: effect_8
@@ -402,7 +509,9 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX330.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.a.us/-8.dds
 
     - colorable_areas:
         - id: effect_9
@@ -410,7 +519,9 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/P_EX330.a.us/-9.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX330.a.us/-9.dds
 
 
 - id: stitch
@@ -418,6 +529,7 @@
   tags:
     - character
     - summon
+    - baseline
   recolors:
     - colorable_areas:
         - id: main
@@ -425,17 +537,23 @@
           hue_start: 165
           hue_end: 235
       image_groups:
-        - - remastered/obj/N_HB040_BTL.mdlx/-0.dds
-          - remastered/obj/N_HB040_TSURU.mdlx/-0.dds
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.mdlx/-0.dds
+            - remastered/obj/N_HB040_TSURU.mdlx/-0.dds
 
-        - - remastered/obj/N_HB040_BTL.mdlx/-1.dds
-          - remastered/obj/N_HB040_TSURU.mdlx/-1.dds
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.mdlx/-1.dds
+            - remastered/obj/N_HB040_TSURU.mdlx/-1.dds
 
-        - - remastered/obj/N_HB040_BTL.a.fr/-18.png
-          - remastered/obj/N_HB040_BTL.a.gr/-18.png
-          - remastered/obj/N_HB040_BTL.a.it/-18.png
-          - remastered/obj/N_HB040_BTL.a.sp/-18.png
-          - remastered/obj/N_HB040_BTL.a.us/-18.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-18.png
+            - remastered/obj/N_HB040_BTL.a.gr/-18.png
+            - remastered/obj/N_HB040_BTL.a.it/-18.png
+            - remastered/obj/N_HB040_BTL.a.sp/-18.png
+            - remastered/obj/N_HB040_BTL.a.us/-18.png
 
     - colorable_areas:
         - id: ukulele
@@ -443,8 +561,10 @@
           hue_start: 355
           hue_end: 75
       image_groups:
-        - - remastered/obj/N_HB040_BTL.mdlx/-2.dds
-          - remastered/obj/N_HB040_TSURU.mdlx/-2.dds
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.mdlx/-2.dds
+            - remastered/obj/N_HB040_TSURU.mdlx/-2.dds
 
 
 - id: stitch_fx
@@ -460,11 +580,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-0.png
-          - remastered/obj/N_HB040_BTL.a.gr/-0.png
-          - remastered/obj/N_HB040_BTL.a.it/-0.png
-          - remastered/obj/N_HB040_BTL.a.sp/-0.png
-          - remastered/obj/N_HB040_BTL.a.us/-0.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-0.png
+            - remastered/obj/N_HB040_BTL.a.gr/-0.png
+            - remastered/obj/N_HB040_BTL.a.it/-0.png
+            - remastered/obj/N_HB040_BTL.a.sp/-0.png
+            - remastered/obj/N_HB040_BTL.a.us/-0.png
 
     - colorable_areas:
         - id: effect_1
@@ -472,11 +594,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-1.png
-          - remastered/obj/N_HB040_BTL.a.gr/-1.png
-          - remastered/obj/N_HB040_BTL.a.it/-1.png
-          - remastered/obj/N_HB040_BTL.a.sp/-1.png
-          - remastered/obj/N_HB040_BTL.a.us/-1.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-1.png
+            - remastered/obj/N_HB040_BTL.a.gr/-1.png
+            - remastered/obj/N_HB040_BTL.a.it/-1.png
+            - remastered/obj/N_HB040_BTL.a.sp/-1.png
+            - remastered/obj/N_HB040_BTL.a.us/-1.png
 
     - colorable_areas:
         - id: effect_3
@@ -485,11 +609,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-3.png
-          - remastered/obj/N_HB040_BTL.a.gr/-3.png
-          - remastered/obj/N_HB040_BTL.a.it/-3.png
-          - remastered/obj/N_HB040_BTL.a.sp/-3.png
-          - remastered/obj/N_HB040_BTL.a.us/-3.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-3.png
+            - remastered/obj/N_HB040_BTL.a.gr/-3.png
+            - remastered/obj/N_HB040_BTL.a.it/-3.png
+            - remastered/obj/N_HB040_BTL.a.sp/-3.png
+            - remastered/obj/N_HB040_BTL.a.us/-3.png
 
     - colorable_areas:
         - id: effect_4
@@ -498,11 +624,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-4.png
-          - remastered/obj/N_HB040_BTL.a.gr/-4.png
-          - remastered/obj/N_HB040_BTL.a.it/-4.png
-          - remastered/obj/N_HB040_BTL.a.sp/-4.png
-          - remastered/obj/N_HB040_BTL.a.us/-4.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-4.png
+            - remastered/obj/N_HB040_BTL.a.gr/-4.png
+            - remastered/obj/N_HB040_BTL.a.it/-4.png
+            - remastered/obj/N_HB040_BTL.a.sp/-4.png
+            - remastered/obj/N_HB040_BTL.a.us/-4.png
 
     - colorable_areas:
         - id: effect_6
@@ -510,11 +638,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-6.png
-          - remastered/obj/N_HB040_BTL.a.gr/-6.png
-          - remastered/obj/N_HB040_BTL.a.it/-6.png
-          - remastered/obj/N_HB040_BTL.a.sp/-6.png
-          - remastered/obj/N_HB040_BTL.a.us/-6.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-6.png
+            - remastered/obj/N_HB040_BTL.a.gr/-6.png
+            - remastered/obj/N_HB040_BTL.a.it/-6.png
+            - remastered/obj/N_HB040_BTL.a.sp/-6.png
+            - remastered/obj/N_HB040_BTL.a.us/-6.png
 
     - colorable_areas:
         - id: effect_7
@@ -522,11 +652,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-7.png
-          - remastered/obj/N_HB040_BTL.a.gr/-7.png
-          - remastered/obj/N_HB040_BTL.a.it/-7.png
-          - remastered/obj/N_HB040_BTL.a.sp/-7.png
-          - remastered/obj/N_HB040_BTL.a.us/-7.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-7.png
+            - remastered/obj/N_HB040_BTL.a.gr/-7.png
+            - remastered/obj/N_HB040_BTL.a.it/-7.png
+            - remastered/obj/N_HB040_BTL.a.sp/-7.png
+            - remastered/obj/N_HB040_BTL.a.us/-7.png
 
     - colorable_areas:
         - id: effect_8
@@ -534,11 +666,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-8.png
-          - remastered/obj/N_HB040_BTL.a.gr/-8.png
-          - remastered/obj/N_HB040_BTL.a.it/-8.png
-          - remastered/obj/N_HB040_BTL.a.sp/-8.png
-          - remastered/obj/N_HB040_BTL.a.us/-8.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-8.png
+            - remastered/obj/N_HB040_BTL.a.gr/-8.png
+            - remastered/obj/N_HB040_BTL.a.it/-8.png
+            - remastered/obj/N_HB040_BTL.a.sp/-8.png
+            - remastered/obj/N_HB040_BTL.a.us/-8.png
 
     - colorable_areas:
         - id: effect_9
@@ -547,11 +681,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-9.png
-          - remastered/obj/N_HB040_BTL.a.gr/-9.png
-          - remastered/obj/N_HB040_BTL.a.it/-9.png
-          - remastered/obj/N_HB040_BTL.a.sp/-9.png
-          - remastered/obj/N_HB040_BTL.a.us/-9.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-9.png
+            - remastered/obj/N_HB040_BTL.a.gr/-9.png
+            - remastered/obj/N_HB040_BTL.a.it/-9.png
+            - remastered/obj/N_HB040_BTL.a.sp/-9.png
+            - remastered/obj/N_HB040_BTL.a.us/-9.png
 
     - colorable_areas:
         - id: effect_10
@@ -559,11 +695,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-10.png
-          - remastered/obj/N_HB040_BTL.a.gr/-10.png
-          - remastered/obj/N_HB040_BTL.a.it/-10.png
-          - remastered/obj/N_HB040_BTL.a.sp/-10.png
-          - remastered/obj/N_HB040_BTL.a.us/-10.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-10.png
+            - remastered/obj/N_HB040_BTL.a.gr/-10.png
+            - remastered/obj/N_HB040_BTL.a.it/-10.png
+            - remastered/obj/N_HB040_BTL.a.sp/-10.png
+            - remastered/obj/N_HB040_BTL.a.us/-10.png
 
     - colorable_areas:
         - id: effect_11
@@ -571,11 +709,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-11.png
-          - remastered/obj/N_HB040_BTL.a.gr/-11.png
-          - remastered/obj/N_HB040_BTL.a.it/-11.png
-          - remastered/obj/N_HB040_BTL.a.sp/-11.png
-          - remastered/obj/N_HB040_BTL.a.us/-11.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-11.png
+            - remastered/obj/N_HB040_BTL.a.gr/-11.png
+            - remastered/obj/N_HB040_BTL.a.it/-11.png
+            - remastered/obj/N_HB040_BTL.a.sp/-11.png
+            - remastered/obj/N_HB040_BTL.a.us/-11.png
 
     - colorable_areas:
         - id: effect_12
@@ -583,11 +723,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-12.png
-          - remastered/obj/N_HB040_BTL.a.gr/-12.png
-          - remastered/obj/N_HB040_BTL.a.it/-12.png
-          - remastered/obj/N_HB040_BTL.a.sp/-12.png
-          - remastered/obj/N_HB040_BTL.a.us/-12.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-12.png
+            - remastered/obj/N_HB040_BTL.a.gr/-12.png
+            - remastered/obj/N_HB040_BTL.a.it/-12.png
+            - remastered/obj/N_HB040_BTL.a.sp/-12.png
+            - remastered/obj/N_HB040_BTL.a.us/-12.png
 
     - colorable_areas:
         - id: effect_15
@@ -596,11 +738,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-15.png
-          - remastered/obj/N_HB040_BTL.a.gr/-15.png
-          - remastered/obj/N_HB040_BTL.a.it/-15.png
-          - remastered/obj/N_HB040_BTL.a.sp/-15.png
-          - remastered/obj/N_HB040_BTL.a.us/-15.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-15.png
+            - remastered/obj/N_HB040_BTL.a.gr/-15.png
+            - remastered/obj/N_HB040_BTL.a.it/-15.png
+            - remastered/obj/N_HB040_BTL.a.sp/-15.png
+            - remastered/obj/N_HB040_BTL.a.us/-15.png
 
     - colorable_areas:
         - id: effect_16
@@ -608,11 +752,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-16.png
-          - remastered/obj/N_HB040_BTL.a.gr/-16.png
-          - remastered/obj/N_HB040_BTL.a.it/-16.png
-          - remastered/obj/N_HB040_BTL.a.sp/-16.png
-          - remastered/obj/N_HB040_BTL.a.us/-16.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-16.png
+            - remastered/obj/N_HB040_BTL.a.gr/-16.png
+            - remastered/obj/N_HB040_BTL.a.it/-16.png
+            - remastered/obj/N_HB040_BTL.a.sp/-16.png
+            - remastered/obj/N_HB040_BTL.a.us/-16.png
 
     - colorable_areas:
         - id: effect_17
@@ -620,8 +766,10 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/obj/N_HB040_BTL.a.fr/-17.png
-          - remastered/obj/N_HB040_BTL.a.gr/-17.png
-          - remastered/obj/N_HB040_BTL.a.it/-17.png
-          - remastered/obj/N_HB040_BTL.a.sp/-17.png
-          - remastered/obj/N_HB040_BTL.a.us/-17.png
+        - required: true
+          images:
+            - remastered/obj/N_HB040_BTL.a.fr/-17.png
+            - remastered/obj/N_HB040_BTL.a.gr/-17.png
+            - remastered/obj/N_HB040_BTL.a.it/-17.png
+            - remastered/obj/N_HB040_BTL.a.sp/-17.png
+            - remastered/obj/N_HB040_BTL.a.us/-17.png

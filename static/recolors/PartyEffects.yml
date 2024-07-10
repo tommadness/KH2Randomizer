@@ -11,11 +11,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald.bar/FR_donald_bar0.dds
-          - remastered/limit/gr/donald.bar/GR_donald_bar0.dds
-          - remastered/limit/it/donald.bar/IT_donald_bar0.dds
-          - remastered/limit/sp/donald.bar/SP_donald_bar0.dds
-          - remastered/limit/us/donald.bar/US_donald_bar0.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald.bar/FR_donald_bar0.dds
+            - remastered/limit/gr/donald.bar/GR_donald_bar0.dds
+            - remastered/limit/it/donald.bar/IT_donald_bar0.dds
+            - remastered/limit/sp/donald.bar/SP_donald_bar0.dds
+            - remastered/limit/us/donald.bar/US_donald_bar0.dds
 
     - colorable_areas:
         - id: fx1
@@ -24,11 +26,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald.bar/FR_donald_bar1.dds
-          - remastered/limit/gr/donald.bar/GR_donald_bar1.dds
-          - remastered/limit/it/donald.bar/IT_donald_bar1.dds
-          - remastered/limit/sp/donald.bar/SP_donald_bar1.dds
-          - remastered/limit/us/donald.bar/US_donald_bar1.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald.bar/FR_donald_bar1.dds
+            - remastered/limit/gr/donald.bar/GR_donald_bar1.dds
+            - remastered/limit/it/donald.bar/IT_donald_bar1.dds
+            - remastered/limit/sp/donald.bar/SP_donald_bar1.dds
+            - remastered/limit/us/donald.bar/US_donald_bar1.dds
 
     - colorable_areas:
         - id: fx2
@@ -37,11 +41,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald.bar/FR_donald_bar2.dds
-          - remastered/limit/gr/donald.bar/GR_donald_bar2.dds
-          - remastered/limit/it/donald.bar/IT_donald_bar2.dds
-          - remastered/limit/sp/donald.bar/SP_donald_bar2.dds
-          - remastered/limit/us/donald.bar/US_donald_bar2.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald.bar/FR_donald_bar2.dds
+            - remastered/limit/gr/donald.bar/GR_donald_bar2.dds
+            - remastered/limit/it/donald.bar/IT_donald_bar2.dds
+            - remastered/limit/sp/donald.bar/SP_donald_bar2.dds
+            - remastered/limit/us/donald.bar/US_donald_bar2.dds
 
     - colorable_areas:
         - id: fx3
@@ -50,11 +56,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald.bar/FR_donald_bar3.dds
-          - remastered/limit/gr/donald.bar/GR_donald_bar3.dds
-          - remastered/limit/it/donald.bar/IT_donald_bar3.dds
-          - remastered/limit/sp/donald.bar/SP_donald_bar3.dds
-          - remastered/limit/us/donald.bar/US_donald_bar3.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald.bar/FR_donald_bar3.dds
+            - remastered/limit/gr/donald.bar/GR_donald_bar3.dds
+            - remastered/limit/it/donald.bar/IT_donald_bar3.dds
+            - remastered/limit/sp/donald.bar/SP_donald_bar3.dds
+            - remastered/limit/us/donald.bar/US_donald_bar3.dds
 
     - colorable_areas:
         - id: fx4
@@ -63,11 +71,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald.bar/FR_donald_bar4.dds
-          - remastered/limit/gr/donald.bar/GR_donald_bar4.dds
-          - remastered/limit/it/donald.bar/IT_donald_bar4.dds
-          - remastered/limit/sp/donald.bar/SP_donald_bar4.dds
-          - remastered/limit/us/donald.bar/US_donald_bar4.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald.bar/FR_donald_bar4.dds
+            - remastered/limit/gr/donald.bar/GR_donald_bar4.dds
+            - remastered/limit/it/donald.bar/IT_donald_bar4.dds
+            - remastered/limit/sp/donald.bar/SP_donald_bar4.dds
+            - remastered/limit/us/donald.bar/US_donald_bar4.dds
 
     - colorable_areas:
         - id: fx5
@@ -76,11 +86,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald.bar/FR_donald_bar5.dds
-          - remastered/limit/gr/donald.bar/GR_donald_bar5.dds
-          - remastered/limit/it/donald.bar/IT_donald_bar5.dds
-          - remastered/limit/sp/donald.bar/SP_donald_bar5.dds
-          - remastered/limit/us/donald.bar/US_donald_bar5.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald.bar/FR_donald_bar5.dds
+            - remastered/limit/gr/donald.bar/GR_donald_bar5.dds
+            - remastered/limit/it/donald.bar/IT_donald_bar5.dds
+            - remastered/limit/sp/donald.bar/SP_donald_bar5.dds
+            - remastered/limit/us/donald.bar/US_donald_bar5.dds
 
 
 - id: donald_flare_fx
@@ -96,11 +108,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald2.bar/FR_donald2_bar0.dds
-          - remastered/limit/gr/donald2.bar/GR_donald2_bar0.dds
-          - remastered/limit/it/donald2.bar/IT_donald2_bar0.dds
-          - remastered/limit/sp/donald2.bar/SP_donald2_bar0.dds
-          - remastered/limit/us/donald2.bar/US_donald2_bar0.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald2.bar/FR_donald2_bar0.dds
+            - remastered/limit/gr/donald2.bar/GR_donald2_bar0.dds
+            - remastered/limit/it/donald2.bar/IT_donald2_bar0.dds
+            - remastered/limit/sp/donald2.bar/SP_donald2_bar0.dds
+            - remastered/limit/us/donald2.bar/US_donald2_bar0.dds
 
     - colorable_areas:
         - id: flare1_main
@@ -112,11 +126,13 @@
           hue_start: 90
           hue_end: 120
       image_groups:
-        - - remastered/limit/fr/donald2.bar/FR_donald2_bar1.dds
-          - remastered/limit/gr/donald2.bar/GR_donald2_bar1.dds
-          - remastered/limit/it/donald2.bar/IT_donald2_bar1.dds
-          - remastered/limit/sp/donald2.bar/SP_donald2_bar1.dds
-          - remastered/limit/us/donald2.bar/US_donald2_bar1.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald2.bar/FR_donald2_bar1.dds
+            - remastered/limit/gr/donald2.bar/GR_donald2_bar1.dds
+            - remastered/limit/it/donald2.bar/IT_donald2_bar1.dds
+            - remastered/limit/sp/donald2.bar/SP_donald2_bar1.dds
+            - remastered/limit/us/donald2.bar/US_donald2_bar1.dds
 
     - colorable_areas:
         - id: flare2_main
@@ -128,11 +144,13 @@
           hue_start: 210
           hue_end: 240
       image_groups:
-        - - remastered/limit/fr/donald2.bar/FR_donald2_bar2.dds
-          - remastered/limit/gr/donald2.bar/GR_donald2_bar2.dds
-          - remastered/limit/it/donald2.bar/IT_donald2_bar2.dds
-          - remastered/limit/sp/donald2.bar/SP_donald2_bar2.dds
-          - remastered/limit/us/donald2.bar/US_donald2_bar2.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald2.bar/FR_donald2_bar2.dds
+            - remastered/limit/gr/donald2.bar/GR_donald2_bar2.dds
+            - remastered/limit/it/donald2.bar/IT_donald2_bar2.dds
+            - remastered/limit/sp/donald2.bar/SP_donald2_bar2.dds
+            - remastered/limit/us/donald2.bar/US_donald2_bar2.dds
 
     - colorable_areas:
         - id: fx3
@@ -141,11 +159,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald2.bar/FR_donald2_bar3.dds
-          - remastered/limit/gr/donald2.bar/GR_donald2_bar3.dds
-          - remastered/limit/it/donald2.bar/IT_donald2_bar3.dds
-          - remastered/limit/sp/donald2.bar/SP_donald2_bar3.dds
-          - remastered/limit/us/donald2.bar/US_donald2_bar3.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald2.bar/FR_donald2_bar3.dds
+            - remastered/limit/gr/donald2.bar/GR_donald2_bar3.dds
+            - remastered/limit/it/donald2.bar/IT_donald2_bar3.dds
+            - remastered/limit/sp/donald2.bar/SP_donald2_bar3.dds
+            - remastered/limit/us/donald2.bar/US_donald2_bar3.dds
 
     - colorable_areas:
         - id: fx4
@@ -154,11 +174,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald2.bar/FR_donald2_bar4.dds
-          - remastered/limit/gr/donald2.bar/GR_donald2_bar4.dds
-          - remastered/limit/it/donald2.bar/IT_donald2_bar4.dds
-          - remastered/limit/sp/donald2.bar/SP_donald2_bar4.dds
-          - remastered/limit/us/donald2.bar/US_donald2_bar4.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald2.bar/FR_donald2_bar4.dds
+            - remastered/limit/gr/donald2.bar/GR_donald2_bar4.dds
+            - remastered/limit/it/donald2.bar/IT_donald2_bar4.dds
+            - remastered/limit/sp/donald2.bar/SP_donald2_bar4.dds
+            - remastered/limit/us/donald2.bar/US_donald2_bar4.dds
 
     - colorable_areas:
         - id: fx5
@@ -167,11 +189,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/donald2.bar/FR_donald2_bar5.dds
-          - remastered/limit/gr/donald2.bar/GR_donald2_bar5.dds
-          - remastered/limit/it/donald2.bar/IT_donald2_bar5.dds
-          - remastered/limit/sp/donald2.bar/SP_donald2_bar5.dds
-          - remastered/limit/us/donald2.bar/US_donald2_bar5.dds
+        - required: true
+          images:
+            - remastered/limit/fr/donald2.bar/FR_donald2_bar5.dds
+            - remastered/limit/gr/donald2.bar/GR_donald2_bar5.dds
+            - remastered/limit/it/donald2.bar/IT_donald2_bar5.dds
+            - remastered/limit/sp/donald2.bar/SP_donald2_bar5.dds
+            - remastered/limit/us/donald2.bar/US_donald2_bar5.dds
 
 
 - id: riku_session_fx
@@ -187,11 +211,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar0.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar0.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar0.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar0.dds
-          - remastered/limit/us/riku.bar/US_riku_bar0.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar0.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar0.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar0.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar0.dds
+            - remastered/limit/us/riku.bar/US_riku_bar0.dds
 
     - colorable_areas:
         - id: fx1
@@ -200,11 +226,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar1.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar1.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar1.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar1.dds
-          - remastered/limit/us/riku.bar/US_riku_bar1.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar1.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar1.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar1.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar1.dds
+            - remastered/limit/us/riku.bar/US_riku_bar1.dds
 
     - colorable_areas:
         - id: fx2
@@ -213,11 +241,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar2.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar2.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar2.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar2.dds
-          - remastered/limit/us/riku.bar/US_riku_bar2.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar2.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar2.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar2.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar2.dds
+            - remastered/limit/us/riku.bar/US_riku_bar2.dds
 
     - colorable_areas:
         - id: fx3
@@ -226,11 +256,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar3.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar3.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar3.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar3.dds
-          - remastered/limit/us/riku.bar/US_riku_bar3.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar3.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar3.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar3.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar3.dds
+            - remastered/limit/us/riku.bar/US_riku_bar3.dds
 
     - colorable_areas:
         - id: fx4
@@ -239,11 +271,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar4.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar4.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar4.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar4.dds
-          - remastered/limit/us/riku.bar/US_riku_bar4.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar4.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar4.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar4.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar4.dds
+            - remastered/limit/us/riku.bar/US_riku_bar4.dds
 
     - colorable_areas:
         - id: fx5
@@ -252,11 +286,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar5.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar5.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar5.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar5.dds
-          - remastered/limit/us/riku.bar/US_riku_bar5.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar5.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar5.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar5.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar5.dds
+            - remastered/limit/us/riku.bar/US_riku_bar5.dds
 
     - colorable_areas:
         - id: fx6
@@ -265,11 +301,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar6.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar6.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar6.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar6.dds
-          - remastered/limit/us/riku.bar/US_riku_bar6.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar6.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar6.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar6.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar6.dds
+            - remastered/limit/us/riku.bar/US_riku_bar6.dds
 
     - colorable_areas:
         - id: fx7
@@ -278,11 +316,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar7.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar7.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar7.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar7.dds
-          - remastered/limit/us/riku.bar/US_riku_bar7.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar7.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar7.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar7.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar7.dds
+            - remastered/limit/us/riku.bar/US_riku_bar7.dds
 
     - colorable_areas:
         - id: fx8
@@ -291,11 +331,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar8.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar8.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar8.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar8.dds
-          - remastered/limit/us/riku.bar/US_riku_bar8.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar8.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar8.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar8.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar8.dds
+            - remastered/limit/us/riku.bar/US_riku_bar8.dds
 
     - colorable_areas:
         - id: fx9
@@ -304,11 +346,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar9.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar9.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar9.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar9.dds
-          - remastered/limit/us/riku.bar/US_riku_bar9.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar9.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar9.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar9.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar9.dds
+            - remastered/limit/us/riku.bar/US_riku_bar9.dds
 
     - colorable_areas:
         - id: fx10
@@ -317,11 +361,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar10.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar10.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar10.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar10.dds
-          - remastered/limit/us/riku.bar/US_riku_bar10.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar10.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar10.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar10.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar10.dds
+            - remastered/limit/us/riku.bar/US_riku_bar10.dds
 
     - colorable_areas:
         - id: fx11
@@ -330,11 +376,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar11.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar11.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar11.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar11.dds
-          - remastered/limit/us/riku.bar/US_riku_bar11.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar11.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar11.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar11.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar11.dds
+            - remastered/limit/us/riku.bar/US_riku_bar11.dds
 
     - colorable_areas:
         - id: fx12
@@ -343,11 +391,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/riku.bar/FR_riku_bar12.dds
-          - remastered/limit/gr/riku.bar/GR_riku_bar12.dds
-          - remastered/limit/it/riku.bar/IT_riku_bar12.dds
-          - remastered/limit/sp/riku.bar/SP_riku_bar12.dds
-          - remastered/limit/us/riku.bar/US_riku_bar12.dds
+        - required: true
+          images:
+            - remastered/limit/fr/riku.bar/FR_riku_bar12.dds
+            - remastered/limit/gr/riku.bar/GR_riku_bar12.dds
+            - remastered/limit/it/riku.bar/IT_riku_bar12.dds
+            - remastered/limit/sp/riku.bar/SP_riku_bar12.dds
+            - remastered/limit/us/riku.bar/US_riku_bar12.dds
 
 
 - id: sora_fx
@@ -363,13 +413,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100.a.us/-0.dds
-          - remastered/obj/P_EX100_AL_CARPET.a.us/-0.dds
-          - remastered/obj/P_EX100_SIDECAR.a.us/-0.dds
-          - remastered/obj/P_EX100_NM.a.us/-0.dds
-          - remastered/obj/P_EX100_TR.a.us/-0.dds
-          - remastered/obj/P_EX100_WI.a.us/-0.dds
-          - remastered/obj/P_EX100_XM.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.a.us/-0.dds
+            - remastered/obj/P_EX100_AL_CARPET.a.us/-0.dds
+            - remastered/obj/P_EX100_SIDECAR.a.us/-0.dds
+            - remastered/obj/P_EX100_NM.a.us/-0.dds
+            - remastered/obj/P_EX100_TR.a.us/-0.dds
+            - remastered/obj/P_EX100_WI.a.us/-0.dds
+            - remastered/obj/P_EX100_XM.a.us/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -378,13 +430,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100.a.us/-1.dds
-          - remastered/obj/P_EX100_AL_CARPET.a.us/-1.dds
-          - remastered/obj/P_EX100_SIDECAR.a.us/-1.dds
-          - remastered/obj/P_EX100_NM.a.us/-1.dds
-          - remastered/obj/P_EX100_TR.a.us/-1.dds
-          - remastered/obj/P_EX100_WI.a.us/-1.dds
-          - remastered/obj/P_EX100_XM.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.a.us/-1.dds
+            - remastered/obj/P_EX100_AL_CARPET.a.us/-1.dds
+            - remastered/obj/P_EX100_SIDECAR.a.us/-1.dds
+            - remastered/obj/P_EX100_NM.a.us/-1.dds
+            - remastered/obj/P_EX100_TR.a.us/-1.dds
+            - remastered/obj/P_EX100_WI.a.us/-1.dds
+            - remastered/obj/P_EX100_XM.a.us/-1.dds
 
     - colorable_areas:
         - id: fx2
@@ -393,13 +447,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100.a.us/-2.dds
-          - remastered/obj/P_EX100_AL_CARPET.a.us/-2.dds
-          - remastered/obj/P_EX100_SIDECAR.a.us/-2.dds
-          - remastered/obj/P_EX100_NM.a.us/-2.dds
-          - remastered/obj/P_EX100_TR.a.us/-2.dds
-          - remastered/obj/P_EX100_WI.a.us/-2.dds
-          - remastered/obj/P_EX100_XM.a.us/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.a.us/-2.dds
+            - remastered/obj/P_EX100_AL_CARPET.a.us/-2.dds
+            - remastered/obj/P_EX100_SIDECAR.a.us/-2.dds
+            - remastered/obj/P_EX100_NM.a.us/-2.dds
+            - remastered/obj/P_EX100_TR.a.us/-2.dds
+            - remastered/obj/P_EX100_WI.a.us/-2.dds
+            - remastered/obj/P_EX100_XM.a.us/-2.dds
 
     - colorable_areas:
         - id: fx3
@@ -408,13 +464,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100.a.us/-3.dds
-          - remastered/obj/P_EX100_AL_CARPET.a.us/-3.dds
-          - remastered/obj/P_EX100_SIDECAR.a.us/-3.dds
-          - remastered/obj/P_EX100_NM.a.us/-3.dds
-          - remastered/obj/P_EX100_TR.a.us/-3.dds
-          - remastered/obj/P_EX100_WI.a.us/-3.dds
-          - remastered/obj/P_EX100_XM.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.a.us/-3.dds
+            - remastered/obj/P_EX100_AL_CARPET.a.us/-3.dds
+            - remastered/obj/P_EX100_SIDECAR.a.us/-3.dds
+            - remastered/obj/P_EX100_NM.a.us/-3.dds
+            - remastered/obj/P_EX100_TR.a.us/-3.dds
+            - remastered/obj/P_EX100_WI.a.us/-3.dds
+            - remastered/obj/P_EX100_XM.a.us/-3.dds
 
     - colorable_areas:
         - id: fx4
@@ -423,13 +481,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100.a.us/-4.dds
-          - remastered/obj/P_EX100_AL_CARPET.a.us/-4.dds
-          - remastered/obj/P_EX100_SIDECAR.a.us/-4.dds
-          - remastered/obj/P_EX100_NM.a.us/-4.dds
-          - remastered/obj/P_EX100_TR.a.us/-4.dds
-          - remastered/obj/P_EX100_WI.a.us/-4.dds
-          - remastered/obj/P_EX100_XM.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.a.us/-4.dds
+            - remastered/obj/P_EX100_AL_CARPET.a.us/-4.dds
+            - remastered/obj/P_EX100_SIDECAR.a.us/-4.dds
+            - remastered/obj/P_EX100_NM.a.us/-4.dds
+            - remastered/obj/P_EX100_TR.a.us/-4.dds
+            - remastered/obj/P_EX100_WI.a.us/-4.dds
+            - remastered/obj/P_EX100_XM.a.us/-4.dds
 
     - colorable_areas:
         - id: fx5
@@ -438,13 +498,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100.a.us/-5.dds
-          - remastered/obj/P_EX100_AL_CARPET.a.us/-5.dds
-          - remastered/obj/P_EX100_SIDECAR.a.us/-5.dds
-          - remastered/obj/P_EX100_NM.a.us/-5.dds
-          - remastered/obj/P_EX100_TR.a.us/-5.dds
-          - remastered/obj/P_EX100_WI.a.us/-5.dds
-          - remastered/obj/P_EX100_XM.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.a.us/-5.dds
+            - remastered/obj/P_EX100_AL_CARPET.a.us/-5.dds
+            - remastered/obj/P_EX100_SIDECAR.a.us/-5.dds
+            - remastered/obj/P_EX100_NM.a.us/-5.dds
+            - remastered/obj/P_EX100_TR.a.us/-5.dds
+            - remastered/obj/P_EX100_WI.a.us/-5.dds
+            - remastered/obj/P_EX100_XM.a.us/-5.dds
 
     - colorable_areas:
         - id: fx6
@@ -453,13 +515,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100.a.us/-6.dds
-          - remastered/obj/P_EX100_AL_CARPET.a.us/-6.dds
-          - remastered/obj/P_EX100_SIDECAR.a.us/-6.dds
-          - remastered/obj/P_EX100_NM.a.us/-6.dds
-          - remastered/obj/P_EX100_TR.a.us/-6.dds
-          - remastered/obj/P_EX100_WI.a.us/-6.dds
-          - remastered/obj/P_EX100_XM.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.a.us/-6.dds
+            - remastered/obj/P_EX100_AL_CARPET.a.us/-6.dds
+            - remastered/obj/P_EX100_SIDECAR.a.us/-6.dds
+            - remastered/obj/P_EX100_NM.a.us/-6.dds
+            - remastered/obj/P_EX100_TR.a.us/-6.dds
+            - remastered/obj/P_EX100_WI.a.us/-6.dds
+            - remastered/obj/P_EX100_XM.a.us/-6.dds
 
     - colorable_areas:
         - id: fx7
@@ -468,13 +532,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100.a.us/-7.dds
-          - remastered/obj/P_EX100_AL_CARPET.a.us/-7.dds
-          - remastered/obj/P_EX100_SIDECAR.a.us/-7.dds
-          - remastered/obj/P_EX100_NM.a.us/-7.dds
-          - remastered/obj/P_EX100_TR.a.us/-7.dds
-          - remastered/obj/P_EX100_WI.a.us/-7.dds
-          - remastered/obj/P_EX100_XM.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100.a.us/-7.dds
+            - remastered/obj/P_EX100_AL_CARPET.a.us/-7.dds
+            - remastered/obj/P_EX100_SIDECAR.a.us/-7.dds
+            - remastered/obj/P_EX100_NM.a.us/-7.dds
+            - remastered/obj/P_EX100_TR.a.us/-7.dds
+            - remastered/obj/P_EX100_WI.a.us/-7.dds
+            - remastered/obj/P_EX100_XM.a.us/-7.dds
 
 
 - id: sora_valor_fx
@@ -490,11 +556,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_BTLF.a.us/-0.dds
-          - remastered/obj/P_EX100_NM_BTLF.a.us/-0.dds
-          - remastered/obj/P_EX100_TR_BTLF.a.us/-0.dds
-          - remastered/obj/P_EX100_WI_BTLF.a.us/-0.dds
-          - remastered/obj/P_EX100_XM_BTLF.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_BTLF.a.us/-0.dds
+            - remastered/obj/P_EX100_NM_BTLF.a.us/-0.dds
+            - remastered/obj/P_EX100_TR_BTLF.a.us/-0.dds
+            - remastered/obj/P_EX100_WI_BTLF.a.us/-0.dds
+            - remastered/obj/P_EX100_XM_BTLF.a.us/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -503,11 +571,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_BTLF.a.us/-1.dds
-          - remastered/obj/P_EX100_NM_BTLF.a.us/-1.dds
-          - remastered/obj/P_EX100_TR_BTLF.a.us/-1.dds
-          - remastered/obj/P_EX100_WI_BTLF.a.us/-1.dds
-          - remastered/obj/P_EX100_XM_BTLF.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_BTLF.a.us/-1.dds
+            - remastered/obj/P_EX100_NM_BTLF.a.us/-1.dds
+            - remastered/obj/P_EX100_TR_BTLF.a.us/-1.dds
+            - remastered/obj/P_EX100_WI_BTLF.a.us/-1.dds
+            - remastered/obj/P_EX100_XM_BTLF.a.us/-1.dds
 
     - colorable_areas:
         - id: fx2
@@ -516,11 +586,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_BTLF.a.us/-2.dds
-          - remastered/obj/P_EX100_NM_BTLF.a.us/-2.dds
-          - remastered/obj/P_EX100_TR_BTLF.a.us/-2.dds
-          - remastered/obj/P_EX100_WI_BTLF.a.us/-2.dds
-          - remastered/obj/P_EX100_XM_BTLF.a.us/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_BTLF.a.us/-2.dds
+            - remastered/obj/P_EX100_NM_BTLF.a.us/-2.dds
+            - remastered/obj/P_EX100_TR_BTLF.a.us/-2.dds
+            - remastered/obj/P_EX100_WI_BTLF.a.us/-2.dds
+            - remastered/obj/P_EX100_XM_BTLF.a.us/-2.dds
 
     - colorable_areas:
         - id: fx3
@@ -529,11 +601,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_BTLF.a.us/-3.dds
-          - remastered/obj/P_EX100_NM_BTLF.a.us/-3.dds
-          - remastered/obj/P_EX100_TR_BTLF.a.us/-3.dds
-          - remastered/obj/P_EX100_WI_BTLF.a.us/-3.dds
-          - remastered/obj/P_EX100_XM_BTLF.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_BTLF.a.us/-3.dds
+            - remastered/obj/P_EX100_NM_BTLF.a.us/-3.dds
+            - remastered/obj/P_EX100_TR_BTLF.a.us/-3.dds
+            - remastered/obj/P_EX100_WI_BTLF.a.us/-3.dds
+            - remastered/obj/P_EX100_XM_BTLF.a.us/-3.dds
 
 
 - id: sora_wisdom_fx
@@ -549,11 +623,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_MAGF.a.us/-0.dds
-          - remastered/obj/P_EX100_NM_MAGF.a.us/-0.dds
-          - remastered/obj/P_EX100_TR_MAGF.a.us/-0.dds
-          - remastered/obj/P_EX100_WI_MAGF.a.us/-0.dds
-          - remastered/obj/P_EX100_XM_MAGF.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_MAGF.a.us/-0.dds
+            - remastered/obj/P_EX100_NM_MAGF.a.us/-0.dds
+            - remastered/obj/P_EX100_TR_MAGF.a.us/-0.dds
+            - remastered/obj/P_EX100_WI_MAGF.a.us/-0.dds
+            - remastered/obj/P_EX100_XM_MAGF.a.us/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -562,11 +638,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_MAGF.a.us/-1.dds
-          - remastered/obj/P_EX100_NM_MAGF.a.us/-1.dds
-          - remastered/obj/P_EX100_TR_MAGF.a.us/-1.dds
-          - remastered/obj/P_EX100_WI_MAGF.a.us/-1.dds
-          - remastered/obj/P_EX100_XM_MAGF.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_MAGF.a.us/-1.dds
+            - remastered/obj/P_EX100_NM_MAGF.a.us/-1.dds
+            - remastered/obj/P_EX100_TR_MAGF.a.us/-1.dds
+            - remastered/obj/P_EX100_WI_MAGF.a.us/-1.dds
+            - remastered/obj/P_EX100_XM_MAGF.a.us/-1.dds
 
 
 - id: sora_limit_fx
@@ -582,11 +660,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-0.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-0.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-0.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-0.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-0.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-0.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-0.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-0.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -595,11 +675,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-1.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-1.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-1.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-1.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-1.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-1.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-1.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-1.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-1.dds
 
     - colorable_areas:
         - id: fx2
@@ -608,11 +690,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-2.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-2.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-2.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-2.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-2.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-2.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-2.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-2.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-2.dds
 
     - colorable_areas:
         - id: fx3
@@ -621,11 +705,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-3.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-3.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-3.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-3.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-3.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-3.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-3.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-3.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-3.dds
 
     - colorable_areas:
         - id: fx4
@@ -634,11 +720,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-4.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-4.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-4.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-4.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-4.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-4.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-4.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-4.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-4.dds
 
     - colorable_areas:
         - id: fx5
@@ -647,11 +735,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-5.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-5.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-5.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-5.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-5.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-5.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-5.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-5.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-5.dds
 
     - colorable_areas:
         - id: fx6
@@ -660,11 +750,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-6.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-6.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-6.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-6.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-6.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-6.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-6.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-6.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-6.dds
 
     - colorable_areas:
         - id: fx7
@@ -673,11 +765,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-7.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-7.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-7.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-7.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-7.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-7.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-7.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-7.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-7.dds
 
     - colorable_areas:
         - id: fx8
@@ -686,11 +780,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_KH1F.a.us/-8.dds
-          - remastered/obj/P_EX100_NM_KH1F.a.us/-8.dds
-          - remastered/obj/P_EX100_TR_KH1F.a.us/-8.dds
-          - remastered/obj/P_EX100_WI_KH1F.a.us/-8.dds
-          - remastered/obj/P_EX100_XM_KH1F.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_KH1F.a.us/-8.dds
+            - remastered/obj/P_EX100_NM_KH1F.a.us/-8.dds
+            - remastered/obj/P_EX100_TR_KH1F.a.us/-8.dds
+            - remastered/obj/P_EX100_WI_KH1F.a.us/-8.dds
+            - remastered/obj/P_EX100_XM_KH1F.a.us/-8.dds
 
 
 - id: sora_master_fx
@@ -706,11 +802,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_TRIF.a.us/-0.dds
-          - remastered/obj/P_EX100_NM_TRIF.a.us/-0.dds
-          - remastered/obj/P_EX100_TR_TRIF.a.us/-0.dds
-          - remastered/obj/P_EX100_WI_TRIF.a.us/-0.dds
-          - remastered/obj/P_EX100_XM_TRIF.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TRIF.a.us/-0.dds
+            - remastered/obj/P_EX100_NM_TRIF.a.us/-0.dds
+            - remastered/obj/P_EX100_TR_TRIF.a.us/-0.dds
+            - remastered/obj/P_EX100_WI_TRIF.a.us/-0.dds
+            - remastered/obj/P_EX100_XM_TRIF.a.us/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -719,11 +817,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_TRIF.a.us/-1.dds
-          - remastered/obj/P_EX100_NM_TRIF.a.us/-1.dds
-          - remastered/obj/P_EX100_TR_TRIF.a.us/-1.dds
-          - remastered/obj/P_EX100_WI_TRIF.a.us/-1.dds
-          - remastered/obj/P_EX100_XM_TRIF.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TRIF.a.us/-1.dds
+            - remastered/obj/P_EX100_NM_TRIF.a.us/-1.dds
+            - remastered/obj/P_EX100_TR_TRIF.a.us/-1.dds
+            - remastered/obj/P_EX100_WI_TRIF.a.us/-1.dds
+            - remastered/obj/P_EX100_XM_TRIF.a.us/-1.dds
 
     - colorable_areas:
         - id: fx2
@@ -732,11 +832,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_TRIF.a.us/-2.dds
-          - remastered/obj/P_EX100_NM_TRIF.a.us/-2.dds
-          - remastered/obj/P_EX100_TR_TRIF.a.us/-2.dds
-          - remastered/obj/P_EX100_WI_TRIF.a.us/-2.dds
-          - remastered/obj/P_EX100_XM_TRIF.a.us/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TRIF.a.us/-2.dds
+            - remastered/obj/P_EX100_NM_TRIF.a.us/-2.dds
+            - remastered/obj/P_EX100_TR_TRIF.a.us/-2.dds
+            - remastered/obj/P_EX100_WI_TRIF.a.us/-2.dds
+            - remastered/obj/P_EX100_XM_TRIF.a.us/-2.dds
 
     - colorable_areas:
         - id: fx3
@@ -745,11 +847,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_TRIF.a.us/-3.dds
-          - remastered/obj/P_EX100_NM_TRIF.a.us/-3.dds
-          - remastered/obj/P_EX100_TR_TRIF.a.us/-3.dds
-          - remastered/obj/P_EX100_WI_TRIF.a.us/-3.dds
-          - remastered/obj/P_EX100_XM_TRIF.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TRIF.a.us/-3.dds
+            - remastered/obj/P_EX100_NM_TRIF.a.us/-3.dds
+            - remastered/obj/P_EX100_TR_TRIF.a.us/-3.dds
+            - remastered/obj/P_EX100_WI_TRIF.a.us/-3.dds
+            - remastered/obj/P_EX100_XM_TRIF.a.us/-3.dds
 
     - colorable_areas:
         - id: fx4
@@ -758,11 +862,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_TRIF.a.us/-4.dds
-          - remastered/obj/P_EX100_NM_TRIF.a.us/-4.dds
-          - remastered/obj/P_EX100_TR_TRIF.a.us/-4.dds
-          - remastered/obj/P_EX100_WI_TRIF.a.us/-4.dds
-          - remastered/obj/P_EX100_XM_TRIF.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_TRIF.a.us/-4.dds
+            - remastered/obj/P_EX100_NM_TRIF.a.us/-4.dds
+            - remastered/obj/P_EX100_TR_TRIF.a.us/-4.dds
+            - remastered/obj/P_EX100_WI_TRIF.a.us/-4.dds
+            - remastered/obj/P_EX100_XM_TRIF.a.us/-4.dds
 
 
 - id: sora_final_fx
@@ -778,11 +884,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-0.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-0.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-0.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-0.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-0.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-0.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-0.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-0.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-0.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -791,11 +899,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-1.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-1.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-1.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-1.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-1.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-1.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-1.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-1.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-1.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-1.dds
 
     - colorable_areas:
         - id: fx2
@@ -804,11 +914,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-2.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-2.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-2.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-2.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-2.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-2.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-2.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-2.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-2.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-2.dds
 
     - colorable_areas:
         - id: fx3
@@ -817,11 +929,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-3.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-3.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-3.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-3.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-3.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-3.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-3.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-3.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-3.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-3.dds
 
     - colorable_areas:
         - id: fx4
@@ -830,11 +944,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-4.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-4.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-4.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-4.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-4.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-4.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-4.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-4.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-4.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-4.dds
 
     - colorable_areas:
         - id: fx5
@@ -843,11 +959,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-5.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-5.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-5.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-5.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-5.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-5.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-5.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-5.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-5.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-5.dds
 
     - colorable_areas:
         - id: fx6
@@ -856,11 +974,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-6.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-6.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-6.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-6.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-6.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-6.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-6.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-6.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-6.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-6.dds
 
     - colorable_areas:
         - id: fx7
@@ -869,11 +989,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-7.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-7.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-7.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-7.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-7.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-7.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-7.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-7.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-7.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-7.dds
 
     - colorable_areas:
         - id: fx8
@@ -882,11 +1004,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-8.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-8.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-8.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-8.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-8.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-8.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-8.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-8.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-8.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-8.dds
 
     - colorable_areas:
         - id: fx9
@@ -895,11 +1019,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/obj/P_EX100_ULTF.a.us/-9.dds
-          - remastered/obj/P_EX100_NM_ULTF.a.us/-9.dds
-          - remastered/obj/P_EX100_TR_ULTF.a.us/-9.dds
-          - remastered/obj/P_EX100_WI_ULTF.a.us/-9.dds
-          - remastered/obj/P_EX100_XM_ULTF.a.us/-9.dds
+        - required: true
+          images:
+            - remastered/obj/P_EX100_ULTF.a.us/-9.dds
+            - remastered/obj/P_EX100_NM_ULTF.a.us/-9.dds
+            - remastered/obj/P_EX100_TR_ULTF.a.us/-9.dds
+            - remastered/obj/P_EX100_WI_ULTF.a.us/-9.dds
+            - remastered/obj/P_EX100_XM_ULTF.a.us/-9.dds
 
 - id: trinity_limit_fx
   name: Trinity Limit (Effects)
@@ -913,11 +1039,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar0.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar0.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar0.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar0.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar0.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar0.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar0.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar0.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar0.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar0.png
 
     - colorable_areas:
         - id: fx1
@@ -926,11 +1054,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar1.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar1.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar1.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar1.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar1.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar1.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar1.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar1.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar1.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar1.png
 
     - colorable_areas:
         - id: fx2
@@ -938,11 +1068,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar2.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar2.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar2.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar2.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar2.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar2.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar2.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar2.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar2.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar2.png
 
     - colorable_areas:
         - id: fx3
@@ -951,11 +1083,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar3.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar3.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar3.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar3.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar3.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar3.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar3.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar3.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar3.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar3.png
 
     - colorable_areas:
         - id: fx4
@@ -963,11 +1097,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar4.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar4.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar4.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar4.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar4.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar4.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar4.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar4.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar4.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar4.png
 
     - colorable_areas:
         - id: fx5
@@ -976,11 +1112,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar5.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar5.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar5.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar5.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar5.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar5.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar5.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar5.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar5.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar5.png
 
     - colorable_areas:
         - id: fx6
@@ -989,11 +1127,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar6.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar6.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar6.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar6.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar6.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar6.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar6.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar6.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar6.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar6.png
 
     - colorable_areas:
         - id: fx7
@@ -1002,11 +1142,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar7.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar7.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar7.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar7.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar7.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar7.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar7.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar7.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar7.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar7.png
 
     - colorable_areas:
         - id: fx8
@@ -1015,11 +1157,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar8.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar8.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar8.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar8.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar8.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar8.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar8.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar8.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar8.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar8.png
 
     - colorable_areas:
         - id: fx9
@@ -1028,11 +1172,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar9.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar9.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar9.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar9.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar9.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar9.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar9.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar9.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar9.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar9.png
 
     - colorable_areas:
         - id: fx10
@@ -1041,11 +1187,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar10.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar10.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar10.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar10.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar10.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar10.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar10.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar10.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar10.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar10.png
 
     - colorable_areas:
         - id: fx11
@@ -1053,11 +1201,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar11.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar11.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar11.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar11.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar11.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar11.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar11.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar11.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar11.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar11.png
 
     - colorable_areas:
         - id: fx12
@@ -1065,11 +1215,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar12.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar12.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar12.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar12.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar12.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar12.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar12.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar12.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar12.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar12.png
 
     - colorable_areas:
         - id: fx13
@@ -1077,11 +1229,13 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar13.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar13.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar13.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar13.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar13.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar13.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar13.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar13.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar13.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar13.png
 
     - colorable_areas:
         - id: fx14
@@ -1090,8 +1244,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/limit/fr/trinity.bar/FR_trinity_bar14.png
-          - remastered/limit/gr/trinity.bar/GR_trinity_bar14.png
-          - remastered/limit/it/trinity.bar/IT_trinity_bar14.png
-          - remastered/limit/sp/trinity.bar/SP_trinity_bar14.png
-          - remastered/limit/us/trinity.bar/US_trinity_bar14.png
+        - required: true
+          images:
+            - remastered/limit/fr/trinity.bar/FR_trinity_bar14.png
+            - remastered/limit/gr/trinity.bar/GR_trinity_bar14.png
+            - remastered/limit/it/trinity.bar/IT_trinity_bar14.png
+            - remastered/limit/sp/trinity.bar/SP_trinity_bar14.png
+            - remastered/limit/us/trinity.bar/US_trinity_bar14.png

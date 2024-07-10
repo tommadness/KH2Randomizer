@@ -10,14 +10,18 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/magic/BLIZZARD_1.mag/-0.dds
-          - remastered/magic/BLIZZARD_1lk.mag/-0.dds
-          - remastered/magic/BLIZZARD_2.mag/-1.dds
-          - remastered/magic/BLIZZARD_2lk.mag/-1.dds
-          - remastered/magic/blizzard1.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/BLIZZARD_1.mag/-0.dds
+            - remastered/magic/BLIZZARD_1lk.mag/-0.dds
+            - remastered/magic/BLIZZARD_2.mag/-1.dds
+            - remastered/magic/BLIZZARD_2lk.mag/-1.dds
+            - remastered/magic/blizzard1.mag/-0.dds
 
-        - - remastered/magic/BLIZZARD_3.mag/-1.dds
-          - remastered/magic/BLIZZARD_3lk.mag/-1.dds
+        - required: true
+          images:
+            - remastered/magic/BLIZZARD_3.mag/-1.dds
+            - remastered/magic/BLIZZARD_3lk.mag/-1.dds
 
     - colorable_areas:
         - id: fx1
@@ -26,10 +30,12 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/BLIZZARD_2.mag/-0.dds
-          - remastered/magic/BLIZZARD_2lk.mag/-0.dds
-          - remastered/magic/BLIZZARD_3.mag/-0.dds
-          - remastered/magic/BLIZZARD_3lk.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/BLIZZARD_2.mag/-0.dds
+            - remastered/magic/BLIZZARD_2lk.mag/-0.dds
+            - remastered/magic/BLIZZARD_3.mag/-0.dds
+            - remastered/magic/BLIZZARD_3lk.mag/-0.dds
 
 
 - id: cure_fx
@@ -44,9 +50,11 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/magic/CURE_1.mag/-0.dds
-          - remastered/magic/CURE_1lk.mag/-0.dds
-          - remastered/magic/cure1.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/CURE_1.mag/-0.dds
+            - remastered/magic/CURE_1lk.mag/-0.dds
+            - remastered/magic/cure1.mag/-0.dds
 
     - colorable_areas:
         - id: curafx0
@@ -55,8 +63,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/CURE_2.mag/-0.dds
-          - remastered/magic/CURE_2lk.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/CURE_2.mag/-0.dds
+            - remastered/magic/CURE_2lk.mag/-0.dds
 
     - colorable_areas:
         - id: curafx1_yellow
@@ -68,8 +78,10 @@
           hue_start: 77
           hue_end: 150
       image_groups:
-        - - remastered/magic/CURE_2.mag/-1.dds
-          - remastered/magic/CURE_2lk.mag/-1.dds
+        - required: true
+          images:
+            - remastered/magic/CURE_2.mag/-1.dds
+            - remastered/magic/CURE_2lk.mag/-1.dds
 
     - colorable_areas:
         - id: curagafx0
@@ -78,8 +90,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/CURE_3.mag/-0.dds
-          - remastered/magic/CURE_3lk.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/CURE_3.mag/-0.dds
+            - remastered/magic/CURE_3lk.mag/-0.dds
 
     - colorable_areas:
         - id: curagafx1_yellow
@@ -95,8 +109,10 @@
           hue_start: 240
           hue_end: 0
       image_groups:
-        - - remastered/magic/CURE_3.mag/-1.dds
-          - remastered/magic/CURE_3lk.mag/-1.dds
+        - required: true
+          images:
+            - remastered/magic/CURE_3.mag/-1.dds
+            - remastered/magic/CURE_3lk.mag/-1.dds
 
 
 - id: fire_fx
@@ -112,9 +128,11 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/FIRE_1.mag/-0.dds
-          - remastered/magic/FIRE_1lk.mag/-0.dds
-          - remastered/magic/fire1.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/FIRE_1.mag/-0.dds
+            - remastered/magic/FIRE_1lk.mag/-0.dds
+            - remastered/magic/fire1.mag/-0.dds
 
     - colorable_areas:
         - id: firaga_fx
@@ -123,8 +141,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/FIRE_3.mag/-0.dds
-          - remastered/magic/FIRE_3lk.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/FIRE_3.mag/-0.dds
+            - remastered/magic/FIRE_3lk.mag/-0.dds
 
 
 - id: magnet_fx
@@ -140,15 +160,17 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/MAGNET_1.mag/-0.dds
-          - remastered/magic/MAGNET_1lk.mag/-0.dds
-          - remastered/magic/MAGNET_2.mag/-0.dds
-          - remastered/magic/MAGNET_2lk.mag/-0.dds
-          - remastered/magic/MAGNET_3.mag/-0.dds
-          - remastered/magic/MAGNET_3.mag/-1.dds
-          - remastered/magic/MAGNET_3lk.mag/-0.dds
-          - remastered/magic/MAGNET_3lk.mag/-1.dds
-          - remastered/magic/magnet1.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/MAGNET_1.mag/-0.dds
+            - remastered/magic/MAGNET_1lk.mag/-0.dds
+            - remastered/magic/MAGNET_2.mag/-0.dds
+            - remastered/magic/MAGNET_2lk.mag/-0.dds
+            - remastered/magic/MAGNET_3.mag/-0.dds
+            - remastered/magic/MAGNET_3.mag/-1.dds
+            - remastered/magic/MAGNET_3lk.mag/-0.dds
+            - remastered/magic/MAGNET_3lk.mag/-1.dds
+            - remastered/magic/magnet1.mag/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -157,15 +179,17 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/MAGNET_1.mag/-1.dds
-          - remastered/magic/MAGNET_1lk.mag/-1.dds
-          - remastered/magic/MAGNET_2.mag/-1.dds
-          - remastered/magic/MAGNET_2lk.mag/-1.dds
-          - remastered/magic/MAGNET_3.mag/-2.dds
-          - remastered/magic/MAGNET_3.mag/-3.dds
-          - remastered/magic/MAGNET_3lk.mag/-2.dds
-          - remastered/magic/MAGNET_3lk.mag/-3.dds
-          - remastered/magic/magnet1.mag/-1.dds
+        - required: true
+          images:
+            - remastered/magic/MAGNET_1.mag/-1.dds
+            - remastered/magic/MAGNET_1lk.mag/-1.dds
+            - remastered/magic/MAGNET_2.mag/-1.dds
+            - remastered/magic/MAGNET_2lk.mag/-1.dds
+            - remastered/magic/MAGNET_3.mag/-2.dds
+            - remastered/magic/MAGNET_3.mag/-3.dds
+            - remastered/magic/MAGNET_3lk.mag/-2.dds
+            - remastered/magic/MAGNET_3lk.mag/-3.dds
+            - remastered/magic/magnet1.mag/-1.dds
 
 
 - id: reflect_fx
@@ -180,13 +204,15 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/magic/REFLECT_1.mag/-0.dds
-          - remastered/magic/REFLECT_1lk.mag/-0.dds
-          - remastered/magic/REFLECT_2.mag/-0.dds
-          - remastered/magic/REFLECT_2lk.mag/-0.dds
-          - remastered/magic/REFLECT_3.mag/-0.dds
-          - remastered/magic/REFLECT_3lk.mag/-0.dds
-          - remastered/magic/reflect1.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/REFLECT_1.mag/-0.dds
+            - remastered/magic/REFLECT_1lk.mag/-0.dds
+            - remastered/magic/REFLECT_2.mag/-0.dds
+            - remastered/magic/REFLECT_2lk.mag/-0.dds
+            - remastered/magic/REFLECT_3.mag/-0.dds
+            - remastered/magic/REFLECT_3lk.mag/-0.dds
+            - remastered/magic/reflect1.mag/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -194,13 +220,15 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/magic/REFLECT_1.mag/-1.dds
-          - remastered/magic/REFLECT_1lk.mag/-1.dds
-          - remastered/magic/REFLECT_2.mag/-1.dds
-          - remastered/magic/REFLECT_2lk.mag/-1.dds
-          - remastered/magic/REFLECT_3.mag/-1.dds
-          - remastered/magic/REFLECT_3lk.mag/-1.dds
-          - remastered/magic/reflect1.mag/-1.dds
+        - required: true
+          images:
+            - remastered/magic/REFLECT_1.mag/-1.dds
+            - remastered/magic/REFLECT_1lk.mag/-1.dds
+            - remastered/magic/REFLECT_2.mag/-1.dds
+            - remastered/magic/REFLECT_2lk.mag/-1.dds
+            - remastered/magic/REFLECT_3.mag/-1.dds
+            - remastered/magic/REFLECT_3lk.mag/-1.dds
+            - remastered/magic/reflect1.mag/-1.dds
 
     - colorable_areas:
         - id: fx2
@@ -209,13 +237,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/REFLECT_1.mag/-2.dds
-          - remastered/magic/REFLECT_1lk.mag/-2.dds
-          - remastered/magic/REFLECT_2.mag/-2.dds
-          - remastered/magic/REFLECT_2lk.mag/-2.dds
-          - remastered/magic/REFLECT_3.mag/-2.dds
-          - remastered/magic/REFLECT_3lk.mag/-2.dds
-          - remastered/magic/reflect1.mag/-2.dds
+        - required: true
+          images:
+            - remastered/magic/REFLECT_1.mag/-2.dds
+            - remastered/magic/REFLECT_1lk.mag/-2.dds
+            - remastered/magic/REFLECT_2.mag/-2.dds
+            - remastered/magic/REFLECT_2lk.mag/-2.dds
+            - remastered/magic/REFLECT_3.mag/-2.dds
+            - remastered/magic/REFLECT_3lk.mag/-2.dds
+            - remastered/magic/reflect1.mag/-2.dds
 
 
 - id: thunder_fx
@@ -231,11 +261,13 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/THUNDER_1.mag/-0.dds
-          - remastered/magic/THUNDER_1lk.mag/-0.dds
-          - remastered/magic/THUNDER_2.mag/-0.dds
-          - remastered/magic/THUNDER_2lk.mag/-0.dds
-          - remastered/magic/thunder1.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/THUNDER_1.mag/-0.dds
+            - remastered/magic/THUNDER_1lk.mag/-0.dds
+            - remastered/magic/THUNDER_2.mag/-0.dds
+            - remastered/magic/THUNDER_2lk.mag/-0.dds
+            - remastered/magic/thunder1.mag/-0.dds
 
     - colorable_areas:
         - id: fx1
@@ -244,13 +276,15 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/THUNDER_1.mag/-1.dds
-          - remastered/magic/THUNDER_1lk.mag/-1.dds
-          - remastered/magic/THUNDER_2.mag/-1.dds
-          - remastered/magic/THUNDER_2lk.mag/-1.dds
-          - remastered/magic/THUNDER_3.mag/-3.dds
-          - remastered/magic/THUNDER_3lk.mag/-3.dds
-          - remastered/magic/thunder1.mag/-1.dds
+        - required: true
+          images:
+            - remastered/magic/THUNDER_1.mag/-1.dds
+            - remastered/magic/THUNDER_1lk.mag/-1.dds
+            - remastered/magic/THUNDER_2.mag/-1.dds
+            - remastered/magic/THUNDER_2lk.mag/-1.dds
+            - remastered/magic/THUNDER_3.mag/-3.dds
+            - remastered/magic/THUNDER_3lk.mag/-3.dds
+            - remastered/magic/thunder1.mag/-1.dds
 
     - colorable_areas:
         - id: thundaga_fx0
@@ -259,8 +293,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/THUNDER_3.mag/-0.dds
-          - remastered/magic/THUNDER_3lk.mag/-0.dds
+        - required: true
+          images:
+            - remastered/magic/THUNDER_3.mag/-0.dds
+            - remastered/magic/THUNDER_3lk.mag/-0.dds
 
     - colorable_areas:
         - id: thundaga_fx1
@@ -269,10 +305,12 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/THUNDER_3.mag/-1.dds
-          - remastered/magic/THUNDER_3lk.mag/-1.dds
-          - remastered/magic/THUNDER_3.mag/-2.dds
-          - remastered/magic/THUNDER_3lk.mag/-2.dds
+        - required: true
+          images:
+            - remastered/magic/THUNDER_3.mag/-1.dds
+            - remastered/magic/THUNDER_3lk.mag/-1.dds
+            - remastered/magic/THUNDER_3.mag/-2.dds
+            - remastered/magic/THUNDER_3lk.mag/-2.dds
 
     - colorable_areas:
         - id: thundaga_fx4
@@ -281,8 +319,10 @@
           hue_end: 360
           new_saturation: 75
       image_groups:
-        - - remastered/magic/THUNDER_3.mag/-4.dds
-          - remastered/magic/THUNDER_3lk.mag/-4.dds
+        - required: true
+          images:
+            - remastered/magic/THUNDER_3.mag/-4.dds
+            - remastered/magic/THUNDER_3lk.mag/-4.dds
 
     - colorable_areas:
         - id: thundaga_fx5
@@ -290,5 +330,7 @@
           hue_start: 0
           hue_end: 360
       image_groups:
-        - - remastered/magic/THUNDER_3.mag/-5.dds
-          - remastered/magic/THUNDER_3lk.mag/-5.dds
+        - required: true
+          images:
+            - remastered/magic/THUNDER_3.mag/-5.dds
+            - remastered/magic/THUNDER_3lk.mag/-5.dds
