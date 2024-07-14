@@ -373,6 +373,7 @@ class SeedModBuilder:
                 {"name":"ard/it/tt32.ard"},
                 {"name":"ard/sp/tt32.ard"},
                 {"name":"ard/uk/tt32.ard"},
+                {"name":"ard/jp/tt32.ard"},
             ],
             "source": [
                 {
@@ -547,6 +548,7 @@ class SeedModBuilder:
                     {"name": "menu/it/mixdata.bar"},
                     {"name": "menu/sp/mixdata.bar"},
                     {"name": "menu/uk/mixdata.bar"},
+                    {"name": "menu/jp/mixdata.bar"},
                 ],
                 "method": "binarc",
                 "source": source_list,
