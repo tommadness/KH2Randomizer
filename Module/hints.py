@@ -143,12 +143,12 @@ class Hints:
             # find the location of the keyblade
             keyblade_item = Items.weaponslot_id_to_keyblade_item(location_id)
             keyblade_location = next(
-                key_loc for key_loc, key_item in location_item_data if key_item.Name == keyblade_item.name
+                (key_loc for key_loc, key_item in location_item_data if key_item.Name == keyblade_item.name), None
             )
             hintable_world = next(
                 (world for world in keyblade_location.LocationTypes if world in hintable_worlds), None
             )
-            if hintable_world is None:
+            if keyblade_location is None or hintable_world is None:
                 # Not in a world we're allowed to hint
                 return None
 
