@@ -153,6 +153,9 @@ class SeedModifier:
         valid_stat_list = [
             stat_config for stat_config in valid_stat_list if stat_config[2] > 0
         ]
+        if len(valid_stat_list)<2:
+            raise GeneratorException("Not enough valid stats for level ups")
+
         # rescale the weights to sum to 100
         total_sum = sum([stat_config[2] for stat_config in valid_stat_list])
         valid_stat_list = [
