@@ -341,6 +341,7 @@ class SeedZip:
         title = "Randomizer Seed"
         if spoiler_log and not tourney_gen:
             title += " w/ Spoiler"
+        title+=" "+LOCAL_UI_VERSION
 
         zip_data = io.BytesIO()
         spoiler_log_output: Optional[str] = None
