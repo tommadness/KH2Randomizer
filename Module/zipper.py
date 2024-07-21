@@ -231,68 +231,69 @@ SeedNotZipResult = tuple[Optional[str], Optional[str]]
 def _invoke_khbr_with_overrides(
     enemy_options: dict, mod: dict[str, Any], out_zip: ZipFile
 ):
-    """
-    A function that mimics the call to generateToZip in khbr. Splitting this out to allow for granular control of
-    khbr's boss placement.
-    """
-    from khbr.randomizer import Randomizer as BossEnemyRandomizer
-    from khbr.KH2.EnemyManager import EnemyManager
-    from khbr.textutils import create_spoiler_text
+    # """
+    # A function that mimics the call to generateToZip in khbr. Splitting this out to allow for granular control of
+    # khbr's boss placement.
+    # """
+    # from khbr.randomizer import Randomizer as BossEnemyRandomizer
+    # from khbr.KH2.EnemyManager import EnemyManager
+    # from khbr.textutils import create_spoiler_text
 
-    random.seed(
-        str(enemy_options)
-    )  # seed boss/enemy with enemy options, which should include the seed name
-    del enemy_options["seed_name"]  # remove it so khbr doesn't complain
+    # random.seed(
+    #     str(enemy_options)
+    # )  # seed boss/enemy with enemy options, which should include the seed name
+    # del enemy_options["seed_name"]  # remove it so khbr doesn't complain
 
-    khbr_randomizer = BossEnemyRandomizer()
+    # khbr_randomizer = BossEnemyRandomizer()
 
-    # get kh2's data
-    game_data = khbr_randomizer._get_game("kh2")
+    # # get kh2's data
+    # game_data = khbr_randomizer._get_game("kh2")
 
-    # make a new enemy manager with custom jsons
-    game_data.enemy_manager = EnemyManager(resource_path("static/khbr_override/"))
+    # # make a new enemy manager with custom jsons
+    # game_data.enemy_manager = EnemyManager(resource_path("static/khbr_override/"))
 
-    # ###  MANUAL STEP: updating records
-    # import os
-    # full_records = game_data.enemy_manager.create_enemy_records(ispc=False)
-    # name = "full_enemy_records.json"
-    # json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
+    # # ###  MANUAL STEP: updating records
+    # # import os
+    # # full_records = game_data.enemy_manager.create_enemy_records(ispc=False)
+    # # name = "full_enemy_records.json"
+    # # json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
 
-    # full_records = game_data.enemy_manager.create_enemy_records(ispc=True)
-    # name = "full_enemy_records_pc.json"
-    # json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
+    # # full_records = game_data.enemy_manager.create_enemy_records(ispc=True)
+    # # name = "full_enemy_records_pc.json"
+    # # json.dump(full_records, open(os.path.join(resource_path("static/khbr_override/"), name), "w"), indent=4)
 
-    # ### DEBUGGING
-    # valid_boss_replacements = {}
-    # boss_list = game_data.enemy_manager.get_boss_list(enemy_options)
-    # for _,source_boss in boss_list.items():
-    #     valid_boss_replacements[source_boss["name"]] = []
-    # for _,source_boss in boss_list.items():
-    #     for __,dest_boss in boss_list.items():
-    #         if source_boss["name"]!=dest_boss["name"]:
-    #             if not EnemyManager.isReplacementBlocked(source_boss,dest_boss):
-    #                 valid_boss_replacements[source_boss["name"]].append(dest_boss["name"])
-    # with open("valid_boss_replacements.json","w") as f:
-    #     json.dump(valid_boss_replacements, f, indent=4)
+    # # ### DEBUGGING
+    # # valid_boss_replacements = {}
+    # # boss_list = game_data.enemy_manager.get_boss_list(enemy_options)
+    # # for _,source_boss in boss_list.items():
+    # #     valid_boss_replacements[source_boss["name"]] = []
+    # # for _,source_boss in boss_list.items():
+    # #     for __,dest_boss in boss_list.items():
+    # #         if source_boss["name"]!=dest_boss["name"]:
+    # #             if not EnemyManager.isReplacementBlocked(source_boss,dest_boss):
+    # #                 valid_boss_replacements[source_boss["name"]].append(dest_boss["name"])
+    # # with open("valid_boss_replacements.json","w") as f:
+    # #     json.dump(valid_boss_replacements, f, indent=4)
 
-    # make sure the options are formatted properly
-    khbr_randomizer._validate_options(
-        khbr_randomizer.get_options_cli(game_data), enemy_options
-    )
+    # # make sure the options are formatted properly
+    # khbr_randomizer._validate_options(
+    #     khbr_randomizer.get_options_cli(game_data), enemy_options
+    # )
 
-    # actually perform the randomization
-    randomization = game_data.perform_randomization(enemy_options)
+    # # actually perform the randomization
+    # randomization = game_data.perform_randomization(enemy_options)
 
-    # add the assets to the zip and mod yml
-    assets = game_data.generate_files(randomization=randomization, outzip=out_zip)
-    mod["assets"].extend(assets)
+    # # add the assets to the zip and mod yml
+    # assets = game_data.generate_files(randomization=randomization, outzip=out_zip)
+    # mod["assets"].extend(assets)
 
-    # create the spoiler log
-    return create_spoiler_text(game_data.spoilers)
+    # # create the spoiler log
+    # return create_spoiler_text(game_data.spoilers)
 
     ### Backup old way
-    # enemySpoilers = khbr().generateToZip("kh2", enemy_options, mod, outZip)
-    # return enemySpoilers
+    from khbr.randomizer import Randomizer as BossEnemyRandomizer
+    enemySpoilers = BossEnemyRandomizer().generateToZip("kh2", enemy_options, mod, out_zip)
+    return enemySpoilers
 
 
 class SeedZip:
