@@ -120,6 +120,8 @@ seed generator contains settings for customizing the Final Door Requirement for 
 The basic/original Final Door Requirement is [Three Proofs](#three-proofs). Other options are [Objectives](#objectives)
 and [Emblems](#emblems).
 
+The computer at the center of the Garden of Assemblage shows the Final Door Requirement for the seed.
+
 ## G
 
 ### Garden of Assemblage

@@ -131,6 +131,8 @@ satisfied, the computer at the center of the Garden of Assemblage opens a path t
 go straight to the final fight gauntlet. This path also contains several Bulky Vendor enemies that give large amounts of
 experience points for a way to gain levels quickly.
 
+> The computer at the center of the Garden of Assemblage shows the Final Door Requirement for the seed. 
+
 ### All Blue Numbers (ABN)
 
 The goal is to obtain all items designated as Important Checks for the seed. Since the original version of the item

@@ -398,14 +398,19 @@ class SeedModBuilder:
             resource_path("static/starting/starting_item_event.script"), starting_item_evt
         )
 
-
-
-    def add_base_messages(self, seed_hash_icons: list[str], crit_mode: bool):
+    def add_base_messages(
+            self,
+            seed_hash_icons: list[str],
+            crit_mode: bool,
+            final_door_requirement_message: str
+    ):
         """Adds messages that are included with every seed."""
         seed_hash_string = " ".join(
             ["{:icon " + icon + "}" for icon in seed_hash_icons]
         )
         self.messages.add_message(17198, en=seed_hash_string, jp=seed_hash_string)
+
+        self.messages.add_message(20239, en=final_door_requirement_message, jp=final_door_requirement_message)
 
         # Not needed until we figure out how to display the correct amount
         # self.messages.add_message(19482, en="Important Checks Found")

@@ -20,7 +20,7 @@ from List.ItemList import Items
 from List.LvupStats import DreamWeaponOffsets
 from List.ObjectiveList import KH2Objective
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
-from List.inventory import bonus
+from List.inventory import bonus, misc
 from List.location import simulatedtwilighttown as stt
 from Module import hashimage
 from Module.RandomizerSettings import RandomizerSettings
@@ -39,7 +39,6 @@ from Module.spoilerLog import (
     weapon_stats_dictionary,
     objectives_dictionary,
 )
-from Module.version import LOCAL_UI_VERSION
 
 
 def noop(self, *args, **kw):
@@ -351,7 +350,11 @@ class SeedZip:
             yaml.emitter.Emitter.process_tag = noop
             mod = SeedModBuilder(title, out_zip)
             mod.add_base_assets()
-            mod.add_base_messages(settings.seedHashIcons, settings.crit_mode)
+            mod.add_base_messages(
+                seed_hash_icons=settings.seedHashIcons,
+                crit_mode=settings.crit_mode,
+                final_door_requirement_message=self._final_door_requirement_message()
+            )
             self.prepare_companion_damage_knockback(mod)
 
             if settings.dummy_forms:
@@ -1589,6 +1592,26 @@ class SeedZip:
             mod.treasures.add_treasure(
                 location_id=trsr.location.LocationId, item_id=trsr.item.Id
             )
+
+    def _final_door_requirement_message(self) -> str:
+        settings = self.settings
+
+        message_lines: list[str] = []
+        if settings.promiseCharm or misc.PromiseCharm.id in settings.starting_inventory_ids:
+            message_lines.append("Entry requires")
+            message_lines.append("Promise Charm and")
+        else:
+            message_lines.append("The Final Door")
+            message_lines.append("opens with")
+
+        if settings.objective_rando:
+            message_lines.append(f"{settings.num_objectives_needed} completed objectives.")
+        elif settings.emblems:
+            message_lines.append(f"{settings.num_emblems_needed} Lucky Emblems.")
+        else:
+            message_lines.append("3 Proofs.")
+
+        return "\n".join(message_lines)
 
     def check_if_companion_changed(
         self, settings: SeedSettings, keys: settingkey
