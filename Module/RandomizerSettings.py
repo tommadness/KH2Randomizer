@@ -725,7 +725,8 @@ class RandomizerSettings:
             self.random_seed
             + str(self.spoiler_log)
             + self.ui_version
-            + str(self.ui_settings.settings_string())
+            + str(self.ui_settings.settings_string()) 
+            + self.boss_enemy_overrides
         )
         self.full_rando_seed = seed_string_from_all_inputs
         random.seed(seed_string_from_all_inputs)
