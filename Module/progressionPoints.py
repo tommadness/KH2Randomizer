@@ -37,7 +37,7 @@ class ProgressionPoints():
         human_readable_labels = {
             "Levels":["Level 10", "Level 20", "Level 30", "Level 40", "Level 50"],
             "Drives":["Drive Level 2", "Drive Level 3", "Drive Level 4", "Drive Level 5", "Drive Level 6", "Drive Level 7"],
-            "SimulatedTwilightTown":[ "STT Enter", "Olette Munny Pouch", "Twilight Thron", "Axel 1", "Setzer", "Mansion Computer Room", "Axel 2", "Data Roxas" ],
+            "SimulatedTwilightTown":[ "STT Enter", "Olette Munny Pouch", "Twilight Thorn", "Axel 1", "Setzer", "Mansion Computer Room", "Axel 2", "Data Roxas" ],
             "TwilightTown":[ "Twilight Town Enter", "Station Dusk Fight", "Mysterious Tower", "Sandlot Fight", "Mansion Fight", "Betwixt and Between", "Data Axel" ],
             "HollowBastion":[ "Hollow Bastion Enter", "Bailey Fight", "Ansem's Study Computer", "Corridors Fight", "Dancers Fight", "Demyx", "Final Fantasy Fights", "1000 Heartless", "Sephiroth", "Data Demyx" ],
             "LandofDragons":[ "Land of Dragons Enter", "Mission 3", "Mountain Trail", "Cave Fight", "Summit Fight", "Shan Yu", "Antechamber Nobodies", "Stormrider", "Data Xigbar" ],
