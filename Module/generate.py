@@ -15,9 +15,9 @@ from Module.zipper import SeedZip, SeedZipResult
 def generateSeed(
     settings: RandomizerSettings, extra_data: ExtraConfigurationData
 ) -> SeedZipResult:
-    newSeedValidation = LocationInformedSeedValidator()
     last_error = None
     for attempt in range(50):
+        newSeedValidation = LocationInformedSeedValidator()
         try:
             randomizer = Randomizer(settings)
             location_spheres = newSeedValidation.validate_seed(
@@ -40,9 +40,9 @@ def generateSeed(
 def generateSeedCLI(
     settings: RandomizerSettings, extra_data: ExtraConfigurationData
 ) -> str:
-    newSeedValidation = LocationInformedSeedValidator()
     last_error = None
     for attempt in range(50):
+        newSeedValidation = LocationInformedSeedValidator()
         try:
             randomizer = Randomizer(settings)
             location_spheres = newSeedValidation.validate_seed(

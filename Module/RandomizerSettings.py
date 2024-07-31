@@ -610,7 +610,7 @@ class RandomizerSettings:
             and self.progression_hints
         ):
             raise SettingsException(
-                "Can't use progression hints with full spoiler hints"
+                "Can't use progression hints with full spoiler hints, set the report reveal mode to reports please"
             )
 
         self.hiscore_mode: bool = ui_settings.get(settingkey.SCORE_MODE)

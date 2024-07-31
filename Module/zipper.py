@@ -39,6 +39,7 @@ from Module.spoilerLog import (
     weapon_stats_dictionary,
     objectives_dictionary,
 )
+from Module.version import LOCAL_UI_VERSION
 
 
 def noop(self, *args, **kw):
@@ -238,10 +239,10 @@ def _invoke_khbr_with_overrides(
     # from khbr.KH2.EnemyManager import EnemyManager
     # from khbr.textutils import create_spoiler_text
 
-    # random.seed(
-    #     str(enemy_options)
-    # )  # seed boss/enemy with enemy options, which should include the seed name
-    # del enemy_options["seed_name"]  # remove it so khbr doesn't complain
+    random.seed(
+        str(enemy_options)
+    )  # seed boss/enemy with enemy options, which should include the seed name
+    del enemy_options["seed_name"]  # remove it so khbr doesn't complain
 
     # khbr_randomizer = BossEnemyRandomizer()
 
