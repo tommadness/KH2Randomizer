@@ -96,19 +96,22 @@ class OCLogicGraph(DefaultLogicGraph):
         self.logic[NodeId.LostRoad][NodeId.LostRoadChests] = keyblade_lambda
         self.logic[NodeId.Atrium][NodeId.AtriumChests] = keyblade_lambda
         self.logic[NodeId.TheLock][NodeId.TheLockChests] = keyblade_lambda
+        pain_and_panic_check = ItemPlacementHelpers.dc2_check
+        cerberus_cup_check = lambda inv: ItemPlacementHelpers.ht1_check(inv) and ItemPlacementHelpers.ag1_check(inv) and ItemPlacementHelpers.pl1_check(inv)
+        goddess_of_fate_check = lambda inv: cerberus_cup_check(inv) and pain_and_panic_check(inv) and ItemPlacementHelpers.twtnw_post_saix_check(inv)
         if not reverse_rando:
             self.logic[START_NODE][NodeId.Passage] = ItemPlacementHelpers.oc1_check
             self.logic[NodeId.Hydra][NodeId.AuronsStatue] = ItemPlacementHelpers.oc2_check
-            self.logic[NodeId.Hydra][NodeId.PainAndPanicCup] = ItemPlacementHelpers.dc2_check
-            self.logic[NodeId.Hydra][NodeId.CerberusCup] = lambda inv: ItemPlacementHelpers.ht1_check(inv) and ItemPlacementHelpers.ag1_check(inv) and ItemPlacementHelpers.pl1_check(inv)
-            self.logic[NodeId.Hades][NodeId.GoddessOfFateCup] = ItemPlacementHelpers.twtnw_post_saix_check
+            self.logic[NodeId.Hydra][NodeId.PainAndPanicCup] = pain_and_panic_check
+            self.logic[NodeId.Hydra][NodeId.CerberusCup] = cerberus_cup_check
+            self.logic[NodeId.Hades][NodeId.GoddessOfFateCup] = goddess_of_fate_check
             self.logic[NodeId.Hades][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
         else:
             self.logic[START_NODE][NodeId.UnderworldEntrance] = ItemPlacementHelpers.oc1_check
             self.logic[NodeId.Zexion][NodeId.CerberusBonus] = ItemPlacementHelpers.oc2_check
-            self.logic[NodeId.Hades][NodeId.PainAndPanicCup] = ItemPlacementHelpers.dc2_check
-            self.logic[NodeId.Hades][NodeId.CerberusCup] = lambda inv: ItemPlacementHelpers.ht1_check(inv) and ItemPlacementHelpers.ag1_check(inv) and ItemPlacementHelpers.pl1_check(inv)
-            self.logic[NodeId.Hydra][NodeId.GoddessOfFateCup] = ItemPlacementHelpers.twtnw_post_saix_check
+            self.logic[NodeId.Hades][NodeId.PainAndPanicCup] = pain_and_panic_check
+            self.logic[NodeId.Hades][NodeId.CerberusCup] = cerberus_cup_check
+            self.logic[NodeId.Hydra][NodeId.GoddessOfFateCup] = goddess_of_fate_check
             self.logic[NodeId.Hydra][NodeId.ParadoxCups] = lambda inv: ItemPlacementHelpers.need_forms(inv) and ItemPlacementHelpers.need_summons(inv)
 
 def make_graph(graph: LocationGraphBuilder):

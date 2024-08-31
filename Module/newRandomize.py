@@ -746,6 +746,16 @@ class Randomizer:
             return not (Counter(smaller_list)-Counter(bigger_list))
         def missing_items(bigger_list,smaller_list):
             return list((Counter(smaller_list)-Counter(bigger_list)).elements())
+        
+        # this is checking for access into CoR, we'll need to simulate having the necessary movement
+        simulated_growth = [growth.HighJump1.id,growth.HighJump2.id,growth.HighJump3.id,
+                                                 growth.QuickRun1.id,growth.QuickRun2.id,growth.QuickRun3.id,
+                                                 growth.AerialDodge1.id,growth.AerialDodge2.id,growth.AerialDodge3.id,
+                                                 growth.Glide1.id,growth.Glide2.id,growth.Glide3.id,
+                                                 ]
+        
+        shop_item_ids = [i.Id for i in self.shop_items]
+
         # determine available unlocks for
         #   1) regular/reverse
         #   2) keyblade locking on/off
@@ -759,9 +769,10 @@ class Randomizer:
 
         item_depth = 0
         min_item_depth = settings.chainLogicMinLength
-        max_item_depth = settings.chainLogicMinLength+50
+        max_item_depth = settings.chainLogicMaxLength
 
-        acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator)
+        acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator,simulated_growth + shop_item_ids)
+        acquired_items = acquired_items + self.starting_item_ids + simulated_growth + shop_item_ids
         last_unlocked_sphere = accessible_locations
 
         world_names_to_unlock = [w for w in item_locking_ids_per_world.keys() for _ in item_locking_ids_per_world[w]]
@@ -791,15 +802,12 @@ class Randomizer:
             del world_names_to_unlock[last_index]
             second_pass_worlds = [proof_world]     
 
-        # this is checking for access into CoR, we'll need to simulate having the necessary movement
-        simulated_growth = [growth.HighJump1.id,growth.HighJump2.id,growth.HighJump3.id,
-                                                 growth.QuickRun1.id,growth.QuickRun2.id,growth.QuickRun3.id,
-                                                 growth.AerialDodge1.id,growth.AerialDodge2.id,growth.AerialDodge3.id,
-                                                 growth.Glide1.id,growth.Glide2.id,growth.Glide3.id,
-                                                 ]
         history_of_items = []
         # print("Starting chain....")
         while (item_depth < min_item_depth or (item_depth < max_item_depth and random.random() < 0.75)): # 25% chance of breaking early
+            # dummy_do_not_use = input("...")
+            # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+            # print(f"Depth {item_depth}/({min_item_depth}-{max_item_depth})")
             # print("--iter")
             # pick a world to unlock checks from
             if world_names_to_unlock is None:
@@ -808,6 +816,7 @@ class Randomizer:
                 break
             chosen_world = world_names_to_unlock[0]
             chosen_checks = item_locking_ids_per_world[chosen_world][0]
+            # print(f"chosen checks {chosen_checks}")
             def pop_world_from_list():
                 nonlocal world_names_to_unlock
                 nonlocal second_pass_worlds
@@ -817,12 +826,15 @@ class Randomizer:
                     second_pass_worlds = None
                 item_locking_ids_per_world[chosen_world].pop(0)
             if contains(acquired_items,chosen_checks):
-                # print(chosen_world)
+                # print(f"chosen world {chosen_world}")
                 # print(f"--Already have these items {chosen_checks}")
                 pop_world_from_list()
                 continue
             chosen_checks = missing_items(acquired_items,chosen_checks)
-            sphere_1 = [loc for loc in valid_locations if locationType.Level not in loc.LocationTypes and validator.is_location_available(self.starting_item_ids + acquired_items + chosen_checks + simulated_growth,loc) and loc not in accessible_locations]
+            sphere_1 = [loc for loc in valid_locations if locationType.Level not in loc.LocationTypes and validator.is_location_available(acquired_items + chosen_checks,loc) and loc not in accessible_locations]
+            if settings.extended_placement_logic:
+                sphere_1 = [loc for loc in sphere_1 if loc.Description!=hb.CheckLocation.DataDemyxApBoost]
+            
             # print("*******************")
             # print(acquired_items)
             # print(chosen_checks)
@@ -836,19 +848,29 @@ class Randomizer:
                     # print(f"placing {i}")
                     i_data = next((it for it in item_pool if it.Id == i), None)
                     if i_data is not None:
+                        # print(f"Assigning item {i_data} in one of these locations {last_unlocked_sphere}")
                         # assign this item somewhere
-                        locations_to_remove = self.randomly_assign_single_item(i_data,last_unlocked_sphere)
+                        try:
+                            locations_to_remove = self.randomly_assign_single_item(i_data,last_unlocked_sphere)
+                        except Exception:
+                            raise GeneratorException(f"Tried to assign {i_data} to {last_unlocked_sphere} and failed")
                         for l in locations_to_remove:
                             valid_locations.remove(l)
                         item_pool.remove(i_data)
                     else:
-                        raise GeneratorException(f"Uh....chain logic couldn't find an item with the id {i} from the unlock list. This shouldn't happen. History {history_of_items}")
-                acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator, simulated_growth)
+                        output_str = f"Uh....chain logic couldn't find an item with the id {i} from the unlock list. This shouldn't happen. History {history_of_items}"
+                        print(output_str)
+                        raise GeneratorException(output_str)
+                acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator, simulated_growth + shop_item_ids)
+                acquired_items = acquired_items + self.starting_item_ids + simulated_growth + shop_item_ids
                 last_unlocked_sphere = sphere_1
+                # print(last_unlocked_sphere)
                 item_depth+=1
             else:
                 if chosen_world not in settings.enabledLocations:
                     # print(f"{chosen_world} checks are disabled")
+                    pop_world_from_list()
+                elif len(chosen_checks)==1 and chosen_checks[0] in [k.id for k in keyblade.get_locking_keyblades()] and settings.keyblades_unlock_chests:
                     pop_world_from_list()
                 else:
                     # print(chosen_world)
@@ -871,6 +893,7 @@ class Randomizer:
         else:
             # make sure we have access to nonexistence
             acquired_items,accessible_locations = self.get_accessible_locations(valid_locations,validator, simulated_growth)
+            acquired_items = acquired_items + self.starting_item_ids + simulated_growth
             if proof.ProofOfNonexistence.id not in acquired_items:
                 raise GeneratorException("Couldn't access proof of nonexistence in chain logic")
             
