@@ -83,9 +83,9 @@ def corOn(seed_settings: SeedSettings):
 
 def lockedVisitsHard(seed_settings: SeedSettings):
     seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.RANDOM.name)
-    seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 5)
+    seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 6)
     seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MIN, 3)
-    seed_settings.set(settingkey.WEIGHTED_UNLOCKS, itemBias.LATE)
+    seed_settings.set(settingkey.WEIGHTED_UNLOCKS, itemBias.SLIGHTLY_LATE)
 
 
 def blockSkips(seed_settings: SeedSettings):
