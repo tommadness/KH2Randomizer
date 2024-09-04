@@ -129,6 +129,36 @@ class SeedModBuilder:
                     ],
                 },
                 {
+                    "name": "msg/jp/jm.bar",
+                    "platform": "ps2",
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "jm",
+                            "type": "list",
+                            "method": "kh2msg",
+                            "source": [
+                                {"name": self.journal_txt.source_name, "language": "en"}
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "name": "msg/jp/jm.bar",
+                    "platform": "pc",
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "jm",
+                            "type": "list",
+                            "method": "kh2msg",
+                            "source": [
+                                {"name": self.journal_txt.source_name, "language": "jp"}
+                            ],
+                        }
+                    ],
+                },
+                {
                     "name": "00battle.bin",
                     "method": "binarc",
                     "source": [
