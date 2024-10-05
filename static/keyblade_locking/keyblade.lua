@@ -1,30 +1,38 @@
-function _OnInit()
-print('Keyblade Locking Lua from Seed Generator')
-if (GAME_ID == 0xF266B00B or GAME_ID == 0xFAF99301) and ENGINE_TYPE == "ENGINE" then --PCSX2
-	if ENGINE_VERSION < 3.0 then
-		print('LuaEngine is Outdated. Things might not work properly.')
-	end
-	OnPC = false
-	Now = 0x032BAE0 --Current Location
-	Save = 0x032BB30 --Save File
-	Sys3Pointer = 0x1C61AF8 --03system.bin Pointer Address
-elseif GAME_ID == 0x431219CC and ENGINE_TYPE == 'BACKEND' then --PC
-	if ENGINE_VERSION < 5.0 then
-		ConsolePrint('LuaBackend is Outdated. Things might not work properly.',2)
-	end
-	OnPC = true
-	if ReadString(0x09A92F0,4) == 'KH2J' then --EGS
-		Now = 0x0716DF8
-		Save = 0x09A92F0
-		Sys3Pointer = 0x2AE5890
-	elseif ReadString(0x09A9830,4) == 'KH2J' then --Steam
-		Now = 0x0717008
-		Save = 0x09A9830
-		Sys3Pointer = 0x2AE5DD0
-	else
-		ConsolePrint("Unable to detect version of PC running")
+function GetVersion()
+	if (GAME_ID == 0xF266B00B or GAME_ID == 0xFAF99301) and ENGINE_TYPE == "ENGINE" then --PCSX2
+		if ENGINE_VERSION < 3.0 then
+			print('LuaEngine is Outdated. Things might not work properly.')
+		end
+		OnPC = false
+		GameVersion=1
+		Now = 0x032BAE0 --Current Location
+		Save = 0x032BB30 --Save File
+		Sys3Pointer = 0x1C61AF8 --03system.bin Pointer Address
+	elseif GAME_ID == 0x431219CC and ENGINE_TYPE == 'BACKEND' then --PC
+		if ENGINE_VERSION < 5.0 then
+			ConsolePrint('LuaBackend is Outdated. Things might not work properly.',2)
+		end
+		OnPC = true
+		if ReadString(0x9A9330,4) == 'KH2J' then --EGS
+			GameVersion=2
+			Now = 0x0716DF8
+			Save = 0x9A9330
+			Sys3Pointer = 0x2AE58D0
+		elseif ReadString(0x09A9830,4) == 'KH2J' then --Steam
+			GameVersion=3
+			Now = 0x0717008
+			Save = 0x9A98B0
+			Sys3Pointer = 0x2AE5E50
+		else
+			ConsolePrint("Unable to detect version of PC running")
+		end
 	end
 end
+
+
+function _OnInit()
+GameVersion = 0
+print('Keyblade Locking Lua from Seed Generator')
 end
 
 --table key is world id. table value is keyblade ID, keyblade save file inventory address 
@@ -83,6 +91,10 @@ return Address
 end
 
 function _OnFrame()
+if GameVersion == 0 then --Get anchor addresses
+	GetVersion()
+	return
+end
 if true then --Define current values for common addresses
 	World  = ReadByte(Now+0x00)
 	Room   = ReadByte(Now+0x01)
