@@ -204,6 +204,7 @@ class Hints:
         ]
         hint_data = common_tracker_data.to_dict()
         hint_data["level_data"] = world_items.level_checks
+        hint_data["world"] = world_items.world_to_item_ids()
         if settings.emblems:
             hint_data["emblems"] = {"max_emblems_available":settings.max_emblems_available,"num_emblems_needed":settings.num_emblems_needed}
 
@@ -218,7 +219,6 @@ class Hints:
             hint_data["objective_locations"] = objective_tuples
             hint_data["num_objectives_needed"] = settings.num_objectives_needed
         if settings.hintsType == HintType.SHANANAS:
-            hint_data["world"] = world_items.world_to_item_ids()
             hint_data["Reports"] = copy.deepcopy(world_items.report_information)
             if common_tracker_data.progression_settings is not None:
                 world_list = list(hint_data["world"].keys())
@@ -237,7 +237,6 @@ class Hints:
                     settings, world_items, jsmartee_data
                 )
         elif settings.hintsType == HintType.POINTS:
-            hint_data["world"] = world_items.world_to_item_ids()
             if common_tracker_data.progression_settings is not None:
                 world_list = list(hint_data["world"].keys())
                 random.shuffle(world_list)
@@ -251,13 +250,11 @@ class Hints:
                 settings, world_items, point_data
             )
         elif settings.hintsType == HintType.SPOILER:
-            hint_data["world"] = world_items.world_to_item_ids()
             hint_data["aux_data"] = world_items.item_ids_to_names()
             hint_data["Reports"] = HintUtils.spoiler_hint_assignment(
                 settings, common_tracker_data, world_items, hintable_worlds
             )
         elif settings.hintsType == HintType.PATH:
-            hint_data["world"] = world_items.world_to_item_ids()
             path_data = []
             for world in HintUtils.hintable_worlds():
                 path_data.append(PathHintData(world_items, world))
