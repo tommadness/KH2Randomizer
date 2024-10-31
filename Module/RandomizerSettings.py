@@ -676,6 +676,11 @@ class RandomizerSettings:
                 if l.value != "Level":  # don't duplicate the level info
                     self.tracker_includes.append(l.value)
 
+        # Add synth if it's not already there and if there's anything in the shop.
+        # Otherwise, the tracker may not have a location for the shop items to get tracked to.
+        if self.shop_hintable and locationType.SYNTH not in self.tracker_includes:
+            self.tracker_includes.append(locationType.SYNTH)
+
         # putting this in the settings object to allow us to turn it off as a safety valve
         self.dummy_forms = True
 
