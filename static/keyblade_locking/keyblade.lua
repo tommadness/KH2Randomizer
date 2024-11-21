@@ -1,41 +1,65 @@
-function GetVersion()
-	if (GAME_ID == 0xF266B00B or GAME_ID == 0xFAF99301) and ENGINE_TYPE == "ENGINE" then --PCSX2
-		if ENGINE_VERSION < 3.0 then
-			print('LuaEngine is Outdated. Things might not work properly.')
-		end
-		OnPC = false
-		GameVersion=1
-		Now = 0x032BAE0 --Current Location
-		Save = 0x032BB30 --Save File
-		Sys3Pointer = 0x1C61AF8 --03system.bin Pointer Address
-	elseif GAME_ID == 0x431219CC and ENGINE_TYPE == 'BACKEND' then --PC
-		if ENGINE_VERSION < 5.0 then
-			ConsolePrint('LuaBackend is Outdated. Things might not work properly.',2)
-		end
-		OnPC = true
-		if ReadString(0x9A9330,4) == 'KH2J' then --EGS
-			GameVersion=2
-			Now = 0x0716DF8
-			Save = 0x9A9330
-			Sys3Pointer = 0x2AE58D0
-		elseif ReadString(0x09A9830,4) == 'KH2J' then --Steam
-			GameVersion=3
-			Now = 0x0717008
-			Save = 0x9A98B0
-			Sys3Pointer = 0x2AE5E50
-		else
-			ConsolePrint("Unable to detect version of PC running")
-		end
-	end
-end
-
-
 function _OnInit()
-GameVersion = 0
-print('Keyblade Locking Lua from Seed Generator')
+    CanExecute = false
+    StaticPointersLoaded = false
+
+    if (GAME_ID == 0xF266B00B or GAME_ID == 0xFAF99301) and ENGINE_TYPE == "ENGINE" then --PCSX2
+        if ENGINE_VERSION < 3.0 then
+            print('LuaEngine is Outdated. Things might not work properly.')
+        end
+        OnPC = false
+        CanExecute = true
+        Now = 0x032BAE0 --Current Location
+        Save = 0x032BB30 --Save File
+        Sys3Pointer = 0x1C61AF8 --03system.bin Pointer Address
+        MSN = 0x04FA440
+        print('Keyblade Locking Lua from Seed Generator - PCSX2')
+    elseif GAME_ID == 0x431219CC and ENGINE_TYPE == 'BACKEND' then --PC
+        if ENGINE_VERSION < 5.0 then
+            ConsolePrint('LuaBackend is Outdated. Things might not work properly.',2)
+        end
+        OnPC = true
+        if ReadByte(0x566A8E) == 0xFF then --EGS 1.0.0.9
+            CanExecute = true
+            Now = 0x0716DF8
+            Save = 0x09A92F0
+            Sys3Pointer = 0x2AE5890
+            MSN = 0x0BF2C40
+            ConsolePrint('Keyblade Locking Lua from Seed Generator - EGS 1.0.0.9')
+        elseif ReadByte(0x56668E) == 0xFF then --Steam Global "1.0.0.9"
+            CanExecute = true
+            Now = 0x0717008
+            Save = 0x09A9830
+            Sys3Pointer = 0x2AE5DD0
+            MSN = 0x0BF3340
+            ConsolePrint('Keyblade Locking Lua from Seed Generator - Steam Global "1.0.0.9"')
+        elseif ReadByte(0x56640E) == 0xFF then --Steam JP "1.0.0.9"
+            CanExecute = true
+            Now = 0x0716008
+            Save = 0x09A8830
+            Sys3Pointer = 0x2AE4DD0
+            MSN = 0x0BF2340
+            ConsolePrint('Keyblade Locking Lua from Seed Generator - Steam JP "1.0.0.9"')
+        elseif ReadByte(0x660E44) == 106 then --EGS 1.0.0.10
+            CanExecute = true
+            Now = 0x0716DF8
+            Save = 0x09A9330
+            Sys3Pointer = 0x2AE58D0
+            MSN = 0x0BF2C80
+            ConsolePrint('Keyblade Locking Lua from Seed Generator - EGS 1.0.0.10')
+        elseif ReadByte(0x660EF4) == 106 then --Steam "1.0.0.10"
+            CanExecute = true
+            Now = 0x0717008
+            Save = 0x09A98B0
+            Sys3Pointer = 0x2AE5E50
+            MSN = 0x0BF33C0
+            ConsolePrint('Keyblade Locking Lua from Seed Generator - Steam "1.0.0.10"')
+        else
+            ConsolePrint("Unable to detect version of PC running")
+        end
+    end
 end
 
---table key is world id. table value is keyblade ID, keyblade save file inventory address 
+--table key is world id. table value is keyblade ID, keyblade save file inventory address
 keyTable = {
 	[0] = {-1, -1},
 	[1] = {0x1F2, 0x368D},	--STT 	| Bond of Flame
@@ -91,32 +115,23 @@ return Address
 end
 
 function _OnFrame()
-if GameVersion == 0 then --Get anchor addresses
-	GetVersion()
-	return
-end
-if true then --Define current values for common addresses
-	World  = ReadByte(Now+0x00)
-	Room   = ReadByte(Now+0x01)
-	Place  = ReadShort(Now+0x00)
-	if Place == 0xFFFF or not MSN then
-		if not OnPC then
-			Sys3 = ReadInt(Sys3Pointer)
-			MSN = 0x04FA440
-		else
-			Sys3 = ReadLong(Sys3Pointer)
-			if ReadString(0x09A92F0,4) == 'KH2J' then --EGS
-				MSN = 0x0BF2C40
-			elseif ReadString(0x09A9830,4) == 'KH2J' then --Steam
-				MSN = 0x0BF3340
-			end
-		end
-	end
-end
-CanUnlock()
-end
+    if not CanExecute then
+        return
+    end
 
-function CanUnlock()
+    if not StaticPointersLoaded then
+        if not OnPC then
+            Sys3 = ReadInt(Sys3Pointer)
+        else
+            Sys3 = ReadLong(Sys3Pointer)
+        end
+        StaticPointersLoaded = true
+    end
+
+    World  = ReadByte(Now+0x00)
+    Room   = ReadByte(Now+0x01)
+    Place  = ReadShort(Now+0x00)
+
 	--return if not a valid world
 	if (World <= 1 or World >= 19) then
 		return
