@@ -9,9 +9,7 @@
 * [Stability Notes](#you-are-now-ready-to-play-the-kh2-randomizer)
 
 # *Your game must be downpatched to be compatible with the Randomizer now, please see the KH2 Rando Discord for more information:*
-Steam Downpatching: https://discord.com/channels/712837252279173150/721205500556869642/1292017013581156402
-
-Epic Downpatching: https://discord.com/channels/712837252279173150/721205500556869642/1279862965021052938
+Steam/Epic Downpatching Guide: https://discord.com/channels/712837252279173150/721205500556869642/1306542084253290557
 
 ## Heads up!
 * Feel free to go to the [Discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated #help channel where you can find people to assist you if you're facing any difficulties. (P.S. Please be polite)
