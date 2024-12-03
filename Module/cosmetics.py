@@ -130,6 +130,9 @@ class CosmeticsMod:
         extracted_data_path = appconfig.extracted_data_path()
         if extracted_data_path is not None:
             def add_game_song(song_file_path: Path, category: str, song_dmca: bool):
+                if not song_file_path.is_file():
+                    return
+
                 if not categorize:
                     category = 'wild'
                 if category not in result:
