@@ -39,8 +39,7 @@ proof.
 
 ## Original Locations Cheatsheet
 
-Since the paths are determined by where the items are found in the vanilla game, here's a cheatsheet with what the
-randomizer considers "original" locations.
+Since the paths are determined by where the items are found in the vanilla game, here's a cheatsheet with what the randomizer considers "original" locations. The numbers on the world icons refer to the total number of items that hint each world, including multiples for magic, torn pages, and world locks. This means that if you've received more hints for a given proof than a world's number, the proof could not be in that world. For example, imagine a scenario where you've received 4 different hints towards Proof of Peace. This would mean the Proof of Peace could not be in any world with a number less than 4, so Sora's Heart, Simulated Twilight Town, and Atlantica would all be eliminated.
 
 ![Vanilla Checks](vanilla_with_story.png)
 
