@@ -31,6 +31,9 @@
 * New Cosmetics setting for randomizing keyblades
 * New Cosmetics settings for customizing item pictures, room transitions, and the ending picture
 * New Cosmetics setting for adding some randomizer-themed textures to the game
+* Removed options for Remove Cutscenes and Randomize Character Costumes for the time being
+  * These are known to be problematic and cause confusion for players
+  * See the Discord for an alternative cutscene skipper mod
 
 ### Changes
 

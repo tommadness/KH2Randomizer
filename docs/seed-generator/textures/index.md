@@ -64,8 +64,8 @@ future recolors. This will potentially use large amounts of disk space, but impr
 minimize disk space usage, but recoloring will take longer for each seed.
 
 **Compress Textures** - If enabled, recolored textures will use image compression. This saves a **large** amount of disk
-space, but could have performance impacts on the game, and causes recolored textures to take slightly longer to
-generate. This setting is considered experimental until more testing is done.
+space, but could have performance impacts on the game (none have been found, but it's possible), and causes recolored
+textures to take slightly longer to generate.
 
 **Refresh Preview(s)** - Displays or refreshes the preview image(s) that help show what the texture recoloring will look
 like when applied. Depending on the texture and your machine's performance, this can take a few seconds or more.

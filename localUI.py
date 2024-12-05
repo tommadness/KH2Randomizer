@@ -738,7 +738,7 @@ class KH2RandomizerApp(QMainWindow):
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_DAMAGE_CAP)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DARK_THORN)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.RETRY_DFX)
-                split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_CUTSCENES)
+                # split_pc_emu = split_pc_emu or self.settings.get(settingkey.REMOVE_CUTSCENES)
                 split_pc_emu = split_pc_emu or self.settings.get(settingkey.KEYBLADES_LOCK_CHESTS)
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_COR_SKIP)
                 # split_pc_emu = split_pc_emu or self.settings.get(settingkey.BLOCK_SHAN_YU_SKIP)

@@ -363,9 +363,6 @@ minigame much faster.
 
 **Skip Atlantica Minigame Tutorial** - If enabled, skips the Atlantica music tutorial (not the swimming tutorial).
 
-**Remove Cutscenes** - Removes all cutscenes from the game. As a consequence there are occasionally strange
-flashes/backgrounds when in a spot a cutscene would normally occur.
-
 ### Other Modifiers
 
 **Split AS/Data Rewards** - Controls how rewards are given for Absent Silhouette fights.
@@ -622,12 +619,6 @@ seed generated outside the standard seed generator (using [Archipelago](https://
 * Randomize (one) - Chooses a single random command menu to use for the entire game.
 * Randomize (all) - Chooses random command menus for each world/location that has a unique command menu.
 * (individual command menus) - Forces all command menus to have the chosen appearance.
-
-**Randomize Character Costumes (Beta)** - If enabled, randomizes the different costumes that Sora/Donald/Goofy switch
-between in the different worlds (i.e. Space Paranoids could now be default Sora, while anywhere default Sora is used
-could be Christmas Town Sora).
-
-> **Warning** - this setting has been known to cause many crashes.
 
 ### Visuals (PC Panacea Only)
 

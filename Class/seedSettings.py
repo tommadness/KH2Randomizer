@@ -2912,14 +2912,14 @@ _all_settings = [
     Toggle(
         name=settingkey.RECOLOR_TEXTURES_COMPRESS,
         group=SettingGroup.COSMETICS,
-        ui_label="Compress Textures (Experimental)",
+        ui_label="Compress Textures",
         shared=False,
         default=False,
         tooltip="""
         If enabled, recolored textures will use image compression. This saves a **large** amount of disk space, but
-        could have performance impacts on the game, and causes recolored textures to take slightly longer to generate.
+        causes recolored textures to take slightly longer to generate.
         
-        This setting is considered experimental until more testing is done.
+        Enabling this _could_ have performance impacts on the game, though none have been observed.
         """,
     ),
     Toggle(
@@ -3768,9 +3768,9 @@ def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
         "cups_give_xp": ui_settings.get(settingkey.CUPS_GIVE_XP),
         "retry_data_final_xemnas": ui_settings.get(settingkey.RETRY_DFX),
         "retry_dark_thorn": ui_settings.get(settingkey.RETRY_DARK_THORN),
-        "remove_cutscenes": ui_settings.get(settingkey.REMOVE_CUTSCENES),
+        "remove_cutscenes": False,
         "party_member_rando": ui_settings.get(settingkey.PARTY_MEMBER_RANDO),
-        "costume_rando": ui_settings.get(settingkey.COSTUME_RANDO),
+        "costume_rando": False,
         "revenge_limit_rando": ui_settings.get(settingkey.REVENGE_LIMIT_RANDO),
     }
     for setting in boss_settings + enemy_settings:
