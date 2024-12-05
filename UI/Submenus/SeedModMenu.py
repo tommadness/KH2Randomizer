@@ -21,7 +21,7 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.REMOVE_WARDROBE_ANIMATION)
         self.add_option(settingkey.FAST_URNS)
         self.add_option(settingkey.ATLANTICA_TUTORIAL_SKIP)
-        self.add_option(settingkey.REMOVE_CUTSCENES)
+        # self.add_option(settingkey.REMOVE_CUTSCENES)
         self.end_group('Quality of Life')
         self.start_group()
         self.add_option(settingkey.AS_DATA_SPLIT)
