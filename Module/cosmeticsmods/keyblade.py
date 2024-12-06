@@ -190,14 +190,14 @@ def _vanilla_keyblades() -> list[VanillaKeyblade]:
         VanillaKeyblade("Fenrir", "063", "se524", "W_EX010_M0"),
         VanillaKeyblade("Ultima Weapon", "064", "se525", "W_EX010_N0"),
         VanillaKeyblade("Two Become One", "300", "se526", "W_EX010_P0"),
-        VanillaKeyblade("Struggle Hammer", "065", "se506", "W_EX010_U0"),
-        VanillaKeyblade("Struggle Wand", "066", "se505", "W_EX010_V0"),
-        VanillaKeyblade("Struggle Sword", "067", "se504", "W_EX010_W0"),
         VanillaKeyblade("Winners Proof", "301", "se527", "W_EX010_R0"),
-        VanillaKeyblade("Pureblood", "296", "se503", "W_EX010_X0", custom=True),
-        VanillaKeyblade("Alpha Weapon", "297", "se501", "W_EX010_Y0", custom=True, can_replace_effects=False),
-        VanillaKeyblade("Omega Weapon", "298", "se519", "W_EX010_Z0", custom=True, can_replace_effects=False),
-        VanillaKeyblade("Kingdom Key D", "299", "se9000", "W_EX010_00", custom=True),
+        # VanillaKeyblade("Struggle Hammer", "065", "se506", "W_EX010_U0"),
+        # VanillaKeyblade("Struggle Wand", "066", "se505", "W_EX010_V0"),
+        # VanillaKeyblade("Struggle Sword", "067", "se504", "W_EX010_W0"),
+        # VanillaKeyblade("Pureblood", "296", "se503", "W_EX010_X0", custom=True),
+        # VanillaKeyblade("Alpha Weapon", "297", "se501", "W_EX010_Y0", custom=True, can_replace_effects=False),
+        # VanillaKeyblade("Omega Weapon", "298", "se519", "W_EX010_Z0", custom=True, can_replace_effects=False),
+        # VanillaKeyblade("Kingdom Key D", "299", "se9000", "W_EX010_00", custom=True),
     ]
 
 
