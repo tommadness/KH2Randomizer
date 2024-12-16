@@ -41,12 +41,17 @@
             </ul>
         </nav>
         <pre class="top-nav-right" style="margin-right: 16px;"></pre>
+        <div class="search-container">
+          <input type="text" placeholder="Search.." class="search-input">
+          <div id="search-results" class="dropdown-results"></div>
+        </div>
         <a href="https://discord.com/invite/KH2FMRando"><img src="{{ '/assets/image/discord-mark-white.png' | relative_url }}" height="36" alt="Discord" style="margin: 4px;"/></a>
         <a href="https://github.com/tommadness/KH2Randomizer"><img src="{{ '/assets/image/github-mark-white.png' | relative_url }}" height="36" alt="GitHub" style="margin: 4px;"/></a>
     </header>
-
     <main id="content" class="main-content" role="main">
       {{ content }}
     </main>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>    
+    <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
   </body>
 </html>

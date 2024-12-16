@@ -102,6 +102,69 @@ a {
     margin-left: auto;
 }
 
+.search-container {
+    position: relative;
+    margin-right: 8px;
+    width: 20%;
+}
+
+.search-input {
+    border-radius: 20px;
+    padding: 6px 12px;
+    border: none;
+    outline: none;
+    color: black;
+    width: 100%;
+}
+
+.dropdown-results {
+    position: absolute;
+    top: 100%; /* Place right below the search box */
+    left: 0;
+    width: 100%;
+    color: black;
+    background-color: #DDDDDD;
+    // border: 1px solid #ccc;
+    z-index: 10;
+    max-height: 400px; /* Limit height for scrolling */
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-results ul {
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.dropdown-results li {
+    padding: 8px;
+    cursor: pointer;
+    /* Set font-size as a proportion of the viewport width */
+    font-size: min(1.5vw, 24px); /* Set font-size to be the max between 1.5vw and 24px */
+    color: black;
+
+    /* Use background-image for the custom bullet */
+    background-image: url('/assets/image/item-key.png');
+    /* Set background-size as a proportion of the viewport width and height */
+    background-size: min(1.5vw, 24px) min(1.5vw, 24px); /* Set background-size to be the max between 1.5vw and 24px */
+    background-repeat: no-repeat;
+    background-position: 0.5em center; /* Position the bullet */
+    list-style-type: none; /* Remove default bullet */
+    padding-left: 2em; /* Add space to avoid text overlapping the bullet */
+}
+
+.dropdown-results li a {
+    padding: 8px;
+    cursor: pointer;
+    color: black;
+}
+
+.dropdown-results li:hover {
+    background-color: #f0f0f0;
+    color: black;
+}
+
 .main-content {
     background-color: #31363b;
 
