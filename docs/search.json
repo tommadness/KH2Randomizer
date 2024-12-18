@@ -3,12 +3,12 @@ layout: null
 ---
 [
   {% for page in site.pages %}
-    {% if page.path != "search.json" %}
+    {% unless page.path == "search.json" or page.path contains "assets" %}
     {
       "title": {{ page.title | jsonify }},
       "url": {{ page.url | relative_url | jsonify }},
       "content": {{ page.content | strip_html | normalize_whitespace | jsonify }}
     }{% unless forloop.last %},{% endunless %}
-    {% endif %}
+    {% endunless %}
   {% endfor %}
 ]
