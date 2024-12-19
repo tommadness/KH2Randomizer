@@ -3,47 +3,72 @@ var lunrIndex;  // Lunr index
 var pagesIndex; // JSON-loaded pages
 
 // Fetch the JSON index
-fetch('/search.json')
-  .then(response => response.json())
-  .then(data => {
-    pagesIndex = data;
-    // Build Lunr index
-    lunrIndex = lunr(function() {
-      this.field('title', { boost: 10 });
-      this.field('content');
-      this.ref('url');
+// USE OF A PROMISE??????
+function fetchAndBuildIndex() {
+  return fetch('/search.json')
+    .then(response => response.json())
+    .then(data => {
+      pagesIndex = data;
+      // Build Lunr index
+      lunrIndex = lunr(function() {
+        this.field('title', { boost: 10 });
+        this.field('content');
+        this.ref('url');
 
-      pagesIndex.forEach(page => {
-        this.add(page);
+        pagesIndex.forEach(page => {
+          this.add(page);
+        });
       });
     });
-  });
+}
+fetchAndBuildIndex();
+
+function performSearch(query, fuzzySearch) {
+  if (query.length > 2) { 
+    // allow up to 2 edits of fuzzy search
+    console.log("HERE COMES THE ");
+    console.log(lunrIndex);
+    if (lunrIndex === null) {
+      fetchAndBuildIndex();
+    }
+    var results = lunrIndex.search(query + "~" + fuzzySearch);
+    if (results.length > 0) {
+      return results.map(result => {
+        return pagesIndex.find(page => page.url === result.ref);
+      });
+    }
+  }
+  return []; // Return an empty array if query length is not more than 2
+}
+
+function populateSearch(query, type="menu") {
+
+  const resultsContainer = document.querySelector(
+    type == "menu"? "#search-results" : "#submitted-search-results"  
+  );
+  // match perfectly for menu, match off 1 character for full results display
+  var fuzzySearch = type === "menu" ? 0 : 1; 
+
+  // Clear old results and perform the search
+  resultsContainer.innerHTML = '';
+  var results = performSearch(query, fuzzySearch);
+  console.log('Menu results:', results);
+    
+  // handle no results 
+  if (results.length === 0) {
+    resultsContainer.innerHTML += `<li><a>No results found.</a></li>`;
+  } else { // populate #search-results in a similar way
+    results.forEach(result => {
+      resultsContainer.innerHTML += `<li><a href="${result.url}">${result.title}</a></li>`;
+    });
+  }
+}
 
 // Listen for input changes
 document.querySelector('.search-input').addEventListener('input', function(e) {
-  var query = e.target.value.trim();
-  var resultsContainer = document.querySelector('#search-results');
-  resultsContainer.innerHTML = ''; // Clear old results
-
-  if (query.length > 2) {  // Only search if 3+ chars
-    // allow up to 2 edits of fuzzy search
-    var results = lunrIndex.search(query + "~2");
-    // results is an array of matches {ref: <url>, score: <number>}
-    // We need to map them back to our pagesIndex
-    results.forEach(result => {
-      var matchedPage = pagesIndex.find(page => page.url === result.ref);
-      if (matchedPage) {
-        var li = document.createElement('li');
-        li.innerHTML = `<a href="${matchedPage.url}">${matchedPage.title}</a>`;
-        resultsContainer.appendChild(li);
-      }
-    });
-
-    if (results.length === 0) {
-      var li = document.createElement('li');
-      li.textContent = 'No results found';
-      resultsContainer.appendChild(li);
-    }
+  const query = e.target.value.trim();
+  if (query) {
+    populateSearch(query, type="menu")
   }
 });
 
@@ -52,45 +77,43 @@ document.querySelector('.search-input').addEventListener('keydown', function(e) 
     e.preventDefault();
     const query = e.target.value.trim();
     if (query) {
+
+      // clear main content and only show results
+      const mainContent = document.querySelector('.main-content');
+      mainContent.innerHTML = '<div id="submitted-search-results"></div>';
+
+      populateSearch(query, type="page")
       const queryResultsURL = `${window.location.origin}?search=${encodeURIComponent(query)}`
-      window.location.href = queryResultsURL;
+      window.history.pushState({ query }, '', queryResultsURL);
     }
   }
 })
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Function to get query parameters
-  function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-  }
-
-  // Get the search term from the URL
-  const searchQuery = getQueryParam('search');
-
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get('search');
   if (searchQuery) {
-    const resultsContainer = document.querySelector('#search-results');
-    const results = lunrIndex.search(searchQuery); // Perform Lunr.js search
 
-    resultsContainer.innerHTML = ''; // Clear old results
+    // clear main content and only show results
+    const mainContent = document.querySelector('.main-content');
+    mainContent.innerHTML = '<div id="submitted-search-results"></div>';
 
-    // Display results
-    results.forEach(result => {
-      const matchedPage = pagesIndex.find(page => page.url === result.ref);
-      if (matchedPage) {
-        const resultDiv = document.createElement('div');
-        resultDiv.classList.add('search-result');
-        resultDiv.innerHTML = `
-          <h2><a href="${matchedPage.url}">${matchedPage.title}</a></h2>
-          <p>${matchedPage.content.substring(0, 150)}...</p>
-        `;
-        resultsContainer.appendChild(resultDiv);
-      }
-    });
-
-    if (results.length === 0) {
-      resultsContainer.innerHTML = '<p>No results found.</p>';
-    }
+    populateSearch(decodeURIComponent(searchQuery), type = "page");
   }
 });
+
+// Handle the popstate event
+window.addEventListener('popstate', function (event) {
+  const state = event.state;
+  // retrieve the search query
+  const searchQuery = state ? state.query : null; 
+  
+  if (searchQuery) {
+    // clear main content and populate results
+    const mainContent = document.querySelector('.main-content');
+    mainContent.innerHTML = '<div id="submitted-search-results"></div>';
+    populateSearch(decodeURIComponent(searchQuery), type = "page");
+  }
+});
+
 
