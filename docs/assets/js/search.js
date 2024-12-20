@@ -3,23 +3,24 @@ var lunrIndex;  // Lunr index
 var pagesIndex; // JSON-loaded pages
 // Search result weave: https://liveweave.com/t6I3lh
 
-function formatSubmittedSearchResult(query) {
+function formatSubmittedSearchResult(url, title, matchedContent, score) {
   var searchResult = '<div class="search-result">' +
     '<div class="arrow">' +
         '<li></li>' +
     '</div>' +
     '<div class="search-result-content">' +
-        '<a href="#" class="result-title">' +
-        'Here is the search result.' +
+        '<a href="' + url + '" class="result-title">' +
+        title +
         '</a>' +
         '<div class="result-snippet">' +
-        'Here is the search result matched content. Let\'s keeeeeeeeep going.' +
+        matchedContent +
         '</div>' +
         '<div class="result-score" style="color: red;">' +
-        'Score: ____.' +
+        'Score: ' + score + 
         '</div>' +
     '</div>' +
   '</div>';
+  return searchResult;
 }
 
 // Fetch the JSON index
@@ -55,7 +56,7 @@ function performSearch(query, fuzzySearch, matchedCharsBefore=50, matchedCharsAf
       return results.map(result => {
         const matchedPage = pagesIndex.find(page => page.url === result.ref);
         const matchedStartIndex = matchedPage.content.indexOf(query);
-        return { ...matchedPage, score: result.score, matched_text: matchedPage.content.slice(matchedStartIndex - matchedCharsBefore, matchedStartIndex + matchedCharsAfter)};
+        return { ...matchedPage, score: result.score, matchedText: matchedPage.content.slice(matchedStartIndex - matchedCharsBefore, matchedStartIndex + matchedCharsAfter)};
       });
     }
   }
@@ -65,8 +66,11 @@ function performSearch(query, fuzzySearch, matchedCharsBefore=50, matchedCharsAf
 function populateSearch(query, type="menu") {
 
   const resultsContainer = document.querySelector(
-    type == "menu"? "#search-results" : "#submitted-search-results"  
+    type == "menu" ? "#search-results" : "#submitted-search-results"
   );
+  if (type == "page") {
+    document.querySelector("#search-results").innerHTML = '';
+  }
   // match perfectly for menu, match off 1 character for full results display
   var fuzzySearch = type === "menu" ? 0 : 1; 
 
@@ -76,12 +80,23 @@ function populateSearch(query, type="menu") {
   console.log('Menu results attributes:', results.map(result => Object.entries(result)));
     
   // handle no results 
+  if (type == "menu") {
+    if (results.length === 0) {
+      resultsContainer.innerHTML += `<li><a>No results found.</a></li>`;
+    } else { // populate #search-results in a similar way
+      results.forEach(result => {
+        resultsContainer.innerHTML += `<li><a href="${result.url}">${result.title}</a></li>`;
+      });
+    }
+  }
+  if (type == "page") {
   if (results.length === 0) {
-    resultsContainer.innerHTML += `<li><a>No results found.</a></li>`;
-  } else { // populate #search-results in a similar way
-    results.forEach(result => {
-      resultsContainer.innerHTML += `<li><a href="${result.url}">${result.title}</a></li>`;
-    });
+      resultsContainer.innerHTML += `<li><a>No results found.</a></li>`;
+    } else { // populate #search-results in a similar way
+      results.forEach(result => {
+        resultsContainer.innerHTML += formatSubmittedSearchResult(result.url, result.title, result.matchedText, result.score);
+      });
+    }
   }
 }
 

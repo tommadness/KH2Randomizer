@@ -171,15 +171,24 @@ a {
     flex: 1;
     display: flex;
     margin: 20px;
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Add a consistent gap between arrow and content */
 }
 
 .arrow {
     display: flex;
     border: 0px;
-    flex: 0.125;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+}
+
+.arrow li {
+    list-style-type: none; /* Remove default bullet */
+    list-style-image: url('/assets/image/right-arrow.png'); /* Use image as bullet */
+    padding-left: 2em; /* Adjust spacing for the bullet */
+    background-size: contain; /* Ensure the image scales correctly */
+    background-repeat: no-repeat;
+    background-position: 0.5em center; /* Position bullet near the text */
 }
 
 .result-title {
