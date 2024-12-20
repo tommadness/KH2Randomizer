@@ -1,6 +1,26 @@
 // Global variables
 var lunrIndex;  // Lunr index
 var pagesIndex; // JSON-loaded pages
+// Search result weave: https://liveweave.com/t6I3lh
+
+function formatSubmittedSearchResult(query) {
+  var searchResult = '<div class="search-result">' +
+    '<div class="arrow">' +
+        '<li></li>' +
+    '</div>' +
+    '<div class="search-result-content">' +
+        '<a href="#" class="result-title">' +
+        'Here is the search result.' +
+        '</a>' +
+        '<div class="result-snippet">' +
+        'Here is the search result matched content. Let\'s keeeeeeeeep going.' +
+        '</div>' +
+        '<div class="result-score" style="color: red;">' +
+        'Score: ____.' +
+        '</div>' +
+    '</div>' +
+  '</div>';
+}
 
 // Fetch the JSON index
 // USE OF A PROMISE??????
@@ -23,18 +43,19 @@ function fetchAndBuildIndex() {
 }
 fetchAndBuildIndex();
 
-function performSearch(query, fuzzySearch) {
+function performSearch(query, fuzzySearch, matchedCharsBefore=50, matchedCharsAfter=100) {
   if (query.length > 2) { 
     // allow up to 2 edits of fuzzy search
-    console.log("HERE COMES THE ");
-    console.log(lunrIndex);
     if (lunrIndex === null) {
       fetchAndBuildIndex();
     }
+
     var results = lunrIndex.search(query + "~" + fuzzySearch);
     if (results.length > 0) {
       return results.map(result => {
-        return pagesIndex.find(page => page.url === result.ref);
+        const matchedPage = pagesIndex.find(page => page.url === result.ref);
+        const matchedStartIndex = matchedPage.content.indexOf(query);
+        return { ...matchedPage, score: result.score, matched_text: matchedPage.content.slice(matchedStartIndex - matchedCharsBefore, matchedStartIndex + matchedCharsAfter)};
       });
     }
   }
@@ -52,7 +73,7 @@ function populateSearch(query, type="menu") {
   // Clear old results and perform the search
   resultsContainer.innerHTML = '';
   var results = performSearch(query, fuzzySearch);
-  console.log('Menu results:', results);
+  console.log('Menu results attributes:', results.map(result => Object.entries(result)));
     
   // handle no results 
   if (results.length === 0) {
@@ -115,5 +136,3 @@ window.addEventListener('popstate', function (event) {
     populateSearch(decodeURIComponent(searchQuery), type = "page");
   }
 });
-
-

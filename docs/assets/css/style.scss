@@ -165,6 +165,45 @@ a {
     color: black;
 }
 
+.search-result {
+    border-radius: 10px;
+    border: 2px solid green;
+    flex: 1;
+    display: flex;
+    margin: 20px;
+}
+
+.arrow {
+    display: flex;
+    border: 0px;
+    flex: 0.125;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
+
+.result-title {
+    display: block;
+    margin: 20px 20px; /* Equal top and bottom margins */
+}
+
+.result-snippet {
+    margin: 20px 20px; /* Equal top and bottom margins */
+}
+
+.result-score {
+    margin: 20px 20px; /* Equal top and bottom margins */
+}
+
+
+.search-result-content {
+    flex: 1;
+    border: 2px solid blue;
+    border-radius: 10px;
+    margin: 30px;
+    padding: 15px 15px; /* Equal top and bottom padding */
+}
+
 .main-content {
     background-color: #31363b;
 
