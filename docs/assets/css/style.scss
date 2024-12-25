@@ -167,7 +167,8 @@ a {
 
 .search-result {
     border-radius: 10px;
-    border: 2px solid green;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(0deg, #000040, #000020);
     flex: 1;
     display: flex;
     margin: 20px;
@@ -184,12 +185,16 @@ a {
 
 .arrow li {
     list-style-type: none; /* Remove default bullet */
-    list-style-image: url('/assets/image/right-arrow.png'); /* Use image as bullet */
+    list-style-image: none; /* Disable default list-style image */
     padding-left: 2em; /* Adjust spacing for the bullet */
-    background-size: contain; /* Ensure the image scales correctly */
+    background-image: url('/assets/image/right-arrow.png'); /* Use the image as a background */
+    background-size: min(8vw, 48px); /* Grow with window size, max size of 48px */
     background-repeat: no-repeat;
-    background-position: 0.5em center; /* Position bullet near the text */
+    background-position: 0.5em center; /* Position the bullet */
+    width: min(8vw, 48px); /* Adjust width to match the image size */
+    height: min(8vw, 48px); /* Adjust height to match the image size */
 }
+
 
 .result-title {
     display: block;
@@ -201,13 +206,20 @@ a {
 }
 
 .result-score {
-    margin: 20px 20px; /* Equal top and bottom margins */
+    margin: 0px 10px 0px 0px;
+    text-align: right;
+    font-size: 16px; /* Corrected to include 'px' for font size */
 }
 
+.highlight {
+    background-color: #DAA520;
+    font-weight: bold;
+}
 
 .search-result-content {
     flex: 1;
-    border: 2px solid blue;
+    background-color: #31363b;
+    border: 1px solid yellow; /* Adjusted to make the border visible */
     border-radius: 10px;
     margin: 30px;
     padding: 15px 15px; /* Equal top and bottom padding */

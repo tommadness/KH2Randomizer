@@ -3,8 +3,30 @@ var lunrIndex;  // Lunr index
 var pagesIndex; // JSON-loaded pages
 // Search result weave: https://liveweave.com/t6I3lh
 
-function formatSubmittedSearchResult(url, title, matchedContent, score) {
-  var searchResult = '<div class="search-result">' +
+function getScoreColor(score, maxScore=5) {
+  // max score determines the score at which a match is considered "perfect" visually
+  const normalized = Math.min(Math.max(score / maxScore, 0), 1);
+
+  const worstColor = { r: 128, g: 128, b: 128 }; // Gray
+  const bestColor = { r: 99, g: 198, b: 245 };    // Blue
+  
+  const r = Math.round(worstColor.r + (bestColor.r - worstColor.r) * normalized);
+  const g = Math.round(worstColor.g + (bestColor.g - worstColor.g) * normalized);
+  const b = Math.round(worstColor.b + (bestColor.b - worstColor.b) * normalized);
+  
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+function formatSubmittedSearchResult(url, title, matchedContent, score, displayedContent) {
+  
+  let snippet;
+  const indexOfMatchedContent = displayedContent.indexOf(matchedContent);
+  snippet = displayedContent.slice(0, indexOfMatchedContent) +
+            '<span class="highlight">' + matchedContent + '</span>' +
+            displayedContent.slice(indexOfMatchedContent + matchedContent.length);
+
+  // Construct the search result HTML
+  const searchResult = '<div class="search-result">' +
     '<div class="arrow">' +
         '<li></li>' +
     '</div>' +
@@ -13,15 +35,18 @@ function formatSubmittedSearchResult(url, title, matchedContent, score) {
         title +
         '</a>' +
         '<div class="result-snippet">' +
-        matchedContent +
+        snippet + // Use snippet instead of directly modifying displayedContent
         '</div>' +
-        '<div class="result-score" style="color: red;">' +
-        'Score: ' + score + 
+        '<div class="result-score">' +
+        '<span style="color: white; text-decoration: underline; text-underline-offset: 2.5px;">Match Score</span>:' +
+        `<span style="color: ${getScoreColor(score)};"> ` + score.toFixed(2) + '</span>' +
         '</div>' +
     '</div>' +
   '</div>';
+
   return searchResult;
 }
+
 
 // Fetch the JSON index
 // USE OF A PROMISE??????
@@ -46,7 +71,6 @@ fetchAndBuildIndex();
 
 function performSearch(query, fuzzySearch, matchedCharsBefore=50, matchedCharsAfter=100) {
   if (query.length > 2) { 
-    // allow up to 2 edits of fuzzy search
     if (lunrIndex === null) {
       fetchAndBuildIndex();
     }
@@ -55,8 +79,14 @@ function performSearch(query, fuzzySearch, matchedCharsBefore=50, matchedCharsAf
     if (results.length > 0) {
       return results.map(result => {
         const matchedPage = pagesIndex.find(page => page.url === result.ref);
-        const matchedStartIndex = matchedPage.content.indexOf(query);
-        return { ...matchedPage, score: result.score, matchedText: matchedPage.content.slice(matchedStartIndex - matchedCharsBefore, matchedStartIndex + matchedCharsAfter)};
+        // get the matched term names
+        const matches = Object.keys(result.matchData.metadata);
+        const firstMatchedTerm = matches[0]
+        const matchedStartIndex = matchedPage.content.indexOf(firstMatchedTerm);
+        return { ...matchedPage, 
+          score: result.score, 
+          matchedText: firstMatchedTerm,
+          displayedMatchText: matchedPage.content.slice(matchedStartIndex - matchedCharsBefore, matchedStartIndex + matchedCharsAfter)};
       });
     }
   }
@@ -77,7 +107,6 @@ function populateSearch(query, type="menu") {
   // Clear old results and perform the search
   resultsContainer.innerHTML = '';
   var results = performSearch(query, fuzzySearch);
-  console.log('Menu results attributes:', results.map(result => Object.entries(result)));
     
   // handle no results 
   if (type == "menu") {
@@ -94,7 +123,7 @@ function populateSearch(query, type="menu") {
       resultsContainer.innerHTML += `<li><a>No results found.</a></li>`;
     } else { // populate #search-results in a similar way
       results.forEach(result => {
-        resultsContainer.innerHTML += formatSubmittedSearchResult(result.url, result.title, result.matchedText, result.score);
+        resultsContainer.innerHTML += formatSubmittedSearchResult(result.url, result.title, result.matchedText, result.score, result.displayedMatchText);
       });
     }
   }
