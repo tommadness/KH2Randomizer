@@ -9,7 +9,7 @@ var pagesIndex; // JSON-loaded pages
  * @param {number} [maxScore=5] - The maximum score for a perfect match.
  * @returns {string} The color in RGB format.
  */
-function getScoreColor(score, maxScore = 5) {
+function getScoreColor(score, maxScore = 5.0) {
   // max score determines the score at which a match is considered "perfect" visually
   const normalized = Math.min(Math.max(score / maxScore, 0), 1);
 
