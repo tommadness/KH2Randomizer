@@ -68,7 +68,7 @@ function formatSubmittedSearchResult(url, title, matchedContent, score, displaye
  * @returns {Promise} A promise that resolves when the index is built.
  */
 function fetchAndBuildIndex() {
-  return fetch('/KH2Randomizer/search.json')
+  return fetch('/search.json')
     .then(response => response.json())
     .then(data => {
       pagesIndex = data;
