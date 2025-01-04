@@ -8,13 +8,10 @@
 * [Installing a new seed](#installing-a-new-seed-to-play)
 * [Stability Notes](#you-are-now-ready-to-play-the-kh2-randomizer)
 
-# *Your game must be downpatched to be compatible with the Randomizer now, please see the KH2 Rando Discord for more information:*
-Steam/Epic Downpatching Guide: https://discord.com/channels/712837252279173150/721205500556869642/1306542084253290557
-
 ## Heads up!
 * Feel free to go to the [Discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated #help channel where you can find people to assist you if you're facing any difficulties. (P.S. Please be polite)
 * `You must run the game once` before you start the guide. Otherwise it may not boot up correctly after the randomizer is installed.
-* `VERIFY GAME FILES` through Steam/Epic for Kingdom Hearts 1.5 + 2.5 Remix (v1.0.0.9_WW), they need to be clean/unpatched files for the extraction process to work.
+* `VERIFY GAME FILES` through Steam/Epic for Kingdom Hearts 1.5 + 2.5 Remix (v1.0.0.10_WW), they need to be clean/unpatched files for the extraction process to work.
 * If you have EVER installed the KH2 Randomizer before then please check if you have a folder at `C:\Documents\My Games\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2` (for Steam) or `C:\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2` (for Epic) and EMPTY IT. You may have outdated lua files located there.
 * Unofficial copies of the game are not supported. It is strongly recommended you buy and install the game directly from either the Steam or Epic Games stores.
 
