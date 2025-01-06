@@ -205,18 +205,17 @@ document.addEventListener('DOMContentLoaded', function () {
 window.addEventListener('popstate', function (event) {
   const state = event.state;
   const searchQuery = state ? state.query : null;
-  const mainContent = document.querySelector('.main-content');
 
   if (searchQuery) {
-      // Replace default content with search results
-      mainContent.innerHTML = '<div id="submitted-search-results"></div>';
-      populateSearch(decodeURIComponent(searchQuery), "page");
+    const mainContent = document.querySelector('.main-content');
+    mainContent.innerHTML = '<div id="submitted-search-results"></div>';
+    populateSearch(decodeURIComponent(searchQuery), "page");
   } else {
-      // Restore default content
-      mainContent.innerHTML = `{{ content }}`;
+    // Reload the page to ensure default content is rendered by the Liquid template
+    window.location.reload();
   }
-  mainContent.style.display = 'block';
 });
+
 
 
 
