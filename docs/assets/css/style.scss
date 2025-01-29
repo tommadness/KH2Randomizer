@@ -102,6 +102,129 @@ a {
     margin-left: auto;
 }
 
+.search-container {
+    position: relative;
+    margin-right: 8px;
+    width: 20%;
+}
+
+.search-input {
+    border-radius: 20px;
+    padding: 6px 12px;
+    border: none;
+    outline: none;
+    color: black;
+    width: 100%;
+}
+
+.dropdown-results {
+    position: absolute;
+    top: 100%; /* Place right below the search box */
+    left: 0;
+    width: 100%;
+    color: black;
+    background-color: #DDDDDD;
+    // border: 1px solid #ccc;
+    z-index: 10;
+    max-height: 400px; /* Limit height for scrolling */
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-results ul {
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.dropdown-results li {
+    padding: 8px;
+    cursor: pointer;
+    /* Set font-size as a proportion of the viewport width */
+    font-size: min(1.5vw, 24px); /* Set font-size to be the max between 1.5vw and 24px */
+    color: black;
+
+    /* Use background-image for the custom bullet */
+    background-image: url('/assets/image/item-key.png');
+    /* Set background-size as a proportion of the viewport width and height */
+    background-size: min(1.5vw, 24px) min(1.5vw, 24px); /* Set background-size to be the max between 1.5vw and 24px */
+    background-repeat: no-repeat;
+    background-position: 0.5em center; /* Position the bullet */
+    list-style-type: none; /* Remove default bullet */
+    padding-left: 2em; /* Add space to avoid text overlapping the bullet */
+}
+
+.dropdown-results li a {
+    padding: 8px;
+    cursor: pointer;
+    color: black;
+}
+
+.dropdown-results li:hover {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.search-result {
+    border-radius: 10px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(0deg, #000040, #000020);
+    flex: 1;
+    display: flex;
+    margin: 20px;
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Add a consistent gap between arrow and content */
+}
+
+.arrow {
+    display: flex;
+    border: 0px;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow li {
+    list-style-type: none; /* Remove default bullet */
+    list-style-image: none; /* Disable default list-style image */
+    padding-left: 2em; /* Adjust spacing for the bullet */
+    background-image: url('/assets/image/right-arrow.png'); /* Use the image as a background */
+    background-size: min(8vw, 48px); /* Grow with window size, max size of 48px */
+    background-repeat: no-repeat;
+    background-position: 0.5em center; /* Position the bullet */
+    width: min(8vw, 48px); /* Adjust width to match the image size */
+    height: min(8vw, 48px); /* Adjust height to match the image size */
+}
+
+
+.result-title {
+    display: block;
+    margin: 20px 20px; /* Equal top and bottom margins */
+}
+
+.result-snippet {
+    margin: 20px 20px; /* Equal top and bottom margins */
+}
+
+.result-score {
+    margin: 0px 10px 0px 0px;
+    text-align: right;
+    font-size: 16px; /* Corrected to include 'px' for font size */
+}
+
+.highlight {
+    background-color: #DAA520;
+    font-weight: bold;
+}
+
+.search-result-content {
+    flex: 1;
+    background-color: #31363b;
+    border: 1px solid yellow; /* Adjusted to make the border visible */
+    border-radius: 10px;
+    margin: 30px;
+    padding: 15px 15px; /* Equal top and bottom padding */
+}
+
 .main-content {
     background-color: #31363b;
 
@@ -138,4 +261,6 @@ a {
             color: #DDDDDD;
         }
     }
+    display: none;
 }
+
