@@ -14,6 +14,11 @@
 
 ## In-Game Issues
 
+### Why does the game load into the Wedding Ship?
+
+This usually means the Garden of Assemblage Lua script did not load properly.
+See [Troubleshooting GoA (PC)](#troubleshooting-goa-pc) or [Troubleshooting GoA (PCSX2)](#troubleshooting-goa-pcsx2).
+
 ### (PC) Why does the game crash immediately upon startup?
 
 * You may be using an incorrect version of LuaBackend Hook. See [Troubleshooting GoA (PC)](#troubleshooting-goa-pc).
@@ -53,7 +58,8 @@ look similar (but not identical) to this screenshot:
 ![Lua console](lua-console.png)
 
 If that window does not appear, it's likely the LuaBackend Hook is missing, is in the wrong location, or is an incorrect
-version
+version. If you already have LuaBackend Hook installed, it may need to be reconfigured or may need to be completely
+removed and reinstalled.
 * See the [PC Setup Guide](../setup/Panacea-ModLoader/index.md#setting-up-openkh-mods-manager) for additional
   instructions
 

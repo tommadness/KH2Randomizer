@@ -17,3 +17,6 @@ randomizer-config.json
 presets/**/devonly-*.json
 /env
 EnemyRandoData
+Gemfile
+Gemfile.lock
+_site
