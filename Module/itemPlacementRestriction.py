@@ -411,7 +411,7 @@ class ItemPlacementHelpers:
 
     @staticmethod
     def twtnw_roxas_check(inventory: list[int]) -> bool:
-        return inventory.count(storyunlock.WayToTheDawn.id) >= 1
+        return inventory.count(storyunlock.WayToTheDawn.id) >= 1 and ItemPlacementHelpers.get_number_visit_unlocks(inventory) > 10
     
     @staticmethod
     def twtnw_post_saix_check(inventory: list[int]) -> bool:
