@@ -1,62 +1,24 @@
 function _OnInit()
-    CanExecute = false
     StaticPointersLoaded = false
-
-    if (GAME_ID == 0xF266B00B or GAME_ID == 0xFAF99301) and ENGINE_TYPE == "ENGINE" then --PCSX2
-        if ENGINE_VERSION < 3.0 then
-            print('LuaEngine is Outdated. Things might not work properly.')
-        end
-        OnPC = false
-        CanExecute = true
-        Now = 0x032BAE0 --Current Location
-        Save = 0x032BB30 --Save File
-        Sys3Pointer = 0x1C61AF8 --03system.bin Pointer Address
-        MSN = 0x04FA440
-        print('Keyblade Locking Lua from Seed Generator - PCSX2')
-    elseif GAME_ID == 0x431219CC and ENGINE_TYPE == 'BACKEND' then --PC
-        if ENGINE_VERSION < 5.0 then
-            ConsolePrint('LuaBackend is Outdated. Things might not work properly.',2)
-        end
-        OnPC = true
-        if ReadByte(0x566A8E) == 0xFF then --EGS 1.0.0.9
-            CanExecute = true
-            Now = 0x0716DF8
-            Save = 0x09A92F0
-            Sys3Pointer = 0x2AE5890
-            MSN = 0x0BF2C40
-            ConsolePrint('Keyblade Locking Lua from Seed Generator - EGS 1.0.0.9')
-        elseif ReadByte(0x56668E) == 0xFF then --Steam Global "1.0.0.9"
-            CanExecute = true
-            Now = 0x0717008
-            Save = 0x09A9830
-            Sys3Pointer = 0x2AE5DD0
-            MSN = 0x0BF3340
-            ConsolePrint('Keyblade Locking Lua from Seed Generator - Steam Global "1.0.0.9"')
-        elseif ReadByte(0x56640E) == 0xFF then --Steam JP "1.0.0.9"
-            CanExecute = true
-            Now = 0x0716008
-            Save = 0x09A8830
-            Sys3Pointer = 0x2AE4DD0
-            MSN = 0x0BF2340
-            ConsolePrint('Keyblade Locking Lua from Seed Generator - Steam JP "1.0.0.9"')
-        elseif ReadByte(0x660E44) == 106 then --EGS 1.0.0.10
-            CanExecute = true
-            Now = 0x0716DF8
-            Save = 0x09A9330
-            Sys3Pointer = 0x2AE58D0
-            MSN = 0x0BF2C80
-            ConsolePrint('Keyblade Locking Lua from Seed Generator - EGS 1.0.0.10')
-        elseif ReadByte(0x660EF4) == 106 then --Steam "1.0.0.10"
-            CanExecute = true
-            Now = 0x0717008
-            Save = 0x09A98B0
-            Sys3Pointer = 0x2AE5E50
-            MSN = 0x0BF33C0
-            ConsolePrint('Keyblade Locking Lua from Seed Generator - Steam "1.0.0.10"')
-        else
-            ConsolePrint("Unable to detect version of PC running")
-        end
+    CanExecute = false
+    kh2libstatus,kh2lib = pcall(require,"kh2lib")
+    if not kh2libstatus then
+        print("ERROR (Keyblade Locking Lua): KH2-Lua-Library not installed")
+        return
     end
+
+    RequireKH2LibraryVersion(1)
+
+    CanExecute = kh2lib.CanExecute
+    if not CanExecute then
+        return
+    end
+
+    OnPC = kh2lib.OnPC
+    Now = kh2lib.Now
+    Save = kh2lib.Save
+    Sys3Pointer = kh2lib.Sys3Pointer
+    MSN = kh2lib.MSN
 end
 
 --table key is world id. table value is keyblade ID, keyblade save file inventory address
