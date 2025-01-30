@@ -145,7 +145,7 @@ a {
     color: black;
 
     /* Use background-image for the custom bullet */
-    background-image: url('/assets/image/item-key.png');
+    background-image: url('/KH2Randomizer/assets/image/item-key.png');
     /* Set background-size as a proportion of the viewport width and height */
     background-size: min(1.5vw, 24px) min(1.5vw, 24px); /* Set background-size to be the max between 1.5vw and 24px */
     background-repeat: no-repeat;
@@ -187,7 +187,7 @@ a {
     list-style-type: none; /* Remove default bullet */
     list-style-image: none; /* Disable default list-style image */
     padding-left: 2em; /* Adjust spacing for the bullet */
-    background-image: url('/assets/image/right-arrow.png'); /* Use the image as a background */
+    background-image: url('/KH2Randomizer/assets/image/right-arrow.png'); /* Use the image as a background */
     background-size: min(8vw, 48px); /* Grow with window size, max size of 48px */
     background-repeat: no-repeat;
     background-position: 0.5em center; /* Position the bullet */
