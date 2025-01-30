@@ -3,7 +3,7 @@
 ### Required Downloads
 
 * [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/KH2.Randomizer.exe)
-* [OpenKH Mods Manager](https://github.com/aliosgaming/OpenKh/releases/latest/download/OpenKH.Mod.Manager.zip)
+* [OpenKH Mods Manager](https://github.com/OpenKH/OpenKh/releases/download/latest/openkh.zip)
 * [.NET Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.25-windows-x64-installer)
   (Required to run OpenKH Mods Manager)
 * [KH2 Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest/download/KhTracker.exe) (Not strictly required but
