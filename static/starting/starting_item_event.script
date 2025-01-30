@@ -14,7 +14,7 @@ AreaSettings 11 -1
 	SetPartyMenu 0
 
 AreaSettings 76 -1
-	SetJump Type 1 World HB Area 26 Entrance 0 LocalSet 0 FadeType 1
+	SetJump Type 1 World LM Area 10 Entrance 0 LocalSet 0 FadeType 1
 	SetPartyMenu 0
 
 Spawn "e_50"
