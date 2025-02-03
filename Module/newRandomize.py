@@ -911,11 +911,11 @@ class Randomizer:
 
         shop_item_ids = [i.Id for i in self.shop_items]
 
-        sphere_0_check = True
+        sphere_0_check = 30
         num_available_locations_needed_to_allow_random_assignment = 125 # TODO(zak) this is arbitrary and may need tuning
-        while sphere_0_check:
+        while sphere_0_check > 0:
             # calculate the available checks
-            acquired_items, sphere_0 = self.get_accessible_locations(valid_locations, validator, shop_item_ids)
+            _, sphere_0 = self.get_accessible_locations(valid_locations, validator, shop_item_ids)
             if len(sphere_0) < num_available_locations_needed_to_allow_random_assignment:
                 # pick a locking item we don't have, assign it somewhere valid, repeat
                 unlocks = [] + [s.id for s in storyunlock.all_story_unlocks()] + [k.id for k in keyblade.get_locking_keyblades()]
@@ -923,7 +923,7 @@ class Randomizer:
                 for u in unlocks:
                     i_data = next((it for it in item_pool if it.Id == u), None)
                     if i_data is not None:
-                        sphere_1 = [loc for loc in valid_locations if validator.is_location_available(self.starting_item_ids + acquired_items + [i_data.Id],loc)]
+                        _, sphere_1 = self.get_accessible_locations(valid_locations, validator, shop_item_ids + [i_data.Id])
                         if len(sphere_1) > len(sphere_0):
                             # assign this item somewhere
                             locations_to_remove = self.randomly_assign_single_item(i_data,sphere_0)
@@ -931,8 +931,9 @@ class Randomizer:
                                 valid_locations.remove(l)
                             item_pool.remove(i_data)
                             break
+                sphere_0_check-=1 # make sure this doesn't ever cause a softlock again
             else:
-                sphere_0_check = False
+                sphere_0_check = 0
 
     def get_accessible_locations(self, valid_locations, validator, aux_items = None):
         if aux_items is None:
