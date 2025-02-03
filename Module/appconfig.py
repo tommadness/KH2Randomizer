@@ -54,7 +54,11 @@ def auto_save_folder() -> Path:
 
 def read_openkh_path() -> Optional[Path]:
     randomizer_config = read_app_config()
-    openkh_path = Path(randomizer_config.get('openkh_folder', 'to-nowhere'))
+    openkh_folder = randomizer_config.get("openkh_folder", "to-nowhere")
+    if openkh_folder is None:
+        return None
+
+    openkh_path = Path(openkh_folder)
     if openkh_path.is_dir():
         return openkh_path
     else:
@@ -67,7 +71,11 @@ def write_openkh_path(selected_directory):
 
 def read_custom_music_path() -> Optional[Path]:
     randomizer_config = read_app_config()
-    custom_music_path = Path(randomizer_config.get('custom_music_folder', 'to-nowhere'))
+    custom_music_folder = randomizer_config.get("custom_music_folder", "to-nowhere")
+    if custom_music_folder is None:
+        return None
+
+    custom_music_path = Path(custom_music_folder)
     if custom_music_path.is_dir():
         return custom_music_path
     else:
@@ -80,7 +88,11 @@ def write_custom_music_path(selected_directory):
 
 def read_custom_visuals_path() -> Optional[Path]:
     randomizer_config = read_app_config()
-    custom_visuals_path = Path(randomizer_config.get('custom_visuals_folder', 'to-nowhere'))
+    custom_visuals_folder = randomizer_config.get("custom_visuals_folder", "to-nowhere")
+    if custom_visuals_folder is None:
+        return None
+
+    custom_visuals_path = Path(custom_visuals_folder)
     if custom_visuals_path.is_dir():
         return custom_visuals_path
     else:
@@ -104,8 +116,14 @@ def extracted_data_path() -> Optional[Path]:
     with open(mods_manager_yml_path, encoding="utf-8") as mod_manager_file:
         mod_manager_yaml = yaml.safe_load(mod_manager_file)
         game_data_path = mod_manager_yaml.get("gameDataPath", "to-nowhere")
+        if game_data_path is None:
+            # Maybe something weird happened in the Mods Manager setup? Should have a gameDataPath.
+            # Regardless, nothing we can do here.
+            return None
+
         extracted_data = Path(game_data_path)
         if extracted_data.is_dir():
             return extracted_data
         else:
+            # Has a gameDataPath configured, but it's not being detected as a directory
             return None
