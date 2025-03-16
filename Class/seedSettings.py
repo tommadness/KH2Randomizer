@@ -3471,6 +3471,32 @@ _all_settings = [
         default=knockbackTypes.JUST_DAMAGE,
         tooltip=KnockbackTypes.damage_type_tooltip(),
     ),
+    SingleSelect(
+        name=settingkey.COOP_PLAYER_NUMBER,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label="Co-op Player Number",
+        choices= {
+            "0":"Single Player",
+            "1":"Player 1 (of 2)",
+            "2":"Player 2 (of 2)",
+            },
+        shared=False, #Not shared so that same seed string can generate the different seeds
+        default="0",
+        tooltip="Enabling co-op mode settings and selecting which player you are",
+    ),
+    SingleSelect(
+        name=settingkey.COOP_HINT_ORDER,
+        group=SettingGroup.HINTS,
+        ui_label="Co-op Progression Hint Ordering",
+        choices= {
+            "default":"Default (All Same)",
+            "random":"Random Order",
+            "reversed":"Reversed",
+            },
+        shared=True,
+        default="default",
+        tooltip="Order each player gets hints in",
+    ),
 ]
 
 

@@ -529,6 +529,8 @@ class RandomizerSettings:
         self.progression_reveal_all: bool = ui_settings.get(
             settingkey.PROGRESSION_HINTS_REVEAL_END
         )
+        self.coop_player_number = ui_settings.get(settingkey.COOP_PLAYER_NUMBER)
+        self.coop_hint_ordering = ui_settings.get(settingkey.COOP_HINT_ORDER)
 
         self.shop_hintable = (
             (self.shop_unlocks > 0)
