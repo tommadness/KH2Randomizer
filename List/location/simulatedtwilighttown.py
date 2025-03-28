@@ -178,8 +178,8 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(namines_room, axel_2, RequirementEdge(battle=True))
         graph.add_edge(axel_2, mansion_basement)
         graph.add_edge(mansion_basement, data_roxas, RequirementEdge(battle=True))
-        graph.register_first_boss(mansion_basement_chests)
-        graph.register_last_story_boss(mansion_basement_chests)
+        graph.register_first_boss(axel_2)
+        graph.register_last_story_boss(axel_2)
     else:
         graph.add_edge(START_NODE, mansion_foyer)
         graph.add_edge(mansion_foyer, mansion_dining_room)
