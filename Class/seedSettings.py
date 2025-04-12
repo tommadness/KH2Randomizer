@@ -919,6 +919,8 @@ _all_settings = [
             StartingMovementOption.DISABLED: "None",
             StartingMovementOption.RANDOM_3: "3 Random",
             StartingMovementOption.RANDOM_5: "5 Random",
+            StartingMovementOption.RANDOM_7: "7 Random",
+            StartingMovementOption.RANDOM_9: "9 Random",
             StartingMovementOption.LEVEL_1: "Level 1",
             StartingMovementOption.LEVEL_2: "Level 2",
             StartingMovementOption.LEVEL_3: "Level 3",

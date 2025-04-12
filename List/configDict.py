@@ -189,6 +189,8 @@ class StartingMovementOption(str, Enum):
     DISABLED = "Disabled"
     RANDOM_3 = "3Random"
     RANDOM_5 = "Random"
+    RANDOM_7 = "7Random"
+    RANDOM_9 = "9Random"
     LEVEL_1 = "Level_1"
     LEVEL_2 = "Level_2"
     LEVEL_3 = "Level_3"

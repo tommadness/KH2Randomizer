@@ -191,6 +191,10 @@ class SeedModifier:
             return SeedModifier._random_growth(3)
         elif option == StartingMovementOption.RANDOM_5:
             return SeedModifier._random_growth(5)
+        elif option == StartingMovementOption.RANDOM_7:
+            return SeedModifier._random_growth(7)
+        elif option == StartingMovementOption.RANDOM_9:
+            return SeedModifier._random_growth(9)
         else:
             raise GeneratorException(f"Unknown option {option}")
 
