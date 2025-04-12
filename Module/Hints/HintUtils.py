@@ -85,8 +85,10 @@ class WorldItems:
         item_to_vanilla_world = HintUtils.item_to_vanilla_world()
 
         self.world_to_item_list: dict[locationType, list[KH2Item]] = {}
+        self.world_to_item_list_revealed: dict[locationType, list[KH2Item]] = {}
         for world in hintable_worlds:
             self.world_to_item_list[world] = []
+            self.world_to_item_list_revealed[world] = []
         # add in the starting items
         self.world_to_item_list[locationType.Critical] = []
         self.world_to_item_list[locationType.Free] = []
@@ -105,6 +107,7 @@ class WorldItems:
                 "FoundIn": "Garden of Assemblage"
             }  # default to found in starting
         important_checks = tracker_info.important_check_list
+        spoiler_reveal_list = tracker_info.spoiler_reveal_list
         for location, item in location_item_tuples:
             if locationType.WeaponSlot in location.LocationTypes:
                 continue
@@ -114,6 +117,13 @@ class WorldItems:
                 world_of_location = HintUtils.location_to_tracker_world(location.LocationTypes)
                 self.report_information[inventory_item.report_number]["FoundIn"] = world_of_location
 
+            if item.ItemType in spoiler_reveal_list or item.Name in spoiler_reveal_list:
+                world_of_location = HintUtils.location_to_tracker_world(location.LocationTypes)
+                if world_of_location not in self.world_to_item_list_revealed:
+                    raise HintException(
+                        f"Something is going wrong with initializing worlds {world_of_location}"
+                    )
+                self.world_to_item_list_revealed[world_of_location].append(item)
             if item.ItemType in important_checks or item.Name in important_checks:
                 world_of_location = HintUtils.location_to_tracker_world(location.LocationTypes)
                 if world_of_location not in self.world_to_item_list:
@@ -195,6 +205,16 @@ class WorldItems:
         """
         dictionary: dict[int, str] = {}
         for _, item_list in self.world_to_item_list.items():
+            for item in item_list:
+                dictionary[item.Id] = item.Name
+        return dictionary
+    
+    def revealed_item_ids_to_names(self) -> dict[int, str]:
+        """
+        Returns a dictionary of world to a list of IDs of items in that world.
+        """
+        dictionary: dict[int, str] = {}
+        for _, item_list in self.world_to_item_list_revealed.items():
             for item in item_list:
                 dictionary[item.Id] = item.Name
         return dictionary
