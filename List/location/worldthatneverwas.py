@@ -1,7 +1,7 @@
 from enum import Enum
 
 from List.configDict import locationType, itemType
-from List.inventory import keyblade, ability, report
+from List.inventory import keyblade, ability, magic, report
 from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, double_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
@@ -153,7 +153,7 @@ def make_graph(graph: LocationGraphBuilder):
         popup(496, CheckLocation.CastleThatNeverWasMap, twtnw),
     ])
     luxord = graph.add_location(NodeId.Luxord, [
-        hybrid_bonus(24, CheckLocation.LuxordBonus, twtnw),
+        hybrid_bonus(24, CheckLocation.LuxordBonus, twtnw, vanilla=magic.Magnet),
         popup(533, CheckLocation.LuxordSecretAnsemReport9, twtnw, vanilla=report.AnsemReport9),
     ])
     saix = graph.add_location(NodeId.Saix, [
