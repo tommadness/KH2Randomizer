@@ -1,7 +1,7 @@
 from enum import Enum
 
 from List.configDict import locationType
-from List.inventory import magic, keyblade, ability, summon, report
+from List.inventory import magic, keyblade, ability, misc, summon, report
 from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, item_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
@@ -155,7 +155,7 @@ def make_graph(graph: LocationGraphBuilder):
     ])
     seadrift_row = graph.add_location(NodeId.SeadriftRow, [])
     cursed_medallion_popup = graph.add_location(NodeId.CursedMedallionPopup, [
-        popup(296, CheckLocation.SeadriftRowCursedMedallion, pr),
+        popup(296, CheckLocation.SeadriftRowCursedMedallion, pr, vanilla=misc.CursedMedallion),
         popup(331, CheckLocation.SeadriftRowShipGraveyardMap, pr),
     ])
     grim_reaper_2 = graph.add_location(NodeId.GrimReaper2, [

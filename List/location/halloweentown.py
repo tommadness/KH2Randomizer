@@ -1,7 +1,7 @@
 from enum import Enum
 
 from List.configDict import locationType, itemType
-from List.inventory import magic, keyblade, ability
+from List.inventory import magic, keyblade, ability, misc
 from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, hybrid_bonus, stat_bonus, LocationGraphBuilder, \
     START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
@@ -122,10 +122,10 @@ def make_graph(graph: LocationGraphBuilder):
         stat_bonus(40, CheckLocation.LockShockBarrel, ht),
     ])
     presents = graph.add_location(NodeId.Presents, [
-        popup(297, CheckLocation.Present, ht),
+        popup(297, CheckLocation.Present, ht, vanilla=misc.Present),
     ])
     decoy_present_minigame = graph.add_location(NodeId.DecoyPresentMinigame, [
-        popup(298, CheckLocation.DecoyPresents, ht),
+        popup(298, CheckLocation.DecoyPresents, ht, vanilla=misc.DecoyPresents),
     ])
     experiment = graph.add_location(NodeId.Experiment, [
         stat_bonus(20, CheckLocation.Experiment, ht),

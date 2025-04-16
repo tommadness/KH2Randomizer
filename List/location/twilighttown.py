@@ -193,7 +193,7 @@ def make_graph(graph: LocationGraphBuilder):
         popup(286, CheckLocation.ValorForm, tt, vanilla=form.ValorForm),
     ])
     seifers_trophy = graph.add_location(NodeId.SeifersTrophy, [
-        popup(294, CheckLocation.SeifersTrophy, tt),
+        popup(294, CheckLocation.SeifersTrophy, tt, vanilla=misc.SeifersTrophy),
     ])
     limit_form = graph.add_location(NodeId.LimitForm, [
         popup(265, CheckLocation.Oathkeeper, tt, vanilla=keyblade.Oathkeeper),

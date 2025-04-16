@@ -1,7 +1,7 @@
 from enum import Enum
 
 from List.configDict import locationType, itemType
-from List.inventory import magic, keyblade, ability, report
+from List.inventory import magic, keyblade, ability, misc, report
 from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup, item_bonus, hybrid_bonus, stat_bonus, \
     LocationGraphBuilder, START_NODE
 from Module.itemPlacementRestriction import ItemPlacementHelpers
@@ -167,7 +167,7 @@ def make_graph(graph: LocationGraphBuilder):
     demyx = graph.add_location(NodeId.DemyxOlympusColiseum, [
         stat_bonus(58, CheckLocation.DemyxOlympusColiseum, oc),
         popup(529, CheckLocation.DemyxOcSecretAnsemReport5, oc, vanilla=report.AnsemReport5),
-        popup(293, CheckLocation.OlympusStone, oc),
+        popup(293, CheckLocation.OlympusStone, oc, vanilla=misc.OlympusStone),
     ])
     lock_chests = graph.add_location(NodeId.TheLockChests, [
         chest(244, CheckLocation.LockCavernsMap, oc),
@@ -183,7 +183,7 @@ def make_graph(graph: LocationGraphBuilder):
         popup(260, CheckLocation.HerosCrest, oc, vanilla=keyblade.HerosCrest),
     ])
     aurons_statue = graph.add_location(NodeId.AuronsStatue, [
-        popup(295, CheckLocation.AuronssStatue, oc),
+        popup(295, CheckLocation.AuronssStatue, oc, vanilla=misc.AuronsStatue),
     ])
     hades = graph.add_location(NodeId.Hades, [
         hybrid_bonus(8, CheckLocation.Hades, oc, vanilla=ability.MagnetBurst),
@@ -208,7 +208,7 @@ def make_graph(graph: LocationGraphBuilder):
     ])
     paradox_cups = graph.add_location(NodeId.ParadoxCups, [
         popup(518, CheckLocation.ParadoxCupsHadesCupTrophy, [oc, locationType.OCParadoxCup],
-              invalid_checks=[itemType.TROPHY, itemType.FORM, itemType.SUMMON]),
+              invalid_checks=[itemType.TROPHY, itemType.FORM, itemType.SUMMON], vanilla=misc.HadesCupTrophy),
     ])
     zexion = graph.add_location(NodeId.Zexion, [
         stat_bonus(66, CheckLocation.ZexionBonus, [oc, locationType.AS]),

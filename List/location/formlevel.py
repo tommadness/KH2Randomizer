@@ -61,47 +61,47 @@ def make_graph(graph: LocationGraphBuilder):
         driveform.ValorForm: {
             1: None,
             2: ability.AutoValor,
-            3: growth.HighJump1,
+            3: growth.HighJump2,
             4: ability.ComboPlus,
-            5: growth.HighJump2,
+            5: growth.HighJump3,
             6: ability.ComboPlus,
-            7: growth.HighJump3
+            7: growth.HighJumpMax
         },
         driveform.WisdomForm: {
             1: None,
             2: ability.AutoWisdom,
-            3: growth.QuickRun1,
+            3: growth.QuickRun2,
             4: ability.MpRage,
-            5: growth.QuickRun2,
+            5: growth.QuickRun3,
             6: ability.MpHaste,
-            7: growth.QuickRun3
+            7: growth.QuickRunMax
         },
         driveform.LimitForm: {
             1: None,
             2: ability.AutoLimitForm,
-            3: growth.DodgeRoll1,
+            3: growth.DodgeRoll2,
             4: ability.Draw,
-            5: growth.DodgeRoll2,
+            5: growth.DodgeRoll3,
             6: ability.LuckyLucky,
-            7: growth.DodgeRoll3
+            7: growth.DodgeRollMax
         },
         driveform.MasterForm: {
             1: None,
             2: ability.AutoMaster,
-            3: growth.AerialDodge1,
+            3: growth.AerialDodge2,
             4: ability.AirComboPlus,
-            5: growth.AerialDodge2,
+            5: growth.AerialDodge3,
             6: ability.AirComboPlus,
-            7: growth.AerialDodge3
+            7: growth.AerialDodgeMax
         },
         driveform.FinalForm: {
             1: None,
             2: ability.AutoFinal,
-            3: growth.Glide1,
+            3: growth.Glide2,
             4: ability.FormBoost,
-            5: growth.Glide2,
+            5: growth.Glide3,
             6: ability.FormBoost,
-            7: growth.Glide3
+            7: growth.GlideMax
         }
     }
 
