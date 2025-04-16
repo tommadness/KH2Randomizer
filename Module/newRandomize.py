@@ -404,9 +404,10 @@ class Randomizer:
             for chosen_report in chosen_reports:
                 item_pool.remove(chosen_report)
         if settings.shop_unlocks > 0:
-            visit_unlock_pool = [
+            # make the visit unlock pool unique so we only select a visit unlock once for the shop
+            visit_unlock_pool = list(set([
                 i for i in item_pool if i.ItemType == itemType.STORYUNLOCK
-            ]
+            ]))
             num_visit_unlocks_in_shop = min(
                 settings.shop_unlocks, len(visit_unlock_pool)
             )

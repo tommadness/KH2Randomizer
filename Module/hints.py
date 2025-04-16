@@ -348,8 +348,9 @@ class Hints:
                     hinted_world = report_data["World"]
                     hint_text.append(f"{hinted_world_text(hinted_world)} has:")
                     for c in hint_data["world"][hinted_world]:
-                        c_txt = hint_data["reveal_data"][c]
-                        hint_text.append(c_txt)
+                        if c in hint_data["reveal_data"]:
+                            c_txt = hint_data["reveal_data"][c]
+                            hint_text.append(c_txt)
 
             for hint_text_instance in hint_text:
                 spoiler_text += hint_text_instance + "\n"
