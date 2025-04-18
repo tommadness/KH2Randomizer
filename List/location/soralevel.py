@@ -77,7 +77,7 @@ def make_graph(graph: LocationGraphBuilder):
     locations: list[str] = []
     current_location_list: list[KH2Location] = []
 
-    double_level_reward = False
+    already_added_level_to_group = False
     level_offsets = DreamWeaponOffsets()
     excluded_levels = settings.excluded_levels()
     for level in range(1, 100):
@@ -98,13 +98,13 @@ def make_graph(graph: LocationGraphBuilder):
         current_location_list.append(level_reward(level, level_description, vanilla_item))
 
         if level not in excluded_levels:
-            if double_level_reward:
+            if already_added_level_to_group:
                 locations.append(graph.add_location(f"LevelGroup-{node_index}", current_location_list))
                 current_location_list = []
                 node_index += 1
-                double_level_reward = False
+                already_added_level_to_group = False
             else:
-                double_level_reward = True
+                already_added_level_to_group = True
 
     # Add in the last group if there are any stragglers
     if len(current_location_list) > 0:

@@ -12,6 +12,8 @@ class SoraMenu(KH2Submenu):
         self.add_option(settingkey.SORA_AP)
         self.end_group()
         self.start_group()
+        self.add_option(settingkey.DOUBLE_STAT_GROWTH_MIN_LEVEL)
+        self.add_option(settingkey.DOUBLE_STAT_GROWTH_MAX_LEVEL)
         self.add_option(settingkey.SORA_STR_RATE)
         self.add_option(settingkey.SORA_MAG_RATE)
         self.add_option(settingkey.SORA_DEF_RATE)
