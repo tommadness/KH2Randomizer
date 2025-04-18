@@ -223,12 +223,16 @@ class Randomizer:
         acc_defense = 2
         acc_ap = 0
         acc_exp = 0
+        stats_added = 0
 
         def add_stat(choice: tuple[LevelUpStatBonus, int]):
             nonlocal acc_strength
             nonlocal acc_magic
             nonlocal acc_defense
             nonlocal acc_ap
+
+            nonlocal stats_added
+            stats_added+=1
 
             chosen_stat, stat_increase = choice
             if chosen_stat == LevelUpStatBonus.STRENGTH:
@@ -251,14 +255,16 @@ class Randomizer:
         stat_weights = [s[2] for s in settings.level_stat_pool]
         experience = settings.sora_exp()
         excluded_levels = settings.excluded_levels()
+        double_stat_levels = settings.double_stat_levels()
         for index, location in enumerate(locations):
             if index != 0:
                 stat_choices = weighted_sample_without_replacement(
                     population=level_stat_pool, weights=stat_weights, k=2
                 )
                 adder_function(stat_choices[0])
-                if location.LocationId in excluded_levels:
+                if location.LocationId in excluded_levels and location.LocationId in double_stat_levels:
                     adder_function(stat_choices[1])
+            print(f"{location} has total {stats_added} stat growths")
             acc_exp += experience[index + 1] - experience[index]
             self.level_stats.append(
                 LevelStats(
