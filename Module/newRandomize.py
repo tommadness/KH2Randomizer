@@ -264,7 +264,7 @@ class Randomizer:
                 adder_function(stat_choices[0])
                 if location.LocationId in excluded_levels and location.LocationId in double_stat_levels:
                     adder_function(stat_choices[1])
-            print(f"{location} has total {stats_added} stat growths")
+            # print(f"{location} has total {stats_added} stat growths")
             acc_exp += experience[index + 1] - experience[index]
             self.level_stats.append(
                 LevelStats(
