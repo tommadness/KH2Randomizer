@@ -2556,6 +2556,7 @@ _all_settings = [
         default=False,
         tooltip="""
         When enabled, Sora must have certain keyblades to open chests in the different worlds.
+        Needs the KH2FM-Mods-equations19/KH2-Lua-Library mod installed
         STT     | Bond of Flame
         TT      | Oathkeeper
         HB      | Sleeping Lion
