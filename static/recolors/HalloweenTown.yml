@@ -1,5 +1,4 @@
 # Notes:
-# - Looks like maybe the GoA messes with Oogie's textures order so can't currently recolor Oogie
 # - Dance Call has some texture orders changed by GoA ROM so can't currently recolor its effects
 
 - id: barrel
@@ -202,6 +201,42 @@
             - remastered/obj/N_NM050_BTL_2.mdlx/-0.dds
             - remastered/obj/N_NM050_BTL_TOY.mdlx/-0.dds
             - remastered/obj/N_NM050_RTN.mdlx/-0.dds
+
+
+- id: oogie
+  name: Oogie Boogie
+  tags:
+    - character
+    - boss
+    - baseline
+  recolors:
+    - colorable_areas:
+        - id: main
+          name: Main Color
+          hue_start: 0
+          hue_end: 360
+      image_groups:
+        - required: true
+          images:
+            - remastered/obj/B_NM000.mdlx/-0.dds
+
+        - required: true
+          images:
+            - remastered/obj/B_NM000.mdlx/-1.dds
+
+        - required: true
+          images:
+            - remastered/obj/B_NM000.mdlx/-2.dds
+
+        - required: true
+          images:
+            - remastered/obj/B_NM000.mdlx/-3.dds
+
+        - required: true
+          images:
+            - remastered/obj/B_NM000.mdlx/-4.dds
+
+      previews: [ true, false, false, false, false ]
 
 
 - id: santa
