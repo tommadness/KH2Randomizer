@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.2 (2025-04-25)
+
+Fixing starting inventory causing problems with journal text
+
 ## 3.1.1 (2025-04-25)
 
 ### Settings
