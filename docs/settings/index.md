@@ -322,8 +322,9 @@ used as the items to place in worlds/locations that are configured to contain on
 * None
 * 3 Random - Pick 3 individual growth abilities to add at the start (e.g. you could start with High Jump LV1 and Dodge
   Roll LV2).
-* 5 Random - Pick 5 individual growth abilities to add at the start (e.g. you could start with High Jump LV1, Dodge Roll
-  LV1, and Glide LV3).
+* 5 Random - Pick 5 individual growth abilities to add at the start.
+* 7 Random - Pick 7 individual growth abilities to add at the start.
+* 9 Random - Pick 9 individual growth abilities to add at the start.
 * Level 1 - All growths start at level 1.
 * Level 2 - All growths start at level 2.
 * Level 3 - All growths start at level 3.
@@ -464,6 +465,10 @@ reaction command to open chests in the associated world will be disabled.
 ## EXP/Stats
 
 **Sora Starting AP** - Sora begins the game with this much AP.
+
+**Double Stats Start Level** - The level at which two stat increases start to be given (when no item is given)
+
+**Double Stats End Level** - The level at which two stat increases stop being given (when no item is given)
 
 **Sora Strength/Magic/Defense/AP Rate** - Configures how likely each of these upgrades are given on level ups, relative
 to the others.

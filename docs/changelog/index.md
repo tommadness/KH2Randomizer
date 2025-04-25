@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.1.1 (2025-04-25)
+
+### Settings
+
+* Added 7 Random and 9 Random growth options
+* Added new options to limit stat growth on level ups
+  * The default remains to allow double stat growth on all levels 1-99
+
+### Changes
+
+* Spoiler hints in reports should now only show hinted items, not all trackable
+* Data Roxas will no longer be considered part of the first visit
+* Multiple copies of the same visit unlock item will not be added to shops, and other copies are still placed elsewhere
+* Fix vanilla magnet location for Luxord in The World that Never Was
+* Marluxia and Oogie Boogie can now have their textures recolored
+
 ## 3.1.0 (2025-02-02)
 
 ### Settings
