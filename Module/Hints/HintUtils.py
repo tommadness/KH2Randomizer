@@ -85,6 +85,8 @@ class WorldItems:
         # add in the starting items
         self.world_to_item_list[locationType.Critical] = []
         self.world_to_item_list[locationType.Free] = []
+        self.world_to_item_list_revealed[locationType.Critical] = []
+        self.world_to_item_list_revealed[locationType.Free] = []
         self.report_information: dict[int, dict[str, Any]] = {}
         self.proof_of_connection_world: Optional[locationType] = None
         self.proof_of_peace_world: Optional[locationType] = None
@@ -144,6 +146,7 @@ class WorldItems:
                     for vanilla_world in item_to_vanilla_world[inventory_item]:
                         if world_of_location in hintable_worlds:
                             self.path_breadcrump_map[vanilla_world].add(world_of_location)
+        print("testing2")
 
     def create_level_check_data_for_tracker(self, location_item_tuples, tracker_info):
         dream_weapon_matters_setting = "Dream Weapon Matters"
