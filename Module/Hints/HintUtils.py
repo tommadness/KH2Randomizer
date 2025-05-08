@@ -146,7 +146,6 @@ class WorldItems:
                     for vanilla_world in item_to_vanilla_world[inventory_item]:
                         if world_of_location in hintable_worlds:
                             self.path_breadcrump_map[vanilla_world].add(world_of_location)
-        print("testing2")
 
     def create_level_check_data_for_tracker(self, location_item_tuples, tracker_info):
         dream_weapon_matters_setting = "Dream Weapon Matters"
