@@ -19,6 +19,9 @@ class KH2Item:
         object.__setattr__(self, "Name", self.item.name)
         object.__setattr__(self, "ItemType", self.item.type)
 
+    def __lt__(self,value):
+        return self.Id < value.Id
+
 
 class ItemEncoder(JSONEncoder):
 

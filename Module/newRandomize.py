@@ -414,6 +414,7 @@ class Randomizer:
             visit_unlock_pool = list(set([
                 i for i in item_pool if i.ItemType == itemType.STORYUNLOCK
             ]))
+            visit_unlock_pool.sort()
             num_visit_unlocks_in_shop = min(
                 settings.shop_unlocks, len(visit_unlock_pool)
             )
