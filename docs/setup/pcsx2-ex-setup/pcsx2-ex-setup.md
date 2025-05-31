@@ -87,7 +87,9 @@ Once that’s done, click the green + icon to add a mod again, but this time, ty
 
 Once you have downloaded `KH2FM-Mods-Num/GOA-ROM-Edition`, click on `Mod Loader`, then select `Build and Run`. This will open PCSX2 for you, but we're not quite ready to play the game just yet. In order for the emulator to detect any Lua-based mods (such as the GoA mod), you need to tell it where to find your scripts. Once PCSX2 launches, go to the `Config` menu and click on `Plugin/BIOS Selector`. Click the `Folders` tab on the left side. Look for the section labeled "Scripts" and uncheck "Use default setting." This should allow you to change the path to your scripts folder. Click `Browse`, navigate to your OpenKH folder (wherever you installed it earlier), and then navigate to `mod\kh2\scripts` within that and click `Select Folder`.
 
-For example, my full path would be `C:\KH2FMRando-PS2\OpenKH\mod\kh2\scripts`.
+![PCSX2 Scripts Folder](./PCSX2_Scripts_Folder.png)
+
+For this guide, the full path would be `C:\KH2FMRando-PS2\OpenKH\mod\kh2\scripts`.
 
 ![Caution: OpenKH has a folder named "mod" and a folder named "mods". You specifically need the one named "mod" here.](./Caution_OpenKH_mod_folder.png)
 
