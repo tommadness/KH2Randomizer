@@ -149,16 +149,20 @@ class SeedModMenu(KH2Submenu):
             btlv_range: int,
             btlv_random_min_max: tuple[int, int]
     ):
-        self.battle_levels.use_setting(
-            setting_name,
-            battle_level_offset=btlv_offset,
-            battle_level_range=btlv_range,
-            battle_level_random_min_max=btlv_random_min_max,
-        )
+        hidden_updates = [BattleLevelOption.SHUFFLE.name,BattleLevelOption.SPHERE_SCALING.name]
+
+        if setting_name not in hidden_updates:
+            self.battle_levels.use_setting(
+                setting_name,
+                battle_level_offset=btlv_offset,
+                battle_level_range=btlv_range,
+                battle_level_random_min_max=btlv_random_min_max,
+                location_spheres={},
+            )
 
         for world, label_list in self.world_level_labels.items():
             for x in range(len(label_list)):
-                if setting_name == BattleLevelOption.SHUFFLE.name:
+                if setting_name in hidden_updates:
                     label_list[x].setText("?")
                 elif setting_name == BattleLevelOption.RANDOM_WITHIN_RANGE.name:
                     vanilla_level = self.vanilla_battle_levels.get_battle_levels(world)[x]

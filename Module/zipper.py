@@ -325,6 +325,8 @@ class SeedZip:
             battle_level_offset=settings.battle_level_offset,
             battle_level_range=settings.battle_level_range,
             battle_level_random_min_max=settings.battle_level_random_min_max,
+            location_spheres=self.location_spheres,
+            regular_rando=settings.regular_rando,
         )
         battle_level_spoiler = btlv.get_spoiler()
         journal_hints_spoiler = {}
@@ -590,6 +592,7 @@ class SeedZip:
         self, mod: SeedModBuilder
     ) -> dict[locationType, list[int]]:
         settings = self.settings
+        location_spheres = self.location_spheres
         btlv_option_name = settings.battle_level_rando
 
         btlv = BtlvViewer()
@@ -598,6 +601,8 @@ class SeedZip:
             battle_level_offset=settings.battle_level_offset,
             battle_level_range=settings.battle_level_range,
             battle_level_random_min_max=settings.battle_level_random_min_max,
+            location_spheres=self.location_spheres,
+            regular_rando=settings.regular_rando,
         )
         if (
             (btlv_option_name == BattleLevelOption.NORMAL.name)

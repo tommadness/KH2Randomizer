@@ -1603,6 +1603,8 @@ _all_settings = [
         Random - All battle levels are random, within configurable limits.
         
         Scale to 50 - All last visits are level 50, with previous visits scaled proportionally.
+        
+        Scale to Spheres - Battle level of worlds will scale to how the seed unlocks itself.
         """,
         standalone_label="Battle Level Randomization",
         randomizable=True,

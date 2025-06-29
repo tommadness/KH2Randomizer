@@ -1,6 +1,11 @@
+import math
 import random
 
 from Class.exceptions import BackendException
+from Class.newLocationClass import KH2Location
+from List.location import landofdragons, spaceparanoids, weaponslot, donaldbonus, goofybonus, starting, formlevel, \
+    summonlevel, agrabah, disneycastle, hundredacrewood, olympuscoliseum, beastscastle, halloweentown, portroyal, \
+    hollowbastion, pridelands, simulatedtwilighttown, twilighttown, worldthatneverwas
 from List.configDict import locationType, BattleLevelOption
 from Module.resources import resource_path
 
@@ -16,7 +21,7 @@ def bytes_to_number(byte0, byte1=0):
     return int(byte0)+int(byte1<<8)
 
 class BtlvViewer():
-    def __init__(self):            
+    def __init__(self):
         self.worlds = [None,None,locationType.TT,None,locationType.HB,locationType.BC,locationType.OC,locationType.Agrabah,
                         locationType.LoD,locationType.HUNDREDAW,locationType.PL,locationType.Atlantica,locationType.DC,locationType.DC,
                         locationType.HT,None,locationType.PR,locationType.SP,locationType.TWTNW,None,None,None,None,None]
@@ -41,6 +46,37 @@ class BtlvViewer():
             self.visit_flags[locationType.PL] = [(10,0x00010),(10,0x00040)]
             self.visit_flags[locationType.SP] = [(17,0x00010),(17,0x00040)]
             self.visit_flags[locationType.TWTNW] = [(18,0x00010)]
+
+            self.regular_rando_visit_rep = {}
+            self.regular_rando_visit_rep[locationType.STT] = [simulatedtwilighttown.CheckLocation.NaminesSketches,simulatedtwilighttown.CheckLocation.NaminesSketches,simulatedtwilighttown.CheckLocation.NaminesSketches]
+            self.regular_rando_visit_rep[locationType.TT] = [twilighttown.CheckLocation.CrystalOrb,twilighttown.CheckLocation.LimitForm,twilighttown.CheckLocation.UndergroundConcourseApBoost]
+            self.regular_rando_visit_rep[locationType.HB] = [hollowbastion.CheckLocation.MarketplaceMap,hollowbastion.CheckLocation.AnsemsStudyMasterForm,hollowbastion.CheckLocation.AnsemsStudyMasterForm]
+            self.regular_rando_visit_rep[locationType.LoD] = [landofdragons.CheckLocation.EncampmentAreaMap,landofdragons.CheckLocation.ThroneRoomTornPages]
+            self.regular_rando_visit_rep[locationType.BC] = [beastscastle.CheckLocation.Beast,beastscastle.CheckLocation.CastleWallsMap]
+            self.regular_rando_visit_rep[locationType.OC] = [olympuscoliseum.CheckLocation.Cerberus,olympuscoliseum.CheckLocation.AuronssStatue]
+            self.regular_rando_visit_rep[locationType.DC] = [disneycastle.CheckLocation.CourtyardApBoost,disneycastle.CheckLocation.BoatPete,disneycastle.CheckLocation.BoatPete]
+            self.regular_rando_visit_rep[locationType.PR] = [portroyal.CheckLocation.Barbossa,portroyal.CheckLocation.GrimReaper1]
+            self.regular_rando_visit_rep[locationType.Agrabah] = [agrabah.CheckLocation.AbuEscort,agrabah.CheckLocation.RuinedChamberTornPages]
+            self.regular_rando_visit_rep[locationType.HT] = [halloweentown.CheckLocation.CandyCaneLaneMythrilGem,halloweentown.CheckLocation.Present]
+            self.regular_rando_visit_rep[locationType.PL] = [pridelands.CheckLocation.CircleOfLife,pridelands.CheckLocation.Hyenas2]
+            self.regular_rando_visit_rep[locationType.SP] = [spaceparanoids.CheckLocation.CanyonDarkCrystal,spaceparanoids.CheckLocation.CentralComputerCoreCosmicArts]
+            self.regular_rando_visit_rep[locationType.TWTNW] = [worldthatneverwas.CheckLocation.LuxordBonus]
+                        
+            self.reverse_rando_visit_rep = {}
+            self.reverse_rando_visit_rep[locationType.STT] = [simulatedtwilighttown.CheckLocation.NaminesSketches,simulatedtwilighttown.CheckLocation.NaminesSketches,simulatedtwilighttown.CheckLocation.NaminesSketches]
+            self.reverse_rando_visit_rep[locationType.TT] = [twilighttown.CheckLocation.UndergroundConcourseApBoost,twilighttown.CheckLocation.LimitForm,twilighttown.CheckLocation.CrystalOrb]
+            self.reverse_rando_visit_rep[locationType.HB] = [hollowbastion.CheckLocation.AnsemsStudyMasterForm,hollowbastion.CheckLocation.WinnersProof,hollowbastion.CheckLocation.MarketplaceMap]
+            self.reverse_rando_visit_rep[locationType.LoD] = [landofdragons.CheckLocation.ThroneRoomTornPages,landofdragons.CheckLocation.EncampmentAreaMap]
+            self.reverse_rando_visit_rep[locationType.BC] = [beastscastle.CheckLocation.CastleWallsMap,beastscastle.CheckLocation.Beast,]
+            self.reverse_rando_visit_rep[locationType.OC] = [olympuscoliseum.CheckLocation.AuronssStatue,olympuscoliseum.CheckLocation.Cerberus]
+            self.reverse_rando_visit_rep[locationType.DC] = [disneycastle.CheckLocation.BoatPete,disneycastle.CheckLocation.CourtyardApBoost,disneycastle.CheckLocation.CourtyardApBoost]
+            self.reverse_rando_visit_rep[locationType.PR] = [portroyal.CheckLocation.GrimReaper1,portroyal.CheckLocation.Barbossa]
+            self.reverse_rando_visit_rep[locationType.Agrabah] = [agrabah.CheckLocation.BazaarApBoost,agrabah.CheckLocation.AbuEscort]
+            self.reverse_rando_visit_rep[locationType.HT] = [halloweentown.CheckLocation.Present,halloweentown.CheckLocation.PrisonKeeper]
+            self.reverse_rando_visit_rep[locationType.PL] = [pridelands.CheckLocation.Hyenas2,pridelands.CheckLocation.CircleOfLife]
+            self.reverse_rando_visit_rep[locationType.SP] = [spaceparanoids.CheckLocation.CentralComputerCoreCosmicArts,spaceparanoids.CheckLocation.ScreensBonus]
+            self.reverse_rando_visit_rep[locationType.TWTNW] = [worldthatneverwas.CheckLocation.LuxordBonus]
+
         else:
             self.visit_flags = {}
             self.visit_flags[locationType.TT] = [(2,0x040001),(2,0x140001),(2,0x140401),(2,0x141C01),(2,0x143D01),(2,0x157D79)]
@@ -66,6 +102,8 @@ class BtlvViewer():
             battle_level_offset: int,
             battle_level_range: int,
             battle_level_random_min_max: tuple[int, int],
+            location_spheres: dict[KH2Location,int],
+            regular_rando: bool = True,
     ):
         self.random_option = setting_name
         self.battle_level_range = battle_level_range
@@ -89,6 +127,9 @@ class BtlvViewer():
         elif self.random_option == BattleLevelOption.SCALE_TO_50.name:
             self._make_btlv_vanilla()
             self._scale_btlv(50)
+        elif self.random_option == BattleLevelOption.SPHERE_SCALING.name:
+            self._make_btlv_vanilla()
+            self._make_sphere_scaling(regular_rando,location_spheres)
         else:
             raise BackendException("Invalid battle level setting")
 
@@ -171,6 +212,23 @@ class BtlvViewer():
             for visit_number in range(len(visit_flag_list)):
                 new_level = int((current_btlvs[visit_number]*1.0/current_btlvs[-1])*scaled_level)
                 self._set_battle_level(world,visit_flag_list[visit_number][0],visit_number,new_level)
+    
+    def _make_sphere_scaling(self,regular_rando,location_spheres):
+        # modify the visits based on the value of spheres, max sphere is level 50
+        max_sphere = max([value for value in location_spheres.values()])
+        if max_sphere == 0:
+            raise ValueError("There are no logical spheres to scale battle levels to. Change the settings for battle level or visit locking")
+        sphere_levels = [math.ceil((x*1.0/max_sphere)*49)+1 for x in range(max_sphere+1)]
+
+        visit_reps = self.regular_rando_visit_rep if regular_rando else self.reverse_rando_visit_rep
+
+        for world, visit_flag_list in self.visit_flags.items():
+            for visit_number in range(len(visit_flag_list)):
+                # find location
+                sphere_of_location = [sphere for loca,sphere in location_spheres.items() if loca.Description == visit_reps[world][visit_number]][0]
+                btlv_change = sphere_levels[sphere_of_location]
+                self._set_battle_level(world, visit_flag_list[visit_number][0], visit_number, btlv_change)
+        
 
     def _offset_btlv(self,btlv_change):
         for world,visit_flag_list in self.visit_flags.items():

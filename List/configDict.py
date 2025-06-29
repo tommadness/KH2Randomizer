@@ -228,6 +228,7 @@ class BattleLevelOption(str, Enum):
     RANDOM_WITHIN_RANGE = "Within Range of Normal"
     RANDOM_MAX_50 = "Random"  # Old enum naming kept for compatibility
     SCALE_TO_50 = "Scale to 50"
+    SPHERE_SCALING = "Scale to Spheres"
 
 
 class ObjectivePoolOption(str, Enum):
