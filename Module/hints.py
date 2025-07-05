@@ -276,6 +276,19 @@ class Hints:
 
         hint_data["startingInventory"] = randomizer.starting_item_ids
 
+
+        if common_tracker_data.coop_player_number == "2":
+            if common_tracker_data.coop_hint_ordering == "random":
+                # change the specified hint ordering to random
+                raise HintException("Random ordering hints is not implemented")
+            elif common_tracker_data.coop_hint_ordering == "reversed":
+                # reverse the hint order for this person
+                keys = sorted(hint_data["Reports"].keys(),reverse=True)
+                new_data = {}
+                for index,key in enumerate(keys):
+                    new_data[index+1] = hint_data["Reports"][key]
+                hint_data["Reports"] = new_data
+
         Hints.generator_journal_hints(location_item_tuples, settings, hint_data)
         return hint_data
 

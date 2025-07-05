@@ -432,12 +432,15 @@ class SeedModBuilder:
             self,
             seed_hash_icons: list[str],
             crit_mode: bool,
-            final_door_requirement_message: str
+            final_door_requirement_message: str,
+            player_number: int
     ):
         """Adds messages that are included with every seed."""
         seed_hash_string = " ".join(
             ["{:icon " + icon + "}" for icon in seed_hash_icons]
         )
+        if int(player_number) > 0:
+            seed_hash_string += f" - {player_number}"
         self.messages.add_message(17198, en=seed_hash_string, jp=seed_hash_string)
 
         self.messages.add_message(20239, en=final_door_requirement_message, jp=final_door_requirement_message)

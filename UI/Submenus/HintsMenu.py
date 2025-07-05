@@ -24,6 +24,8 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.HINT_SYSTEM)
         self.add_option(settingkey.JOURNAL_HINTS_ABILITIES)
         self.add_option(settingkey.PROGRESSION_HINTS)
+        self.add_option(settingkey.COOP_PLAYER_NUMBER)
+        self.add_option(settingkey.COOP_HINT_ORDER)
         self.configure_progression_points = QPushButton("Configure Progression Points")
         self.configure_progression_points.clicked.connect(self._configure_progression_points)
         self.pending_group.addWidget(self.configure_progression_points)
@@ -102,6 +104,8 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on)
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on)
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REVEAL_END, visible=progression_on)
+        self.set_option_visibility(settingkey.COOP_PLAYER_NUMBER, visible=progression_on)
+        self.set_option_visibility(settingkey.COOP_HINT_ORDER, visible=progression_on)
 
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)
