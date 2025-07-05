@@ -15,7 +15,7 @@ from Module.zipper import SeedZip, SeedZipResult
 def generateSeed(
     settings: RandomizerSettings, extra_data: ExtraConfigurationData
 ) -> SeedZipResult:
-    last_error = None
+    last_errors = []
     for attempt in range(50):
         newSeedValidation = LocationInformedSeedValidator()
         try:
@@ -33,9 +33,9 @@ def generateSeed(
             characters = string.ascii_letters + string.digits
             settings.random_seed = "".join(random.choice(characters) for i in range(30))
             settings.create_full_seed_string()
-            last_error = e
+            last_errors.append(e)
             continue
-    raise last_error
+    raise max(set(last_errors), key=last_errors.count)
 
 def generateSeedCLI(
     settings: RandomizerSettings, extra_data: ExtraConfigurationData

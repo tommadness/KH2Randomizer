@@ -10,6 +10,7 @@ _HINTABLE_ITEMS = "Hintable Items"
 _ITEM_POINT_VALUES = "Item Point Values"
 _MISC_POINT_VALUES = "Misc Point Values"
 _PROGRESSION_POINTS = "Progression Points"
+_COOP_HINTS = "Co-op Hints"
 _SET_BONUSES = "Set Bonuses"
 _SPOILED_ITEMS = "Spoiled Items"
 
@@ -24,8 +25,6 @@ class HintsMenu(KH2Submenu):
         self.add_option(settingkey.HINT_SYSTEM)
         self.add_option(settingkey.JOURNAL_HINTS_ABILITIES)
         self.add_option(settingkey.PROGRESSION_HINTS)
-        self.add_option(settingkey.COOP_PLAYER_NUMBER)
-        self.add_option(settingkey.COOP_HINT_ORDER)
         self.configure_progression_points = QPushButton("Configure Progression Points")
         self.configure_progression_points.clicked.connect(self._configure_progression_points)
         self.pending_group.addWidget(self.configure_progression_points)
@@ -46,6 +45,13 @@ class HintsMenu(KH2Submenu):
         self.end_column()
 
         self.start_column()
+        self.start_group()
+        self.add_option(settingkey.COOP_HINTS_ENABLED)
+        self.add_option(settingkey.COOP_HINT_TYPE)
+        self.add_option(settingkey.COOP_PLAYER1_HINT_SYSTEM)
+        self.add_option(settingkey.COOP_PLAYER2_HINT_SYSTEM)
+        self.add_option(settingkey.COOP_PLAYER_NUMBER)
+        self.end_group("Co-op Hints", group_id=_COOP_HINTS)
         self.start_group()
         self.add_option(settingkey.SPOILER_REVEAL_TYPES)
         self.end_group(title="Reports Reveal Items", group_id=_SPOILED_ITEMS)
@@ -96,6 +102,7 @@ class HintsMenu(KH2Submenu):
         settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
         settings.observe(settingkey.SCORE_MODE, self._hint_system_changed)
         settings.observe(settingkey.PROGRESSION_HINTS, self._progression_toggle)
+        settings.observe(settingkey.COOP_HINTS_ENABLED, self._coop_toggle)
 
     def _progression_toggle(self):
         progression_on = self.settings.get(settingkey.PROGRESSION_HINTS)
@@ -104,8 +111,16 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on)
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on)
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REVEAL_END, visible=progression_on)
-        self.set_option_visibility(settingkey.COOP_PLAYER_NUMBER, visible=progression_on)
-        self.set_option_visibility(settingkey.COOP_HINT_ORDER, visible=progression_on)
+        self.set_group_visibility(
+            group_id=_COOP_HINTS, visible=progression_on
+        )
+
+    def _coop_toggle(self):
+        coop_on = self.settings.get(settingkey.COOP_HINTS_ENABLED)
+        self.set_option_visibility(settingkey.COOP_PLAYER_NUMBER, visible=coop_on)
+        self.set_option_visibility(settingkey.COOP_HINT_TYPE, visible=coop_on)
+        self.set_option_visibility(settingkey.COOP_PLAYER1_HINT_SYSTEM, visible=coop_on)
+        self.set_option_visibility(settingkey.COOP_PLAYER2_HINT_SYSTEM, visible=coop_on)
 
     def _hint_system_changed(self):
         hint_system = self.settings.get(settingkey.HINT_SYSTEM)

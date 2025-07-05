@@ -357,7 +357,7 @@ class SeedZip:
                 seed_hash_icons=settings.seedHashIcons,
                 crit_mode=settings.crit_mode,
                 final_door_requirement_message=self._final_door_requirement_message(),
-                player_number = settings.coop_player_number
+                player_number = settings.coop_player_number if settings.coop_hints_enabled else 0
             )
             self.prepare_companion_damage_knockback(mod)
 

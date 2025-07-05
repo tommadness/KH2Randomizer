@@ -26,8 +26,11 @@ class CommonTrackerInfo:
         self.spoiler_reveal_list = settings.spoiler_reveal_checks
         self.objective_mode = settings.objective_rando
         self.emblem_mode = settings.emblems
+        self.coop_mode = settings.coop_hints_enabled
         self.coop_player_number = settings.coop_player_number
-        self.coop_hint_ordering = settings.coop_hint_ordering
+        self.coop_hint_type = settings.coop_hint_type
+        self.coop_player1_hints = settings.coop_player1_hints
+        self.coop_player2_hints = settings.coop_player2_hints
         # remove any items that aren't enabled by settings
         if settings.promiseCharm:
             tracker_includes.append("PromiseCharm")
@@ -50,11 +53,6 @@ class CommonTrackerInfo:
             settings.spoiler_hint_values if self.hintsType == HintType.SPOILER else None
         )
         self.reveal_mode = settings.revealMode
-
-        if self.coop_player_number == "0" and self.coop_hint_ordering != "default":
-            raise HintException("Trying to generate hints with a coop hint ordering without saying which player")
-        if self.coop_player_number != "0" and self.progression_settings is None:
-            raise HintException("Trying to generate hints with a coop hint ordering but not using progression hints")
 
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {

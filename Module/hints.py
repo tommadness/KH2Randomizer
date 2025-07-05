@@ -7,7 +7,7 @@ from itertools import permutations, chain
 from typing import Optional, Any
 from zipfile import ZipFile
 
-from Class.exceptions import HintException
+from Class.exceptions import HintException,SettingsException
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
 from List.ItemList import Items
@@ -221,13 +221,21 @@ class Hints:
             hint_data["objective_list"] = [o.Name for o in randomizer.objectives]
             hint_data["objective_locations"] = objective_tuples
             hint_data["num_objectives_needed"] = settings.num_objectives_needed
-        if settings.hintsType == HintType.SHANANAS:
+
+        generate_hint_type_list = [settings.hintsType]
+        if common_tracker_data.coop_mode:
+            generate_hint_type_list = [common_tracker_data.coop_player1_hints,common_tracker_data.coop_player2_hints]
+            generate_hint_type_list = list(set(generate_hint_type_list))
+            if len(generate_hint_type_list)==2:
+                raise SettingsException("Different hint systems for co-op not implemented")
+    
+        if HintType.SHANANAS in generate_hint_type_list:
             hint_data["Reports"] = copy.deepcopy(world_items.report_information)
             if common_tracker_data.progression_settings is not None:
                 world_list = list(hint_data["world"].keys())
                 random.shuffle(world_list)
                 hint_data["world_order"] = world_list
-        elif settings.hintsType == HintType.JSMARTEE:
+        elif HintType.JSMARTEE in generate_hint_type_list:
             jsmartee_data = []
             for world in hintable_worlds:
                 jsmartee_data.append(JsmarteeHintData(world_items, world))
@@ -239,7 +247,7 @@ class Hints:
                 hint_data["Reports"] = HintUtils.jsmartee_hint_report_assignment(
                     settings, world_items, jsmartee_data
                 )
-        elif settings.hintsType == HintType.POINTS:
+        elif HintType.POINTS in generate_hint_type_list:
             if common_tracker_data.progression_settings is not None:
                 world_list = list(hint_data["world"].keys())
                 random.shuffle(world_list)
@@ -252,13 +260,13 @@ class Hints:
             hint_data["Reports"] = HintUtils.point_hint_report_assignment(
                 settings, world_items, point_data
             )
-        elif settings.hintsType == HintType.SPOILER:
+        elif HintType.SPOILER in generate_hint_type_list:
             hint_data["reveal_data"] = world_items.revealed_item_ids_to_names()
             hint_data["aux_data"] = world_items.item_ids_to_names()
             hint_data["Reports"] = HintUtils.spoiler_hint_assignment(
                 settings, common_tracker_data, world_items, hintable_worlds
             )
-        elif settings.hintsType == HintType.PATH:
+        elif HintType.PATH in generate_hint_type_list:
             path_data = []
             for world in HintUtils.hintable_worlds():
                 path_data.append(PathHintData(world_items, world))
@@ -268,7 +276,7 @@ class Hints:
                 common_tracker_data,
                 hintable_worlds,
             )
-        elif settings.hintsType == HintType.DISABLED:
+        elif HintType.DISABLED in generate_hint_type_list:
             # don't need to do anything extra
             pass
         else:
@@ -277,17 +285,23 @@ class Hints:
         hint_data["startingInventory"] = randomizer.starting_item_ids
 
 
-        if common_tracker_data.coop_player_number == "2":
-            if common_tracker_data.coop_hint_ordering == "random":
-                # change the specified hint ordering to random
-                raise HintException("Random ordering hints is not implemented")
-            elif common_tracker_data.coop_hint_ordering == "reversed":
+        if common_tracker_data.coop_hint_type == "random":
+            # change the specified hint ordering to random
+            raise SettingsException("Random ordering hints is not implemented")
+        elif common_tracker_data.coop_hint_type == "reversed":
+            if common_tracker_data.coop_player_number == "2":
                 # reverse the hint order for this person
                 keys = sorted(hint_data["Reports"].keys(),reverse=True)
                 new_data = {}
                 for index,key in enumerate(keys):
                     new_data[index+1] = hint_data["Reports"][key]
                 hint_data["Reports"] = new_data
+        elif common_tracker_data.coop_hint_type == "default":
+            # ensure player 1 and 2 hints are the same order
+            raise SettingsException("Same ordering hints is not implemented")
+        else:
+            raise SettingsException("Unknown coop hint type")
+
 
         Hints.generator_journal_hints(location_item_tuples, settings, hint_data)
         return hint_data

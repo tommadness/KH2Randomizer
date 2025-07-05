@@ -532,8 +532,14 @@ class RandomizerSettings:
         self.progression_reveal_all: bool = ui_settings.get(
             settingkey.PROGRESSION_HINTS_REVEAL_END
         )
+        self.coop_hints_enabled = ui_settings.get(settingkey.COOP_HINTS_ENABLED)
         self.coop_player_number = ui_settings.get(settingkey.COOP_PLAYER_NUMBER)
-        self.coop_hint_ordering = ui_settings.get(settingkey.COOP_HINT_ORDER)
+        self.coop_hint_type = ui_settings.get(settingkey.COOP_HINT_TYPE)
+        self.coop_player1_hints = ui_settings.get(settingkey.COOP_PLAYER1_HINT_SYSTEM)
+        self.coop_player2_hints = ui_settings.get(settingkey.COOP_PLAYER2_HINT_SYSTEM)
+
+        if not self.progression_hints and self.coop_hints_enabled:
+            raise SettingsException("Can't use coop hints without progression hints")
 
         self.shop_hintable = (
             (self.shop_unlocks > 0)
