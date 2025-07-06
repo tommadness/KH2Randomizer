@@ -18,8 +18,8 @@ from Module.newRandomize import ItemAssignment
 
 
 class CommonTrackerInfo:
-    def __init__(self, settings: RandomizerSettings):
-        self.hintsType = settings.hintsType
+    def __init__(self, hint_type, settings: RandomizerSettings):
+        self.hintsType = hint_type
         self.generatorVersion = settings.ui_version
         tracker_includes = settings.tracker_includes
         self.important_check_list = settings.important_checks

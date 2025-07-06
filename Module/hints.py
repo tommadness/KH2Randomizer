@@ -200,7 +200,7 @@ class Hints:
             randomizer.assignments, randomizer.shop_items
         )
 
-        common_tracker_data = CommonTrackerInfo(settings)
+        common_tracker_data = CommonTrackerInfo(settings.hintsType,settings)
         world_items = WorldItems(location_item_tuples, common_tracker_data)
         hintable_worlds = [
             world for world in HintUtils.hintable_worlds() if world not in exclude_list
@@ -224,63 +224,102 @@ class Hints:
 
         generate_hint_type_list = [settings.hintsType]
         if common_tracker_data.coop_mode:
-            generate_hint_type_list = [common_tracker_data.coop_player1_hints,common_tracker_data.coop_player2_hints]
-            generate_hint_type_list = list(set(generate_hint_type_list))
-            if len(generate_hint_type_list)==2:
-                raise SettingsException("Different hint systems for co-op not implemented")
+            generate_hint_type_list = [common_tracker_data.coop_player1_hints]
+            if common_tracker_data.coop_player1_hints!=common_tracker_data.coop_player2_hints:
+                generate_hint_type_list.append(common_tracker_data.coop_player2_hints)
+        
+        hint_datas = [copy.deepcopy(hint_data),copy.deepcopy(hint_data)]
+        hint_data_index = 0
+        hint_names = []
+        player1_index = None
+        player2_index = None
     
         if HintType.SHANANAS in generate_hint_type_list:
-            hint_data["Reports"] = copy.deepcopy(world_items.report_information)
+            hint_names.append(HintType.SHANANAS)
+            hint_datas[hint_data_index]["hintsType"] = HintType.SHANANAS
+            hint_datas[hint_data_index]["reveal"] = None
+            hint_datas[hint_data_index]["Reports"] = copy.deepcopy(world_items.report_information)
             if common_tracker_data.progression_settings is not None:
-                world_list = list(hint_data["world"].keys())
+                world_list = list(hint_datas[hint_data_index]["world"].keys())
                 random.shuffle(world_list)
-                hint_data["world_order"] = world_list
-        elif HintType.JSMARTEE in generate_hint_type_list:
+                hint_datas[hint_data_index]["world_order"] = world_list
+            hint_data_index+=1
+        if HintType.JSMARTEE in generate_hint_type_list:
+            hint_names.append(HintType.JSMARTEE)
+            hint_datas[hint_data_index]["hintsType"] = HintType.JSMARTEE
+            hint_datas[hint_data_index]["reveal"] = None
             jsmartee_data = []
             for world in hintable_worlds:
                 jsmartee_data.append(JsmarteeHintData(world_items, world))
             if common_tracker_data.progression_settings is not None:
-                hint_data["Reports"] = HintUtils.jsmartee_progression_hints(
+                hint_datas[hint_data_index]["Reports"] = HintUtils.jsmartee_progression_hints(
                     world_items, jsmartee_data
                 )
             else:
-                hint_data["Reports"] = HintUtils.jsmartee_hint_report_assignment(
+                hint_datas[hint_data_index]["Reports"] = HintUtils.jsmartee_hint_report_assignment(
                     settings, world_items, jsmartee_data
                 )
-        elif HintType.POINTS in generate_hint_type_list:
+            hint_data_index+=1
+        if HintType.POINTS in generate_hint_type_list:
+            hint_datas[hint_data_index]["hintsType"] = HintType.POINTS
+            hint_datas[hint_data_index]["reveal"] = None
+            hint_names.append(HintType.POINTS)
             if common_tracker_data.progression_settings is not None:
-                world_list = list(hint_data["world"].keys())
+                world_list = list(hint_datas[hint_data_index]["world"].keys())
                 random.shuffle(world_list)
-                hint_data["world_order"] = world_list
+                hint_datas[hint_data_index]["world_order"] = world_list
             point_data = []
             for world in hintable_worlds:
                 point_data.append(
                     PointHintData(settings, common_tracker_data, world_items, world)
                 )
-            hint_data["Reports"] = HintUtils.point_hint_report_assignment(
+            hint_datas[hint_data_index]["Reports"] = HintUtils.point_hint_report_assignment(
                 settings, world_items, point_data
             )
-        elif HintType.SPOILER in generate_hint_type_list:
-            hint_data["reveal_data"] = world_items.revealed_item_ids_to_names()
-            hint_data["aux_data"] = world_items.item_ids_to_names()
-            hint_data["Reports"] = HintUtils.spoiler_hint_assignment(
+            hint_data_index+=1
+        if HintType.SPOILER in generate_hint_type_list:
+            hint_names.append(HintType.SPOILER)
+            hint_datas[hint_data_index]["hintsType"] = HintType.SPOILER
+            hint_datas[hint_data_index]["reveal"] = settings.spoiler_hint_values
+            hint_datas[hint_data_index]["reveal_data"] = world_items.revealed_item_ids_to_names()
+            hint_datas[hint_data_index]["aux_data"] = world_items.item_ids_to_names()
+            hint_datas[hint_data_index]["Reports"] = HintUtils.spoiler_hint_assignment(
                 settings, common_tracker_data, world_items, hintable_worlds
             )
-        elif HintType.PATH in generate_hint_type_list:
+            hint_data_index+=1
+        if HintType.PATH in generate_hint_type_list:
+            hint_names.append(HintType.PATH)
             path_data = []
             for world in HintUtils.hintable_worlds():
                 path_data.append(PathHintData(world_items, world))
-            hint_data["Reports"] = HintUtils.path_hint_assignment(
+            hint_datas[hint_data_index]["hintsType"] = HintType.PATH
+            hint_datas[hint_data_index]["reveal"] = None
+            hint_datas[hint_data_index]["Reports"] = HintUtils.path_hint_assignment(
                 world_items,
                 path_data,
                 common_tracker_data,
                 hintable_worlds,
             )
-        elif HintType.DISABLED in generate_hint_type_list:
+            hint_data_index+=1
+        if HintType.DISABLED in generate_hint_type_list:
             # don't need to do anything extra
-            pass
-        else:
+            hint_datas[hint_data_index]["reveal"] = None
+            hint_data_index+=1
+            hint_names.append(HintType.DISABLED)
+        if len(hint_names)==0:
             raise HintException("Unable to generate hints for nonexistent hint system")
+        if len(hint_names)>2:
+            raise HintException("Generated too many hints")
+        
+
+        if not common_tracker_data.coop_mode or common_tracker_data.coop_player_number=="1":
+            player1_index = hint_names.index(common_tracker_data.coop_player1_hints)
+            hint_data = hint_datas[player1_index]
+        elif common_tracker_data.coop_mode and common_tracker_data.coop_player_number=="2":
+            player2_index = hint_names.index(common_tracker_data.coop_player2_hints)
+            hint_data = hint_datas[player2_index]
+        else:
+            raise HintException("Invalid player settings in hints")
 
         hint_data["startingInventory"] = randomizer.starting_item_ids
 
