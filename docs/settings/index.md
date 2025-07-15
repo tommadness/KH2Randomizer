@@ -621,9 +621,21 @@ seed generated outside the standard seed generator (using [Archipelago](https://
 **Command Menu** - controls the appearance of the command menu on-screen.
 
 * Vanilla - Command menus will have their normal appearance.
-* Randomize (one) - Chooses a single random command menu to use for the entire game.
-* Randomize (all) - Chooses random command menus for each world/location that has a unique command menu.
+* Randomize (one) - Chooses a single random command menu to use for the entire game. Favors custom command menus over
+  in-game ones.
+* Randomize (in-game only) - Chooses a random command menu for each world from existing in-game command menus.
+* Randomize (custom only) - Chooses a random command menu for each world from the `command-menus` folder contained
+  within your configured Custom Visuals Folder.
+* Randomize (in-game + custom) - Chooses a random command menu for each world from both existing in-game command menus
+  and the `command-menus` folder contained within your configured Custom Visuals Folder.
 * (individual command menus) - Forces all command menus to have the chosen appearance.
+
+> Using custom command menus requires a Custom Visuals Folder to have been configured using the Configure menu -> Choose
+> Custom Visuals Folder. Place any custom command menus into individual folders within the `command-menus` folder within
+> your chosen custom visuals folder.
+> 
+> Each custom command menu folder must include a .2dd file for the base asset, and a .png or .dds file for the
+> remastered asset (if using the PC game version).
 
 ### Visuals (PC Panacea Only)
 
@@ -651,7 +663,7 @@ specific custom picture for each supported item in the game.
 
 > Using custom item pictures requires a Custom Visuals Folder to have been configured using the Configure menu -> Choose
 > Custom Visuals Folder. Place any custom images into appropriate category folders within the `item-pictures` folder
-> within your chosen > custom visuals folder. Custom images can be in .dds or .png format.
+> within your chosen custom visuals folder. Custom images can be in .dds or .png format.
 
 **Room Transitions** - controls the appearance of the room transition images.
 

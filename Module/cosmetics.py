@@ -252,6 +252,9 @@ class CosmeticsMod:
         for folder in ["room-transition-images"]:
             (custom_visuals_path / folder).mkdir(exist_ok=True)
 
+        command_menus_path = custom_visuals_path / "command-menus"
+        command_menus_path.mkdir(exist_ok=True)
+
         end_pictures_path = custom_visuals_path / "ending-pictures"
         end_pictures_path.mkdir(exist_ok=True)
 
