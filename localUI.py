@@ -3,6 +3,7 @@ import json
 import os
 import random
 import re
+import shutil
 import string
 import subprocess
 import sys
@@ -321,29 +322,7 @@ class KH2RandomizerApp(QMainWindow):
         self.tabs = QTabWidget()
 
         self._configure_menu_bar()
-
-        self.preset_json = {}
-        if not os.path.exists(appconfig.PRESET_FOLDER):
-            os.makedirs(appconfig.PRESET_FOLDER)
-            path_to_presets = resource_path("presets")
-            for filename in os.listdir(path_to_presets):
-                f = os.path.join(path_to_presets, filename)
-                if os.path.isfile(f):
-                    with open(f,'r') as preset_file:
-                        preset_data = preset_file.read()
-                        out = os.path.join(appconfig.PRESET_FOLDER, filename)
-                        with open(out,'w') as out_preset_file:
-                            out_preset_file.write(preset_data)
-
-        for preset_file_name in os.listdir(appconfig.PRESET_FOLDER):
-            preset_name, extension = os.path.splitext(preset_file_name)
-            if extension == '.json':
-                with open(os.path.join(appconfig.PRESET_FOLDER, preset_file_name), 'r') as presetData:
-                    try:
-                        settings_json = json.load(presetData)
-                        self.preset_json[preset_name] = settings_json
-                    except Exception:
-                        print('Unable to load preset [{}], skipping'.format(preset_file_name))
+        self._reload_presets()
 
         pagelayout.addLayout(seed_layout)
         pagelayout.addSpacing(8)
@@ -356,10 +335,6 @@ class KH2RandomizerApp(QMainWindow):
         self.seedName.setProperty("cssClass", "biggerLineEdit")
         self.seedName.setPlaceholderText("Leave blank for a random seed")
         seed_layout.addWidget(self.seedName)
-
-        for x in self.preset_json.keys():
-            if x != 'BaseDailySeed':
-                self.loadPresetsMenu.addAction(x, lambda x=x: self.usePreset(x))
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         self.spoiler_log.setCheckState(Qt.Checked)
@@ -408,10 +383,11 @@ class KH2RandomizerApp(QMainWindow):
     def _configure_menu_bar(self):
         menu_bar = self.menuBar()
         self.presetMenu = QMenu("Preset")
-        self.presetMenu.addAction("Open Preset Folder", self.openPresetFolder)
-        self.presetMenu.addAction("Save Settings as New Preset", self.savePreset)
         self.loadPresetsMenu = QMenu("Load a Preset")
         self.presetMenu.addMenu(self.loadPresetsMenu)
+        self.presetMenu.addAction("Open Preset Folder", self.openPresetFolder)
+        self.presetMenu.addAction("Import Preset", self._import_preset)
+        self.presetMenu.addAction("Save Settings as New Preset", self._save_preset)
         self.presetMenu.addAction("Pick a Random Preset", self.randomPreset)
         
         self.seedMenu = QMenu("Share Seed")
@@ -841,17 +817,67 @@ class KH2RandomizerApp(QMainWindow):
         self.progress = None
         self.tourney_spoilers.save()
 
-    def savePreset(self):
+    def _reload_presets(self):
+        self.preset_json = {}
+
+        presets_folder = appconfig.settings_presets_folder()
+        if not presets_folder.is_dir():
+            presets_folder.mkdir(parents=True)
+
+            bundled_presets_folder = Path(resource_path("presets"))
+            for filename in os.listdir(bundled_presets_folder):
+                bundled_preset_path = bundled_presets_folder / filename
+                if bundled_preset_path.is_file():
+                    with open(bundled_preset_path, 'r') as bundled_preset_file:
+                        bundled_preset_data = bundled_preset_file.read()
+                        out = presets_folder / filename
+                        with open(out, 'w') as out_preset_file:
+                            out_preset_file.write(bundled_preset_data)
+
+        for preset_file_name in os.listdir(presets_folder):
+            preset_name, extension = os.path.splitext(preset_file_name)
+            if extension == '.json':
+                with open(presets_folder / preset_file_name, 'r') as preset_data:
+                    try:
+                        settings_json = json.load(preset_data)
+                        self.preset_json[preset_name] = settings_json
+                    except Exception:
+                        print(f'Unable to load preset [{preset_file_name}], skipping')
+
+        self.loadPresetsMenu.clear()
+        for key in self.preset_json.keys():
+            if key != 'BaseDailySeed':
+                self.loadPresetsMenu.addAction(key, self._make_apply_preset(key))
+
+    def _make_apply_preset(self, preset_name: str):
+        return lambda: self.usePreset(preset_name)
+
+    def _save_preset(self):
         preset_name, ok = QInputDialog.getText(self, 'Make New Preset', 'Enter a name for your preset...', QLineEdit.EchoMode.Normal)
         valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
         preset_name = ''.join(c for c in preset_name if c in valid_chars)
         if ok:
-            # add current settings to saved presets, add to current preset list, change preset selection.
             settings_json = self.settings.settings_json()
-            self.preset_json[preset_name] = settings_json
-            self.loadPresetsMenu.addAction(preset_name, lambda: self.usePreset(preset_name))
-            with open(os.path.join(appconfig.PRESET_FOLDER, preset_name + '.json'), 'w') as presetData:
+            with open(appconfig.settings_presets_folder() / f'{preset_name}.json', 'w') as presetData:
                 presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
+            self._reload_presets()
+
+    def _import_preset(self):
+        file_dialog = QFileDialog(self)
+        outfile_name, _ = file_dialog.getOpenFileName(self, filter="Settings Preset (*.json)")
+        if outfile_name:
+            outfile = Path(outfile_name)
+            preset_name = outfile.stem
+            shutil.copy2(outfile, appconfig.settings_presets_folder())
+            self._reload_presets()
+            response = QMessageBox.question(
+                self,
+                "Presets",
+                f"Preset [{preset_name}] imported.\n\nUse it now?",
+                QMessageBox.Yes, QMessageBox.No
+            )
+            if response == QMessageBox.Yes:
+                self.usePreset(preset_name)
 
     def randomPreset(self):
         preset_select_dialog = RandomPresetDialog(self.preset_json.keys())
@@ -894,7 +920,7 @@ class KH2RandomizerApp(QMainWindow):
         return None,None
 
     def openPresetFolder(self):
-        os.startfile(appconfig.PRESET_FOLDER)
+        os.startfile(appconfig.settings_presets_folder())
 
     def usePreset(self, preset_name: str):
         settings_json = self.preset_json[preset_name]
