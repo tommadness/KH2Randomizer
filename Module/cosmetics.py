@@ -12,6 +12,7 @@ from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
 from Module.cosmeticsmods.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.cosmeticsmods.itempic import ItempicRandomizer
 from Module.cosmeticsmods.keyblade import KeybladeRandomizer
+from Module.cosmeticsmods.texture import TextureRecolorSettings
 
 
 class CustomCosmetics:
@@ -62,6 +63,8 @@ class CosmeticsMod:
         custom_visuals_path = appconfig.read_custom_visuals_path()
         if custom_visuals_path is not None:
             CosmeticsMod.bootstrap_custom_visuals_folder(custom_visuals_path)
+
+        TextureRecolorSettings.bootstrap_texture_recolors()
 
     @staticmethod
     def bootstrap_music_list_file() -> Path:
@@ -251,6 +254,9 @@ class CosmeticsMod:
         """Creates folders for each of the default custom visuals categories."""
         for folder in ["room-transition-images"]:
             (custom_visuals_path / folder).mkdir(exist_ok=True)
+
+        command_menus_path = custom_visuals_path / "command-menus"
+        command_menus_path.mkdir(exist_ok=True)
 
         end_pictures_path = custom_visuals_path / "ending-pictures"
         end_pictures_path.mkdir(exist_ok=True)

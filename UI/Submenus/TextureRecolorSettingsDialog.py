@@ -1,6 +1,7 @@
 import json
 import os
 import random
+import shutil
 import string
 import textwrap
 import time
@@ -10,7 +11,7 @@ from typing import Any
 import numpy
 from PIL import Image
 from PySide6.QtWidgets import QDialog, QMenuBar, QMenu, QComboBox, QSpinBox, QLabel, QVBoxLayout, QHBoxLayout, \
-    QInputDialog, QLineEdit, QPushButton
+    QInputDialog, QLineEdit, QPushButton, QFileDialog, QMessageBox
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
@@ -58,15 +59,13 @@ class TextureRecolorSettingsDialog(QDialog):
         presets_menu.addAction("All Random", self._all_random_preset)
         presets_menu.addAction("Randomize Most Relevant", self._randomize_baseline)
         presets_menu.addSeparator()
+        custom_presets_menu = QMenu("Load a Preset")
+        presets_menu.addMenu(custom_presets_menu)
+        self.custom_presets_menu = custom_presets_menu
+        self._rebuild_custom_presets_menu()
         presets_menu.addAction("Open Preset Folder", self._open_preset_folder)
+        presets_menu.addAction("Import Preset", self._import_preset)
         presets_menu.addAction("Save Settings as New Preset", self._save_preset)
-        presets_menu.addSeparator()
-        presets_folder = self._texture_recolors_presets_folder()
-        if presets_folder.is_dir():
-            for file in os.listdir(presets_folder):
-                preset_name, extension = os.path.splitext(file)
-                if extension == ".json":
-                    presets_menu.addAction(preset_name, self._make_apply_preset(preset_name))
         menu_bar.addMenu(presets_menu)
 
         category_menu = QMenu("Category")
@@ -197,6 +196,16 @@ class TextureRecolorSettingsDialog(QDialog):
 
         self.all_models = TextureRecolorizer.load_recolorable_models()
         self._category_changed()
+
+    def _rebuild_custom_presets_menu(self):
+        menu = self.custom_presets_menu
+        menu.clear()
+        presets_folder = TextureRecolorSettings.texture_recolors_presets_folder()
+        if presets_folder.is_dir():
+            for file in os.listdir(presets_folder):
+                preset_name, extension = os.path.splitext(file)
+                if extension == ".json":
+                    menu.addAction(preset_name, self._make_apply_preset(preset_name))
 
     def _category_changed(self):
         selected_category = _model_tags_by_category_name[self.category_picker.currentText()]
@@ -343,12 +352,25 @@ class TextureRecolorSettingsDialog(QDialog):
             self.hue_picker.setEnabled(True)
 
     @staticmethod
-    def _texture_recolors_presets_folder() -> Path:
-        return Path(appconfig.PRESET_FOLDER).absolute() / "texture-recolors"
-
-    @staticmethod
     def _open_preset_folder():
-        os.startfile(TextureRecolorSettingsDialog._texture_recolors_presets_folder())
+        os.startfile(TextureRecolorSettings.texture_recolors_presets_folder())
+
+    def _import_preset(self):
+        file_dialog = QFileDialog(self)
+        outfile_name, _ = file_dialog.getOpenFileName(self, filter="Texture Recolor Preset (*.json)")
+        if outfile_name:
+            outfile = Path(outfile_name)
+            preset_name = outfile.stem
+            shutil.copy2(outfile, TextureRecolorSettings.texture_recolors_presets_folder())
+            self._rebuild_custom_presets_menu()
+            response = QMessageBox.question(
+                self,
+                "Presets",
+                f"Preset [{preset_name}] imported.\n\nUse it now?",
+                QMessageBox.Yes, QMessageBox.No
+            )
+            if response == QMessageBox.Yes:
+                self._apply_preset(preset_name)
 
     def _save_preset(self):
         preset_name, ok = QInputDialog.getText(
@@ -359,10 +381,11 @@ class TextureRecolorSettingsDialog(QDialog):
         valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
         preset_name = ''.join(c for c in preset_name if c in valid_chars)
         if ok:
-            presets_folder = self._texture_recolors_presets_folder()
+            presets_folder = TextureRecolorSettings.texture_recolors_presets_folder()
             presets_folder.mkdir(parents=True, exist_ok=True)
             with open(presets_folder / f"{preset_name}.json", "w", encoding="utf-8") as preset_file:
                 json.dump(self.texture_recolor_settings.raw_settings, preset_file, indent=4, sort_keys=True)
+            self._rebuild_custom_presets_menu()
 
     def _all_vanilla_preset(self):
         self._apply_setting_to_models(self.all_models, texture.VANILLA)
@@ -412,7 +435,7 @@ class TextureRecolorSettingsDialog(QDialog):
         return lambda: self._apply_preset(preset_name)
 
     def _apply_preset(self, preset_name: str):
-        preset_file_path = self._texture_recolors_presets_folder() / f"{preset_name}.json"
+        preset_file_path = TextureRecolorSettings.texture_recolors_presets_folder() / f"{preset_name}.json"
         if preset_file_path.is_file():
             with open(preset_file_path, encoding="utf-8") as preset_file:
                 loaded_settings: dict[str, dict[str, str]] = json.load(preset_file)

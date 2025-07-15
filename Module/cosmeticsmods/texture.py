@@ -269,6 +269,14 @@ class TextureRecolorSettings:
         """Applies the specified setting for the specified area_id of the specified model_id."""
         self.settings_for_model(model_id)[area_id] = setting
 
+    @staticmethod
+    def texture_recolors_presets_folder() -> Path:
+        return appconfig.settings_presets_folder() / "texture-recolors"
+
+    @staticmethod
+    def bootstrap_texture_recolors():
+        TextureRecolorSettings.texture_recolors_presets_folder().mkdir(parents=True, exist_ok=True)
+
 
 class TextureRecolorizer:
 

@@ -2839,10 +2839,17 @@ _all_settings = [
         
         Vanilla - Command menus will have their normal appearance.
         
-        Randomize (one) - Chooses a single random command menu to use for the entire game.
+        Randomize (one) - Chooses a single random command menu to use for the entire game. Favors custom command menus
+        over in-game ones.
         
-        Randomize (all) - Chooses random command menus for each world/location that has a unique command menu.
+        Randomize (in-game only) - Chooses a random command menu for each world from existing in-game command menus.
         
+        Randomize (custom only) - Chooses a random command menu for each world from the command-menus folder contained
+        within your configured Custom Visuals Folder.
+        
+        Randomize (in-game + custom) - Chooses a random command menu for each world from both existing in-game command
+        menus and the command-menus folder contained within your configured Custom Visuals Folder.
+
         individual command menu options - Forces all command menus to have the chosen appearance.
         """,
     ),
