@@ -8,6 +8,10 @@ AUTOSAVE_FOLDER = "auto-save"
 PRESET_FOLDER = "presets"
 
 
+def settings_presets_folder() -> Path:
+    return Path(PRESET_FOLDER).absolute()
+
+
 def read_app_config() -> dict:
     config_path = Path('randomizer-config.json').absolute()
     if config_path.is_file():
