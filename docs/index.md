@@ -25,9 +25,10 @@ See the various pages on this site for additional information about the randomiz
 ### First-Time Setup Tutorials
 
 * [PC (Epic/Steam)](setup/Panacea-ModLoader/index.md) by Alios
-* [Emulator (PCSX2)](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) by gameaddict
+* [Emulator (PCSX2)](setup/pcsx2-ex-setup/pcsx2-ex-setup.md) by gameaddict (edited by JHobz)
 
 ### Updating Your Installation
+
 * [Epic Update Guide Post Steam Release](setup/updating/index.md) by Alios
 
 ### Resources
@@ -39,7 +40,7 @@ See the various pages on this site for additional information about the randomiz
 * [Randomized Keyblades Guide](keyblades/index.md)
 * [Chests, Popups, and Bonuses Guide](https://docs.google.com/spreadsheets/d/1Q9xE8mVvdnXTXpQg6j0cpnLxti8pjUD9qRMugFymRw4/edit#gid=0)
   by HoshinoHaru
-* [Randomizer Check Sheet](https://docs.google.com/spreadsheets/d/1XMUNvlLNSHX8f38_rm__eWByZA3whqh0tgHBGHWNfb8/edit#gid=1519464140) 
+* [Randomizer Check Sheet](https://docs.google.com/spreadsheets/d/1XMUNvlLNSHX8f38_rm__eWByZA3whqh0tgHBGHWNfb8/edit#gid=1519464140)
   by Xtreone
 * [Battle Level Experience Values](https://docs.google.com/spreadsheets/d/1q3Fa4UCiqQRbHLpU7ZVj8y7oqbn0L5ZSYhXW_z5piFU/edit?usp=sharing)
   by Bulcon
