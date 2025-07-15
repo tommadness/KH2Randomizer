@@ -175,9 +175,9 @@ def make_graph(graph: LocationGraphBuilder):
         graph.add_edge(mansion_foyer, mansion_dining_room)
         graph.add_edge(mansion_foyer, namines_room)
         graph.add_edge(namines_room, mansion_library)
-        graph.add_edge(namines_room, axel_2, RequirementEdge(battle=True))
-        graph.add_edge(axel_2, mansion_basement)
-        graph.add_edge(mansion_basement, data_roxas, RequirementEdge(battle=True))
+        graph.add_edge(namines_room, mansion_basement, RequirementEdge(battle=True))
+        graph.add_edge(mansion_basement, axel_2)
+        graph.add_edge(axel_2, data_roxas, RequirementEdge(battle=True))
         graph.register_first_boss(axel_2)
         graph.register_last_story_boss(axel_2)
     else:
