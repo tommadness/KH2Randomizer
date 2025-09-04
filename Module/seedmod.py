@@ -1664,9 +1664,16 @@ class CosmeticsModAppender:
         self.mod_yml.add_assets(music_assets)
         self._write_music_replacements(music_replacements)
 
+    @staticmethod
+    def keyblade_dummy_wave_source() -> str:
+        """Returns the relative mod path of the dummy keyblade wave file."""
+        return _relative_mod_file("keyblades/dummy_wave.wd")
+
     def write_keyblade_rando_assets(self, keyblade_assets: list[Asset], keyblade_replacements: dict[str, str]):
-        self.mod_yml.add_assets(keyblade_assets)
-        self._write_keyblade_replacements(keyblade_replacements)
+        if keyblade_assets:
+            self.out_zip.write(resource_path("static/cosmetics/dummy_wave.wd"), self.keyblade_dummy_wave_source())
+            self.mod_yml.add_assets(keyblade_assets)
+            self._write_keyblade_replacements(keyblade_replacements)
 
     def write_rando_themed_texture_assets(self):
         """Adds assets and files to the mod for 'Add Randomizer-Themed Textures'."""

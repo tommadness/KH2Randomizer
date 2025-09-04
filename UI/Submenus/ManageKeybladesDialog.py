@@ -13,7 +13,8 @@ from Module.cosmeticsmods.keyblade import KeybladeRandomizer, ReplacementKeyblad
 from UI import theme, configui
 from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog
 from UI.Submenus.SubMenu import KH2Submenu
-from UI.keybladeworker import ExtractVanillaKeybladesWorker, ImportCustomKeybladesWorker
+from UI.keybladeworker import ExtractVanillaKeybladesWorker, ImportCustomKeybladesWorker, ImportKh1KeybladePackWorker, \
+    ImportBirthBySleepKeybladePackWorker
 from UI.qtlib import button, clear_layout, show_alert
 
 
@@ -31,6 +32,9 @@ class ManageKeybladesDialog(QDialog):
 
         import_menu = QMenu("Import")
         import_menu.addAction("Add Keyblade(s) from .kh2randokb Files", self._import_keyblades)
+        import_menu.addSeparator()
+        import_menu.addAction("Download KH1 Keyblade Pack (Zurphing)", self._import_kh1_keyblade_pack)
+        import_menu.addAction("Download BBS Keyblade Pack (Kite2810)", self._import_birth_by_sleep_keyblade_pack)
 
         create_menu = QMenu("Create")
         create_menu.addAction("Create .kh2randokb File", self._show_keyblade_packager)
@@ -140,6 +144,16 @@ class ManageKeybladesDialog(QDialog):
     def _extract_vanilla_keyblades(self):
         worker = ExtractVanillaKeybladesWorker()
         worker.finished.connect(self._refresh_vanilla_section)
+        worker.start()
+
+    def _import_kh1_keyblade_pack(self):
+        worker = ImportKh1KeybladePackWorker()
+        worker.finished.connect(self._refresh_custom_section)
+        worker.start()
+
+    def _import_birth_by_sleep_keyblade_pack(self):
+        worker = ImportBirthBySleepKeybladePackWorker()
+        worker.finished.connect(self._refresh_custom_section)
         worker.start()
 
     def _show_keyblade_packager(self):

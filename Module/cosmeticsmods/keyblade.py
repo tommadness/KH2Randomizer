@@ -31,11 +31,13 @@ class VanillaKeyblade:
         self.sound_name = sound_name
         self.model_name = model_name
         self.custom = custom
-        # Some of the custom keyblades share sound effect IDs with in-game keyblades. If we try to replace the
-        # effects on these keyblades (even just the visual effects), the sound effects seem to get messed up. For now,
-        # have a way to just skip effects for those (we can still replace the model and textures).
-        # TODO: If someone more knowledgeable knows how to get around this, we can restore the ability to replace
-        #  effects for the keyblades in question.
+        # We were previously using this to allow certain keyblades (Oathkeeper and Sleeping Lion specifically) to fully
+        # opt out of having their effects replaced due to sound effects getting messed up, even if just visual effects
+        # were replaced. This doesn't seem to be a problem in more recent testing, either due to OpenKH Mods Manager /
+        # Panacea updates, or due to the adding of a dummy wave file to randomized keyblades. If we are able to
+        # reproduce this again in the future, make sure to document which custom keyblades are having the problem. We
+        # could look into generating our own SEB files that customize the sound effect IDs which may be another
+        # potential solution.
         self.can_replace_effects = can_replace_effects
 
 
@@ -170,7 +172,7 @@ class ReplacementKeyblade:
 def _vanilla_keyblades() -> list[VanillaKeyblade]:
     return [
         VanillaKeyblade("Kingdom Key", "043", "se500", "W_EX010"),
-        VanillaKeyblade("Oathkeeper", "044", "se501", "W_EX010_10", can_replace_effects=False),
+        VanillaKeyblade("Oathkeeper", "044", "se501", "W_EX010_10"),
         VanillaKeyblade("Oblivion", "045", "se502", "W_EX010_20"),
         VanillaKeyblade("Star Seeker", "046", "se507", "W_EX010_30"),
         VanillaKeyblade("Hidden Dragon", "047", "se508", "W_EX010_40"),
@@ -184,7 +186,7 @@ def _vanilla_keyblades() -> list[VanillaKeyblade]:
         VanillaKeyblade("Guardian Soul", "055", "se516", "W_EX010_C0"),
         VanillaKeyblade("Wishing Lamp", "056", "se517", "W_EX010_D0"),
         VanillaKeyblade("Decisive Pumpkin", "057", "se518", "W_EX010_E0"),
-        VanillaKeyblade("Sleeping Lion", "058", "se519", "W_EX010_F0", can_replace_effects=False),
+        VanillaKeyblade("Sleeping Lion", "058", "se519", "W_EX010_F0"),
         VanillaKeyblade("Sweet Memories", "059", "se520", "W_EX010_G0"),
         VanillaKeyblade("Mysterious Abyss", "060", "se521", "W_EX010_H0"),
         VanillaKeyblade("Fatal Crest", "061", "se522", "W_EX010_J0"),
@@ -257,7 +259,10 @@ class KeybladeRandomizer:
             bar_output.mkdir(parents=True, exist_ok=True)
             # -s to skip creating an extra file
             # -o specifies the output location
-            subprocess.call([bar_exe, "unpack", "-s", "-o", bar_output, bar_input])
+            subprocess.call(
+                [bar_exe, "unpack", "-s", "-o", bar_output, bar_input],
+                creationflags=subprocess.CREATE_NO_WINDOW
+            )
 
         def copy_remastered_textures(textures_input: Path, textures_output: Path):
             textures_output.mkdir(parents=True, exist_ok=True)
@@ -550,19 +555,16 @@ class KeybladeRandomizer:
 
         original_pax = replacement.pax(model_type)
         remastered_effects = replacement.remastered_effects(model_type)
+        remastered_sound = replacement.remastered_sound(model_type)
+
+        original_effect_sources: list[dict[str, Any]] = []
+
         if original_pax is not None and len(remastered_effects) > 0:
-            assets.append({
-                "name": f"obj/{model_name}{suffix}.a.us",
-                "platform": "pc",
-                "method": "binarc",
-                "source": [
-                    {
-                        "name": "w_ex",
-                        "type": "pax",
-                        "method": "copy",
-                        "source": [{"name": str(original_pax)}]
-                    }
-                ]
+            original_effect_sources.append({
+                "name": "w_ex",
+                "type": "pax",
+                "method": "copy",
+                "source": [{"name": str(original_pax)}]
             })
 
             for remastered_effect_path in remastered_effects:
@@ -573,8 +575,17 @@ class KeybladeRandomizer:
                     "source": [{"name": str(remastered_effect_path)}]
                 })
 
-        remastered_sound = replacement.remastered_sound(model_type)
         if remastered_sound is not None:
+            # Adding a dummy wave file seems to prevent some crashes.
+            # Inspiration taken from Zurphing's KH1 keyblade pack.
+            from Module.seedmod import CosmeticsModAppender
+            original_effect_sources.append({
+                "name": "wave",
+                "type": "wd",
+                "method": "copy",
+                "source": [{"name": CosmeticsModAppender.keyblade_dummy_wave_source()}],
+            })
+
             # Since we're not replacing the SEB file, we should be able to use the sound name from the vanilla keyblade
             sound_name = vanilla.sound_name
             assets.append({
@@ -582,6 +593,14 @@ class KeybladeRandomizer:
                 "platform": "pc",
                 "method": "copy",
                 "source": [{"name": str(remastered_sound)}]
+            })
+
+        if original_effect_sources:
+            assets.append({
+                "name": f"obj/{model_name}{suffix}.a.us",
+                "platform": "pc",
+                "method": "binarc",
+                "source": original_effect_sources,
             })
 
         return assets
