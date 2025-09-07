@@ -3,12 +3,13 @@ import shutil
 from pathlib import Path
 from typing import Optional
 
-from PySide6.QtWidgets import QDialog, QLineEdit, QPushButton, QMessageBox, QVBoxLayout, QFileDialog, QHBoxLayout, \
+from PySide6.QtWidgets import QDialog, QLineEdit, QVBoxLayout, QFileDialog, QHBoxLayout, \
     QWidget
 
 from Class.seedSettings import SeedSettings
 from Module.cosmeticsmods.keyblade import KeybladeRandomizer
 from UI.Submenus.SubMenu import KH2Submenu
+from UI.qtlib import button, show_alert
 
 
 class PackageKeybladeMenu(KH2Submenu):
@@ -32,12 +33,10 @@ class PackageKeybladeMenu(KH2Submenu):
             file_filter: str = "",
             directory: bool = False,
     ):
-        button = QPushButton("Browse")
-        button.clicked.connect(lambda: self._browse(field, file_filter, directory))
         hbox = QHBoxLayout()
         field.setFixedWidth(600)
         hbox.addWidget(field)
-        hbox.addWidget(button)
+        hbox.addWidget(button("Browse", lambda: self._browse(field, file_filter, directory)))
         wrapper = QWidget()
         wrapper.setLayout(hbox)
         self.add_labeled_widget(wrapper, label_text, tooltip)
@@ -52,6 +51,10 @@ class PackageKeybladeMenu(KH2Submenu):
         author = QLineEdit("")
         author.setFixedWidth(600)
         self.author = author
+
+        source = QLineEdit("")
+        source.setFixedWidth(600)
+        self.source = source
 
         remastered_itempic = QLineEdit()
         self.remastered_itempic = remastered_itempic
@@ -69,6 +72,7 @@ class PackageKeybladeMenu(KH2Submenu):
         self.start_group()
         self.add_labeled_widget(key_name, "Keyblade Name*", tooltip="Name of the keyblade (required).")
         self.add_labeled_widget(author, "Author", tooltip="Author/designer for attribution (included in metadata).")
+        self.add_labeled_widget(source, "Source", tooltip="Link to the source for the keyblade assets, if any.")
         self.end_group("Basic")
 
         self.start_group()
@@ -223,9 +227,7 @@ class PackageKeybladeMenu(KH2Submenu):
         self.end_group("Remastered Sounds (se###) (Optional)")
 
         self.start_group()
-        button = QPushButton("Package Keyblade")
-        button.clicked.connect(self._package_keyblade)
-        self.pending_group.addWidget(button)
+        self.pending_group.addWidget(button("Package Keyblade", self._package_keyblade))
         self.end_group()
 
         self.end_column()
@@ -246,9 +248,7 @@ class PackageKeybladeMenu(KH2Submenu):
     def _package_keyblade(self):
         validation = self._validate()
         if validation is not None:
-            msg = QMessageBox(text=validation)
-            msg.setWindowTitle("Package Keyblade")
-            msg.exec()
+            show_alert(validation, title="Package Keyblade")
             return
 
         key_name = self.key_name.text()
@@ -260,6 +260,7 @@ class PackageKeybladeMenu(KH2Submenu):
             KeybladeRandomizer.extract_keyblade(
                 keyblade_name=key_name,
                 author=self.author.text(),
+                source=self.source.text(),
                 output_path=staging_path,
                 original_itempic=Path(self.original_itempic.text()),
                 remastered_itempic=Path(self.remastered_itempic.text()),
@@ -270,9 +271,7 @@ class PackageKeybladeMenu(KH2Submenu):
                 remastered_sound_files=[Path(field.text()) for field in self.sound_fields],
             )
         except Exception as error:
-            msg = QMessageBox(text=str(repr(error)))
-            msg.setWindowTitle("Package Keyblade")
-            msg.exec()
+            show_alert(str(repr(error)), title="Package Keyblade")
             return
 
         packaged_path = Path(f"cache/packaged-keyblades").absolute()
@@ -284,9 +283,7 @@ class PackageKeybladeMenu(KH2Submenu):
         os.rename(archive, packaged_file)
         shutil.rmtree(staging_path)
 
-        msg = QMessageBox(text=f"Created [{packaged_file}].")
-        msg.setWindowTitle("Package Keyblade")
-        msg.exec()
+        show_alert(f"Created [{packaged_file}].", title="Package Keyblade")
 
 
 class KeybladePackageDialog(QDialog):

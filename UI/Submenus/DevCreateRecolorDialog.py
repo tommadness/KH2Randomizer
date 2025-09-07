@@ -5,11 +5,12 @@ from typing import Optional
 import numpy
 from PIL import Image
 from PySide6.QtGui import Qt
-from PySide6.QtWidgets import QDialog, QGridLayout, QLabel, QLineEdit, QHBoxLayout, QSpinBox, QCheckBox, QPushButton
+from PySide6.QtWidgets import QDialog, QGridLayout, QLabel, QLineEdit, QHBoxLayout, QSpinBox, QCheckBox
 from numpy import ndarray
 
 from Module.cosmeticsmods.image import rgb_to_mask
 from Module.cosmeticsmods.texture import make_matching_conditions, recolor_image, RecolorDefinition, TextureRecolorizer
+from UI.qtlib import button
 
 
 class DevCreateRecolorDialog(QDialog):
@@ -98,8 +99,7 @@ class DevCreateRecolorDialog(QDialog):
         grid.addWidget(self.value_offset_field, row, 1, 1, 2)
         row = row + 1
 
-        btn = QPushButton("Generate Mask File From PNG")
-        btn.clicked.connect(self._generate_mask_file)
+        btn = button("Generate Mask File From PNG", self._generate_mask_file)
         grid.addWidget(btn, row, 0, 1, 2)
 
         hbox.addLayout(grid)

@@ -53,12 +53,14 @@ class ReplacementKeyblade:
         self.path = path
         self.version = -1
         self.author: Optional[str] = None
+        self.source: Optional[str] = None
 
         with open(keyblade_json_path, encoding="utf-8") as keyblade_json_file:
             keyblade_json: dict[str, Any] = json.load(keyblade_json_file)
             self.name = keyblade_json.get("name", self.name)
             self.version = keyblade_json.get("version", -1)
             self.author = keyblade_json.get("author", None)
+            self.source = keyblade_json.get("source", None)
 
     def model(self, model_type: str) -> Optional[Path]:
         full_path = self.path / model_type
@@ -211,6 +213,10 @@ def _model_type_suffix(model_type: str) -> str:
 class KeybladeRandomizer:
 
     @staticmethod
+    def directory_name() -> str:
+        return "keyblades"
+
+    @staticmethod
     def keyblade_rando_options() -> dict[str, str]:
         return {
             configDict.VANILLA: "Vanilla",
@@ -223,6 +229,7 @@ class KeybladeRandomizer:
     def extract_keyblade(
             keyblade_name: str,
             author: Optional[str],
+            source: Optional[str],
             output_path: Path,
             original_itempic: Path,
             remastered_itempic: Path,
@@ -301,21 +308,37 @@ class KeybladeRandomizer:
         if remastered_itempic.is_file():
             shutil.copy2(remastered_itempic, out_itempic_path)
 
+        KeybladeRandomizer.write_keyblade_json(
+            keyblade_name=keyblade_name,
+            author=author,
+            source=source,
+            keyblade_output_location=keyblade_output_location,
+        )
+
+    @staticmethod
+    def write_keyblade_json(
+            keyblade_name: str,
+            author: Optional[str],
+            source: Optional[str],
+            keyblade_output_location: Path,
+    ):
         keyblade_json = {
             "version": _KEYBLADE_VERSION,
             "name": keyblade_name,
         }
         if author is not None and author != "":
             keyblade_json["author"] = author
+        if source is not None and source != "":
+            keyblade_json["source"] = source
         keyblade_json_path = keyblade_output_location / "keyblade.json"
         with open(keyblade_json_path, "w", encoding="utf-8") as keyblade_json_file:
             json.dump(keyblade_json, keyblade_json_file, indent=4)
 
     @staticmethod
     def extract_game_models() -> Path:
-        extracted_data_path = appconfig.extracted_data_path() / "kh2"
+        extracted_data_path = appconfig.extracted_game_path("kh2")
         if extracted_data_path is None:
-            raise GeneratorException("No extracted data path, can't extract keyblades")
+            raise GeneratorException("No extracted KH2 game data, can't extract keyblades")
 
         obj_path = extracted_data_path / "obj"
         remastered_obj_path = extracted_data_path / "remastered" / "obj"
@@ -335,6 +358,7 @@ class KeybladeRandomizer:
             KeybladeRandomizer.extract_keyblade(
                 keyblade_name=keyblade_name,
                 author=None,
+                source=None,
                 output_path=vanilla_keys_path,
                 original_itempic=extracted_data_path / "itempic" / imd_name,
                 remastered_itempic=extracted_data_path / "remastered" / "itempic" / imd_name / "-0.dds",
@@ -358,7 +382,7 @@ class KeybladeRandomizer:
         packaged_path = Path(packaged_file)
         keyblade_name, _ = os.path.splitext(packaged_path.name)
 
-        keyblades_path = custom_visuals_path / "keyblades"
+        keyblades_path = custom_visuals_path / KeybladeRandomizer.directory_name()
         keyblades_path.mkdir(exist_ok=True)
 
         shutil.unpack_archive(packaged_path, keyblades_path / keyblade_name, "zip")
@@ -390,7 +414,7 @@ class KeybladeRandomizer:
         if custom_visuals_path is None:
             return result
 
-        custom_keys_path = custom_visuals_path / "keyblades"
+        custom_keys_path = custom_visuals_path / KeybladeRandomizer.directory_name()
         if not custom_keys_path.is_dir():
             return result
 

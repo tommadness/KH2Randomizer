@@ -11,7 +11,7 @@ from typing import Any
 import numpy
 from PIL import Image
 from PySide6.QtWidgets import QDialog, QMenuBar, QMenu, QComboBox, QSpinBox, QLabel, QVBoxLayout, QHBoxLayout, \
-    QInputDialog, QLineEdit, QPushButton, QFileDialog, QMessageBox
+    QInputDialog, QLineEdit, QFileDialog, QMessageBox
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
@@ -20,6 +20,7 @@ from Module.cosmeticsmods import texture
 from Module.cosmeticsmods.texture import TextureRecolorSettings, TextureRecolorizer, recolor_image, RecolorDefinition, \
     TextureConditionsLoader
 from UI.Submenus.SubMenu import KH2Submenu
+from UI.qtlib import button
 
 _model_tags_by_category_name = {
     "Characters": "character",
@@ -41,7 +42,7 @@ class TextureRecolorSettingsDialog(QDialog):
         self.texture_recolor_settings = TextureRecolorSettings(seed_settings.get(settingkey.TEXTURE_RECOLOR_SETTINGS))
         self.conditions_loader = TextureConditionsLoader()
 
-        self.base_path = appconfig.extracted_data_path() / "kh2"
+        self.base_path = appconfig.extracted_game_path("kh2")
         if not self.base_path.is_dir():
             # Really shouldn't be able to get here without something weird going on, just note it and return
             print(f"Could not find extracted data at {self.base_path}")
@@ -146,8 +147,7 @@ class TextureRecolorSettingsDialog(QDialog):
 
         hue_picker.valueChanged.connect(self._setting_changed)
 
-        reroll_button = QPushButton("Refresh Preview(s) (can take awhile)")
-        reroll_button.clicked.connect(self._update_preview)
+        reroll_button = button("Refresh Preview(s) (can take awhile)", self._update_preview)
 
         main = QVBoxLayout()
         main.setContentsMargins(0, 0, 0, 0)
