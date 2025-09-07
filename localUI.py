@@ -771,7 +771,7 @@ class KH2RandomizerApp(QMainWindow):
             rando_settings = self.make_rando_settings()
             if rando_settings is not None:
                 worker = GenerateSeedWorker(self, rando_settings, extra_data)
-                worker.generate_seed()
+                worker.start()
 
         # rando_settings = self.make_rando_settings()
         # self.seedName.setText("")
@@ -1069,9 +1069,10 @@ class KH2RandomizerApp(QMainWindow):
         dialog = AboutDialog(self)
         dialog.exec()
 
-    def _extract_vanilla_keyblades(self):
-        worker = ExtractVanillaKeybladesWorker(self)
-        worker.extract_keyblades()
+    @staticmethod
+    def _extract_vanilla_keyblades():
+        worker = ExtractVanillaKeybladesWorker()
+        worker.start()
 
     def _show_keyblade_packager(self):
         KeybladePackageDialog(self, self.settings).exec()
@@ -1080,8 +1081,8 @@ class KH2RandomizerApp(QMainWindow):
         file_dialog = QFileDialog(self)
         outfile_names, _ = file_dialog.getOpenFileNames(self, filter="Randomizer Keyblades (*.kh2randokb)")
         if len(outfile_names) > 0:
-            worker = ImportCustomKeybladesWorker(self)
-            worker.import_keyblades(outfile_names)
+            worker = ImportCustomKeybladesWorker(keyblade_file_paths=outfile_names)
+            worker.start()
         else:
             msg = QMessageBox(text=f"No keyblades selected.")
             msg.setWindowTitle("Import Keyblade(s)")
