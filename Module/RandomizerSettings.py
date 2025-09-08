@@ -22,8 +22,7 @@ from List.configDict import (
     FinalDoorRequirement,
 )
 from List.hashTextEntries import generate_hash_icons
-from List.inventory import report, proof, form, storyunlock, magic, misc
-from List.inventory.keyblade import get_locking_keyblade_names
+from List.inventory import report, proof, form, storyunlock, magic, misc, keyblade
 from Module.modifier import SeedModifier
 from Module.progressionPoints import ProgressionPoints
 
@@ -361,6 +360,8 @@ class RandomizerSettings:
         self.allow_report_hinting: bool = ui_settings.get(
             settingkey.ALLOW_REPORT_HINTING
         )
+
+        self.keyblade_abilities_randomized: bool = ui_settings.get(settingkey.KEYBLADE_ABILITIES_RANDOMIZED)
         self.keyblade_support_abilities: list[int] = [
             int(ability_id)
             for ability_id in ui_settings.get(settingkey.KEYBLADE_SUPPORT_ABILITIES)
@@ -369,6 +370,7 @@ class RandomizerSettings:
             int(ability_id)
             for ability_id in ui_settings.get(settingkey.KEYBLADE_ACTION_ABILITIES)
         ]
+        self.keyblade_stats_randomized: bool = ui_settings.get(settingkey.KEYBLADE_STATS_RANDOMIZED)
         self.keyblade_min_stat: int = ui_settings.get(settingkey.KEYBLADE_MIN_STAT)
         self.keyblade_max_stat: int = ui_settings.get(settingkey.KEYBLADE_MAX_STAT)
 
@@ -725,7 +727,7 @@ class RandomizerSettings:
         if "visit" in hintable_checks_list:
             check_list += [itemType.STORYUNLOCK]
         if "keyblade" in hintable_checks_list:
-            check_list += get_locking_keyblade_names()
+            check_list += [key.name for key in keyblade.get_locking_keyblades()]
         if "ability" in hintable_checks_list:
             check_list += ["Second Chance", "Once More"]
         if "other" in hintable_checks_list:
