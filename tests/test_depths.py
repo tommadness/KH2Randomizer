@@ -101,9 +101,7 @@ class Tests(unittest.TestCase):
                 self._assert_node_valid(last_story_boss_node, depths)
 
         # These worlds have no "second visit" so there shouldn't be any valid locations there
-        self._assert_validity(disneycastle.NodeId, depths, valid=False)
         self._assert_validity(simulatedtwilighttown.NodeId, depths, valid=False)
-        self._assert_validity(worldthatneverwas.NodeId, depths, valid=False)
 
         # Hundred Acre Wood and Atlantica are not considered any visit
         self._assert_validity(hundredacrewood.NodeId, depths, False)
@@ -220,7 +218,6 @@ def _sample_first_visit_nodes() -> list[str]:
     return [
         simulatedtwilighttown.NodeId.MunnyPouchPopup,
         simulatedtwilighttown.NodeId.Axel2,
-        simulatedtwilighttown.NodeId.SimulatedMansionBasementChests,
         twilighttown.NodeId.OldMansionChests,
         twilighttown.NodeId.YenSidTowerEntrywayChests,
         twilighttown.NodeId.TowerWardrobeChests,
@@ -242,10 +239,7 @@ def _sample_first_visit_nodes() -> list[str]:
         olympuscoliseum.NodeId.PeteOlympusColiseum,
         olympuscoliseum.NodeId.Hydra,
         disneycastle.NodeId.DisneyCastleCourtyardChests,
-        disneycastle.NodeId.CornerstoneHillChests,
-        disneycastle.NodeId.BoatPete,
-        disneycastle.NodeId.FuturePete,
-        disneycastle.NodeId.WisdomPopup,
+        disneycastle.NodeId.MinnieEscort,
         portroyal.NodeId.RampartChests,
         portroyal.NodeId.IslaDeMuertaPopup,
         portroyal.NodeId.MoonlightNookChests,
@@ -269,8 +263,7 @@ def _sample_first_visit_nodes() -> list[str]:
         worldthatneverwas.NodeId.FragmentCrossingChests,
         worldthatneverwas.NodeId.NothingsCallChests,
         worldthatneverwas.NodeId.Luxord,
-        worldthatneverwas.NodeId.RuinAndCreationsPassageChests,
-        worldthatneverwas.NodeId.Xemnas1,
+        worldthatneverwas.NodeId.Saix,
     ]
 
 
@@ -294,6 +287,10 @@ def _sample_second_visit_nodes() -> list[str]:
         beastscastle.NodeId.Xaldin,
         olympuscoliseum.NodeId.AuronsStatue,
         olympuscoliseum.NodeId.Hades,
+        disneycastle.NodeId.CornerstoneHillChests,
+        disneycastle.NodeId.BoatPete,
+        disneycastle.NodeId.FuturePete,
+        disneycastle.NodeId.WisdomPopup,
         portroyal.NodeId.GrimReaper1,
         portroyal.NodeId.SeadriftKeepChests,
         portroyal.NodeId.CursedMedallionPopup,
@@ -308,16 +305,18 @@ def _sample_second_visit_nodes() -> list[str]:
         spaceparanoids.NodeId.SolarSailerBonus,
         spaceparanoids.NodeId.CentralComputerCoreChests,
         spaceparanoids.NodeId.MasterControlProgramBonus,
+        worldthatneverwas.NodeId.RuinAndCreationsPassageChests,
+        worldthatneverwas.NodeId.Xemnas1,
     ]
 
 
 def _expected_first_boss_nodes() -> list[str]:
     """
-    A set of known superboss node IDs. Done this way to avoid tests being coupled to the same logic that's
+    A set of known first boss node IDs. Done this way to avoid tests being coupled to the same logic that's
     implementing the code being tested.
     """
     return [
-        worldthatneverwas.NodeId.Xemnas1,
+        worldthatneverwas.NodeId.Saix,
         landofdragons.NodeId.ShanYu,
         beastscastle.NodeId.DarkThorn,
         halloweentown.NodeId.OogieBoogie,
@@ -327,9 +326,9 @@ def _expected_first_boss_nodes() -> list[str]:
         twilighttown.NodeId.ValorForm,
         hollowbastion.NodeId.BaseballCharmPopup,
         portroyal.NodeId.Barbossa,
-        disneycastle.NodeId.WisdomPopup,
+        disneycastle.NodeId.MinnieEscort,
         spaceparanoids.NodeId.PhotonDebugger,
-        simulatedtwilighttown.NodeId.SimulatedMansionBasementChests,
+        simulatedtwilighttown.NodeId.Axel2,
     ]
 
 
@@ -351,7 +350,7 @@ def _expected_last_story_boss_nodes() -> list[str]:
         portroyal.NodeId.GrimReaper2,
         disneycastle.NodeId.WisdomPopup,
         spaceparanoids.NodeId.MasterControlProgramBonus,
-        simulatedtwilighttown.NodeId.SimulatedMansionBasementChests,
+        simulatedtwilighttown.NodeId.Axel2,
     ]
 
 

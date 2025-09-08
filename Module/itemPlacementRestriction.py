@@ -71,16 +71,20 @@ class ItemPlacementHelpers:
     @staticmethod
     def can_level_valor(inventory: list[int]) -> bool:
         return True
+
     @staticmethod
     def can_level_wisdom(inventory: list[int]) -> bool:
         return True
+
     @staticmethod
     def can_level_limit(inventory: list[int]) -> bool:
         return True
+
     @staticmethod
     def can_level_master(inventory: list[int]) -> bool:
         return ItemPlacementHelpers.ht1_check(inventory) \
               or ItemPlacementHelpers.hb2_check(inventory)
+
     @staticmethod
     def can_level_final(inventory: list[int]) -> bool:
         return ItemPlacementHelpers.twtnw_roxas_check(inventory) \

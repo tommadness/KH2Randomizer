@@ -27,7 +27,7 @@ class Tests(unittest.TestCase):
         num_mag_increase = (randomizer.level_stats[-1].magic - 6) // 2
         num_def_increase = (randomizer.level_stats[-1].defense - 2)
         num_ap_increase = (randomizer.level_stats[-1].ap) // 2
-        self.assertEqual(173, num_str_increase + num_mag_increase + num_def_increase + num_ap_increase)
+        self.assertEqual(172, num_str_increase + num_mag_increase + num_def_increase + num_ap_increase)
         self.assertEqual(42, len(randomizer.form_level_exp))
 
 

@@ -29,32 +29,37 @@ class Tests(unittest.TestCase):
 
         self.inventory: list[int] = []
 
-    def test_post_roxas(self):
+    def test_roxas(self):
+        """ Verifies a Way to the Dawn and 10 other unlocks are required to access Roxas checks. """
         roxas_checks = [worldthatneverwas.NodeId.Roxas]
         self._assert_unavailable(roxas_checks)
         self._collect(storyunlock.WayToTheDawn)
+        self._assert_unavailable(roxas_checks)
+        self._collect_ten_non_twtnw_unlocks()
         self._assert_available(roxas_checks)
 
     def test_post_saix(self):
-        """ Verifies 2 WttD are required to access Post Saix checks. """
+        """ Verifies 2 Way to the Dawns are required to access Post Saix checks. """
         pre_xemnas_popup = [worldthatneverwas.NodeId.PreXemnas1Popup]
         self._assert_unavailable(pre_xemnas_popup)
         self._collect(storyunlock.WayToTheDawn)
+        self._collect_ten_non_twtnw_unlocks()
         self._assert_unavailable(pre_xemnas_popup)
         self._collect(storyunlock.WayToTheDawn)
         self._assert_available(pre_xemnas_popup)
 
     def test_final_door(self):
-        """ Verifies all 3 proofs are required to access Final Xemnas. """
+        """ Verifies all 3 proofs (along with all other visit prerequisites) are required to access Final Xemnas. """
         final_xemnas = [worldthatneverwas.NodeId.FinalXemnas]
+        self._collect_ten_non_twtnw_unlocks()
         self._assert_unavailable(final_xemnas)
         self._collect(proof.ProofOfPeace)
         self._collect(proof.ProofOfConnection)
         self._assert_unavailable(final_xemnas)
-        self._collect(proof.ProofOfNonexistence)
+        self._collect(storyunlock.WayToTheDawn)
+        self._collect(storyunlock.WayToTheDawn)
         self._assert_unavailable(final_xemnas)
-        self._collect(storyunlock.WayToTheDawn)
-        self._collect(storyunlock.WayToTheDawn)
+        self._collect(proof.ProofOfNonexistence)
         self._assert_available(final_xemnas)
 
     def test_data_demyx(self):
@@ -242,6 +247,18 @@ class Tests(unittest.TestCase):
             msg = f"Expected {node_id} to be unavailable"
             for location in self.locations.locations_for_node(node_id):
                 self.assertFalse(self.validator.is_location_available(self.inventory, location), msg=msg)
+
+    def _collect_ten_non_twtnw_unlocks(self):
+        self._collect(storyunlock.NaminesSketches)
+        self._collect(storyunlock.IceCream)
+        self._collect(storyunlock.ProudFang)
+        self._collect(storyunlock.Scimitar)
+        self._collect(storyunlock.SkillAndCrossbones)
+        self._collect(storyunlock.IceCream)
+        self._collect(storyunlock.MembershipCard)
+        self._collect(storyunlock.RoyalSummons)
+        self._collect(storyunlock.SwordOfTheAncestor)
+        self._collect(storyunlock.IdentityDisk)
 
 
 if __name__ == '__main__':
