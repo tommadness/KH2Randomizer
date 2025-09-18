@@ -352,7 +352,6 @@ class Tests(unittest.TestCase):
         inventory.append(storyunlock.IdentityDisk.id)
         self.assertTrue(restriction(inventory))
 
-
     def test_twtnw_roxas_check(self):
         inventory = []
     
@@ -360,6 +359,21 @@ class Tests(unittest.TestCase):
         self.assertFalse(restriction(inventory))
     
         inventory.append(storyunlock.WayToTheDawn.id)
+        self.assertFalse(restriction(inventory))
+
+        # Needs Way to the Dawn plus 10 other unlocks
+        inventory.append(storyunlock.NaminesSketches.id)
+        inventory.append(storyunlock.IceCream.id)
+        inventory.append(storyunlock.ProudFang.id)
+        inventory.append(storyunlock.Scimitar.id)
+        inventory.append(storyunlock.SkillAndCrossbones.id)
+        inventory.append(storyunlock.IceCream.id)
+        inventory.append(storyunlock.MembershipCard.id)
+        inventory.append(storyunlock.RoyalSummons.id)
+        inventory.append(storyunlock.SwordOfTheAncestor.id)
+        self.assertFalse(restriction(inventory))
+
+        inventory.append(storyunlock.IdentityDisk.id)
         self.assertTrue(restriction(inventory))
 
     def test_twtnw_post_saix_check(self):
@@ -796,7 +810,7 @@ class Tests(unittest.TestCase):
         self.assertFalse(restriction(inventory))
         
         # give access to TWTNW
-        inventory.append(storyunlock.WayToTheDawn.id)
+        self._unlock_twtnw(inventory)
         self.assertTrue(restriction(inventory))
 
     def test_form_lambda_nightmare_final_7(self):
@@ -819,8 +833,23 @@ class Tests(unittest.TestCase):
         self.assertFalse(restriction(inventory))
 
         # give access to TWTNW
-        inventory.append(storyunlock.WayToTheDawn.id)
+        self._unlock_twtnw(inventory)
         self.assertTrue(restriction(inventory))
+
+    @staticmethod
+    def _unlock_twtnw(inventory: list[int]):
+        # Access to TWTNW needs Way to the Dawn + 10 other unlocks
+        inventory.append(storyunlock.WayToTheDawn.id)
+        inventory.append(storyunlock.NaminesSketches.id)
+        inventory.append(storyunlock.IceCream.id)
+        inventory.append(storyunlock.ProudFang.id)
+        inventory.append(storyunlock.Scimitar.id)
+        inventory.append(storyunlock.SkillAndCrossbones.id)
+        inventory.append(storyunlock.IceCream.id)
+        inventory.append(storyunlock.MembershipCard.id)
+        inventory.append(storyunlock.RoyalSummons.id)
+        inventory.append(storyunlock.SwordOfTheAncestor.id)
+        inventory.append(storyunlock.IdentityDisk.id)
 
 
 if __name__ == '__main__':
