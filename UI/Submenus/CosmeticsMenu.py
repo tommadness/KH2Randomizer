@@ -260,4 +260,4 @@ class CosmeticsMenu(KH2Submenu):
             custom_cosmetics_executables=self.custom_cosmetics.collect_custom_executable_files(),
         )
         worker = CosmeticsZipWorker(self, self.settings, extra_data)
-        worker.generate_mod()
+        worker.start()

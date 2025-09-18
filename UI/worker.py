@@ -1,9 +1,9 @@
-import io
 import subprocess
+from io import BytesIO
 from pathlib import Path
 from typing import Optional
 
-from PySide6.QtCore import QThread, Signal, Qt
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QProgressDialog, QFileDialog, QWidget, QMessageBox
 
 from Class.exceptions import RandomizerExceptions
@@ -13,311 +13,168 @@ from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmeticsmods.keyblade import KeybladeRandomizer
 from Module.generate import generateSeed, generateMultiWorldSeed
 from Module.zipper import BossEnemyOnlyZip, CosmeticsOnlyZip, SeedZipResult
+from UI.workers import BaseWorkerThread, BaseWorker
 
 
-def _run_custom_cosmetics_executables(extra_data: ExtraConfigurationData):
-    for custom_executable in extra_data.custom_cosmetics_executables:
-        custom_file_path = Path(custom_executable)
-        if custom_file_path.is_file():
-            custom_cwd = custom_file_path.parent
-            subprocess.call(custom_file_path, cwd=custom_cwd)
+class GenerateModWorker(BaseWorker):
+
+    def __init__(self, parent: QWidget):
+        super().__init__()
+        self.parent = parent
+
+    @staticmethod
+    def run_custom_cosmetics_executables(extra_data: ExtraConfigurationData):
+        for custom_executable in extra_data.custom_cosmetics_executables:
+            custom_file_path = Path(custom_executable)
+            if custom_file_path.is_file():
+                custom_cwd = custom_file_path.parent
+                subprocess.call(custom_file_path, cwd=custom_cwd)
+
+    def download_mod(self, zip_data: BytesIO, output_file_name: str, title: str):
+        last_save_path = appconfig.read_last_save_path()
+        if last_save_path is not None:
+            output_file_name = str(last_save_path / output_file_name)
+
+        save_widget = QFileDialog()
+        filter_name = f"{title} (*.zip)"
+        save_widget.setNameFilters([filter_name])
+        outfile_name, _ = save_widget.getSaveFileName(self.parent, f"Save {title}", output_file_name, filter_name)
+        if outfile_name != "":
+            if not outfile_name.endswith(".zip"):
+                outfile_name += ".zip"
+            with open(outfile_name, "wb") as out_zip:
+                out_zip.write(zip_data.getbuffer())
+            appconfig.write_last_save_path(str(Path(outfile_name).parent))
+
+    @staticmethod
+    def display_emu_warnings(rando_settings: RandomizerSettings, extra_data: ExtraConfigurationData):
+        if not extra_data.disable_emu_warning and rando_settings.keyblades_unlock_chests and extra_data.platform == "PCSX2":
+            from UI import theme
+            explainer_text = f'''You've generated a seed for PCSX2 with the setting for locking chests with keyblades. <br><br>
+    This requires running the lua file included in the seed zip. This means, either move the lua file from the zip 
+    (randoseed-mod-files/keyblade_locking/keyblade.lua) manually to your scripts folder, or reconfigure PCSX2 to use the folder made by the mod manager.<br><br>
+    A tutorial to do so can be found here: <a href="LINK_HERE" style="color: {theme.LinkColor}">Tutorial</a><br><br>
+    '''
+            message = QMessageBox(text=explainer_text)
+            message.setTextFormat(Qt.RichText)
+            message.setWindowTitle("KH2 Seed Generator")
+            message.exec()
 
 
-def _wrap_in_last_seed_folder_if_possible(
-    last_seed_folder_txt: Path, output_file_name: str
-) -> str:
-    if last_seed_folder_txt.is_file():
-        last_seed_folder = Path(last_seed_folder_txt.read_text().strip())
-        if last_seed_folder.is_dir():
-            output_file_name = str(last_seed_folder / output_file_name)
-    return output_file_name
+class GenerateSeedThread(BaseWorkerThread):
 
-
-def _download_seed(parent: QWidget, seed_zip_result: SeedZipResult):
-    zip_file, _, _ = seed_zip_result
-
-    last_seed_folder_txt = appconfig.auto_save_folder() / "last_seed_folder.txt"
-    output_file_name = _wrap_in_last_seed_folder_if_possible(
-        last_seed_folder_txt, "randoseed.zip"
-    )
-
-    save_widget = QFileDialog()
-    filter_name = "KH2 Randomizer Seed (*.zip)"
-    save_widget.setNameFilters([filter_name])
-    outfile_name, _ = save_widget.getSaveFileName(
-        parent, "Save Seed", output_file_name, filter_name
-    )
-    if outfile_name != "":
-        if not outfile_name.endswith(".zip"):
-            outfile_name += ".zip"
-        with open(outfile_name, "wb") as out_zip:
-            out_zip.write(zip_file.getbuffer())
-
-        last_seed_folder_txt.write_text(str(Path(outfile_name).parent))
-
-def _emu_warnings(rando_settings: RandomizerSettings,extra_data: ExtraConfigurationData):
-    if not extra_data.disable_emu_warning and rando_settings.keyblades_unlock_chests and extra_data.platform=="PCSX2":
-        from UI import theme
-        explainer_text = f'''You've generated a seed for PCSX2 with the setting for locking chests with keyblades. <br><br>
-This requires running the lua file included in the seed zip. This means, either move the lua file from the zip 
-(randoseed-mod-files/keyblade_locking/keyblade.lua) manually to your scripts folder, or reconfigure PCSX2 to use the folder made by the mod manager.<br><br>
-A tutorial to do so can be found here: <a href="LINK_HERE" style="color: {theme.LinkColor}">Tutorial</a><br><br>
-'''
-        message = QMessageBox(text=explainer_text)
-        message.setTextFormat(Qt.RichText)
-        message.setWindowTitle("KH2 Seed Generator")
-        message.exec()
-
-class GenerateSeedThread(QThread):
-    finished = Signal(object)
-    failed = Signal(Exception)
-
-    def __init__(
-        self, rando_settings: RandomizerSettings, extra_data: ExtraConfigurationData
-    ):
+    def __init__(self, rando_settings: RandomizerSettings, extra_data: ExtraConfigurationData):
         super().__init__()
         self.rando_settings = rando_settings
         self.extra_data = extra_data
 
-    def run(self):
-        try:
-            extra_data = self.extra_data
-            seed_zip_result = generateSeed(self.rando_settings, extra_data)
-
-            _run_custom_cosmetics_executables(extra_data)
-
-            self.finished.emit(seed_zip_result)
-        except Exception as e:
-            self.failed.emit(e)
+    def do_work(self) -> SeedZipResult:
+        extra_data = self.extra_data
+        seed_zip_result = generateSeed(self.rando_settings, extra_data)
+        GenerateModWorker.run_custom_cosmetics_executables(extra_data)
+        return seed_zip_result
 
 
-class GenerateSeedWorker:
-    def __init__(
-        self,
-        parent: QWidget,
-        rando_settings: RandomizerSettings,
-        extra_data: ExtraConfigurationData,
-    ):
-        self.parent = parent
+class GenerateSeedWorker(GenerateModWorker):
+
+    def __init__(self, parent: QWidget, rando_settings: RandomizerSettings, extra_data: ExtraConfigurationData):
+        super().__init__(parent)
         self.rando_settings = rando_settings
         self.extra_data = extra_data
-        self.progress: Optional[QProgressDialog] = None
-        self.thread: Optional[GenerateCosmeticsZipThread] = None
 
-    def generate_seed(self):
-        rando_settings = self.rando_settings
-        displayed_seed_name = rando_settings.random_seed
-        self.progress = QProgressDialog(
-            f"Creating seed with name {displayed_seed_name}", "Cancel", 0, 0, None
+    def create_worker_thread(self) -> BaseWorkerThread:
+        return GenerateSeedThread(self.rando_settings, self.extra_data)
+
+    def create_progress_dialog(self) -> Optional[QProgressDialog]:
+        return self.basic_wait_dialog(
+            label_text=f"Creating seed with name {self.rando_settings.random_seed}",
+            title_text="Making your Seed, please wait...",
         )
-        self.progress.setWindowTitle("Making your Seed, please wait...")
-        # self.progress.setCancelButton(None)
-        self.progress.setModal(True)
-        self.progress.show()
 
-        self.thread = GenerateSeedThread(rando_settings, self.extra_data)
-        self.thread.finished.connect(self._handle_result)
-        self.thread.failed.connect(self._handle_failure)
-        self.progress.canceled.connect(lambda: self.thread.terminate())
-        self.thread.start()
+    def handle_result(self, result: SeedZipResult):
+        zip_data, _, _ = result
+        self.download_mod(zip_data, output_file_name="randoseed.zip", title="Randomizer Seed")
+        self.display_emu_warnings(self.rando_settings, self.extra_data)
 
-    def _handle_result(self, seed_zip_result: SeedZipResult):
-        self.progress.close()
-        self.progress = None
-        zip_file, spoiler_log_output, enemy_log_output = seed_zip_result
-        spoiler_log_output = (
-            spoiler_log_output
-            if spoiler_log_output
-            else "<html>No spoiler log generated</html>"
-        )
-        _download_seed(self.parent, (zip_file, spoiler_log_output, enemy_log_output))
-        _emu_warnings(self.rando_settings,self.extra_data)
-        self.thread = None
-
-    def _handle_failure(self, failure: Exception):
-        if self.progress is not None:
-            self.progress.close()
-        self.progress = None
-        message = QMessageBox(text=str(repr(failure)))
-        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        message.setWindowTitle("Seed Generation Error")
-        message.exec()
-        self.thread = None
+    def handle_failure(self, failure: Exception):
+        super().handle_failure(failure)
         if not isinstance(failure, RandomizerExceptions):
             raise failure
 
 
-class GenerateMultiWorldSeedThread(QThread):
-    finished = Signal(object)
-    failed = Signal(Exception)
+class GenerateMultiWorldSeedThread(BaseWorkerThread):
 
-    def __init__(
-        self,
-        rando_settings: list[RandomizerSettings],
-        extra_data: ExtraConfigurationData,
-    ):
+    def __init__(self, rando_settings: list[RandomizerSettings], extra_data: ExtraConfigurationData):
         super().__init__()
         self.rando_settings = rando_settings
         self.extra_data = extra_data
 
-    def run(self):
-        try:
-            extra_data = self.extra_data
-            all_output = generateMultiWorldSeed(self.rando_settings, extra_data)
-
-            _run_custom_cosmetics_executables(extra_data)
-
-            self.finished.emit(all_output)
-        except Exception as e:
-            self.failed.emit(e)
+    def do_work(self) -> list[SeedZipResult]:
+        extra_data = self.extra_data
+        all_output = generateMultiWorldSeed(self.rando_settings, extra_data)
+        GenerateModWorker.run_custom_cosmetics_executables(extra_data)
+        return all_output
 
 
-class GenerateMultiWorldSeedWorker:
-    def __init__(
-        self,
-        parent: QWidget,
-        rando_settings: list[RandomizerSettings],
-        extra_data: ExtraConfigurationData,
-    ):
-        self.parent = parent
+class GenerateMultiWorldSeedWorker(GenerateModWorker):
+
+    def __init__(self, parent: QWidget, rando_settings: list[RandomizerSettings], extra_data: ExtraConfigurationData):
+        super().__init__(parent)
         self.rando_settings = rando_settings
         self.extra_data = extra_data
-        self.progress: Optional[QProgressDialog] = None
-        self.thread: Optional[GenerateMultiWorldSeedThread] = None
 
-    def generate_seed(self):
-        rando_settings = self.rando_settings
-        displayed_seed_name = rando_settings[0].random_seed
-        self.progress = QProgressDialog(
-            f"Creating seed with name {displayed_seed_name}", "Cancel", 0, 0, None
+    def create_worker_thread(self) -> BaseWorkerThread:
+        return GenerateMultiWorldSeedThread(self.rando_settings, self.extra_data)
+
+    def create_progress_dialog(self) -> Optional[QProgressDialog]:
+        return self.basic_wait_dialog(
+            label_text=f"Creating seed with name {self.rando_settings[0].random_seed}",
+            title_text="Making your Seed, please wait...",
         )
-        self.progress.setWindowTitle("Making your Seed, please wait...")
-        # self.progress.setCancelButton(None)
-        self.progress.setModal(True)
-        self.progress.show()
 
-        self.thread = GenerateMultiWorldSeedThread(rando_settings, self.extra_data)
-        self.thread.finished.connect(self._handle_result)
-        self.thread.failed.connect(self._handle_failure)
-        self.progress.canceled.connect(lambda: self.thread.terminate())
-        self.thread.start()
+    def handle_result(self, result: list[SeedZipResult]):
+        for zip_data, _, _ in result:
+            self.download_mod(zip_data, output_file_name="randoseed.zip", title="Randomizer Seed")
 
-    def _handle_result(self, seed_zip_result: SeedZipResult):
-        self.progress.close()
-        self.progress = None
-        for zip_file, spoiler_log_output, enemy_log_output in seed_zip_result:
-            spoiler_log_output = (
-                spoiler_log_output
-                if spoiler_log_output
-                else "<html>No spoiler log generated</html>"
-            )
-            _download_seed(
-                self.parent, (zip_file, spoiler_log_output, enemy_log_output)
-            )
-        self.thread = None
-
-    def _handle_failure(self, failure: Exception):
-        if self.progress is not None:
-            self.progress.close()
-        self.progress = None
-        message = QMessageBox(text=str(repr(failure)))
-        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        message.setWindowTitle("Seed Generation Error")
-        message.exec()
-        self.thread = None
+    def handle_failure(self, failure: Exception):
+        super().handle_failure(failure)
         if not isinstance(failure, RandomizerExceptions):
             raise failure
 
 
-class GenerateCosmeticsZipThread(QThread):
-    finished = Signal(object)
-    failed = Signal(Exception)
+class GenerateCosmeticsZipThread(BaseWorkerThread):
 
     def __init__(self, ui_settings: SeedSettings, extra_data: ExtraConfigurationData):
         super().__init__()
         self.ui_settings = ui_settings
         self.extra_data = extra_data
 
-    def run(self):
-        try:
-            extra_data = self.extra_data
-            zipper = CosmeticsOnlyZip(self.ui_settings)
-            zip_file = zipper.create_zip()
-
-            _run_custom_cosmetics_executables(extra_data)
-
-            self.finished.emit(zip_file)
-        except Exception as e:
-            self.failed.emit(e)
+    def do_work(self) -> BytesIO:
+        extra_data = self.extra_data
+        zipper = CosmeticsOnlyZip(self.ui_settings)
+        zip_data = zipper.create_zip()
+        GenerateModWorker.run_custom_cosmetics_executables(extra_data)
+        return zip_data
 
 
-class CosmeticsZipWorker:
-    def __init__(
-        self,
-        parent: QWidget,
-        ui_settings: SeedSettings,
-        extra_data: ExtraConfigurationData,
-    ):
-        self.parent = parent
+class CosmeticsZipWorker(GenerateModWorker):
+
+    def __init__(self, parent: QWidget, ui_settings: SeedSettings, extra_data: ExtraConfigurationData):
+        super().__init__(parent)
         self.ui_settings = ui_settings
         self.extra_data = extra_data
-        self.progress: Optional[QProgressDialog] = None
-        self.thread: Optional[GenerateCosmeticsZipThread] = None
 
-    def generate_mod(self):
-        self.progress = QProgressDialog(
-            "Creating cosmetics-only mod", "Cancel", 0, 0, None
-        )
-        self.progress.setWindowTitle("Please wait...")
-        self.progress.setModal(True)
-        self.progress.show()
+    def create_worker_thread(self) -> BaseWorkerThread:
+        return GenerateCosmeticsZipThread(self.ui_settings, self.extra_data)
 
-        self.thread = GenerateCosmeticsZipThread(self.ui_settings, self.extra_data)
-        self.thread.finished.connect(self._handle_result)
-        self.thread.failed.connect(self._handle_failure)
-        self.progress.canceled.connect(lambda: self.thread.terminate())
-        self.thread.start()
+    def create_progress_dialog(self) -> Optional[QProgressDialog]:
+        return self.basic_wait_dialog("Creating cosmetics-only mod")
 
-    def _handle_result(self, zip_file: io.BytesIO):
-        self.progress.close()
-        self.progress = None
-        self._download_zip(zip_file)
-        self.thread = None
-
-    def _handle_failure(self, failure: Exception):
-        if self.progress is not None:
-            self.progress.close()
-        self.progress = None
-
-        message = QMessageBox(text=str(repr(failure)))
-        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        message.setWindowTitle("Cosmetics Generation Error")
-        message.exec()
-
-        self.thread = None
-
-    def _download_zip(self, zip_file: io.BytesIO):
-        last_seed_folder_txt = appconfig.auto_save_folder() / "last_seed_folder.txt"
-        output_file_name = _wrap_in_last_seed_folder_if_possible(
-            last_seed_folder_txt, "randomized-cosmetics.zip"
-        )
-
-        save_widget = QFileDialog()
-        filter_name = "OpenKH Mod (*.zip)"
-        save_widget.setNameFilters([filter_name])
-        outfile_name, _ = save_widget.getSaveFileName(
-            self.parent, "Save Cosmetics Mod", output_file_name, filter_name
-        )
-        if outfile_name != "":
-            if not outfile_name.endswith(".zip"):
-                outfile_name += ".zip"
-            with open(outfile_name, "wb") as out_zip:
-                out_zip.write(zip_file.getbuffer())
+    def handle_result(self, result: BytesIO):
+        self.download_mod(result, output_file_name="randomized-cosmetics.zip", title="Cosmetics Mod")
 
 
-class GenerateBossEnemyZipThread(QThread):
-    finished = Signal(object)
-    failed = Signal(Exception)
+class GenerateBossEnemyZipThread(BaseWorkerThread):
 
     def __init__(self, seed_name: str, ui_settings: SeedSettings, platform: str):
         super().__init__()
@@ -325,188 +182,78 @@ class GenerateBossEnemyZipThread(QThread):
         self.platform = platform
         self.seed_name = seed_name
 
-    def run(self):
-        try:
-            platform = self.platform
-            zipper = BossEnemyOnlyZip(self.seed_name, self.ui_settings, platform)
-            zip_file = zipper.create_zip()
-            self.finished.emit(zip_file)
-        except Exception as e:
-            self.failed.emit(e)
+    def do_work(self) -> BytesIO:
+        platform = self.platform
+        zipper = BossEnemyOnlyZip(self.seed_name, self.ui_settings, platform)
+        zip_data = zipper.create_zip()
+        return zip_data
 
 
-class BossEnemyZipWorker:
-    def __init__(
-        self, parent: QWidget, seed_name: str, ui_settings: SeedSettings, platform: str
-    ):
-        self.parent = parent
+class BossEnemyZipWorker(GenerateModWorker):
+
+    def __init__(self, parent: QWidget, seed_name: str, ui_settings: SeedSettings, platform: str):
+        super().__init__(parent)
         self.ui_settings = ui_settings
         self.platform = platform
         self.seed_name = seed_name
-        self.progress: Optional[QProgressDialog] = None
-        self.thread: Optional[GenerateBossEnemyZipThread] = None
 
-    def generate_mod(self):
-        self.progress = QProgressDialog(
-            "Creating boss/enemy-only mod", "Cancel", 0, 0, None
-        )
-        self.progress.setWindowTitle("Please wait...")
-        self.progress.setModal(True)
-        self.progress.show()
+    def create_worker_thread(self) -> BaseWorkerThread:
+        return GenerateBossEnemyZipThread(self.seed_name, self.ui_settings, self.platform)
 
-        self.thread = GenerateBossEnemyZipThread(
-            self.seed_name, self.ui_settings, self.platform
-        )
-        self.thread.finished.connect(self._handle_result)
-        self.thread.failed.connect(self._handle_failure)
-        self.progress.canceled.connect(lambda: self.thread.terminate())
-        self.thread.start()
+    def create_progress_dialog(self) -> Optional[QProgressDialog]:
+        return self.basic_wait_dialog("Creating boss/enemy-only mod")
 
-    def _handle_result(self, zip_file: io.BytesIO):
-        self.progress.close()
-        self.progress = None
-        self._download_zip(zip_file)
-        self.thread = None
-
-    def _handle_failure(self, failure: Exception):
-        if self.progress is not None:
-            self.progress.close()
-        self.progress = None
-
-        message = QMessageBox(text=str(repr(failure)))
-        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        message.setWindowTitle("Boss/Enemy Generation Error")
-        message.exec()
-
-        self.thread = None
-
-    def _download_zip(self, zip_file: io.BytesIO):
-        last_seed_folder_txt = appconfig.auto_save_folder() / "last_seed_folder.txt"
-        output_file_name = _wrap_in_last_seed_folder_if_possible(
-            last_seed_folder_txt, "randomized-bosses-enemies.zip"
-        )
-
-        save_widget = QFileDialog()
-        filter_name = "OpenKH Mod (*.zip)"
-        save_widget.setNameFilters([filter_name])
-        outfile_name, _ = save_widget.getSaveFileName(
-            self.parent, "Save boss/enemy mod", output_file_name, filter_name
-        )
-        if outfile_name != "":
-            if not outfile_name.endswith(".zip"):
-                outfile_name += ".zip"
-            with open(outfile_name, "wb") as out_zip:
-                out_zip.write(zip_file.getbuffer())
+    def handle_result(self, result: BytesIO):
+        self.download_mod(result, output_file_name="randomized-bosses-enemies.zip", title="Boss/Enemy Mod")
 
 
-class ExtractVanillaKeybladesThread(QThread):
-    finished = Signal(object)
-    failed = Signal(Exception)
+class ExtractVanillaKeybladesThread(BaseWorkerThread):
 
-    def run(self):
-        try:
-            result = KeybladeRandomizer.extract_game_models()
-            self.finished.emit(result)
-        except Exception as e:
-            self.failed.emit(e)
+    def do_work(self) -> Path:
+        return KeybladeRandomizer.extract_game_models()
 
 
-class ExtractVanillaKeybladesWorker:
-    def __init__(self, parent: QWidget):
-        self.parent = parent
-        self.progress: Optional[QProgressDialog] = None
-        self.thread: Optional[ExtractVanillaKeybladesThread] = None
+class ExtractVanillaKeybladesWorker(BaseWorker):
 
-    def extract_keyblades(self):
-        self.progress = QProgressDialog("Extracting vanilla keyblades", "Cancel", 0, 0, None)
-        self.progress.setWindowTitle("Please wait...")
-        self.progress.setModal(True)
-        self.progress.show()
+    def create_worker_thread(self) -> BaseWorkerThread:
+        return ExtractVanillaKeybladesThread()
 
-        self.thread = ExtractVanillaKeybladesThread()
-        self.thread.finished.connect(self._handle_result)
-        self.thread.failed.connect(self._handle_failure)
-        self.progress.canceled.connect(lambda: self.thread.terminate())
-        self.thread.start()
+    def create_progress_dialog(self) -> Optional[QProgressDialog]:
+        return self.basic_wait_dialog("Extracting vanilla keyblades")
 
-    def _handle_result(self, result: Path):
-        self.progress.close()
-        self.progress = None
-
+    def handle_result(self, result: Path):
         message = QMessageBox(text=f"Extracted keyblades to [{str(result.absolute())}]")
         message.setWindowTitle("Keyblade Extraction")
         message.exec()
 
-        self.thread = None
 
-    def _handle_failure(self, failure: Exception):
-        if self.progress is not None:
-            self.progress.close()
-        self.progress = None
-
-        message = QMessageBox(text=str(repr(failure)))
-        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        message.setWindowTitle("Keyblade Extraction Error")
-        message.exec()
-
-        self.thread = None
-
-
-class ImportCustomKeybladesThread(QThread):
-    finished = Signal(object)
-    failed = Signal(Exception)
+class ImportCustomKeybladesThread(BaseWorkerThread):
 
     def __init__(self, keyblade_file_paths: list[str]):
         super().__init__()
         self.keyblade_file_paths = keyblade_file_paths
 
-    def run(self):
-        try:
-            count = len(self.keyblade_file_paths)
-            if count > 0:
-                for keyblade_file_path in self.keyblade_file_paths:
-                    KeybladeRandomizer.import_keyblade(keyblade_file_path)
-            self.finished.emit(count)
-        except Exception as e:
-            self.failed.emit(e)
+    def do_work(self) -> int:
+        count = len(self.keyblade_file_paths)
+        if count > 0:
+            for keyblade_file_path in self.keyblade_file_paths:
+                KeybladeRandomizer.import_keyblade(keyblade_file_path)
+        return count
 
 
-class ImportCustomKeybladesWorker:
-    def __init__(self, parent: QWidget):
-        self.parent = parent
-        self.progress: Optional[QProgressDialog] = None
-        self.thread: Optional[ImportCustomKeybladesThread] = None
+class ImportCustomKeybladesWorker(BaseWorker):
 
-    def import_keyblades(self, keyblade_file_paths: list[str]):
-        self.progress = QProgressDialog("Importing keyblade(s)", "Cancel", 0, 0, None)
-        self.progress.setWindowTitle("Please wait...")
-        self.progress.setModal(True)
-        self.progress.show()
+    def __init__(self, keyblade_file_paths: list[str]):
+        super().__init__()
+        self.keyblade_file_paths = keyblade_file_paths
 
-        self.thread = ImportCustomKeybladesThread(keyblade_file_paths)
-        self.thread.finished.connect(self._handle_result)
-        self.thread.failed.connect(self._handle_failure)
-        self.progress.canceled.connect(lambda: self.thread.terminate())
-        self.thread.start()
+    def create_worker_thread(self) -> BaseWorkerThread:
+        return ImportCustomKeybladesThread(self.keyblade_file_paths)
 
-    def _handle_result(self, result: int):
-        self.progress.close()
-        self.progress = None
+    def create_progress_dialog(self) -> Optional[QProgressDialog]:
+        return self.basic_wait_dialog("Importing keyblade(s)")
 
+    def handle_result(self, result: int):
         message = QMessageBox(text=f"Imported {result} keyblade(s).")
         message.setWindowTitle("Keyblade Import")
         message.exec()
-
-        self.thread = None
-
-    def _handle_failure(self, failure: Exception):
-        if self.progress is not None:
-            self.progress.close()
-        self.progress = None
-
-        message = QMessageBox(text=str(repr(failure)))
-        message.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        message.setWindowTitle("Keyblade Import Error")
-        message.exec()
-
-        self.thread = None
