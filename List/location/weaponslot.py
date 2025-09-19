@@ -169,11 +169,6 @@ def keyblade_slots() -> list[KH2Location]:
         weapon_slot(LocationId.UltimaWeapon, CheckLocation.UltimaWeapon),
         weapon_slot(LocationId.WinnersProof, CheckLocation.WinnersProof),
         weapon_slot(LocationId.Pureblood, CheckLocation.Pureblood),
-    ]
-
-
-def struggle_weapon_slots() -> list[KH2Location]:
-    return [
         weapon_slot(LocationId.StruggleSword, CheckLocation.StruggleSword),
         weapon_slot(LocationId.StruggleWand, CheckLocation.StruggleWand),
         weapon_slot(LocationId.StruggleHammer, CheckLocation.StruggleHammer),

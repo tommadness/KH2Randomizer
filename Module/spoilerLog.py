@@ -127,12 +127,16 @@ def weapon_stats_dictionary(
     result: list[dict[str, str]] = []
     for weapon in weapons:
         location = weapon.location
-        assignment = next(a for a in all_assignments if a.location == location)
+        assignment = next((a for a in all_assignments if a.location == location), None)
+        if assignment is None:
+            assignment_item = ""
+        else:
+            assignment_item = assignment.item.Name
         result.append({
             "name": location.Description.partition(" (Slot)")[0],
             "strength": weapon.strength,
             "magic": weapon.magic,
-            "item": assignment.item.Name
+            "item": assignment_item
         })
     return result
 
