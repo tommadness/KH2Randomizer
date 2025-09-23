@@ -87,10 +87,3 @@ exe = EXE(
     entitlements_file=None,
     icon='rando.ico'
 )
-
-import shutil
-presetPath = '{0}/presets'.format(DISTPATH)
-if os.path.exists(presetPath):
-  shutil.rmtree(presetPath)
-
-shutil.copytree('presets', presetPath)
