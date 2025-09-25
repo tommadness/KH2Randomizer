@@ -34,8 +34,7 @@ from List.configDict import (
     StartingVisitMode,
     FinalDoorRequirement,
 )
-from List.inventory import ability, misc, proof, storyunlock, form, summon
-from List.inventory.keyblade import get_all_keyblades
+from List.inventory import ability, misc, proof, storyunlock, form, summon, keyblade
 from Module import encoding
 from Module import knockbackTypes
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
@@ -1002,7 +1001,7 @@ _all_settings = [
         group=SettingGroup.STARTING_INVENTORY,
         ui_label="Starting Keyblades",
         choices={
-            str(k.id): k.name for k in get_all_keyblades()
+            str(k.id): k.name for k in keyblade.get_all_keyblades() if k.start_item_eligible
         },
         shared=True,
         default=[],
@@ -1940,6 +1939,15 @@ _all_settings = [
         """,
         randomizable=None,
     ),
+    Toggle(
+        name=settingkey.KEYBLADE_STATS_RANDOMIZED,
+        group=SettingGroup.KEYBLADES,
+        ui_label="Randomize Keyblade Stats",
+        shared=True,
+        default=True,
+        randomizable=True,
+        tooltip="If enabled, keyblade strength and magic stats will be randomized.",
+    ),
     IntSpinner(
         name=settingkey.KEYBLADE_MIN_STAT,
         group=SettingGroup.KEYBLADES,
@@ -1963,6 +1971,15 @@ _all_settings = [
         default=7,
         randomizable=True,
         tooltip="The maximum strength and magic stat that each keyblade must have.",
+    ),
+    Toggle(
+        name=settingkey.KEYBLADE_ABILITIES_RANDOMIZED,
+        group=SettingGroup.KEYBLADES,
+        ui_label="Randomize Keyblade Abilities",
+        shared=True,
+        default=True,
+        randomizable=True,
+        tooltip="If enabled, keyblade abilities will be randomized.",
     ),
     MultiSelect(
         name=settingkey.KEYBLADE_SUPPORT_ABILITIES,

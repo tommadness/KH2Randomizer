@@ -1,6 +1,6 @@
 import os
 
-LOCAL_UI_VERSION = '3.1.2'
+LOCAL_UI_VERSION = "3.2.0-dev"
 EXTRACTED_DATA_UPDATE_VERSION = "3.0.1"  # shouldn't need to update this often
 
 
