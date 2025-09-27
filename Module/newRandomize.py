@@ -1,7 +1,7 @@
-from collections import Counter
 import copy
 import itertools
 import random
+from collections import Counter
 from dataclasses import dataclass
 from dataclasses import field
 from typing import Optional
@@ -14,15 +14,14 @@ from Class.exceptions import (
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
 from Class.randomUtils import weighted_sample_without_replacement
-from List.ObjectiveList import KH2Objective
 from List.ItemList import Items
 from List.NewLocationList import Locations
+from List.ObjectiveList import KH2Objective
 from List.configDict import (
     ObjectivePoolOption,
     locationCategory,
     itemRarity,
     itemType,
-    locationDepth,
     locationType,
     LevelUpStatBonus,
 )
@@ -32,19 +31,18 @@ from List.inventory import (
     form,
     growth,
     keyblade,
-    magic,
     misc,
     proof,
     report,
     storyunlock,
 )
 from List.inventory.item import InventoryItem
+from List.inventory.keyblade import Keyblade
 from List.location import (
     simulatedtwilighttown as stt,
     weaponslot,
     hundredacrewood as haw,
     hollowbastion as hb,
-    starting,
 )
 from Module.RandomizerSettings import RandomizerSettings
 from Module.depths import ItemDepths
@@ -274,32 +272,37 @@ class Randomizer:
 
     def assign_weapon_stats(self, settings: RandomizerSettings):
         """Assigns stats to each weapon."""
+        randomize_stats = settings.keyblade_stats_randomized
         key_min = settings.keyblade_min_stat
         key_max = settings.keyblade_max_stat
         sora_average = (key_min + key_max) // 2
 
-        for key in weaponslot.keyblade_slots():
-            if (
-                key.LocationId == weaponslot.LocationId.Pureblood
-                and not settings.pureblood
-            ):
+        def choose_strength(target_key: Keyblade) -> int:
+            if not randomize_stats:
+                return target_key.strength
+            elif target_key.struggle_weapon:
+                return sora_average
+            else:
+                return random.randint(key_min, key_max)
+
+        def choose_magic(target_key: Keyblade) -> int:
+            if not randomize_stats:
+                return target_key.magic
+            elif target_key.struggle_weapon:
+                return sora_average
+            else:
+                return random.randint(key_min, key_max)
+
+        slot_locations = {location.LocationId: location for location in weaponslot.keyblade_slots()}
+        for key in keyblade.get_all_keyblades():
+            if key == keyblade.Pureblood and not settings.pureblood:
                 continue
-            self.weapon_stats.append(
-                WeaponStats(
-                    key,
-                    strength=random.randint(key_min, key_max),
-                    magic=random.randint(key_min, key_max),
-                )
-            )
-        for struggle_weapon in weaponslot.struggle_weapon_slots():
-            self.weapon_stats.append(
-                WeaponStats(struggle_weapon, strength=sora_average, magic=sora_average)
-            )
+            location = slot_locations[key.weaponslot_id]
+            self.weapon_stats.append(WeaponStats(location, strength=choose_strength(key), magic=choose_magic(key)))
+
         for staff in weaponslot.donald_staff_slots():
             self.weapon_stats.append(
-                WeaponStats(
-                    staff, strength=random.randint(1, 13), magic=random.randint(1, 13)
-                )
+                WeaponStats(staff, strength=random.randint(1, 13), magic=random.randint(1, 13))
             )
         for shield in weaponslot.goofy_shield_slots():
             self.weapon_stats.append(
@@ -655,7 +658,7 @@ class Randomizer:
             settings, num_junk_items=self.num_valid_locations - self.num_available_items
         )
 
-        self.assign_keyblade_abilities(settings, randomizable_abilities, item_pool)
+        self.assign_keyblade_abilities(settings, randomizable_abilities)
         item_pool.extend(vanilla_abilities)
         item_pool.extend(randomizable_abilities)
         item_pool.extend(valid_junk)
@@ -728,7 +731,7 @@ class Randomizer:
                 # pick first 3
                 non_form_objectives.extend(all_form_objectives[0:min(3, len(all_form_objectives))])
             objective_pool = non_form_objectives
-                
+
 
             # pick a number of objectives
             self.objectives = random.sample(objective_pool,k=settings.max_objectives_available)
@@ -739,13 +742,13 @@ class Randomizer:
                 locations_to_remove = self.randomly_assign_single_item(Items.objectiveItem(),[o])
                 for l in locations_to_remove:
                     valid_locations.remove(l)
-            
+
 
         if settings.chainLogic:
-            self.assign_chain_logic(settings, item_pool, valid_locations)    
+            self.assign_chain_logic(settings, item_pool, valid_locations)
         else:
             # create some space for random assignment by doing a forward-pass assignment
-            self.create_available_location_space(settings, item_pool, valid_locations)                
+            self.create_available_location_space(settings, item_pool, valid_locations)
 
         self.randomly_assign_items(item_pool, valid_locations)
 
@@ -758,14 +761,14 @@ class Randomizer:
             return not (Counter(smaller_list)-Counter(bigger_list))
         def missing_items(bigger_list,smaller_list):
             return list((Counter(smaller_list)-Counter(bigger_list)).elements())
-        
+
         # this is checking for access into CoR, we'll need to simulate having the necessary movement
         simulated_growth = [growth.HighJump1.id,growth.HighJump2.id,growth.HighJump3.id,
                                                  growth.QuickRun1.id,growth.QuickRun2.id,growth.QuickRun3.id,
                                                  growth.AerialDodge1.id,growth.AerialDodge2.id,growth.AerialDodge3.id,
                                                  growth.Glide1.id,growth.Glide2.id,growth.Glide3.id,
                                                  ]
-        
+
         shop_item_ids = [i.Id for i in self.shop_items]
 
         # determine available unlocks for
@@ -812,7 +815,7 @@ class Randomizer:
             # confirmed location, check last instance of this world and move it last
             last_index = [i for i in range(len(world_names_to_unlock)) if world_names_to_unlock[i] == proof_world][-1]
             del world_names_to_unlock[last_index]
-            second_pass_worlds = [proof_world]     
+            second_pass_worlds = [proof_world]
 
         history_of_items = []
         # print("Starting chain....")
@@ -846,7 +849,7 @@ class Randomizer:
             sphere_1 = [loc for loc in valid_locations if locationType.Level not in loc.LocationTypes and validator.is_location_available(acquired_items + chosen_checks,loc) and loc not in accessible_locations]
             if settings.extended_placement_logic:
                 sphere_1 = [loc for loc in sphere_1 if loc.Description!=hb.CheckLocation.DataDemyxApBoost]
-            
+
             # print("*******************")
             # print(acquired_items)
             # print(chosen_checks)
@@ -890,7 +893,7 @@ class Randomizer:
                     # print("--This item doesn't unlock enough right now, trying again later")
                     world_names_to_unlock.pop(0)
                     if second_pass_worlds is not None:
-                        second_pass_worlds.insert(0,chosen_world)              
+                        second_pass_worlds.insert(0,chosen_world)
 
         if item_depth < min_item_depth:
             raise GeneratorException("Couldn't generate a chain long enough, are enough worlds on?...")
@@ -908,7 +911,7 @@ class Randomizer:
             acquired_items = acquired_items + self.starting_item_ids + simulated_growth
             if proof.ProofOfNonexistence.id not in acquired_items:
                 raise GeneratorException("Couldn't access proof of nonexistence in chain logic")
-            
+
     def create_available_location_space(self, settings, item_pool, valid_locations):
         # (a)determine sphere 0
         #    if sphere 0 is big enough
@@ -991,7 +994,7 @@ class Randomizer:
                 raise CantAssignItemException(
                     "None of the Starry Hill locations are available for Yeet the Bear. Is HAW not randomized?"
                 )
-            
+
         if restricted_proofs:
             remaining_proofs = [i for i in item_pool if i.ItemType in proof.proof_item_types()]
             # pick N valid locations for these items
@@ -1012,7 +1015,7 @@ class Randomizer:
                 for index,c in enumerate(chosen_locations):
                     # check that each proof is valid for the location (i.e. no connection on Terra)
                     if remaining_proofs[index].ItemType in c.InvalidChecks:
-                        good_choices = False                    
+                        good_choices = False
 
             for index,c in enumerate(chosen_locations):
                 item_pool.remove(remaining_proofs[index])
@@ -1261,71 +1264,79 @@ class Randomizer:
                     loc.InvalidChecks.append(itemType.PROOF_OF_NONEXISTENCE)
             '''
 
-    def assign_keyblade_abilities(
-        self,
-        settings: RandomizerSettings,
-        ability_pool: list[KH2Item],
-        item_pool: list[KH2Item],
-    ):
+    def assign_keyblade_abilities(self, settings: RandomizerSettings, ability_pool: list[KH2Item]):
         """Assign abilities to keyblades."""
-        eligible_ids = set(
-            settings.keyblade_support_abilities + settings.keyblade_action_abilities
-        )
 
-        # remove auto abilities from keyblades
-        if settings.extended_placement_logic:
-            eligible_ids.discard(ability.AutoValor.id)
-            eligible_ids.discard(ability.AutoWisdom.id)
-            eligible_ids.discard(ability.AutoMaster.id)
-            eligible_ids.discard(ability.AutoFinal.id)
-            eligible_ids.discard(ability.AutoLimitForm.id)
+        slot_locations = {location.LocationId: location for location in weaponslot.keyblade_slots()}
 
-        eligible_abilities = [abil for abil in ability_pool if abil.Id in eligible_ids]
-        nightmare_rarity_weights = {
-            itemRarity.COMMON: 1,
-            itemRarity.UNCOMMON: 2,
-            itemRarity.RARE: 5,
-            itemRarity.MYTHIC: 5,
-        }
+        if settings.keyblade_abilities_randomized:
+            eligible_ids = set(settings.keyblade_support_abilities + settings.keyblade_action_abilities)
 
-        keyblade_ids_to_exclude = [
-            weaponslot.LocationId.KingdomKeyD,
-            weaponslot.LocationId.AlphaWeapon,
-            weaponslot.LocationId.OmegaWeapon,
-            weaponslot.LocationId.KingdomKey,
-        ]
+            # remove auto abilities from keyblades
+            if settings.extended_placement_logic:
+                eligible_ids.discard(ability.AutoValor.id)
+                eligible_ids.discard(ability.AutoWisdom.id)
+                eligible_ids.discard(ability.AutoMaster.id)
+                eligible_ids.discard(ability.AutoFinal.id)
+                eligible_ids.discard(ability.AutoLimitForm.id)
 
-        # assign all the abilities for keyblades
-        for key in weaponslot.keyblade_slots():
-            if (
-                key.LocationId == weaponslot.LocationId.Pureblood
-                and not settings.pureblood
-            ):
-                continue
+            eligible_abilities = [abil for abil in ability_pool if abil.Id in eligible_ids]
+            nightmare_rarity_weights = {
+                itemRarity.COMMON: 1,
+                itemRarity.UNCOMMON: 2,
+                itemRarity.RARE: 5,
+                itemRarity.MYTHIC: 5,
+            }
 
-            if len(eligible_abilities) == 0:
-                raise GeneratorException(
-                    "Keyblades: Not enough abilities are available to assign an ability to every keyblade"
-                )
+            keyblades_to_exclude = {
+                keyblade.KingdomKeyD,
+                keyblade.AlphaWeapon,
+                keyblade.OmegaWeapon,
+                keyblade.KingdomKey,
+            }
 
-            if (
-                settings.extended_placement_logic
-                and key.LocationId not in keyblade_ids_to_exclude
-            ):
-                ability_weights = [
-                    nightmare_rarity_weights[abil.Rarity] for abil in eligible_abilities
-                ]
-            else:
-                ability_weights = [1 for _ in eligible_abilities]
+            # assign all the abilities for keyblades
+            for key in keyblade.get_all_keyblades():
+                location = slot_locations[key.weaponslot_id]
 
-            random_ability = random.choices(eligible_abilities, ability_weights)[0]
-            self.assign_item(key, random_ability)
-            ability_pool.remove(random_ability)
-            eligible_abilities.remove(random_ability)
+                if key == keyblade.Pureblood and not settings.pureblood:
+                    continue
+                elif key.struggle_weapon:
+                    # Assign draws to struggle weapons
+                    self.assign_item(location, KH2Item(ability.Draw))
+                else:
+                    if len(eligible_abilities) == 0:
+                        raise GeneratorException(
+                            "Keyblades: Not enough abilities are available to assign an ability to every keyblade"
+                        )
 
-        # Assign draws to struggle weapons
-        for weapon in weaponslot.struggle_weapon_slots():
-            self.assign_item(weapon, KH2Item(ability.Draw))
+                    if settings.extended_placement_logic and key not in keyblades_to_exclude:
+                        ability_weights = [nightmare_rarity_weights[abil.Rarity] for abil in eligible_abilities]
+                    else:
+                        ability_weights = [1 for _ in eligible_abilities]
+
+                    random_ability = random.choices(eligible_abilities, ability_weights)[0]
+                    self.assign_item(location, random_ability)
+                    ability_pool.remove(random_ability)
+                    eligible_abilities.remove(random_ability)
+        else:
+            for key in keyblade.get_all_keyblades():
+                location = slot_locations[key.weaponslot_id]
+
+                if key == keyblade.Pureblood and not settings.pureblood:
+                    continue
+                elif key.struggle_weapon:
+                    # Alternatively, we could leave the Struggle weapons with no ability, but keeping Draw for now
+                    self.assign_item(location, KH2Item(ability.Draw))
+                else:
+                    found_ability_item = next((a for a in ability_pool if a.item == key.ability), None)
+                    if found_ability_item is None:
+                        raise GeneratorException(
+                            f"Keyblades - Can't find vanilla ability {key.ability.name} in the pool to assign to {key.name}."
+                        )
+                    else:
+                        ability_pool.remove(found_ability_item)
+                        self.assign_item(location, found_ability_item)
 
     def assign_stat_bonuses(self, avail_locations: list[KH2Location]):
         """Assign all the stat items to bonuses for stats. Only used when "statsanity" is off."""
@@ -1449,12 +1460,13 @@ class Randomizer:
         return opposite
 
     def assignment_for_location(self, location_name: str) -> Optional[ItemAssignment]:
-        return next(
-            (a for a in self.assignments if a.location.name() == location_name), None
-        )
+        return next((a for a in self.assignments if a.location.name() == location_name), None)
 
     def assignment_for_item(self, item: InventoryItem) -> Optional[ItemAssignment]:
         return next((a for a in self.assignments if a.item.item == item), None)
-    
+
     def assignment_for_item_id(self, item_id: int) -> Optional[ItemAssignment]:
         return next((a for a in self.assignments if a.item.item.id == item_id), None)
+
+    def weapon_stats_for_location(self, location_name: str) -> Optional[WeaponStats]:
+        return next((w for w in self.weapon_stats if w.location.name() == location_name), None)

@@ -52,21 +52,29 @@ def remove_app_config(key: str):
         write_app_config(randomizer_config)
 
 
-def auto_save_folder() -> Path:
-    return Path(AUTOSAVE_FOLDER)
+def _read_directory(key: str) -> Optional[Path]:
+    randomizer_config = read_app_config()
+    value = randomizer_config.get(key, "to-nowhere")
+    if value is None:
+        return None
+
+    candidate = Path(value)
+    if candidate.is_dir():
+        return candidate
+    else:
+        return None
+
+
+def read_last_save_path() -> Optional[Path]:
+    return _read_directory("last_save_folder")
+
+
+def write_last_save_path(selected_directory):
+    update_app_config("last_save_folder", selected_directory)
 
 
 def read_openkh_path() -> Optional[Path]:
-    randomizer_config = read_app_config()
-    openkh_folder = randomizer_config.get("openkh_folder", "to-nowhere")
-    if openkh_folder is None:
-        return None
-
-    openkh_path = Path(openkh_folder)
-    if openkh_path.is_dir():
-        return openkh_path
-    else:
-        return None
+    return _read_directory("openkh_folder")
 
 
 def write_openkh_path(selected_directory):
@@ -74,16 +82,7 @@ def write_openkh_path(selected_directory):
 
 
 def read_custom_music_path() -> Optional[Path]:
-    randomizer_config = read_app_config()
-    custom_music_folder = randomizer_config.get("custom_music_folder", "to-nowhere")
-    if custom_music_folder is None:
-        return None
-
-    custom_music_path = Path(custom_music_folder)
-    if custom_music_path.is_dir():
-        return custom_music_path
-    else:
-        return None
+    return _read_directory("custom_music_folder")
 
 
 def write_custom_music_path(selected_directory):
@@ -91,16 +90,7 @@ def write_custom_music_path(selected_directory):
 
 
 def read_custom_visuals_path() -> Optional[Path]:
-    randomizer_config = read_app_config()
-    custom_visuals_folder = randomizer_config.get("custom_visuals_folder", "to-nowhere")
-    if custom_visuals_folder is None:
-        return None
-
-    custom_visuals_path = Path(custom_visuals_folder)
-    if custom_visuals_path.is_dir():
-        return custom_visuals_path
-    else:
-        return None
+    return _read_directory("custom_visuals_folder")
 
 
 def write_custom_visuals_path(selected_directory):

@@ -48,4 +48,4 @@ class BossEnemyMenu(KH2Submenu):
 
     def _make_boss_enemy_only_mod(self, platform: str):
         worker = BossEnemyZipWorker(self, self.seed_name_getter(), self.settings, platform)
-        worker.generate_mod()
+        worker.start()

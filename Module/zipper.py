@@ -10,7 +10,7 @@ import yaml
 
 from Class import settingkey
 from Class.exceptions import GeneratorException
-from Class.itemClass import ItemEncoder
+from Class.itemClass import ItemEncoder, KH2Item
 from Class.newLocationClass import KH2Location
 from Class.openkhmod import ATKPObject, AttackEntriesOrganizer, ModYml
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, makeKHBRSettings
@@ -21,6 +21,7 @@ from List.LvupStats import DreamWeaponOffsets
 from List.ObjectiveList import KH2Objective
 from List.configDict import itemType, locationCategory, locationType, BattleLevelOption
 from List.inventory import bonus, misc
+from List.inventory.form import ValorForm, FinalForm
 from List.location import simulatedtwilighttown as stt
 from Module import hashimage
 from Module.RandomizerSettings import RandomizerSettings
@@ -362,11 +363,23 @@ class SeedZip:
             self.prepare_companion_damage_knockback(mod)
 
             if settings.dummy_forms:
-                # convert the valor and final ids to their dummy values
-                for a in self.randomizer.assignments:
-                    for dummy_form_item in Items.getDummyFormItems():
-                        if a.item.Name == dummy_form_item.Name:
-                            a.item = dummy_form_item
+                # convert the valor and final assignments to their dummy items
+                def actual_assignment_item(original_item: Optional[KH2Item]) -> Optional[KH2Item]:
+                    if original_item is None:
+                        return None
+
+                    original_inventory_item = original_item.item
+                    if original_inventory_item == ValorForm:
+                        return Items.getDummyValorForm()
+                    elif original_inventory_item == FinalForm:
+                        return Items.getDummyFinalForm()
+                    else:
+                        return original_item
+
+                for assignment in self.randomizer.assignments:
+                    assignment.item = actual_assignment_item(assignment.item)
+                    assignment.item2 = actual_assignment_item(assignment.item2)
+
                 # if valor/final in starting inventory, swap their ids
                 orig_to_dummy = Items.getFormToDummyMap()
                 for orig_id,dummy_id in orig_to_dummy.items():

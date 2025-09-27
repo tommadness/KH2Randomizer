@@ -5,6 +5,7 @@ import string
 import textwrap
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
@@ -34,8 +35,7 @@ from List.configDict import (
     StartingVisitMode,
     FinalDoorRequirement,
 )
-from List.inventory import ability, misc, proof, storyunlock, form, summon
-from List.inventory.keyblade import get_all_keyblades
+from List.inventory import ability, misc, proof, storyunlock, form, summon, keyblade
 from Module import encoding
 from Module import knockbackTypes
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
@@ -1002,7 +1002,7 @@ _all_settings = [
         group=SettingGroup.STARTING_INVENTORY,
         ui_label="Starting Keyblades",
         choices={
-            str(k.id): k.name for k in get_all_keyblades()
+            str(k.id): k.name for k in keyblade.get_all_keyblades() if k.start_item_eligible
         },
         shared=True,
         default=[],
@@ -1942,6 +1942,15 @@ _all_settings = [
         """,
         randomizable=None,
     ),
+    Toggle(
+        name=settingkey.KEYBLADE_STATS_RANDOMIZED,
+        group=SettingGroup.KEYBLADES,
+        ui_label="Randomize Keyblade Stats",
+        shared=True,
+        default=True,
+        randomizable=True,
+        tooltip="If enabled, keyblade strength and magic stats will be randomized.",
+    ),
     IntSpinner(
         name=settingkey.KEYBLADE_MIN_STAT,
         group=SettingGroup.KEYBLADES,
@@ -1965,6 +1974,15 @@ _all_settings = [
         default=7,
         randomizable=True,
         tooltip="The maximum strength and magic stat that each keyblade must have.",
+    ),
+    Toggle(
+        name=settingkey.KEYBLADE_ABILITIES_RANDOMIZED,
+        group=SettingGroup.KEYBLADES,
+        ui_label="Randomize Keyblade Abilities",
+        shared=True,
+        default=True,
+        randomizable=True,
+        tooltip="If enabled, keyblade abilities will be randomized.",
     ),
     MultiSelect(
         name=settingkey.KEYBLADE_SUPPORT_ABILITIES,
@@ -3675,18 +3693,16 @@ class SeedSettings:
         # Trigger an initial observation
         observer()
 
-    def _filtered_settings(self, include_private: bool) -> dict:
-        return {
-            name: setting
-            for (name, setting) in settings_by_name.items()
-            if setting.shared or include_private
-        }
+    @staticmethod
+    def filtered_settings(include_private: bool) -> dict[str, Setting]:
+        """Returns settings by name, possibly filtering out ones that are private."""
+        return {name: setting for (name, setting) in settings_by_name.items() if setting.shared or include_private}
 
-    def settings_string(self, include_private: bool = False):
+    def settings_string(self, include_private: bool = False) -> str:
         flags: list[bool] = []
         short_select_values = ""
         values: list[str] = []
-        for name in sorted(self._filtered_settings(include_private)):
+        for name in sorted(self.filtered_settings(include_private)):
             setting = settings_by_name[name]
             value = self._values[name]
             if isinstance(setting, Toggle):
@@ -3726,7 +3742,7 @@ class SeedSettings:
         short_select_settings = []
 
         used_index = 0
-        for name in sorted(self._filtered_settings(include_private)):
+        for name in sorted(self.filtered_settings(include_private)):
             setting = settings_by_name[name]
             if isinstance(setting, Toggle):
                 toggle_settings.append(setting)
@@ -3753,24 +3769,21 @@ class SeedSettings:
             elif isinstance(setting, FloatSpinner):
                 self.set(setting.name, setting.selectable_values[selected_index])
 
-    def settings_json(self, include_private: bool = False):
-        filtered_settings = {
-            key: self.get(key)
-            for key in self._filtered_settings(include_private).keys()
-        }
+    def settings_json(self, include_private: bool = False) -> dict[str, Any]:
+        filtered_settings = {key: self.get(key) for key in self.filtered_settings(include_private).keys()}
         return filtered_settings
 
     def settings_spoiler_json(self) -> dict[SettingGroup, dict[str, str]]:
         result: dict[SettingGroup, dict[str, str]] = {
             group: {} for group in SettingGroup
         }
-        for key, setting in self._filtered_settings(include_private=True).items():
+        for key, setting in self.filtered_settings(include_private=True).items():
             for label, value in setting.spoiler_log_entries(self.get(key)).items():
                 result[setting.group][label] = value
         return result
 
-    def apply_settings_json(self, settings_json, include_private: bool = False):
-        for key, setting in self._filtered_settings(include_private).items():
+    def apply_settings_json(self, settings_json: dict[str, Any], include_private: bool = False):
+        for key, setting in self.filtered_settings(include_private).items():
             # If there's a setting in the JSON for the key, use its value; otherwise, use the default.
             # This should in theory allow the generator to be (mostly) backward-compatible with older shared presets,
             # at least when it's a simple case like a new setting added.

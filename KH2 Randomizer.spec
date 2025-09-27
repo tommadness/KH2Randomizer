@@ -142,10 +142,4 @@ exe = EXE(
     icon='rando.ico'
 )
 
-#presetPath = '{0}/presets'.format(DISTPATH)
-#if os.path.exists(presetPath):
-#  shutil.rmtree(presetPath)
-
-#shutil.copytree('presets', presetPath)
-
 #shutil.make_archive('Kingdom Hearts II Final Mix Randomizer', 'zip', DISTPATH)

@@ -3,7 +3,6 @@ import json
 import os
 import random
 import re
-import shutil
 import string
 import subprocess
 import sys
@@ -18,8 +17,8 @@ from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon, QPixmap, QImage
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
-    QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QInputDialog,
-    QFileDialog, QMessageBox, QProgressDialog, QProgressBar, QDialog, QGridLayout, QListWidget, QSpinBox, QComboBox,
+    QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QFileDialog,
+    QMessageBox, QProgressDialog, QProgressBar, QDialog, QGridLayout, QListWidget, QSpinBox, QComboBox,
     QListView, QFrame
 )
 
@@ -36,7 +35,7 @@ from Module.resources import resource_path
 from Module.seedshare import SharedSeed, ShareStringException
 from Module.tourneySpoiler import TourneySeedSaver
 from Module.version import LOCAL_UI_VERSION, EXTRACTED_DATA_UPDATE_VERSION
-from UI import theme
+from UI import theme, presets
 from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
 from UI.GithubInfo.releaseInfo import KH2RandomizerGithubReleases
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
@@ -53,6 +52,7 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.about import AboutDialog
+from UI.presets import SettingsPreset, RandomPresetDialog
 from UI.worker import GenerateSeedWorker, ExtractVanillaKeybladesWorker, ImportCustomKeybladesWorker
 
 
@@ -154,44 +154,6 @@ Participants will only be able to customize cosmetics.
         output = QFileDialog.getExistingDirectory()
         if output is not None and output != '':
             self.output_path_field.setText(output)
-
-
-class RandomPresetDialog(QDialog):
-    def __init__(self,preset_list):
-        super().__init__()
-        self.preset_list = preset_list
-        self.setWindowTitle("Randomly Pick a Preset")
-        self.setMinimumWidth(800)
-        self.setMinimumHeight(500)
-
-        box = QGridLayout()
-
-        self.preset_list_widget = QListWidget(self)
-        self.preset_list_widget.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        for preset in self.preset_list:
-            self.preset_list_widget.addItem(preset)
-
-        select_all_button = QPushButton("Select All Presets")
-        select_all_button.clicked.connect(self.select_all_presets_from_list)
-
-        cancel_button = QPushButton("Cancel")
-        choose_button = QPushButton("Randomly Pick From Selected Presets")
-        cancel_button.clicked.connect(self.reject)
-        choose_button.clicked.connect(self.accept)
-
-        box.addWidget(self.preset_list_widget, 0, 0)
-        box.addWidget(choose_button, 0, 1)
-        box.addWidget(select_all_button, 1, 0)
-        box.addWidget(cancel_button, 1, 1)
-
-        self.setLayout(box)
-
-    def select_all_presets_from_list(self):
-        for index in range(self.preset_list_widget.count()):
-            self.preset_list_widget.item(index).setSelected(True)
-
-    def save(self):
-        return [item.text() for item in self.preset_list_widget.selectedItems()]
 
 
 class RandomSettingsDialog(QDialog):
@@ -302,6 +264,7 @@ class KH2RandomizerApp(QMainWindow):
                 except Exception:
                     print('Unable to apply last settings - will use defaults')
 
+        presets.bootstrap_presets()
         CosmeticsMod.bootstrap_cosmetics_files()
 
         # using this to change settings when these files are provided
@@ -370,7 +333,7 @@ class KH2RandomizerApp(QMainWindow):
         self.setCentralWidget(widget)
 
         self.recalculate = False
-        settings_keys = self.settings._filtered_settings(True).keys()
+        settings_keys = SeedSettings.filtered_settings(include_private=True).keys()
         for key in settings_keys:
             self.settings.observe(key,self.get_num_enabled_locations)
 
@@ -549,14 +512,31 @@ class KH2RandomizerApp(QMainWindow):
         e.accept()
 
     def resetSettings(self):
+        try:
+            # Attempt to use the bundled starter preset
+            starter_settings_preset = presets.bundled_starter_preset()
+            settings_json = starter_settings_preset.settings_json()
+        except Exception:
+            # Hopefully impossible, but if it fails, just use empty settings (applying them should set the defaults)
+            settings_json = {}
+
         self.recalculate = False
-        self.settings.apply_settings_json(self.preset_json['StarterSettings'])
+        self.settings.apply_settings_json(settings_json)
         for widget in self.widgets:
             widget.update_widgets()
         self.recalculate = True
         self.get_num_enabled_locations()
 
     def dailySeedHandler(self,difficulty,boss_enemy=False):
+        try:
+            starter_settings_preset = presets.bundled_starter_preset()
+            starter_settings_json = starter_settings_preset.settings_json()
+        except SettingsException:
+            message = QMessageBox(text="Unable to load base settings for daily seeds.")
+            message.setWindowTitle('KH2 Seed Generator - Daily Seed')
+            message.exec()
+            return
+
         self.seedName.setText(self.dailySeedName)
         self.recalculate = False
 
@@ -564,14 +544,14 @@ class KH2RandomizerApp(QMainWindow):
         try:
             all_mods = allDailyModifiers()
             for m in all_mods:
-                self.settings.apply_settings_json(self.preset_json['StarterSettings'])
+                self.settings.apply_settings_json(starter_settings_json)
                 m.local_modifier(self.settings)
                 for widget in self.widgets:
                     widget.update_widgets()
         except Exception as e:
             print(f"Error found with one of the options {e}")
 
-        self.settings.apply_settings_json(self.preset_json['StarterSettings'])
+        self.settings.apply_settings_json(starter_settings_json)
 
         # use the modifications to change the preset
         mod_string = f'Updated settings for Daily Seed {self.startTime.strftime("%a %b %d %Y")}\n\n'
@@ -771,7 +751,7 @@ class KH2RandomizerApp(QMainWindow):
             rando_settings = self.make_rando_settings()
             if rando_settings is not None:
                 worker = GenerateSeedWorker(self, rando_settings, extra_data)
-                worker.generate_seed()
+                worker.start()
 
         # rando_settings = self.make_rando_settings()
         # self.seedName.setText("")
@@ -818,58 +798,33 @@ class KH2RandomizerApp(QMainWindow):
         self.tourney_spoilers.save()
 
     def _reload_presets(self):
-        self.preset_json = {}
+        self.all_presets: list[SettingsPreset] = []
+        user_presets = presets.list_user_presets()
+        bundled_presets = presets.list_bundled_presets()
+        self.all_presets.extend(user_presets)
+        self.all_presets.extend(bundled_presets)
 
-        presets_folder = appconfig.settings_presets_folder()
-        if not presets_folder.is_dir():
-            presets_folder.mkdir(parents=True)
+        menu = self.loadPresetsMenu
+        menu.clear()
+        if user_presets:
+            for user_preset in user_presets:
+                menu.addAction(user_preset.display_name, self._make_apply_preset(user_preset))
+            menu.addSeparator()
+        for bundled_preset in bundled_presets:
+            menu.addAction(bundled_preset.display_name, self._make_apply_preset(bundled_preset))
 
-            bundled_presets_folder = Path(resource_path("presets"))
-            for filename in os.listdir(bundled_presets_folder):
-                bundled_preset_path = bundled_presets_folder / filename
-                if bundled_preset_path.is_file():
-                    with open(bundled_preset_path, 'r') as bundled_preset_file:
-                        bundled_preset_data = bundled_preset_file.read()
-                        out = presets_folder / filename
-                        with open(out, 'w') as out_preset_file:
-                            out_preset_file.write(bundled_preset_data)
-
-        for preset_file_name in os.listdir(presets_folder):
-            preset_name, extension = os.path.splitext(preset_file_name)
-            if extension == '.json':
-                with open(presets_folder / preset_file_name, 'r') as preset_data:
-                    try:
-                        settings_json = json.load(preset_data)
-                        self.preset_json[preset_name] = settings_json
-                    except Exception:
-                        print(f'Unable to load preset [{preset_file_name}], skipping')
-
-        self.loadPresetsMenu.clear()
-        for key in self.preset_json.keys():
-            if key != 'BaseDailySeed':
-                self.loadPresetsMenu.addAction(key, self._make_apply_preset(key))
-
-    def _make_apply_preset(self, preset_name: str):
-        return lambda: self.usePreset(preset_name)
+    def _make_apply_preset(self, preset: SettingsPreset):
+        return lambda: self._use_preset(preset)
 
     def _save_preset(self):
-        preset_name, ok = QInputDialog.getText(self, 'Make New Preset', 'Enter a name for your preset...', QLineEdit.EchoMode.Normal)
-        valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
-        preset_name = ''.join(c for c in preset_name if c in valid_chars)
-        if ok:
-            settings_json = self.settings.settings_json()
-            with open(appconfig.settings_presets_folder() / f'{preset_name}.json', 'w') as presetData:
-                presetData.write(json.dumps(settings_json, indent=4, sort_keys=True))
+        if presets.prompt_save_preset(self, self.settings):
             self._reload_presets()
 
     def _import_preset(self):
-        file_dialog = QFileDialog(self)
-        outfile_name, _ = file_dialog.getOpenFileName(self, filter="Settings Preset (*.json)")
-        if outfile_name:
-            outfile = Path(outfile_name)
-            preset_name = outfile.stem
-            shutil.copy2(outfile, appconfig.settings_presets_folder())
+        preset_name = presets.prompt_import_preset(self)
+        if preset_name is not None:
             self._reload_presets()
+
             response = QMessageBox.question(
                 self,
                 "Presets",
@@ -877,10 +832,14 @@ class KH2RandomizerApp(QMainWindow):
                 QMessageBox.Yes, QMessageBox.No
             )
             if response == QMessageBox.Yes:
-                self.usePreset(preset_name)
+                preset = next((p for p in self.all_presets if p.display_name == preset_name), None)
+                if preset is None:
+                    raise SettingsException(f"Preset {preset_name} not found")
+                else:
+                    self._use_preset(preset)
 
     def randomPreset(self):
-        preset_select_dialog = RandomPresetDialog(self.preset_json.keys())
+        preset_select_dialog = RandomPresetDialog(self.all_presets)
         if preset_select_dialog.exec():
             random_preset_list = preset_select_dialog.save()
             if len(random_preset_list) == 0:
@@ -890,9 +849,9 @@ class KH2RandomizerApp(QMainWindow):
             else:
                 self.validate_seed_name()
                 random.seed(self.seedName.text())
-                selected_preset = random.choice(random_preset_list)
-                self.usePreset(selected_preset)
-                message = QMessageBox(text=f"Picked {selected_preset}")
+                selected_preset: SettingsPreset = random.choice(random_preset_list)
+                self._use_preset(selected_preset)
+                message = QMessageBox(text=f"Picked {selected_preset.display_name}")
                 message.setWindowTitle("KH2 Seed Generator")
                 message.exec()
 
@@ -922,10 +881,9 @@ class KH2RandomizerApp(QMainWindow):
     def openPresetFolder(self):
         os.startfile(appconfig.settings_presets_folder())
 
-    def usePreset(self, preset_name: str):
-        settings_json = self.preset_json[preset_name]
+    def _use_preset(self, preset: SettingsPreset):
         self.recalculate = False
-        self.settings.apply_settings_json(settings_json)
+        self.settings.apply_settings_json(preset.settings_json())
         for widget in self.widgets:
             widget.update_widgets()
         self.recalculate = True
@@ -1069,9 +1027,10 @@ class KH2RandomizerApp(QMainWindow):
         dialog = AboutDialog(self)
         dialog.exec()
 
-    def _extract_vanilla_keyblades(self):
-        worker = ExtractVanillaKeybladesWorker(self)
-        worker.extract_keyblades()
+    @staticmethod
+    def _extract_vanilla_keyblades():
+        worker = ExtractVanillaKeybladesWorker()
+        worker.start()
 
     def _show_keyblade_packager(self):
         KeybladePackageDialog(self, self.settings).exec()
@@ -1080,8 +1039,8 @@ class KH2RandomizerApp(QMainWindow):
         file_dialog = QFileDialog(self)
         outfile_names, _ = file_dialog.getOpenFileNames(self, filter="Randomizer Keyblades (*.kh2randokb)")
         if len(outfile_names) > 0:
-            worker = ImportCustomKeybladesWorker(self)
-            worker.import_keyblades(outfile_names)
+            worker = ImportCustomKeybladesWorker(keyblade_file_paths=outfile_names)
+            worker.start()
         else:
             msg = QMessageBox(text=f"No keyblades selected.")
             msg.setWindowTitle("Import Keyblade(s)")

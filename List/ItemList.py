@@ -365,12 +365,20 @@ class Items:
         return KH2Item(misc.PromiseCharm, itemRarity.MYTHIC)
 
     @staticmethod
+    def getDummyValorForm() -> KH2Item:
+        return KH2Item(form.DummyValorForm, Rarity=itemRarity.MYTHIC)
+
+    @staticmethod
+    def getDummyFinalForm() -> KH2Item:
+        return KH2Item(form.DummyFinalForm, Rarity=itemRarity.MYTHIC)
+
+    @staticmethod
     def getDummyFormItems() -> list[KH2Item]:
         return [
-            KH2Item(form.DummyFinalForm, Rarity=itemRarity.MYTHIC),
-            KH2Item(form.DummyValorForm, Rarity=itemRarity.MYTHIC)
+            Items.getDummyValorForm(),
+            Items.getDummyFinalForm(),
         ]
-    
+
     @staticmethod
     def getFormToDummyMap() -> dict[int,int]:
         return {form.ValorForm.id:form.DummyValorForm.id,
