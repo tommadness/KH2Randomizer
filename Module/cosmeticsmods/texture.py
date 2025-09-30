@@ -330,7 +330,7 @@ class TextureRecolorizer:
         if not self.settings.get(settingkey.RECOLOR_TEXTURES):
             return assets
 
-        base_path = appconfig.extracted_data_path() / "kh2"
+        base_path = appconfig.extracted_game_path("kh2")
         if not base_path.is_dir():
             print(f"Could not find extracted data at {base_path} - not recoloring textures")
             return assets

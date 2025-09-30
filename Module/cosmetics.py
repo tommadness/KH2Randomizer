@@ -252,18 +252,17 @@ class CosmeticsMod:
     @staticmethod
     def bootstrap_custom_visuals_folder(custom_visuals_path: Path):
         """Creates folders for each of the default custom visuals categories."""
-        for folder in ["room-transition-images"]:
+        base_folders = [
+            CommandMenuRandomizer.directory_name(),
+            EndingPictureRandomizer.directory_name(),
+            KeybladeRandomizer.directory_name(),
+            ItempicRandomizer.directory_name(),
+            RoomTransitionImageRandomizer.directory_name(),
+        ]
+        for folder in base_folders:
             (custom_visuals_path / folder).mkdir(exist_ok=True)
 
-        command_menus_path = custom_visuals_path / "command-menus"
-        command_menus_path.mkdir(exist_ok=True)
-
-        end_pictures_path = custom_visuals_path / "ending-pictures"
-        end_pictures_path.mkdir(exist_ok=True)
-
-        item_pictures_path = custom_visuals_path / "item-pictures"
-        item_pictures_path.mkdir(exist_ok=True)
-
+        item_pictures_path = custom_visuals_path / ItempicRandomizer.directory_name()
         itempic_categories: list[str] = []
         for itempic in ItempicRandomizer.replaceable_itempics():
             itempic_categories.extend(itempic.types)

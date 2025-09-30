@@ -98,7 +98,7 @@ def write_custom_visuals_path(selected_directory):
 
 
 def extracted_data_path() -> Optional[Path]:
-    """Returns the path to extracted game data."""
+    """Returns the path to extracted game data, or None if not found."""
     openkh_path = read_openkh_path()
     if openkh_path is None:
         return None
@@ -121,3 +121,15 @@ def extracted_data_path() -> Optional[Path]:
         else:
             # Has a gameDataPath configured, but it's not being detected as a directory
             return None
+
+def extracted_game_path(game: str) -> Optional[Path]:
+    """Returns the path to extracted game data for the specified game, or None if not found."""
+    base_extracted_path = extracted_data_path()
+    if base_extracted_path is None:
+        return None
+
+    game_path = base_extracted_path / game
+    if game_path.is_dir():
+        return game_path
+    else:
+        return None

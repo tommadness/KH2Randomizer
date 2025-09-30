@@ -35,8 +35,7 @@ from Module.resources import resource_path
 from Module.seedshare import SharedSeed, ShareStringException
 from Module.tourneySpoiler import TourneySeedSaver
 from Module.version import LOCAL_UI_VERSION, EXTRACTED_DATA_UPDATE_VERSION
-from UI import theme, presets
-from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
+from UI import theme, presets, configui
 from UI.GithubInfo.releaseInfo import KH2RandomizerGithubReleases
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CompanionMenu import CompanionMenu
@@ -46,14 +45,13 @@ from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
 from UI.Submenus.ItemPoolMenu import ItemPoolMenu
 from UI.Submenus.KeybladeMenu import KeybladeMenu
-from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog
 from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.about import AboutDialog
 from UI.presets import SettingsPreset, RandomPresetDialog
-from UI.worker import GenerateSeedWorker, ExtractVanillaKeybladesWorker, ImportCustomKeybladesWorker
+from UI.worker import GenerateSeedWorker
 
 
 class Logger(object):
@@ -361,10 +359,6 @@ class KH2RandomizerApp(QMainWindow):
         cosmetic_submenu.addAction('Find OpenKH Folder', self.openkh_folder_getter)
         cosmetic_submenu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
         cosmetic_submenu.addAction('Choose Custom Visuals Folder', self.custom_visuals_folder_getter)
-        cosmetic_submenu.addSeparator()
-        cosmetic_submenu.addAction("Extract Vanilla Keyblades", self._extract_vanilla_keyblades)
-        cosmetic_submenu.addAction("Package External Keyblade", self._show_keyblade_packager)
-        cosmetic_submenu.addAction("Import External Keyblade(s)", self._import_keyblades)
         self.config_menu.addMenu(cosmetic_submenu)
         if version.debug_mode():
             self.config_menu.addSeparator()
@@ -376,7 +370,6 @@ class KH2RandomizerApp(QMainWindow):
         self.emu_warning_toggle.setCheckable(True)
         self.emu_warning_toggle.setChecked(self.disable_emu_warnings)
         self.config_menu.addSeparator()
-        # self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
 
         github_releases = KH2RandomizerGithubReleases()
         infos = github_releases.get_update_infos()
@@ -979,72 +972,20 @@ class KH2RandomizerApp(QMainWindow):
             message.exec()
 
     def openkh_folder_getter(self):
-        save_file_widget = QFileDialog()
-        selected_directory = save_file_widget.getExistingDirectory()
-
-        if selected_directory is None or selected_directory == "":
-            return
-
-        selected_path = Path(selected_directory)
-        if not (selected_path / 'OpenKh.Tools.ModsManager.exe').is_file():
-            message = QMessageBox(text='Not a valid OpenKH folder')
-            message.setWindowTitle('KH2 Seed Generator')
-            message.exec()
-        else:
-            appconfig.write_openkh_path(selected_directory)
-
+        if configui.openkh_folder_getter():
             self.cosmetics_menu.reload_cosmetic_widgets()
 
     def custom_music_folder_getter(self):
-        save_file_widget = QFileDialog()
-        selected_directory = save_file_widget.getExistingDirectory()
-
-        if selected_directory is None or selected_directory == "":
-            return
-
-        CosmeticsMod.bootstrap_custom_music_folder(Path(selected_directory))
-        appconfig.write_custom_music_path(selected_directory)
-
-        self.cosmetics_menu.reload_cosmetic_widgets()
+        if configui.custom_music_folder_getter():
+            self.cosmetics_menu.reload_cosmetic_widgets()
 
     def custom_visuals_folder_getter(self):
-        save_file_widget = QFileDialog()
-        selected_directory = save_file_widget.getExistingDirectory()
-
-        if selected_directory is None or selected_directory == "":
-            return
-
-        CosmeticsMod.bootstrap_custom_visuals_folder(Path(selected_directory))
-        appconfig.write_custom_visuals_path(selected_directory)
-
-        self.cosmetics_menu.reload_cosmetic_widgets()
-
-    def show_luabackend_configuration(self):
-        dialog = LuaBackendSetupDialog(self)
-        dialog.exec()
+        if configui.custom_visuals_folder_getter():
+            self.cosmetics_menu.reload_cosmetic_widgets()
 
     def show_about(self):
         dialog = AboutDialog(self)
         dialog.exec()
-
-    @staticmethod
-    def _extract_vanilla_keyblades():
-        worker = ExtractVanillaKeybladesWorker()
-        worker.start()
-
-    def _show_keyblade_packager(self):
-        KeybladePackageDialog(self, self.settings).exec()
-
-    def _import_keyblades(self):
-        file_dialog = QFileDialog(self)
-        outfile_names, _ = file_dialog.getOpenFileNames(self, filter="Randomizer Keyblades (*.kh2randokb)")
-        if len(outfile_names) > 0:
-            worker = ImportCustomKeybladesWorker(keyblade_file_paths=outfile_names)
-            worker.start()
-        else:
-            msg = QMessageBox(text=f"No keyblades selected.")
-            msg.setWindowTitle("Import Keyblade(s)")
-            msg.exec()
 
     @staticmethod
     def _dev_create_recolor():

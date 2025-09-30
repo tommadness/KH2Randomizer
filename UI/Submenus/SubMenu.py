@@ -1,5 +1,6 @@
 from typing import Optional
 
+from PIL import Image
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
@@ -39,6 +40,7 @@ class KH2Submenu(QWidget):
         self.title = title
         self.settings = settings
         self.widgets_and_settings_by_name = {}
+        self.auxiliary_widgets: dict[str, QWidget] = {}
         self.groups_by_id: dict[str, QWidget] = {}
 
         self.menulayout = QHBoxLayout()
@@ -81,7 +83,7 @@ class KH2Submenu(QWidget):
         if group_id != '':
             self.groups_by_id[group_id] = frame
 
-    def add_labeled_widget(self, widget: QWidget, label_text: str, tooltip: str = ""):
+    def add_labeled_widget(self, widget: QWidget, label_text: str, tooltip: str = "", auxiliary_widget: Optional[QWidget] = None):
         label = QLabel(label_text)
         if tooltip != '':
             label.setToolTip(tooltip)
@@ -93,42 +95,44 @@ class KH2Submenu(QWidget):
         if widget.toolTip() == "":
             widget.setToolTip(label.toolTip())
 
+        horizontal_layout = QHBoxLayout()
+        horizontal_layout.setContentsMargins(0, 0, 0, 0)
+        layout_widget = QWidget()
+        layout_widget.setProperty('cssClass', 'layoutWidget')
+        layout_widget.setLayout(horizontal_layout)
         if self.pending_column:
-            layout = QHBoxLayout()
-            layout.setContentsMargins(0, 0, 0, 0)
-            layout.addWidget(label)
-            layout.addWidget(widget, alignment=Qt.AlignRight)
+            horizontal_layout.addWidget(label)
+            horizontal_layout.addWidget(widget, alignment=Qt.AlignRight)
+            if auxiliary_widget is not None:
+                horizontal_layout.addWidget(auxiliary_widget)
 
-            layout_widget = QWidget()
-            layout_widget.setProperty('cssClass', 'layoutWidget')
-            layout_widget.setLayout(layout)
             if self.pending_group:
                 self.pending_group.addWidget(layout_widget)
             else:
                 self.pending_column.addWidget(layout_widget)
         else:
-            layout = QHBoxLayout()
-            layout.setContentsMargins(0, 0, 0, 0)
-            layout.addWidget(label, stretch=1)
-            layout.addWidget(widget, stretch=2, alignment=Qt.AlignLeft)
+            horizontal_layout.addWidget(label, stretch=1)
+            horizontal_layout.addWidget(widget, stretch=2, alignment=Qt.AlignLeft)
+            if auxiliary_widget is not None:
+                horizontal_layout.addWidget(auxiliary_widget)
 
-            layout_widget = QWidget()
-            layout_widget.setProperty('cssClass', 'layoutWidget')
-            layout_widget.setLayout(layout)
             self.menulayout.addWidget(layout_widget)
 
-    def _add_option_widget(self, label_text: str, tooltip: str, option):
+    def _add_option_widget(self, label_text: str, tooltip: str, option, auxiliary_widget: Optional[QWidget] = None):
         if self.pending_column:
             if isinstance(option, QCheckBox):
                 option.setText(label_text)
 
-                layout = QVBoxLayout()
-                layout.setContentsMargins(0, 0, 0, 0)
-                layout.addWidget(option)
+                horizontal_layout = QHBoxLayout()
+                horizontal_layout.setContentsMargins(0, 0, 0, 0)
+                horizontal_layout.addWidget(option)
+                if auxiliary_widget is not None:
+                    horizontal_layout.addWidget(auxiliary_widget)
+                horizontal_layout.addStretch()
 
                 layout_widget = QWidget()
                 layout_widget.setProperty('cssClass', 'layoutWidget')
-                layout_widget.setLayout(layout)
+                layout_widget.setLayout(horizontal_layout)
                 if self.pending_group:
                     self.pending_group.addWidget(layout_widget)
                 else:
@@ -146,11 +150,11 @@ class KH2Submenu(QWidget):
                 else:
                     self.pending_column.addWidget(layout_widget)
             else:
-                self.add_labeled_widget(option, label_text=label_text, tooltip=tooltip)
+                self.add_labeled_widget(option, label_text=label_text, tooltip=tooltip, auxiliary_widget=auxiliary_widget)
         else:
-            self.add_labeled_widget(option, label_text=label_text, tooltip=tooltip)
+            self.add_labeled_widget(option, label_text=label_text, tooltip=tooltip, auxiliary_widget=auxiliary_widget)
 
-    def add_option(self, setting_name: str):
+    def add_option(self, setting_name: str, auxiliary_widget: Optional[QWidget] = None):
         setting = Class.seedSettings.settings_by_name[setting_name]
 
         if isinstance(setting, Toggle):
@@ -174,8 +178,10 @@ class KH2Submenu(QWidget):
         if setting.tooltip != '':
             widget.setToolTip(setting.tooltip)
 
-        self._add_option_widget(setting.ui_label, setting.tooltip, widget)
+        self._add_option_widget(setting.ui_label, setting.tooltip, widget, auxiliary_widget)
         self.widgets_and_settings_by_name[setting_name] = (setting, widget)
+        if auxiliary_widget is not None:
+            self.auxiliary_widgets[setting_name] = auxiliary_widget
 
     def set_option_visibility(self, name: str, visible: bool):
         (_, widget) = self.widgets_and_settings_by_name[name]
@@ -187,6 +193,11 @@ class KH2Submenu(QWidget):
         elif isinstance(widget, list) and len(widget) > 0:
             # The multi-select buttons are represented as a list but they're contained within a parent widget as well
             widget[0].parentWidget().setVisible(visible)
+
+    def set_auxiliary_visibility(self, name: str, visible: bool):
+        widget = self.auxiliary_widgets.get(name, None)
+        if widget is not None:
+            widget.setVisible(visible)
 
     def set_group_visibility(self, group_id: str, visible: bool):
         if group_id in self.groups_by_id:
@@ -536,3 +547,28 @@ class KH2Submenu(QWidget):
         stylesheet = f"QComboBox {{ border: 1px solid {border_color}; background-color: {background_color}; color: {text_color};}}"
         stylesheet += f" QComboBox QAbstractItemView {{ background-color: {theme.BackgroundPrimary}; }}"
         combo_box.setStyleSheet(stylesheet)
+
+    @staticmethod
+    def make_icon_label(icon_name: str, tooltip: str = "") -> QLabel:
+        label = QLabel()
+        with Image.open(resource_path(f"static/icons/misc/{icon_name}.png")) as image:
+            label.setPixmap(image.resize((24, 24)).toqpixmap())
+        label.setToolTip(tooltip)
+        label.setFixedSize(QSize(24, 24))
+        return label
+
+    @staticmethod
+    def make_error_label(tooltip: str = "") -> QLabel:
+        return KH2Submenu.make_icon_label(icon_name="error", tooltip=tooltip)
+
+    @staticmethod
+    def make_icon_button(slot_function, icon_name: str, tooltip: str = "") -> QPushButton:
+        button = QPushButton(icon=QIcon(resource_path(f"static/icons/misc/{icon_name}.png")))
+        button.setToolTip(tooltip)
+        button.setFixedWidth(48)
+        button.clicked.connect(slot_function)
+        return button
+
+    @staticmethod
+    def make_settings_button(slot_function, tooltip: str = "") -> QPushButton:
+        return KH2Submenu.make_icon_button(slot_function, icon_name="settings", tooltip=tooltip)

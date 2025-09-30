@@ -24,6 +24,10 @@ class Itempic:
 class ItempicRandomizer:
 
     @staticmethod
+    def directory_name() -> str:
+        return "item-pictures"
+
+    @staticmethod
     def itempic_rando_options() -> dict[str, str]:
         return {
             configDict.VANILLA: "Vanilla",
@@ -65,7 +69,7 @@ class ItempicRandomizer:
                 replacements_by_category[category].extend((True, file) for file in game_files)
 
         if setting == configDict.RANDOMIZE_CUSTOM_ONLY or setting == configDict.RANDOMIZE_ALL:
-            for category, custom_files in ItempicRandomizer._collect_custom_itempic_files(categorize).items():
+            for category, custom_files in ItempicRandomizer.collect_custom_itempic_files(categorize).items():
                 if category not in replacements_by_category:
                     replacements_by_category[category] = []
                 replacements_by_category[category].extend((False, str(path)) for path in custom_files)
@@ -467,13 +471,13 @@ class ItempicRandomizer:
         return result
 
     @staticmethod
-    def _collect_custom_itempic_files(categorize: bool) -> dict[str, list[Path]]:
+    def collect_custom_itempic_files(categorize: bool) -> dict[str, list[Path]]:
         """Returns custom itempic files grouped by category."""
         result: dict[str, list[Path]] = {}
 
         custom_visuals_path = appconfig.read_custom_visuals_path()
         if custom_visuals_path is not None:
-            item_pictures_path = custom_visuals_path / "item-pictures"
+            item_pictures_path = custom_visuals_path / ItempicRandomizer.directory_name()
             if item_pictures_path.is_dir():
                 for child in [str(category_file).lower() for category_file in os.listdir(item_pictures_path)]:
                     child_path = item_pictures_path / child

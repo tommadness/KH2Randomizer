@@ -92,6 +92,10 @@ QCheckBox {{
     font-size: 14px;
 }}
 
+QCheckBox:disabled {{
+    color: #666666;
+}}
+
 QCheckBox::indicator {{
     width: 20px;
     height: 20px;

@@ -108,6 +108,15 @@ class VanillaCommandMenu(ReplacementCommandMenu):
 
         return assets
 
+    def image_for_preview(self, extracted_game_data: Path) -> Optional[Path]:
+        remastered_field2d = extracted_game_data / "remastered" / "field2d"
+        code = self.code
+        for region in ["us", "fr", "gr", "it", "sp"]:
+            path = remastered_field2d / region / f"{code}command.2dd" / f"{region.upper()}_{code}command_2dd0.png"
+            if path.is_file():
+                return path
+        return None
+
 
 class CustomCommandMenu(ReplacementCommandMenu):
 
@@ -170,6 +179,10 @@ class CommandMenuRandomizer:
         self.command_menu_choice = command_menu_choice
 
     @staticmethod
+    def directory_name() -> str:
+        return "command-menus"
+
+    @staticmethod
     def command_menu_options() -> dict[str, str]:
         return {
             configDict.VANILLA: "Vanilla",
@@ -230,7 +243,8 @@ class CommandMenuRandomizer:
             assets.extend(new_menu.pc_command_menu_assets(old_menu, regions=["fr", "gr", "it", "sp", "us"]))
         return assets
 
-    def _supported_menu_list(self, pc: bool) -> list[str]:
+    @staticmethod
+    def _supported_menu_list(pc: bool) -> list[str]:
         unsupported = [
             configDict.VANILLA,
             configDict.RANDOMIZE_ONE,
@@ -240,10 +254,11 @@ class CommandMenuRandomizer:
         ]
         if pc:
             unsupported.append(ATLANTICA)
-        return [menu for menu in self.command_menu_options().keys() if menu not in unsupported]
+        return [menu for menu in CommandMenuRandomizer.command_menu_options().keys() if menu not in unsupported]
 
-    def _vanilla_command_menus(self, pc: bool) -> list[VanillaCommandMenu]:
-        return [VanillaCommandMenu(menu) for menu in self._supported_menu_list(pc)]
+    @staticmethod
+    def _vanilla_command_menus(pc: bool) -> list[VanillaCommandMenu]:
+        return [VanillaCommandMenu(menu) for menu in CommandMenuRandomizer._supported_menu_list(pc)]
 
     @staticmethod
     def _custom_command_menus() -> list[CustomCommandMenu]:
@@ -253,7 +268,7 @@ class CommandMenuRandomizer:
         if custom_visuals_path is None:
             return result
 
-        command_menus_path = custom_visuals_path / "command-menus"
+        command_menus_path = custom_visuals_path / CommandMenuRandomizer.directory_name()
         if not command_menus_path.is_dir():
             return result
 
@@ -326,12 +341,43 @@ class CommandMenuRandomizer:
 
         return menu_replacements
 
+    @staticmethod
+    def collect_custom_images() -> list[Path]:
+        result: list[Path] = []
+
+        for menu in CommandMenuRandomizer._custom_command_menus():
+            image_path = menu.remastered_file
+            if image_path is not None:
+                result.append(image_path)
+
+        return result
+
+    @staticmethod
+    def collect_vanilla_images() -> list[Path]:
+        result: list[Path] = []
+
+        extracted_data_path = appconfig.extracted_game_path("kh2")
+        if extracted_data_path is None:
+            return result
+
+        vanilla_menus = CommandMenuRandomizer._vanilla_command_menus(pc=True)
+        for menu in vanilla_menus:
+            image_path = menu.image_for_preview(extracted_data_path)
+            if image_path is not None:
+                result.append(image_path)
+
+        return result
+
 
 class RoomTransitionImageRandomizer:
 
     def __init__(self, transition_choice: str):
         super().__init__()
         self.transition_choice = transition_choice
+
+    @staticmethod
+    def directory_name() -> str:
+        return "room-transition-images"
 
     @staticmethod
     def room_transition_options() -> dict[str, str]:
@@ -378,8 +424,9 @@ class RoomTransitionImageRandomizer:
             })
         return assets
 
-    def _compute_transition_replacements(self) -> dict[str, str]:
-        supported_transitions = [
+    @staticmethod
+    def _supported_transitions() -> list[str]:
+        return [
             AGRABAH,
             BEAST_CASTLE,
             PORT_ROYAL,
@@ -397,17 +444,20 @@ class RoomTransitionImageRandomizer:
             TIMELESS_RIVER
         ]
 
+    def _compute_transition_replacements(self) -> dict[str, str]:
+        supported_transitions = RoomTransitionImageRandomizer._supported_transitions()
+
         transition_choice = self.transition_choice
 
         source_list: list[str] = []
         if transition_choice == configDict.RANDOMIZE_IN_GAME_ONLY:
             source_list = supported_transitions.copy()
         elif transition_choice == configDict.RANDOMIZE_CUSTOM_ONLY:
-            source_list = [f"$x${path}" for path in self._custom_room_transition_images().values()]
+            source_list = [f"$x${path}" for path in self.custom_room_transition_images().values()]
         elif transition_choice == configDict.RANDOMIZE_ALL:
             source_list = []
             source_list.extend(supported_transitions)
-            source_list.extend([f"$x${path}" for path in self._custom_room_transition_images().values()])
+            source_list.extend([f"$x${path}" for path in self.custom_room_transition_images().values()])
 
         transition_replacements: dict[str, str] = {}
         if len(source_list) == 0:
@@ -423,14 +473,14 @@ class RoomTransitionImageRandomizer:
         return transition_replacements
 
     @staticmethod
-    def _custom_room_transition_images() -> dict[str, Path]:
+    def custom_room_transition_images() -> dict[str, Path]:
         result: dict[str, Path] = {}
 
         custom_visuals_path = appconfig.read_custom_visuals_path()
         if custom_visuals_path is None:
             return result
 
-        room_transition_images_path = custom_visuals_path / "room-transition-images"
+        room_transition_images_path = custom_visuals_path / RoomTransitionImageRandomizer.directory_name()
         if not room_transition_images_path.is_dir():
             return result
 
@@ -443,3 +493,27 @@ class RoomTransitionImageRandomizer:
                     result[name] = file_path
 
         return result
+
+    @staticmethod
+    def collect_vanilla_images() -> list[Path]:
+        result: list[Path] = []
+
+        extracted_data_path = appconfig.extracted_game_path("kh2")
+        if extracted_data_path is None:
+            return result
+
+        for code in RoomTransitionImageRandomizer._supported_transitions():
+            image_path = RoomTransitionImageRandomizer._vanilla_transition_image_for_preview(extracted_data_path, code)
+            if image_path is not None:
+                result.append(image_path)
+
+        return result
+
+    @staticmethod
+    def _vanilla_transition_image_for_preview(extracted_game_path: Path, code: str) -> Optional[Path]:
+        remastered_field2d = extracted_game_path / "remastered" / "field2d"
+        for region in ["us", "fr", "gr", "it", "sp"]:
+            path = remastered_field2d / region / f"{code}field.2dd/{region.upper()}_{code}field_2dd2.png"
+            if path.is_file():
+                return path
+        return None

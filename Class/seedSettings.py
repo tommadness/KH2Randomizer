@@ -5,7 +5,7 @@ import string
 import textwrap
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any
+from typing import Callable, Any
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
@@ -3105,7 +3105,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
         group=SettingGroup.COSMETICS,
-        ui_label="Include KH1 Songs",
+        ui_label="Kingdom Hearts 1 Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3118,7 +3118,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH2,
         group=SettingGroup.COSMETICS,
-        ui_label="Include KH2 Songs",
+        ui_label="Kingdom Hearts 2 Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3130,7 +3130,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM,
         group=SettingGroup.COSMETICS,
-        ui_label="Include Re:Chain of Memories Songs",
+        ui_label="Re:Chain of Memories Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3143,7 +3143,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_BBS,
         group=SettingGroup.COSMETICS,
-        ui_label="Include Birth by Sleep Songs",
+        ui_label="Birth by Sleep Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3156,7 +3156,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_DDD,
         group=SettingGroup.COSMETICS,
-        ui_label="Include Dream Drop Distance Songs",
+        ui_label="Dream Drop Distance Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3600,12 +3600,13 @@ DELIMITER = "-"
 
 
 class SeedSettings:
+
     def __init__(self):
         self._values = {setting.name: setting.default for setting in _all_settings}
         self._randomizable = [
             setting for setting in _all_settings if setting.randomizable
         ]
-        self._observers = {}
+        self._observers: dict[str, list[Callable[[], Any]]] = {}
 
     def get(self, name: str):
         return self._values[name]
@@ -3616,7 +3617,7 @@ class SeedSettings:
             for observer in self._observers[name]:
                 observer()
 
-    def observe(self, name: str, observer):
+    def observe(self, name: str, observer: Callable[[], Any]):
         """Calls the provided observer whenever the setting with the given name is changed."""
         if name in self._observers:
             observers = self._observers[name]
