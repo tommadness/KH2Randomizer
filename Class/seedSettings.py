@@ -2572,24 +2572,25 @@ _all_settings = [
         ui_label="Keyblades Unlock Chests",
         shared=True,
         default=False,
-        tooltip="""
+        tooltip=f"""
         When enabled, Sora must have certain keyblades to open chests in the different worlds.
-        Needs the KH2FM-Mods-equations19/KH2-Lua-Library mod installed
-        STT     | Bond of Flame
-        TT      | Oathkeeper
-        HB      | Sleeping Lion
-        CoR     | Winner's Proof
-        LoD     | Hidden Dragon
-        BC      | Rumbling Rose
-        OC      | Hero's Crest
-        DC      | Monochrome
-        PR      | Follow The Wind
-        AG      | Wishing Lamp
-        HT      | Decisive Pumpkin
-        PL      | Circle of Life
-        SP      | Photon Debugger
-        TWTNW   | Two Become One
-        HAW     | Sweet Memories
+        Requires the KH2FM-Mods-equations19/KH2-Lua-Library mod.
+
+        {locationType.STT.value} - Bond of Flame
+        {locationType.TT.value} - Oathkeeper
+        {locationType.HB.value} - Sleeping Lion
+        {locationType.CoR.value} - Winner's Proof
+        {locationType.LoD.value} - Hidden Dragon
+        {locationType.BC.value} - Rumbling Rose
+        {locationType.OC.value} - Hero's Crest
+        {locationType.DC.value} - Monochrome
+        {locationType.PR.value} - Follow The Wind
+        {locationType.Agrabah.value} - Wishing Lamp
+        {locationType.HT.value} - Decisive Pumpkin
+        {locationType.PL.value} - Circle of Life
+        {locationType.SP.value} - Photon Debugger
+        {locationType.TWTNW.value} - Two Become One
+        {locationType.HUNDREDAW.value} - Sweet Memories
         """,
         randomizable=True,
     ),

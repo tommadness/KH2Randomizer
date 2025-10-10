@@ -24,6 +24,7 @@ from PySide6.QtWidgets import (
 
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
+from Class.randomUtils import unseeded_rng
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
 from Module import appconfig, hashimage, version
 from Module.RandomizerSettings import RandomizerSettings
@@ -51,6 +52,7 @@ from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.about import AboutDialog
 from UI.presets import SettingsPreset, RandomPresetDialog
+from UI.qtlib import show_alert
 from UI.worker import GenerateSeedWorker
 
 
@@ -836,17 +838,11 @@ class KH2RandomizerApp(QMainWindow):
         if preset_select_dialog.exec():
             random_preset_list = preset_select_dialog.save()
             if len(random_preset_list) == 0:
-                message = QMessageBox(text="Need at least 1 preset selected")
-                message.setWindowTitle("KH2 Seed Generator")
-                message.exec()
+                show_alert("Need at least 1 preset selected")
             else:
-                self.validate_seed_name()
-                random.seed(self.seedName.text())
-                selected_preset: SettingsPreset = random.choice(random_preset_list)
+                selected_preset: SettingsPreset = unseeded_rng.choice(random_preset_list)
                 self._use_preset(selected_preset)
-                message = QMessageBox(text=f"Picked {selected_preset.display_name}")
-                message.setWindowTitle("KH2 Seed Generator")
-                message.exec()
+                show_alert(f"Picked {selected_preset.display_name}")
 
     def validate_seed_name(self):
         seedString = self.seedName.text()

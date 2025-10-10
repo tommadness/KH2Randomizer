@@ -425,6 +425,9 @@ Shan-Yu to progress.
 It's not required to equip the keyblade - being in the inventory is enough. If the keyblade is not acquired, the
 reaction command to open chests in the associated world will be disabled.
 
+> **Note** - this setting requires the `KH2FM-Mods-equations19/KH2-Lua-Library` mod, and will not work properly
+> without it installed and enabled.
+
     Simulated Twilight Town | Bond of Flame
     Twilight Town           | Oathkeeper
     Hollow Bastion          | Sleeping Lion

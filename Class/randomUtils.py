@@ -1,6 +1,9 @@
-from random import random
 from bisect import bisect_left
 from itertools import accumulate
+from random import random, Random
+
+# An instance of a Random that deliberately _isn't_ tied to a specific seed.
+unseeded_rng = Random()
 
 
 def weighted_sample_without_replacement(population, weights, k):
