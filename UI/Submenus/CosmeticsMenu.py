@@ -16,6 +16,7 @@ from UI.Submenus.CustomVisualsDialogs import ItempicViewerDialog, RoomTransition
 from UI.Submenus.ManageKeybladesDialog import ManageKeybladesDialog
 from UI.Submenus.SubMenu import KH2Submenu
 from UI.Submenus.TextureRecolorSettingsDialog import TextureRecolorSettingsDialog
+from UI.configui import OPENKH_LOCATION_NOT_CHOSEN
 from UI.qtlib import button, clear_layout, show_alert
 from UI.worker import CosmeticsZipWorker
 
@@ -51,8 +52,12 @@ class CosmeticsMenu(KH2Submenu):
         self.start_group()
         manage_keyblades = KH2Submenu.make_settings_button(self._manage_keyblades, "Manage Keyblades")
         self.add_option(settingkey.KEYBLADE_RANDO, auxiliary_widget=manage_keyblades)
-        self.add_option(settingkey.KEYBLADE_RANDO_INCLUDE_EFFECTS)
         self.add_option(settingkey.KEYBLADE_RANDO_ALLOW_DUPLICATES)
+        self.add_option(settingkey.KEYBLADE_RANDO_INCLUDE_EFFECTS)
+        self.add_option(
+            settingkey.KEYBLADE_RANDO_INCLUDE_GOA,
+            auxiliary_widget=KH2Submenu.make_error_label(OPENKH_LOCATION_NOT_CHOSEN),
+        )
         self.end_group("Keyblades (PC)")
 
         self.start_group()
@@ -188,6 +193,8 @@ class CosmeticsMenu(KH2Submenu):
         keyblade_rando_enabled = keyblade_rando_setting != configDict.VANILLA
         self.set_option_visibility(settingkey.KEYBLADE_RANDO_ALLOW_DUPLICATES, visible=keyblade_rando_enabled)
         self.set_option_visibility(settingkey.KEYBLADE_RANDO_INCLUDE_EFFECTS, visible=keyblade_rando_enabled)
+        self.set_option_visibility(settingkey.KEYBLADE_RANDO_INCLUDE_GOA, visible=keyblade_rando_enabled)
+        self.set_auxiliary_visibility(settingkey.KEYBLADE_RANDO_INCLUDE_GOA, visible=not has_extracted_data)
 
         music_rando_enabled = self.settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
         custom_music_configured = appconfig.read_custom_music_path() is not None

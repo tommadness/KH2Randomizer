@@ -2,27 +2,22 @@ import io
 import textwrap
 import zipfile
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Optional, Any
 from zipfile import ZipFile, ZIP_DEFLATED
 
 import yaml
 
-from Class.openkhmod import (
-    AttackEntriesOrganizer,
-    ModYml,
-    Bonuses,
-    FormLevels,
-    Items,
-    LevelUps,
-    Messages,
-    PlayerParams,
-    PrizeTable,
-    Treasures,
-    write_yaml_to_zip_file,
-    Asset,
-)
+from Class.openkhmod import AttackEntriesOrganizer, ModYml, Bonuses, FormLevels, Items, LevelUps, Messages, \
+    PlayerParams, PrizeTable, Treasures, write_yaml_to_zip_file, StrDict, ModAsset, ModSourceFile, AssetMethod
 from Module.RandomizerSettings import RandomizerSettings
+from Module.cosmeticsmods.keyblade import KeybladeRandomizer, KeybladeRandomizerResult
 from Module.resources import resource_path
+
+
+def _relative_mod_path(name: str) -> Path:
+    """Used to help organize mod-specific files inside the mod zip."""
+    return Path("randoseed-mod-files", name)
 
 
 def _relative_mod_file(name: str) -> str:
@@ -1189,8 +1184,8 @@ class SeedModBuilder:
         )
 
     @staticmethod
-    def _get_chest_visual_assets() -> list[Asset]:
-        assets: list[Asset] = []
+    def _get_chest_visual_assets() -> list[StrDict]:
+        assets: list[StrDict] = []
 
         basic_types = {
             "JK2": "trash",
@@ -1660,20 +1655,37 @@ class CosmeticsModAppender:
         self.out_zip = out_zip
         self.mod_yml = mod_yml
 
-    def write_music_rando_assets(self, music_assets: list[Asset], music_replacements: dict[str, str]):
-        self.mod_yml.add_assets(music_assets)
+    def write_music_rando_assets(self, music_assets: list[ModAsset], music_replacements: dict[str, Path]):
+        self.mod_yml.add_mod_assets(music_assets)
         self._write_music_replacements(music_replacements)
 
     @staticmethod
-    def keyblade_dummy_wave_source() -> str:
+    def keyblade_dummy_wave_source() -> Path:
         """Returns the relative mod path of the dummy keyblade wave file."""
-        return _relative_mod_file("keyblades/dummy_wave.wd")
+        return _relative_mod_path("keyblades/dummy_wave.wd")
 
-    def write_keyblade_rando_assets(self, keyblade_assets: list[Asset], keyblade_replacements: dict[str, str]):
+    def write_keyblade_rando_assets(self, keyblade_result: KeybladeRandomizerResult):
+        keyblade_assets = keyblade_result.assets
         if keyblade_assets:
-            self.out_zip.write(resource_path("static/cosmetics/dummy_wave.wd"), self.keyblade_dummy_wave_source())
-            self.mod_yml.add_assets(keyblade_assets)
-            self._write_keyblade_replacements(keyblade_replacements)
+            custom_objentries = keyblade_result.object_entries
+            if custom_objentries:
+                keyblade_objlist_source = _relative_mod_file("keyblades/ObjList.yml")
+                custom_objentries.source_name = keyblade_objlist_source
+                custom_objentries.write_to_zip_file(self.out_zip)
+
+                # TODO: Do we need to merge this with the chest visuals 00objentry listpatch stuff?
+                #       Thought we did, since we do the merging for the cmd piece, but in testing, things seem fine?
+                self.mod_yml.add_mod_asset(ModAsset.make_asset(
+                    game_files=["00objentry.bin"],
+                    method=AssetMethod.LISTPATCH,
+                    type_="List",
+                    sources=[ModSourceFile.make_source_file(keyblade_objlist_source, type="objentry")],
+                ))
+
+            self.out_zip.write(KeybladeRandomizer.dummy_wave_resource_path(), self.keyblade_dummy_wave_source())
+
+            self.mod_yml.add_mod_assets(keyblade_assets)
+            self._write_keyblade_replacements(keyblade_result.replacements)
 
     def write_rando_themed_texture_assets(self):
         """Adds assets and files to the mod for 'Add Randomizer-Themed Textures'."""
@@ -1743,9 +1755,9 @@ class CosmeticsModAppender:
                 keyblade_replacements_string += f"[{original}] was replaced by [{replacement}]\n"
             self.out_zip.writestr("keyblade-replacement-list.txt", keyblade_replacements_string)
 
-    def _write_music_replacements(self, replacements: dict[str, str]):
+    def _write_music_replacements(self, replacements: dict[str, Path]):
         if len(replacements) > 0:
             music_replacements_string = ""
             for original, replacement in replacements.items():
-                music_replacements_string += f"[{original}] was replaced by [{replacement}]\n"
+                music_replacements_string += f"[{original}] was replaced by [{str(replacement)}]\n"
             self.out_zip.writestr("music-replacement-list.txt", music_replacements_string)

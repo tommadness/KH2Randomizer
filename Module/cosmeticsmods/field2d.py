@@ -1,11 +1,11 @@
-import os
 import random
-from pathlib import Path
-from typing import Optional
+from pathlib import Path, PurePath
+from typing import Optional, Iterator
 
-from Class.openkhmod import Asset
+from Class.openkhmod import ModAsset, AssetPlatform, ModSourceFile, AssetMethod
 from List import configDict
 from Module import appconfig
+from Module.paths import walk_files_with_extension
 
 AGRABAH = "al0"
 BEAST_CASTLE = "bb0"
@@ -45,10 +45,10 @@ class ReplacementCommandMenu:
     def __init__(self):
         super().__init__()
 
-    def ps2_command_menu_assets(self, old_menu: str) -> list[Asset]:
+    def ps2_command_menu_assets(self, old_menu: str) -> list[ModAsset]:
         return []
 
-    def pc_command_menu_assets(self, old_menu: str, regions: list[str]) -> list[Asset]:
+    def pc_command_menu_assets(self, old_menu: str, regions: list[str]) -> list[ModAsset]:
         return []
 
 
@@ -58,53 +58,35 @@ class VanillaCommandMenu(ReplacementCommandMenu):
         super().__init__()
         self.code = code
 
-    def ps2_command_menu_assets(self, old_menu: str) -> list[Asset]:
+    def ps2_command_menu_assets(self, old_menu: str) -> list[ModAsset]:
         new_menu = self.code
-        return [{
-            "platform": "ps2",
-            "name": f"field2d/jp/{old_menu}command.2dd",
-            "multi": [
-                {"name": f"field2d/us/{old_menu}command.2dd"}
-            ],
-            "method": "copy",
-            "source": [
-                {
-                    "name": f"field2d/jp/{new_menu}command.2dd",
-                    "type": "internal"
-                }
-            ]
-        }]
+        return [ModAsset.make_copy_asset(
+            game_files=[f"field2d/jp/{old_menu}command.2dd", f"field2d/us/{old_menu}command.2dd"],
+            platform=AssetPlatform.PS2,
+            source_file=f"field2d/jp/{new_menu}command.2dd",
+            internal=True,
+        )]
 
-    def pc_command_menu_assets(self, old_menu: str, regions: list[str]) -> list[Asset]:
+    def pc_command_menu_assets(self, old_menu: str, regions: list[str]) -> list[ModAsset]:
         new_menu = self.code
 
-        assets: list[Asset] = []
+        assets: list[ModAsset] = []
         for region in regions:
-            assets.append({
-                "platform": "pc",
-                "name": f"field2d/{region}/{old_menu}command.2dd",
-                "method": "copy",
-                "source": [
-                    {
-                        "name": f"field2d/{region}/{new_menu}command.2dd",
-                        "type": "internal"
-                    }
-                ]
-            })
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[f"field2d/{region}/{old_menu}command.2dd"],
+                platform=AssetPlatform.PC,
+                source_file=f"field2d/{region}/{new_menu}command.2dd",
+                internal=True,
+            ))
 
             remastered_region = f"remastered/field2d/{region}"
             cap_region = region.upper()
-            assets.append({
-                "platform": "pc",
-                "name": f"{remastered_region}/{old_menu}command.2dd/{cap_region}_{old_menu}command_2dd0.png",
-                "method": "copy",
-                "source": [
-                    {
-                        "name": f"{remastered_region}/{new_menu}command.2dd/{cap_region}_{new_menu}command_2dd0.png",
-                        "type": "internal"
-                    }
-                ]
-            })
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[f"{remastered_region}/{old_menu}command.2dd/{cap_region}_{old_menu}command_2dd0.png"],
+                platform=AssetPlatform.PC,
+                source_file=f"{remastered_region}/{new_menu}command.2dd/{cap_region}_{new_menu}command_2dd0.png",
+                internal=True,
+            ))
 
         return assets
 
@@ -120,28 +102,20 @@ class VanillaCommandMenu(ReplacementCommandMenu):
 
 class CustomCommandMenu(ReplacementCommandMenu):
 
-    def __init__(self, name: str, containing_path: Path, original_file: Path, remastered_file: Optional[Path]):
+    def __init__(self, name: str, original_file: Path, remastered_file: Optional[Path]):
         super().__init__()
         self.name = name
-        self.containing_path = containing_path
         self.original_file = original_file
         self.remastered_file = remastered_file
 
-    def ps2_command_menu_assets(self, old_menu: str) -> list[Asset]:
-        original_file = self.original_file
-        return [{
-            "platform": "ps2",
-            "name": f"field2d/jp/{old_menu}command.2dd",
-            "multi": [
-                {"name": f"field2d/us/{old_menu}command.2dd"}
-            ],
-            "method": "copy",
-            "source": [
-                {"name": f"{original_file}"}
-            ]
-        }]
+    def ps2_command_menu_assets(self, old_menu: str) -> list[ModAsset]:
+        return [ModAsset.make_copy_asset(
+            game_files=[f"field2d/jp/{old_menu}command.2dd", f"field2d/us/{old_menu}command.2dd"],
+            platform=AssetPlatform.PS2,
+            source_file=self.original_file,
+        )]
 
-    def pc_command_menu_assets(self, old_menu: str, regions: list[str]) -> list[Asset]:
+    def pc_command_menu_assets(self, old_menu: str, regions: list[str]) -> list[ModAsset]:
         original_names = []
         remastered_names = []
         for region in regions:
@@ -151,24 +125,16 @@ class CustomCommandMenu(ReplacementCommandMenu):
             )
 
         return [
-            {
-                "platform": "pc",
-                "name": original_names[0],
-                "multi": [{"name": original_name} for original_name in original_names[1:]],
-                "method": "copy",
-                "source": [
-                    {"name": f"{self.original_file}"}
-                ]
-            },
-            {
-                "platform": "pc",
-                "name": remastered_names[0],
-                "multi": [{"name": remastered_name} for remastered_name in remastered_names[1:]],
-                "method": "copy",
-                "source": [
-                    {"name": f"{self.remastered_file}"}
-                ]
-            }
+            ModAsset.make_copy_asset(
+                game_files=original_names,
+                platform=AssetPlatform.PC,
+                source_file=self.original_file,
+            ),
+            ModAsset.make_copy_asset(
+                game_files=remastered_names,
+                platform=AssetPlatform.PC,
+                source_file=self.remastered_file,
+            ),
         ]
 
 
@@ -223,22 +189,22 @@ class CommandMenuRandomizer:
             KINGDOM_HEARTS_1: "Kingdom Hearts 1"
         }
 
-    def randomize_command_menus(self) -> list[Asset]:
+    def randomize_command_menus(self) -> list[ModAsset]:
         assets = []
         assets.extend(self._randomize_ps2())
         assets.extend(self._randomize_pc())
         return assets
 
-    def _randomize_ps2(self) -> list[Asset]:
+    def _randomize_ps2(self) -> list[ModAsset]:
         menu_replacements = self._compute_menu_replacements(pc=False)
-        assets: list[Asset] = []
+        assets: list[ModAsset] = []
         for old_menu, new_menu in menu_replacements.items():
             assets.extend(new_menu.ps2_command_menu_assets(old_menu))
         return assets
 
-    def _randomize_pc(self) -> list[Asset]:
+    def _randomize_pc(self) -> list[ModAsset]:
         menu_replacements = self._compute_menu_replacements(pc=True)
-        assets: list[Asset] = []
+        assets: list[ModAsset] = []
         for old_menu, new_menu in menu_replacements.items():
             assets.extend(new_menu.pc_command_menu_assets(old_menu, regions=["fr", "gr", "it", "sp", "us"]))
         return assets
@@ -272,27 +238,24 @@ class CommandMenuRandomizer:
         if not command_menus_path.is_dir():
             return result
 
-        for child in os.listdir(command_menus_path):
-            command_menu_path = command_menus_path / child
+        for command_menu_dir in command_menus_path.iterdir():
+            if command_menu_dir.is_dir():
+                original: Optional[Path] = None
+                remastered: Optional[Path] = None
 
-            original: Optional[Path] = None
-            remastered: Optional[Path] = None
-
-            if command_menu_path.is_dir():
-                for file in os.listdir(command_menu_path):
-                    _, extension = os.path.splitext(file)
+                for file in command_menu_dir.iterdir():
+                    extension = file.suffix
                     if extension == ".2dd":
-                        original = command_menu_path / file
+                        original = file
                     elif extension == ".dds" or extension == ".png":
-                        remastered = command_menu_path / file
+                        remastered = file
 
-            if original is not None:
-                result.append(CustomCommandMenu(
-                    name=child,
-                    containing_path=command_menu_path,
-                    original_file=original,
-                    remastered_file=remastered
-                ))
+                if original is not None:
+                    result.append(CustomCommandMenu(
+                        name=command_menu_dir.name,
+                        original_file=original,
+                        remastered_file=remastered,
+                    ))
 
         return result
 
@@ -388,40 +351,30 @@ class RoomTransitionImageRandomizer:
             configDict.RANDOMIZE_ALL: "Randomize (in-game + custom)",
         }
 
-    def randomize_room_transitions(self) -> list[Asset]:
+    def randomize_room_transitions(self) -> list[ModAsset]:
         if self.transition_choice == configDict.VANILLA:
             return []
-        assets = []
+        assets: list[ModAsset] = []
         # assets.extend(self._randomize_ps2())
         assets.extend(self._randomize_pc())
         return assets
 
-    def _randomize_pc(self) -> list[Asset]:
+    def _randomize_pc(self) -> list[ModAsset]:
         transition_replacements = self._compute_transition_replacements()
-        assets: list[Asset] = []
-        for old_image, new_image in transition_replacements.items():
-            if new_image.startswith("$x$"):  # It's a custom one with a full path
-                replacement_source = {
-                    "name": new_image[3:]
-                }
-            else:
-                replacement_source = {
-                    "name": f"remastered/field2d/us/{new_image}field.2dd/US_{new_image}field_2dd2.png",
-                    "type": "internal"
-                }
+        regions = ["us", "fr", "gr", "it", "sp"]
+        assets: list[ModAsset] = []
+        for old_image, replacement_source in transition_replacements.items():
             # These images aren't any different between the regions, so save some mod space by using a multi
-            assets.append({
-                "platform": "pc",
-                "name": f"remastered/field2d/us/{old_image}field.2dd/US_{old_image}field_2dd2.png",
-                "multi": [
-                    {"name": f"remastered/field2d/fr/{old_image}field.2dd/FR_{old_image}field_2dd2.png"},
-                    {"name": f"remastered/field2d/gr/{old_image}field.2dd/GR_{old_image}field_2dd2.png"},
-                    {"name": f"remastered/field2d/it/{old_image}field.2dd/IT_{old_image}field_2dd2.png"},
-                    {"name": f"remastered/field2d/sp/{old_image}field.2dd/SP_{old_image}field_2dd2.png"}
-                ],
-                "method": "copy",
-                "source": [replacement_source]
-            })
+            game_files = [
+                self._remastered_transition_image_path(region=region, world_code=old_image) for region in regions
+            ]
+            assets.append(ModAsset.make_asset(
+                game_files=game_files,
+                platform=AssetPlatform.PC,
+                method=AssetMethod.COPY,
+                sources=[replacement_source],
+            ))
+
         return assets
 
     @staticmethod
@@ -444,26 +397,36 @@ class RoomTransitionImageRandomizer:
             TIMELESS_RIVER
         ]
 
-    def _compute_transition_replacements(self) -> dict[str, str]:
+    def _compute_transition_replacements(self) -> dict[str, ModSourceFile]:
         supported_transitions = RoomTransitionImageRandomizer._supported_transitions()
+
+        def game_transition_sources() -> Iterator[ModSourceFile]:
+            for world_code in supported_transitions:
+                yield ModSourceFile.make_source_file(
+                    source_file=self._remastered_transition_image_path(region="us", world_code=world_code),
+                    internal=True,
+                )
+
+        def custom_transition_sources() -> Iterator[ModSourceFile]:
+            for custom_transition in self.custom_room_transition_images().values():
+                yield ModSourceFile.make_source_file(custom_transition)
 
         transition_choice = self.transition_choice
 
-        source_list: list[str] = []
+        source_list: list[ModSourceFile] = []
         if transition_choice == configDict.RANDOMIZE_IN_GAME_ONLY:
-            source_list = supported_transitions.copy()
+            source_list.extend(game_transition_sources())
         elif transition_choice == configDict.RANDOMIZE_CUSTOM_ONLY:
-            source_list = [f"$x${path}" for path in self.custom_room_transition_images().values()]
+            source_list.extend(custom_transition_sources())
         elif transition_choice == configDict.RANDOMIZE_ALL:
-            source_list = []
-            source_list.extend(supported_transitions)
-            source_list.extend([f"$x${path}" for path in self.custom_room_transition_images().values()])
+            source_list.extend(game_transition_sources())
+            source_list.extend(custom_transition_sources())
 
-        transition_replacements: dict[str, str] = {}
+        transition_replacements: dict[str, ModSourceFile] = {}
         if len(source_list) == 0:
             return transition_replacements
 
-        candidates: list[str] = []
+        candidates: list[ModSourceFile] = []
         for index, old_transition in enumerate(supported_transitions):
             if len(candidates) == 0:
                 candidates = source_list.copy()
@@ -484,13 +447,8 @@ class RoomTransitionImageRandomizer:
         if not room_transition_images_path.is_dir():
             return result
 
-        for root, dirs, files in os.walk(room_transition_images_path):
-            root_path = Path(root)
-            for file in files:
-                name, extension = os.path.splitext(file)
-                if extension.lower() == ".png":
-                    file_path = root_path / file
-                    result[name] = file_path
+        for file in walk_files_with_extension(room_transition_images_path, ".png"):
+            result[file.name] = file
 
         return result
 
@@ -511,9 +469,19 @@ class RoomTransitionImageRandomizer:
 
     @staticmethod
     def _vanilla_transition_image_for_preview(extracted_game_path: Path, code: str) -> Optional[Path]:
-        remastered_field2d = extracted_game_path / "remastered" / "field2d"
         for region in ["us", "fr", "gr", "it", "sp"]:
-            path = remastered_field2d / region / f"{code}field.2dd/{region.upper()}_{code}field_2dd2.png"
+            subpath = RoomTransitionImageRandomizer._remastered_transition_image_path(region=region, world_code=code)
+            path = extracted_game_path / subpath
             if path.is_file():
                 return path
         return None
+
+    @staticmethod
+    def _remastered_transition_image_path(region: str, world_code: str) -> PurePath:
+        return PurePath(
+            "remastered",
+            "field2d",
+            region,
+            f"{world_code}field.2dd",
+            f"{region.upper()}_{world_code}field_2dd2.png"
+        )

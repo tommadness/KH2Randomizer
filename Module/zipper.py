@@ -119,19 +119,19 @@ def _run_khbr(
 def _add_cosmetics(out_zip: ZipFile, mod_yml: ModYml, settings: SeedSettings):
     appender = CosmeticsModAppender(out_zip=out_zip, mod_yml=mod_yml)
 
-    mod_yml.add_assets(CosmeticsMod.randomize_field2d(settings))
-    mod_yml.add_assets(CosmeticsMod.randomize_itempics(settings))
-    mod_yml.add_assets(CosmeticsMod.randomize_end_screen(settings))
+    mod_yml.add_mod_assets(CosmeticsMod.randomize_field2d(settings))
+    mod_yml.add_mod_assets(CosmeticsMod.randomize_itempics(settings))
+    mod_yml.add_mod_assets(CosmeticsMod.randomize_end_screen(settings))
 
-    keyblade_assets, keyblade_replacements = CosmeticsMod.randomize_keyblades(settings)
-    appender.write_keyblade_rando_assets(keyblade_assets, keyblade_replacements)
+    keyblade_result = CosmeticsMod.randomize_keyblades(settings)
+    appender.write_keyblade_rando_assets(keyblade_result)
 
     music_assets, music_replacements = CosmeticsMod.randomize_music(settings)
     appender.write_music_rando_assets(music_assets, music_replacements)
 
     from Module.cosmeticsmods.texture import TextureRecolorizer
     texture_assets = TextureRecolorizer(settings).recolor_textures()
-    mod_yml.add_assets(texture_assets)
+    mod_yml.add_mod_assets(texture_assets)
 
     if settings.get(settingkey.RANDO_THEMED_TEXTURES):
         appender.write_rando_themed_texture_assets()

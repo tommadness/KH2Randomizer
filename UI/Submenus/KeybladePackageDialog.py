@@ -3,13 +3,18 @@ import shutil
 from pathlib import Path
 from typing import Optional
 
+from PIL import Image
+from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QDialog, QLineEdit, QVBoxLayout, QFileDialog, QHBoxLayout, \
-    QWidget
+    QWidget, QLabel
 
 from Class.seedSettings import SeedSettings
-from Module.cosmeticsmods.keyblade import KeybladeRandomizer
+from Module import appconfig
+from Module.cosmeticsmods.keyblade import KeybladePathVariants, KeybladeModelVariant
+from Module.cosmeticsmods.keyblademod import ImportableKeyblade, KeybladeModParser, KeybladeMod
 from UI.Submenus.SubMenu import KH2Submenu
-from UI.qtlib import button, show_alert
+from UI.keybladeworker import ImportModKeybladesWorker
+from UI.qtlib import button, show_alert, clear_layout, layout_widget
 
 
 class PackageKeybladeMenu(KH2Submenu):
@@ -256,19 +261,27 @@ class PackageKeybladeMenu(KH2Submenu):
         staging_path = Path(f"cache/staging-keyblades").absolute()
         staging_path.mkdir(parents=True, exist_ok=True)
 
+        def _fields_to_paths(fields: list[QLineEdit]) -> KeybladePathVariants:
+            variants = KeybladePathVariants()
+            variants.apply(KeybladeModelVariant.BASE, Path(fields[0].text()))
+            variants.apply(KeybladeModelVariant.NIGHTMARE, Path(fields[1].text()))
+            variants.apply(KeybladeModelVariant.TRON, Path(fields[2].text()))
+            variants.apply(KeybladeModelVariant.WILLIE, Path(fields[3].text()))
+            return variants
+
         try:
-            KeybladeRandomizer.extract_keyblade(
+            KeybladeMod.extract_keyblade(
                 keyblade_name=key_name,
                 author=self.author.text(),
                 source=self.source.text(),
                 output_path=staging_path,
                 original_itempic=Path(self.original_itempic.text()),
                 remastered_itempic=Path(self.remastered_itempic.text()),
-                mdlx_files=[Path(field.text()) for field in self.mdlx_fields],
-                remastered_mdlx_folders=[Path(field.text()) for field in self.remastered_texture_fields],
-                fx_files=[Path(field.text()) for field in self.fx_fields],
-                remastered_fx_folders=[Path(field.text()) for field in self.remastered_fx_fields],
-                remastered_sound_files=[Path(field.text()) for field in self.sound_fields],
+                mdlx_files=_fields_to_paths(self.mdlx_fields),
+                remastered_mdlx_dirs=_fields_to_paths(self.remastered_texture_fields),
+                fx_files=_fields_to_paths(self.fx_fields),
+                remastered_fx_dirs=_fields_to_paths(self.remastered_fx_fields),
+                sound_files=_fields_to_paths(self.sound_fields),
             )
         except Exception as error:
             show_alert(str(repr(error)), title="Package Keyblade")
@@ -294,6 +307,167 @@ class KeybladePackageDialog(QDialog):
 
         vbox = QVBoxLayout()
         vbox.addWidget(PackageKeybladeMenu(settings))
+
+        self.setLayout(vbox)
+        self.setMinimumWidth(1200)
+        self.setMinimumHeight(800)
+
+
+class KeybladeModImportMenu(KH2Submenu):
+
+    def _browse(self, field: QLineEdit):
+        openkh_path = appconfig.read_openkh_path()
+        if openkh_path is None:
+            chosen_dir = QFileDialog.getExistingDirectory(self)
+        else:
+            mods_path = openkh_path / "mods" / "kh2"
+            chosen_dir = QFileDialog.getExistingDirectory(self, dir=str(mods_path))
+        if chosen_dir != "":
+            field.setText(chosen_dir)
+
+    def _add_browseable(self, label_text: str, field: QLineEdit, tooltip: str):
+        hbox = QHBoxLayout()
+        field.setFixedWidth(600)
+        hbox.addWidget(field)
+        hbox.addWidget(button("Browse", lambda: self._browse(field)))
+        wrapper = layout_widget()
+        wrapper.setLayout(hbox)
+        self.add_labeled_widget(wrapper, label_text, tooltip)
+
+    def __init__(self, settings: SeedSettings):
+        super().__init__("Import", settings)
+
+        self.keyblades: list[ImportableKeyblade] = []
+
+        mod_path = QLineEdit("")
+        mod_path.setFixedWidth(600)
+        self.mod_path = mod_path
+
+        author = QLineEdit("")
+        author.setFixedWidth(600)
+        self.author = author
+
+        source = QLineEdit("")
+        source.setFixedWidth(600)
+        self.source = source
+
+        self.start_column()
+
+        self.start_group()
+        self._add_browseable(
+            label_text="Keyblade Mod Folder",
+            field=self.mod_path,
+            tooltip="A folder containing a keyblade mod on your local machine.",
+        )
+        self.pending_group.addWidget(button("Find Keyblade(s)", self._parse_mod))
+        self.end_group()
+
+        self.start_group()
+        self.add_labeled_widget(author, "Author", tooltip="Author/designer for attribution.")
+        self.add_labeled_widget(source, "Source", tooltip="Link to the source for the keyblade assets, if any.")
+        self.end_group("Attribution", group_id="attribution")
+        self.set_group_visibility("attribution", False)
+
+        self.start_group()
+        self.keyblade_layout = QVBoxLayout()
+        self.pending_group.addLayout(self.keyblade_layout)
+        self.pending_group.addWidget(button("Import Keyblade(s)", self._import_keyblades))
+        self.end_group("Keyblades To Import", group_id="keyblades")
+        self.set_group_visibility("keyblades", False)
+
+        self.end_column()
+        self.finalizeMenu()
+
+    def _parse_mod(self):
+        mod_folder = self.mod_path.text()
+
+        path = Path(mod_folder)
+        if not path.is_dir():
+            show_alert(f"Could not find [{path}]", title="Import Keyblade(s)")
+            return
+
+        keyblade_mod = KeybladeModParser(path).try_parse_mod()
+        if keyblade_mod is None:
+            self.keyblades = []
+            self.author.setText("")
+            self.source.setText("")
+            self._reload_keyblades()
+        else:
+            author = keyblade_mod.author
+            if author:
+                self.author.setText(author)
+            else:
+                self.author.setText("")
+
+            source = keyblade_mod.source
+            if source:
+                self.source.setText(source)
+            else:
+                self.source.setText("")
+
+            self.keyblades = keyblade_mod.keyblades
+            self._reload_keyblades()
+
+    def _reload_keyblades(self):
+        keyblade_layout = self.keyblade_layout
+        clear_layout(keyblade_layout)
+
+        keyblades = self.keyblades
+        has_keyblades = len(keyblades) > 0
+        self.set_group_visibility("attribution", has_keyblades)
+        self.set_group_visibility("keyblades", has_keyblades)
+
+        for key in keyblades:
+            box = QHBoxLayout()
+
+            itempic = key.remastered_itempic
+            itempic_label = QLabel("")
+            itempic_label.setFixedSize(QSize(48, 48))
+            if itempic.is_file():
+                with Image.open(itempic) as image:
+                    itempic_label.setPixmap(image.resize((48, 48)).toqpixmap())
+            box.addWidget(itempic_label)
+
+            name = QLineEdit(key.keyblade_name)
+            name.setFixedWidth(600)
+            name.textChanged.connect(key.update_name)
+            box.addWidget(name)
+
+            box.addStretch()
+
+            wrapper = layout_widget()
+            wrapper.setLayout(box)
+            keyblade_layout.addWidget(wrapper)
+
+    def _import_keyblades(self):
+        keyblades = self.keyblades
+        if not keyblades:
+            return
+
+        author = self.author.text()
+        if not author:
+            author = None
+
+        source = self.source.text()
+        if not source:
+            source = None
+
+        mod = KeybladeMod()
+        mod.author = author
+        mod.source = source
+        mod.keyblades = keyblades
+        worker = ImportModKeybladesWorker(mod)
+        worker.start()
+
+
+class KeybladeModImportDialog(QDialog):
+
+    def __init__(self, parent: QWidget, settings: SeedSettings):
+        super().__init__(parent)
+        self.setWindowTitle("Import Keyblade(s) from Mod")
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(KeybladeModImportMenu(settings))
 
         self.setLayout(vbox)
         self.setMinimumWidth(1200)

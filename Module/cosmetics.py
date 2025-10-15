@@ -1,18 +1,18 @@
 import json
-import os
 import random
 from pathlib import Path
 
 from Class import settingkey
-from Class.openkhmod import Asset
+from Class.openkhmod import ModAsset, StrDict
 from Class.seedSettings import SeedSettings
 from Module import appconfig
 from Module.cosmeticsmods import music
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
 from Module.cosmeticsmods.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
 from Module.cosmeticsmods.itempic import ItempicRandomizer
-from Module.cosmeticsmods.keyblade import KeybladeRandomizer
+from Module.cosmeticsmods.keyblade import KeybladeRandomizer, KeybladeRandomizerResult
 from Module.cosmeticsmods.texture import TextureRecolorSettings
+from Module.paths import walk_files_with_extension
 
 
 class CustomCosmetics:
@@ -82,18 +82,12 @@ class CosmeticsMod:
             (custom_music_path / folder).mkdir(exist_ok=True)
 
     @staticmethod
-    def randomize_music(ui_settings: SeedSettings) -> tuple[list[Asset], dict[str, str]]:
+    def randomize_music(ui_settings: SeedSettings) -> tuple[list[ModAsset], dict[str, Path]]:
         """
         Randomizes music, returning a list of assets to be added to the seed mod and a dictionary of which song was
         replaced by which replacement.
         """
         return CosmeticsMod._get_music_assets(ui_settings)
-
-    @staticmethod
-    def get_keyblade_summary() -> dict[str, int]:
-        vanilla = KeybladeRandomizer.collect_vanilla_keyblades()
-        custom = KeybladeRandomizer.collect_custom_keyblades()
-        return {"In-Game": len(vanilla), "Custom": len(custom)}
 
     @staticmethod
     def get_music_summary(settings: SeedSettings) -> dict[str, int]:
@@ -109,39 +103,28 @@ class CosmeticsMod:
         categorize = settings.get(settingkey.MUSIC_RANDO_PC_USE_CATEGORIES)
         dmca_safe = settings.get(settingkey.MUSIC_RANDO_PC_DMCA_SAFE)
 
+        def add_songs(song_files: list[Path], suggested_category: str):
+            resolved_category = suggested_category.lower()
+            if not categorize:
+                resolved_category = "wild"
+            if resolved_category not in result:
+                result[resolved_category] = []
+            result[resolved_category].extend(song_files)
+
         if settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_CUSTOM):
             custom_music_path = appconfig.read_custom_music_path()
             if custom_music_path is not None:
-                for child in [str(category_file).lower() for category_file in os.listdir(custom_music_path)]:
-                    child_path = custom_music_path / child
-                    if child_path.is_dir():
-                        category_songs: list[Path] = []
-                        for root, dirs, files in os.walk(child_path):
-                            root_path = Path(root)
-                            for file in files:
-                                _, extension = os.path.splitext(file)
-                                if extension.lower() == '.scd':
-                                    file_path = root_path / file
-                                    category_songs.append(file_path)
-                        resolved_category = child
-                        if not categorize:
-                            resolved_category = 'wild'
-                        if resolved_category not in result:
-                            result[resolved_category] = []
-                        result[resolved_category] += category_songs
+                for category_dir in custom_music_path.iterdir():
+                    if category_dir.is_dir():
+                        category_songs = list(walk_files_with_extension(category_dir, ".scd"))
+                        add_songs(category_songs, suggested_category=category_dir.name)
 
         extracted_data_path = appconfig.extracted_data_path()
         if extracted_data_path is not None:
             def add_game_song(song_file_path: Path, category: str, song_dmca: bool):
-                if not song_file_path.is_file():
-                    return
-
-                if not categorize:
-                    category = 'wild'
-                if category not in result:
-                    result[category] = []
                 if not dmca_safe or not song_dmca:
-                    result[category].append(song_file_path)
+                    if song_file_path.is_file():
+                        add_songs([song_file_path], suggested_category=category)
 
             if settings.get(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2):
                 kh2_path = extracted_data_path / 'kh2'
@@ -153,7 +136,7 @@ class CosmeticsMod:
                             song_dmca=kh2_song.get('dmca', False)
                         )
 
-            def add_other_game_music(enabled_key: str, game_music_path: Path, game_music_list: list):
+            def add_other_game_music(enabled_key: str, game_music_path: Path, game_music_list: list[StrDict]):
                 if settings.get(enabled_key) and game_music_path.is_dir():
                     for song in game_music_list:
                         add_game_song(
@@ -186,7 +169,7 @@ class CosmeticsMod:
         return result
 
     @staticmethod
-    def _get_music_assets(settings: SeedSettings) -> tuple[list[Asset], dict[str, str]]:
+    def _get_music_assets(settings: SeedSettings) -> tuple[list[ModAsset], dict[str, Path]]:
         music_rando_enabled = settings.get(settingkey.MUSIC_RANDO_ENABLED_PC)
         if not music_rando_enabled:
             return [], {}
@@ -206,17 +189,19 @@ class CosmeticsMod:
 
             backup_files_by_categories[category] = song_list
 
-        assets: list[Asset] = []
-        replacements: dict[str, str] = {}
+        assets: list[ModAsset] = []
+        replacements: dict[str, Path] = {}
 
         music_list_file_path = CosmeticsMod.bootstrap_music_list_file()
-        with open(music_list_file_path, encoding='utf-8') as music_list_file:
-            music_metadata = json.load(music_list_file)
+        with open(music_list_file_path, encoding="utf-8") as music_list_file:
+            music_metadata: list[StrDict] = json.load(music_list_file)
         random.shuffle(music_metadata)
         for info in music_metadata:
-            filename = info['filename']
-            title = info['title']
-            types = [song_type.lower() for song_type in info['type'] if song_type.lower() in music_files_by_categories]
+            filename: str = info["filename"]
+            title: str = info["title"]
+            types: list[str] = [
+                song_type.lower() for song_type in info["type"] if song_type.lower() in music_files_by_categories
+            ]
             if len(types) > 0:
                 random.shuffle(types)
 
@@ -232,19 +217,9 @@ class CosmeticsMod:
                         songs_for_chosen_type = refill_list
 
                     if len(songs_for_chosen_type) > 0:
-                        chosen_song = str(songs_for_chosen_type.pop())
-
-                        asset = {
-                            'name': filename,
-                            'vanilla_song': title,
-                            'song_type': chosen_type,
-                            'method': 'copy',
-                            'source': [{'name': chosen_song}]
-                        }
-                        assets.append(asset)
-
+                        chosen_song = songs_for_chosen_type.pop()
+                        assets.append(ModAsset.make_copy_asset(game_files=[filename], source_file=chosen_song))
                         replacements[title] = chosen_song
-
                         break
 
         return assets, replacements
@@ -270,21 +245,22 @@ class CosmeticsMod:
             (item_pictures_path / category.lower()).mkdir(exist_ok=True)
 
     @staticmethod
-    def randomize_keyblades(seed_settings: SeedSettings) -> tuple[list[Asset], dict[str, str]]:
+    def randomize_keyblades(seed_settings: SeedSettings) -> KeybladeRandomizerResult:
         """
-        Randomizes keyblades, returning a list of assets to be added to the seed mod and a dictionary of which keyblade
-        was replaced by which replacement.
+        Randomizes keyblades, returning a result object containing various data needed to write the portions of the mod
+        for the keyblades.
         """
         return KeybladeRandomizer.randomize_keyblades(
             setting=seed_settings.get(settingkey.KEYBLADE_RANDO),
             include_effects=seed_settings.get(settingkey.KEYBLADE_RANDO_INCLUDE_EFFECTS),
-            allow_duplicate_replacement=seed_settings.get(settingkey.KEYBLADE_RANDO_ALLOW_DUPLICATES)
+            allow_duplicate_replacement=seed_settings.get(settingkey.KEYBLADE_RANDO_ALLOW_DUPLICATES),
+            replace_goa_keyblades=seed_settings.get(settingkey.KEYBLADE_RANDO_INCLUDE_GOA),
         )
 
     @staticmethod
-    def randomize_field2d(seed_settings: SeedSettings) -> list[Asset]:
+    def randomize_field2d(seed_settings: SeedSettings) -> list[ModAsset]:
         """Randomizes various field2d entries, returning a list of assets to be added to a mod."""
-        assets: list[Asset] = []
+        assets: list[ModAsset] = []
 
         command_menu_choice = seed_settings.get(settingkey.COMMAND_MENU)
         assets.extend(CommandMenuRandomizer(command_menu_choice).randomize_command_menus())
@@ -295,13 +271,13 @@ class CosmeticsMod:
         return assets
 
     @staticmethod
-    def randomize_itempics(seed_settings: SeedSettings) -> list[Asset]:
+    def randomize_itempics(seed_settings: SeedSettings) -> list[ModAsset]:
         """Randomizes various itempic entries, returning a list of assets to be added to a mod."""
         setting = seed_settings.get(settingkey.ITEMPIC_RANDO)
         return ItempicRandomizer.randomize_itempics(setting)
 
     @staticmethod
-    def randomize_end_screen(seed_settings: SeedSettings) -> list[Asset]:
+    def randomize_end_screen(seed_settings: SeedSettings) -> list[ModAsset]:
         """Randomizes the ending screen, returning a list of assets to be added to a mod."""
         setting = seed_settings.get(settingkey.ENDPIC_RANDO)
         return EndingPictureRandomizer.randomize_end_screen(setting)

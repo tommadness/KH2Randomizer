@@ -1,6 +1,6 @@
 from typing import Callable, Any
 
-from PySide6.QtWidgets import QLayout, QMessageBox, QPushButton
+from PySide6.QtWidgets import QLayout, QMessageBox, QPushButton, QWidget
 
 
 def button(text: str, onclick: Callable[[], Any]) -> QPushButton:
@@ -12,6 +12,16 @@ def button(text: str, onclick: Callable[[], Any]) -> QPushButton:
 def show_alert(body: str, title: str = "KH2 Seed Generator"):
     message = QMessageBox(QMessageBox.NoIcon, title, body)
     message.exec()
+
+
+def set_css_class(widget: QWidget, css_class: str):
+    widget.setProperty("cssClass", css_class)
+
+
+def layout_widget() -> QWidget:
+    widget = QWidget()
+    set_css_class(widget, "layoutWidget")
+    return widget
 
 
 def clear_layout(layout: QLayout):

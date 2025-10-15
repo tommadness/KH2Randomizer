@@ -3,7 +3,7 @@ import os
 import random
 from pathlib import Path
 
-from Class.openkhmod import Asset
+from Class.openkhmod import ModAsset, ModSourceFile, StrDict, AssetPlatform, AssetMethod
 from List import configDict
 from Module import appconfig
 
@@ -53,37 +53,41 @@ class ItempicRandomizer:
         return itempic_list_file_path
 
     @staticmethod
-    def randomize_itempics(setting: str) -> list[Asset]:
+    def randomize_itempics(setting: str) -> list[ModAsset]:
         if setting == configDict.VANILLA:
             return []
 
         # We could maybe give an option here, but not sure if it's necessary
         categorize = True
 
-        replacements_by_category: dict[str, list[tuple[bool, str]]] = {}  # (internal, path)
+        replacements_by_category: dict[str, list[ModSourceFile]] = {}
 
         if setting == configDict.RANDOMIZE_IN_GAME_ONLY or setting == configDict.RANDOMIZE_ALL:
             for category, game_files in ItempicRandomizer._collect_game_itempic_files(categorize).items():
                 if category not in replacements_by_category:
                     replacements_by_category[category] = []
-                replacements_by_category[category].extend((True, file) for file in game_files)
+                for game_file in game_files:
+                    game_file_source = ModSourceFile.make_source_file(game_file, internal=True)
+                    replacements_by_category[category].append(game_file_source)
 
         if setting == configDict.RANDOMIZE_CUSTOM_ONLY or setting == configDict.RANDOMIZE_ALL:
             for category, custom_files in ItempicRandomizer.collect_custom_itempic_files(categorize).items():
                 if category not in replacements_by_category:
                     replacements_by_category[category] = []
-                replacements_by_category[category].extend((False, str(path)) for path in custom_files)
+                for custom_file in custom_files:
+                    custom_file_source = ModSourceFile.make_source_file(custom_file)
+                    replacements_by_category[category].append(custom_file_source)
 
-        backup_files_by_categories: dict[str, list[tuple[bool, str]]] = {}
+        backup_files_by_categories: dict[str, list[ModSourceFile]] = {}
         for category, replacements in replacements_by_category.items():
             backup_files_by_categories[category] = replacements.copy()
             random.shuffle(replacements)
 
-        assets: list[Asset] = []
+        assets: list[ModAsset] = []
 
         itempic_list_file_path = ItempicRandomizer.bootstrap_itempic_file()
         with open(itempic_list_file_path, encoding="utf-8") as itempic_list_file:
-            itempic_metadata = json.load(itempic_list_file)
+            itempic_metadata: list[StrDict] = json.load(itempic_list_file)
         random.shuffle(itempic_metadata)
         for info in itempic_metadata:
             itempic_id: str = info["id"]
@@ -104,19 +108,13 @@ class ItempicRandomizer:
                         itempics_for_chosen_type = refill_list
 
                     if len(itempics_for_chosen_type) > 0:
-                        internal, chosen_itempic = itempics_for_chosen_type.pop()
-
-                        asset = {
-                            "name": f"remastered/itempic/item-{itempic_id}.imd/-0.dds",
-                            "platform": "pc",
-                            "method": "copy",
-                            "source": [{"name": chosen_itempic}]
-                        }
-                        if internal:
-                            asset["source"][0]["type"] = "internal"
-
-                        assets.append(asset)
-
+                        chosen_itempic = itempics_for_chosen_type.pop()
+                        assets.append(ModAsset.make_asset(
+                            game_files=[f"remastered/itempic/item-{itempic_id}.imd/-0.dds"],
+                            platform=AssetPlatform.PC,
+                            method=AssetMethod.COPY,
+                            sources=[chosen_itempic],
+                        ))
                         break
 
         return assets

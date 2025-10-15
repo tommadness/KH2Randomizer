@@ -3054,6 +3054,20 @@ _all_settings = [
         """,
     ),
     Toggle(
+        name=settingkey.KEYBLADE_RANDO_INCLUDE_GOA,
+        group=SettingGroup.COSMETICS,
+        ui_label="Replace GoA Keyblades (Beta)",
+        shared=False,
+        default=False,
+        tooltip="""
+        If enabled, attempts to also replace keyblades from the Garden of Assemblage mod (Kingdom Key D, Alpha Weapon,
+        Omega Weapon, Pureblood, and the Struggle Weapons).
+        
+        Requires the OpenKH folder to be set up in the Configure menu, and the Garden of Assemblage mod must be
+        installed in OpenKH Mods Manager.
+        """,
+    ),
+    Toggle(
         name=settingkey.MUSIC_RANDO_ENABLED_PC,
         group=SettingGroup.COSMETICS,
         ui_label="Randomize Music",
