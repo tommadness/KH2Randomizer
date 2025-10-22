@@ -435,6 +435,9 @@ class RandomizerSettings:
         self.create_full_seed_string()
         self.seedHashIcons: list[str] = generate_hash_icons()
 
+        # TODO: We could make this its own opt-in setting, or we could just make it automatic if/when we're confident
+        self.write_seed_checker_script: bool = spoiler_log
+
         self.statSanity: bool = ui_settings.get(settingkey.STATSANITY)
         self.yeetTheBear: bool = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.chainLogic: bool = ui_settings.get(settingkey.CHAIN_LOGIC)

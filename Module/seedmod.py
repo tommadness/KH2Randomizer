@@ -275,11 +275,11 @@ class SeedModBuilder:
         self.journal_txt.add_message(
             14260,
             en=convert_string_to_unicode("Objective List")
-        )       
+        )
         self.journal_txt.add_message(
             13945,
             en=convert_string_to_unicode("Reports/Objectives")
-        )     
+        )
         listText = ''
         counter = 1
         for task in objective_list:
@@ -290,7 +290,7 @@ class SeedModBuilder:
             message_id=14261,
             en=listText
         )
-        
+
         mark_image_source = _relative_mod_file("objectives/completionmark.dds")
         emu_mark_image_source = _relative_mod_file("objectives/completionmark.imd")
         report_addition_bin = _relative_mod_file("objectives/ansem_modified.bin")
@@ -417,7 +417,7 @@ class SeedModBuilder:
                 }
             ],
         })
-        
+
         self.out_zip.writestr(starting_item_bdscript, full_item_script)
         self.out_zip.write(
             resource_path("static/starting/starting_item_event.script"), starting_item_evt
@@ -748,21 +748,14 @@ class SeedModBuilder:
             resource_path("static/keyblade_locking/keyblade.lua"), keyblade_lua_name
         )
 
-    def write_goa_lua(self):
-        goa_lua_name = _relative_mod_file("beta_files/F266B00B GoA ROM.lua")
-        assets = [
-            {
-                "name": "scripts/F266B00B GoA ROM.lua",
-                "method": "copy",
-                "source": [{"name": goa_lua_name}],
-            },
-        ]
-        self.mod_yml.add_assets(assets)
+    def write_seed_checker_lua(self, lua_file_content: str):
+        checker_lua_name = _relative_mod_file("RandoSeedChecker.lua")
+        self.mod_yml.add_mod_asset(ModAsset.make_copy_asset(
+            game_files=["scripts/F266B00B RandoSeedChecker.lua"],
+            source_file=checker_lua_name
+        ))
 
-        self.out_zip.write(
-            resource_path("static/F266B00B GoA ROM.lua"), goa_lua_name
-        )
-
+        self.out_zip.writestr(checker_lua_name, lua_file_content)
 
     def write_better_stt_assets(self, boss_enabled: bool):
         """Adds assets and files to the mod for 'Better STT'."""

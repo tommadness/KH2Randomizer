@@ -32,6 +32,7 @@ from Module.knockbackTypes import KnockbackTypes
 from Module.multiworld import MultiWorldOutput
 from Module.newRandomize import Randomizer, SynthesisRecipe, ItemAssignment
 from Module.resources import resource_path
+from Module.seedEvaluation import SeedCheckerLuaGenerator
 from Module.seedmod import SeedModBuilder, ChestVisualAssignment, CosmeticsModAppender
 from Module.spoilerLog import (
     item_spoiler_dictionary,
@@ -434,15 +435,15 @@ class SeedZip:
                     "Disabled",
                 ]
                 mod.write_better_stt_assets(boss_enabled)
-            
+
             if settings.keyblades_unlock_chests:
                 mod.write_keyblade_locking_lua()
 
-            # if "beta" in LOCAL_UI_VERSION:
-            #     print("Writing beta stuff")
-            #     mod.write_goa_lua()
-
             self.add_cmd_list_modifications(mod)
+
+            if settings.write_seed_checker_script:
+                lua_generator = SeedCheckerLuaGenerator(self.randomizer, verbose=settings.spoiler_log)
+                mod.write_seed_checker_lua(lua_generator.get_script_content())
 
             if spoiler_log or tourney_gen:
                 # For a tourney seed, generate the spoiler log to return to the caller but don't include it in the zip
@@ -1572,7 +1573,7 @@ class SeedZip:
                 staff_ability=item_id[2],
                 padding=0,
             )
-            
+
         companion_names = ["Donald","Goofy","PingMulan","Beast","Auron","Sparrow","Aladdin","Jack","Simba","Tron","Riku"]
         companion_exp = settings.companion_exp()
         for c_name in companion_names:
@@ -1666,7 +1667,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Donald/PL_Donald", options_list, kill_boss
         )
-        
+
         # Goofy
         options_list = []
         options_list.append(
@@ -1686,7 +1687,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Goofy/PL_Goofy", options_list, kill_boss
         )
-        
+
         # Jack Skellington
         options_list = []
         options_list.append(
@@ -1706,7 +1707,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Jack Skellington", options_list, kill_boss
         )
-        
+
         # Simba
         options_list = []
         options_list.append(
@@ -1740,7 +1741,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Aladdin", options_list, kill_boss
         )
-        
+
         # Ping/Mulan
         options_list = []
         options_list.append(
@@ -1757,7 +1758,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Ping/Mulan", options_list, kill_boss
         )
-        
+
         # Beast
         options_list = []
         options_list.append(
@@ -1774,7 +1775,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Beast", options_list, kill_boss
         )
-        
+
         # Tron
         options_list = []
         options_list.append(
@@ -1791,7 +1792,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Tron", options_list, kill_boss
         )
-        
+
         # Jack Sparrow
         options_list = []
         options_list.append(
@@ -1811,7 +1812,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Jack Sparrow", options_list, kill_boss
         )
-        
+
         # Riku
         options_list = []
         options_list.append(
@@ -1828,7 +1829,7 @@ class SeedZip:
         self.ready_companion_damage_knockback_atkp_entries(
             atkp_organizer, "Riku", options_list, kill_boss
         )
-        
+
         # Auron
         options_list = []
         options_list.append(
@@ -1857,7 +1858,7 @@ class SeedZip:
         for melee_entry in companion_melee_ids:
             if len(melee_entry) == 3:
                 companion_melee_objects.append(
-                    atkp_organizer.get_attack_using_ids_plus_switch(melee_entry[0], melee_entry[1], melee_entry[2])    
+                    atkp_organizer.get_attack_using_ids_plus_switch(melee_entry[0], melee_entry[1], melee_entry[2])
                 )
             companion_melee_objects.append(
                 atkp_organizer.get_attack_using_ids(melee_entry[0], melee_entry[1])
@@ -1883,7 +1884,7 @@ class SeedZip:
                     entry_object.Flags = kill_boss
                     companion_ability_objects.append(entry_object)
                     continue
-                
+
                 entry_object = atkp_organizer.get_attack_using_ids(
                     ability_entry[0], ability_entry[1]
                 )
