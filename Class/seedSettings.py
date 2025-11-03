@@ -1313,7 +1313,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=0,
-        tooltip="Bonus points for collecting all Magic.",
+        tooltip="Bonus points for collecting all of each type of Magic.",
     ),
     IntSpinner(
         name=settingkey.POINTS_PAGE_COLLECT,
@@ -1385,6 +1385,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=0,
+        tooltip="Bonus points for collecting all abilities considered important.",
     ),
     IntSpinner(
         name=settingkey.POINTS_REPORT_COLLECT,
@@ -1420,6 +1421,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=10,
+        tooltip="Bonus points for each Bonus level earned.",
     ),
     IntSpinner(
         name=settingkey.POINTS_COMPLETE,
@@ -1431,6 +1433,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=10,
+        tooltip="Bonus points for collecting all hinted items in a world, for hint systems that support displaying world completion."
     ),
     IntSpinner(
         name=settingkey.POINTS_FORMLV,
@@ -1442,6 +1445,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=3,
+        tooltip="Bonus points for each Drive Form level earned.",
     ),
     IntSpinner(
         name=settingkey.POINTS_DEATH,
@@ -1453,6 +1457,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=-10,
+        tooltip="Points awarded (or taken away) for each death. Use a negative number to remove points per death.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_NORMAL,
@@ -1464,6 +1469,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=10,
+        tooltip="Bonus points for each standard boss defeated.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_AS,
@@ -1475,6 +1481,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=20,
+        tooltip="Bonus points for each Absent Silhouette defeated.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_DATA,
@@ -1486,6 +1493,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=30,
+        tooltip="Bonus points for each Data Organization boss defeated.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_SEPHIROTH,
@@ -1497,6 +1505,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=40,
+        tooltip="Bonus points for defeating Sephiroth.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_TERRA,
@@ -1508,6 +1517,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=50,
+        tooltip="Bonus points for defeating Lingering Will.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_FINAL,
@@ -1519,6 +1529,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=100,
+        tooltip="Bonus points for defeating Final Xemnas.",
     ),
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
