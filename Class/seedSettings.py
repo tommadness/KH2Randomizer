@@ -1903,7 +1903,7 @@ _all_settings = [
         ui_label="Reveal World Completion",
         shared=True,
         default=True,
-        tooltip="If enabled, the tracker will reveal when all Important Checks in a world are found.",
+        tooltip="If enabled, the tracker will indicate when all Important Checks in a revealed world are found.",
     ),
     SingleSelect(
         name=settingkey.REPORTS_REVEAL,
