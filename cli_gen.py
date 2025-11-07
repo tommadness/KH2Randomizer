@@ -1,9 +1,8 @@
 import json
 import os
-import random
-import string
 from collections import namedtuple
 
+from Class.randomUtils import random_seed_name
 from Class.seedSettings import ExtraConfigurationData, SeedSettings
 from Module import appconfig
 from Module.RandomizerSettings import RandomizerSettings
@@ -28,8 +27,7 @@ def make_random_seed_from_preset_name(requested_type:str):
                     print('Unable to load preset [{}], skipping'.format(preset_file_name))
 
     # get seed name at random
-    characters = string.ascii_letters + string.digits
-    seedString = (''.join(random.choice(characters) for i in range(30)))
+    seedString = random_seed_name()
     makeSpoilerLog = False
     settings = SeedSettings()
     settings.apply_settings_json(preset_json[requested_type])

@@ -1,9 +1,25 @@
+import string
 from bisect import bisect_left
 from itertools import accumulate
 from random import random, Random
+from typing import Optional
 
 # An instance of a Random that deliberately _isn't_ tied to a specific seed.
 unseeded_rng = Random()
+
+
+def random_seed_name(rng: Optional[Random] = None) -> str:
+    """
+    Returns a randomly generated seed name.
+
+    If a specific generator instance is passed, uses that; otherwise, uses the shared generator instance.
+    """
+    possible_characters = string.ascii_letters + string.digits
+    if rng is None:
+        chosen_characters = random.choices(possible_characters, k=30)
+    else:
+        chosen_characters = rng.choices(possible_characters, k=30)
+    return "".join(chosen_characters)
 
 
 def weighted_sample_without_replacement(population, weights, k):

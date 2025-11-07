@@ -3,7 +3,6 @@ import json
 import os
 import random
 import re
-import string
 import subprocess
 import sys
 import textwrap
@@ -24,7 +23,7 @@ from PySide6.QtWidgets import (
 
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
-from Class.randomUtils import unseeded_rng
+from Class.randomUtils import unseeded_rng, random_seed_name
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
 from Module import appconfig, hashimage, version
 from Module.RandomizerSettings import RandomizerSettings
@@ -780,8 +779,7 @@ class KH2RandomizerApp(QMainWindow):
             self.progress.setValue(seed_number)
             self.progress.setLabelText(f"Seed {seed_number+2}") # dialog updates are offset by one seed, so making display correct
             self.progress.show()
-            characters = string.ascii_letters + string.digits
-            seedString = (''.join(random.choice(characters) for i in range(30)))
+            seedString = random_seed_name()
             self.seedName.setText(seedString)
             tourney_rando_settings = self.make_rando_settings()
             if tourney_rando_settings is not None:
@@ -845,11 +843,11 @@ class KH2RandomizerApp(QMainWindow):
                 show_alert(f"Picked {selected_preset.display_name}")
 
     def validate_seed_name(self):
-        seedString = self.seedName.text()
-        if seedString == "":
-            characters = string.ascii_letters + string.digits
-            seedString = (''.join(random.choice(characters) for i in range(30)))
-            self.seedName.setText(seedString)
+        seed_name = self.seedName.text()
+        if seed_name == "":
+            # Use the unseeded RNG to make sure the next seed name isn't tied to the previous one
+            seed_name = random_seed_name(unseeded_rng)
+            self.seedName.setText(seed_name)
 
     def randoRando(self):
         rando_rando_dialog = RandomSettingsDialog(self.settings)
