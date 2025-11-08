@@ -779,8 +779,8 @@ class KH2RandomizerApp(QMainWindow):
             self.progress.setValue(seed_number)
             self.progress.setLabelText(f"Seed {seed_number+2}") # dialog updates are offset by one seed, so making display correct
             self.progress.show()
-            seedString = random_seed_name()
-            self.seedName.setText(seedString)
+            seed_name = random_seed_name(unseeded_rng)
+            self.seedName.setText(seed_name)
             tourney_rando_settings = self.make_rando_settings()
             if tourney_rando_settings is not None:
                 zip_file, spoiler_log, enemy_log = generateSeed(tourney_rando_settings, extra_data)

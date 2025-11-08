@@ -1,14 +1,14 @@
+import random
 import string
 from bisect import bisect_left
 from itertools import accumulate
-from random import random, Random
 from typing import Optional
 
 # An instance of a Random that deliberately _isn't_ tied to a specific seed.
-unseeded_rng = Random()
+unseeded_rng = random.Random()
 
 
-def random_seed_name(rng: Optional[Random] = None) -> str:
+def random_seed_name(rng: Optional[random.Random] = None) -> str:
     """
     Returns a randomly generated seed name.
 
@@ -25,7 +25,7 @@ def random_seed_name(rng: Optional[Random] = None) -> str:
 def weighted_sample_without_replacement(population, weights, k):
     wts = list(weights)
     sampl = []
-    rnums = [random() for _ in range(k)]
+    rnums = [random.random() for _ in range(k)]
     for r in rnums:
         acm_wts = list(accumulate(wts))
         total = acm_wts[-1]
