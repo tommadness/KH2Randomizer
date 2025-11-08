@@ -3,7 +3,6 @@ import json
 import os
 import random
 import re
-import string
 import subprocess
 import sys
 import textwrap
@@ -24,6 +23,7 @@ from PySide6.QtWidgets import (
 
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
+from Class.randomUtils import unseeded_rng, random_seed_name
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
 from Module import appconfig, hashimage, version
 from Module.RandomizerSettings import RandomizerSettings
@@ -51,6 +51,7 @@ from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.about import AboutDialog
 from UI.presets import SettingsPreset, RandomPresetDialog
+from UI.qtlib import show_alert
 from UI.worker import GenerateSeedWorker
 
 
@@ -778,9 +779,8 @@ class KH2RandomizerApp(QMainWindow):
             self.progress.setValue(seed_number)
             self.progress.setLabelText(f"Seed {seed_number+2}") # dialog updates are offset by one seed, so making display correct
             self.progress.show()
-            characters = string.ascii_letters + string.digits
-            seedString = (''.join(random.choice(characters) for i in range(30)))
-            self.seedName.setText(seedString)
+            seed_name = random_seed_name(unseeded_rng)
+            self.seedName.setText(seed_name)
             tourney_rando_settings = self.make_rando_settings()
             if tourney_rando_settings is not None:
                 zip_file, spoiler_log, enemy_log = generateSeed(tourney_rando_settings, extra_data)
@@ -836,24 +836,18 @@ class KH2RandomizerApp(QMainWindow):
         if preset_select_dialog.exec():
             random_preset_list = preset_select_dialog.save()
             if len(random_preset_list) == 0:
-                message = QMessageBox(text="Need at least 1 preset selected")
-                message.setWindowTitle("KH2 Seed Generator")
-                message.exec()
+                show_alert("Need at least 1 preset selected")
             else:
-                self.validate_seed_name()
-                random.seed(self.seedName.text())
-                selected_preset: SettingsPreset = random.choice(random_preset_list)
+                selected_preset: SettingsPreset = unseeded_rng.choice(random_preset_list)
                 self._use_preset(selected_preset)
-                message = QMessageBox(text=f"Picked {selected_preset.display_name}")
-                message.setWindowTitle("KH2 Seed Generator")
-                message.exec()
+                show_alert(f"Picked {selected_preset.display_name}")
 
     def validate_seed_name(self):
-        seedString = self.seedName.text()
-        if seedString == "":
-            characters = string.ascii_letters + string.digits
-            seedString = (''.join(random.choice(characters) for i in range(30)))
-            self.seedName.setText(seedString)
+        seed_name = self.seedName.text()
+        if seed_name == "":
+            # Use the unseeded RNG to make sure the next seed name isn't tied to the previous one
+            seed_name = random_seed_name(unseeded_rng)
+            self.seedName.setText(seed_name)
 
     def randoRando(self):
         rando_rando_dialog = RandomSettingsDialog(self.settings)
