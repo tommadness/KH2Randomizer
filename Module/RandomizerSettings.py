@@ -11,18 +11,19 @@ from List.configDict import (
     locationType,
     itemType,
     locationDepth,
-    StartingMovementOption,
     SoraLevelOption,
     ItemAccessibilityOption,
     itemRarity,
     SoftlockPreventionOption,
     AbilityPoolOption,
     expCurve,
-    StartingVisitMode,
     FinalDoorRequirement,
 )
 from List.hashTextEntries import generate_hash_icons
 from List.inventory import report, proof, form, storyunlock, magic, misc, keyblade
+from List.inventory.growth import GrowthType
+from List.inventory.magic import MagicElement
+from List.inventory.storyunlock import StoryUnlock
 from Module.modifier import SeedModifier
 from Module.progressionPoints import ProgressionPoints
 
@@ -223,47 +224,59 @@ class RandomizerSettings:
         )
 
         self.starting_inventory_ids: list[int] = []
-        self.starting_inventory_ids.extend([
-            int(value) for value in ui_settings.get(settingkey.STARTING_KEYBLADES)])
-        self.starting_inventory_ids.extend([
-            int(value) for value in ui_settings.get(settingkey.STARTING_DRIVES)])
-        self.starting_inventory_ids.extend([
-            int(value) for value in ui_settings.get(settingkey.STARTING_ITEMS)])
-        self.starting_inventory_ids.extend([
-            int(value) for value in ui_settings.get(settingkey.STARTING_ABILITIES)])
-        self.starting_inventory_ids.extend([magic.Fire.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_FIRE))])
-        self.starting_inventory_ids.extend([magic.Blizzard.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_BLIZZARD))])
-        self.starting_inventory_ids.extend([magic.Thunder.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_THUNDER))])
-        self.starting_inventory_ids.extend([magic.Cure.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_CURE))])
-        self.starting_inventory_ids.extend([magic.Magnet.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_MAGNET))])
-        self.starting_inventory_ids.extend([magic.Reflect.id for _ in range(ui_settings.get(settingkey.STARTING_MAGIC_REFLECT))])
+        self.starting_inventory_ids.extend([int(value) for value in ui_settings.get(settingkey.STARTING_KEYBLADES)])
+        self.starting_inventory_ids.extend([int(value) for value in ui_settings.get(settingkey.STARTING_DRIVES)])
+        self.starting_inventory_ids.extend([int(value) for value in ui_settings.get(settingkey.STARTING_ITEMS)])
+        self.starting_inventory_ids.extend([int(value) for value in ui_settings.get(settingkey.STARTING_ABILITIES)])
+
+        self.starting_growth_specific: dict[GrowthType, int] = {
+            GrowthType.HIGH_JUMP: ui_settings.get(settingkey.STARTING_GROWTH_HIGH_JUMP),
+            GrowthType.QUICK_RUN: ui_settings.get(settingkey.STARTING_GROWTH_QUICK_RUN),
+            GrowthType.DODGE_ROLL: ui_settings.get(settingkey.STARTING_GROWTH_DODGE_ROLL),
+            GrowthType.AERIAL_DODGE: ui_settings.get(settingkey.STARTING_GROWTH_AERIAL_DODGE),
+            GrowthType.GLIDE: ui_settings.get(settingkey.STARTING_GROWTH_GLIDE),
+        }
+        self.starting_growth_random_range: tuple[int, int] = (
+            ui_settings.get(settingkey.STARTING_GROWTH_RANDOM_MIN),
+            ui_settings.get(settingkey.STARTING_GROWTH_RANDOM_MAX),
+        )
+
+        self.starting_magics_specific: dict[MagicElement, int] = {
+            magic.Fire: ui_settings.get(settingkey.STARTING_MAGIC_FIRE),
+            magic.Blizzard: ui_settings.get(settingkey.STARTING_MAGIC_BLIZZARD),
+            magic.Thunder: ui_settings.get(settingkey.STARTING_MAGIC_THUNDER),
+            magic.Cure: ui_settings.get(settingkey.STARTING_MAGIC_CURE),
+            magic.Magnet: ui_settings.get(settingkey.STARTING_MAGIC_MAGNET),
+            magic.Reflect: ui_settings.get(settingkey.STARTING_MAGIC_REFLECT),
+        }
+        self.starting_magic_random_range: tuple[int, int] = (
+            ui_settings.get(settingkey.STARTING_MAGIC_RANDOM_MIN),
+            ui_settings.get(settingkey.STARTING_MAGIC_RANDOM_MAX),
+        )
+
         self.starting_inventory_ids.extend([misc.TornPages.id for _ in range(ui_settings.get(settingkey.STARTING_PAGES))])
 
-        self.starting_growth_option = StartingMovementOption(
-            ui_settings.get(settingkey.STARTING_MOVEMENT)
-        )
         self.starting_report_count: int = ui_settings.get(settingkey.STARTING_REPORTS)
 
-        self.starting_visit_mode: StartingVisitMode = StartingVisitMode[ui_settings.get(settingkey.STARTING_VISIT_MODE)]
+        self.starting_unlocks_specific: dict[StoryUnlock, int] = {
+            storyunlock.Scimitar: ui_settings.get(settingkey.STARTING_UNLOCKS_AG),
+            storyunlock.BeastsClaw: ui_settings.get(settingkey.STARTING_UNLOCKS_BC),
+            storyunlock.RoyalSummons: ui_settings.get(settingkey.STARTING_UNLOCKS_DC),
+            storyunlock.MembershipCard: ui_settings.get(settingkey.STARTING_UNLOCKS_HB),
+            storyunlock.BoneFist: ui_settings.get(settingkey.STARTING_UNLOCKS_HT),
+            storyunlock.SwordOfTheAncestor: ui_settings.get(settingkey.STARTING_UNLOCKS_LOD),
+            storyunlock.BattlefieldsOfWar: ui_settings.get(settingkey.STARTING_UNLOCKS_OC),
+            storyunlock.ProudFang: ui_settings.get(settingkey.STARTING_UNLOCKS_PL),
+            storyunlock.SkillAndCrossbones: ui_settings.get(settingkey.STARTING_UNLOCKS_PR),
+            storyunlock.IdentityDisk: ui_settings.get(settingkey.STARTING_UNLOCKS_SP),
+            storyunlock.NaminesSketches: ui_settings.get(settingkey.STARTING_UNLOCKS_STT),
+            storyunlock.IceCream: ui_settings.get(settingkey.STARTING_UNLOCKS_TT),
+            storyunlock.WayToTheDawn: ui_settings.get(settingkey.STARTING_UNLOCKS_TWTNW),
+        }
         self.starting_visit_random_range: tuple[int, int] = (
             ui_settings.get(settingkey.STARTING_VISIT_RANDOM_MIN),
-            ui_settings.get(settingkey.STARTING_VISIT_RANDOM_MAX)
+            ui_settings.get(settingkey.STARTING_VISIT_RANDOM_MAX),
         )
-        self.starting_unlocks_per_world: dict[locationType, int] = {
-            locationType.Agrabah: ui_settings.get(settingkey.STARTING_UNLOCKS_AG),
-            locationType.BC: ui_settings.get(settingkey.STARTING_UNLOCKS_BC),
-            locationType.DC: ui_settings.get(settingkey.STARTING_UNLOCKS_DC),
-            locationType.HB: ui_settings.get(settingkey.STARTING_UNLOCKS_HB),
-            locationType.HT: ui_settings.get(settingkey.STARTING_UNLOCKS_HT),
-            locationType.LoD: ui_settings.get(settingkey.STARTING_UNLOCKS_LOD),
-            locationType.OC: ui_settings.get(settingkey.STARTING_UNLOCKS_OC),
-            locationType.PL: ui_settings.get(settingkey.STARTING_UNLOCKS_PL),
-            locationType.PR: ui_settings.get(settingkey.STARTING_UNLOCKS_PR),
-            locationType.SP: ui_settings.get(settingkey.STARTING_UNLOCKS_SP),
-            locationType.STT: ui_settings.get(settingkey.STARTING_UNLOCKS_STT),
-            locationType.TT: ui_settings.get(settingkey.STARTING_UNLOCKS_TT),
-            locationType.TWTNW: ui_settings.get(settingkey.STARTING_UNLOCKS_TWTNW),
-        }
 
         self.form_weights = ui_settings.get(settingkey.WEIGHTED_FORMS)
         self.unlock_weights = ui_settings.get(settingkey.WEIGHTED_UNLOCKS)
@@ -600,8 +613,15 @@ class RandomizerSettings:
         # automatically change the setting in the UI. However, we should be able to safely exclude visit unlocks from
         # being trackable if explicitly starting with all visits. This prevents the clutter in the GoA section of the
         # tracker, where all the visit unlock items just get dumped into GoA immediately upon starting the game.
-        if "visit" in self.hintable_check_types and self.starting_visit_mode is StartingVisitMode.ALL:
-            self.hintable_check_types.remove("visit")
+        start_with_all_unlocks = True
+        if "visit" in self.hintable_check_types:
+            for unlock in storyunlock.all_story_unlocks():
+                explicit_starting_count = self.starting_unlocks_specific[unlock]
+                if explicit_starting_count < unlock.visit_count:
+                    start_with_all_unlocks = False
+                    break
+            if start_with_all_unlocks:
+                self.hintable_check_types.remove("visit")
 
         self.spoiler_hint_values: list[str] = [
             item_type for item_type in ui_settings.get(settingkey.SPOILER_REVEAL_TYPES)
@@ -824,33 +844,19 @@ class RandomizerSettings:
             )
 
 
-        starting_visit_mode = self.starting_visit_mode
         starting_visit_items_count = 0
-        if starting_visit_mode is StartingVisitMode.FIRST:
-            starting_visit_items_count = len(storyunlock.all_story_unlocks())
-        elif starting_visit_mode is StartingVisitMode.ALL:
-            starting_visit_items_count = len(storyunlock.all_individual_story_unlocks())
-        elif starting_visit_mode is StartingVisitMode.RANDOM:
-            # Going to be pessimistic here and assume worst-case of max random
-            starting_visit_items_count = self.starting_visit_random_range[1]
-        elif starting_visit_mode is StartingVisitMode.SPECIFIC:
-            for _, count in self.starting_unlocks_per_world.items():
-                starting_visit_items_count = starting_visit_items_count + count
-        elif starting_visit_mode is StartingVisitMode.CUSTOM:
-            for _, count in self.starting_unlocks_per_world.items():
-                starting_visit_items_count = starting_visit_items_count + count
-            starting_visit_items_count = starting_visit_items_count + self.starting_visit_random_range[1]
+        for _, count in self.starting_unlocks_specific.items():
+            starting_visit_items_count += count
 
+        # Going to be pessimistic here and assume worst-case of max random
+        starting_visit_items_count += self.starting_visit_random_range[1]
         max_unlocks = len(storyunlock.all_individual_story_unlocks())
-        if starting_visit_items_count > max_unlocks:
-            raise SettingsException(
-                f"Starting Visit Unlocks plus Maximum Visits Available is more than {max_unlocks}"
-            )
+
+        # No matter what we won't start with more than the max
+        starting_visit_items_count = min(starting_visit_items_count, max_unlocks)
 
         if starting_visit_items_count + self.shop_unlocks > max_unlocks:
-            raise SettingsException(
-                f"Starting Visit Unlocks plus Visit Unlocks in shop is more than {max_unlocks}"
-            )
+            raise SettingsException(f"Starting Visit Unlocks plus Visit Unlocks in shop is more than {max_unlocks}")
 
         if self.yeetTheBear:
             if proof.ProofOfNonexistence.id in self.starting_inventory_ids:

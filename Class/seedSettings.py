@@ -26,16 +26,14 @@ from List.configDict import (
     locationType,
     locationDepth,
     BattleLevelOption,
-    StartingMovementOption,
     SoraLevelOption,
     location_depth_choices,
     ItemAccessibilityOption,
     SoftlockPreventionOption,
     AbilityPoolOption,
-    StartingVisitMode,
     FinalDoorRequirement,
 )
-from List.inventory import ability, misc, proof, storyunlock, form, summon, keyblade
+from List.inventory import misc, proof, storyunlock, form, summon, keyblade, growth, magic
 from Module import encoding
 from Module import knockbackTypes
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
@@ -558,7 +556,7 @@ def _location_unlock_setting(key: str, location: locationType) -> IntSpinner:
         minimum=0,
         maximum=storyunlock.story_unlock_for_location(location).visit_count,
         step=1,
-        default=0,
+        default=unlock.visit_count,
         tooltip=f"Number of visits to unlock in {location}. Visits are unlocked with {unlock.name}.",
     )
 
@@ -934,48 +932,34 @@ _all_settings = [
         default=False,
         tooltip="Start with abilities auto-equipped (except ones from critical bonuses).",
     ),
-    SingleSelect(
-        name=settingkey.STARTING_MOVEMENT,
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_AERIAL_DODGE, "Aerial Dodge", itemType.GROWTH_ABILITY, 4),
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_DODGE_ROLL, "Dodge Roll", itemType.GROWTH_ABILITY, 4),
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_GLIDE, "Glide", itemType.GROWTH_ABILITY, 4),
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_HIGH_JUMP, "High Jump", itemType.GROWTH_ABILITY, 4),
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_QUICK_RUN, "Quick Run", itemType.GROWTH_ABILITY, 4),
+    IntSpinner(
+        name=settingkey.STARTING_GROWTH_RANDOM_MIN,
         group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Growth Abilities",
-        standalone_label="Starting Growth Abilities",
-        choices={
-            StartingMovementOption.DISABLED: "None",
-            StartingMovementOption.RANDOM_3: "3 Random",
-            StartingMovementOption.RANDOM_5: "5 Random",
-            StartingMovementOption.RANDOM_7: "7 Random",
-            StartingMovementOption.RANDOM_9: "9 Random",
-            StartingMovementOption.LEVEL_1: "Level 1",
-            StartingMovementOption.LEVEL_2: "Level 2",
-            StartingMovementOption.LEVEL_3: "Level 3",
-            StartingMovementOption.LEVEL_4: "Max",
-        },
+        ui_label="Minimum Extra",
+        standalone_label="Min Random Extra Starting Growth",
         shared=True,
-        default="Level_1",
-        tooltip="""
-        None - No guaranteed starting growth.
-        
-        3 Random - Start with 3 individual growths at random.
-        
-        5 Random - Start with 5 individual growths at random.
-        
-        Level 1 - Start with level 1 of all growth abilities.
-        
-        Level 2 - Start with level 2 of all growth abilities.
-        
-        Level 3 - Start with level 3 of all growth abilities.
-        
-        Max - Start with the maximum level of all growth abilities.
-        """,
-        randomizable=[
-            StartingMovementOption.DISABLED,
-            StartingMovementOption.RANDOM_3,
-            StartingMovementOption.RANDOM_5,
-            StartingMovementOption.LEVEL_1,
-            StartingMovementOption.LEVEL_2,
-            StartingMovementOption.LEVEL_3,
-            StartingMovementOption.LEVEL_4,
-        ],
+        minimum=0,
+        maximum=len(growth.all_individual_growth_types()),
+        step=1,
+        default=0,
+        tooltip="Minimum number of random growth abilities to start with (in addition to the specific ones chosen).",
+    ),
+    IntSpinner(
+        name=settingkey.STARTING_GROWTH_RANDOM_MAX,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Maximum Extra",
+        standalone_label="Max Random Extra Starting Growth",
+        shared=True,
+        minimum=0,
+        maximum=len(growth.all_individual_growth_types()),
+        step=1,
+        default=0,
+        tooltip="Maximum number of random growth abilities to start with (in addition to the specific ones chosen).",
     ),
     IntSpinner(
         name=settingkey.STARTING_REPORTS,
@@ -996,6 +980,30 @@ _all_settings = [
     _starting_inventory_setting(settingkey.STARTING_MAGIC_CURE, "Cure", itemType.CURE, 3),
     _starting_inventory_setting(settingkey.STARTING_MAGIC_MAGNET, "Magnet", itemType.MAGNET, 3),
     _starting_inventory_setting(settingkey.STARTING_MAGIC_REFLECT, "Reflect", itemType.REFLECT, 3),
+    IntSpinner(
+        name=settingkey.STARTING_MAGIC_RANDOM_MIN,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Minimum Extra",
+        standalone_label="Min Random Extra Starting Magic",
+        shared=True,
+        minimum=0,
+        maximum=len(magic.all_individual_magics()),
+        step=1,
+        default=0,
+        tooltip="Minimum number of random magic elements to start with (in addition to the specific ones chosen).",
+    ),
+    IntSpinner(
+        name=settingkey.STARTING_MAGIC_RANDOM_MAX,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Maximum Extra",
+        standalone_label="Max Random Extra Starting Magic",
+        shared=True,
+        minimum=0,
+        maximum=len(magic.all_individual_magics()),
+        step=1,
+        default=0,
+        tooltip="Maximum number of random magic elements to start with (in addition to the specific ones chosen).",
+    ),
     _starting_inventory_setting(settingkey.STARTING_PAGES, "Torn Page", itemType.TORN_PAGE, 5),
     MultiSelect(
         name=settingkey.STARTING_KEYBLADES,
@@ -1059,29 +1067,6 @@ _all_settings = [
         shared=True,
         default=[],
         tooltip="Start with the selected items already obtained.",
-    ),
-    MultiSelect(
-        name=settingkey.STARTING_INVENTORY,
-        group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Starting Inventory",
-        choices={
-            str(ability.Scan.id): ability.Scan.name,
-            str(ability.NoExperience.id): ability.NoExperience.name,
-            str(ability.AerialRecovery.id): ability.AerialRecovery.name,
-            str(ability.Guard.id): ability.Guard.name,
-            str(ability.FinishingPlus.id): ability.FinishingPlus.name,
-            str(misc.HadesCupTrophy.id): misc.HadesCupTrophy.name,
-            str(misc.OlympusStone.id): misc.OlympusStone.name,
-            str(misc.UnknownDisk.id): misc.UnknownDisk.name,
-            str(proof.ProofOfConnection.id): proof.ProofOfConnection.name,
-            str(proof.ProofOfNonexistence.id): proof.ProofOfNonexistence.name,
-            str(proof.ProofOfPeace.id): proof.ProofOfPeace.name,
-            # TODO: misc.PromiseCharm.name is "PromiseCharm", need to see if that matters before committing to change
-            str(misc.PromiseCharm.id): "Promise Charm",
-        },
-        shared=True,
-        default=[],
-        tooltip="Start with the selected items/abilities already obtained.",
     ),
     SingleSelect(
         name=settingkey.HINT_SYSTEM,
@@ -2605,57 +2590,6 @@ _all_settings = [
         """,
         randomizable=True,
     ),
-    SingleSelect(
-        name=settingkey.STARTING_VISIT_MODE,
-        group=SettingGroup.LOCATIONS,
-        ui_label="Availability",
-        standalone_label="Visit Availability",
-        choices={option.name: option.value for option in list(StartingVisitMode)},
-        shared=True,
-        default=StartingVisitMode.ALL.name,
-        tooltip="""
-        How "visits" for worlds that have them (the 13 portal worlds) should be initially available.
-        
-        All Visits - All visits of all worlds are available from the beginning of the seed.
-
-        First Visits - All first visits are immediately available, but you must find visit unlock items to
-        access subsequent visits in each visit-capable world.
-
-        No Visits - No world visits are immediately available, outside of the ones that are always present. You
-        must find a visit unlock item in the immediately available areas to proceed. 
-
-        Random Visits - Unlock a random set of visits by starting with random visit unlock items.
-
-        Specific Visits - Unlock a specific set of visits by starting with specific visit unlock items.
-
-        Custom - Combination of the "Random Visits" and "Specific Visits" modes. Unlock a specific set of
-        visits, and then additionally unlock a random set of visits.
-        """,
-    ),
-    IntSpinner(
-        name=settingkey.STARTING_VISIT_RANDOM_MIN,
-        group=SettingGroup.LOCATIONS,
-        ui_label="Minimum Visits Available",
-        standalone_label="Min Random Visits Available",
-        shared=True,
-        minimum=0,
-        maximum=len(storyunlock.all_individual_story_unlocks()),
-        step=1,
-        default=3,
-        tooltip="Minimum number of random visits to unlock at the start.",
-    ),
-    IntSpinner(
-        name=settingkey.STARTING_VISIT_RANDOM_MAX,
-        group=SettingGroup.LOCATIONS,
-        ui_label="Maximum Visits Available",
-        standalone_label="Max Random Visits Available",
-        shared=True,
-        minimum=0,
-        maximum=len(storyunlock.all_individual_story_unlocks()),
-        step=1,
-        default=3,
-        tooltip="Maximum number of random visits to unlock at the start.",
-    ),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_SP, location=locationType.SP),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_PR, location=locationType.PR),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_TT, location=locationType.TT),
@@ -2669,6 +2603,30 @@ _all_settings = [
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_HB, location=locationType.HB),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_DC, location=locationType.DC),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_STT, location=locationType.STT),
+    IntSpinner(
+        name=settingkey.STARTING_VISIT_RANDOM_MIN,
+        group=SettingGroup.LOCATIONS,
+        ui_label="Minimum Extra",
+        standalone_label="Min Random Extra Visits Available",
+        shared=True,
+        minimum=0,
+        maximum=len(storyunlock.all_individual_story_unlocks()),
+        step=1,
+        default=3,
+        tooltip="Minimum number of random visits to unlock at the start (in addition to the specific ones chosen).",
+    ),
+    IntSpinner(
+        name=settingkey.STARTING_VISIT_RANDOM_MAX,
+        group=SettingGroup.LOCATIONS,
+        ui_label="Maximum Extra",
+        standalone_label="Max Random Extra Visits Available",
+        shared=True,
+        minimum=0,
+        maximum=len(storyunlock.all_individual_story_unlocks()),
+        step=1,
+        default=3,
+        tooltip="Maximum number of random visits to unlock at the start (in addition to the specific ones chosen).",
+    ),
     Toggle(
         name=settingkey.MAPS_IN_ITEM_POOL,
         group=SettingGroup.ITEM_POOL,

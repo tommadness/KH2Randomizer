@@ -18,7 +18,7 @@ class Tests(unittest.TestCase):
         """
         seed_settings = SeedSettings()
         seed_settings.set(settingkey.YEET_THE_BEAR, True)
-        seed_settings.set(settingkey.STARTING_INVENTORY, [proof.ProofOfNonexistence.id])
+        seed_settings.set(settingkey.STARTING_ITEMS, [proof.ProofOfNonexistence.id])
 
         for seed_name in seedtest.test_seed_names():
             with self.assertRaises(SettingsException):
