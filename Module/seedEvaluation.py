@@ -1,22 +1,38 @@
-
-
-import random
-from altgraph.Graph import Graph
 import copy
-import itertools
+import random
+
+from altgraph.Graph import Graph
 
 from Class.exceptions import ValidationException
-from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
 from List.NewLocationList import get_all_parent_edge_requirements, Locations
 from List.configDict import ItemAccessibilityOption, locationType
 from List.inventory import storyunlock, keyblade, proof, form, magic, misc
-from List.location import simulatedtwilighttown as stt
-from List.location import worldthatneverwas as twtnw
+from List.inventory.misc import NullItem
+from List.location import (
+    agrabah as ag,
+    atlantica as at,
+    beastscastle as bc,
+    disneycastle as dc,
+    halloweentown as ht,
+    hollowbastion as hb,
+    hundredacrewood as haw,
+    landofdragons as lod,
+    olympuscoliseum as oc,
+    portroyal as pr,
+    pridelands as pl,
+    simulatedtwilighttown as stt,
+    spaceparanoids as sp,
+    twilighttown as tt,
+    worldthatneverwas as twtnw,
+    formlevel,
+    starting,
+)
 from List.location.graph import RequirementFunction
 from Module.RandomizerSettings import RandomizerSettings
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 from Module.newRandomize import Randomizer, SynthesisRecipe
+from Module.resources import resource_path
 
 
 class ValidationResult:
@@ -393,3 +409,142 @@ class LocationInformedSeedValidator:
             #         if loc_req[0] == assignment.location:
             #             print(f"---{assignment.item.Name}")
             raise ValidationException(f"Completion checking failed to collect {len(location_requirements)} items")
+
+
+class SeedCheckerLuaGenerator:
+
+    def __init__(self, randomizer: Randomizer, verbose: bool):
+        super().__init__()
+        self.randomizer = randomizer
+        self.verbose = verbose
+
+    def get_script_content(self) -> str:
+        lua_file_text = ""
+        with open(resource_path("static/RandoSeedChecker.lua"), encoding="utf-8") as opened_file:
+            lua_file_text = opened_file.read()
+
+        lua_code_lines: list[str] = []
+        if self.verbose:
+            lua_code_lines.append("verbose = true")
+
+        def add_checks(fn_name: str, addresses_and_locations: list[tuple[int, str]]):
+            for pair in addresses_and_locations:
+                address, location_name = pair
+
+                assignment = self.randomizer.assignment_for_location(location_name)
+                if assignment is not None:
+                    assignment_item = assignment.item
+                    if assignment_item is not None and assignment_item.item != NullItem:
+                        label = location_name if self.verbose else ""
+                        lua_code_lines.append(
+                            f'    {fn_name}(0x{address:X}, {assignment_item.item.id}, "{label}")'
+                        )
+
+        def add_level_checks(addresses_and_levels: list[tuple[int, int]]):
+            for pair in addresses_and_levels:
+                address, level = pair
+
+                assignment = self.randomizer.assignment_for_sword_level(level)
+                if assignment is not None:
+                    assignment_item = assignment.item
+                    if assignment_item is not None and assignment_item.item != NullItem:
+                        label = f"Level {level}" if self.verbose else ""
+                        lua_code_lines.append(
+                            f'    check_level_up_item(0x{address:X}, {assignment_item.item.id}, "{label}")'
+                        )
+
+        add_checks(
+            "check_chest_item",
+            [
+                (0x1CDF826, ag.CheckLocation.AgrabahDarkShard),
+                (0x1CDF8CE, ag.CheckLocation.CaveEntrancePowerStone),
+                (0x1CDFC16, bc.CheckLocation.BellesRoomCastleMap),
+                (0x1CDFCE2, bc.CheckLocation.BeastsRoomBlazingShard),
+                (0x1CDF95E, dc.CheckLocation.CornerstoneHillMap),
+                (0x1CDFA06, dc.CheckLocation.LibraryTornPages),
+                (0x1CDFD96, ht.CheckLocation.GraveyardMythrilShard),
+                (0x1CDFDF6, ht.CheckLocation.CandyCaneLaneMegaPotion),
+                (0x1CDFF3A, hb.CheckLocation.BoroughDriveRecovery),
+                (0x1CDFFD6, hb.CheckLocation.UkuleleCharm),
+                (0x1CE001E, hb.CheckLocation.CrystalFissureApBoost),
+                (0x1CE0036, hb.CheckLocation.HeartlessManufactoryCosmicChain),
+                (0x1CE0522, hb.CheckLocation.CorDepthsUpperLevelRemembranceGem),
+                (0x1CE0576, hb.CheckLocation.CorEngineChamberSerenityCrystal),
+                (0x1CDFA12, haw.CheckLocation.PoohsHowseHundredAcreWoodMap),
+                (0x1CDFAA2, haw.CheckLocation.SpookyCaveMyhtrilGem),
+                (0x1CDF72A, lod.CheckLocation.BambooGroveDarkShard),
+                (0x1CDF7C6, lod.CheckLocation.ThroneRoomTornPages),
+                (0x1CDFB02, oc.CheckLocation.UnderworldEntrancePowerBoost),
+                (0x1CDFBCE, oc.CheckLocation.LockCavernsMap),
+                (0x1CDFE3E, pr.CheckLocation.RampartNavalMap),
+                (0x1CDFEE6, pr.CheckLocation.InterceptorsHoldFeatherCharm),
+                (0x1CE005A, pl.CheckLocation.GorgeMyhtrilStone),
+                (0x1CE0126, pl.CheckLocation.JungleSerenityGem),
+                (0x1CE0192, stt.CheckLocation.CentralStationHiPotion),
+                (0x1CE0216, stt.CheckLocation.MansionLibraryHiPotion),
+                (0x1CDFCEE, sp.CheckLocation.PitCellAreaMap),
+                (0x1CDFD66, sp.CheckLocation.CentralComputerCoreApBoost),
+                (0x1CE0246, tt.CheckLocation.WoodsPotion),
+                (0x1CE0282, tt.CheckLocation.TramCommonTent),
+                (0x1CE0282, tt.CheckLocation.TramCommonTent),
+                (0x1CE0306, tt.CheckLocation.TowerEntrywayEther),
+                (0x1CE03EA, tt.CheckLocation.MansionLibraryOrichalcum),
+                (0x1CE041A, twtnw.CheckLocation.FragmentCrossingApBoost),
+                (0x1CE0486, twtnw.CheckLocation.TwilightsViewCosmicBelt),
+                (0x1CE04CE, twtnw.CheckLocation.RuinCreationsPassageMythrilCrystal),
+                (0x1CE05E2, starting.CheckLocation.GardenOfAssemblageMap),
+            ]
+        )
+
+        add_checks(
+            "check_popup_item",
+            [
+                (0x107A, ag.CheckLocation.LampCharm),
+                (0x11D6, at.CheckLocation.MusicalOrichalcumPlus),
+                (0x112E, bc.CheckLocation.RumblingRose),
+                (0x103E, dc.CheckLocation.WisdomForm),
+                (0x13F2, dc.CheckLocation.LingeringWillProofOfConnection),
+                (0x11A6, ht.CheckLocation.DecoyPresents),
+                (0x140A, hb.CheckLocation.WinnersProof),
+                (0x11FA, haw.CheckLocation.StarryHillCureElement),
+                (0x13C2, lod.CheckLocation.DataXigbarDefenseBoost),
+                (0x1332, oc.CheckLocation.ZexionBookOfShadows),
+                (0x1176, oc.CheckLocation.TitanCupGenjiShield),
+                (0x1152, pr.CheckLocation.SeadriftRowShipGraveyardMap),
+                (0x109E, pl.CheckLocation.ScarFireElement),
+                (0x0EEE, stt.CheckLocation.StruggleWinnerChampionBelt),
+                (0x0F06, stt.CheckLocation.StruggleTrophy),
+                (0x13E6, stt.CheckLocation.DataRoxasMagicBoost),
+                (0x10F2, sp.CheckLocation.PhotonDebugger),
+                (0x1242, tt.CheckLocation.BetwixtAndBetweenBondOfFlame),
+                (0x12DE, twtnw.CheckLocation.LuxordSecretAnsemReport9),
+                (0x13B6, twtnw.CheckLocation.DataXemnas),
+            ]
+        )
+
+        add_level_checks(
+            [
+                (0x054, 2),
+                (0x0D4, 10),
+                (0x174, 20),
+                (0x214, 30),
+                (0x354, 50),
+                (0x664, 99),
+            ]
+        )
+
+        add_checks(
+            "check_form_level_item",
+            [
+                (0x0044, formlevel.CheckLocation.Valor2),
+                (0x005C, formlevel.CheckLocation.Valor5),
+                (0x006C, formlevel.CheckLocation.Valor7),
+                (0x0084, formlevel.CheckLocation.Wisdom3),
+                (0x00DC, formlevel.CheckLocation.Limit7),
+                (0x00EC, formlevel.CheckLocation.Master2),
+                (0x0144, formlevel.CheckLocation.Final6),
+            ]
+        )
+
+        lua_file_text = lua_file_text.replace("-- {REPLACE_ME}", "\n".join(lua_code_lines))
+        return lua_file_text
