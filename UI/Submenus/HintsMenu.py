@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QPushButton
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
+from List.configDict import HintType
 from UI.Submenus.ProgressionPointsDialog import ProgressionPointsDialog
 from UI.Submenus.SubMenu import KH2Submenu
 
@@ -104,74 +105,36 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REVEAL_END, visible=progression_on)
 
     def _hint_system_changed(self):
-        hint_system = self.settings.get(settingkey.HINT_SYSTEM)
-        score_mode_enabled = hint_system == "Points" or self.settings.get(
-            settingkey.SCORE_MODE
-        )
-        progression_points = self.settings.get(settingkey.PROGRESSION_HINTS)
+        hint_type = HintType(self.settings.get(settingkey.HINT_SYSTEM))
+        score_mode_enabled = self.settings.get(settingkey.SCORE_MODE)
 
-        if hint_system == "Disabled":
+        if hint_type == HintType.DISABLED:
             _, widget = self.widgets_and_settings_by_name[settingkey.PROGRESSION_HINTS]
             widget.setChecked(False)
 
-        # self.set_option_visibility(settingkey.REPORT_DEPTH, visible=hint_system in ['JSmartee', 'Points', 'Path'])
-        self.set_option_visibility(
-            settingkey.PROGRESSION_HINTS, visible=hint_system != "Disabled"
-        )
+        self.set_option_visibility(settingkey.PROGRESSION_HINTS, visible=hint_type != HintType.DISABLED)
         self.set_option_visibility(
             settingkey.PREVENT_SELF_HINTING,
-            visible=hint_system in ["JSmartee", "Points", "Spoiler"],
+            visible=hint_type in [HintType.JSMARTEE, HintType.POINTS, HintType.SPOILER],
         )
-        self.set_option_visibility(
-            settingkey.SCORE_MODE,
-            visible=hint_system in ["JSmartee", "Shananas", "Spoiler", "Path"],
-        )
-        # self.set_option_visibility(
-        #     settingkey.ALLOW_PROOF_HINTING, visible=hint_system == "Points"
-        # )
-        # self.set_option_visibility(
-        #     settingkey.ALLOW_REPORT_HINTING, visible=hint_system == "Points"
-        # )
 
         self.set_group_visibility(
-            group_id=_ITEM_POINT_VALUES, visible=score_mode_enabled
+            group_id=_ITEM_POINT_VALUES,
+            visible=score_mode_enabled or hint_type == HintType.POINTS
         )
         self.set_group_visibility(group_id=_SET_BONUSES, visible=score_mode_enabled)
-        self.set_group_visibility(
-            group_id=_MISC_POINT_VALUES, visible=score_mode_enabled
-        )
+        self.set_group_visibility(group_id=_MISC_POINT_VALUES, visible=score_mode_enabled)
 
+        self.set_group_visibility(group_id=_HINTABLE_ITEMS, visible=hint_type != HintType.DISABLED)
+        self.set_option_visibility(settingkey.REVEAL_COMPLETE, visible=hint_type == HintType.SPOILER)
+        self.set_option_visibility(settingkey.REPORTS_REVEAL, visible=hint_type == HintType.SPOILER)
         self.set_group_visibility(
-            group_id=_HINTABLE_ITEMS, visible=hint_system != "Disabled"
+            group_id=_SPOILED_ITEMS,
+            visible=hint_type == HintType.SPOILER or hint_type == HintType.POINTS
         )
-        self.set_option_visibility(
-            settingkey.REVEAL_COMPLETE, visible=hint_system == "Spoiler"
-        )
-        self.set_option_visibility(
-            settingkey.REPORTS_REVEAL, visible=hint_system == "Spoiler"
-        )
-        self.set_group_visibility(
-            group_id=_SPOILED_ITEMS, visible=hint_system == "Spoiler" or hint_system == "Points"
-        )
-        if hint_system != "Spoiler":
-            setting, widget = self.widgets_and_settings_by_name[
-                settingkey.REPORTS_REVEAL
-            ]
+        if hint_type != HintType.SPOILER:
+            setting, widget = self.widgets_and_settings_by_name[settingkey.REPORTS_REVEAL]
             widget.setCurrentIndex(0)
-        # if (
-        #     hint_system in ["JSmartee", "Points", "Spoiler", "Path"]
-        #     and not progression_points
-        # ):
-        #     setting, widget = self.widgets_and_settings_by_name[
-        #         settingkey.HINTABLE_CHECKS
-        #     ]
-        #     for selected in setting.choice_keys:
-        #         if selected == "report":
-        #             index = setting.choice_keys.index(selected)
-        #             widget.item(index).setSelected(True)
-        #             widget.item(index).setFlags(
-        #                 Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled
-        #             )
 
     def _configure_progression_points(self):
         dialog = ProgressionPointsDialog(self, self.settings)
