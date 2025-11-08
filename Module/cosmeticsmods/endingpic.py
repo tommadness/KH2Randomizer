@@ -2,7 +2,7 @@ import os
 import random
 from pathlib import Path
 
-from Class.openkhmod import Asset
+from Class.openkhmod import ModAsset, AssetPlatform
 from List import configDict
 from Module import appconfig
 
@@ -68,10 +68,10 @@ class EndingPictureRandomizer:
         }
 
     @staticmethod
-    def randomize_end_screen(setting: str) -> list[Asset]:
+    def randomize_end_screen(setting: str) -> list[ModAsset]:
         """Randomizes the ending screen, returning a list of assets to be added to a mod."""
 
-        assets: list[Asset] = []
+        assets: list[ModAsset] = []
         if setting == configDict.VANILLA:
             return assets
 
@@ -92,28 +92,22 @@ class EndingPictureRandomizer:
 
         if setting == configDict.RANDOMIZE_IN_GAME_ONLY:
             for endpic_list in vanilla_by_region.values():
-                choice = random.choice(endpic_list)
-                assets.append({
-                    "name": endpic_list[0],
-                    "platform": "pc",
-                    "multi": [{"name": endpic} for endpic in endpic_list[1:]],
-                    "method": "copy",
-                    "source": [{
-                        "name": choice,
-                        "type": "internal",
-                    }]
-                })
+                game_choice: str = random.choice(endpic_list)
+                assets.append(ModAsset.make_copy_asset(
+                    game_files=endpic_list,
+                    platform=AssetPlatform.PC,
+                    source_file=game_choice,
+                    internal=True,
+                ))
 
         if setting == configDict.RANDOMIZE_CUSTOM_ONLY and len(custom) > 0:
-            choice = random.choice(custom)
+            custom_choice: Path = random.choice(custom)
             for endpic_list in vanilla_by_region.values():
-                assets.append({
-                    "name": endpic_list[0],
-                    "platform": "pc",
-                    "multi": [{"name": endpic} for endpic in endpic_list[1:]],
-                    "method": "copy",
-                    "source": [{"name": str(choice)}]
-                })
+                assets.append(ModAsset.make_copy_asset(
+                    game_files=endpic_list,
+                    platform=AssetPlatform.PC,
+                    source_file=custom_choice,
+                ))
 
         return assets
 

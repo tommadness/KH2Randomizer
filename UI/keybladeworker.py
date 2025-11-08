@@ -5,8 +5,8 @@ from typing import Optional
 
 from PySide6.QtWidgets import QProgressDialog
 
-from Module.cosmeticsmods.keyblade import KeybladeRandomizer
-from Module.cosmeticsmods.keybladepack import Kh1KeybladePack, BirthBySleepKeybladePack
+from Module.cosmeticsmods.keyblademod import KeybladeMod, Kh1KeybladePack, BirthBySleepKeybladePack, \
+    VanillaKeybladePack, PackagedKeyblade
 from UI.qtlib import show_alert
 from UI.workers import BaseWorkerThread, BaseWorker
 
@@ -14,7 +14,7 @@ from UI.workers import BaseWorkerThread, BaseWorker
 class ExtractVanillaKeybladesThread(BaseWorkerThread):
 
     def do_work(self) -> Path:
-        return KeybladeRandomizer.extract_game_models()
+        return VanillaKeybladePack.extract_vanilla_keyblades()
 
 
 class ExtractVanillaKeybladesWorker(BaseWorker):
@@ -31,7 +31,7 @@ class ExtractVanillaKeybladesWorker(BaseWorker):
 
 class ImportCustomKeybladesThread(BaseWorkerThread):
 
-    def __init__(self, keyblade_file_paths: list[str]):
+    def __init__(self, keyblade_file_paths: list[Path]):
         super().__init__()
         self.keyblade_file_paths = keyblade_file_paths
 
@@ -39,13 +39,13 @@ class ImportCustomKeybladesThread(BaseWorkerThread):
         count = len(self.keyblade_file_paths)
         if count > 0:
             for keyblade_file_path in self.keyblade_file_paths:
-                KeybladeRandomizer.import_keyblade(keyblade_file_path)
+                PackagedKeyblade.import_keyblade(keyblade_file_path)
         return count
 
 
 class ImportCustomKeybladesWorker(BaseWorker):
 
-    def __init__(self, keyblade_file_paths: list[str]):
+    def __init__(self, keyblade_file_paths: list[Path]):
         super().__init__()
         self.keyblade_file_paths = keyblade_file_paths
 
@@ -62,7 +62,7 @@ class ImportCustomKeybladesWorker(BaseWorker):
 class ImportKh1KeybladePackThread(BaseWorkerThread):
 
     def do_work(self) -> Path:
-        base_path = Path("cache/kh1-keyblade-pack")
+        base_path = Path("cache", "kh1-keyblade-pack")
         Kh1KeybladePack.download_keyblade_pack(base_path)
 
         children = os.listdir(base_path)
@@ -91,7 +91,7 @@ class ImportKh1KeybladePackWorker(BaseWorker):
 class ImportBirthBySleepKeybladePackThread(BaseWorkerThread):
 
     def do_work(self) -> Path:
-        base_path = Path("cache/birth-by-sleep-keyblade-pack")
+        base_path = Path("cache", "birth-by-sleep-keyblade-pack")
         BirthBySleepKeybladePack.download_keyblade_pack(base_path)
 
         children = os.listdir(base_path)
@@ -115,3 +115,29 @@ class ImportBirthBySleepKeybladePackWorker(BaseWorker):
 
     def handle_result(self, result: Path):
         show_alert(f"Imported keyblades to [{str(result.absolute())}]", title="Keyblade Import")
+
+
+class ImportModKeybladesThread(BaseWorkerThread):
+
+    def __init__(self, mod: KeybladeMod):
+        super().__init__()
+        self.mod = mod
+
+    def do_work(self) -> Path:
+        return self.mod.import_keyblades()
+
+
+class ImportModKeybladesWorker(BaseWorker):
+
+    def __init__(self, mod: KeybladeMod):
+        super().__init__()
+        self.mod = mod
+
+    def create_worker_thread(self) -> BaseWorkerThread:
+        return ImportModKeybladesThread(self.mod)
+
+    def create_progress_dialog(self) -> Optional[QProgressDialog]:
+        return self.basic_wait_dialog("Importing keyblade(s)")
+
+    def handle_result(self, result: Path):
+        show_alert(f"Imported keyblade(s) to [{str(result.absolute())}]", title="Keyblade Import")

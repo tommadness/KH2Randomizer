@@ -1,17 +1,79 @@
 import json
-import os
 import random
 import shutil
-import subprocess
+import struct
+from enum import Enum
 from pathlib import Path
 from typing import Optional, Any
 
 from Class.exceptions import GeneratorException
-from Class.openkhmod import Asset
+from Class.openkhmod import AssetPlatform, BinarcMethod, ModAsset, ModBinarcSource, ModSourceFile, StrDict, \
+    ObjectEntries
 from List import configDict
 from Module import appconfig
+from Module.cosmeticsmods.openkh import BinaryArchiver
+from Module.paths import child_with_extension, children_with_extension
+from Module.resources import resource_path
 
-_KEYBLADE_VERSION = 1
+ITEMPIC = "itempic"
+REMASTERED_EFFECTS = "remastered-effects"
+REMASTERED_TEXTURES = "remastered-textures"
+
+
+class KeybladeModelVariant(str, Enum):
+    BASE = "base"
+    NIGHTMARE = "nm"
+    TRON = "tr"
+    WILLIE = "wi"
+
+    def game_path_suffix(self) -> str:
+        """Suffix used by game files for this variant."""
+        if self == KeybladeModelVariant.NIGHTMARE:
+            return "_NM"
+        elif self == KeybladeModelVariant.TRON:
+            return "_TR"
+        elif self == KeybladeModelVariant.WILLIE:
+            return "_WI"
+        else:
+            return ""
+
+    def keyblade_mod_subdir_name(self) -> str:
+        """Subdirectory used by keyblade mods for this variant."""
+        return self.value
+
+
+class KeybladePathVariants:
+    """Associates a Path with each keyblade model variant."""
+
+    def __init__(self):
+        super().__init__()
+        self._paths: dict[KeybladeModelVariant, Path] = {}
+
+    def variant(self, variant: KeybladeModelVariant) -> Path:
+        """Returns the path for the given variant."""
+        return self._paths.get(variant, Path())
+
+    def apply(self, variant: KeybladeModelVariant, value: Path):
+        """Assigns the given path to the given variant."""
+        self._paths[variant] = value
+
+    def variants(self) -> list[tuple[KeybladeModelVariant, Path]]:
+        """Returns each variant paired with its associated path."""
+        return [(variant, self.variant(variant)) for variant in KeybladeModelVariant]
+
+
+class KeybladeDdsVariants:
+    """Associates Paths for .dds files with each keyblade world variant."""
+
+    def __init__(self):
+        super().__init__()
+        self._data: dict[KeybladeModelVariant, dict[str, Path]] = {}
+
+    def variant(self, variant: KeybladeModelVariant) -> dict[str, Path]:
+        """Returns the stored mappings for the given variant."""
+        if variant not in self._data:
+            self._data[variant] = {}
+        return self._data[variant]
 
 
 class VanillaKeyblade:
@@ -22,194 +84,427 @@ class VanillaKeyblade:
             itempic_index: str,
             sound_name: str,
             model_name: str,
-            custom: bool = False,
-            can_replace_effects: bool = True
+            text_id: int,
     ):
         super().__init__()
         self.name = name
         self.itempic_index = itempic_index
         self.sound_name = sound_name
         self.model_name = model_name
-        self.custom = custom
+        self.text_id = text_id
         # We were previously using this to allow certain keyblades (Oathkeeper and Sleeping Lion specifically) to fully
         # opt out of having their effects replaced due to sound effects getting messed up, even if just visual effects
         # were replaced. This doesn't seem to be a problem in more recent testing, either due to OpenKH Mods Manager /
         # Panacea updates, or due to the adding of a dummy wave file to randomized keyblades. If we are able to
-        # reproduce this again in the future, make sure to document which custom keyblades are having the problem. We
-        # could look into generating our own SEB files that customize the sound effect IDs which may be another
-        # potential solution.
-        self.can_replace_effects = can_replace_effects
+        # reproduce this again in the future, make sure to document which custom keyblades are having the problem.
+        self.can_replace_effects = True
 
 
-def _safe_list(path: Path) -> list[str]:
-    if path.is_dir():
-        return os.listdir(path)
-    else:
-        return []
+class VanillaKeybladePaths:
+    """Accumulates the file paths for a vanilla keyblade, relative to a root."""
+
+    def __init__(self, itempic_index: str, model_name: str, sound_name: str, root: Path = Path()):
+        super().__init__()
+
+        imd_name = f"item-{itempic_index}.imd"
+        self.itempic = root / "itempic" / imd_name
+        self.remastered_itempic = root / "remastered" / "itempic" / imd_name / "-0.dds"
+
+        obj = root / "obj"
+        remastered_obj = root / "remastered" / "obj"
+        self.mdlx_files = self._path_variants(base_path=obj, stem=model_name, extension="mdlx")
+        self.fx_files = self._path_variants(base_path=obj, stem=model_name, extension="a.us")
+        self.remastered_mdlx_dirs = self._path_variants(base_path=remastered_obj, stem=model_name, extension="mdlx")
+        self.remastered_fx_dirs = self._path_variants(base_path=remastered_obj, stem=model_name, extension="a.us")
+
+        self.scd_files = self._path_variants(base_path=remastered_obj, stem=model_name, extension="a.us")
+        for variant, path in self.scd_files.variants():
+            self.scd_files.apply(variant, path / "se" / "obj" / sound_name)
+
+    @staticmethod
+    def _path_variants(base_path: Path, stem: str, extension: str) -> KeybladePathVariants:
+        variants = KeybladePathVariants()
+        for model_variant in KeybladeModelVariant:
+            variants.apply(model_variant, base_path / f"{stem}{model_variant.game_path_suffix()}.{extension}")
+        return variants
+
+    @staticmethod
+    def for_vanilla_key(vanilla_key: VanillaKeyblade, root: Path = Path()) -> "VanillaKeybladePaths":
+        return VanillaKeybladePaths(
+            itempic_index=vanilla_key.itempic_index,
+            model_name=vanilla_key.model_name,
+            sound_name=vanilla_key.sound_name,
+            root=root,
+        )
+
+
+class AddOnKeyblade:
+
+    def __init__(
+            self,
+            name: str,
+            itempic_index: str,
+            override_sound_id: int,
+            goa_mdlx_name_for_collision: str,
+            override_model_name: str,
+            objentry_object_ids: dict[KeybladeModelVariant, int],
+            objentry_pages: dict[KeybladeModelVariant, int],
+    ):
+        super().__init__()
+        self.name = name
+        self.itempic_index = itempic_index
+        self.override_sound_id = override_sound_id
+        self.goa_mdlx_name_for_collision = goa_mdlx_name_for_collision
+        self.override_model_name = override_model_name
+        self._objentry_object_ids = objentry_object_ids
+        self._objentry_pages = objentry_pages
+
+    @staticmethod
+    def keyblade_collisions_dir() -> Path:
+        return Path("cache/keyblade-collisions").absolute()
+
+    def override_model_name_variant(self, variant: KeybladeModelVariant) -> str:
+        return f"{self.override_model_name}{variant.game_path_suffix()}"
+
+    def override_sound_name(self) -> str:
+        return f"se{self.override_sound_id}"
+
+    def objentry_object_id(self, variant: KeybladeModelVariant) -> int:
+        return self._objentry_object_ids[variant]
+
+    def objentry_page(self, variant: KeybladeModelVariant) -> int:
+        return self._objentry_pages[variant]
+
+    def collision_file(self) -> Optional[Path]:
+        candidate = self.keyblade_collisions_dir() / f"{self.name}.collision"
+        if candidate.is_file():
+            return candidate
+        else:
+            return None
+
+    @staticmethod
+    def extract_goa_collisions_if_needed() -> Path:
+        keyblade_collisions_dir = AddOnKeyblade.keyblade_collisions_dir()
+        keyblade_collisions_dir.mkdir(parents=True, exist_ok=True)
+
+        found_all_collisions = True
+        for add_on_key in add_on_keyblades():
+            if add_on_key.collision_file() is None:
+                found_all_collisions = False
+                break
+
+        if found_all_collisions:
+            return keyblade_collisions_dir
+
+        goa_mod_path = appconfig.goa_mod_path()
+        if goa_mod_path is None:
+            raise GeneratorException("Can't find GoA ROM mod. Can't extract GoA keyblades.")
+
+        binary_archiver = BinaryArchiver()
+
+        for add_on_key in add_on_keyblades():
+            if add_on_key.collision_file() is not None:
+                continue
+
+            key_name = add_on_key.name
+            key_dir = keyblade_collisions_dir / key_name
+            key_dir.mkdir(parents=True, exist_ok=True)
+
+            goa_keyblade_mdlx = goa_mod_path / "obj" / add_on_key.goa_mdlx_name_for_collision
+            if not goa_keyblade_mdlx.is_file():
+                raise GeneratorException(f"Can't find [{str(goa_keyblade_mdlx)}] to extract keyblade collision.")
+            binary_archiver.extract_bar(goa_keyblade_mdlx, key_dir)
+
+            collision_file = child_with_extension(key_dir, ".collision")
+            if collision_file is not None:
+                shutil.move(collision_file, keyblade_collisions_dir / f"{key_name}.collision")
+
+            shutil.rmtree(key_dir)
+
+            if collision_file is None:
+                raise GeneratorException(f"Couldn't find a collision file in [{str(goa_keyblade_mdlx)}].")
+
+            print(f"Extracted collision from {key_name}")
+
+        return keyblade_collisions_dir
 
 
 class ReplacementKeyblade:
 
-    def __init__(self, name: str, path: Path, keyblade_json_path: Path):
+    def __init__(self, name: str, keyblade_dir: Path, keyblade_json_file: Path):
         self.name = name
-        self.path = path
+        self.keyblade_dir = keyblade_dir
         self.version = -1
         self.author: Optional[str] = None
         self.source: Optional[str] = None
 
-        with open(keyblade_json_path, encoding="utf-8") as keyblade_json_file:
-            keyblade_json: dict[str, Any] = json.load(keyblade_json_file)
+        with open(keyblade_json_file, encoding="utf-8") as opened_file:
+            keyblade_json: dict[str, Any] = json.load(opened_file)
             self.name = keyblade_json.get("name", self.name)
             self.version = keyblade_json.get("version", -1)
             self.author = keyblade_json.get("author", None)
             self.source = keyblade_json.get("source", None)
 
-    def model(self, model_type: str) -> Optional[Path]:
-        full_path = self.path / model_type
-        for file in _safe_list(full_path):
-            name, extension = os.path.splitext(file)
-            if extension == ".model":
-                return full_path / file
-        if model_type == "base":
-            return None
-        else:
-            return self.model("base")
-
-    def texture(self, model_type: str) -> Optional[Path]:
-        full_path = self.path / model_type
-        for file in _safe_list(full_path):
-            name, extension = os.path.splitext(file)
-            if extension == ".tim" or extension == ".texture":
-                return full_path / file
-        if model_type == "base":
-            return None
-        else:
-            return self.texture("base")
-
-    def pax(self, model_type: str) -> Optional[Path]:
-        full_path = self.path / model_type
-        for file in _safe_list(full_path):
-            name, extension = os.path.splitext(file)
-            if extension == ".pax":
-                return full_path / file
-        if model_type == "base":
-            return None
-        else:
-            return self.pax("base")
-
-    def remastered_textures(self, model_type: str) -> list[Path]:
-        full_path = self.path / model_type / "remastered-textures"
-        if not full_path.is_dir():
-            if model_type == "base":
-                return []
-            else:
-                return self.remastered_textures("base")
-
-        textures: list[Path] = []
-        for file in _safe_list(full_path):
-            name, extension = os.path.splitext(file)
-            if extension == ".dds":
-                textures.append(full_path / file)
-
-        if len(textures) == 0:
-            if model_type == "base":
-                return []
-            else:
-                return self.remastered_textures("base")
-
-        return textures
-
-    def remastered_effects(self, model_type: str) -> list[Path]:
-        full_path = self.path / model_type / "remastered-effects"
-        if not full_path.is_dir():
-            if model_type == "base":
-                return []
-            else:
-                return self.remastered_effects("base")
-
-        textures: list[Path] = []
-        for file in _safe_list(full_path):
-            name, extension = os.path.splitext(file)
-            if extension == ".dds":
-                textures.append(full_path / file)
-
-        if len(textures) == 0:
-            if model_type == "base":
-                return []
-            else:
-                return self.remastered_effects("base")
-
-        return textures
-
-    def remastered_sound(self, model_type: str) -> Optional[Path]:
-        full_path = self.path / model_type
-        for file in _safe_list(full_path):
-            name, extension = os.path.splitext(file)
-            if extension == ".scd":
-                return full_path / file
-        if model_type == "base":
-            return None
-        else:
-            return self.remastered_sound("base")
-
     def original_itempic(self) -> Optional[Path]:
-        full_path = self.path / "itempic"
-        for file in _safe_list(full_path):
-            name, extension = os.path.splitext(file)
-            if extension == ".imd":
-                return full_path / file
-        return None
+        return child_with_extension(self.keyblade_dir / ITEMPIC, ".imd")
 
     def remastered_itempic(self) -> Optional[Path]:
-        full_path = self.path / "itempic"
-        for file in _safe_list(full_path):
-            name, extension = os.path.splitext(file)
-            if extension == ".dds":
-                return full_path / file
-        return None
+        return child_with_extension(self.keyblade_dir / ITEMPIC, ".dds")
+
+    def model(self, variant: KeybladeModelVariant) -> Optional[Path]:
+        full_path = self.keyblade_dir / variant.keyblade_mod_subdir_name()
+        file = child_with_extension(full_path, ".model")
+        if file is not None:
+            return file
+        elif variant == KeybladeModelVariant.BASE:
+            return None
+        else:
+            return self.model(KeybladeModelVariant.BASE)
+
+    def texture(self, variant: KeybladeModelVariant) -> Optional[Path]:
+        full_path = self.keyblade_dir / variant.keyblade_mod_subdir_name()
+        file = child_with_extension(full_path, ".tim", ".texture")
+        if file is not None:
+            return file
+        elif variant == KeybladeModelVariant.BASE:
+            return None
+        else:
+            return self.texture(KeybladeModelVariant.BASE)
+
+    def pax(self, variant: KeybladeModelVariant) -> Optional[Path]:
+        full_path = self.keyblade_dir / variant.keyblade_mod_subdir_name()
+        file = child_with_extension(full_path, ".pax")
+        if file is not None:
+            return file
+        elif variant == KeybladeModelVariant.BASE:
+            return None
+        else:
+            return self.pax(KeybladeModelVariant.BASE)
+
+    def remastered_textures(self, variant: KeybladeModelVariant) -> list[Path]:
+        full_path = self.keyblade_dir / variant.keyblade_mod_subdir_name() / REMASTERED_TEXTURES
+        textures = children_with_extension(full_path, ".dds")
+        if textures:
+            return textures
+        elif variant == KeybladeModelVariant.BASE:
+            return []
+        else:
+            return self.remastered_textures(KeybladeModelVariant.BASE)
+
+    def remastered_effects(self, variant: KeybladeModelVariant) -> list[Path]:
+        full_path = self.keyblade_dir / variant.keyblade_mod_subdir_name() / REMASTERED_EFFECTS
+        textures = children_with_extension(full_path, ".dds")
+        if textures:
+            return textures
+        elif variant == KeybladeModelVariant.BASE:
+            return []
+        else:
+            return self.remastered_effects(KeybladeModelVariant.BASE)
+
+    def remastered_sound(self, variant: KeybladeModelVariant) -> Optional[Path]:
+        full_path = self.keyblade_dir / variant.keyblade_mod_subdir_name()
+        file = child_with_extension(full_path, ".scd")
+        if file is not None:
+            return file
+        elif variant == KeybladeModelVariant.BASE:
+            return None
+        else:
+            return self.remastered_sound(KeybladeModelVariant.BASE)
 
 
-def _vanilla_keyblades() -> list[VanillaKeyblade]:
+def vanilla_keyblades() -> list[VanillaKeyblade]:
     return [
-        VanillaKeyblade("Kingdom Key", "043", "se500", "W_EX010"),
-        VanillaKeyblade("Oathkeeper", "044", "se501", "W_EX010_10"),
-        VanillaKeyblade("Oblivion", "045", "se502", "W_EX010_20"),
-        VanillaKeyblade("Star Seeker", "046", "se507", "W_EX010_30"),
-        VanillaKeyblade("Hidden Dragon", "047", "se508", "W_EX010_40"),
-        VanillaKeyblade("Heros Crest", "048", "se509", "W_EX010_50"),
-        VanillaKeyblade("Monochrome", "049", "se510", "W_EX010_60"),
-        VanillaKeyblade("Follow the Wind", "050", "se511", "W_EX010_70"),
-        VanillaKeyblade("Circle of Life", "051", "se512", "W_EX010_80"),
-        VanillaKeyblade("Photon Debugger", "052", "se513", "W_EX010_90"),
-        VanillaKeyblade("Gull Wing", "053", "se514", "W_EX010_A0"),
-        VanillaKeyblade("Rumbling Rose", "054", "se515", "W_EX010_B0"),
-        VanillaKeyblade("Guardian Soul", "055", "se516", "W_EX010_C0"),
-        VanillaKeyblade("Wishing Lamp", "056", "se517", "W_EX010_D0"),
-        VanillaKeyblade("Decisive Pumpkin", "057", "se518", "W_EX010_E0"),
-        VanillaKeyblade("Sleeping Lion", "058", "se519", "W_EX010_F0"),
-        VanillaKeyblade("Sweet Memories", "059", "se520", "W_EX010_G0"),
-        VanillaKeyblade("Mysterious Abyss", "060", "se521", "W_EX010_H0"),
-        VanillaKeyblade("Fatal Crest", "061", "se522", "W_EX010_J0"),
-        VanillaKeyblade("Bond of Flame", "062", "se523", "W_EX010_K0"),
-        VanillaKeyblade("Fenrir", "063", "se524", "W_EX010_M0"),
-        VanillaKeyblade("Ultima Weapon", "064", "se525", "W_EX010_N0"),
-        VanillaKeyblade("Two Become One", "300", "se526", "W_EX010_P0"),
-        VanillaKeyblade("Winners Proof", "301", "se527", "W_EX010_R0"),
-        # VanillaKeyblade("Struggle Hammer", "065", "se506", "W_EX010_U0"),
-        # VanillaKeyblade("Struggle Wand", "066", "se505", "W_EX010_V0"),
-        # VanillaKeyblade("Struggle Sword", "067", "se504", "W_EX010_W0"),
-        # VanillaKeyblade("Pureblood", "296", "se503", "W_EX010_X0", custom=True),
-        # VanillaKeyblade("Alpha Weapon", "297", "se501", "W_EX010_Y0", custom=True, can_replace_effects=False),
-        # VanillaKeyblade("Omega Weapon", "298", "se519", "W_EX010_Z0", custom=True, can_replace_effects=False),
-        # VanillaKeyblade("Kingdom Key D", "299", "se9000", "W_EX010_00", custom=True),
+        VanillaKeyblade("Kingdom Key", "043", "se500", "W_EX010", 0x05C2),
+        VanillaKeyblade("Oathkeeper", "044", "se501", "W_EX010_10", 0x05C4),
+        VanillaKeyblade("Oblivion", "045", "se502", "W_EX010_20", 0x05C6),
+        VanillaKeyblade("Star Seeker", "046", "se507", "W_EX010_30", 0x3DFA),
+        VanillaKeyblade("Hidden Dragon", "047", "se508", "W_EX010_40", 0x3DFC),
+        VanillaKeyblade("Heros Crest", "048", "se509", "W_EX010_50", 0x3E2E),
+        VanillaKeyblade("Monochrome", "049", "se510", "W_EX010_60", 0x3E30),
+        VanillaKeyblade("Follow the Wind", "050", "se511", "W_EX010_70", 0x3E32),
+        VanillaKeyblade("Circle of Life", "051", "se512", "W_EX010_80", 0x3E34),
+        VanillaKeyblade("Photon Debugger", "052", "se513", "W_EX010_90", 0x3E36),
+        VanillaKeyblade("Gull Wing", "053", "se514", "W_EX010_A0", 0x3E38),
+        VanillaKeyblade("Rumbling Rose", "054", "se515", "W_EX010_B0", 0x3E3A),
+        VanillaKeyblade("Guardian Soul", "055", "se516", "W_EX010_C0", 0x3E3C),
+        VanillaKeyblade("Wishing Lamp", "056", "se517", "W_EX010_D0", 0x3E3E),
+        VanillaKeyblade("Decisive Pumpkin", "057", "se518", "W_EX010_E0", 0x3E40),
+        VanillaKeyblade("Sleeping Lion", "058", "se519", "W_EX010_F0", 0x3E42),
+        VanillaKeyblade("Sweet Memories", "059", "se520", "W_EX010_G0", 0x3E44),
+        VanillaKeyblade("Mysterious Abyss", "060", "se521", "W_EX010_H0", 0x3E46),
+        VanillaKeyblade("Fatal Crest", "061", "se522", "W_EX010_J0", 0x3E48),
+        VanillaKeyblade("Bond of Flame", "062", "se523", "W_EX010_K0", 0x3E4A),
+        VanillaKeyblade("Fenrir", "063", "se524", "W_EX010_M0", 0x3E4C),
+        VanillaKeyblade("Ultima Weapon", "064", "se525", "W_EX010_N0", 0x3E4E),
+        VanillaKeyblade("Two Become One", "300", "se526", "W_EX010_P0", 0x4E35),
+        VanillaKeyblade("Winners Proof", "301", "se527", "W_EX010_R0", 0x4E37),
     ]
 
 
-def _model_type_suffix(model_type: str) -> str:
-    if model_type == "base":
-        return ""
-    else:
-        return "_" + model_type.upper()
+def add_on_keyblades() -> list[AddOnKeyblade]:
+    return [
+        AddOnKeyblade(
+            name="Kingdom Key D",
+            itempic_index="299",
+            override_sound_id=9100,
+            goa_mdlx_name_for_collision="W_EX010_00.mdlx",
+            override_model_name="W_EX010_0X",
+            objentry_object_ids={
+                KeybladeModelVariant.BASE: 0xBB9,
+                KeybladeModelVariant.NIGHTMARE: 0xBBA,
+                KeybladeModelVariant.TRON: 0xBBE,
+            },
+            objentry_pages={
+                KeybladeModelVariant.BASE: 17,
+                KeybladeModelVariant.NIGHTMARE: 17,
+                KeybladeModelVariant.TRON: 17,
+            },
+        ),
+        AddOnKeyblade(
+            name="Alpha Weapon",
+            itempic_index="297",
+            override_sound_id=9101,
+            goa_mdlx_name_for_collision="W_EX010_Y0.mdlx",
+            override_model_name="W_EX010_YX",
+            objentry_object_ids={
+                KeybladeModelVariant.BASE: 0x6A,
+                KeybladeModelVariant.NIGHTMARE: 0xBBB,
+                KeybladeModelVariant.TRON: 0xBBF,
+            },
+            objentry_pages={
+                KeybladeModelVariant.BASE: 0,
+                KeybladeModelVariant.NIGHTMARE: 17,
+                KeybladeModelVariant.TRON: 17,
+            },
+        ),
+        AddOnKeyblade(
+            name="Omega Weapon",
+            itempic_index="298",
+            override_sound_id=9102,
+            goa_mdlx_name_for_collision="W_EX010_Z0.mdlx",
+            override_model_name="W_EX010_ZX",
+            objentry_object_ids={
+                KeybladeModelVariant.BASE: 0x6B,
+                KeybladeModelVariant.NIGHTMARE: 0xBBC,
+                KeybladeModelVariant.TRON: 0xBC0,
+            },
+            objentry_pages={
+                KeybladeModelVariant.BASE: 0,
+                KeybladeModelVariant.NIGHTMARE: 17,
+                KeybladeModelVariant.TRON: 17,
+            },
+        ),
+        AddOnKeyblade(
+            name="Pureblood",
+            itempic_index="296",
+            override_sound_id=9103,
+            goa_mdlx_name_for_collision="W_EX010_X0.mdlx",
+            override_model_name="W_EX010_XX",
+            objentry_object_ids={
+                KeybladeModelVariant.BASE: 0x384,
+                KeybladeModelVariant.NIGHTMARE: 0xBBD,
+                KeybladeModelVariant.TRON: 0xBC1,
+            },
+            objentry_pages={
+                KeybladeModelVariant.BASE: 0,
+                KeybladeModelVariant.NIGHTMARE: 17,
+                KeybladeModelVariant.TRON: 17,
+            },
+        ),
+        AddOnKeyblade(
+            name="Struggle Hammer",
+            itempic_index="065",
+            override_sound_id=9104,
+            goa_mdlx_name_for_collision="W_EX010_U0_NM.mdlx",
+            override_model_name="W_EX010_UX",
+            objentry_object_ids={
+                KeybladeModelVariant.BASE: 0x77C,
+                KeybladeModelVariant.NIGHTMARE: 0xBC4,
+                KeybladeModelVariant.TRON: 0xBC7,
+            },
+            objentry_pages={
+                KeybladeModelVariant.BASE: 0,
+                KeybladeModelVariant.NIGHTMARE: 17,
+                KeybladeModelVariant.TRON: 17,
+            },
+        ),
+        AddOnKeyblade(
+            name="Struggle Wand",
+            itempic_index="066",
+            override_sound_id=9105,
+            goa_mdlx_name_for_collision="W_EX010_V0_NM.mdlx",
+            override_model_name="W_EX010_VX",
+            objentry_object_ids={
+                KeybladeModelVariant.BASE: 0x77D,
+                KeybladeModelVariant.NIGHTMARE: 0xBC3,
+                KeybladeModelVariant.TRON: 0xBC6,
+            },
+            objentry_pages={
+                KeybladeModelVariant.BASE: 0,
+                KeybladeModelVariant.NIGHTMARE: 17,
+                KeybladeModelVariant.TRON: 17,
+            },
+        ),
+        AddOnKeyblade(
+            name="Struggle Sword",
+            itempic_index="067",
+            override_sound_id=9106,
+            goa_mdlx_name_for_collision="W_EX010_W0_NM.mdlx",
+            override_model_name="W_EX010_WX",
+            objentry_object_ids={
+                KeybladeModelVariant.BASE: 0x73B,
+                KeybladeModelVariant.NIGHTMARE: 0xBC2,
+                KeybladeModelVariant.TRON: 0xBC5,
+            },
+            objentry_pages={
+                KeybladeModelVariant.BASE: 0,
+                KeybladeModelVariant.NIGHTMARE: 17,
+                KeybladeModelVariant.TRON: 17,
+            },
+        ),
+    ]
+
+
+class KeybladeRandomizerResult:
+
+    def __init__(self):
+        super().__init__()
+        self.assets: list[ModAsset] = []
+        self.object_entries = ObjectEntries(source_name="")  # The source name will get filled in later
+        self.replacements: dict[str, str] = {}
+
+    def add_object_entry(self, object_id: int, model_name: str, page: int):
+        self.object_entries.add_object(
+            object_id=object_id,
+            object_type="WEAPON",
+            subtype=0,
+            draw_priority=0,
+            weapon_joint=25,
+            model_name=model_name,
+            animation_name="",
+            flags=0,
+            object_target_type="M",
+            padding=0,
+            neo_status=0,
+            neo_moveset=0,
+            weight=0,
+            spawn_limiter=0,
+            page=page,
+            object_shadow_size="SmallShadow",
+            object_form="Default",
+            spawn_object_1=0,
+            spawn_object_2=0,
+            spawn_object_3=0,
+            spawn_object_4=0,
+            no_apdx=False,
+            before=False,
+            fix_color=False,
+            fly=False,
+            scissoring=False,
+            is_pirate=False,
+            wall_occlusion=False,
+            hift=False,
+        )
 
 
 class KeybladeRandomizer:
@@ -217,6 +512,10 @@ class KeybladeRandomizer:
     @staticmethod
     def directory_name() -> str:
         return "keyblades"
+
+    @staticmethod
+    def dummy_wave_resource_path() -> str:
+        return resource_path("static/cosmetics/keyblades/dummy_wave.wd")
 
     @staticmethod
     def keyblade_rando_options() -> dict[str, str]:
@@ -228,218 +527,45 @@ class KeybladeRandomizer:
         }
 
     @staticmethod
-    def extract_keyblade(
-            keyblade_name: str,
-            author: Optional[str],
-            source: Optional[str],
-            output_path: Path,
-            original_itempic: Path,
-            remastered_itempic: Path,
-            mdlx_files: list[Path],
-            remastered_mdlx_folders: list[Path],
-            fx_files: list[Path],
-            remastered_fx_folders: list[Path],
-            remastered_sound_files: list[Path],
-    ):
-        """
-        Extracts a keyblade to the randomizer-specific file/folder structure.
+    def _collect_keyblades(keyblades_dir: Path) -> list[ReplacementKeyblade]:
+        result: list[ReplacementKeyblade] = []
 
-        The parameters that accept list[Path] assume the order [base, NM, TR, WI].
-        """
+        if not keyblades_dir.is_dir():
+            return result
 
-        openkh_path = appconfig.read_openkh_path()
-        if openkh_path is None:
-            raise GeneratorException("No OpenKH path configured. Can't extract keyblades.")
+        for keyblade_dir in keyblades_dir.iterdir():
+            if keyblade_dir.is_dir():
+                keyblade_json_file = keyblade_dir / "keyblade.json"
+                if keyblade_json_file.is_file():
+                    result.append(ReplacementKeyblade(keyblade_dir.name, keyblade_dir, keyblade_json_file))
 
-        bar_exe = openkh_path / "OpenKh.Command.Bar.exe"
-        if not bar_exe.is_file():
-            raise GeneratorException("No OpenKh.Command.Bar.exe found. Can't extract keyblades.")
-
-        def unpack_bar(bar_input: Path, bar_output: Path):
-            bar_output.mkdir(parents=True, exist_ok=True)
-            # -s to skip creating an extra file
-            # -o specifies the output location
-            subprocess.call(
-                [bar_exe, "unpack", "-s", "-o", bar_output, bar_input],
-                creationflags=subprocess.CREATE_NO_WINDOW
-            )
-
-        def copy_remastered_textures(textures_input: Path, textures_output: Path):
-            textures_output.mkdir(parents=True, exist_ok=True)
-            for input_file in os.listdir(textures_input):
-                _, extension = os.path.splitext(input_file)
-                if extension == ".dds":
-                    shutil.copy2(textures_input / input_file, textures_output)
-
-        def copy_remastered_sound(sound_input: Path, sound_output: Path):
-            sound_output.mkdir(parents=True, exist_ok=True)
-            copy_result = shutil.copy2(sound_input, sound_output)
-            copy_result_path = Path(copy_result).absolute()
-            renamed_path = copy_result_path.parent / f"{copy_result_path.name}.scd"
-            if renamed_path.is_file():
-                renamed_path.unlink()
-            copy_result_path.rename(renamed_path)
-
-        keyblade_output_location = output_path / keyblade_name
-        keyblade_output_location.mkdir(parents=True, exist_ok=True)
-
-        for index, model_type in enumerate(["base", "nm", "tr", "wi"]):
-            out_path = keyblade_output_location / model_type
-
-            mdlx_file = mdlx_files[index]
-            if mdlx_file.is_file():
-                unpack_bar(mdlx_file, out_path)
-
-            remastered_mdlx_folder = remastered_mdlx_folders[index]
-            if remastered_mdlx_folder.is_dir():
-                copy_remastered_textures(remastered_mdlx_folder, out_path / "remastered-textures")
-
-            fx_file = fx_files[index]
-            if fx_file.is_file():
-                unpack_bar(fx_file, out_path)
-
-            remastered_fx_folder = remastered_fx_folders[index]
-            if remastered_fx_folder.is_dir():
-                copy_remastered_textures(remastered_fx_folder, out_path / "remastered-effects")
-
-            remastered_sound_file = remastered_sound_files[index]
-            if remastered_sound_file.is_file():
-                copy_remastered_sound(remastered_sound_file, out_path)
-
-        out_itempic_path = keyblade_output_location / "itempic"
-        out_itempic_path.mkdir(exist_ok=True)
-        if original_itempic.is_file():
-            shutil.copy2(original_itempic, out_itempic_path)
-        if remastered_itempic.is_file():
-            shutil.copy2(remastered_itempic, out_itempic_path)
-
-        KeybladeRandomizer.write_keyblade_json(
-            keyblade_name=keyblade_name,
-            author=author,
-            source=source,
-            keyblade_output_location=keyblade_output_location,
-        )
-
-    @staticmethod
-    def write_keyblade_json(
-            keyblade_name: str,
-            author: Optional[str],
-            source: Optional[str],
-            keyblade_output_location: Path,
-    ):
-        keyblade_json = {
-            "version": _KEYBLADE_VERSION,
-            "name": keyblade_name,
-        }
-        if author is not None and author != "":
-            keyblade_json["author"] = author
-        if source is not None and source != "":
-            keyblade_json["source"] = source
-        keyblade_json_path = keyblade_output_location / "keyblade.json"
-        with open(keyblade_json_path, "w", encoding="utf-8") as keyblade_json_file:
-            json.dump(keyblade_json, keyblade_json_file, indent=4)
-
-    @staticmethod
-    def extract_game_models() -> Path:
-        extracted_data_path = appconfig.extracted_game_path("kh2")
-        if extracted_data_path is None:
-            raise GeneratorException("No extracted KH2 game data, can't extract keyblades")
-
-        obj_path = extracted_data_path / "obj"
-        remastered_obj_path = extracted_data_path / "remastered" / "obj"
-
-        vanilla_keys_path = Path("cache/vanilla-keyblades")
-        vanilla_keys_path.mkdir(parents=True, exist_ok=True)
-
-        for vanilla_key in _vanilla_keyblades():
-            if vanilla_key.custom:
-                continue
-
-            keyblade_name = vanilla_key.name
-            print(f"Extracting {keyblade_name}")
-
-            imd_name = f"item-{vanilla_key.itempic_index}.imd"
-            models = [f"{vanilla_key.model_name}{suffix}" for suffix in ["", "_NM", "_TR", "_WI"]]
-            KeybladeRandomizer.extract_keyblade(
-                keyblade_name=keyblade_name,
-                author=None,
-                source=None,
-                output_path=vanilla_keys_path,
-                original_itempic=extracted_data_path / "itempic" / imd_name,
-                remastered_itempic=extracted_data_path / "remastered" / "itempic" / imd_name / "-0.dds",
-                mdlx_files=[obj_path / f"{model}.mdlx" for model in models],
-                remastered_mdlx_folders=[remastered_obj_path / f"{model}.mdlx" for model in models],
-                fx_files=[obj_path / f"{model}.a.us" for model in models],
-                remastered_fx_folders=[remastered_obj_path / f"{model}.a.us" for model in models],
-                remastered_sound_files=[
-                    remastered_obj_path / f"{model}.a.us/se/obj/{vanilla_key.sound_name}" for model in models
-                ],
-            )
-
-        return vanilla_keys_path
-
-    @staticmethod
-    def import_keyblade(packaged_file: str) -> str:
-        custom_visuals_path = appconfig.read_custom_visuals_path()
-        if custom_visuals_path is None:
-            raise GeneratorException("No custom visuals path configured. Can't import keyblade.")
-
-        packaged_path = Path(packaged_file)
-        keyblade_name, _ = os.path.splitext(packaged_path.name)
-
-        keyblades_path = custom_visuals_path / KeybladeRandomizer.directory_name()
-        keyblades_path.mkdir(exist_ok=True)
-
-        shutil.unpack_archive(packaged_path, keyblades_path / keyblade_name, "zip")
-
-        return keyblade_name
+        return result
 
     @staticmethod
     def collect_vanilla_keyblades() -> list[ReplacementKeyblade]:
-        result: list[ReplacementKeyblade] = []
-
-        vanilla_keys_path = Path("cache/vanilla-keyblades").absolute()
-        if not vanilla_keys_path.is_dir():
-            return result
-
-        for child in os.listdir(vanilla_keys_path):
-            vanilla_key_path = vanilla_keys_path / child
-            if vanilla_key_path.is_dir():
-                keyblade_json_path = vanilla_key_path / "keyblade.json"
-                if keyblade_json_path.is_file():
-                    result.append(ReplacementKeyblade(vanilla_key_path.name, vanilla_key_path, keyblade_json_path))
-
-        return result
+        vanilla_keys_path = Path("cache", "vanilla-keyblades").absolute()
+        return KeybladeRandomizer._collect_keyblades(vanilla_keys_path)
 
     @staticmethod
     def collect_custom_keyblades() -> list[ReplacementKeyblade]:
-        result: list[ReplacementKeyblade] = []
-
         custom_visuals_path = appconfig.read_custom_visuals_path()
         if custom_visuals_path is None:
-            return result
+            return []
 
         custom_keys_path = custom_visuals_path / KeybladeRandomizer.directory_name()
-        if not custom_keys_path.is_dir():
-            return result
-
-        for child in os.listdir(custom_keys_path):
-            custom_key_path = custom_keys_path / child
-            if custom_key_path.is_dir():
-                keyblade_json_path = custom_key_path / "keyblade.json"
-                if keyblade_json_path.is_file():
-                    result.append(ReplacementKeyblade(custom_key_path.name, custom_key_path, keyblade_json_path))
-
-        return result
+        return KeybladeRandomizer._collect_keyblades(custom_keys_path)
 
     @staticmethod
     def randomize_keyblades(
             setting: str,
             include_effects: bool,
-            allow_duplicate_replacement: bool
-    ) -> tuple[list[Asset], dict[str, str]]:
+            allow_duplicate_replacement: bool,
+            replace_goa_keyblades: bool,
+    ) -> KeybladeRandomizerResult:
+        result = KeybladeRandomizerResult()
+
         if setting == configDict.VANILLA:
-            return [], {}
+            return result
 
         replacement_keys: list[ReplacementKeyblade] = []
         if setting == configDict.RANDOMIZE_IN_GAME_ONLY or setting == configDict.RANDOMIZE_ALL:
@@ -448,17 +574,17 @@ class KeybladeRandomizer:
             replacement_keys.extend(KeybladeRandomizer.collect_custom_keyblades())
 
         if len(replacement_keys) == 0:
-            return [], {}
+            return result
 
         replacement_keys = replacement_keys.copy()
         backup_keys = replacement_keys.copy()
         random.shuffle(replacement_keys)
 
-        assets: list[Asset] = []
-        replacements: dict[str, str] = {}
-        vanilla_keyblades = _vanilla_keyblades()
-        random.shuffle(vanilla_keyblades)
-        for vanilla_key in vanilla_keyblades:
+        vanilla_keys = vanilla_keyblades()
+        random.shuffle(vanilla_keys)
+        for vanilla_key in vanilla_keys:
+            vanilla_paths = VanillaKeybladePaths.for_vanilla_key(vanilla_key)
+
             if len(replacement_keys) == 0:
                 if allow_duplicate_replacement:
                     replacement_keys = backup_keys.copy()
@@ -466,141 +592,432 @@ class KeybladeRandomizer:
                 else:
                     break
 
-            replacement = replacement_keys.pop()
-            assets.extend(KeybladeRandomizer._itempic_assets(vanilla_key, replacement))
-            assets.extend(KeybladeRandomizer._keyblade_assets(vanilla_key, replacement, "base", include_effects))
-            assets.extend(KeybladeRandomizer._keyblade_assets(vanilla_key, replacement, "nm", include_effects))
-            assets.extend(KeybladeRandomizer._keyblade_assets(vanilla_key, replacement, "tr", include_effects))
-            assets.extend(KeybladeRandomizer._keyblade_assets(vanilla_key, replacement, "wi", include_effects))
+            replacement_key = replacement_keys.pop()
 
-            replacements[vanilla_key.name] = replacement.name
+            result.assets.extend(KeybladeRandomizer._itempic_assets(vanilla_paths, replacement_key))
 
-        return assets, replacements
+            for variant in KeybladeModelVariant:
+                variant_assets = KeybladeRandomizer._keyblade_assets(
+                    vanilla_paths=vanilla_paths,
+                    replacement_key=replacement_key,
+                    variant=variant,
+                    include_effects=include_effects and vanilla_key.can_replace_effects,
+                )
+                result.assets.extend(variant_assets)
+
+            result.replacements[vanilla_key.name] = replacement_key.name
+
+        if not replace_goa_keyblades:
+            return result
+
+        AddOnKeyblade.extract_goa_collisions_if_needed()
+
+        def can_use_for_add_on(candidate: ReplacementKeyblade) -> bool:
+            has_model = candidate.model(KeybladeModelVariant.BASE) is not None
+            has_texture = candidate.texture(KeybladeModelVariant.BASE) is not None
+            has_pax = candidate.pax(KeybladeModelVariant.BASE) is not None
+            has_re_textures = len(candidate.remastered_textures(KeybladeModelVariant.BASE)) > 0
+            has_re_effects = len(candidate.remastered_effects(KeybladeModelVariant.BASE)) > 0
+            has_scd = candidate.remastered_sound(KeybladeModelVariant.BASE) is not None
+            return has_model and has_texture and has_pax and has_re_textures and has_re_effects and has_scd
+
+        # Need to create new source lists - not all keyblades can replace add-on keys, since they need all the
+        # keyblade components pre-packaged
+        backup_keys = [key for key in backup_keys if can_use_for_add_on(key)]
+        if not backup_keys:
+            return result
+        replacement_keys = [key for key in replacement_keys if can_use_for_add_on(key)]
+
+        # None of the GoA keyblades bother with WILLIE
+        add_on_variants = [KeybladeModelVariant.BASE, KeybladeModelVariant.NIGHTMARE, KeybladeModelVariant.TRON]
+
+        add_on_keys = add_on_keyblades()
+        random.shuffle(add_on_keys)
+        for add_on_key in add_on_keys:
+            if len(replacement_keys) == 0:
+                if allow_duplicate_replacement:
+                    replacement_keys = backup_keys.copy()
+                    random.shuffle(replacement_keys)
+                else:
+                    break
+
+            replacement_key = replacement_keys.pop()
+
+            fake_vanilla_paths = VanillaKeybladePaths(
+                itempic_index=add_on_key.itempic_index,
+                model_name=add_on_key.override_model_name,
+                sound_name=add_on_key.override_sound_name(),
+            )
+
+            result.assets.extend(KeybladeRandomizer._itempic_assets(fake_vanilla_paths, replacement_key))
+
+            for variant in add_on_variants:
+                # Need to add a custom object entry so that we can redirect to our override model instead of the one
+                # provided by the GoA mod
+                result.add_object_entry(
+                    object_id=add_on_key.objentry_object_id(variant),
+                    model_name=add_on_key.override_model_name_variant(variant),
+                    page=add_on_key.objentry_page(variant),
+                )
+
+                result.assets.extend(KeybladeRandomizer._handle_add_on_key(
+                    replacement_key,
+                    variant,
+                    add_on_key,
+                    fake_vanilla_paths
+                ))
+
+            result.replacements[add_on_key.name] = replacement_key.name
+
+        return result
 
     @staticmethod
-    def _itempic_assets(vanilla: VanillaKeyblade, replacement: ReplacementKeyblade) -> list[Asset]:
-        assets: list[Asset] = []
+    def _itempic_assets(vanilla_paths: VanillaKeybladePaths, replacement_key: ReplacementKeyblade) -> list[ModAsset]:
+        assets: list[ModAsset] = []
 
         # TODO: This was crashing with at least one itempic (Fresh Faces keyblade).
         #   Since these really shouldn't matter on PC, just not bothering for now.
         #   If someone else wants to try to figure this out, feel free.
-        # original_itempic = replacement.original_itempic()
+        # original_itempic = replacement_key.original_itempic()
         # if original_itempic is not None:
-        #     assets.append({
-        #         "name": f"itempic/item-{vanilla.itempic_index}.imd",
-        #         "platform": "pc",
-        #         "method": "copy",
-        #         "source": [{"name": str(original_itempic)}]
-        #     })
+        #     assets.append(ModYml.make_copy_asset(
+        #         game_files=[vanilla_paths.itempic],
+        #         source_files=[original_itempic],
+        #         platform=PC,
+        #     ))
 
-        remastered_itempic = replacement.remastered_itempic()
+        remastered_itempic = replacement_key.remastered_itempic()
         if remastered_itempic is not None:
-            assets.append({
-                "name": f"remastered/itempic/item-{vanilla.itempic_index}.imd/-0.dds",
-                "platform": "pc",
-                "method": "copy",
-                "source": [{"name": str(remastered_itempic)}]
-            })
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[vanilla_paths.remastered_itempic],
+                source_file=remastered_itempic,
+                platform=AssetPlatform.PC,
+            ))
 
         return assets
 
     @staticmethod
     def _keyblade_assets(
-            vanilla: VanillaKeyblade,
-            replacement: ReplacementKeyblade,
-            model_type: str,
-            include_effects: bool
-    ) -> list[Asset]:
-        assets: list[Asset] = []
+            vanilla_paths: VanillaKeybladePaths,
+            replacement_key: ReplacementKeyblade,
+            variant: KeybladeModelVariant,
+            include_effects: bool,
+    ) -> list[ModAsset]:
+        assets: list[ModAsset] = []
 
-        model_name = vanilla.model_name
-        suffix = _model_type_suffix(model_type)
-
-        original_model = replacement.model(model_type)
-        original_texture = replacement.texture(model_type)
+        original_model = replacement_key.model(variant)
+        original_texture = replacement_key.texture(variant)
         if original_model is not None and original_texture is not None:
-            assets.append({
-                "name": f"obj/{model_name}{suffix}.mdlx",
-                "platform": "pc",
-                "method": "binarc",
-                "source": [
-                    {
-                        "name": "w_ex",
-                        "type": "model",
-                        "method": "copy",
-                        "source": [{"name": str(original_model)}]
-                    },
-                    {
-                        "name": "tim_",
-                        "type": "modeltexture",
-                        "method": "copy",
-                        "source": [{"name": str(original_texture)}]
-                    }
-                ]
-            })
+            assets.append(ModAsset.make_binarc_asset(
+                game_files=[vanilla_paths.mdlx_files.variant(variant)],
+                sources=[
+                    ModBinarcSource.make_source(
+                        name="w_ex",
+                        type_="model",
+                        method=BinarcMethod.COPY,
+                        sources=[ModSourceFile.make_source_file(original_model)],
+                    ),
+                    ModBinarcSource.make_source(
+                        name="tim_",
+                        type_="modeltexture",
+                        method=BinarcMethod.COPY,
+                        sources=[ModSourceFile.make_source_file(original_texture)],
+                    ),
+                ],
+                platform=AssetPlatform.PC,
+            ))
 
-        remastered_textures = replacement.remastered_textures(model_type)
-        for remastered_texture_path in remastered_textures:
-            assets.append({
-                "name": f"remastered/obj/{model_name}{suffix}.mdlx/{remastered_texture_path.name}",
-                "platform": "pc",
-                "method": "copy",
-                "source": [{"name": str(remastered_texture_path)}]
-            })
+        for remastered_texture_path in replacement_key.remastered_textures(variant):
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[vanilla_paths.remastered_mdlx_dirs.variant(variant) / remastered_texture_path.name],
+                source_file=remastered_texture_path,
+                platform=AssetPlatform.PC,
+            ))
 
         if not include_effects:
             return assets
-        if not vanilla.can_replace_effects:
-            return assets
 
-        original_pax = replacement.pax(model_type)
-        remastered_effects = replacement.remastered_effects(model_type)
-        remastered_sound = replacement.remastered_sound(model_type)
+        original_pax = replacement_key.pax(variant)
+        remastered_effects = replacement_key.remastered_effects(variant)
+        remastered_sound = replacement_key.remastered_sound(variant)
 
-        original_effect_sources: list[dict[str, Any]] = []
+        original_effect_sources: list[ModBinarcSource] = []
 
         if original_pax is not None and len(remastered_effects) > 0:
-            original_effect_sources.append({
-                "name": "w_ex",
-                "type": "pax",
-                "method": "copy",
-                "source": [{"name": str(original_pax)}]
-            })
+            original_effect_sources.append(ModBinarcSource.make_source(
+                name="w_ex",
+                type_="pax",
+                method=BinarcMethod.COPY,
+                sources=[ModSourceFile.make_source_file(original_pax)],
+            ))
 
             for remastered_effect_path in remastered_effects:
-                assets.append({
-                    "name": f"remastered/obj/{model_name}{suffix}.a.us/{remastered_effect_path.name}",
-                    "platform": "pc",
-                    "method": "copy",
-                    "source": [{"name": str(remastered_effect_path)}]
-                })
+                assets.append(ModAsset.make_copy_asset(
+                    game_files=[vanilla_paths.remastered_fx_dirs.variant(variant) / remastered_effect_path.name],
+                    source_file=remastered_effect_path,
+                    platform=AssetPlatform.PC,
+                ))
 
         if remastered_sound is not None:
             # Adding a dummy wave file seems to prevent some crashes.
             # Inspiration taken from Zurphing's KH1 keyblade pack.
             from Module.seedmod import CosmeticsModAppender
-            original_effect_sources.append({
-                "name": "wave",
-                "type": "wd",
-                "method": "copy",
-                "source": [{"name": CosmeticsModAppender.keyblade_dummy_wave_source()}],
-            })
+            original_effect_sources.append(ModBinarcSource.make_source(
+                name="wave",
+                type_="wd",
+                method=BinarcMethod.COPY,
+                sources=[ModSourceFile.make_source_file(CosmeticsModAppender.keyblade_dummy_wave_source())],
+            ))
 
-            # Since we're not replacing the SEB file, we should be able to use the sound name from the vanilla keyblade
-            sound_name = vanilla.sound_name
-            assets.append({
-                "name": f"remastered/obj/{model_name}{suffix}.a.us/se/obj/{sound_name}",
-                "platform": "pc",
-                "method": "copy",
-                "source": [{"name": str(remastered_sound)}]
-            })
+            vanilla_scd_path = vanilla_paths.scd_files.variant(variant)
+
+            # Since we're not replacing the SEB file, we should be able to use the sound file from the vanilla keyblade
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[vanilla_scd_path],
+                source_file=remastered_sound,
+                platform=AssetPlatform.PC,
+            ))
 
         if original_effect_sources:
-            assets.append({
-                "name": f"obj/{model_name}{suffix}.a.us",
-                "platform": "pc",
-                "method": "binarc",
-                "source": original_effect_sources,
-            })
+            assets.append(ModAsset.make_binarc_asset(
+                game_files=[vanilla_paths.fx_files.variant(variant)],
+                sources=original_effect_sources,
+                platform=AssetPlatform.PC,
+            ))
 
         return assets
+
+    @staticmethod
+    def seb_file_data(sound_id: int) -> bytearray:
+        """
+        https://openkh.dev/kh2/file/type/seb.html
+        seb file format:
+        Offset 	Type 	Description
+        0       string  Seemingly always “ORIGIN”. If removed, sound effects from se000 will play instead.
+        8       uint16  Sound ID Number; not used by the game?
+        10      uint16  Unknown; not used by the game?
+        12      uint16  Sound ID Number
+        16      string  Filepath to SCD in objects remastered folder.
+        """
+
+        # Format string:
+        # 8s: 8-byte string (bytes 0-7)
+        # H: 2-byte unsigned short (bytes 8-9)
+        # H: 2-byte unsigned short (bytes 10-11)
+        # H: 2-byte unsigned short (bytes 12-13)
+        # 2x: skip 2 bytes (bytes 14-15)
+        # 32s: 32-byte string (bytes 16-47)
+        # The '<' indicates little-endian byte order for the integers.
+        format_string = "<8sHHH2x32s"
+
+        data_array = bytearray(48)
+        struct.pack_into(
+            format_string,
+            data_array,
+            0,
+            "ORIGIN".encode("utf-8"),  # 0-7
+            sound_id,  # 8-9
+            61,  # 10-11 (Most of them seem to be 61)
+            sound_id,  # 12-13
+            f"se/obj/se{sound_id}".encode("utf-8"),  # 16-47
+        )
+
+        return data_array
+
+    @staticmethod
+    def _handle_add_on_key(
+            replacement_key: ReplacementKeyblade,
+            variant: KeybladeModelVariant,
+            add_on_key: AddOnKeyblade,
+            vanilla_paths: VanillaKeybladePaths,
+    ) -> list[ModAsset]:
+        # For the add-on keyblades, we pre-package .mdlx and .a.us files with the collision of the add-on keyblade.
+        # If any of the pre-packaged files aren't there, create them as needed.
+
+        target_dir = replacement_key.keyblade_dir / variant.keyblade_mod_subdir_name() / "add-ons"
+        target_dir.mkdir(parents=True, exist_ok=True)
+
+        override_model_name = add_on_key.override_model_name_variant(variant)
+        mdlx_file = target_dir / f"{override_model_name}.mdlx"
+        fx_file = target_dir / f"{override_model_name}.a.us"
+
+        assets = KeybladeRandomizer._add_on_assets(
+            replacement_key=replacement_key,
+            variant=variant,
+            vanilla_paths=vanilla_paths,
+            mdlx_file=mdlx_file,
+            fx_file=fx_file,
+        )
+
+        if mdlx_file.is_file() and fx_file.is_file():
+            return assets
+
+        staging_dir = target_dir / f"{override_model_name}-staging"
+        staging_dir.mkdir(parents=True, exist_ok=True)
+
+        if not mdlx_file.is_file():
+            shutil.copy2(replacement_key.model(variant), staging_dir)
+            shutil.copy2(replacement_key.texture(variant), staging_dir)
+            # We specifically use the collision of the keyblade we're replacing
+            # (this is kinda the whole point of all this)
+            collision_file = add_on_key.collision_file()
+            if collision_file is None:
+                raise GeneratorException(f"Extracted collision file is missing for {add_on_key.name}")
+            shutil.copy2(collision_file, staging_dir)
+
+            packaged_file = KeybladeRandomizer._package_mdlx(staging_dir, keyblade_name=override_model_name)
+            shutil.move(packaged_file, target_dir)
+
+        if not fx_file.is_file():
+            shutil.copy2(replacement_key.pax(variant), staging_dir)
+            shutil.copy2(KeybladeRandomizer.dummy_wave_resource_path(), staging_dir)
+
+            sound_id = add_on_key.override_sound_id
+            seb_data = KeybladeRandomizer.seb_file_data(sound_id=sound_id)
+            with open(staging_dir / f"se{str(sound_id)[0:2]}.seb", "wb") as opened_file:
+                opened_file.write(seb_data)
+
+            packaged_file = KeybladeRandomizer._package_fx(staging_dir, keyblade_name=override_model_name)
+            shutil.move(packaged_file, target_dir)
+
+        shutil.rmtree(staging_dir)
+        return assets
+
+    @staticmethod
+    def _add_on_assets(
+            replacement_key: ReplacementKeyblade,
+            variant: KeybladeModelVariant,
+            vanilla_paths: VanillaKeybladePaths,
+            mdlx_file: Path,
+            fx_file: Path,
+    ) -> list[ModAsset]:
+        assets: list[ModAsset] = [
+            ModAsset.make_copy_asset(
+                game_files=[vanilla_paths.mdlx_files.variant(variant)],
+                source_file=mdlx_file,
+                platform=AssetPlatform.PC,
+            ),
+            ModAsset.make_copy_asset(
+                game_files=[vanilla_paths.fx_files.variant(variant)],
+                source_file=fx_file,
+                platform=AssetPlatform.PC,
+            ),
+        ]
+
+        for remastered_texture_path in replacement_key.remastered_textures(variant):
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[vanilla_paths.remastered_mdlx_dirs.variant(variant) / remastered_texture_path.name],
+                source_file=remastered_texture_path,
+                platform=AssetPlatform.PC,
+            ))
+
+        for remastered_effect_path in replacement_key.remastered_effects(variant):
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[vanilla_paths.remastered_fx_dirs.variant(variant) / remastered_effect_path.name],
+                source_file=remastered_effect_path,
+                platform=AssetPlatform.PC,
+            ))
+
+        assets.append(ModAsset.make_copy_asset(
+            game_files=[vanilla_paths.scd_files.variant(variant)],
+            source_file=replacement_key.remastered_sound(variant),
+            platform=AssetPlatform.PC,
+        ))
+
+        return assets
+
+    @staticmethod
+    def _package_mdlx(source_dir: Path, keyblade_name: str) -> Path:
+        model_file = child_with_extension(source_dir, ".model")
+        if model_file is None:
+            raise GeneratorException("No model file found for mdlx")
+
+        texture_file = child_with_extension(source_dir, ".tim", ".texture")
+        if texture_file is None:
+            raise GeneratorException("No texture file found for mdlx")
+
+        collision_file = child_with_extension(source_dir, ".collision")
+        if collision_file is None:
+            raise GeneratorException("No collision file found for mdlx")
+
+        mdlx_file_name = f"{keyblade_name}.mdlx"
+        mdlx_project_data: StrDict = {
+            "OriginalFileName": mdlx_file_name,
+            "Motionset": 0,
+            "Entries": [
+                {
+                    "FileName": model_file.name,
+                    "InternalName": "w_ex",
+                    "TypeId": 4,
+                    "LinkIndex": 0,
+                },
+                {
+                    "FileName": texture_file.name,
+                    "InternalName": "tim_",
+                    "TypeId": 7,
+                    "LinkIndex": 0,
+                },
+                {
+                    "FileName": collision_file.name,
+                    "InternalName": "w_ex",
+                    "TypeId": 23,
+                    "LinkIndex": 0,
+                },
+            ],
+        }
+        project_json_file = source_dir / f"{mdlx_file_name}.json"
+        with open(project_json_file, "w", encoding="utf-8") as opened_file:
+            json.dump(mdlx_project_data, opened_file, sort_keys=False)
+
+        archiver = BinaryArchiver()
+        archiver.create_bar(bar_json_file=project_json_file, destination=source_dir)
+
+        return source_dir / mdlx_file_name
+
+    @staticmethod
+    def _package_fx(source_dir: Path, keyblade_name: str) -> Path:
+        pax_file = child_with_extension(source_dir, ".pax")
+        if pax_file is None:
+            raise GeneratorException("No pax file found for effects")
+
+        wave_file = child_with_extension(source_dir, ".wd")
+        if wave_file is None:
+            raise GeneratorException("No wave file found for effects")
+
+        seb_file = child_with_extension(source_dir, ".seb")
+        if seb_file is None:
+            raise GeneratorException("No seb file found for effects")
+
+        fx_file_name = f"{keyblade_name}.a.us"
+        fx_project_data: StrDict = {
+            "OriginalFileName": fx_file_name,
+            "Motionset": 0,
+            "Entries": [
+                {
+                    "FileName": pax_file.name,
+                    "InternalName": "w_ex",
+                    "TypeId": 18,
+                    "LinkIndex": 0,
+                },
+                {
+                    "FileName": wave_file.name,
+                    "InternalName": "wave",
+                    "TypeId": 32,
+                    "LinkIndex": 0,
+                },
+                {
+                    "FileName": seb_file.name,
+                    "InternalName": f"{seb_file.stem}",
+                    "TypeId": 31,
+                    "LinkIndex": 0,
+                },
+            ],
+        }
+        project_json_file = source_dir / f"{fx_file_name}.json"
+        with open(project_json_file, "w", encoding="utf-8") as opened_file:
+            json.dump(fx_project_data, opened_file, sort_keys=False)
+
+        archiver = BinaryArchiver()
+        archiver.create_bar(bar_json_file=project_json_file, destination=source_dir)
+
+        return source_dir / fx_file_name

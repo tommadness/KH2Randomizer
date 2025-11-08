@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Optional
 
 from PIL import Image
@@ -11,7 +12,7 @@ from Class.seedSettings import SeedSettings
 from Module import appconfig
 from Module.cosmeticsmods.keyblade import KeybladeRandomizer, ReplacementKeyblade
 from UI import theme, configui
-from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog
+from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog, KeybladeModImportDialog
 from UI.Submenus.SubMenu import KH2Submenu
 from UI.keybladeworker import ExtractVanillaKeybladesWorker, ImportCustomKeybladesWorker, ImportKh1KeybladePackWorker, \
     ImportBirthBySleepKeybladePackWorker
@@ -32,6 +33,7 @@ class ManageKeybladesDialog(QDialog):
 
         import_menu = QMenu("Import")
         import_menu.addAction("Add Keyblade(s) from .kh2randokb Files", self._import_keyblades)
+        import_menu.addAction("Add Keyblade(s) from OpenKH Mod", self._import_mod)
         import_menu.addSeparator()
         import_menu.addAction("Download KH1 Keyblade Pack (Zurphing)", self._import_kh1_keyblade_pack)
         import_menu.addAction("Download BBS Keyblade Pack (Kite2810)", self._import_birth_by_sleep_keyblade_pack)
@@ -161,10 +163,16 @@ class ManageKeybladesDialog(QDialog):
 
     def _import_keyblades(self):
         file_dialog = QFileDialog(self)
-        outfile_names, _ = file_dialog.getOpenFileNames(self, filter="Randomizer Keyblades (*.kh2randokb)")
-        if len(outfile_names) > 0:
-            worker = ImportCustomKeybladesWorker(keyblade_file_paths=outfile_names)
+        file_names, _ = file_dialog.getOpenFileNames(self, filter="Randomizer Keyblades (*.kh2randokb)")
+        if len(file_names) > 0:
+            file_paths = [Path(file_name) for file_name in file_names]
+            worker = ImportCustomKeybladesWorker(keyblade_file_paths=file_paths)
             worker.finished.connect(self._refresh_custom_section)
             worker.start()
         else:
             show_alert("No keyblades selected.", title="Import Keyblade(s)")
+
+    def _import_mod(self):
+        dialog = KeybladeModImportDialog(self, self.settings)
+        dialog.exec()
+        self._refresh_custom_section()
