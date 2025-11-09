@@ -16,7 +16,6 @@ class Tests(unittest.TestCase):
 
     def setUp(self):
         seed_settings = SeedSettings()
-        seed_settings.set(settingkey.STARTING_INVENTORY, [])
 
         seed_name = f"{datetime.now()}"
         settings = RandomizerSettings(seed_name, True, "version", seed_settings, "")

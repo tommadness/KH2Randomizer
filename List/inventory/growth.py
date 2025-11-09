@@ -60,3 +60,20 @@ def all_growth_to_level(growth_level: int) -> list[GrowthAbility]:
 
 def growth_to_level(growth_level: int, growth_type: GrowthType) -> list[GrowthAbility]:
     return [g for g in all_growth_to_level(growth_level) if g.growth_type == growth_type]
+
+
+def all_unique_growth_types() -> list[GrowthType]:
+    return [
+        GrowthType.HIGH_JUMP,
+        GrowthType.QUICK_RUN,
+        GrowthType.DODGE_ROLL,
+        GrowthType.AERIAL_DODGE,
+        GrowthType.GLIDE,
+    ]
+
+
+def all_individual_growth_types() -> list[GrowthType]:
+    result: list[GrowthType] = []
+    for unique in all_unique_growth_types():
+        result.extend([unique] * 4)
+    return result

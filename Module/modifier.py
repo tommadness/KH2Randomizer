@@ -1,11 +1,13 @@
 import random
+from collections import Counter
 from typing import Callable
 
 from Class.exceptions import GeneratorException, SettingsException
 from Class.itemClass import KH2Item
-from List.configDict import LevelUpStatBonus, StartingMovementOption, AbilityPoolOption, StartingVisitMode, locationType
-from List.inventory import growth, ability, storyunlock
+from List.configDict import LevelUpStatBonus, AbilityPoolOption
+from List.inventory import growth, ability, storyunlock, magic
 from List.inventory.growth import GrowthAbility, GrowthType
+from List.inventory.magic import MagicElement
 from List.inventory.storyunlock import StoryUnlock
 
 
@@ -176,76 +178,67 @@ class SeedModifier:
         return valid_stat_list
 
     @staticmethod
-    def starting_growth(option: StartingMovementOption) -> list[GrowthAbility]:
-        if option == StartingMovementOption.DISABLED:
-            return []
-        elif option == StartingMovementOption.LEVEL_1:
-            return growth.all_growth_to_level(1)
-        elif option == StartingMovementOption.LEVEL_2:
-            return growth.all_growth_to_level(2)
-        elif option == StartingMovementOption.LEVEL_3:
-            return growth.all_growth_to_level(3)
-        elif option == StartingMovementOption.LEVEL_4:
-            return growth.all_growth_to_level(4)
-        elif option == StartingMovementOption.RANDOM_3:
-            return SeedModifier._random_growth(3)
-        elif option == StartingMovementOption.RANDOM_5:
-            return SeedModifier._random_growth(5)
-        elif option == StartingMovementOption.RANDOM_7:
-            return SeedModifier._random_growth(7)
-        elif option == StartingMovementOption.RANDOM_9:
-            return SeedModifier._random_growth(9)
+    def starting_growth(specific_growth: dict[GrowthType, int], random_range: tuple[int, int]) -> list[GrowthAbility]:
+        available_growth = growth.all_individual_growth_types().copy()
+
+        chosen: list[GrowthType] = []
+        for growth_type, count in specific_growth.items():
+            for _ in range(count):
+                chosen.append(growth_type)
+                available_growth.remove(growth_type)
+
+        random_min, random_max = random_range
+        random_count = random.randint(random_min, random_max)
+        if random_count == 0:
+            pass
+        elif random_count >= len(available_growth):
+            chosen.extend(available_growth)
         else:
-            raise GeneratorException(f"Unknown option {option}")
+            chosen.extend(random.sample(available_growth, k=random_count))
+
+        result: list[GrowthAbility] = []
+        for growth_type, level in Counter(chosen).items():
+            result.extend(growth.growth_to_level(level, growth_type))
+        return result
 
     @staticmethod
-    def _random_growth(num_growth_abilities: int) -> list[GrowthAbility]:
-        options = [growth_ability.growth_type for growth_ability in growth.all_growth()]
-        levels_by_growth_type: dict[GrowthType, int] = {}
-        for chosen_growth_type in random.sample(options, k=num_growth_abilities):
-            if chosen_growth_type in levels_by_growth_type:
-                levels_by_growth_type[chosen_growth_type] = (
-                    levels_by_growth_type[chosen_growth_type] + 1
-                )
-            else:
-                levels_by_growth_type[chosen_growth_type] = 1
+    def starting_magic(specific_magics: dict[MagicElement, int], random_range: tuple[int, int]) -> list[MagicElement]:
+        available_magic_elements = magic.all_individual_magics().copy()
 
-        random_growth = []
-        for growth_type, level in levels_by_growth_type.items():
-            random_growth.extend(growth.growth_to_level(level, growth_type))
-        return random_growth
+        result: list[MagicElement] = []
+        for magic_element, count in specific_magics.items():
+            for _ in range(count):
+                result.append(magic_element)
+                available_magic_elements.remove(magic_element)
 
-    @staticmethod
-    def starting_unlocks(
-            mode: StartingVisitMode,
-            random_range: tuple[int, int],
-            specific_unlocks: dict[locationType, int],
-    ) -> list[StoryUnlock]:
-        if mode is StartingVisitMode.ALL:
-            return storyunlock.all_individual_story_unlocks()
-        elif mode is StartingVisitMode.FIRST:
-            return storyunlock.all_story_unlocks()
-        elif mode is StartingVisitMode.NONE:
-            return []
-        elif mode is StartingVisitMode.RANDOM:
-            random_min, random_max = random_range
-            random_count = random.randint(random_min, random_max)
-            return random.sample(storyunlock.all_individual_story_unlocks(), k=random_count)
-        elif mode is StartingVisitMode.SPECIFIC:
-            result: list[StoryUnlock] = []
-            for location, count in specific_unlocks.items():
-                result.extend([storyunlock.story_unlock_for_location(location)] * count)
+        random_min, random_max = random_range
+        random_count = random.randint(random_min, random_max)
+        if random_count == 0:
             return result
-        elif mode is StartingVisitMode.CUSTOM:
-            result: list[StoryUnlock] = []
-            random_pool: list[StoryUnlock] = []
-            for unlock in storyunlock.all_story_unlocks():
-                specific_count = specific_unlocks[unlock.location]
-                result.extend([unlock] * specific_count)
-                random_pool.extend([unlock] * (unlock.visit_count - specific_count))
-            random_min, random_max = random_range
-            random_count = random.randint(random_min, random_max)
-            result.extend(random.sample(random_pool, k=random_count))
+        elif random_count >= len(available_magic_elements):
+            result.extend(available_magic_elements)
             return result
         else:
-            raise GeneratorException(f"Unknown mode {mode}")
+            result.extend(random.sample(available_magic_elements, k=random_count))
+            return result
+
+    @staticmethod
+    def starting_unlocks(specific_unlocks: dict[StoryUnlock, int], random_range: tuple[int, int]) -> list[StoryUnlock]:
+        available_unlocks = storyunlock.all_individual_story_unlocks().copy()
+
+        result: list[StoryUnlock] = []
+        for unlock, count in specific_unlocks.items():
+            for _ in range(count):
+                result.append(unlock)
+                available_unlocks.remove(unlock)
+
+        random_min, random_max = random_range
+        random_count = random.randint(random_min, random_max)
+        if random_count == 0:
+            return result
+        elif random_count >= len(available_unlocks):
+            result.extend(available_unlocks)
+            return result
+        else:
+            result.extend(random.sample(available_unlocks, k=random_count))
+            return result

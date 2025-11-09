@@ -34,6 +34,7 @@ See the various pages on this site for additional information about the randomiz
 ### Resources
 
 * [Downloads](downloads/index.md)
+* [Visit Unlock Items](unlocks/index.md)
 * [Superboss Locations](superboss-locations/index.md)
 * [Randomized Synthesis Guide](synthesis/index.md)
 * [Randomized Music Guide](music/index.md)

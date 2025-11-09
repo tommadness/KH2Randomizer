@@ -122,6 +122,8 @@ This can be the same as `Minimum Visits Available` to configure an exact number 
 **(individual location options)** - When using Specific Visits, the number of visits to make available at the start for
 each location.
 
+> See the [Visit Unlock Items](../unlocks/index.md) page for more information about visit unlocking.
+
 ### Worlds
 
 Allows you to select whether each world has one of the following:

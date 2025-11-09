@@ -10,11 +10,10 @@ from List.configDict import (
     expCurve,
     itemBias,
     itemDifficulty,
-    itemRarity,
     locationDepth,
     locationType,
-    StartingVisitMode,
 )
+from List.inventory import misc
 
 DailyModifier = namedtuple(
     "DailyModifier", ["local_modifier", "initMod", "name", "description", "categories"]
@@ -67,10 +66,9 @@ def cupsOn(seed_settings: SeedSettings):
         seed_settings.get(settingkey.MISC_LOCATIONS_WITH_REWARDS)
         + [locationType.OCCups.name],
     )
-    seed_settings.set(
-        settingkey.STARTING_INVENTORY,
-        seed_settings.get(settingkey.STARTING_INVENTORY) + [537],
-    )
+    existing_items = seed_settings.get(settingkey.STARTING_ITEMS)
+    if misc.HadesCupTrophy.id not in existing_items:
+        seed_settings.set(settingkey.STARTING_ITEMS, existing_items + [misc.HadesCupTrophy.id])
 
 
 def corOn(seed_settings: SeedSettings):
@@ -82,9 +80,21 @@ def corOn(seed_settings: SeedSettings):
 
 
 def lockedVisitsHard(seed_settings: SeedSettings):
-    seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.RANDOM.name)
-    seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 6)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_SP, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_PR, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_TT, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_OC, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_HT, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_LOD, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_TWTNW, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_BC, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_AG, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_PL, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_HB, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_DC, 0)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_STT, 0)
     seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MIN, 3)
+    seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 6)
     seed_settings.set(settingkey.WEIGHTED_UNLOCKS, itemBias.SLIGHTLY_LATE)
 
 
@@ -168,6 +178,32 @@ def keybladeLocking(seed_settings: SeedSettings):
     seed_settings.set(settingkey.KEYBLADES_LOCK_CHESTS, True)
     seed_settings.set(settingkey.HINTABLE_CHECKS, seed_settings.get(settingkey.HINTABLE_CHECKS) + ["keyblade"])
 
+def level_3_growth(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.STARTING_GROWTH_HIGH_JUMP, 3)
+    seed_settings.set(settingkey.STARTING_GROWTH_QUICK_RUN, 3)
+    seed_settings.set(settingkey.STARTING_GROWTH_DODGE_ROLL, 3)
+    seed_settings.set(settingkey.STARTING_GROWTH_AERIAL_DODGE, 3)
+    seed_settings.set(settingkey.STARTING_GROWTH_GLIDE, 3)
+    seed_settings.set(settingkey.STARTING_GROWTH_RANDOM_MIN, 0)
+    seed_settings.set(settingkey.STARTING_GROWTH_RANDOM_MAX, 0)
+
+def locked_second_visits(seed_settings: SeedSettings):
+    seed_settings.set(settingkey.STARTING_UNLOCKS_SP, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_PR, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_TT, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_OC, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_HT, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_LOD, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_TWTNW, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_BC, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_AG, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_PL, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_HB, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_DC, 1)
+    seed_settings.set(settingkey.STARTING_UNLOCKS_STT, 1)
+    seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MIN, 0)
+    seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 0)
+
 dailyModifiers = [
     DailyModifier(
         name="Level Up!",
@@ -202,7 +238,7 @@ dailyModifiers = [
         initMod=None,
         description="Visit unlocks are dispersed throughout the seed, and you'll need to find them before you can enter second visits.",
         categories={"progression"},
-        local_modifier=lambda settings: settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.FIRST.name),
+        local_modifier=locked_second_visits,
     ),
     DailyModifier(
         name="Glass Cannon",
@@ -216,9 +252,7 @@ dailyModifiers = [
         initMod=None,
         description="All Growth Abilities start at level 3",
         categories={"qol"},
-        local_modifier=lambda settings: settings.set(
-            settingkey.STARTING_MOVEMENT, "Level_3"
-        ),
+        local_modifier=level_3_growth,
     ),
     DailyModifier(
         name="Weapons In Stock",

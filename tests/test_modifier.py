@@ -1,7 +1,7 @@
 import unittest
 
 from List.ItemList import Items
-from List.configDict import StartingMovementOption, LevelUpStatBonus
+from List.configDict import LevelUpStatBonus
 from List.inventory import ability
 from List.inventory.growth import (
     HighJump1,
@@ -24,6 +24,7 @@ from List.inventory.growth import (
     DodgeRoll2,
     DodgeRoll3,
     DodgeRollMax,
+    GrowthType,
 )
 from Module.modifier import SeedModifier
 
@@ -159,10 +160,24 @@ class Tests(unittest.TestCase):
         self.assertCountEqual(expected_weights, weights)
 
     def test_movement_disabled(self):
-        growths = SeedModifier.starting_growth(StartingMovementOption.DISABLED)
+        specific_growth = {
+            GrowthType.HIGH_JUMP: 0,
+            GrowthType.QUICK_RUN: 0,
+            GrowthType.DODGE_ROLL: 0,
+            GrowthType.AERIAL_DODGE: 0,
+            GrowthType.GLIDE: 0,
+        }
+        growths = SeedModifier.starting_growth(specific_growth, random_range=(0, 0))
         self.assertEqual(0, len(growths))
 
     def test_movement_level_1(self):
+        specific_growth = {
+            GrowthType.HIGH_JUMP: 1,
+            GrowthType.QUICK_RUN: 1,
+            GrowthType.DODGE_ROLL: 1,
+            GrowthType.AERIAL_DODGE: 1,
+            GrowthType.GLIDE: 1,
+        }
         expected = [
             HighJump1,
             QuickRun1,
@@ -170,10 +185,17 @@ class Tests(unittest.TestCase):
             Glide1,
             DodgeRoll1,
         ]
-        growths = SeedModifier.starting_growth(StartingMovementOption.LEVEL_1)
+        growths = SeedModifier.starting_growth(specific_growth, random_range=(0, 0))
         self.assertCountEqual(expected, growths)
 
     def test_movement_level_2(self):
+        specific_growth = {
+            GrowthType.HIGH_JUMP: 2,
+            GrowthType.QUICK_RUN: 2,
+            GrowthType.DODGE_ROLL: 2,
+            GrowthType.AERIAL_DODGE: 2,
+            GrowthType.GLIDE: 2,
+        }
         expected = [
             HighJump1,
             HighJump2,
@@ -186,10 +208,17 @@ class Tests(unittest.TestCase):
             DodgeRoll1,
             DodgeRoll2,
         ]
-        growths = SeedModifier.starting_growth(StartingMovementOption.LEVEL_2)
+        growths = SeedModifier.starting_growth(specific_growth, random_range=(0, 0))
         self.assertCountEqual(expected, growths)
 
     def test_movement_level_3(self):
+        specific_growth = {
+            GrowthType.HIGH_JUMP: 3,
+            GrowthType.QUICK_RUN: 3,
+            GrowthType.DODGE_ROLL: 3,
+            GrowthType.AERIAL_DODGE: 3,
+            GrowthType.GLIDE: 3,
+        }
         expected = [
             HighJump1,
             HighJump2,
@@ -207,10 +236,17 @@ class Tests(unittest.TestCase):
             DodgeRoll2,
             DodgeRoll3,
         ]
-        growths = SeedModifier.starting_growth(StartingMovementOption.LEVEL_3)
+        growths = SeedModifier.starting_growth(specific_growth, random_range=(0, 0))
         self.assertCountEqual(expected, growths)
 
     def test_movement_level_4(self):
+        specific_growth = {
+            GrowthType.HIGH_JUMP: 4,
+            GrowthType.QUICK_RUN: 4,
+            GrowthType.DODGE_ROLL: 4,
+            GrowthType.AERIAL_DODGE: 4,
+            GrowthType.GLIDE: 4,
+        }
         expected = [
             HighJump1,
             HighJump2,
@@ -233,17 +269,31 @@ class Tests(unittest.TestCase):
             DodgeRoll3,
             DodgeRollMax,
         ]
-        growths = SeedModifier.starting_growth(StartingMovementOption.LEVEL_4)
+        growths = SeedModifier.starting_growth(specific_growth, random_range=(0, 0))
         self.assertCountEqual(expected, growths)
 
     def test_random_3(self):
+        specific_growth = {
+            GrowthType.HIGH_JUMP: 0,
+            GrowthType.QUICK_RUN: 0,
+            GrowthType.DODGE_ROLL: 0,
+            GrowthType.AERIAL_DODGE: 0,
+            GrowthType.GLIDE: 0,
+        }
         for _ in range(1000):
-            growths = SeedModifier.starting_growth(StartingMovementOption.RANDOM_3)
+            growths = SeedModifier.starting_growth(specific_growth, random_range=(3, 3))
             self.assertEqual(3, len(growths))
 
     def test_random_5(self):
+        specific_growth = {
+            GrowthType.HIGH_JUMP: 0,
+            GrowthType.QUICK_RUN: 0,
+            GrowthType.DODGE_ROLL: 0,
+            GrowthType.AERIAL_DODGE: 0,
+            GrowthType.GLIDE: 0,
+        }
         for _ in range(1000):
-            growths = SeedModifier.starting_growth(StartingMovementOption.RANDOM_5)
+            growths = SeedModifier.starting_growth(specific_growth, random_range=(5, 5))
             self.assertEqual(5, len(growths))
 
 
