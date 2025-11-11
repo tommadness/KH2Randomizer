@@ -13,7 +13,7 @@ import pyperclip as pc
 import pytz
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QSize
-from PySide6.QtGui import QIcon, QPixmap, QImage
+from PySide6.QtGui import QIcon, QPixmap, QImage, QAction
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QFileDialog,
@@ -296,7 +296,12 @@ class KH2RandomizerApp(QMainWindow):
         self.seedName = QLineEdit()
         self.seedName.setProperty("cssClass", "biggerLineEdit")
         self.seedName.setPlaceholderText("Leave blank for a random seed")
+        new_seed_action = QAction(QIcon(resource_path("static/icons/misc/new-seed.png")), "Random Seed Name", self)
+        new_seed_action.triggered.connect(self._randomize_seed_name)
+        self.seedName.addAction(new_seed_action, QLineEdit.TrailingPosition)
         seed_layout.addWidget(self.seedName)
+
+        seed_layout.addSpacing(24)
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         self.spoiler_log.setCheckState(Qt.Checked)
@@ -848,6 +853,10 @@ class KH2RandomizerApp(QMainWindow):
             # Use the unseeded RNG to make sure the next seed name isn't tied to the previous one
             seed_name = random_seed_name(unseeded_rng)
             self.seedName.setText(seed_name)
+
+    def _randomize_seed_name(self):
+        self.seedName.setText(random_seed_name(unseeded_rng))
+        self._seed_name_changed()
 
     def randoRando(self):
         rando_rando_dialog = RandomSettingsDialog(self.settings)
