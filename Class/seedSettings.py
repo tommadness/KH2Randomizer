@@ -1102,14 +1102,14 @@ _all_settings = [
     
         Disabled - Use no hint system.
         
-        JSmartee - Ansem Reports reveal how many "important checks" are in a world.
+        JSmartee - Hints reveal how many "important checks" are in a world.
         
         Shananas - Each world informs you once the world has no more "important checks".
         
         Points - Each "important check" is assigned a point value, and you are told the number of points in each
-        world. Ansem Reports reveal where items are.
+        world. Additional hints can reveal locations of specific items.
         
-        Path - Ansem Reports will tell you if a world contains "breadcrumbs" left by a world that has a proof.
+        Path - Hints will tell you if a world contains "breadcrumbs" left by a world that has a proof.
         "Breadcrumbs" being vanilla important checks from a world.
         
         Spoiler - Reveal "Important Check" locations in a world at the start of a seed.
