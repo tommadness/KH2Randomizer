@@ -1,12 +1,10 @@
-# PC - Steam and Epic Setup Guide
+# PC - Steam and Epic Mod Manager and Garden of Assemblage mod Setup Guide
 
 * [Heads up!](#heads-up)
 * [Downloads](#downloads)
-* [Installing the Mods Manager & Seed Generator](#installing-openkh-mods-manager-and-seed-generator)
+* [Installing the Mods Manager](#installing-openkh-mods-manager)
 * [Setting up the Mods Manager](#setting-up-openkh-mods-manager)
 * [Installing the GoA mod](#garden-of-assemblage-mod-installation)
-* [Installing a new seed](#installing-a-new-seed-to-play)
-* [Stability Notes](#you-are-now-ready-to-play-the-kh2-randomizer)
 
 ## Heads up!
 * Feel free to go to the [Discord server](https://discord.gg/vKhdwNAmzE) for help with the setup, there is a dedicated #help channel where you can find people to assist you if you're facing any difficulties. (P.S. Please be polite)
@@ -18,12 +16,10 @@
 ## Downloads:
 * [OpenKH Mods Manager](https://github.com/OpenKH/OpenKh/releases/download/latest/openkh.zip)
   - The program you will be downloading and installing mods to. It can directly download mods hosted on github, as well as locally downloaded mods with the `lua`, `.zip`, and `.kh2pcpatch` file types (other KH game .pcpatch files are also supported)
-* [Seed Generator](https://github.com/tommadness/KH2Randomizer/releases/latest/download/KH2.Randomizer.exe)
-  - The program that generates KH2 Randomizer seeds. In the app you can see detailed descriptions about each setting by hovering over them with your mouse, or you can read more about them on the "Settings" page [here](https://tommadness.github.io/KH2Randomizer/settings/)
 * [.NET 8 Desktop Runtime](https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.20/windowsdesktop-runtime-8.0.20-win-x64.exe)
   - Software required to run the OpenKH Mods Manager
 
-## Installing OpenKH Mods Manager and Seed Generator
+## Installing OpenKH Mods Manager
 1. Start by downloading the 3 programs from the download links above
 2. Install the .NET Desktop Runtime by running the `windowsdesktop-runtime-8.0.20-win-x64.exe` executable you just downloaded
 3. Create a `KH2 Rando` folder (you may give it any name) on the same hard drive you have the game installed. This is where we will be installing the `Mods Manager` and `Seed Generator`
@@ -32,7 +28,6 @@
 
 4. Extract the `OpenKH Mods Manager` to the "KH2 Rando" folder 
 	- It's recommended to give each app its own subfolder to make navigating their files easier (See screenshot)
-5. Place the `Seed Generator` exe into its own "Seed Generator" folder in the "KH2 Rando" folder. When we run the Seed Generator for the first time later in this guide, it will place a few new files and folders into its directory and we don't want to get them mixed up with our other stuff
 
 ![Rando Folder](../images/Panacea-ModLoader/KH2%20Rando%20Folder.png)
 
@@ -94,46 +89,19 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
 ![Second Warning](Build_Note.png)
 
-## Installing a new seed to play:
-1. Open the Seed Generator app by double clicking the `KH2.Randomizer.exe` program you downloaded earlier. If this is your first time starting the program, it may take some time to open as it extracts the necessary folders and files it uses to run.
-2. Choose your seed settings in the generator window, or choose one of the built in presets under the `Preset` tab (I recommend the "StarterSettings" preset) and then click on `Generate Seed` in the bottom right
+##Links to next setup steps:
 
-    ![Generate Seed](../images/Panacea-ModLoader/Generate%20New%20Seed.png)
+1. If you are setting this up the standalone seed generator for solo offline seeds follow this link
 
-![Third Warning](Seed_Note.png)
+* [PC (Epic/Steam) Standalone Seed Generator](../Standalone-SeedGenerator/index.md) by Alios
 
-3. This will open up a window to save the seed as a zip file. Save it anywhere that works for you (I like to place it in the same folder as the generator)
-4. Once saved, return to the Mods Manager and click on `Mods`, then `Install a New Mod`
-5. This time click on `Select and Install Mod Archive or Lua Script`, navigate to your new seed zip file and click `Open`
+2. If you are setting this up for Archipelago Multiworlds or solo seeds using Archipelago follow this link
 
-    ![Install New Seed](../images/Panacea-ModLoader/Install%20New%20Seed.png)
+* [PC (Epic/Steam) Archielago Setup Guide](../Archipelago/index.md)
 
-    ![Target New Seed](../images/Panacea-ModLoader/Target%20New%20Seed.png)
-
- ![Fourth Warning](Mod_Order_Important.png)
-
-7. Be sure to click on the check box next to the seed, then click on `Build` and `Build and Run` to enable the mod in game. Note the 5 buttons to the right of the mod list. The first button places a mod at the top of the list. The second moves a mod up the list one space, the third moves it down the list by one space. The green '+' icon is a shortcut to install a new mod, while the red "-" icon is a shortcut to deleting a mod
-	- `How to install a new seed in the future:` Create a new zip seed file using the generator. Delete the current seed from your Mods Manager. Add the new zip seed to your Mods Manager. Enable the seed and then `Build and Run`
-
-    ![Enable New Seed](../images/Panacea-ModLoader/Enable%20New%20Seed.png)
-
-![Tip](Extra_Mods_Note.png)
-* `KH2FM-Mods-equations19/auto-save` - This mod auto saves the game for you as you enter rooms. Be sure to make at least 1 regular save in game, then if you ever crash or your game closes unexpectedly, just hold the `SELECT` button while loading a save, and the auto-save will be loaded instead.
-* `KH2FM-Mods-equations19/soft-reset` - Hold `L1+L2+R1+R2+Start` at the same time to immediately reset the game to the start screen. Very useful if you accidentally softlock in boss/enemy rando, or just to restart the game faster!
-* `KH2FM-Mods-equations19/KH2-Lua-Library` - _This mod is required to use either of auto-save or soft-reset_.
-* [KH2 Rando Tracker](https://github.com/Dee-Ayy/KH2Tracker/releases/latest) - Not an OpenKH mod but instead a full fledged automated tracker program for the Important Checks in game. Checkout [Hint Systems](https://kh2rando.com/hints) for info about different ways to play Rando!
-
-**You Mods Manager should look like this when you are done:**
-
-![Final View](../images/Panacea-ModLoader/Final%20View.png)
-
-# *You are now ready to play the KH2 Randomizer!*
-Please use the #help channel in our [Community Discord](https://discord.gg/vKhdwNAmzE) if you have any errors or questions.
 
 __Technical And Stability Notes__
 1. As mentioned earlier in the guide, the Mods Manager/Lua doesn't seem to work if the folder is under a "OneDrive" directory. We don't know exactly why but it's a consistent thing between users. Be sure to move your folders and re-run the setup wizards if you installed in a "OneDrive" directory.
 2. Recommended to set fps limit to `60fps`.
 3. Recommended to run game in Windowed/Borderless Fullscreen. Fullscreen is stable but the game can crash if you alt-tab out.
 4. Overlays that hook onto the game process (Steam, RivaTuner, NVIDIA Overlay, etc) and recording programs (OBS, Streamlabs, Xsplit) seem to decrease stability when playing rando. It's recommended to disable them, or in the case of recording programs use window/desktop capture, in order to minimize your chances of a crash.
-5. GoA ROM and the Seed Generator will always be compatible with one another. Any other mods beyond that should be compatible as long as they don't overlap on changes. Mods at the top of the list will overwrite mods below them if there's any overlapping files. Feel free to ask in the [Community Discord](https://discord.gg/vKhdwNAmzE) if you aren't sure.
-6. Boss/Enemy Rando is amazing but still a work in progress. Please report any bugs/softlocks/out-of-bounds glitches you encounter to the corresponding Google Form listed in the #bug-reports channels of our Discord. 
