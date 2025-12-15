@@ -89,7 +89,13 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
 ![Second Warning](Build_Note.png)
 
-##Links to next setup steps:
+__Technical And Stability Notes__
+1. As mentioned earlier in the guide, the Mods Manager/Lua doesn't seem to work if the folder is under a "OneDrive" directory. We don't know exactly why but it's a consistent thing between users. Be sure to move your folders and re-run the setup wizards if you installed in a "OneDrive" directory.
+2. Recommended to set fps limit to `60fps`.
+3. Recommended to run game in Windowed/Borderless Fullscreen. Fullscreen is stable but the game can crash if you alt-tab out.
+4. Overlays that hook onto the game process (Steam, RivaTuner, NVIDIA Overlay, etc) and recording programs (OBS, Streamlabs, Xsplit) seem to decrease stability when playing rando. It's recommended to disable them, or in the case of recording programs use window/desktop capture, in order to minimize your chances of a crash.
+
+# Links to next setup steps:
 
 1. If you are setting this up the standalone seed generator for solo offline seeds follow this link
 
@@ -97,11 +103,4 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
 2. If you are setting this up for Archipelago Multiworlds or solo seeds using Archipelago follow this link
 
-* [PC (Epic/Steam) Archielago Setup Guide](../Archipelago/index.md)
-
-
-__Technical And Stability Notes__
-1. As mentioned earlier in the guide, the Mods Manager/Lua doesn't seem to work if the folder is under a "OneDrive" directory. We don't know exactly why but it's a consistent thing between users. Be sure to move your folders and re-run the setup wizards if you installed in a "OneDrive" directory.
-2. Recommended to set fps limit to `60fps`.
-3. Recommended to run game in Windowed/Borderless Fullscreen. Fullscreen is stable but the game can crash if you alt-tab out.
-4. Overlays that hook onto the game process (Steam, RivaTuner, NVIDIA Overlay, etc) and recording programs (OBS, Streamlabs, Xsplit) seem to decrease stability when playing rando. It's recommended to disable them, or in the case of recording programs use window/desktop capture, in order to minimize your chances of a crash.
+* [PC (Epic/Steam) Archielago Setup Guide](../Archipelago/index.md) by JaredWeakStrike & Shananas
