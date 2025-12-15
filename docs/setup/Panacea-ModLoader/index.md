@@ -1,4 +1,4 @@
-# PC - Steam and Epic Setup Guide
+# PC - Steam and Epic Mod Manager and Garden of Assemblage mod Setup Guide
 
 * [Heads up!](#heads-up)
 * [Downloads](#downloads)
