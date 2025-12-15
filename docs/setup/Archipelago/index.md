@@ -1,11 +1,6 @@
 # Kingdom Hearts 2 Archipelago Setup Guide
 
 ## Required Software:
-
-- Follow this Guide to set up these requirements [KH2Rando.com](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/)
-    1. Version 25.03.16.0 or greater OpenKH Mod Manager with Panacea
-    2. Lua Backend from the OpenKH Mod Manager
-    3. Install the mod `KH2FM-Mods-Num/GoA-ROM-Edition` using OpenKH Mod Manager
 - Needed for Archipelago 
     1. [ArchipelagoKH2Client.exe](https://github.com/ArchipelagoMW/Archipelago/releases)
     2. Install the Archipelago Companion mod from `JaredWeakStrike/APCompanion` using OpenKH Mod Manager
@@ -46,7 +41,7 @@ After Installing the seed click "Mod Loader -> Build/Build and Run". Every slot 
 
 ## What the Mod Manager Should Look Like.
 
-![image](https://i.imgur.com/3IAgeee.png)
+![image](Mod_Manager_Archipelago.png)
 - if you are using APEnablers Lite, install `KH2FM-Mods-equations19/soft-reset` and  `KH2FM-Mods-equations19/KH2-Lua-Library`. Put them below the APCompanion but ABOVE the goa
 
 ## Using the KH2 Client
@@ -63,14 +58,14 @@ If you obtain magic, you will need to pause your game to have it show up in your
 
 ## KH2 Client should look like this: 
 
-![image](https://i.imgur.com/qP6CmV8.png)
+![image](KH2Client.png)
 
 Enter The room's port number into the top box <b> where the x's are</b> and press "Connect". Follow the prompts there and you should be connected
 
 ## Common Pitfalls
 
 - Having an old GOA Lua Script in your `C:\Users\*YourName*\Documents\KINGDOM HEARTS HD 1.5+2.5 ReMIX\scripts\kh2` folder.
-    - Pressing F2 while in game should look like this. ![image](https://i.imgur.com/ABSdtPC.png)
+    - Pressing F2 while in game should look like this. ![image](Common_Pitfalls.png)
 - Not having Lua Backend Configured Correctly.
     - To fix this look over the guide at [KH2Rando.com](https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/). Specifically the Lua Backend Configuration Step.
 

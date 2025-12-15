@@ -2,7 +2,7 @@
 
 * [Heads up!](#heads-up)
 * [Downloads](#downloads)
-* [Installing the Mods Manager ](#installing-openkh-mods-manager)
+* [Installing the Mods Manager](#installing-openkh-mods-manager)
 * [Setting up the Mods Manager](#setting-up-openkh-mods-manager)
 * [Installing the GoA mod](#garden-of-assemblage-mod-installation)
 
@@ -93,11 +93,11 @@ Installing new mods into the Mods Manager is easy! Follow these steps to get the
 
 1. If you are setting this up the standalone seed generator for solo offline seeds follow this link
 
-* [PC (Epic/Steam)](../Standalone-SeedGenerator/index.md) by Alios
+* [PC (Epic/Steam) Standalone Seed Generator](../Standalone-SeedGenerator/index.md) by Alios
 
 2. If you are setting this up for Archipelago Multiworlds or solo seeds using Archipelago follow this link
 
-* [PC (Epic/Steam)](../Archipelago/index.md)
+* [PC (Epic/Steam) Archielago Setup Guide](../Archipelago/index.md)
 
 
 __Technical And Stability Notes__

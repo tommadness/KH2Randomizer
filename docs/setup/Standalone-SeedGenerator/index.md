@@ -1,9 +1,7 @@
 # PC - Steam and Epic Standalone Seed Generator Setup Guide
 
 * [Downloads](#downloads)
-* [Installing the Mods Manager & Seed Generator](#installing-openkh-mods-manager-and-seed-generator)
-* [Setting up the Mods Manager](#setting-up-openkh-mods-manager)
-* [Installing the GoA mod](#garden-of-assemblage-mod-installation)
+* [Installing the Seed Generator](#installing-openkh-mods-manager-and-seed-generator)
 * [Installing a new seed](#installing-a-new-seed-to-play)
 * [Stability Notes](#you-are-now-ready-to-play-the-kh2-randomizer)
 
@@ -56,4 +54,4 @@ Please use the #help channel in our [Community Discord](https://discord.gg/vKhdw
 
 __Technical And Stability Notes__
 1. GoA ROM and the Seed Generator will always be compatible with one another. Any other mods beyond that should be compatible as long as they don't overlap on changes. Mods at the top of the list will overwrite mods below them if there's any overlapping files. Feel free to ask in the [Community Discord](https://discord.gg/vKhdwNAmzE) if you aren't sure.
-3. Boss/Enemy Rando is amazing but still a work in progress. Please report any bugs/softlocks/out-of-bounds glitches you encounter to the corresponding Google Form listed in the #bug-reports channels of our Discord. 
+2. Boss/Enemy Rando is amazing but still a work in progress. Please report any bugs/softlocks/out-of-bounds glitches you encounter to the corresponding Google Form listed in the #bug-reports channels of our Discord. 
