@@ -3,8 +3,8 @@ import unittest
 from Class import settingkey
 from Class.exceptions import SettingsException
 from Class.seedSettings import SeedSettings
-from List.configDict import locationType, StartingVisitMode
-from List.inventory import proof
+from List.configDict import locationType
+from List.inventory import proof, storyunlock
 from Module.newRandomize import RandomizerSettings, Randomizer
 from seedtests import seedtest
 
@@ -18,7 +18,21 @@ class Tests(unittest.TestCase):
         """
         seed_settings = SeedSettings()
         seed_settings.set(settingkey.CHAIN_LOGIC, True)
-        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.ALL.name)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_SP, storyunlock.IdentityDisk.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_PR, storyunlock.SkillAndCrossbones.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_TT, storyunlock.IceCream.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_OC, storyunlock.BattlefieldsOfWar.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_HT, storyunlock.BoneFist.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_LOD, storyunlock.SwordOfTheAncestor.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_TWTNW, storyunlock.WayToTheDawn.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_BC, storyunlock.BeastsClaw.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_AG, storyunlock.Scimitar.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_PL, storyunlock.ProudFang.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_HB, storyunlock.MembershipCard.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_DC, storyunlock.RoyalSummons.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_STT, storyunlock.NaminesSketches.visit_count)
+        seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MIN, 0)
+        seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 0)
 
         for randomizer in seedtest.test_seeds(seed_settings):
             proof_assignment = randomizer.assignment_for_item(proof.ProofOfNonexistence)
@@ -33,8 +47,22 @@ class Tests(unittest.TestCase):
         """
         seed_settings = SeedSettings()
         seed_settings.set(settingkey.CHAIN_LOGIC, True)
-        seed_settings.set(settingkey.STARTING_VISIT_MODE, StartingVisitMode.ALL.name)
-        seed_settings.set(settingkey.STARTING_INVENTORY, [proof.ProofOfPeace.id])
+        seed_settings.set(settingkey.STARTING_UNLOCKS_SP, storyunlock.IdentityDisk.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_PR, storyunlock.SkillAndCrossbones.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_TT, storyunlock.IceCream.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_OC, storyunlock.BattlefieldsOfWar.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_HT, storyunlock.BoneFist.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_LOD, storyunlock.SwordOfTheAncestor.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_TWTNW, storyunlock.WayToTheDawn.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_BC, storyunlock.BeastsClaw.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_AG, storyunlock.Scimitar.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_PL, storyunlock.ProudFang.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_HB, storyunlock.MembershipCard.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_DC, storyunlock.RoyalSummons.visit_count)
+        seed_settings.set(settingkey.STARTING_UNLOCKS_STT, storyunlock.NaminesSketches.visit_count)
+        seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MIN, 0)
+        seed_settings.set(settingkey.STARTING_VISIT_RANDOM_MAX, 0)
+        seed_settings.set(settingkey.STARTING_ITEMS, [proof.ProofOfPeace.id])
         randomized_worlds = [
             locationType.STT.name,
             locationType.HB.name,
@@ -64,7 +92,7 @@ class Tests(unittest.TestCase):
         """
         seed_settings = SeedSettings()
         seed_settings.set(settingkey.CHAIN_LOGIC, True)
-        seed_settings.set(settingkey.STARTING_INVENTORY, [proof.ProofOfNonexistence.id])
+        seed_settings.set(settingkey.STARTING_ITEMS, [proof.ProofOfNonexistence.id])
 
         for seed_name in seedtest.test_seed_names():
             with self.assertRaises(SettingsException):

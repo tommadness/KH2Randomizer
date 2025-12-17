@@ -185,18 +185,6 @@ class SoraLevelOption(str, Enum):
     LEVEL_99 = "ExcludeFrom99"
 
 
-class StartingMovementOption(str, Enum):
-    DISABLED = "Disabled"
-    RANDOM_3 = "3Random"
-    RANDOM_5 = "Random"
-    RANDOM_7 = "7Random"
-    RANDOM_9 = "9Random"
-    LEVEL_1 = "Level_1"
-    LEVEL_2 = "Level_2"
-    LEVEL_3 = "Level_3"
-    LEVEL_4 = "Level_4"
-
-
 class AbilityPoolOption(str, Enum):
     DEFAULT = "default"
     RANDOMIZE = "randomize"
@@ -252,15 +240,6 @@ class HintType(str, Enum):
     PATH = "Path"
     POINTS = "Points"
     SPOILER = "Spoiler"
-
-
-class StartingVisitMode(str, Enum):
-    ALL = "All Visits"
-    FIRST = "First Visits"
-    NONE = "No Visits"
-    RANDOM = "Random Visits"
-    SPECIFIC = "Specific Visits"
-    CUSTOM = "Custom"
 
 
 class FinalDoorRequirement(str, Enum):
