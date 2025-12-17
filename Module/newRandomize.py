@@ -1463,6 +1463,12 @@ class Randomizer:
     def assignment_for_location(self, location_name: str) -> Optional[ItemAssignment]:
         return next((a for a in self.assignments if a.location.name() == location_name), None)
 
+    def assignment_for_sword_level(self, level: int) -> Optional[ItemAssignment]:
+        level_assignments = (
+            a for a in self.assignments if (a.location.LocationCategory == locationCategory.LEVEL and a.location.LocationId == level)
+        )
+        return next(level_assignments, None)
+
     def assignment_for_item(self, item: InventoryItem) -> Optional[ItemAssignment]:
         return next((a for a in self.assignments if a.item.item == item), None)
 
