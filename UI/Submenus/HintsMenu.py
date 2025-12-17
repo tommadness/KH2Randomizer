@@ -1,4 +1,3 @@
-from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QPushButton
 
 from Class import settingkey
@@ -20,9 +19,11 @@ class HintsMenu(KH2Submenu):
     def __init__(self, settings: SeedSettings):
         super().__init__(title="Hints", settings=settings)
 
+        self.hint_system_warning_label = KH2Submenu.make_error_label(tooltip="")
+
         self.start_column()
         self.start_group()
-        self.add_option(settingkey.HINT_SYSTEM)
+        self.add_option(settingkey.HINT_SYSTEM, auxiliary_widget=self.hint_system_warning_label)
         self.add_option(settingkey.JOURNAL_HINTS_ABILITIES)
         self.add_option(settingkey.PROGRESSION_HINTS)
         self.configure_progression_points = QPushButton("Configure Progression Points")
@@ -95,6 +96,7 @@ class HintsMenu(KH2Submenu):
         settings.observe(settingkey.HINT_SYSTEM, self._hint_system_changed)
         settings.observe(settingkey.SCORE_MODE, self._hint_system_changed)
         settings.observe(settingkey.PROGRESSION_HINTS, self._progression_toggle)
+        settings.observe(settingkey.HINTABLE_CHECKS, self._trackable_items_changed)
 
     def _progression_toggle(self):
         progression_on = self.settings.get(settingkey.PROGRESSION_HINTS)
@@ -103,6 +105,8 @@ class HintsMenu(KH2Submenu):
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_COMPLETE_BONUS, visible=progression_on)
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REPORT_BONUS, visible=progression_on)
         self.set_option_visibility(settingkey.PROGRESSION_HINTS_REVEAL_END, visible=progression_on)
+
+        self._check_hint_system_warnings()
 
     def _hint_system_changed(self):
         hint_type = HintType(self.settings.get(settingkey.HINT_SYSTEM))
@@ -136,6 +140,22 @@ class HintsMenu(KH2Submenu):
             setting, widget = self.widgets_and_settings_by_name[settingkey.REPORTS_REVEAL]
             widget.setCurrentIndex(0)
 
+        self._check_hint_system_warnings()
+
+    def _trackable_items_changed(self):
+        self._check_hint_system_warnings()
+
     def _configure_progression_points(self):
         dialog = ProgressionPointsDialog(self, self.settings)
         dialog.exec()
+
+    def _check_hint_system_warnings(self):
+        self.set_auxiliary_visibility(settingkey.HINT_SYSTEM, visible=False)
+
+        hint_system = self.settings.get(settingkey.HINT_SYSTEM)
+        if hint_system == HintType.JSMARTEE and not self.settings.get(settingkey.PROGRESSION_HINTS):
+            if "report" not in self.settings.get(settingkey.HINTABLE_CHECKS):
+                self.hint_system_warning_label.setToolTip(
+                    "JSmartee hints require either Ansem Reports to be trackable, or that you use Progression Hint Mode."
+                )
+                self.set_auxiliary_visibility(settingkey.HINT_SYSTEM, visible=True)
