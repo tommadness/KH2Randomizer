@@ -741,47 +741,60 @@ class KeybladeRandomizer:
         remastered_effects = replacement_key.remastered_effects(variant)
         remastered_sound = replacement_key.remastered_sound(variant)
 
-        original_effect_sources: list[ModBinarcSource] = []
+        # We can proceed as long as there are replacement visual effects.
+        # If there is only a replacement sound file, things don't seem to be very stable.
+        if original_pax is None or len(remastered_effects) == 0:
+            if remastered_sound is not None:
+                key_dir = replacement_key.keyblade_dir
+                print(f"{key_dir} has a replacement sound but no replacement visual effects. Cannot replace sound only.")
+            return assets
 
-        if original_pax is not None and len(remastered_effects) > 0:
-            original_effect_sources.append(ModBinarcSource.make_source(
+        from Module.seedmod import CosmeticsModAppender
+        original_effect_sources: list[ModBinarcSource] = [
+            ModBinarcSource.make_source(
                 name="w_ex",
                 type_="pax",
                 method=BinarcMethod.COPY,
                 sources=[ModSourceFile.make_source_file(original_pax)],
-            ))
-
-            for remastered_effect_path in remastered_effects:
-                assets.append(ModAsset.make_copy_asset(
-                    game_files=[vanilla_paths.remastered_fx_dirs.variant(variant) / remastered_effect_path.name],
-                    source_file=remastered_effect_path,
-                    platform=AssetPlatform.PC,
-                ))
-
-        if remastered_sound is not None:
+            ),
             # Adding a dummy wave file seems to prevent some crashes.
             # Inspiration taken from Zurphing's KH1 keyblade pack.
-            from Module.seedmod import CosmeticsModAppender
-            original_effect_sources.append(ModBinarcSource.make_source(
+            ModBinarcSource.make_source(
                 name="wave",
                 type_="wd",
                 method=BinarcMethod.COPY,
                 sources=[ModSourceFile.make_source_file(CosmeticsModAppender.keyblade_dummy_wave_source())],
-            ))
+            ),
+        ]
+        assets.append(ModAsset.make_binarc_asset(
+            game_files=[vanilla_paths.fx_files.variant(variant)],
+            sources=original_effect_sources,
+            platform=AssetPlatform.PC,
+        ))
 
-            vanilla_scd_path = vanilla_paths.scd_files.variant(variant)
-
-            # Since we're not replacing the SEB file, we should be able to use the sound file from the vanilla keyblade
+        for remastered_effect_path in remastered_effects:
             assets.append(ModAsset.make_copy_asset(
-                game_files=[vanilla_scd_path],
-                source_file=remastered_sound,
+                game_files=[vanilla_paths.remastered_fx_dirs.variant(variant) / remastered_effect_path.name],
+                source_file=remastered_effect_path,
                 platform=AssetPlatform.PC,
             ))
 
-        if original_effect_sources:
-            assets.append(ModAsset.make_binarc_asset(
-                game_files=[vanilla_paths.fx_files.variant(variant)],
-                sources=original_effect_sources,
+        vanilla_scd_path = vanilla_paths.scd_files.variant(variant)
+        if remastered_sound is None:
+            # Copying over the sound from the vanilla keyblade seems to prevent crashes when the replacement keyblade
+            # doesn't have a .scd file included, but has other effect files.
+            # (BBS Destiny's Embrace in particular was crashing as a Kingdom Key replacement without this.)
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[vanilla_scd_path],
+                source_file=vanilla_scd_path,
+                platform=AssetPlatform.PC,
+                internal=True,
+            ))
+        else:
+            # We're not replacing the SEB file, so should be able to use the sound file path from the vanilla keyblade
+            assets.append(ModAsset.make_copy_asset(
+                game_files=[vanilla_scd_path],
+                source_file=remastered_sound,
                 platform=AssetPlatform.PC,
             ))
 
