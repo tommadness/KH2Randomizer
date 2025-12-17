@@ -330,21 +330,23 @@ class Randomizer:
         self.starting_item_ids.extend(settings.starting_inventory_ids)
 
         starting_growth_abilities = SeedModifier.starting_growth(
-            settings.starting_growth_option
+            specific_growth=settings.starting_growth_specific,
+            random_range=settings.starting_growth_random_range,
         )
-        self.starting_item_ids.extend(
-            growth_ability.id for growth_ability in starting_growth_abilities
-        )
+        self.starting_item_ids.extend(growth_ability.id for growth_ability in starting_growth_abilities)
 
-        starting_reports = random.sample(
-            report.all_reports(), k=settings.starting_report_count
+        starting_magics = SeedModifier.starting_magic(
+            specific_magics=settings.starting_magics_specific,
+            random_range=settings.starting_magic_random_range,
         )
+        self.starting_item_ids.extend(mag.id for mag in starting_magics)
+
+        starting_reports = random.sample(report.all_reports(), k=settings.starting_report_count)
         self.starting_item_ids.extend(rpt.id for rpt in starting_reports)
 
         starting_unlocks = SeedModifier.starting_unlocks(
-            mode=settings.starting_visit_mode,
+            specific_unlocks=settings.starting_unlocks_specific,
             random_range=settings.starting_visit_random_range,
-            specific_unlocks=settings.starting_unlocks_per_world
         )
         self.starting_item_ids.extend(unlock.id for unlock in starting_unlocks)
 
@@ -1461,6 +1463,12 @@ class Randomizer:
 
     def assignment_for_location(self, location_name: str) -> Optional[ItemAssignment]:
         return next((a for a in self.assignments if a.location.name() == location_name), None)
+
+    def assignment_for_sword_level(self, level: int) -> Optional[ItemAssignment]:
+        level_assignments = (
+            a for a in self.assignments if (a.location.LocationCategory == locationCategory.LEVEL and a.location.LocationId == level)
+        )
+        return next(level_assignments, None)
 
     def assignment_for_item(self, item: InventoryItem) -> Optional[ItemAssignment]:
         return next((a for a in self.assignments if a.item.item == item), None)

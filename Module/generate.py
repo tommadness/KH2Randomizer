@@ -1,8 +1,7 @@
-import random
-import string
 from typing import List
 
 from Class.exceptions import RandomizerExceptions
+from Class.randomUtils import random_seed_name
 from Class.seedSettings import ExtraConfigurationData
 from Module.RandomizerSettings import RandomizerSettings
 from Module.hints import Hints
@@ -30,8 +29,7 @@ def generateSeed(
             )
             return zipper.create_zip()
         except RandomizerExceptions as e:
-            characters = string.ascii_letters + string.digits
-            settings.random_seed = "".join(random.choice(characters) for i in range(30))
+            settings.random_seed = random_seed_name()
             settings.create_full_seed_string()
             last_errors.append(e)
             continue
@@ -55,8 +53,7 @@ def generateSeedCLI(
             )
             return zipper.make_spoiler_without_zip()
         except RandomizerExceptions as e:
-            characters = string.ascii_letters + string.digits
-            settings.random_seed = "".join(random.choice(characters) for i in range(30))
+            settings.random_seed = random_seed_name()
             settings.create_full_seed_string()
             last_error = e
             continue
@@ -84,10 +81,7 @@ def generateMultiWorldSeed(
 
                 break
             except RandomizerExceptions as e:
-                characters = string.ascii_letters + string.digits
-                player_settings.random_seed = "".join(
-                    random.choice(characters) for i in range(30)
-                )
+                player_settings.random_seed = random_seed_name()
                 player_settings.create_full_seed_string()
                 last_error = e
                 continue

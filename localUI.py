@@ -3,7 +3,6 @@ import json
 import os
 import random
 import re
-import string
 import subprocess
 import sys
 import textwrap
@@ -14,7 +13,7 @@ import pyperclip as pc
 import pytz
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QSize
-from PySide6.QtGui import QIcon, QPixmap, QImage
+from PySide6.QtGui import QIcon, QPixmap, QImage, QAction
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QLineEdit, QMenu, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QHBoxLayout, QWidget, QFileDialog,
@@ -24,6 +23,7 @@ from PySide6.QtWidgets import (
 
 from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
+from Class.randomUtils import unseeded_rng, random_seed_name
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
 from Module import appconfig, hashimage, version
 from Module.RandomizerSettings import RandomizerSettings
@@ -35,8 +35,7 @@ from Module.resources import resource_path
 from Module.seedshare import SharedSeed, ShareStringException
 from Module.tourneySpoiler import TourneySeedSaver
 from Module.version import LOCAL_UI_VERSION, EXTRACTED_DATA_UPDATE_VERSION
-from UI import theme, presets
-from UI.FirstTimeSetup.luabackendsetup import LuaBackendSetupDialog
+from UI import theme, presets, configui
 from UI.GithubInfo.releaseInfo import KH2RandomizerGithubReleases
 from UI.Submenus.BossEnemyMenu import BossEnemyMenu
 from UI.Submenus.CompanionMenu import CompanionMenu
@@ -46,14 +45,14 @@ from UI.Submenus.HintsMenu import HintsMenu
 from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
 from UI.Submenus.ItemPoolMenu import ItemPoolMenu
 from UI.Submenus.KeybladeMenu import KeybladeMenu
-from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog
 from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
 from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.about import AboutDialog
 from UI.presets import SettingsPreset, RandomPresetDialog
-from UI.worker import GenerateSeedWorker, ExtractVanillaKeybladesWorker, ImportCustomKeybladesWorker
+from UI.qtlib import show_alert
+from UI.worker import GenerateSeedWorker
 
 
 class Logger(object):
@@ -297,7 +296,12 @@ class KH2RandomizerApp(QMainWindow):
         self.seedName = QLineEdit()
         self.seedName.setProperty("cssClass", "biggerLineEdit")
         self.seedName.setPlaceholderText("Leave blank for a random seed")
+        new_seed_action = QAction(QIcon(resource_path("static/icons/misc/new-seed.png")), "Random Seed Name", self)
+        new_seed_action.triggered.connect(self._randomize_seed_name)
+        self.seedName.addAction(new_seed_action, QLineEdit.TrailingPosition)
         seed_layout.addWidget(self.seedName)
+
+        seed_layout.addSpacing(24)
 
         self.spoiler_log = QCheckBox("Make Spoiler Log")
         self.spoiler_log.setCheckState(Qt.Checked)
@@ -361,10 +365,6 @@ class KH2RandomizerApp(QMainWindow):
         cosmetic_submenu.addAction('Find OpenKH Folder', self.openkh_folder_getter)
         cosmetic_submenu.addAction('Choose Custom Music Folder', self.custom_music_folder_getter)
         cosmetic_submenu.addAction('Choose Custom Visuals Folder', self.custom_visuals_folder_getter)
-        cosmetic_submenu.addSeparator()
-        cosmetic_submenu.addAction("Extract Vanilla Keyblades", self._extract_vanilla_keyblades)
-        cosmetic_submenu.addAction("Package External Keyblade", self._show_keyblade_packager)
-        cosmetic_submenu.addAction("Import External Keyblade(s)", self._import_keyblades)
         self.config_menu.addMenu(cosmetic_submenu)
         if version.debug_mode():
             self.config_menu.addSeparator()
@@ -376,7 +376,6 @@ class KH2RandomizerApp(QMainWindow):
         self.emu_warning_toggle.setCheckable(True)
         self.emu_warning_toggle.setChecked(self.disable_emu_warnings)
         self.config_menu.addSeparator()
-        # self.config_menu.addAction('LuaBackend Hook Setup (PC Only)', self.show_luabackend_configuration)
 
         github_releases = KH2RandomizerGithubReleases()
         infos = github_releases.get_update_infos()
@@ -785,9 +784,8 @@ class KH2RandomizerApp(QMainWindow):
             self.progress.setValue(seed_number)
             self.progress.setLabelText(f"Seed {seed_number+2}") # dialog updates are offset by one seed, so making display correct
             self.progress.show()
-            characters = string.ascii_letters + string.digits
-            seedString = (''.join(random.choice(characters) for i in range(30)))
-            self.seedName.setText(seedString)
+            seed_name = random_seed_name(unseeded_rng)
+            self.seedName.setText(seed_name)
             tourney_rando_settings = self.make_rando_settings()
             if tourney_rando_settings is not None:
                 zip_file, spoiler_log, enemy_log = generateSeed(tourney_rando_settings, extra_data)
@@ -843,24 +841,22 @@ class KH2RandomizerApp(QMainWindow):
         if preset_select_dialog.exec():
             random_preset_list = preset_select_dialog.save()
             if len(random_preset_list) == 0:
-                message = QMessageBox(text="Need at least 1 preset selected")
-                message.setWindowTitle("KH2 Seed Generator")
-                message.exec()
+                show_alert("Need at least 1 preset selected")
             else:
-                self.validate_seed_name()
-                random.seed(self.seedName.text())
-                selected_preset: SettingsPreset = random.choice(random_preset_list)
+                selected_preset: SettingsPreset = unseeded_rng.choice(random_preset_list)
                 self._use_preset(selected_preset)
-                message = QMessageBox(text=f"Picked {selected_preset.display_name}")
-                message.setWindowTitle("KH2 Seed Generator")
-                message.exec()
+                show_alert(f"Picked {selected_preset.display_name}")
 
     def validate_seed_name(self):
-        seedString = self.seedName.text()
-        if seedString == "":
-            characters = string.ascii_letters + string.digits
-            seedString = (''.join(random.choice(characters) for i in range(30)))
-            self.seedName.setText(seedString)
+        seed_name = self.seedName.text()
+        if seed_name == "":
+            # Use the unseeded RNG to make sure the next seed name isn't tied to the previous one
+            seed_name = random_seed_name(unseeded_rng)
+            self.seedName.setText(seed_name)
+
+    def _randomize_seed_name(self):
+        self.seedName.setText(random_seed_name(unseeded_rng))
+        self._seed_name_changed()
 
     def randoRando(self):
         rando_rando_dialog = RandomSettingsDialog(self.settings)
@@ -979,72 +975,20 @@ class KH2RandomizerApp(QMainWindow):
             message.exec()
 
     def openkh_folder_getter(self):
-        save_file_widget = QFileDialog()
-        selected_directory = save_file_widget.getExistingDirectory()
-
-        if selected_directory is None or selected_directory == "":
-            return
-
-        selected_path = Path(selected_directory)
-        if not (selected_path / 'OpenKh.Tools.ModsManager.exe').is_file():
-            message = QMessageBox(text='Not a valid OpenKH folder')
-            message.setWindowTitle('KH2 Seed Generator')
-            message.exec()
-        else:
-            appconfig.write_openkh_path(selected_directory)
-
+        if configui.openkh_folder_getter():
             self.cosmetics_menu.reload_cosmetic_widgets()
 
     def custom_music_folder_getter(self):
-        save_file_widget = QFileDialog()
-        selected_directory = save_file_widget.getExistingDirectory()
-
-        if selected_directory is None or selected_directory == "":
-            return
-
-        CosmeticsMod.bootstrap_custom_music_folder(Path(selected_directory))
-        appconfig.write_custom_music_path(selected_directory)
-
-        self.cosmetics_menu.reload_cosmetic_widgets()
+        if configui.custom_music_folder_getter():
+            self.cosmetics_menu.reload_cosmetic_widgets()
 
     def custom_visuals_folder_getter(self):
-        save_file_widget = QFileDialog()
-        selected_directory = save_file_widget.getExistingDirectory()
-
-        if selected_directory is None or selected_directory == "":
-            return
-
-        CosmeticsMod.bootstrap_custom_visuals_folder(Path(selected_directory))
-        appconfig.write_custom_visuals_path(selected_directory)
-
-        self.cosmetics_menu.reload_cosmetic_widgets()
-
-    def show_luabackend_configuration(self):
-        dialog = LuaBackendSetupDialog(self)
-        dialog.exec()
+        if configui.custom_visuals_folder_getter():
+            self.cosmetics_menu.reload_cosmetic_widgets()
 
     def show_about(self):
         dialog = AboutDialog(self)
         dialog.exec()
-
-    @staticmethod
-    def _extract_vanilla_keyblades():
-        worker = ExtractVanillaKeybladesWorker()
-        worker.start()
-
-    def _show_keyblade_packager(self):
-        KeybladePackageDialog(self, self.settings).exec()
-
-    def _import_keyblades(self):
-        file_dialog = QFileDialog(self)
-        outfile_names, _ = file_dialog.getOpenFileNames(self, filter="Randomizer Keyblades (*.kh2randokb)")
-        if len(outfile_names) > 0:
-            worker = ImportCustomKeybladesWorker(keyblade_file_paths=outfile_names)
-            worker.start()
-        else:
-            msg = QMessageBox(text=f"No keyblades selected.")
-            msg.setWindowTitle("Import Keyblade(s)")
-            msg.exec()
 
     @staticmethod
     def _dev_create_recolor():

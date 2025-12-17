@@ -5,7 +5,7 @@ import string
 import textwrap
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any
+from typing import Callable, Any
 
 from bitstring import BitArray
 from khbr.randomizer import Randomizer as khbr
@@ -26,16 +26,14 @@ from List.configDict import (
     locationType,
     locationDepth,
     BattleLevelOption,
-    StartingMovementOption,
     SoraLevelOption,
     location_depth_choices,
     ItemAccessibilityOption,
     SoftlockPreventionOption,
     AbilityPoolOption,
-    StartingVisitMode,
     FinalDoorRequirement,
 )
-from List.inventory import ability, misc, proof, storyunlock, form, summon, keyblade
+from List.inventory import misc, proof, storyunlock, form, summon, keyblade, growth, magic
 from Module import encoding
 from Module import knockbackTypes
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
@@ -558,7 +556,7 @@ def _location_unlock_setting(key: str, location: locationType) -> IntSpinner:
         minimum=0,
         maximum=storyunlock.story_unlock_for_location(location).visit_count,
         step=1,
-        default=0,
+        default=unlock.visit_count,
         tooltip=f"Number of visits to unlock in {location}. Visits are unlocked with {unlock.name}.",
     )
 
@@ -934,48 +932,34 @@ _all_settings = [
         default=False,
         tooltip="Start with abilities auto-equipped (except ones from critical bonuses).",
     ),
-    SingleSelect(
-        name=settingkey.STARTING_MOVEMENT,
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_AERIAL_DODGE, "Aerial Dodge", itemType.GROWTH_ABILITY, 4),
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_DODGE_ROLL, "Dodge Roll", itemType.GROWTH_ABILITY, 4),
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_GLIDE, "Glide", itemType.GROWTH_ABILITY, 4),
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_HIGH_JUMP, "High Jump", itemType.GROWTH_ABILITY, 4),
+    _starting_inventory_setting(settingkey.STARTING_GROWTH_QUICK_RUN, "Quick Run", itemType.GROWTH_ABILITY, 4),
+    IntSpinner(
+        name=settingkey.STARTING_GROWTH_RANDOM_MIN,
         group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Growth Abilities",
-        standalone_label="Starting Growth Abilities",
-        choices={
-            StartingMovementOption.DISABLED: "None",
-            StartingMovementOption.RANDOM_3: "3 Random",
-            StartingMovementOption.RANDOM_5: "5 Random",
-            StartingMovementOption.RANDOM_7: "7 Random",
-            StartingMovementOption.RANDOM_9: "9 Random",
-            StartingMovementOption.LEVEL_1: "Level 1",
-            StartingMovementOption.LEVEL_2: "Level 2",
-            StartingMovementOption.LEVEL_3: "Level 3",
-            StartingMovementOption.LEVEL_4: "Max",
-        },
+        ui_label="Minimum Extra",
+        standalone_label="Min Random Extra Starting Growth",
         shared=True,
-        default="Level_1",
-        tooltip="""
-        None - No guaranteed starting growth.
-        
-        3 Random - Start with 3 individual growths at random.
-        
-        5 Random - Start with 5 individual growths at random.
-        
-        Level 1 - Start with level 1 of all growth abilities.
-        
-        Level 2 - Start with level 2 of all growth abilities.
-        
-        Level 3 - Start with level 3 of all growth abilities.
-        
-        Max - Start with the maximum level of all growth abilities.
-        """,
-        randomizable=[
-            StartingMovementOption.DISABLED,
-            StartingMovementOption.RANDOM_3,
-            StartingMovementOption.RANDOM_5,
-            StartingMovementOption.LEVEL_1,
-            StartingMovementOption.LEVEL_2,
-            StartingMovementOption.LEVEL_3,
-            StartingMovementOption.LEVEL_4,
-        ],
+        minimum=0,
+        maximum=len(growth.all_individual_growth_types()),
+        step=1,
+        default=0,
+        tooltip="Minimum number of random growth abilities to start with (in addition to the specific ones chosen).",
+    ),
+    IntSpinner(
+        name=settingkey.STARTING_GROWTH_RANDOM_MAX,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Maximum Extra",
+        standalone_label="Max Random Extra Starting Growth",
+        shared=True,
+        minimum=0,
+        maximum=len(growth.all_individual_growth_types()),
+        step=1,
+        default=0,
+        tooltip="Maximum number of random growth abilities to start with (in addition to the specific ones chosen).",
     ),
     IntSpinner(
         name=settingkey.STARTING_REPORTS,
@@ -996,6 +980,30 @@ _all_settings = [
     _starting_inventory_setting(settingkey.STARTING_MAGIC_CURE, "Cure", itemType.CURE, 3),
     _starting_inventory_setting(settingkey.STARTING_MAGIC_MAGNET, "Magnet", itemType.MAGNET, 3),
     _starting_inventory_setting(settingkey.STARTING_MAGIC_REFLECT, "Reflect", itemType.REFLECT, 3),
+    IntSpinner(
+        name=settingkey.STARTING_MAGIC_RANDOM_MIN,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Minimum Extra",
+        standalone_label="Min Random Extra Starting Magic",
+        shared=True,
+        minimum=0,
+        maximum=len(magic.all_individual_magics()),
+        step=1,
+        default=0,
+        tooltip="Minimum number of random magic elements to start with (in addition to the specific ones chosen).",
+    ),
+    IntSpinner(
+        name=settingkey.STARTING_MAGIC_RANDOM_MAX,
+        group=SettingGroup.STARTING_INVENTORY,
+        ui_label="Maximum Extra",
+        standalone_label="Max Random Extra Starting Magic",
+        shared=True,
+        minimum=0,
+        maximum=len(magic.all_individual_magics()),
+        step=1,
+        default=0,
+        tooltip="Maximum number of random magic elements to start with (in addition to the specific ones chosen).",
+    ),
     _starting_inventory_setting(settingkey.STARTING_PAGES, "Torn Page", itemType.TORN_PAGE, 5),
     MultiSelect(
         name=settingkey.STARTING_KEYBLADES,
@@ -1060,29 +1068,6 @@ _all_settings = [
         default=[],
         tooltip="Start with the selected items already obtained.",
     ),
-    MultiSelect(
-        name=settingkey.STARTING_INVENTORY,
-        group=SettingGroup.STARTING_INVENTORY,
-        ui_label="Starting Inventory",
-        choices={
-            str(ability.Scan.id): ability.Scan.name,
-            str(ability.NoExperience.id): ability.NoExperience.name,
-            str(ability.AerialRecovery.id): ability.AerialRecovery.name,
-            str(ability.Guard.id): ability.Guard.name,
-            str(ability.FinishingPlus.id): ability.FinishingPlus.name,
-            str(misc.HadesCupTrophy.id): misc.HadesCupTrophy.name,
-            str(misc.OlympusStone.id): misc.OlympusStone.name,
-            str(misc.UnknownDisk.id): misc.UnknownDisk.name,
-            str(proof.ProofOfConnection.id): proof.ProofOfConnection.name,
-            str(proof.ProofOfNonexistence.id): proof.ProofOfNonexistence.name,
-            str(proof.ProofOfPeace.id): proof.ProofOfPeace.name,
-            # TODO: misc.PromiseCharm.name is "PromiseCharm", need to see if that matters before committing to change
-            str(misc.PromiseCharm.id): "Promise Charm",
-        },
-        shared=True,
-        default=[],
-        tooltip="Start with the selected items/abilities already obtained.",
-    ),
     SingleSelect(
         name=settingkey.HINT_SYSTEM,
         group=SettingGroup.HINTS,
@@ -1102,14 +1087,14 @@ _all_settings = [
     
         Disabled - Use no hint system.
         
-        JSmartee - Ansem Reports reveal how many "important checks" are in a world.
+        JSmartee - Hints reveal how many "important checks" are in a world.
         
         Shananas - Each world informs you once the world has no more "important checks".
         
         Points - Each "important check" is assigned a point value, and you are told the number of points in each
-        world. Ansem Reports reveal where items are.
+        world. Additional hints can reveal locations of specific items.
         
-        Path - Ansem Reports will tell you if a world contains "breadcrumbs" left by a world that has a proof.
+        Path - Hints will tell you if a world contains "breadcrumbs" left by a world that has a proof.
         "Breadcrumbs" being vanilla important checks from a world.
         
         Spoiler - Reveal "Important Check" locations in a world at the start of a seed.
@@ -1313,7 +1298,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=0,
-        tooltip="Bonus points for collecting all Magic.",
+        tooltip="Bonus points for collecting all of each type of Magic.",
     ),
     IntSpinner(
         name=settingkey.POINTS_PAGE_COLLECT,
@@ -1385,6 +1370,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=0,
+        tooltip="Bonus points for collecting all abilities considered important.",
     ),
     IntSpinner(
         name=settingkey.POINTS_REPORT_COLLECT,
@@ -1420,6 +1406,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=10,
+        tooltip="Bonus points for each Bonus level earned.",
     ),
     IntSpinner(
         name=settingkey.POINTS_COMPLETE,
@@ -1431,6 +1418,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=10,
+        tooltip="Bonus points for collecting all hinted items in a world, for hint systems that support displaying world completion."
     ),
     IntSpinner(
         name=settingkey.POINTS_FORMLV,
@@ -1442,6 +1430,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=3,
+        tooltip="Bonus points for each Drive Form level earned.",
     ),
     IntSpinner(
         name=settingkey.POINTS_DEATH,
@@ -1453,6 +1442,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=-10,
+        tooltip="Points awarded (or taken away) for each death. Use a negative number to remove points per death.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_NORMAL,
@@ -1464,6 +1454,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=10,
+        tooltip="Bonus points for each standard boss defeated.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_AS,
@@ -1475,6 +1466,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=20,
+        tooltip="Bonus points for each Absent Silhouette defeated.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_DATA,
@@ -1486,6 +1478,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=30,
+        tooltip="Bonus points for each Data Organization boss defeated.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_SEPHIROTH,
@@ -1497,6 +1490,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=40,
+        tooltip="Bonus points for defeating Sephiroth.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_TERRA,
@@ -1508,6 +1502,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=50,
+        tooltip="Bonus points for defeating Lingering Will.",
     ),
     IntSpinner(
         name=settingkey.POINTS_BOSS_FINAL,
@@ -1519,6 +1514,7 @@ _all_settings = [
         step=1,
         shared=True,
         default=100,
+        tooltip="Bonus points for defeating Final Xemnas.",
     ),
     SingleSelect(
         name=settingkey.REPORT_DEPTH,
@@ -1894,7 +1890,7 @@ _all_settings = [
         ui_label="Reveal World Completion",
         shared=True,
         default=True,
-        tooltip="If enabled, the tracker will reveal when all Important Checks in a world are found.",
+        tooltip="If enabled, the tracker will indicate when all Important Checks in a revealed world are found.",
     ),
     SingleSelect(
         name=settingkey.REPORTS_REVEAL,
@@ -2574,77 +2570,27 @@ _all_settings = [
         ui_label="Keyblades Unlock Chests",
         shared=True,
         default=False,
-        tooltip="""
+        tooltip=f"""
         When enabled, Sora must have certain keyblades to open chests in the different worlds.
-        Needs the KH2FM-Mods-equations19/KH2-Lua-Library mod installed
-        STT     | Bond of Flame
-        TT      | Oathkeeper
-        HB      | Sleeping Lion
-        CoR     | Winner's Proof
-        LoD     | Hidden Dragon
-        BC      | Rumbling Rose
-        OC      | Hero's Crest
-        DC      | Monochrome
-        PR      | Follow The Wind
-        AG      | Wishing Lamp
-        HT      | Decisive Pumpkin
-        PL      | Circle of Life
-        SP      | Photon Debugger
-        TWTNW   | Two Become One
-        HAW     | Sweet Memories
+        Requires the KH2FM-Mods-equations19/KH2-Lua-Library mod.
+
+        {locationType.STT.value} - Bond of Flame
+        {locationType.TT.value} - Oathkeeper
+        {locationType.HB.value} - Sleeping Lion
+        {locationType.CoR.value} - Winner's Proof
+        {locationType.LoD.value} - Hidden Dragon
+        {locationType.BC.value} - Rumbling Rose
+        {locationType.OC.value} - Hero's Crest
+        {locationType.DC.value} - Monochrome
+        {locationType.PR.value} - Follow The Wind
+        {locationType.Agrabah.value} - Wishing Lamp
+        {locationType.HT.value} - Decisive Pumpkin
+        {locationType.PL.value} - Circle of Life
+        {locationType.SP.value} - Photon Debugger
+        {locationType.TWTNW.value} - Two Become One
+        {locationType.HUNDREDAW.value} - Sweet Memories
         """,
         randomizable=True,
-    ),
-    SingleSelect(
-        name=settingkey.STARTING_VISIT_MODE,
-        group=SettingGroup.LOCATIONS,
-        ui_label="Availability",
-        standalone_label="Visit Availability",
-        choices={option.name: option.value for option in list(StartingVisitMode)},
-        shared=True,
-        default=StartingVisitMode.ALL.name,
-        tooltip="""
-        How "visits" for worlds that have them (the 13 portal worlds) should be initially available.
-        
-        All Visits - All visits of all worlds are available from the beginning of the seed.
-
-        First Visits - All first visits are immediately available, but you must find visit unlock items to
-        access subsequent visits in each visit-capable world.
-
-        No Visits - No world visits are immediately available, outside of the ones that are always present. You
-        must find a visit unlock item in the immediately available areas to proceed. 
-
-        Random Visits - Unlock a random set of visits by starting with random visit unlock items.
-
-        Specific Visits - Unlock a specific set of visits by starting with specific visit unlock items.
-
-        Custom - Combination of the "Random Visits" and "Specific Visits" modes. Unlock a specific set of
-        visits, and then additionally unlock a random set of visits.
-        """,
-    ),
-    IntSpinner(
-        name=settingkey.STARTING_VISIT_RANDOM_MIN,
-        group=SettingGroup.LOCATIONS,
-        ui_label="Minimum Visits Available",
-        standalone_label="Min Random Visits Available",
-        shared=True,
-        minimum=0,
-        maximum=len(storyunlock.all_individual_story_unlocks()),
-        step=1,
-        default=3,
-        tooltip="Minimum number of random visits to unlock at the start.",
-    ),
-    IntSpinner(
-        name=settingkey.STARTING_VISIT_RANDOM_MAX,
-        group=SettingGroup.LOCATIONS,
-        ui_label="Maximum Visits Available",
-        standalone_label="Max Random Visits Available",
-        shared=True,
-        minimum=0,
-        maximum=len(storyunlock.all_individual_story_unlocks()),
-        step=1,
-        default=3,
-        tooltip="Maximum number of random visits to unlock at the start.",
     ),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_SP, location=locationType.SP),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_PR, location=locationType.PR),
@@ -2659,6 +2605,30 @@ _all_settings = [
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_HB, location=locationType.HB),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_DC, location=locationType.DC),
     _location_unlock_setting(key=settingkey.STARTING_UNLOCKS_STT, location=locationType.STT),
+    IntSpinner(
+        name=settingkey.STARTING_VISIT_RANDOM_MIN,
+        group=SettingGroup.LOCATIONS,
+        ui_label="Minimum Extra",
+        standalone_label="Min Random Extra Visits Available",
+        shared=True,
+        minimum=0,
+        maximum=len(storyunlock.all_individual_story_unlocks()),
+        step=1,
+        default=3,
+        tooltip="Minimum number of random visits to unlock at the start (in addition to the specific ones chosen).",
+    ),
+    IntSpinner(
+        name=settingkey.STARTING_VISIT_RANDOM_MAX,
+        group=SettingGroup.LOCATIONS,
+        ui_label="Maximum Extra",
+        standalone_label="Max Random Extra Visits Available",
+        shared=True,
+        minimum=0,
+        maximum=len(storyunlock.all_individual_story_unlocks()),
+        step=1,
+        default=3,
+        tooltip="Maximum number of random visits to unlock at the start (in addition to the specific ones chosen).",
+    ),
     Toggle(
         name=settingkey.MAPS_IN_ITEM_POOL,
         group=SettingGroup.ITEM_POOL,
@@ -3056,6 +3026,20 @@ _all_settings = [
         """,
     ),
     Toggle(
+        name=settingkey.KEYBLADE_RANDO_INCLUDE_GOA,
+        group=SettingGroup.COSMETICS,
+        ui_label="Replace GoA Keyblades (Beta)",
+        shared=False,
+        default=False,
+        tooltip="""
+        If enabled, attempts to also replace keyblades from the Garden of Assemblage mod (Kingdom Key D, Alpha Weapon,
+        Omega Weapon, Pureblood, and the Struggle Weapons).
+        
+        Requires the OpenKH folder to be set up in the Configure menu, and the Garden of Assemblage mod must be
+        installed in OpenKH Mods Manager.
+        """,
+    ),
+    Toggle(
         name=settingkey.MUSIC_RANDO_ENABLED_PC,
         group=SettingGroup.COSMETICS,
         ui_label="Randomize Music",
@@ -3107,7 +3091,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH1,
         group=SettingGroup.COSMETICS,
-        ui_label="Include KH1 Songs",
+        ui_label="Kingdom Hearts 1 Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3120,7 +3104,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_KH2,
         group=SettingGroup.COSMETICS,
-        ui_label="Include KH2 Songs",
+        ui_label="Kingdom Hearts 2 Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3132,7 +3116,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_RECOM,
         group=SettingGroup.COSMETICS,
-        ui_label="Include Re:Chain of Memories Songs",
+        ui_label="Re:Chain of Memories Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3145,7 +3129,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_BBS,
         group=SettingGroup.COSMETICS,
-        ui_label="Include Birth by Sleep Songs",
+        ui_label="Birth by Sleep Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3158,7 +3142,7 @@ _all_settings = [
     Toggle(
         name=settingkey.MUSIC_RANDO_PC_INCLUDE_DDD,
         group=SettingGroup.COSMETICS,
-        ui_label="Include Dream Drop Distance Songs",
+        ui_label="Dream Drop Distance Songs",
         shared=False,
         default=False,
         tooltip="""
@@ -3665,12 +3649,13 @@ DELIMITER = "-"
 
 
 class SeedSettings:
+
     def __init__(self):
         self._values = {setting.name: setting.default for setting in _all_settings}
         self._randomizable = [
             setting for setting in _all_settings if setting.randomizable
         ]
-        self._observers = {}
+        self._observers: dict[str, list[Callable[[], Any]]] = {}
 
     def get(self, name: str):
         return self._values[name]
@@ -3681,7 +3666,7 @@ class SeedSettings:
             for observer in self._observers[name]:
                 observer()
 
-    def observe(self, name: str, observer):
+    def observe(self, name: str, observer: Callable[[], Any]):
         """Calls the provided observer whenever the setting with the given name is changed."""
         if name in self._observers:
             observers = self._observers[name]

@@ -2,12 +2,16 @@ import os
 import random
 from pathlib import Path
 
-from Class.openkhmod import Asset
+from Class.openkhmod import ModAsset, AssetPlatform
 from List import configDict
 from Module import appconfig
 
 
 class EndingPictureRandomizer:
+
+    @staticmethod
+    def directory_name() -> str:
+        return "ending-pictures"
 
     @staticmethod
     def endingpic_rando_options() -> dict[str, str]:
@@ -19,14 +23,8 @@ class EndingPictureRandomizer:
         }
 
     @staticmethod
-    def randomize_end_screen(setting: str) -> list[Asset]:
-        """Randomizes the ending screen, returning a list of assets to be added to a mod."""
-
-        assets: list[Asset] = []
-        if setting == configDict.VANILLA:
-            return assets
-
-        vanilla_by_locale: dict[str, list[str]] = {
+    def _vanilla_screens_by_region() -> dict[str, list[str]]:
+        return {
             "fr": [
                 "remastered/menu/fr/ending.2ld/FR_ending_2ld2.png",
                 "remastered/menu/fr/ending.2ld/FR_ending_2ld3.png",
@@ -69,7 +67,16 @@ class EndingPictureRandomizer:
             ],
         }
 
-        custom = EndingPictureRandomizer._collect_custom_endpics()
+    @staticmethod
+    def randomize_end_screen(setting: str) -> list[ModAsset]:
+        """Randomizes the ending screen, returning a list of assets to be added to a mod."""
+
+        assets: list[ModAsset] = []
+        if setting == configDict.VANILLA:
+            return assets
+
+        vanilla_by_region = EndingPictureRandomizer._vanilla_screens_by_region()
+        custom = EndingPictureRandomizer.collect_custom_endpics()
 
         if setting == configDict.RANDOMIZE_ALL:
             if len(custom) == 0:
@@ -84,39 +91,33 @@ class EndingPictureRandomizer:
                     setting = configDict.RANDOMIZE_CUSTOM_ONLY
 
         if setting == configDict.RANDOMIZE_IN_GAME_ONLY:
-            for endpic_list in vanilla_by_locale.values():
-                choice = random.choice(endpic_list)
-                assets.append({
-                    "name": endpic_list[0],
-                    "platform": "pc",
-                    "multi": [{"name": endpic} for endpic in endpic_list[1:]],
-                    "method": "copy",
-                    "source": [{
-                        "name": choice,
-                        "type": "internal",
-                    }]
-                })
+            for endpic_list in vanilla_by_region.values():
+                game_choice: str = random.choice(endpic_list)
+                assets.append(ModAsset.make_copy_asset(
+                    game_files=endpic_list,
+                    platform=AssetPlatform.PC,
+                    source_file=game_choice,
+                    internal=True,
+                ))
 
         if setting == configDict.RANDOMIZE_CUSTOM_ONLY and len(custom) > 0:
-            choice = random.choice(custom)
-            for endpic_list in vanilla_by_locale.values():
-                assets.append({
-                    "name": endpic_list[0],
-                    "platform": "pc",
-                    "multi": [{"name": endpic} for endpic in endpic_list[1:]],
-                    "method": "copy",
-                    "source": [{"name": str(choice)}]
-                })
+            custom_choice: Path = random.choice(custom)
+            for endpic_list in vanilla_by_region.values():
+                assets.append(ModAsset.make_copy_asset(
+                    game_files=endpic_list,
+                    platform=AssetPlatform.PC,
+                    source_file=custom_choice,
+                ))
 
         return assets
 
     @staticmethod
-    def _collect_custom_endpics() -> list[Path]:
+    def collect_custom_endpics() -> list[Path]:
         result: list[Path] = []
 
         custom_visuals_path = appconfig.read_custom_visuals_path()
         if custom_visuals_path is not None:
-            ending_pictures_path = custom_visuals_path / "ending-pictures"
+            ending_pictures_path = custom_visuals_path / EndingPictureRandomizer.directory_name()
             if ending_pictures_path.is_dir():
                 for root, dirs, files in os.walk(ending_pictures_path):
                     root_path = Path(root)
@@ -125,5 +126,25 @@ class EndingPictureRandomizer:
                         if extension.lower() == ".png":
                             file_path = root_path / file
                             result.append(file_path)
+
+        return result
+
+    @staticmethod
+    def collect_vanilla_endpics() -> list[Path]:
+        result: list[Path] = []
+
+        extracted_data_path = appconfig.extracted_game_path("kh2")
+        if extracted_data_path is None:
+            return result
+
+        vanilla_by_region = EndingPictureRandomizer._vanilla_screens_by_region()
+        for region in ["us", "fr", "gr", "it", "sp"]:
+            # Find the first region that has existing files
+            for screen in vanilla_by_region[region]:
+                image_path = extracted_data_path / screen
+                if image_path.is_file():
+                    result.append(image_path)
+            if result:
+                return result
 
         return result

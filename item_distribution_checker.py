@@ -1,9 +1,8 @@
-import random
-import string
 from Class import settingkey
 from Class.exceptions import RandomizerExceptions
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
+from Class.randomUtils import random_seed_name
 from Class.seedSettings import SeedSettings
 from List.configDict import itemDifficulty, itemRarity, locationCategory
 from Module.newRandomize import RandomizerSettings,Randomizer
@@ -24,8 +23,7 @@ def make_rando_seed(difficulty,seed_name):
             result = newSeedValidation.validate_seed(settings, randomizer)
             break
         except RandomizerExceptions as e:
-            characters = string.ascii_letters + string.digits
-            settings.random_seed = (''.join(random.choice(characters) for i in range(30)))
+            settings.random_seed = random_seed_name()
             settings.create_full_seed_string()
             last_error = e
             continue

@@ -54,8 +54,8 @@ as demonstrated in the gif above.
 
 ### Reveal World Completion
 
-If enabled, the tracker will indicate when all Important Checks in a world are found (with default settings, the world's
-number will turn blue).
+If enabled, the tracker will indicate when all Important Checks in a revealed world are found (with default settings,
+the world's number will turn blue).
 
 ### Reports Reveal Items
 

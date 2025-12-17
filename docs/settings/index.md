@@ -122,6 +122,8 @@ This can be the same as `Minimum Visits Available` to configure an exact number 
 **(individual location options)** - When using Specific Visits, the number of visits to make available at the start for
 each location.
 
+> See the [Visit Unlock Items](../unlocks/index.md) page for more information about visit unlocking.
+
 ### Worlds
 
 Allows you to select whether each world has one of the following:
@@ -424,6 +426,9 @@ Shan-Yu to progress.
 **Keyblades Unlock Chests** - When enabled, Sora must have certain keyblades to open chests in the different worlds.
 It's not required to equip the keyblade - being in the inventory is enough. If the keyblade is not acquired, the
 reaction command to open chests in the associated world will be disabled.
+
+> **Note** - this setting requires the `KH2FM-Mods-equations19/KH2-Lua-Library` mod, and will not work properly
+> without it installed and enabled.
 
     Simulated Twilight Town | Bond of Flame
     Twilight Town           | Oathkeeper

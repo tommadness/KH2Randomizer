@@ -1,10 +1,9 @@
-import concurrent.futures
 import gzip
 import os
 import random
 import shutil
 import string
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Any, Optional, Callable
 
 import numpy as np
@@ -13,7 +12,7 @@ from PIL import Image
 from numpy import ndarray
 
 from Class import settingkey
-from Class.openkhmod import Asset
+from Class.openkhmod import ModAsset, StrDict, AssetPlatform
 from Class.seedSettings import SeedSettings
 from Module import version, appconfig
 from Module.cosmeticsmods.image import rgb_to_hsv, hsv_to_rgb
@@ -286,7 +285,7 @@ class TextureRecolorizer:
         self.recolor_settings = TextureRecolorSettings(settings.get(settingkey.TEXTURE_RECOLOR_SETTINGS))
 
     @staticmethod
-    def load_recolorable_models() -> list[dict[str, Any]]:
+    def load_recolorable_models() -> list[StrDict]:
         """Returns a list of all recolorable models configured in the project."""
         recolors_path = Path(resource_path("static/recolors"))
         recolor_templates: list[Path] = []
@@ -296,7 +295,7 @@ class TextureRecolorizer:
                 if extension == ".yml":
                     recolor_templates.append(recolors_path / file)
 
-        result: list[dict[str, Any]] = []
+        result: list[StrDict] = []
         for recolor_template_path in recolor_templates:
             with open(recolor_template_path) as recolor_template_file:
                 models = yaml.safe_load(recolor_template_file)
@@ -323,14 +322,14 @@ class TextureRecolorizer:
                         mask[y, x] = True
             return mask
 
-    def recolor_textures(self) -> list[Asset]:
+    def recolor_textures(self) -> list[ModAsset]:
         """Returns a list of mod assets (if any) that recolor textures based on settings."""
-        assets: list[Asset] = []
+        assets: list[ModAsset] = []
 
         if not self.settings.get(settingkey.RECOLOR_TEXTURES):
             return assets
 
-        base_path = appconfig.extracted_data_path() / "kh2"
+        base_path = appconfig.extracted_game_path("kh2")
         if not base_path.is_dir():
             print(f"Could not find extracted data at {base_path} - not recoloring textures")
             return assets
@@ -340,13 +339,13 @@ class TextureRecolorizer:
             print("Could not find any recolor templates - not recoloring textures")
             return assets
 
-        recolors_cache_folder = Path("cache/texture-recolors")
+        recolors_cache_folder = Path("cache/texture-recolors").absolute()
         if recolors_cache_folder.is_dir():
             if not self.settings.get(settingkey.RECOLOR_TEXTURES_KEEP_CACHE):
                 shutil.rmtree(recolors_cache_folder)
 
-        compress_textures = self.settings.get(settingkey.RECOLOR_TEXTURES_COMPRESS)
-        include_extra_textures = self.settings.get(settingkey.RECOLOR_TEXTURES_INCLUDE_EXTRAS)
+        compress_textures: bool = self.settings.get(settingkey.RECOLOR_TEXTURES_COMPRESS)
+        include_extra_textures: bool = self.settings.get(settingkey.RECOLOR_TEXTURES_INCLUDE_EXTRAS)
 
         conditions_loader = TextureConditionsLoader()
 
@@ -366,13 +365,13 @@ class TextureRecolorizer:
             model_cache_folder = recolors_cache_folder / model_id
 
             for recolor in model["recolors"]:
-                colorable_areas: list[dict[str, Any]] = recolor["colorable_areas"]
+                colorable_areas: list[StrDict] = recolor["colorable_areas"]
 
                 pending_recolors: list[PendingRecolor] = []
                 chosen_filename_hues: list[str] = []
 
                 for colorable_area in colorable_areas:
-                    area_id = colorable_area["id"]
+                    area_id: str = colorable_area["id"]
 
                     chosen_hue = self._choose_hue(model_id=model_id, area_id=area_id, colorable_area=colorable_area)
                     if chosen_hue < 0:  # Keep it vanilla
@@ -391,14 +390,14 @@ class TextureRecolorizer:
                     )
                     pending_recolors.append(pending_recolor)
 
-                image_groups: list[dict[str, Any]] = recolor["image_groups"]
+                image_groups: list[StrDict] = recolor["image_groups"]
                 for index, image_group in enumerate(image_groups):
                     # Each group gets a unique ID
                     group_id = available_image_group_ids.pop(0)
 
-                    group_images: list[str]
+                    group_images: list[PurePath]
                     if image_group["required"] or include_extra_textures:
-                        group_images = image_group["images"]
+                        group_images = [PurePath(image) for image in image_group["images"]]
                     else:
                         continue
 
@@ -411,7 +410,7 @@ class TextureRecolorizer:
                     # (with multiple PC game versions, just in case the game files are different between them)
                     original_image_path: Optional[Path] = None
                     for group_member in group_images:
-                        candidate = Path(base_path) / group_member
+                        candidate = base_path / group_member
                         if candidate.is_file():
                             original_image_path = candidate
                             break
@@ -421,24 +420,18 @@ class TextureRecolorizer:
 
                     combined_hues = "-".join(chosen_filename_hues)
 
-                    _, cached_extension = os.path.splitext(group_images[0])
+                    cached_extension = group_images[0].suffix
                     if compress_textures:
                         cached_extension = ".png"
 
                     destination_name = f"{model_id}{model_version_suffix}-{group_id}-{combined_hues}{cached_extension}"
                     destination_path = model_cache_folder / destination_name
 
-                    asset: Asset = {
-                        "platform": "pc",
-                        "name": group_images[0]
-                    }
-                    if len(group_images) > 1:
-                        asset["multi"] = [{"name": image} for image in group_images[1:]]
-                    asset["method"] = "copy"
-                    asset["source"] = [
-                        {"name": f"{destination_path.absolute()}"}
-                    ]
-                    assets.append(asset)
+                    assets.append(ModAsset.make_copy_asset(
+                        game_files=group_images,
+                        platform=AssetPlatform.PC,
+                        source_file=destination_path,
+                    ))
 
                     if destination_path.is_file():
                         if version.debug_mode():

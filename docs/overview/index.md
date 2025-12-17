@@ -21,6 +21,11 @@ having tools you weren't otherwise meant to have in certain parts of the game.
   addition to satisfying the [Final Door Requirement](../glossary/index.md#final-door-requirement). This path also
   contains several Bulky Vendor enemies that can be used to level grind quickly.
 
+### Visit Unlocking
+
+World progression is unlocked by obtaining certain [Visit Unlock Items](../unlocks/index.md). Randomizer allows
+customizing how many world "visits" are available at the start of the game.
+
 ### Save Warping
 
 Because there is no world map from which to choose a spawn point, the player is placed at an appropriate save point

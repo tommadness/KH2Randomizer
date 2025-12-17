@@ -1,11 +1,28 @@
+import re
 from copy import deepcopy
-from typing import Any, Optional, Iterator
+from enum import Enum
+from pathlib import PurePath, Path
+from typing import Any, Optional, Iterator, Union
 from zipfile import ZipFile
+
+import yaml
+
 from Module.resources import resource_path
 
-import yaml, re
+ModPath = Union[str, PurePath]
+StrDict = dict[str, Any]
 
-Asset = dict[str, Any]
+_ASSETS = "assets"
+_DESCRIPTION = "description"
+_INTERNAL = "internal"
+_METHOD = "method"
+_MULTI = "multi"
+_NAME = "name"
+_ORIGINAL_AUTHOR = "originalAuthor"
+_PLATFORM = "platform"
+_SOURCE = "source"
+_TITLE = "title"
+_TYPE = "type"
 
 
 def write_yaml_to_zip_file(zip_file: ZipFile, name: str, data, sort_keys: bool):
@@ -21,40 +38,500 @@ def write_unicode_yaml_to_zip_file(zip_file: ZipFile, name: str, data, sort_keys
     zip_file.writestr(name, yaml_string)
 
 
+def _as_path(mod_path: ModPath) -> PurePath:
+    if isinstance(mod_path, PurePath):
+        return mod_path
+    else:
+        return PurePath(mod_path)
+
+
+class ModYmlException(Exception):
+    pass
+
+
+class ModYmlSyntaxException(ModYmlException):
+    pass
+
+
+class AssetMethod(str, Enum):
+    # https://github.com/OpenKH/OpenKh/blob/8f967bd412a9e7104a5124ae2688815307ba2472/OpenKh.Patcher/Metadata.cs#L96-L107
+    AREADATASCRIPT = "areadatascript"
+    BDSCRIPT = "bdscript"
+    BINARC = "binarc"
+    COPY = "copy"
+    IMGD = "imgd"
+    IMGZ = "imgz"
+    KH2MSG = "kh2msg"
+    LISTPATCH = "listpatch"
+    SPAWNPOINT = "spawnpoint"
+    SYNTHPATCH = "synthpatch"
+
+
+class AssetPlatform(str, Enum):
+    PC = "pc"
+    PS2 = "ps2"
+
+
+class BinarcMethod(str, Enum):
+    # Taken from OpenKH docs originally, but found others in use in practice.
+    # It's not entirely clear whether these are even meant to be a separate entity from the AssetMethod.
+    AREADATASCRIPT = "areadatascript"
+    AREADATASPAWN = "areadataspawn"
+    COPY = "copy"
+    INDEX = "index"
+    IMGD = "imgd"
+    IMGZ = "imgz"
+    LISTPATCH = "listpatch"
+    KH2MSG = "kh2msg"
+    SPAWNPOINT = "spawnpoint"
+
+
+class ModSourceFile:
+    """
+    Representation of a file that serves as a source in a mod.
+
+    Must have a `name` property that is the relative or absolute path of the source file. Optionally contains other
+    properties as well, depending on the context in which the source file is being used.
+
+    Not meant to be a fully type-safe implementation, as the underlying data model is still exposed.
+
+    Some examples:
+
+    - name: C:\\kh2\\keyblades\\Jungle King\\base\\remastered-effects\\-1.dds
+
+    - name: randoseed-mod-files/ItemList.yml
+      type: item
+
+    - name: randoseed-mod-files/sys.yml
+      language: en
+
+    - name: title/title1.png
+      highdef: title/title1_hd.png
+      index: 1
+
+    - name: obj/F_EX040_EH.a.us
+      type: internal
+    """
+
+    def __init__(self, source: Optional[StrDict] = None):
+        super().__init__()
+        self.data: StrDict = {}
+        if source is not None:
+            # Normalize the source file name if present
+            raw_name = source.get(_NAME, "")
+            if raw_name:
+                source[_NAME] = ModYml.source_file_name(raw_name)
+
+            self.data = source
+
+    def file_path(self) -> Path:
+        """Returns the path represented by this source file, or raises ModYmlSyntaxException if missing."""
+        name = self.data.get(_NAME, "")
+        if not name:
+            raise ModYmlSyntaxException(f"Source files must have a {_NAME}")
+        return Path(name)
+
+    def type(self) -> str:
+        """
+        Returns the value of the `type` property of this object, or an empty string if not defined. (Not all mod
+        operations require an explicit type.)
+        """
+        return self.data.get(_TYPE, "")
+
+    def __getitem__(self, key: str):
+        """Returns the value of this object's property with the specified key, or None if not defined."""
+        return self.data.get(key, None)
+
+    def __repr__(self) -> str:
+        return repr(self.data)
+
+    @staticmethod
+    def make_source_file(source_file: ModPath, internal: bool = False, **source_data: Any) -> "ModSourceFile":
+        data: StrDict = {_NAME: ModYml.source_file_name(source_file)}
+        if internal:
+            data[_TYPE] = _INTERNAL
+        data.update(source_data)
+        return ModSourceFile(data)
+
+
+class ModBinarcSource:
+    """
+    Representation of a source of a mod asset that uses the `binarc` method.
+
+    Must have a `name`, `type`, and `method`, as well as at least one `source` (see `ModSourceFile`). The valid
+    `method`s are enumerated in `BinarcMethod`.
+
+    Not meant to be a fully type-safe implementation, as the underlying data model is still exposed.
+
+    Some examples:
+
+    - name: sys
+      type: list
+      method: kh2msg
+      source:
+        - name: sys.yml
+          language: en
+
+    - name: bons
+      type: list
+      method: listpatch
+      source:
+      - name: 00battle.bin/BonsList.yml
+        type: bons
+    """
+
+    def __init__(self, source: Optional[StrDict] = None):
+        super().__init__()
+        self.data: StrDict = {}
+        if source is not None:
+            self.data = source
+
+    def name(self) -> str:
+        """Returns the name of the subfile being modified, or raises ModYmlSyntaxException if missing or invalid."""
+        name = self.data.get(_NAME, "")
+        if not name:
+            raise ModYmlSyntaxException(f"binarc sources must have a {_NAME}")
+        return name
+
+    def type(self) -> str:
+        """Returns the type of the subfile being modified, or raises ModYmlSyntaxException if missing or invalid."""
+        name = self.data.get(_TYPE, "")
+        if not name:
+            raise ModYmlSyntaxException(f"binarc sources must have a {_TYPE}")
+        return name
+
+    def method(self) -> BinarcMethod:
+        """Returns this source's method, or raises ModYmlSyntaxException if missing or invalid."""
+        raw = self.data.get(_METHOD, "")
+        if not raw:
+            raise ModYmlSyntaxException(f"binarc sources must have a {_METHOD}")
+        try:
+            return BinarcMethod(raw)
+        except ValueError as e:
+            raise ModYmlSyntaxException from e
+
+    def source_files(self) -> list[ModSourceFile]:
+        """Returns this source's inner source files, or raises ModYmlSyntaxException if missing."""
+        sources: list[StrDict] = self.data.get(_SOURCE, [])
+        if not sources:
+            raise ModYmlSyntaxException(f"Binarc sources must have at least one inner {_SOURCE}")
+        return [ModSourceFile(source) for source in sources]
+
+    @staticmethod
+    def make_source(name: str, type_: str, method: BinarcMethod, sources: list[ModSourceFile]) -> "ModBinarcSource":
+        data: StrDict = {
+            _NAME: name,
+            _TYPE: type_,
+            _METHOD: method.value,
+            _SOURCE: [source.data for source in sources]
+        }
+        return ModBinarcSource(data)
+
+
+class ModAsset:
+    """
+    Representation of an OpenKH Mods Manager mod asset.
+
+    Not meant to be a fully type-safe implementation, as the underlying data model is still exposed.
+
+    Must have a `name` that represents the relative path to the target game file. May contain additional target game
+    files as part of a `multi`.
+
+    Must have a `method` that, should be one of the `AssetMethod` values.
+
+    Must contain at least one `source`, which should either be a `ModSourceFile` or a `ModBinarcSource`, depending on
+    the `method`.
+
+    May contain a `platform` property that indicates that the asset is only needed for that particular platform (see
+    `AssetPlatform`.
+
+    Some examples:
+
+    - name: scripts/F266B00B GoA ROM.lua
+      method: copy
+      source:
+      - name: F266B00B GoA ROM.lua
+
+    - method: copy
+      name: msn/jp/BB03_MS103.bar
+      source:
+      - name: files/modified_msn.bar
+
+    - name: obj/W_EX010_U0_NM.a.us
+      multi:
+      - name: obj/W_EX010_U0_TR.a.us
+      - name: obj/W_EX010_U0_WI.a.us
+      platform: pc
+      method: copy
+      source:
+      - name: obj/W_EX010_U0.a.us
+        type: internal
+
+    - method: binarc
+      name: ard/wi03.ard
+      source:
+      - method: spawnpoint
+        name: b_40
+        source:
+        - name: files/b_40.yml
+        type: AreaDataSpawn
+
+    - name: 00common.bdx
+      method: bdscript
+      source:
+      - name: 00common.bdscript
+
+    - name: 00objentry.bin
+      method: listpatch
+      type: List
+      source:
+      - name: ObjList.yml
+        type: objentry
+    """
+
+    def __init__(self, asset: Optional[StrDict] = None):
+        super().__init__()
+        self.data: StrDict = {}
+        if asset is not None:
+            self.data = asset
+
+    def primary_game_file(self) -> PurePath:
+        """Returns the primary game file for this asset, or raises ModYmlSyntaxException if missing or invalid."""
+        return self._game_file(self.data)
+
+    def game_files(self) -> list[PurePath]:
+        """
+        Returns all game files for this asset (both the primary and any additional from a `multi` declaration), or
+        raises ModYmlSyntaxException if missing or invalid.
+        """
+        game_files = [self.primary_game_file()]
+        game_files.extend(self._game_file(multi_data) for multi_data in self.data.get(_MULTI, []))
+        return game_files
+
+    def method(self) -> AssetMethod:
+        """Returns this asset's method, or raises ModYmlSyntaxException if missing or invalid."""
+        raw = self.data.get(_METHOD, "")
+        if not raw:
+            raise ModYmlSyntaxException(f"Assets must have a {_METHOD}")
+        try:
+            return AssetMethod(raw)
+        except ValueError as e:
+            raise ModYmlSyntaxException from e
+
+    def sources(self) -> list[StrDict]:
+        """Returns this asset's sources, or raises ModYmlSyntaxException if missing."""
+        sources = self.data.get(_SOURCE, [])
+        if not sources:
+            raise ModYmlSyntaxException(f"Assets must have at least one {_SOURCE}")
+        return sources
+
+    def copy_sources(self) -> list[ModSourceFile]:
+        """Returns the source files for this asset, or an empty list if this asset's method is not `copy`."""
+        if self.method() == AssetMethod.COPY:
+            return [ModSourceFile(source) for source in self.sources()]
+        else:
+            return []
+
+    def binarc_sources(self) -> list[ModBinarcSource]:
+        """Returns the binarc sources for this asset, or an empty list if this asset's method is not `binarc`."""
+        if self.method() == AssetMethod.BINARC:
+            return [ModBinarcSource(source) for source in self.sources()]
+        else:
+            return []
+
+    @staticmethod
+    def make_copy_asset(
+            game_files: list[ModPath],
+            source_file: ModPath,
+            platform: Optional[AssetPlatform] = None,
+            internal: bool = False,
+    ) -> "ModAsset":
+        """
+        Creates a ModAsset for a simple file copy.
+
+        Use make_asset if anything more complex is required.
+        """
+        source: StrDict = {_NAME: ModYml.source_file_name(source_file)}
+        if internal:
+            source[_TYPE] = _INTERNAL
+        return ModAsset._make_asset(
+            game_files=game_files,
+            method=AssetMethod.COPY,
+            sources=[source],
+            platform=platform,
+        )
+
+    @staticmethod
+    def make_binarc_asset(
+            game_files: list[ModPath],
+            sources: list[ModBinarcSource],
+            platform: Optional[AssetPlatform] = None,
+    ) -> "ModAsset":
+        """
+        Creates a ModAsset for a simple binarc modification.
+
+        Use make_asset if anything more complex is required.
+        """
+        return ModAsset._make_asset(
+            game_files=game_files,
+            method=AssetMethod.BINARC,
+            sources=[source.data for source in sources],
+            platform=platform,
+        )
+
+    @staticmethod
+    def make_asset(
+            game_files: list[ModPath],
+            method: AssetMethod,
+            sources: list[ModSourceFile],
+            platform: Optional[AssetPlatform] = None,
+            type_: str = "",
+    ) -> "ModAsset":
+        asset_data: StrDict = {}
+        if type_:
+            asset_data[_TYPE] = type_
+        asset = ModAsset._make_asset(
+            game_files=game_files,
+            method=method,
+            sources=[source.data for source in sources],
+            platform=platform,
+            asset_data=asset_data,
+        )
+        return asset
+
+    @staticmethod
+    def _game_file(data: StrDict) -> PurePath:
+        """
+        Returns the value in the `name` property of the given dictionary as a relative PurePath, or raises
+        ModYmlSyntaxException if missing or an absolute path.
+        """
+        name = data.get(_NAME, "")
+        if not name:
+            raise ModYmlSyntaxException(f"Assets must have a {_NAME}")
+        path = PurePath(name)
+        if path.is_absolute():
+            raise ModYmlSyntaxException(f"{name} - Asset names must be relative paths")
+        return path
+
+    @staticmethod
+    def _make_asset(
+            game_files: list[ModPath],
+            method: AssetMethod,
+            sources: list[StrDict],
+            platform: Optional[AssetPlatform],
+            asset_data: Optional[StrDict] = None,
+    ) -> "ModAsset":
+        game_file_count = len(game_files)
+        if game_file_count == 0:
+            raise ValueError("Assets require at least one game file")
+
+        def game_file_name(game_file: ModPath) -> str:
+            game_file = _as_path(game_file)
+            if game_file.is_absolute():
+                raise ValueError(f"{str(game_file)}: Game files must be relative paths")
+            else:
+                return game_file.as_posix()
+
+        data: StrDict = {_NAME: game_file_name(game_files[0])}
+
+        if game_file_count > 1:
+            data[_MULTI] = [{_NAME: game_file_name(game_file)} for game_file in game_files[1:]]
+
+        if platform is not None:
+            data[_PLATFORM] = platform.value
+
+        data[_METHOD] = method.value
+
+        if sources:
+            data[_SOURCE] = sources
+        else:
+            raise ValueError("Assets require at least one source")
+
+        if asset_data is not None:
+            data.update(asset_data)
+
+        return ModAsset(data)
+
+
 class ModYml:
-    """Builder for a mod.yml file to be used within an OpenKH Mods Manager mod."""
+    """
+    Representation of an OpenKH Mods Manager mod.
+
+    Not meant to be a fully type-safe implementation, as the underlying data model is still exposed.
+    """
 
     def __init__(self, title: str, description: Optional[str]):
-        self.data: dict[str, Any] = {"title": title}
+        self.data: StrDict = {_TITLE: title}
         if description is not None:
-            self.data["description"] = description
-        self.data["assets"] = []
+            self.data[_DESCRIPTION] = description
+        self.data[_ASSETS] = []
 
-    def add_assets(self, assets: list[Asset]):
-        existing = self.data["assets"]
+    @staticmethod
+    def from_file(mod_yml_file: Path) -> "ModYml":
+        """
+        Returns a ModYml object from the contents of the specified file. Performs only basic syntax checking up front.
+        """
+        if not mod_yml_file.is_file():
+            raise ModYmlException(f"{str(mod_yml_file)} - File does not exist")
+        with open(mod_yml_file, "r", encoding="utf-8") as opened_file:
+            yaml_data: StrDict = yaml.safe_load(opened_file)
+            if not isinstance(yaml_data, dict):
+                raise ModYmlSyntaxException(f"{str(mod_yml_file)} - Expected mod file to parse as a dict")
+            if _ASSETS not in yaml_data:
+                raise ModYmlSyntaxException(f"{str(mod_yml_file)} - Expected mod file to contain assets")
+
+            # Create it with a title, but then swap out the data dict completely. Feels a little weird, but keeps the
+            # constructor the way we want it.
+            mod_yml = ModYml(title="", description=None)
+            mod_yml.data = yaml_data
+            return mod_yml
+
+    def original_author(self) -> str:
+        return self.data.get(_ORIGINAL_AUTHOR, "")
+
+    def assets(self) -> list[StrDict]:
+        return self.data[_ASSETS]
+
+    def add_assets(self, assets: list[StrDict]):
+        existing = self.data[_ASSETS]
         # Using deepcopy to avoid YAML anchors and aliases being used
         for asset in assets:
             existing.append(deepcopy(asset))
 
-    def add_asset(self, asset: Asset):
+    def add_asset(self, asset: StrDict):
         self.add_assets([asset])
 
-    def find_assets(self, asset_name: str) -> Iterator[Asset]:
-        return (asset for asset in self.data["assets"] if asset["name"] == asset_name)
+    def add_mod_assets(self, assets: list[ModAsset]):
+        self.add_assets([asset.data for asset in assets])
 
-    def find_asset(self, asset_name: str) -> Optional[Asset]:
+    def add_mod_asset(self, asset: ModAsset):
+        self.add_asset(asset.data)
+
+    def find_assets(self, asset_name: str) -> Iterator[StrDict]:
+        return (asset for asset in self.data[_ASSETS] if asset[_NAME] == asset_name)
+
+    def find_asset(self, asset_name: str) -> Optional[StrDict]:
         return next(self.find_assets(asset_name), None)
 
-    def add_asset_source(self, asset_name: str, source: dict[str, Any]):
+    def add_asset_source(self, asset_name: str, source: StrDict):
         asset = self.find_asset(asset_name)
         if asset is None:
             raise Exception(f"Unable to find {asset_name} in the mod being built")
         else:
             # Using deepcopy to avoid YAML anchors and aliases being used
-            asset["source"].append(deepcopy(source))
+            asset[_SOURCE].append(deepcopy(source))
 
     def write_to_zip_file(self, zip_file: ZipFile):
         write_yaml_to_zip_file(zip_file, "mod.yml", self.data, sort_keys=False)
+
+    @staticmethod
+    def source_file_name(source_file: ModPath) -> str:
+        """Returns an appropriately formatted string to use as a source name in a mod."""
+        source_file = _as_path(source_file)
+        if source_file.is_absolute():
+            return str(source_file)
+        else:
+            return source_file.as_posix()
 
 
 class Bonuses:
@@ -326,14 +803,12 @@ class Messages:
     """YAML builder for listpatch for items. See the kh2msg section at https://openkh.dev/tool/GUI.ModsManager."""
 
     def __init__(self, source_name: str, unicode_output: bool = False):
-        self.data: list[dict[str, Any]] = []
+        self.data: list[StrDict] = []
         self.source_name = source_name
         self.unicode_output = unicode_output
 
-    def add_message(
-        self, message_id: int, en: Optional[str] = None, jp: Optional[str] = None
-    ):
-        entry = {"id": message_id}
+    def add_message(self, message_id: int, en: Optional[str] = None, jp: Optional[str] = None):
+        entry: StrDict = {"id": message_id}
         if en is not None:
             entry["en"] = en
         if jp is not None:
@@ -385,6 +860,81 @@ class PlayerParams:
                 "Padding": padding,
             }
         )
+
+    def write_to_zip_file(self, zip_file: ZipFile):
+        write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=False)
+
+
+class ObjectEntries:
+    """YAML builder for listpatch for object entries. See https://openkh.dev/kh2/file/type/00objentry.html."""
+
+    def __init__(self, source_name: str):
+        self.data: dict[int, StrDict] = {}
+        self.source_name = source_name
+
+    def add_object(
+            self,
+            object_id: int,
+            object_type: str,
+            subtype: int,
+            draw_priority: int,
+            weapon_joint: int,
+            model_name: str,
+            animation_name: str,
+            flags: int,
+            object_target_type: str,
+            padding: int,
+            neo_status: int,
+            neo_moveset: int,
+            weight: float,
+            spawn_limiter: int,
+            page: int,
+            object_shadow_size: str,
+            object_form: str,
+            spawn_object_1: int,
+            spawn_object_2: int,
+            spawn_object_3: int,
+            spawn_object_4: int,
+            no_apdx: bool,
+            before: bool,
+            fix_color: bool,
+            fly: bool,
+            scissoring: bool,
+            is_pirate: bool,
+            wall_occlusion: bool,
+            hift: bool,
+    ):
+        self.data[object_id] = {
+            "ObjectId": object_id,
+            "ObjectType": object_type,
+            "SubType": subtype,
+            "DrawPriority": draw_priority,
+            "WeaponJoint": weapon_joint,
+            "ModelName": model_name,
+            "AnimationName": animation_name,
+            "Flags": flags,
+            "ObjectTargetType": object_target_type,
+            "Padding": padding,
+            "NeoStatus": neo_status,
+            "NeoMoveset": neo_moveset,
+            "Weight": weight,
+            "SpawnLimiter": spawn_limiter,
+            "Page": page,
+            "ObjectShadowSize": object_shadow_size,
+            "ObjectForm": object_form,
+            "SpawnObject1": spawn_object_1,
+            "SpawnObject2": spawn_object_2,
+            "SpawnObject3": spawn_object_3,
+            "SpawnObject4": spawn_object_4,
+            "NoApdx": no_apdx,
+            "Before": before,
+            "FixColor": fix_color,
+            "Fly": fly,
+            "Scissoring": scissoring,
+            "IsPirate": is_pirate,
+            "WallOcclusion": wall_occlusion,
+            "Hift": hift,
+        }
 
     def write_to_zip_file(self, zip_file: ZipFile):
         write_yaml_to_zip_file(zip_file, self.source_name, self.data, sort_keys=False)

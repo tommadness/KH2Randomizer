@@ -20,6 +20,7 @@ def read_app_config() -> dict:
     else:
         return {}
 
+
 def read_boss_enemy_override_files() -> str:
     result_string = ""
     location_override_path = Path('override_enemies.yaml').absolute()
@@ -31,7 +32,7 @@ def read_boss_enemy_override_files() -> str:
         with open(enemy_override_path, encoding='utf-8') as enemy_override:
             result_string += enemy_override.read()
     return result_string
-            
+
 
 def write_app_config(config: dict):
     config_path = Path('randomizer-config.json').absolute()
@@ -98,7 +99,7 @@ def write_custom_visuals_path(selected_directory):
 
 
 def extracted_data_path() -> Optional[Path]:
-    """Returns the path to extracted game data."""
+    """Returns the path to extracted game data, or None if not found."""
     openkh_path = read_openkh_path()
     if openkh_path is None:
         return None
@@ -121,3 +122,41 @@ def extracted_data_path() -> Optional[Path]:
         else:
             # Has a gameDataPath configured, but it's not being detected as a directory
             return None
+
+
+def extracted_game_path(game: str) -> Optional[Path]:
+    """Returns the path to extracted game data for the specified game, or None if not found."""
+    base_extracted_path = extracted_data_path()
+    if base_extracted_path is None:
+        return None
+
+    game_path = base_extracted_path / game
+    if game_path.is_dir():
+        return game_path
+    else:
+        return None
+
+
+def goa_mod_path() -> Optional[Path]:
+    """Returns the path to the Garden of Assemblage mod, or None if not found."""
+    openkh_path = read_openkh_path()
+    if openkh_path is None:
+        return None
+
+    kh2_mods_path = openkh_path / "mods" / "kh2"
+    if not kh2_mods_path.is_dir():
+        return None
+
+    # Best effort here to try to find GoA ROM mod. If this doesn't seem good enough, could change to a folder chooser.
+    for top_mod_dir in kh2_mods_path.iterdir():
+        if not top_mod_dir.is_dir():
+            continue
+
+        if top_mod_dir.name.startswith("GoA-ROM-Edition"):
+            return top_mod_dir
+
+        for second_dir in top_mod_dir.iterdir():
+            if second_dir.is_dir() and second_dir.name.startswith("GoA-ROM-Edition"):
+                return second_dir
+
+    return None
