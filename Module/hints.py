@@ -312,14 +312,14 @@ class Hints:
             raise HintException("Generated too many hints")
         
 
-        if not common_tracker_data.coop_mode or common_tracker_data.coop_player_number=="1":
+        if common_tracker_data.coop_mode and common_tracker_data.coop_player_number=="1":
             player1_index = hint_names.index(common_tracker_data.coop_player1_hints)
             hint_data = hint_datas[player1_index]
         elif common_tracker_data.coop_mode and common_tracker_data.coop_player_number=="2":
             player2_index = hint_names.index(common_tracker_data.coop_player2_hints)
             hint_data = hint_datas[player2_index]
         else:
-            raise HintException("Invalid player settings in hints")
+            hint_data = hint_datas[0]
 
         hint_data["startingInventory"] = randomizer.starting_item_ids
 
