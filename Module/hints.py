@@ -323,23 +323,23 @@ class Hints:
 
         hint_data["startingInventory"] = randomizer.starting_item_ids
 
-
-        if common_tracker_data.coop_hint_type == "random":
-            # change the specified hint ordering to random
-            raise SettingsException("Random ordering hints is not implemented")
-        elif common_tracker_data.coop_hint_type == "reversed":
-            if common_tracker_data.coop_player_number == "2":
-                # reverse the hint order for this person
-                keys = sorted(hint_data["Reports"].keys(),reverse=True)
-                new_data = {}
-                for index,key in enumerate(keys):
-                    new_data[index+1] = hint_data["Reports"][key]
-                hint_data["Reports"] = new_data
-        elif common_tracker_data.coop_hint_type == "default":
-            # ensure player 1 and 2 hints are the same order
-            raise SettingsException("Same ordering hints is not implemented")
-        else:
-            raise SettingsException("Unknown coop hint type")
+        if common_tracker_data.coop_mode:
+            if common_tracker_data.coop_hint_type == "random":
+                # change the specified hint ordering to random
+                raise SettingsException("Random ordering hints is not implemented")
+            elif common_tracker_data.coop_hint_type == "reversed":
+                if common_tracker_data.coop_player_number == "2":
+                    # reverse the hint order for this person
+                    keys = sorted(hint_data["Reports"].keys(),reverse=True)
+                    new_data = {}
+                    for index,key in enumerate(keys):
+                        new_data[index+1] = hint_data["Reports"][key]
+                    hint_data["Reports"] = new_data
+            elif common_tracker_data.coop_hint_type == "default":
+                # ensure player 1 and 2 hints are the same order
+                raise SettingsException("Same ordering hints is not implemented")
+            else:
+                raise SettingsException("Unknown coop hint type")
 
 
         Hints.generator_journal_hints(location_item_tuples, settings, hint_data)
