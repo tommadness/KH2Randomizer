@@ -20,7 +20,7 @@
   - Software required to run the OpenKH Mods Manager
 
 ## Installing OpenKH Mods Manager
-1. Start by downloading the 3 programs from the download links above
+1. Start by downloading the 2 programs from the download links above
 2. Install the .NET Desktop Runtime by running the `windowsdesktop-runtime-8.0.20-win-x64.exe` executable you just downloaded
 3. Create a `KH2 Rando` folder (you may give it any name) on the same hard drive you have the game installed. This is where we will be installing the `Mods Manager` and `Seed Generator`
 
