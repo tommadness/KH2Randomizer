@@ -333,7 +333,12 @@ class Hints:
                     keys = sorted(hint_data["Reports"].keys(),reverse=True)
                     new_data = {}
                     for index,key in enumerate(keys):
-                        new_data[index+1] = hint_data["Reports"][key]
+                        new_data[index+1] = copy.deepcopy(hint_data["Reports"][key])
+                        new_data[index+1]["Location"] = copy.deepcopy(hint_data["Reports"][index+1]["Location"])
+
+                    print(json.dumps(new_data))
+                    print("-----------------")
+                    print(json.dumps(hint_data["Reports"]))
                     hint_data["Reports"] = new_data
             elif common_tracker_data.coop_hint_type == "default":
                 # ensure player 1 and 2 hints are the same order
