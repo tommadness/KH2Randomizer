@@ -31,6 +31,8 @@ class ItemPoolMenu(KH2Submenu):
         self.start_group()
         self.add_option(settingkey.SHOP_UNLOCKS)
         self.add_option(settingkey.SHOP_REPORTS)
+        self.add_option(settingkey.SHOP_PRICE_VISIT_UNLOCKS)
+        self.add_option(settingkey.SHOP_PRICE_REPORT)
         self.end_group('Randomized Shop')
 
         self.start_group()
@@ -38,6 +40,16 @@ class ItemPoolMenu(KH2Submenu):
         self.add_option(settingkey.SHOP_ELIXIRS)
         self.add_option(settingkey.SHOP_RECOVERIES)
         self.add_option(settingkey.SHOP_BOOSTS)
+        
+        self.add_option(settingkey.SHOP_PRICE_KEYBLADE)
+        self.add_option(settingkey.SHOP_PRICE_ELIXIR)
+        self.add_option(settingkey.SHOP_PRICE_MEGALIXIR)
+        self.add_option(settingkey.SHOP_PRICE_DRIVE_RECOVERY)
+        self.add_option(settingkey.SHOP_PRICE_HI_DRIVE_RECOVERY)
+        self.add_option(settingkey.SHOP_PRICE_AP_BOOST)
+        self.add_option(settingkey.SHOP_PRICE_POWER_BOOST)
+        self.add_option(settingkey.SHOP_PRICE_MAGIC_BOOST)
+        self.add_option(settingkey.SHOP_PRICE_DEFENSE_BOOST)
         self.end_group('Guaranteed Shop Items')
         self.end_column(stretch_at_end=True)
 

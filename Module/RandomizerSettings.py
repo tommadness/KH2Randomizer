@@ -508,6 +508,19 @@ class RandomizerSettings:
         self.shop_unlocks: int = ui_settings.get(settingkey.SHOP_UNLOCKS)
         self.shop_reports: int = ui_settings.get(settingkey.SHOP_REPORTS)
 
+        self.shop_prices: dict[str,int] = { key: ui_settings.get(key) for key in [settingkey.SHOP_PRICE_KEYBLADE,
+                                                                                  settingkey.SHOP_PRICE_ELIXIR,
+                                                                                  settingkey.SHOP_PRICE_MEGALIXIR,
+                                                                                  settingkey.SHOP_PRICE_AP_BOOST,
+                                                                                  settingkey.SHOP_PRICE_POWER_BOOST,
+                                                                                  settingkey.SHOP_PRICE_MAGIC_BOOST,
+                                                                                  settingkey.SHOP_PRICE_DEFENSE_BOOST,
+                                                                                  settingkey.SHOP_PRICE_DRIVE_RECOVERY,
+                                                                                  settingkey.SHOP_PRICE_HI_DRIVE_RECOVERY,
+                                                                                  settingkey.SHOP_PRICE_REPORT,
+                                                                                  settingkey.SHOP_PRICE_VISIT_UNLOCKS,]
+                                        }
+
         self.point_hint_values: dict[str, int] = {
             "proof": ui_settings.get(settingkey.POINTS_PROOF),
             "form": ui_settings.get(settingkey.POINTS_FORM),

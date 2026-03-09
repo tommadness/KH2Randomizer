@@ -907,6 +907,7 @@ class SeedZip:
 
     def create_shop_rando_assets(self, mod: SeedModBuilder):
         shop_items = self.randomizer.shop_items
+        shop_prices = self.settings.shop_prices
         if len(shop_items) > 0:
             items_for_shop = []
             keyblade_item_ids = [
@@ -926,11 +927,11 @@ class SeedZip:
 
             if len(keyblade_item_ids) > 0:
                 for keyblade_id in keyblade_item_ids:
-                    items_for_shop.append((keyblade_id, 400))
+                    items_for_shop.append((keyblade_id, shop_prices[settingkey.SHOP_PRICE_KEYBLADE]))
 
             if len(report_item_ids) > 0:
                 for report_id in report_item_ids:
-                    items_for_shop.append((report_id, 75 * (report_id - 225)))
+                    items_for_shop.append((report_id, shop_prices[settingkey.SHOP_PRICE_REPORT]))
                 for report_number in range(13):
                     short_name = f"Ansem Report {report_number + 1}"
                     mod.messages.add_message(
@@ -939,18 +940,18 @@ class SeedZip:
 
             if len(story_unlock_ids) > 0:
                 for story_unlock_id in story_unlock_ids:
-                    items_for_shop.append((story_unlock_id, 500))
+                    items_for_shop.append((story_unlock_id, shop_prices[settingkey.SHOP_PRICE_VISIT_UNLOCKS]))
 
             if len(consumable_ids) > 0:
                 consumable_price_map = {
-                    4: 400,
-                    7: 600,
-                    274: 400,
-                    275: 600,
-                    276: 250,
-                    277: 250,
-                    278: 250,
-                    279: 250,
+                    4: shop_prices[settingkey.SHOP_PRICE_ELIXIR],
+                    7: shop_prices[settingkey.SHOP_PRICE_MEGALIXIR],
+                    274: shop_prices[settingkey.SHOP_PRICE_DRIVE_RECOVERY],
+                    275: shop_prices[settingkey.SHOP_PRICE_HI_DRIVE_RECOVERY],
+                    276: shop_prices[settingkey.SHOP_PRICE_POWER_BOOST],
+                    277: shop_prices[settingkey.SHOP_PRICE_MAGIC_BOOST],
+                    278: shop_prices[settingkey.SHOP_PRICE_DEFENSE_BOOST],
+                    279: shop_prices[settingkey.SHOP_PRICE_AP_BOOST],
                 }
                 for consumable_id in consumable_ids:
                     if consumable_id in consumable_price_map:
@@ -958,6 +959,7 @@ class SeedZip:
                             (consumable_id, consumable_price_map[consumable_id])
                         )
                     else:
+                        # a default value to assign to a consumable that we somehow don't have a value for
                         items_for_shop.append((consumable_id, 700))
 
             if len(remaining_items) > 0:

@@ -629,6 +629,22 @@ def _weighted_item_setting(key: str, item_type: str):
         """,
     )
 
+def _shop_price_setting(key: str, item_type: str, default_price: int) -> IntSpinner:
+    assert default_price%50 == 0
+    return IntSpinner(
+        name=key,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label=f"{item_type} Price",
+        standalone_label=f"{item_type} Price",
+        shared=True,
+        minimum=50,
+        maximum=2000,
+        step=50,
+        default=default_price,
+        tooltip=f"Sets the price of {item_type} items in the moogle shop",
+        randomizable=True,
+    )
+
 
 _all_settings = [
     SingleSelect(
@@ -2505,6 +2521,17 @@ _all_settings = [
         tooltip="Adds a number of visit unlocks into the moogle shop.",
         randomizable=[0, 1, 2, 3],
     ),
+    _shop_price_setting(settingkey.SHOP_PRICE_KEYBLADE,"Keyblade",500),
+    _shop_price_setting(settingkey.SHOP_PRICE_ELIXIR,"Elixir",400),
+    _shop_price_setting(settingkey.SHOP_PRICE_MEGALIXIR,"Megalixir",600),
+    _shop_price_setting(settingkey.SHOP_PRICE_AP_BOOST,"AP Boost",250),
+    _shop_price_setting(settingkey.SHOP_PRICE_POWER_BOOST,"Power Boost",250),
+    _shop_price_setting(settingkey.SHOP_PRICE_MAGIC_BOOST,"Magic Boost",250),
+    _shop_price_setting(settingkey.SHOP_PRICE_DEFENSE_BOOST,"Defense Boost",250),
+    _shop_price_setting(settingkey.SHOP_PRICE_DRIVE_RECOVERY,"Drive Recovery",400),
+    _shop_price_setting(settingkey.SHOP_PRICE_HI_DRIVE_RECOVERY,"Hi-Drive Recovery",600),
+    _shop_price_setting(settingkey.SHOP_PRICE_REPORT,"Report",300),
+    _shop_price_setting(settingkey.SHOP_PRICE_VISIT_UNLOCKS,"Visit Unlock",500),
     Toggle(
         name=settingkey.ROXAS_ABILITIES_ENABLED,
         group=SettingGroup.SEED_MODIFIERS,
