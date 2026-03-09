@@ -3,19 +3,17 @@ import copy
 import json
 import random
 import textwrap
-from itertools import permutations, chain
 from typing import Optional, Any
 from zipfile import ZipFile
 
-from Class.exceptions import HintException,SettingsException
+from Class.exceptions import HintException, SettingsException
 from Class.itemClass import KH2Item
 from Class.newLocationClass import KH2Location
 from List.ItemList import Items
-from List.configDict import itemType, locationType, locationCategory, HintType
-from List.inventory import ability, form, magic, misc, storyunlock, summon, proof
+from List.configDict import locationType, locationCategory, HintType
+from List.inventory import ability
 from List.location import weaponslot
 from Module import version
-from Module.Hints.HintOutput import HintOutput
 from Module.Hints.HintUtils import (
     CommonTrackerInfo,
     HintUtils,
@@ -27,7 +25,6 @@ from Module.Hints.HintUtils import (
 from Module.RandomizerSettings import RandomizerSettings
 from Module.newRandomize import Randomizer
 from Module.seedmod import SeedModBuilder
-
 
 HintData = dict[str, Any]
 
@@ -273,10 +270,16 @@ class Hints:
                 point_data.append(
                     PointHintData(settings, common_tracker_data, world_items, world)
                 )
-            hint_datas[hint_data_index]["Reports"] = HintUtils.point_hint_report_assignment(
-                settings, world_items, point_data
-            )
-            hint_data_index+=1
+
+            # If _any_ item types are chosen to be reveal-able, it's expected that there are enough such that each
+            # report can reveal an item.
+            # If _no_ item types are chosen to be reveal-able, we just skip doing the report assignment altogether.
+            if len(settings.spoiler_reveal_checks) > 0:
+                hint_datas[hint_data_index]["Reports"] = HintUtils.point_hint_report_assignment(
+                    settings, world_items, point_data
+                )
+
+            hint_data_index += 1
         if HintType.SPOILER in generate_hint_type_list:
             hint_names.append(HintType.SPOILER)
             hint_datas[hint_data_index]["hintsType"] = HintType.SPOILER
@@ -341,7 +344,6 @@ class Hints:
             else:
                 raise SettingsException("Unknown coop hint type")
 
-
         Hints.generator_journal_hints(location_item_tuples, settings, hint_data)
         return hint_data
 
@@ -394,8 +396,11 @@ class Hints:
                     hint_text.append(report_data["Text"])
 
                 if hint_data["hintsType"] == HintType.POINTS:
-                    hinted_world = report_data["World"]
-                    hint_text.append(f"{hinted_world_text(hinted_world)} has {report_data['itemName']}.")
+                    # These could be None if reports aren't allowed to reveal any item types
+                    hinted_world = report_data.get("World", None)
+                    revealed_item = report_data.get("itemName", None)
+                    if hinted_world is not None and revealed_item is not None:
+                        hint_text.append(f"{hinted_world_text(hinted_world)} has {revealed_item}.")
 
                 if hint_data["hintsType"] == HintType.SPOILER:
                     hinted_world = report_data["World"]
