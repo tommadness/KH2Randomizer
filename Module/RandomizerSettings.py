@@ -452,6 +452,13 @@ class RandomizerSettings:
         self.write_seed_checker_script: bool = spoiler_log
 
         self.statSanity: bool = ui_settings.get(settingkey.STATSANITY)
+        self.hp_bonuses: int = ui_settings.get(settingkey.NUM_HP_BONUSES)
+        self.mp_bonuses: int = ui_settings.get(settingkey.NUM_MP_BONUSES)
+        self.drive_bonuses: int = ui_settings.get(settingkey.NUM_DRIVE_BONUSES)
+        self.acc_slots: int = ui_settings.get(settingkey.NUM_ACCESSORY_SLOT_BONUSES)
+        self.armor_slots: int = ui_settings.get(settingkey.NUM_ARMOR_SLOT_BONUSES)
+        self.item_slots: int = ui_settings.get(settingkey.NUM_ITEM_SLOT_BONUSES)
+
         self.yeetTheBear: bool = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.chainLogic: bool = ui_settings.get(settingkey.CHAIN_LOGIC)
         self.chainLogicMinLength: int = ui_settings.get(settingkey.CHAIN_LOGIC_LENGTH)

@@ -15,6 +15,12 @@ class ItemPoolMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.STATSANITY)
+        self.add_option(settingkey.NUM_HP_BONUSES)
+        self.add_option(settingkey.NUM_MP_BONUSES)
+        self.add_option(settingkey.NUM_DRIVE_BONUSES)
+        self.add_option(settingkey.NUM_ACCESSORY_SLOT_BONUSES)
+        self.add_option(settingkey.NUM_ARMOR_SLOT_BONUSES)
+        self.add_option(settingkey.NUM_ITEM_SLOT_BONUSES)
         self.add_option(settingkey.FIFTY_AP_BOOSTS)
         self.add_option(settingkey.ENABLE_PROMISE_CHARM)
         self.add_option(settingkey.ANTIFORM)
@@ -72,7 +78,19 @@ class ItemPoolMenu(KH2Submenu):
         select_all_junk.clicked.connect(lambda: self.toggle_all_items())
         select_better_junk.clicked.connect(lambda: self.toggle_better_junk())
 
+        settings.observe(settingkey.STATSANITY, self._statsanity_changed)
+        
         self.finalizeMenu()
+
+    def _statsanity_changed(self):
+        enabled = self.settings.get(settingkey.STATSANITY)
+        self.set_option_visibility(settingkey.NUM_HP_BONUSES, enabled)
+        self.set_option_visibility(settingkey.NUM_MP_BONUSES, enabled)
+        self.set_option_visibility(settingkey.NUM_DRIVE_BONUSES, enabled)
+        self.set_option_visibility(settingkey.NUM_ACCESSORY_SLOT_BONUSES, enabled)
+        self.set_option_visibility(settingkey.NUM_ARMOR_SLOT_BONUSES, enabled)
+        self.set_option_visibility(settingkey.NUM_ITEM_SLOT_BONUSES, enabled)
+
 
     def toggle_all_items(self):
         setting, widget = self.widgets_and_settings_by_name[settingkey.JUNK_ITEMS]

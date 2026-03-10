@@ -365,8 +365,19 @@ class Randomizer:
         )
 
         # Add any additional items to the pool based on settings
+        # self.hp_bonuses: int = ui_settings.get(settingkey.NUM_HP_BONUSES)
+        # self.mp_bonuses: int = ui_settings.get(settingkey.NUM_MP_BONUSES)
+        # self.drive_bonuses: int = ui_settings.get(settingkey.NUM_DRIVE_BONUSES)
+        # self.acc_slots: int = ui_settings.get(settingkey.NUM_ACCESSORY_SLOT_BONUSES)
+        # self.armor_slots: int = ui_settings.get(settingkey.NUM_ARMOR_SLOT_BONUSES)
+        # self.item_slots: int = ui_settings.get(settingkey.NUM_ITEM_SLOT_BONUSES)
         if settings.statSanity:
-            item_pool.extend(Items.getStatItems())
+            item_pool.extend(Items.getStatItems(hp_ups=settings.hp_bonuses,
+                                                mp_ups=settings.mp_bonuses,
+                                                drive_ups=settings.drive_bonuses,
+                                                acc_slots=settings.acc_slots,
+                                                armor_slots=settings.armor_slots,
+                                                item_slots=settings.item_slots))
         if settings.fifty_ap:
             item_pool.extend(itertools.repeat(KH2Item(consumable.ApBoost), 50))
         if settings.promiseCharm:

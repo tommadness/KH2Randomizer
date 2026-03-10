@@ -645,6 +645,19 @@ def _shop_price_setting(key: str, item_type: str, default_price: int) -> IntSpin
         randomizable=True,
     )
 
+def _bonus_slot_setting(key: str, item_type: str, max_val: int, default_val: int) -> IntSpinner:
+    return IntSpinner(
+        name=key,
+        group=SettingGroup.ITEM_POOL,
+        ui_label=f"Number of {item_type}",
+        standalone_label=f"Number of {item_type}",
+        minimum=0,
+        maximum=max_val,
+        step=1,
+        shared=True,
+        default=default_val,
+        tooltip=f"Total number of {item_type} available to find in a seed.",
+    )
 
 _all_settings = [
     SingleSelect(
@@ -685,6 +698,12 @@ _all_settings = [
         lets them appear in chests or other locations. Those bonus locations can now have other items in them.
         """,
     ),
+    _bonus_slot_setting(key=settingkey.NUM_HP_BONUSES,item_type="HP Bonuses",max_val=60,default_val=20),
+    _bonus_slot_setting(key=settingkey.NUM_DRIVE_BONUSES,item_type="Drive Bonuses",max_val=13,default_val=6),
+    _bonus_slot_setting(key=settingkey.NUM_MP_BONUSES,item_type="MP Bonuses",max_val=10,default_val=4),
+    _bonus_slot_setting(key=settingkey.NUM_ACCESSORY_SLOT_BONUSES,item_type="Accessory Slots",max_val=7,default_val=3),
+    _bonus_slot_setting(key=settingkey.NUM_ARMOR_SLOT_BONUSES,item_type="Armor Slots",max_val=7,default_val=3),
+    _bonus_slot_setting(key=settingkey.NUM_ITEM_SLOT_BONUSES,item_type="Item Slots",max_val=5,default_val=5),
     FloatSpinner(
         name=settingkey.SORA_EXP_MULTIPLIER,
         group=SettingGroup.EXP_STATS,

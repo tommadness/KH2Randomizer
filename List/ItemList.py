@@ -351,14 +351,19 @@ class Items:
         ]
 
     @staticmethod
-    def getStatItems() -> list[KH2Item]:
+    def getStatItems(hp_ups: int = 20, 
+                     mp_ups: int = 4, 
+                     drive_ups: int = 6, 
+                     armor_slots: int = 3,
+                     acc_slots: int = 3, 
+                     item_slots: int = 5) -> list[KH2Item]:
         """Get different dummy items that represent stat bonuses (Dummy 23, 24, 25, 26, 27, 16)"""
-        return list(itertools.repeat(KH2Item(bonus.MaxHpUp), 20)) + \
-            list(itertools.repeat(KH2Item(bonus.MaxMpUp), 4)) + \
-            list(itertools.repeat(KH2Item(bonus.DriveGaugeUp, itemRarity.RARE), 6)) + \
-            list(itertools.repeat(KH2Item(bonus.ArmorSlotUp, itemRarity.UNCOMMON), 3)) + \
-            list(itertools.repeat(KH2Item(bonus.AccessorySlotUp, itemRarity.UNCOMMON), 3)) + \
-            list(itertools.repeat(KH2Item(bonus.ItemSlotUp, itemRarity.UNCOMMON), 5))
+        return list(itertools.repeat(KH2Item(bonus.MaxHpUp), hp_ups)) + \
+            list(itertools.repeat(KH2Item(bonus.MaxMpUp), mp_ups)) + \
+            list(itertools.repeat(KH2Item(bonus.DriveGaugeUp, itemRarity.RARE), drive_ups)) + \
+            list(itertools.repeat(KH2Item(bonus.ArmorSlotUp, itemRarity.UNCOMMON), armor_slots)) + \
+            list(itertools.repeat(KH2Item(bonus.AccessorySlotUp, itemRarity.UNCOMMON), acc_slots)) + \
+            list(itertools.repeat(KH2Item(bonus.ItemSlotUp, itemRarity.UNCOMMON), item_slots))
 
     @staticmethod
     def getPromiseCharm() -> KH2Item:
