@@ -120,6 +120,7 @@ def weapon_stats_dictionary(
         sora_assignments: list[ItemAssignment],
         donald_assignments: list[ItemAssignment],
         goofy_assignments: list[ItemAssignment],
+        equip_assignments: list[ItemAssignment],
         weapons: list[WeaponStats]
 ) -> list[dict[str, str]]:
     all_assignments = sora_assignments + donald_assignments + goofy_assignments
@@ -138,6 +139,16 @@ def weapon_stats_dictionary(
             "magic": weapon.magic,
             "item": assignment_item
         })
+    for equip_assignment in equip_assignments:
+        equip_slot = equip_assignment.location
+        ability = equip_assignment.item
+        result.append({
+            "name": equip_slot.Description.partition(" (Slot)")[0],
+            "strength": "",
+            "magic": "",
+            "item": ability.Name
+        })
+        
     return result
 
 

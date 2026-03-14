@@ -419,6 +419,7 @@ class SeedZip:
                 mod.write_wardrobe_skip_assets()
             self.create_drop_rate_assets(mod)
             self.create_shop_rando_assets(mod)
+            self.create_equipment_ability_rando_assets(mod)
             if settings.objective_rando:
                 self.create_objective_rando_assets(mod,settings.num_objectives_needed, self.randomizer.objectives)
             if settings.emblems:
@@ -571,6 +572,7 @@ class SeedZip:
             sora_assignments=randomizer.assignments,
             donald_assignments=randomizer.donald_assignments,
             goofy_assignments=randomizer.goofy_assignments,
+            equip_assignments=randomizer.equipment_assignments,
             weapons=randomizer.weapon_stats,
         )
         objectives_json = objectives_dictionary(randomizer.objectives)
@@ -904,6 +906,40 @@ class SeedZip:
             icon_1=0,
             icon_2=2,
         )
+
+    def create_equipment_ability_rando_assets(self, mod: SeedModBuilder):
+        if not self.settings.equipment_abilities_enabled:
+            return
+        equipment_assignments = self.randomizer.equipment_assignments
+        with open(resource_path("static/full_items.json"), "r") as item_json:
+            all_item_jsons = json.loads(item_json.read())
+            for assignment in equipment_assignments:
+                equip_slot = assignment.location
+                ability = assignment.item
+                item_json = None
+                for y in all_item_jsons["Items"]:
+                    if y["Flag1"] == equip_slot.LocationId and y["Type"] in ["Accessory","Armor"]:
+                        item_json = y
+                        break
+                item_json["Description"] = ability.item.ingame_text_id
+                item_json["Slot"] = ability.item.id
+                mod.items.add_item(
+                    item_id=item_json["Id"],
+                    item_type=item_json["Type"],
+                    flag_0=item_json["Flag0"],
+                    flag_1=item_json["Flag1"],
+                    rank=item_json["Rank"],
+                    stat_entry=item_json["StatEntry"],
+                    name=item_json["Name"],
+                    description=item_json["Description"],
+                    shop_buy=item_json["ShopBuy"],
+                    shop_sell=item_json["ShopSell"],
+                    command=item_json["Command"],
+                    slot=item_json["Slot"],
+                    picture=item_json["Picture"],
+                    icon_1=item_json["Icon1"],
+                    icon_2=item_json["Icon2"],
+                )
 
     def create_shop_rando_assets(self, mod: SeedModBuilder):
         shop_items = self.randomizer.shop_items
