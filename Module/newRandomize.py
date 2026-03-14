@@ -181,6 +181,7 @@ class Randomizer:
         self.assignments: list[ItemAssignment] = []
         self.donald_assignments: list[ItemAssignment] = []
         self.goofy_assignments: list[ItemAssignment] = []
+        self.equipment_assignments: list[ItemAssignment] = []
         self.weapon_stats: list[WeaponStats] = []
         self.level_stats: list[LevelStats] = []
         self.form_level_exp: list[FormExp] = []
@@ -670,6 +671,8 @@ class Randomizer:
         valid_junk = self.get_n_junk(
             settings, num_junk_items=self.num_valid_locations - self.num_available_items
         )
+
+        self.assign_equipment_abilities(settings)
 
         self.assign_keyblade_abilities(settings, randomizable_abilities)
         item_pool.extend(vanilla_abilities)
@@ -1276,6 +1279,23 @@ class Randomizer:
                 else:
                     loc.InvalidChecks.append(itemType.PROOF_OF_NONEXISTENCE)
             '''
+
+    def assign_equipment_abilities(self, settings: RandomizerSettings):
+        """Assign abilities to armor and accessories"""
+        if settings.equipment_abilities_enabled:
+            valid_ability_ids = set(settings.equipment_abilities_list)
+            all_abilities = Items.getActionAbilityList() + Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
+            valid_abilities = [abil for abil in all_abilities if abil.Id in valid_ability_ids]
+            random.shuffle(valid_abilities)
+            slot_locations = {location.LocationId: location for location in weaponslot.armor_accessory_slots()}
+            # repeat the ability list a max number of times
+            valid_abilities = valid_abilities*len(slot_locations)
+            # splice the list down to the right length
+            valid_abilities = valid_abilities[:len(slot_locations)]
+            assert len(valid_abilities)==len(slot_locations)
+
+            for ability,slot in zip(valid_abilities,slot_locations):
+                self.assign_item(slot_locations[slot],ability,self.equipment_assignments)
 
     def assign_keyblade_abilities(self, settings: RandomizerSettings, ability_pool: list[KH2Item]):
         """Assign abilities to keyblades."""

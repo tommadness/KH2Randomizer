@@ -1,15 +1,16 @@
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
-from PySide6.QtWidgets import (QPushButton,QHBoxLayout,QWidget)
+from PySide6.QtWidgets import (QPushButton,QVBoxLayout,QWidget)
 
 _SUPPORT_ABILITIES_GROUP = "support_abilities"
 _ACTION_ABILITIES_GROUP = "action_abilities"
+_EQUIP_ABILITIES_GROUP = "equipment_abilities"
 
 class KeybladeMenu(KH2Submenu):
 
     def __init__(self, settings: SeedSettings):
-        super().__init__(title='Keyblades', settings=settings)
+        super().__init__(title='Equipment', settings=settings)
 
         self.start_column()
         self.start_group()
@@ -21,12 +22,16 @@ class KeybladeMenu(KH2Submenu):
         self.start_group()
         self.add_option(settingkey.KEYBLADE_ABILITIES_RANDOMIZED)
         self.end_group("Keyblade Abilities")
+
+        self.start_group()
+        self.add_option(settingkey.ARMOR_ACCESSORY_ABILITIES)
+        self.end_group("Armor/Accessory Abilities")
         self.end_column()
 
         self.start_column()
         self.start_group()
         self.add_option(settingkey.KEYBLADE_SUPPORT_ABILITIES)
-        support_widget_layout = QHBoxLayout()
+        support_widget_layout = QVBoxLayout()
         support_widget = QWidget()
         support_widget.setProperty('cssClass', 'layoutWidget')
         support_widget.setLayout(support_widget_layout)
@@ -41,7 +46,7 @@ class KeybladeMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.KEYBLADE_ACTION_ABILITIES)
-        action_widget_layout = QHBoxLayout()
+        action_widget_layout = QVBoxLayout()
         action_widget = QWidget()
         action_widget.setProperty('cssClass', 'layoutWidget')
         action_widget.setLayout(action_widget_layout)
@@ -51,6 +56,12 @@ class KeybladeMenu(KH2Submenu):
         action_widget_layout.addWidget(select_all_action_button)
         self._add_option_widget("","",action_widget)
         self.end_group("Action Keyblade-Eligible Abilities", group_id=_ACTION_ABILITIES_GROUP)
+        self.end_column(stretch_at_end=False)
+
+        self.start_column()
+        self.start_group()
+        self.add_option(settingkey.ARMOR_ACCESSORY_ABILITY_LIST)
+        self.end_group("Armor+Accessory Eligible Abilities", group_id=_EQUIP_ABILITIES_GROUP)
         self.end_column(stretch_at_end=False)
 
         select_no_support_button.clicked.connect(lambda: self.toggle_all_items(settingkey.KEYBLADE_SUPPORT_ABILITIES,False))

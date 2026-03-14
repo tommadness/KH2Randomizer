@@ -459,6 +459,12 @@ class RandomizerSettings:
         self.armor_slots: int = ui_settings.get(settingkey.NUM_ARMOR_SLOT_BONUSES)
         self.item_slots: int = ui_settings.get(settingkey.NUM_ITEM_SLOT_BONUSES)
 
+        self.equipment_abilities_enabled: bool = ui_settings.get(settingkey.ARMOR_ACCESSORY_ABILITIES)
+        self.equipment_abilities_list: list[int] = [
+            int(ability_id)
+            for ability_id in ui_settings.get(settingkey.ARMOR_ACCESSORY_ABILITY_LIST)
+        ]
+
         self.yeetTheBear: bool = ui_settings.get(settingkey.YEET_THE_BEAR)
         self.chainLogic: bool = ui_settings.get(settingkey.CHAIN_LOGIC)
         self.chainLogicMinLength: int = ui_settings.get(settingkey.CHAIN_LOGIC_LENGTH)

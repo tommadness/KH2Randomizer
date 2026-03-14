@@ -2041,6 +2041,33 @@ _all_settings = [
         default=[],
         tooltip="Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.",
     ),
+    Toggle(
+        name=settingkey.ARMOR_ACCESSORY_ABILITIES,
+        group=SettingGroup.KEYBLADES,
+        ui_label="Random Abilities on Accessory/Armor",
+        shared=True,
+        default=True,
+        randomizable=True,
+        tooltip="If enabled, armor and accessories will have random abilities assigned to them. The item description will be updated to the equipment's new ability.",
+    ),
+    MultiSelect(
+        name=settingkey.ARMOR_ACCESSORY_ABILITY_LIST,
+        group=SettingGroup.KEYBLADES,
+        ui_label="Equipment Ability Pool",
+        choices={
+            str(item.Id): item.Name for item in Items.sort_ability_items(
+                Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList() + Items.getActionAbilityList()
+            )
+        },
+        shared=True,
+        default=list(
+            set([str(item.Id) for item in Items.sort_ability_items(
+                Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
+            )])
+        ),
+        tooltip="Selected abilities may randomize onto armor and accessories. \nUnselected abilities will not appear. \nThese abilities are extra copies and do not affect the available abilities on keyblades and on their own.",
+    ),
+
     WorldRandomizationTristate(
         name=settingkey.WORLDS_WITH_REWARDS,
         group=SettingGroup.LOCATIONS,
