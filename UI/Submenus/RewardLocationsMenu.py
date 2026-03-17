@@ -11,6 +11,7 @@ class RewardLocationsMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.SORA_LEVELS)
+        self.add_option(settingkey.RANDOMIZE_LEVELS_WITH_CHECKS)
         self.add_option(settingkey.SPLIT_LEVELS)
         self.add_option(settingkey.CRITICAL_BONUS_REWARDS)
         self.add_option(settingkey.GARDEN_OF_ASSEMBLAGE_REWARDS)

@@ -211,6 +211,8 @@ class RandomizerSettings:
         else:
             raise SettingsException("Invalid Level choice")
         
+        self.randomize_level_check_slots = ui_settings.get(settingkey.RANDOMIZE_LEVELS_WITH_CHECKS)
+        
         self.min_double_stat_level = ui_settings.get(settingkey.DOUBLE_STAT_GROWTH_MIN_LEVEL)
         self.max_double_stat_level = ui_settings.get(settingkey.DOUBLE_STAT_GROWTH_MAX_LEVEL)
 
@@ -916,14 +918,28 @@ class RandomizerSettings:
 
     def excluded_levels(self) -> list[int]:
         max_level = self.max_level_checks
-        if max_level == 99:
-            return self.excludeFrom99
-        elif max_level == 50:
-            return self.excludeFrom50
-        elif max_level == 1:
-            return list(range(1, 100))
+        if self.randomize_level_check_slots:
+            random.seed(self.full_rando_seed)
+            if max_level == 99:
+                level_checks = set(random.sample(range(2,100),23))
+                return [l for l in range(1,100) if l not in level_checks]
+            elif max_level == 50:
+                level_checks = set(random.sample(range(2,51),23))
+                return [l for l in range(1,100) if l not in level_checks]
+            elif max_level == 1:
+                return list(range(1, 100))
+            else:
+                raise SettingsException(f"Incorrect level choice {max_level}")
+
         else:
-            raise SettingsException(f"Incorrect level choice {max_level}")
+            if max_level == 99:
+                return self.excludeFrom99
+            elif max_level == 50:
+                return self.excludeFrom50
+            elif max_level == 1:
+                return list(range(1, 100))
+            else:
+                raise SettingsException(f"Incorrect level choice {max_level}")
         
     def double_stat_levels(self) -> list[int]:
         return list(range(self.min_double_stat_level, self.max_double_stat_level))

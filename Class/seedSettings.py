@@ -687,6 +687,16 @@ _all_settings = [
         randomizable=True,
     ),
     Toggle(
+        name=settingkey.RANDOMIZE_LEVELS_WITH_CHECKS,
+        group = SettingGroup.LOCATIONS,
+        ui_label = "Randomize Level Check Slots",
+        shared=True,
+        default=False,
+        tooltip="Changes which levels will have items instead of the predetermined spacing. The number of checks will stay the same.",
+        randomizable=True,
+
+    ),
+    Toggle(
         name=settingkey.STATSANITY,
         group=SettingGroup.ITEM_POOL,
         ui_label="Bonus Rewards as Items (Statsanity)",
