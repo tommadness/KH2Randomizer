@@ -78,7 +78,7 @@ class ItemDepths:
             for after_node in locations.node_ids_after(first_boss_node, include_self=False):
                 if after_node not in locations.superboss_nodes:
                     for location in locations.locations_for_node(after_node):
-                        self.depth_classification[loca tion] = True
+                        self.depth_classification[location] = True
 
     def _apply_non_first_visit(self, locations: Locations):
         # Default to yes, disable before and including first boss
