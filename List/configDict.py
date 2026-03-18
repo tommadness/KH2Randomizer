@@ -105,6 +105,7 @@ class locationDepth(str, Enum):
     LastStoryBoss = "SecondBoss"  # Keep an old naming for compatibility
     Superbosses = "DataFight"  # Keep an old naming for compatibility
     NoFirstVisit = "NoFirstVisit"
+    NoSecondVisit = "NoSecondVisit"
 
 
 def location_depth_choices() -> dict[locationDepth, str]:
@@ -117,6 +118,7 @@ def location_depth_choices() -> dict[locationDepth, str]:
         locationDepth.LastStoryBoss: "Last Story Boss",
         locationDepth.Superbosses: "Superbosses",
         locationDepth.NoFirstVisit: "Non First Visits",
+        locationDepth.NoSecondVisit: "Non Second Visits",
     }
 
 

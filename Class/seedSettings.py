@@ -542,6 +542,8 @@ _depth_options_text = textwrap.dedent(
         Superbosses - Force onto superbosses only (Data Organization/Absent Silhouette/Sephiroth/Terra).
 
         Non First Visits - Opposite of the first visit depth. Anywhere but the first visit of the 13 portal worlds (can include Drive Forms/Levels/100 Acre Wood).
+
+        Non Second Visits - Opposite of the second visit depth. Anywhere but the second/third visit of the 13 portal worlds (can include Drive Forms/Levels/100 Acre Wood).        
 """
 )
 

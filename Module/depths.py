@@ -31,6 +31,8 @@ class ItemDepths:
             self._apply_boss_depth(locations, locations.superboss_nodes)
         elif location_depth is locationDepth.NoFirstVisit:
             self._apply_non_first_visit(locations)
+        elif location_depth is locationDepth.NoSecondVisit:
+            self._apply_non_second_visit(locations)
         else:
             raise SettingsException(f"Invalid location depth {location_depth}")
 
@@ -83,6 +85,13 @@ class ItemDepths:
         self._set_all_initial_values(locations, True)
         for first_boss_node in locations.first_boss_nodes:
             for location in locations.locations_before(first_boss_node, include_self=True, include_starting_node=True):
+                self.depth_classification[location] = False
+
+    def _apply_non_second_visit(self, locations: Locations):
+        # Default to yes, disable after the first boss
+        self._set_all_initial_values(locations, True)
+        for first_boss_node in locations.first_boss_nodes:
+            for location in locations.locations_after(first_boss_node, include_self=False):
                 self.depth_classification[location] = False
 
     @staticmethod
