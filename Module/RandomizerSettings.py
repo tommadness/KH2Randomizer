@@ -492,6 +492,7 @@ class RandomizerSettings:
             )
 
         self.keyblades_unlock_chests: bool = ui_settings.get(settingkey.KEYBLADES_LOCK_CHESTS)
+        self.enabled_keyblade_unlock_worlds: list[locationType] = ui_settings.get(settingkey.ENABLED_KEYBLADE_LOCKING_WORLDS)
 
         self.roxas_abilities_enabled: bool = ui_settings.get(
             settingkey.ROXAS_ABILITIES_ENABLED

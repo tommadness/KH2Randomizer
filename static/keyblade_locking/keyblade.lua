@@ -23,25 +23,25 @@ end
 
 --table key is world id. table value is keyblade ID, keyblade save file inventory address
 keyTable = {
-	[0] = {-1, -1},
-	[1] = {0x1F2, 0x368D},	--STT 	| Bond of Flame
-	[2] = {0x02A, 0x35A2},	--TT  	| Oathkeeper
-	[3] = {0x220, 0x3699},	--CoR 	| Winner's Proof
-	[4] = {0x1EE, 0x3689},	--HB  	| Sleeping Lion
-	[5] = {0x1EA, 0x3685},	--BC  	| Rumbling Rose
-	[6] = {0x1E4, 0x367F},	--OC  	| Hero's Crest 
-	[7] = {0x1EC, 0x3687},	--AG  	| Wishing Lamp
-	[8] = {0x1E1, 0x367C},	--LoD 	| Hidden Dragon
-	[9] = {0x1EF, 0x368A},	--HAW 	| Sweet Memeories
-	[10] = {0x1E7, 0x3682},	--PL  	| Circle of Life
-	[11] = {-1, -1},
-	[12] = {0x1E5, 0x3680},	--DC  	| Monochrome
-	[13] = {0x1E5, 0x3680},	--TR  	| Monochrome
-	[14] = {0x1ED, 0x3688},	--HT  	| Decisive Pumpkin
-	[15] = {-1, -1},
-	[16] = {0x1E6, 0x3681},	--PR  	| Follow The Wind
-	[17] = {0x1E8, 0x3683},	--SP  	| Photon Debugger
-	[18] = {0x21F, 0x3698}	--TWTNW | Two Become One
+	[0] = {-1, -1, false},
+	[1] = {0x1F2, 0x368D, STT_ENABLED},	--STT 	| Bond of Flame
+	[2] = {0x02A, 0x35A2, TT_ENABLED},	--TT  	| Oathkeeper
+	[3] = {0x220, 0x3699, COR_ENABLED},	--CoR 	| Winner's Proof
+	[4] = {0x1EE, 0x3689, HB_ENABLED},	--HB  	| Sleeping Lion
+	[5] = {0x1EA, 0x3685, BC_ENABLED},	--BC  	| Rumbling Rose
+	[6] = {0x1E4, 0x367F, OC_ENABLED},	--OC  	| Hero's Crest 
+	[7] = {0x1EC, 0x3687, AG_ENABLED},	--AG  	| Wishing Lamp
+	[8] = {0x1E1, 0x367C, LOD_ENABLED},	--LoD 	| Hidden Dragon
+	[9] = {0x1EF, 0x368A, HAW_ENABLED},	--HAW 	| Sweet Memeories
+	[10] = {0x1E7, 0x3682, PL_ENABLED},	--PL  	| Circle of Life
+	[11] = {-1, -1, false},
+	[12] = {0x1E5, 0x3680, DC_ENABLED},	--DC  	| Monochrome
+	[13] = {0x1E5, 0x3680, DC_ENABLED},	--TR  	| Monochrome
+	[14] = {0x1ED, 0x3688, HT_ENABLED},	--HT  	| Decisive Pumpkin
+	[15] = {-1, -1, false},
+	[16] = {0x1E6, 0x3681, PR_ENABLED},	--PR  	| Follow The Wind
+	[17] = {0x1E8, 0x3683, SP_ENABLED},	--SP  	| Photon Debugger
+	[18] = {0x21F, 0x3698, TWTNW_ENABLED}	--TWTNW | Two Become One
 }
 
 function CheckKeyblade(invAdd, keyValue)
@@ -121,9 +121,10 @@ function _OnFrame()
 	--get key values
 	local worldKeyInv = keyTable[curWorld][1]
 	local worldKeySav = keyTable[curWorld][2]
+	local worldEnabled = keyTable[curWorld][3]
 
 	--return if somehow not a valid key
-	if worldKeyInv == -1 or worldKeySav == -1 then
+	if worldEnabled == false or worldKeyInv == -1 or worldKeySav == -1 then
 		return
 	end
 	

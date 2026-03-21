@@ -45,8 +45,9 @@ class SeedModMenu(KH2Submenu):
         self.start_group()
         self.add_option(settingkey.BLOCK_COR_SKIP)
         self.add_option(settingkey.BLOCK_SHAN_YU_SKIP)
-        self.add_option(settingkey.KEYBLADES_LOCK_CHESTS)
         self.add_option(settingkey.DISABLE_FINAL_FORM)
+        self.add_option(settingkey.KEYBLADES_LOCK_CHESTS)
+        self.add_option(settingkey.ENABLED_KEYBLADE_LOCKING_WORLDS)
         self.end_group('Challenge Modifiers')
         self.end_column()
 

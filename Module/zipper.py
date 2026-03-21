@@ -441,7 +441,7 @@ class SeedZip:
                 mod.write_better_stt_assets(boss_enabled)
 
             if settings.keyblades_unlock_chests:
-                mod.write_keyblade_locking_lua()
+                mod.write_keyblade_locking_lua(settings.enabled_keyblade_unlock_worlds)
 
             self.add_cmd_list_modifications(mod)
 

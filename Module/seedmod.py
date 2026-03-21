@@ -10,6 +10,7 @@ import yaml
 
 from Class.openkhmod import AttackEntriesOrganizer, ModYml, Bonuses, FormLevels, Items, LevelUps, Messages, \
     PlayerParams, PrizeTable, Treasures, write_yaml_to_zip_file, StrDict, ModAsset, ModSourceFile, AssetMethod
+from List.configDict import locationType
 from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmeticsmods.keyblade import KeybladeRandomizer, KeybladeRandomizerResult
 from Module.resources import resource_path
@@ -736,7 +737,7 @@ class SeedModBuilder:
 
         self.out_zip.writestr(source_name, modified_battle_level_binary)
 
-    def write_keyblade_locking_lua(self):
+    def write_keyblade_locking_lua(self,enabled_worlds_list):
         keyblade_lua_name = _relative_mod_file("keyblade_locking/F266B00B Keyblade Locking.lua")
         assets = [
             {
@@ -747,9 +748,34 @@ class SeedModBuilder:
         ]
         self.mod_yml.add_assets(assets)
 
-        self.out_zip.write(
-            resource_path("static/keyblade_locking/keyblade.lua"), keyblade_lua_name
-        )
+        world_mapping = { locationType.STT: "STT_ENABLED",
+                          locationType.TT: "TT_ENABLED",
+                          locationType.CoR: "COR_ENABLED", 
+                          locationType.HB: "HB_ENABLED", 
+                          locationType.BC: "BC_ENABLED", 
+                          locationType.OC: "OC_ENABLED", 
+                          locationType.Agrabah: "AG_ENABLED", 
+                          locationType.LoD: "LOD_ENABLED", 
+                          locationType.HUNDREDAW: "HAW_ENABLED", 
+                          locationType.PL: "PL_ENABLED", 
+                          locationType.DC: "DC_ENABLED",  
+                          locationType.HT: "HT_ENABLED", 
+                          locationType.PR: "PR_ENABLED", 
+                          locationType.SP: "SP_ENABLED", 
+                          locationType.TWTNW: "TWTNW_ENABLED", 
+                        }
+        
+        world_string_replacements = [(v,"true") if k in enabled_worlds_list else (v,"false") for (k,v) in world_mapping.items() ]
+        
+        with open(
+            resource_path("static/keyblade_locking/keyblade.lua")
+        ) as unfinished_lua:
+            in_progress_lua_string = unfinished_lua.read()
+
+        for world,enabled in world_string_replacements:
+            in_progress_lua_string = in_progress_lua_string.replace(world,enabled)
+
+        self.out_zip.writestr(keyblade_lua_name,in_progress_lua_string)
 
     def write_seed_checker_lua(self, lua_file_content: str):
         checker_lua_name = _relative_mod_file("RandoSeedChecker.lua")
