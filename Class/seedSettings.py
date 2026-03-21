@@ -2058,7 +2058,7 @@ _all_settings = [
         group=SettingGroup.KEYBLADES,
         ui_label="Random Abilities on Accessory/Armor",
         shared=True,
-        default=True,
+        default=False,
         randomizable=True,
         tooltip="If enabled, armor and accessories will have random abilities assigned to them. The item description will be updated to the equipment's new ability.",
     ),

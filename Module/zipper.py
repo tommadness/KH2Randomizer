@@ -911,6 +911,9 @@ class SeedZip:
         if not self.settings.equipment_abilities_enabled:
             return
         equipment_assignments = self.randomizer.equipment_assignments
+        with open(resource_path("static/stats.yml"), "r") as file:
+            stat_data = yaml.safe_load(file)
+        equipment_default_stats = stat_data
         with open(resource_path("static/full_items.json"), "r") as item_json:
             all_item_jsons = json.loads(item_json.read())
             for assignment in equipment_assignments:
@@ -922,7 +925,6 @@ class SeedZip:
                         item_json = y
                         break
                 item_json["Description"] = ability.item.ingame_text_id
-                item_json["Slot"] = ability.item.id
                 mod.items.add_item(
                     item_id=item_json["Id"],
                     item_type=item_json["Type"],
@@ -939,6 +941,28 @@ class SeedZip:
                     picture=item_json["Picture"],
                     icon_1=item_json["Icon1"],
                     icon_2=item_json["Icon2"],
+                )
+
+                equipment_stats = None
+                for y in equipment_default_stats:
+                    if y["Id"] == equip_slot.LocationId:
+                        equipment_stats = y
+                equipment_stats["Ability"] = ability.item.id
+                mod.items.add_stats(
+                    location_id=equipment_stats["Id"],
+                    attack=equipment_stats["Attack"],
+                    magic=equipment_stats["Magic"],
+                    defense=equipment_stats["Defense"],
+                    ability=equipment_stats["Ability"],
+                    ability_points=equipment_stats["AbilityPoints"],
+                    unknown_08=equipment_stats["Unknown08"],
+                    fire_resistance=equipment_stats["FireResistance"],
+                    ice_resistance=equipment_stats["IceResistance"],
+                    lightning_resistance=equipment_stats["LightningResistance"],
+                    dark_resistance=equipment_stats["DarkResistance"],
+                    unknown_0d=equipment_stats["Unknown0d"],
+                    general_resistance=equipment_stats["GeneralResistance"],
+                    unknown=equipment_stats["Unknown"],
                 )
 
     def create_shop_rando_assets(self, mod: SeedModBuilder):
