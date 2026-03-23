@@ -85,7 +85,8 @@ class PLLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     pl = locationType.PL
-    pl_logic = PLLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(pl)
+    pl_logic = PLLogicGraph(graph.reverse_rando,keyblades_unlock_chests)
     graph.add_logic(pl_logic)
 
     gorge_chests = graph.add_location(NodeId.GorgeChests, [

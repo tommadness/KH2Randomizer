@@ -123,10 +123,10 @@ class CheckLocation(str, Enum):
     TransportToRemembrance = "Transport to Remembrance"
 
 class HBLogicGraph(DefaultLogicGraph):
-    def __init__(self,reverse_rando,keyblade_unlocks):
+    def __init__(self,reverse_rando,keyblade_unlocks,keyblade_unlock_cor):
         DefaultLogicGraph.__init__(self,NodeId)
         hb_keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_hb_keyblade(inv)
-        cor_keyblade_lambda = lambda inv : not keyblade_unlocks or ItemPlacementHelpers.need_cor_keyblade(inv)
+        cor_keyblade_lambda = lambda inv : not keyblade_unlock_cor or ItemPlacementHelpers.need_cor_keyblade(inv)
         self.logic[NodeId.Borough][NodeId.BoroughChests] = hb_keyblade_lambda
         self.logic[NodeId.Postern][NodeId.PosternChests] = hb_keyblade_lambda
         self.logic[NodeId.Corridors][NodeId.CorridorsChests] = hb_keyblade_lambda
@@ -160,7 +160,9 @@ class HBLogicGraph(DefaultLogicGraph):
 def make_graph(graph: LocationGraphBuilder):
     hb = locationType.HB
     cor = locationType.CoR
-    hb_logic = HBLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(hb)
+    keyblades_unlock_chests_cor = graph.is_world_keyblade_locked(cor)
+    hb_logic = HBLogicGraph(graph.reverse_rando,keyblades_unlock_chests,keyblades_unlock_chests_cor)
     graph.add_logic(hb_logic)
 
     marketplace_map_popup = graph.add_location(NodeId.MarketplaceMapPopup, [

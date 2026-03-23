@@ -117,7 +117,8 @@ class OCLogicGraph(DefaultLogicGraph):
 def make_graph(graph: LocationGraphBuilder):
     oc = locationType.OC
     cups = locationType.OCCups
-    oc_logic = OCLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(oc)
+    oc_logic = OCLogicGraph(graph.reverse_rando,keyblades_unlock_chests)
     graph.add_logic(oc_logic)
 
     passage_chests = graph.add_location(NodeId.PassageChests, [

@@ -81,7 +81,8 @@ class STTLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     stt = locationType.STT
-    stt_logic = STTLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(stt)
+    stt_logic = STTLogicGraph(graph.reverse_rando,keyblades_unlock_chests)
     graph.add_logic(stt_logic)
 
     twilight_town_map_popup = graph.add_location(NodeId.TwilightTownMapPopup, [

@@ -62,6 +62,7 @@ class LocationGraphBuilder:
     def __init__(self, graph: Graph, reverse_rando: bool, settings: RandomizerSettings):
         self.graph = graph
         self.keyblades_unlock_chests = settings.keyblades_unlock_chests
+        self.keyblade_locked_locations = settings.enabled_keyblade_unlock_worlds
         self.reverse_rando = reverse_rando
         self.settings = settings
         self.logic_graph = DefaultLogicGraph()
@@ -69,6 +70,9 @@ class LocationGraphBuilder:
         self.pending_first_boss_nodes: list[str] = []
         self.pending_last_story_boss_nodes: list[str] = []
         self.pending_superboss_nodes: list[str] = []
+
+    def is_world_keyblade_locked(self,world: locationType):
+        return self.keyblades_unlock_chests and world in self.keyblade_locked_locations
     
     def add_logic(self,added_logic_graph : DefaultLogicGraph):
         self.logic_graph.merge(added_logic_graph)

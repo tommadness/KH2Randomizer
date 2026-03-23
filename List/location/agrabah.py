@@ -94,7 +94,8 @@ class AGLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     ag = locationType.Agrabah
-    ag_logic = AGLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(ag)
+    ag_logic = AGLogicGraph(graph.reverse_rando,keyblades_unlock_chests)
     graph.add_logic(ag_logic)
 
     agrabah_map_popup = graph.add_location(NodeId.AgrabahMapPopup, [

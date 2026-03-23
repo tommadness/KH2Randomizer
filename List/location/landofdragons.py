@@ -79,7 +79,8 @@ class LoDLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     lod = locationType.LoD
-    lod_logic = LoDLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(lod)
+    lod_logic = LoDLogicGraph(graph.reverse_rando,keyblades_unlock_chests)
     graph.add_logic(lod_logic)
 
     bamboo_grove_chests = graph.add_location(NodeId.BambooGroveChests, [

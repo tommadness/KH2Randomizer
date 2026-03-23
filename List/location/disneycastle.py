@@ -80,7 +80,8 @@ class DCLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     dc = locationType.DC
-    dc_logic = DCLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(dc)
+    dc_logic = DCLogicGraph(graph.reverse_rando,keyblades_unlock_chests)
     graph.add_logic(dc_logic)
 
     courtyard_chests = graph.add_location(NodeId.DisneyCastleCourtyardChests, [

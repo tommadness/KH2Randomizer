@@ -103,7 +103,8 @@ def make_graph(graph: LocationGraphBuilder):
         objectives_needed = graph.settings.num_objectives_needed
     if graph.settings.emblems:
         objectives_needed = graph.settings.num_emblems_needed
-    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests,objectives_needed)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(twtnw)
+    twtnw_logic = TWTNWLogicGraph(graph.reverse_rando,keyblades_unlock_chests,objectives_needed)
     graph.add_logic(twtnw_logic)
 
     fragment_crossing_chests = graph.add_location(NodeId.FragmentCrossingChests, [

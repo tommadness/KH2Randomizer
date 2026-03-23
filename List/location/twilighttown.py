@@ -134,7 +134,8 @@ class TTLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     tt = locationType.TT
-    tt_logic = TTLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(tt)
+    tt_logic = TTLogicGraph(graph.reverse_rando,keyblades_unlock_chests)
     graph.add_logic(tt_logic)
 
     old_mansion_chests = graph.add_location(NodeId.OldMansionChests, [

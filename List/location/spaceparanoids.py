@@ -69,7 +69,8 @@ class SPLogicGraph(DefaultLogicGraph):
 
 def make_graph(graph: LocationGraphBuilder):
     sp = locationType.SP
-    sp_logic = SPLogicGraph(graph.reverse_rando,graph.keyblades_unlock_chests)
+    keyblades_unlock_chests = graph.is_world_keyblade_locked(sp)
+    sp_logic = SPLogicGraph(graph.reverse_rando,keyblades_unlock_chests)
     graph.add_logic(sp_logic)
 
     pit_cell_chests = graph.add_location(NodeId.PitCellChests, [
