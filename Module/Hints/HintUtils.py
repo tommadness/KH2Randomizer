@@ -23,6 +23,7 @@ class CommonTrackerInfo:
         self.generatorVersion = settings.ui_version
         tracker_includes = settings.tracker_includes
         self.important_check_list = settings.important_checks
+        self.enabled_keyblade_unlock_worlds = settings.enabled_keyblade_unlock_worlds
         self.spoiler_reveal_list = settings.spoiler_reveal_checks
         self.objective_mode = settings.objective_rando
         self.emblem_mode = settings.emblems
@@ -60,7 +61,8 @@ class CommonTrackerInfo:
             "generatorVersion": self.generatorVersion,
             "settings": self.settings,
             "checkValue": self.point_values,
-            "hintableItems": self.hintable_categories
+            "hintableItems": self.hintable_categories,
+            "enabledKeybladeLockingWorlds": self.enabled_keyblade_unlock_worlds,
         }
         if self.reveal_mode == "bossreports":
             data["ProgressionType"] = "Bosses"

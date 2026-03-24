@@ -215,12 +215,17 @@ class BtlvViewer():
     
     def _make_sphere_scaling(self,regular_rando,location_spheres):
         # modify the visits based on the value of spheres, max sphere is level 50
-        max_sphere = max([value for value in location_spheres.values()])
+        visit_reps = self.regular_rando_visit_rep if regular_rando else self.reverse_rando_visit_rep
+        max_sphere = 0
+        # get the max sphere from all the visit representative checks
+        for world, visit_flag_list in self.visit_flags.items():
+            for visit_number in range(len(visit_flag_list)):
+                # find location
+                sphere_of_location = [sphere for loca,sphere in location_spheres.items() if loca.Description == visit_reps[world][visit_number]][0]
+                max_sphere = max(max_sphere,sphere_of_location)
         if max_sphere == 0:
             raise ValueError("There are no logical spheres to scale battle levels to. Change the settings for battle level or visit locking")
         sphere_levels = [math.ceil((x*1.0/max_sphere)*49)+1 for x in range(max_sphere+1)]
-
-        visit_reps = self.regular_rando_visit_rep if regular_rando else self.reverse_rando_visit_rep
 
         for world, visit_flag_list in self.visit_flags.items():
             for visit_number in range(len(visit_flag_list)):
