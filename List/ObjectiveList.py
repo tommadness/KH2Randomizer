@@ -41,8 +41,8 @@ def get_last_story_objectives():
         KH2Objective("Defeat MCP",spaceparanoids.CheckLocation.McpBonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         KH2Objective("Defeat Xemnas",worldthatneverwas.CheckLocation.Xemnas1Bonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
         KH2Objective("Defeat Hades",olympuscoliseum.CheckLocation.Hades,ObjectiveType.BOSS,ObjectiveDifficulty.LATE),
-        KH2Objective("Help Pooh out of the pot of hunny",hundredacrewood.CheckLocation.StarryHillCureElement,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.LATEST),
-        KH2Objective("Participate the New Day Musical",atlantica.CheckLocation.MusicalBlizzardElement,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.LATEST),
+        KH2Objective("Help Pooh on Starry Hill",hundredacrewood.CheckLocation.StarryHillCureElement,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.LATEST),
+        KH2Objective("Participate in the New Day Musical",atlantica.CheckLocation.MusicalBlizzardElement,ObjectiveType.WORLDPROGRESS,ObjectiveDifficulty.LATEST),
     ]
 
 def get_full_objective_list():
@@ -70,7 +70,7 @@ def get_full_objective_list():
         KH2Objective("Defeat Shan Yu",landofdragons.CheckLocation.ShanYuBonus,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
         # BC
         KH2Objective("Defeat Thresholder",beastscastle.CheckLocation.Thresholder,ObjectiveType.BOSS),
-        KH2Objective("Help Beast",beastscastle.CheckLocation.Beast,ObjectiveType.WORLDPROGRESS),
+        KH2Objective("Calm Beast",beastscastle.CheckLocation.Beast,ObjectiveType.WORLDPROGRESS),
         KH2Objective("Defeat Dark Thorn",beastscastle.CheckLocation.DarkThorn,ObjectiveType.BOSS,ObjectiveDifficulty.MIDDLE),
         # DC
         KH2Objective("Escort Queen Minnie",disneycastle.CheckLocation.MinnieEscort,ObjectiveType.WORLDPROGRESS),
@@ -171,41 +171,48 @@ def get_full_objective_list():
     ]
 
     def sorting_key(obj: KH2Objective):
+        modifier = 0
+        if obj.Difficulty == ObjectiveDifficulty.MIDDLE:
+            modifier = 1
+        elif obj.Difficulty == ObjectiveDifficulty.LATE:
+            modifier = 2
+        elif obj.Difficulty == ObjectiveDifficulty.LATEST:
+            modifier = 3
         if obj.Location in simulatedtwilighttown.CheckLocation:
-            return 0
+            return 0 + modifier
         elif obj.Location in twilighttown.CheckLocation:
-            return 1
+            return 10 + modifier
         elif obj.Location in hollowbastion.CheckLocation:
-            return 2
+            return 20 + modifier
         elif obj.Location in landofdragons.CheckLocation:
-            return 3
+            return 30 + modifier
         elif obj.Location in beastscastle.CheckLocation:
-            return 4
+            return 40 + modifier
         elif obj.Location in olympuscoliseum.CheckLocation:
-            return 5
+            return 50 + modifier
         elif obj.Location in disneycastle.CheckLocation:
-            return 6
+            return 60 + modifier
         elif obj.Location in portroyal.CheckLocation:
-            return 7
+            return 70 + modifier
         elif obj.Location in agrabah.CheckLocation:
-            return 8
+            return 80 + modifier
         elif obj.Location in halloweentown.CheckLocation:
-            return 9
+            return 90 + modifier
         elif obj.Location in pridelands.CheckLocation:
-            return 10
+            return 100 + modifier
         elif obj.Location in spaceparanoids.CheckLocation:
-            return 11
+            return 110 + modifier
         elif obj.Location in worldthatneverwas.CheckLocation:
-            return 12
+            return 120 + modifier
         elif obj.Location in hundredacrewood.CheckLocation:
-            return 13
+            return 130 + modifier
         elif obj.Location in atlantica.CheckLocation:
-            return 14
+            return 140 + modifier
         elif obj.Location in formlevel.CheckLocation:
-            return 15
+            return 150 + modifier
         elif obj.Location in puzzlereward.CheckLocation:
-            return 16
-        return 30
+            return 160 + modifier
+        return 300
     
     full_list.sort(key=sorting_key)       
 

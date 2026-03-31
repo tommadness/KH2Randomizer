@@ -1,7 +1,10 @@
+from PySide6.QtWidgets import QPushButton
+
 from Class import settingkey
 from Class.seedSettings import SeedSettings
 from List.configDict import FinalDoorRequirement
 from UI.Submenus.SubMenu import KH2Submenu
+from UI.Submenus.ObjectiveSelectionDialog import ObjectiveSelectionDialog
 
 
 class ItemPlacementMenu(KH2Submenu):
@@ -15,7 +18,10 @@ class ItemPlacementMenu(KH2Submenu):
         self.add_option(settingkey.FINAL_DOOR_REQUIREMENT)
         self.add_option(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED)
         self.add_option(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
-        self.add_option(settingkey.OBJECTIVE_RANDO_POOL)
+        self.set_objective_pool = QPushButton("Set Objective Pool")
+        self.set_objective_pool.clicked.connect(self._set_objective_pool)
+        self.pending_group.addWidget(self.set_objective_pool)
+        
         self.add_option(settingkey.EMBLEM_NUM_REQUIRED)
         self.add_option(settingkey.EMBLEM_NUM_AVAILABLE)
         self.end_group("Final Door Requirement")
@@ -79,9 +85,15 @@ class ItemPlacementMenu(KH2Submenu):
         emblems_enabled = requirement is FinalDoorRequirement.EMBLEMS
         self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE, objectives_enabled)
         self.set_option_visibility(settingkey.OBJECTIVE_RANDO_NUM_REQUIRED, objectives_enabled)
-        self.set_option_visibility(settingkey.OBJECTIVE_RANDO_POOL, objectives_enabled)
+        self.set_objective_pool.setVisible(objectives_enabled)
+
         self.set_option_visibility(settingkey.EMBLEM_NUM_AVAILABLE, emblems_enabled)
         self.set_option_visibility(settingkey.EMBLEM_NUM_REQUIRED, emblems_enabled)
+
+        
+    def _set_objective_pool(self):
+        dialog = ObjectiveSelectionDialog(self, self.settings)
+        dialog.exec()
 
     def disable_widgets(self):
         self.disable_signal = True

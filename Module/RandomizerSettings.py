@@ -630,7 +630,8 @@ class RandomizerSettings:
         self.max_objectives_available = ui_settings.get(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
         self.num_emblems_needed = ui_settings.get(settingkey.EMBLEM_NUM_REQUIRED)
         self.max_emblems_available = ui_settings.get(settingkey.EMBLEM_NUM_AVAILABLE)
-        self.available_objectives = ui_settings.get(settingkey.OBJECTIVE_POOL_MULTISELECT)
+        available_objective_names = ui_settings.get(settingkey.OBJECTIVE_POOL_MULTISELECT)
+        self.available_objectives = [obj for obj in ObjectiveList.get_full_objective_list() if obj.Name in available_objective_names]
 
         # self.objective_pool_type = ui_settings.get(settingkey.OBJECTIVE_RANDO_POOL)
         # if self.objective_pool_type == ObjectivePoolOption.BOSSES.name:

@@ -1769,7 +1769,7 @@ _all_settings = [
         group=SettingGroup.ITEM_PLACEMENT,
         ui_label="Objective Pool",
         choices={
-            obj.Name : obj for obj in ObjectiveList.get_full_objective_list()
+            obj.Name : obj.Name for obj in ObjectiveList.get_full_objective_list()
         },
         shared=True,
         default=[
