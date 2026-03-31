@@ -12,7 +12,7 @@ from khbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
 from Class.exceptions import SettingsException
-from List import configDict
+from List import configDict, ObjectiveList
 from List.ItemList import Items
 from List.configDict import (
     DisableFinalOption,
@@ -50,7 +50,7 @@ SHORT_SELECT_LIMIT = len(single_select_chars)
 
 def _format_list_for_spoiler(values: list[str]) -> str:
     if len(values) > 0:
-        return ", ".join(values)
+        return ", ".join(str(v) for v in values)
     else:
         return "(none)"
 
@@ -1763,6 +1763,18 @@ _all_settings = [
         shared=True,
         default=20,
         tooltip="How many emblems should be required to enter the final door.",
+    ),
+    MultiSelect(
+        name=settingkey.OBJECTIVE_POOL_MULTISELECT,
+        group=SettingGroup.ITEM_PLACEMENT,
+        ui_label="Objective Pool",
+        choices={
+            obj.Name : obj for obj in ObjectiveList.get_full_objective_list()
+        },
+        shared=True,
+        default=[
+            obj.Name for obj in ObjectiveList.get_full_objective_list()
+        ],
     ),
     SingleSelect(
         name=settingkey.OBJECTIVE_RANDO_POOL,

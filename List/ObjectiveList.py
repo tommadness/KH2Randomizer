@@ -19,6 +19,9 @@ class KH2Objective:
     Type: ObjectiveType
     Difficulty: ObjectiveDifficulty = ObjectiveDifficulty.EARLY
 
+    def __str__(self):
+        return self.Name
+
 def get_last_story_objectives():
     from List.location import (simulatedtwilighttown,twilighttown,hollowbastion,landofdragons,
                             beastscastle,disneycastle,portroyal,agrabah,halloweentown,
@@ -47,7 +50,7 @@ def get_full_objective_list():
                             beastscastle,disneycastle,portroyal,agrabah,halloweentown,
                             pridelands, spaceparanoids, worldthatneverwas, olympuscoliseum,
                             hundredacrewood, atlantica, formlevel,puzzlereward)
-    return get_last_story_objectives() + [
+    full_list = get_last_story_objectives() + [
         # STT
         KH2Objective("Defeat Twilight Thorn",simulatedtwilighttown.CheckLocation.TwilightThorn,ObjectiveType.BOSS),
         KH2Objective("Defeat Axel I",simulatedtwilighttown.CheckLocation.Axel1,ObjectiveType.FIGHT),
@@ -166,3 +169,44 @@ def get_full_objective_list():
         KH2Objective("Defeat AS Marluxia",disneycastle.CheckLocation.MarluxiaBonus,ObjectiveType.BOSS,ObjectiveDifficulty.LATEST),
         
     ]
+
+    def sorting_key(obj: KH2Objective):
+        if obj.Location in simulatedtwilighttown.CheckLocation:
+            return 0
+        elif obj.Location in twilighttown.CheckLocation:
+            return 1
+        elif obj.Location in hollowbastion.CheckLocation:
+            return 2
+        elif obj.Location in landofdragons.CheckLocation:
+            return 3
+        elif obj.Location in beastscastle.CheckLocation:
+            return 4
+        elif obj.Location in olympuscoliseum.CheckLocation:
+            return 5
+        elif obj.Location in disneycastle.CheckLocation:
+            return 6
+        elif obj.Location in portroyal.CheckLocation:
+            return 7
+        elif obj.Location in agrabah.CheckLocation:
+            return 8
+        elif obj.Location in halloweentown.CheckLocation:
+            return 9
+        elif obj.Location in pridelands.CheckLocation:
+            return 10
+        elif obj.Location in spaceparanoids.CheckLocation:
+            return 11
+        elif obj.Location in worldthatneverwas.CheckLocation:
+            return 12
+        elif obj.Location in hundredacrewood.CheckLocation:
+            return 13
+        elif obj.Location in atlantica.CheckLocation:
+            return 14
+        elif obj.Location in formlevel.CheckLocation:
+            return 15
+        elif obj.Location in puzzlereward.CheckLocation:
+            return 16
+        return 30
+    
+    full_list.sort(key=sorting_key)       
+
+    return full_list

@@ -7,7 +7,6 @@ from Class.exceptions import GeneratorException
 from Class.newLocationClass import KH2Location
 from List.configDict import locationType, itemType, locationCategory
 from List.inventory.item import InventoryItem
-from Module.RandomizerSettings import RandomizerSettings
 
 RequirementFunction = Callable[[list[int]], bool]
 
@@ -58,8 +57,7 @@ class RequirementEdge:
 
 
 class LocationGraphBuilder:
-
-    def __init__(self, graph: Graph, reverse_rando: bool, settings: RandomizerSettings):
+    def __init__(self, graph: Graph, reverse_rando: bool, settings):
         self.graph = graph
         self.keyblades_unlock_chests = settings.keyblades_unlock_chests
         self.keyblade_locked_locations = settings.enabled_keyblade_unlock_worlds

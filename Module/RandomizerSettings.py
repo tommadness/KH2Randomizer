@@ -630,17 +630,17 @@ class RandomizerSettings:
         self.max_objectives_available = ui_settings.get(settingkey.OBJECTIVE_RANDO_NUM_AVAILABLE)
         self.num_emblems_needed = ui_settings.get(settingkey.EMBLEM_NUM_REQUIRED)
         self.max_emblems_available = ui_settings.get(settingkey.EMBLEM_NUM_AVAILABLE)
-        self.available_objectives = ObjectiveList.get_full_objective_list()
+        self.available_objectives = ui_settings.get(settingkey.OBJECTIVE_POOL_MULTISELECT)
 
-        self.objective_pool_type = ui_settings.get(settingkey.OBJECTIVE_RANDO_POOL)
-        if self.objective_pool_type == ObjectivePoolOption.BOSSES.name:
-            self.available_objectives = [o for o in self.available_objectives if o.Type == ObjectiveList.ObjectiveType.BOSS]
-        elif self.objective_pool_type == ObjectivePoolOption.NOBOSSES.name:
-            self.available_objectives = [o for o in self.available_objectives if o.Type == ObjectiveList.ObjectiveType.WORLDPROGRESS or o.Type == ObjectiveList.ObjectiveType.FIGHT]
-        elif self.objective_pool_type == ObjectivePoolOption.HITLIST.name:
-            self.available_objectives = [o for o in self.available_objectives if o.Difficulty==ObjectiveList.ObjectiveDifficulty.LATEST ]
-        elif self.objective_pool_type == ObjectivePoolOption.LASTSTORY.name:
-            self.available_objectives = ObjectiveList.get_last_story_objectives()
+        # self.objective_pool_type = ui_settings.get(settingkey.OBJECTIVE_RANDO_POOL)
+        # if self.objective_pool_type == ObjectivePoolOption.BOSSES.name:
+        #     self.available_objectives = [o for o in self.available_objectives if o.Type == ObjectiveList.ObjectiveType.BOSS]
+        # elif self.objective_pool_type == ObjectivePoolOption.NOBOSSES.name:
+        #     self.available_objectives = [o for o in self.available_objectives if o.Type == ObjectiveList.ObjectiveType.WORLDPROGRESS or o.Type == ObjectiveList.ObjectiveType.FIGHT]
+        # elif self.objective_pool_type == ObjectivePoolOption.HITLIST.name:
+        #     self.available_objectives = [o for o in self.available_objectives if o.Difficulty==ObjectiveList.ObjectiveDifficulty.LATEST ]
+        # elif self.objective_pool_type == ObjectivePoolOption.LASTSTORY.name:
+        #     self.available_objectives = ObjectiveList.get_last_story_objectives()
 
         if self.max_objectives_available > len(self.available_objectives):
             raise SettingsException("Not enough enabled objectives for the requested available pool. Turn on more objectives or lower available")
