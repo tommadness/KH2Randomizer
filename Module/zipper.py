@@ -637,6 +637,9 @@ class SeedZip:
         modified_battle_level_binary = btlv.write_modifications()
         mod.write_battle_level_assets(modified_battle_level_binary)
 
+        if settings.force_final_fights_level50:
+            mod.write_final_fights_level50_assets()
+
         return btlv.get_spoiler()
 
     def add_cmd_list_modifications(self, mod: SeedModBuilder):

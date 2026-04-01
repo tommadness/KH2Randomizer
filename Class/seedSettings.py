@@ -1652,6 +1652,17 @@ _all_settings = [
         standalone_label="Battle Level Randomization",
         randomizable=True,
     ),
+    Toggle(
+        name=settingkey.FORCE_FINAL_FIGHTS_50,
+        group=SettingGroup.SEED_MODIFIERS,
+        ui_label="Force Final Fights to Level 50",
+        shared=True,
+        default=False,
+        tooltip="""
+        Force the Final Fights sequence to be level 50, even if TWTNW is different.
+        """,
+        randomizable=False,
+    ),
     IntSpinner(
         name=settingkey.BATTLE_LEVEL_OFFSET,
         group=SettingGroup.SEED_MODIFIERS,

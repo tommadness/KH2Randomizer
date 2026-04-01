@@ -715,14 +715,14 @@ class Randomizer:
                 else:
                     # remove duplicates for Datas
                     objective_pool = [o for o in objective_pool if not any(t in o.Name for t in ["Data Vexen","Data Zexion","Data Larxene","Data Lexaeus","Data Marluxia"])]
-            if settings.objective_pool_type==ObjectivePoolOption.HITLIST.name:
-                # remove all but one of the form objectives
-                form_objectives = [o for o in objective_pool if "Level 7" in o.Name]
-                form_choice = []
-                if len(form_objectives)>0:
-                    form_choice = [random.choice(form_objectives)]
+            # if settings.objective_pool_type==ObjectivePoolOption.HITLIST.name:
+            #     # remove all but one of the form objectives
+            #     form_objectives = [o for o in objective_pool if "Level 7" in o.Name]
+            #     form_choice = []
+            #     if len(form_objectives)>0:
+            #         form_choice = [random.choice(form_objectives)]
 
-                objective_pool = [o for o in objective_pool if "Level 7" not in o.Name] + form_choice
+            #     objective_pool = [o for o in objective_pool if "Level 7" not in o.Name] + form_choice
 
             if len(objective_pool) < settings.max_objectives_available:
                 raise SettingsException(f"Not enough objective locations ({len(objective_pool)}) available to allow the max number of objectives ({settings.max_objectives_available}) to be placed.")

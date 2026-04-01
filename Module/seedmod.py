@@ -737,6 +737,100 @@ class SeedModBuilder:
 
         self.out_zip.writestr(source_name, modified_battle_level_binary)
 
+        
+    def write_final_fights_level50_assets(self):
+        """Adds assets and files to the mod for forcing battle level 50 for final fights."""
+
+        eh20_script = _relative_mod_file("final_fights_50/eh20.script")
+        eh23_script = _relative_mod_file("final_fights_50/eh23.script")
+        eh24_script = _relative_mod_file("final_fights_50/eh24.script")
+        eh25_script = _relative_mod_file("final_fights_50/eh25.script")
+        self.mod_yml.add_assets(
+            [
+                {
+                    "name": "ard/eh20.ard",
+                    "multi": [
+                        {"name": "ard/us/eh20.ard"},
+                        {"name": "ard/fr/eh20.ard"},
+                        {"name": "ard/gr/eh20.ard"},
+                        {"name": "ard/it/eh20.ard"},
+                        {"name": "ard/sp/eh20.ard"},
+                    ],
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "btl",
+                            "type": "areadatascript",
+                            "method": "areadatascript",
+                            "source": [{"name": eh20_script}],
+                        }
+                    ],
+                },
+                {
+                    "name": "ard/eh23.ard",
+                    "multi": [
+                        {"name": "ard/us/eh23.ard"},
+                        {"name": "ard/fr/eh23.ard"},
+                        {"name": "ard/gr/eh23.ard"},
+                        {"name": "ard/it/eh23.ard"},
+                        {"name": "ard/sp/eh23.ard"},
+                    ],
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "btl",
+                            "type": "areadatascript",
+                            "method": "areadatascript",
+                            "source": [{"name": eh23_script}],
+                        }
+                    ],
+                },
+                {
+                    "name": "ard/eh24.ard",
+                    "multi": [
+                        {"name": "ard/us/eh24.ard"},
+                        {"name": "ard/fr/eh24.ard"},
+                        {"name": "ard/gr/eh24.ard"},
+                        {"name": "ard/it/eh24.ard"},
+                        {"name": "ard/sp/eh24.ard"},
+                    ],
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "btl",
+                            "type": "areadatascript",
+                            "method": "areadatascript",
+                            "source": [{"name": eh24_script}],
+                        }
+                    ],
+                },
+                {
+                    "name": "ard/eh25.ard",
+                    "multi": [
+                        {"name": "ard/us/eh25.ard"},
+                        {"name": "ard/fr/eh25.ard"},
+                        {"name": "ard/gr/eh25.ard"},
+                        {"name": "ard/it/eh25.ard"},
+                        {"name": "ard/sp/eh25.ard"},
+                    ],
+                    "method": "binarc",
+                    "source": [
+                        {
+                            "name": "btl",
+                            "type": "areadatascript",
+                            "method": "areadatascript",
+                            "source": [{"name": eh25_script}],
+                        }
+                    ],
+                },
+            ]
+        )
+
+        self.out_zip.write(resource_path("static/map_skip/ca.yml"), eh20_script)
+        self.out_zip.write(resource_path("static/map_skip/ca.yml"), eh23_script)
+        self.out_zip.write(resource_path("static/map_skip/ca.yml"), eh24_script)
+        self.out_zip.write(resource_path("static/map_skip/ca.yml"), eh25_script)
+
     def write_keyblade_locking_lua(self,enabled_worlds_list):
         keyblade_lua_name = _relative_mod_file("keyblade_locking/F266B00B Keyblade Locking.lua")
         assets = [

@@ -57,6 +57,7 @@ class SeedModMenu(KH2Submenu):
         self.start_column()
         self.start_group()
         self.add_option(settingkey.BATTLE_LEVEL_RANDO)
+        self.add_option(settingkey.FORCE_FINAL_FIGHTS_50)
         self.add_option(settingkey.BATTLE_LEVEL_OFFSET)
         self.add_option(settingkey.BATTLE_LEVEL_RANGE)
         self.add_option(settingkey.BATTLE_LEVEL_RANDOM_MIN)
@@ -131,6 +132,10 @@ class SeedModMenu(KH2Submenu):
         self.set_option_visibility(
             settingkey.BATTLE_LEVEL_RANDOM_MAX,
             visible=(btlv_setting == BattleLevelOption.RANDOM_MAX_50.name)
+        )
+        self.set_option_visibility(
+            settingkey.FORCE_FINAL_FIGHTS_50,
+            visible=(btlv_setting != BattleLevelOption.NORMAL.name and btlv_setting != BattleLevelOption.SCALE_TO_50.name)
         )
 
         self.update_battle_level_display(
