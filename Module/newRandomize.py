@@ -674,10 +674,13 @@ class Randomizer:
 
         self.assign_equipment_abilities(settings)
 
-        self.assign_keyblade_abilities(settings, randomizable_abilities)
+        self.assign_keyblade_abilities(settings, randomizable_abilities, valid_locations)
+
+        if any([loc.LocationCategory == locationCategory.WEAPONSLOT for loc in valid_locations]):
+            raise GeneratorException("Some keyblades weren't assigned abilities")
+
         item_pool.extend(vanilla_abilities)
         item_pool.extend(randomizable_abilities)
-        item_pool.extend(valid_junk)
         if settings.emblems:
             item_pool.extend([Items.emblemItem() for _ in range(settings.max_emblems_available)])
         random.shuffle(item_pool)
@@ -1297,21 +1300,21 @@ class Randomizer:
             for ability,slot in zip(valid_abilities,slot_locations):
                 self.assign_item(slot_locations[slot],ability,self.equipment_assignments)
 
-    def assign_keyblade_abilities(self, settings: RandomizerSettings, ability_pool: list[KH2Item]):
+    def assign_keyblade_abilities(self, settings: RandomizerSettings, ability_pool: list[KH2Item], valid_locations: list[KH2Location]):
         """Assign abilities to keyblades."""
 
-        slot_locations = {location.LocationId: location for location in weaponslot.keyblade_slots()}
+        slot_locations = {location.LocationId: location for location in valid_locations if locationCategory.WEAPONSLOT in location.LocationCategory}
 
         if settings.keyblade_abilities_randomized:
             eligible_ids = set(settings.keyblade_support_abilities + settings.keyblade_action_abilities)
 
             # remove auto abilities from keyblades
-            if settings.extended_placement_logic:
-                eligible_ids.discard(ability.AutoValor.id)
-                eligible_ids.discard(ability.AutoWisdom.id)
-                eligible_ids.discard(ability.AutoMaster.id)
-                eligible_ids.discard(ability.AutoFinal.id)
-                eligible_ids.discard(ability.AutoLimitForm.id)
+            # if settings.extended_placement_logic:
+            #     eligible_ids.discard(ability.AutoValor.id)
+            #     eligible_ids.discard(ability.AutoWisdom.id)
+            #     eligible_ids.discard(ability.AutoMaster.id)
+            #     eligible_ids.discard(ability.AutoFinal.id)
+            #     eligible_ids.discard(ability.AutoLimitForm.id)
 
             eligible_abilities = [abil for abil in ability_pool if abil.Id in eligible_ids]
             nightmare_rarity_weights = {
@@ -1337,6 +1340,7 @@ class Randomizer:
                 elif key.struggle_weapon:
                     # Assign draws to struggle weapons
                     self.assign_item(location, KH2Item(ability.Draw))
+                    valid_locations.remove(location)
                 else:
                     if len(eligible_abilities) == 0:
                         raise GeneratorException(
@@ -1350,6 +1354,7 @@ class Randomizer:
 
                     random_ability = random.choices(eligible_abilities, ability_weights)[0]
                     self.assign_item(location, random_ability)
+                    valid_locations.remove(location)
                     ability_pool.remove(random_ability)
                     eligible_abilities.remove(random_ability)
         else:
@@ -1361,6 +1366,7 @@ class Randomizer:
                 elif key.struggle_weapon:
                     # Alternatively, we could leave the Struggle weapons with no ability, but keeping Draw for now
                     self.assign_item(location, KH2Item(ability.Draw))
+                    valid_locations.remove(location)
                 else:
                     found_ability_item = next((a for a in ability_pool if a.item == key.ability), None)
                     if found_ability_item is None:
@@ -1369,6 +1375,7 @@ class Randomizer:
                         )
                     else:
                         ability_pool.remove(found_ability_item)
+                        valid_locations.remove(location)
                         self.assign_item(location, found_ability_item)
 
     def assign_stat_bonuses(self, avail_locations: list[KH2Location]):

@@ -643,3 +643,10 @@ class ItemPlacementHelpers:
     @staticmethod
     def need_haw_keyblade(inventory: list[int]) -> bool:
         return keyblade.SweetMemories.id in inventory
+    
+    @staticmethod
+    def make_keyblade_slot_logic_lambda(weapon_slot_id: int) -> RequirementFunction:
+        all_keyblades = keyblade.get_all_keyblades()
+        # find matching keyblade from slot id
+        matching_keyblade = next(keyblade for keyblade in all_keyblades if keyblade.weaponslot_id==weapon_slot_id)
+        return lambda inv: matching_keyblade.id in inv

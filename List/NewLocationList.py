@@ -192,6 +192,7 @@ class Locations:
         summonlevel.make_graph(builder)
         synthesis.make_graph(builder)
         puzzlereward.make_graph(builder)
+        weaponslot.make_graph(builder)
 
         for name, location in builder.pending_locations_by_name.items():
             self.locations_by_name[name] = location

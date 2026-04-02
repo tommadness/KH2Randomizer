@@ -225,7 +225,7 @@ class RandomizerSettings:
             ui_settings.get(settingkey.BATTLE_LEVEL_RANDOM_MIN),
             ui_settings.get(settingkey.BATTLE_LEVEL_RANDOM_MAX)
         )
-        self.force_final_fights_level50 = self.battle_level_rando != BattleLevelOption.NORMAL.name and ui_settings.get(settingkey.FORCE_FINAL_FIGHTS_50)
+        self.force_final_fights_level50 = self.battle_level_rando != BattleLevelOption.NORMAL.name and self.battle_level_rando != BattleLevelOption.SCALE_TO_50.name and ui_settings.get(settingkey.FORCE_FINAL_FIGHTS_50)
 
         self.starting_inventory_ids: list[int] = []
         self.starting_inventory_ids.extend([int(value) for value in ui_settings.get(settingkey.STARTING_KEYBLADES)])

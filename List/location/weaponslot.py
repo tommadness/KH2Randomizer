@@ -1,5 +1,9 @@
+from enum import Enum
+
 from Class.newLocationClass import KH2Location
 from List.configDict import locationCategory, locationType
+from List.location.graph import START_NODE, DefaultLogicGraph, LocationGraphBuilder
+from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 class LocationId:
     KingdomKey = 80
@@ -269,9 +273,204 @@ class CheckLocation:
     AcrisiusPlus = "Acrisius+"
     CosmicChain = "Cosmic Chain"
 
+class NodeId(str,Enum):
+    KingdomKeyDSlot = "Kingdom Key D (Slot)"
+    AlphaWeaponSlot = "Alpha Weapon (Slot)"
+    OmegaWeaponSlot = "Omega Weapon (Slot)"
+    KingdomKeySlot = "Kingdom Key (Slot)"
+    OathkeeperSlot = "Oathkeeper (Slot)"
+    OblivionSlot = "Oblivion (Slot)"
+    StarSeekerSlot = "Star Seeker (Slot)"
+    HiddenDragonSlot = "Hidden Dragon (Slot)"
+    HerosCrestSlot = "Hero's Crest (Slot)"
+    MonochromeSlot = "Monochrome (Slot)"
+    FollowTheWindSlot = "Follow the Wind (Slot)"
+    CircleOfLifeSlot = "Circle of Life (Slot)"
+    PhotonDebuggerSlot = "Photon Debugger (Slot)"
+    GullWingSlot = "Gull Wing (Slot)"
+    RumblingRoseSlot = "Rumbling Rose (Slot)"
+    GuardianSoulSlot = "Guardian Soul (Slot)"
+    WishingLampSlot = "Wishing Lamp (Slot)"
+    DecisivePumpkinSlot = "Decisive Pumpkin (Slot)"
+    SweetMemoriesSlot = "Sweet Memories (Slot)"
+    MysteriousAbyssSlot = "Mysterious Abyss (Slot)"
+    SleepingLionSlot = "Sleeping Lion (Slot)"
+    BondOfFlameSlot = "Bond of Flame (Slot)"
+    TwoBecomeOneSlot = "Two Become One (Slot)"
+    FatalCrestSlot = "Fatal Crest (Slot)"
+    FenrirSlot = "Fenrir (Slot)"
+    UltimaWeaponSlot = "Ultima Weapon (Slot)"
+    WinnersProofSlot = "Winner's Proof (Slot)"
+    PurebloodSlot = "Pureblood (Slot)"
+    StruggleSwordSlot = "Struggle Sword (Slot)"
+    StruggleWandSlot = "Struggle Wand (Slot)"
+    StruggleHammerSlot = "Struggle Hammer (Slot)"
 
 def weapon_slot(loc_id: int, description: str) -> KH2Location:
     return KH2Location(loc_id, description, locationCategory.WEAPONSLOT, [locationType.WeaponSlot])
+
+class WeaponSlotLogicGraph(DefaultLogicGraph):
+    def __init__(self):
+        DefaultLogicGraph.__init__(self,NodeId)
+        self.logic[START_NODE][NodeId.KingdomKeyDSlot] = ItemPlacementHelpers.has_valor_form
+        self.logic[START_NODE][NodeId.AlphaWeaponSlot] = ItemPlacementHelpers.has_master_form
+        self.logic[START_NODE][NodeId.OmegaWeaponSlot] = ItemPlacementHelpers.has_final_form
+        self.logic[START_NODE][NodeId.OathkeeperSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.Oathkeeper)
+        self.logic[START_NODE][NodeId.OblivionSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.Oblivion)
+        self.logic[START_NODE][NodeId.StarSeekerSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.StarSeeker)
+        self.logic[START_NODE][NodeId.HiddenDragonSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.HiddenDragon)
+        self.logic[START_NODE][NodeId.HerosCrestSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.HerosCrest)
+        self.logic[START_NODE][NodeId.MonochromeSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.Monochrome)
+        self.logic[START_NODE][NodeId.FollowTheWindSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.FollowTheWind)
+        self.logic[START_NODE][NodeId.CircleOfLifeSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.CircleOfLife)
+        self.logic[START_NODE][NodeId.PhotonDebuggerSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.PhotonDebugger)
+        self.logic[START_NODE][NodeId.GullWingSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.GullWing)
+        self.logic[START_NODE][NodeId.RumblingRoseSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.RumblingRose)
+        self.logic[START_NODE][NodeId.GuardianSoulSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.GuardianSoul)
+        self.logic[START_NODE][NodeId.WishingLampSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.WishingLamp)
+        self.logic[START_NODE][NodeId.DecisivePumpkinSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.DecisivePumpkin)
+        self.logic[START_NODE][NodeId.SweetMemoriesSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.SweetMemories)
+        self.logic[START_NODE][NodeId.MysteriousAbyssSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.MysteriousAbyss)
+        self.logic[START_NODE][NodeId.SleepingLionSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.SleepingLion)
+        self.logic[START_NODE][NodeId.BondOfFlameSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.BondOfFlame)
+        self.logic[START_NODE][NodeId.TwoBecomeOneSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.TwoBecomeOne)
+        self.logic[START_NODE][NodeId.FatalCrestSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.FatalCrest)
+        self.logic[START_NODE][NodeId.FenrirSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.Fenrir)
+        self.logic[START_NODE][NodeId.UltimaWeaponSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.UltimaWeapon)
+        self.logic[START_NODE][NodeId.WinnersProofSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.WinnersProof)
+        self.logic[START_NODE][NodeId.PurebloodSlot] = ItemPlacementHelpers.make_keyblade_slot_logic_lambda(LocationId.Pureblood)
+
+def make_graph(graph: LocationGraphBuilder):
+    slot_logic = WeaponSlotLogicGraph()
+    graph.add_logic(slot_logic)
+
+    kingdomkeyd = graph.add_location(NodeId.KingdomKeyDSlot, [
+        weapon_slot(LocationId.KingdomKeyD, CheckLocation.KingdomKeyD),
+    ])
+    alphaweapon = graph.add_location(NodeId.AlphaWeaponSlot, [
+        weapon_slot(LocationId.AlphaWeapon, CheckLocation.AlphaWeapon),
+    ])
+    omegaweapon = graph.add_location(NodeId.OmegaWeaponSlot, [
+        weapon_slot(LocationId.OmegaWeapon, CheckLocation.OmegaWeapon),
+    ])
+    kingdomkey = graph.add_location(NodeId.KingdomKeySlot, [
+        weapon_slot(LocationId.KingdomKey, CheckLocation.KingdomKey),
+    ])
+    oathkeeper = graph.add_location(NodeId.OathkeeperSlot, [
+        weapon_slot(LocationId.Oathkeeper, CheckLocation.Oathkeeper),
+    ])
+    oblivion = graph.add_location(NodeId.OblivionSlot, [
+        weapon_slot(LocationId.Oblivion, CheckLocation.Oblivion),
+    ])
+    starseeker = graph.add_location(NodeId.StarSeekerSlot, [
+        weapon_slot(LocationId.StarSeeker, CheckLocation.StarSeeker),
+    ])
+    hiddendragon = graph.add_location(NodeId.HiddenDragonSlot, [
+        weapon_slot(LocationId.HiddenDragon, CheckLocation.HiddenDragon),
+    ])
+    heroscrest = graph.add_location(NodeId.HerosCrestSlot, [
+        weapon_slot(LocationId.HerosCrest, CheckLocation.HerosCrest),
+    ])
+    monochrome = graph.add_location(NodeId.MonochromeSlot, [
+        weapon_slot(LocationId.Monochrome, CheckLocation.Monochrome),
+    ])
+    followthewind = graph.add_location(NodeId.FollowTheWindSlot, [
+        weapon_slot(LocationId.FollowTheWind, CheckLocation.FollowTheWind),
+    ])
+    circleoflife = graph.add_location(NodeId.CircleOfLifeSlot, [
+        weapon_slot(LocationId.CircleOfLife, CheckLocation.CircleOfLife),
+    ])
+    photondebugger = graph.add_location(NodeId.PhotonDebuggerSlot, [
+        weapon_slot(LocationId.PhotonDebugger, CheckLocation.PhotonDebugger),
+    ])
+    gullwing = graph.add_location(NodeId.GullWingSlot, [
+        weapon_slot(LocationId.GullWing, CheckLocation.GullWing),
+    ])
+    rumblingrose = graph.add_location(NodeId.RumblingRoseSlot, [
+        weapon_slot(LocationId.RumblingRose, CheckLocation.RumblingRose),
+    ])
+    guardiansoul = graph.add_location(NodeId.GuardianSoulSlot, [
+        weapon_slot(LocationId.GuardianSoul, CheckLocation.GuardianSoul),
+    ])
+    wishinglamp = graph.add_location(NodeId.WishingLampSlot, [
+        weapon_slot(LocationId.WishingLamp, CheckLocation.WishingLamp),
+    ])
+    decisivepumpkin = graph.add_location(NodeId.DecisivePumpkinSlot, [
+        weapon_slot(LocationId.DecisivePumpkin, CheckLocation.DecisivePumpkin),
+    ])
+    sweetmemories = graph.add_location(NodeId.SweetMemoriesSlot, [
+        weapon_slot(LocationId.SweetMemories, CheckLocation.SweetMemories),
+    ])
+    mysteriousabyss = graph.add_location(NodeId.MysteriousAbyssSlot, [
+        weapon_slot(LocationId.MysteriousAbyss, CheckLocation.MysteriousAbyss),
+    ])
+    sleepinglion = graph.add_location(NodeId.SleepingLionSlot, [
+        weapon_slot(LocationId.SleepingLion, CheckLocation.SleepingLion),
+    ])
+    bondofflame = graph.add_location(NodeId.BondOfFlameSlot, [
+        weapon_slot(LocationId.BondOfFlame, CheckLocation.BondOfFlame),
+    ])
+    twobecomeone = graph.add_location(NodeId.TwoBecomeOneSlot, [
+        weapon_slot(LocationId.TwoBecomeOne, CheckLocation.TwoBecomeOne),
+    ])
+    fatalcrest = graph.add_location(NodeId.FatalCrestSlot, [
+        weapon_slot(LocationId.FatalCrest, CheckLocation.FatalCrest),
+    ])
+    fenrir = graph.add_location(NodeId.FenrirSlot, [
+        weapon_slot(LocationId.Fenrir, CheckLocation.Fenrir),
+    ])
+    ultimaweapon = graph.add_location(NodeId.UltimaWeaponSlot, [
+        weapon_slot(LocationId.UltimaWeapon, CheckLocation.UltimaWeapon),
+    ])
+    winnersproof = graph.add_location(NodeId.WinnersProofSlot, [
+        weapon_slot(LocationId.WinnersProof, CheckLocation.WinnersProof),
+    ])
+    pureblood = graph.add_location(NodeId.PurebloodSlot, [
+        weapon_slot(LocationId.Pureblood, CheckLocation.Pureblood),
+    ])
+    strugglesword = graph.add_location(NodeId.StruggleSwordSlot, [
+        weapon_slot(LocationId.StruggleSword, CheckLocation.StruggleSword),
+    ])
+    strugglewand = graph.add_location(NodeId.StruggleWandSlot, [
+        weapon_slot(LocationId.StruggleWand, CheckLocation.StruggleWand),
+    ])
+    strugglehammer = graph.add_location(NodeId.StruggleHammerSlot, [
+        weapon_slot(LocationId.StruggleHammer, CheckLocation.StruggleHammer),
+    ])
+
+    
+    graph.add_edge(START_NODE, kingdomkeyd)
+    graph.add_edge(START_NODE, alphaweapon)
+    graph.add_edge(START_NODE, omegaweapon)
+    graph.add_edge(START_NODE, kingdomkey)
+    graph.add_edge(START_NODE, oathkeeper)
+    graph.add_edge(START_NODE, oblivion)
+    graph.add_edge(START_NODE, starseeker)
+    graph.add_edge(START_NODE, hiddendragon)
+    graph.add_edge(START_NODE, heroscrest)
+    graph.add_edge(START_NODE, monochrome)
+    graph.add_edge(START_NODE, followthewind)
+    graph.add_edge(START_NODE, circleoflife)
+    graph.add_edge(START_NODE, photondebugger)
+    graph.add_edge(START_NODE, gullwing)
+    graph.add_edge(START_NODE, rumblingrose)
+    graph.add_edge(START_NODE, guardiansoul)
+    graph.add_edge(START_NODE, wishinglamp)
+    graph.add_edge(START_NODE, decisivepumpkin)
+    graph.add_edge(START_NODE, sweetmemories)
+    graph.add_edge(START_NODE, mysteriousabyss)
+    graph.add_edge(START_NODE, sleepinglion)
+    graph.add_edge(START_NODE, bondofflame)
+    graph.add_edge(START_NODE, twobecomeone)
+    graph.add_edge(START_NODE, fatalcrest)
+    graph.add_edge(START_NODE, fenrir)
+    graph.add_edge(START_NODE, ultimaweapon)
+    graph.add_edge(START_NODE, winnersproof)
+    graph.add_edge(START_NODE, pureblood)
+    graph.add_edge(START_NODE, strugglesword)
+    graph.add_edge(START_NODE, strugglewand)
+    graph.add_edge(START_NODE, strugglehammer)
+
 
 
 def keyblade_slots() -> list[KH2Location]:
