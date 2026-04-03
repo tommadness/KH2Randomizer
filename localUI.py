@@ -248,6 +248,7 @@ class KH2RandomizerApp(QMainWindow):
         
         app_config = appconfig.read_app_config()
         self.disable_emu_warnings = "disable_emu_warnings" in app_config
+        self.markdown_seed_string = "markdown_seed_string" in app_config
 
         self.settings = SeedSettings()
         self.custom_cosmetics = CustomCosmetics()
@@ -360,6 +361,10 @@ class KH2RandomizerApp(QMainWindow):
         self.seedMenu = QMenu("Share Seed")
         self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
         self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
+        self.seedMenu.addSeparator()
+        self.markdown_seed_string_toggle = self.seedMenu.addAction('Format Seed String for Discord', self.update_markdown_seed_string)
+        self.markdown_seed_string_toggle.setCheckable(True)
+        self.markdown_seed_string_toggle.setChecked(self.markdown_seed_string)
         self.config_menu = QMenu('Configure')
         cosmetic_submenu = QMenu("Cosmetics")
         cosmetic_submenu.addAction('Find OpenKH Folder', self.openkh_folder_getter)
@@ -507,6 +512,10 @@ class KH2RandomizerApp(QMainWindow):
             appconfig.update_app_config('disable_emu_warnings', True)
         else:
             appconfig.remove_app_config('disable_emu_warnings')
+        if self.markdown_seed_string_toggle.isChecked():
+            appconfig.update_app_config('markdown_seed_string', True)
+        else:
+            appconfig.remove_app_config('markdown_seed_string')
 
         e.accept()
 
@@ -887,6 +896,8 @@ class KH2RandomizerApp(QMainWindow):
 
     def shareSeed(self):
         output_text = self.createSharedString()
+        if self.markdown_seed_string:
+            output_text = f"```\n{output_text}\n```"
 
         pc.copy(output_text)
         message = QMessageBox(text="Copied seed to clipboard")
@@ -912,7 +923,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def receiveSeed(self):
         try:
-            share_string = "".join(str(pc.paste()).strip().splitlines())
+            share_string = "".join(str(pc.paste()).strip().strip('`').splitlines())
             shared_seed = SharedSeed.from_share_string(
                 local_generator_version=LOCAL_UI_VERSION,
                 share_string=share_string
@@ -985,6 +996,9 @@ class KH2RandomizerApp(QMainWindow):
     def custom_visuals_folder_getter(self):
         if configui.custom_visuals_folder_getter():
             self.cosmetics_menu.reload_cosmetic_widgets()
+
+    def update_markdown_seed_string(self):
+        self.markdown_seed_string = self.markdown_seed_string_toggle.isChecked()
 
     def show_about(self):
         dialog = AboutDialog(self)
