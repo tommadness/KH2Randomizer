@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Optional
 
-from List.configDict import itemType
+from List.configDict import itemType,locationType
 from List.inventory import ability
 from List.inventory.item import InventoryItem
 from List.location import weaponslot
@@ -380,3 +380,22 @@ def get_all_keyblades() -> list[Keyblade]:
 def get_locking_keyblades() -> list[Keyblade]:
     """Returns a list of the keyblades that can lock chests if the associated setting is enabled."""
     return [key for key in get_all_keyblades() if key.can_unlock_chests]
+
+def get_location_to_locking_keyblade() -> dict[locationType,str]:
+    return {
+        locationType.STT : BondOfFlame.name,
+        locationType.TT : Oathkeeper.name,
+        locationType.HB : SleepingLion.name,
+        locationType.CoR : WinnersProof.name,
+        locationType.BC : RumblingRose.name,
+        locationType.LoD : HiddenDragon.name,
+        locationType.OC : HerosCrest.name,
+        locationType.DC : Monochrome.name,
+        locationType.PR : FollowTheWind.name,
+        locationType.Agrabah : WishingLamp.name,
+        locationType.HT : DecisivePumpkin.name,
+        locationType.PL : CircleOfLife.name,
+        locationType.SP : PhotonDebugger.name,
+        locationType.TWTNW : TwoBecomeOne.name,
+        locationType.HUNDREDAW : SweetMemories.name,
+    }
