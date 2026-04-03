@@ -8,7 +8,7 @@ from enum import Enum
 from typing import Callable, Any
 
 from bitstring import BitArray
-from khbr.randomizer import Randomizer as khbr
+from kh2fmbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
 from Class.exceptions import SettingsException
