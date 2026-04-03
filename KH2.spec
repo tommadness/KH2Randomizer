@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(["'\\KH2", "Randomizer.spec'"],
-             pathex=['C:\\Users\\12sam\\Desktop\\git\\KH2Randomizer'],
+             pathex=['C:\\Users\\Owner\\Documents\\RandoProjects\\KH2Randomizer'],
              binaries=[],
              datas=[],
              hiddenimports=[],

@@ -127,7 +127,7 @@ here.
 
 ### Beat Final Xemnas
 
-The primary goal is to defeat Final Xemnas (the normal final boss of the game) at the end of The World That Never Was.
+The primary goal is to emnas (the normal final boss of the game) at the end of The World That Never Was.
 However, the door to the final battles remains locked until the
 [Final Door Requirement](../glossary/index.md#final-door-requirement) for the seed is satisfied.
 
