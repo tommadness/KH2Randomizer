@@ -20,3 +20,6 @@ EnemyRandoData
 Gemfile
 Gemfile.lock
 _site
+.generator/
+override_enemies.yaml
+override_locations.yaml

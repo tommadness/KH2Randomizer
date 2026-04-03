@@ -8,7 +8,7 @@ from enum import Enum
 from typing import Callable, Any
 
 from bitstring import BitArray
-from khbr.randomizer import Randomizer as khbr
+from kh2fmbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
 from Class.exceptions import SettingsException
@@ -1554,8 +1554,8 @@ _all_settings = [
     IntSpinner(
         name=settingkey.POINTS_BOSS_FINAL,
         group=SettingGroup.HINTS,
-        ui_label="Final Xemnas Defeated",
-        standalone_label="Final Xemnas Defeated Point Value",
+        ui_label="Final Fights Completed",
+        standalone_label="Final Fights Completed Point Value",
         minimum=0,
         maximum=1000,
         step=1,

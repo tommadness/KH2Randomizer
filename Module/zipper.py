@@ -237,9 +237,9 @@ def _invoke_khbr_with_overrides(
     # A function that mimics the call to generateToZip in khbr. Splitting this out to allow for granular control of
     # khbr's boss placement.
     # """
-    # from khbr.randomizer import Randomizer as BossEnemyRandomizer
-    # from khbr.KH2.EnemyManager import EnemyManager
-    # from khbr.textutils import create_spoiler_text
+    # from kh2fmbr.randomizer import Randomizer as BossEnemyRandomizer
+    # from kh2fmbr.KH2.EnemyManager import EnemyManager
+    # from kh2fmbr.textutils import create_spoiler_text
 
     random.seed(
         str(enemy_options)
@@ -293,7 +293,7 @@ def _invoke_khbr_with_overrides(
     # return create_spoiler_text(game_data.spoilers)
 
     ### Backup old way
-    from khbr.randomizer import Randomizer as BossEnemyRandomizer
+    from kh2fmbr.randomizer import Randomizer as BossEnemyRandomizer
     enemySpoilers = BossEnemyRandomizer().generateToZip("kh2", enemy_options, mod, out_zip)
     return enemySpoilers
 

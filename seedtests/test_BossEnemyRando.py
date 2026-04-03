@@ -1,6 +1,6 @@
 import unittest
 
-from khbr.randomizer import Randomizer as BossEnemyRandomizer
+from kh2fmbr.randomizer import Randomizer as BossEnemyRandomizer
 
 from Class.seedSettings import SeedSettings, makeKHBRSettings
 from seedtests import seedtest
