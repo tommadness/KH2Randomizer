@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-import os, glob, shutil, importlib, khbr
+import os, glob, shutil, importlib, kh2fmbr
 
 for root, dirs, files in os.walk(DISTPATH):
     for f in files:
@@ -13,7 +13,7 @@ for root, dirs, files in os.walk(DISTPATH):
         shutil.rmtree(os.path.join(root, d))
 
 
-khbrpath = os.path.dirname(khbr.__file__)
+khbrpath = os.path.dirname(kh2fmbr.__file__)
 def build_datas_recursive(paths):
   datas = []
   
