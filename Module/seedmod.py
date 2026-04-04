@@ -826,10 +826,10 @@ class SeedModBuilder:
             ]
         )
 
-        self.out_zip.write(resource_path("static/map_skip/ca.yml"), eh20_script)
-        self.out_zip.write(resource_path("static/map_skip/ca.yml"), eh23_script)
-        self.out_zip.write(resource_path("static/map_skip/ca.yml"), eh24_script)
-        self.out_zip.write(resource_path("static/map_skip/ca.yml"), eh25_script)
+        self.out_zip.write(resource_path("static/final_fights_50/eh20.script"), eh20_script)
+        self.out_zip.write(resource_path("static/final_fights_50/eh23.script"), eh23_script)
+        self.out_zip.write(resource_path("static/final_fights_50/eh24.script"), eh24_script)
+        self.out_zip.write(resource_path("static/final_fights_50/eh25.script"), eh25_script)
 
     def write_keyblade_locking_lua(self,enabled_worlds_list):
         keyblade_lua_name = _relative_mod_file("keyblade_locking/F266B00B Keyblade Locking.lua")
