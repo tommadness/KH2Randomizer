@@ -792,7 +792,6 @@ class RandomizerSettings:
         if "keyblade" in hintable_checks_list:
             location_to_key_map = keyblade.get_location_to_locking_keyblade()
             enabled_keys = [location_to_key_map[l] for l in self.enabled_keyblade_unlock_worlds]
-            print([key.name for key in keyblade.get_locking_keyblades() if key.name in enabled_keys])
             check_list += [key.name for key in keyblade.get_locking_keyblades() if key.name in enabled_keys]
         if "ability" in hintable_checks_list:
             check_list += ["Second Chance", "Once More"]
