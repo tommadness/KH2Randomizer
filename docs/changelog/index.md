@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.1 (2026-04-04)
+
+Hotfix to battle level scaling for final fights
+
 ## 3.2.0 (2026-04-04)
 
 Features
