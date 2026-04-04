@@ -56,7 +56,7 @@ class HintsMenu(KH2Submenu):
         # self.end_group("Co-op Hints", group_id=_COOP_HINTS)
         self.start_group()
         self.add_option(settingkey.SPOILER_REVEAL_TYPES)
-        self.end_group(title="Reports Reveal Items", group_id=_SPOILED_ITEMS)
+        self.end_group(title="Hints Reveal Items", group_id=_SPOILED_ITEMS)
         self.start_group()
         self.add_option(settingkey.POINTS_REPORT)
         self.add_option(settingkey.POINTS_PROOF)
