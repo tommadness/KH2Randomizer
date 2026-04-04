@@ -89,6 +89,7 @@ class SeedModMenu(KH2Submenu):
         settings.observe(settingkey.BATTLE_LEVEL_RANDOM_MIN, self._btlv_setting_change)
         settings.observe(settingkey.BATTLE_LEVEL_RANDOM_MAX, self._btlv_setting_change)
         settings.observe(settingkey.SOFTLOCK_CHECKING, self.reverse_rando_checking)
+        settings.observe(settingkey.KEYBLADES_LOCK_CHESTS, self._keyblade_locking_change)
 
         self.finalizeMenu()
 
@@ -111,6 +112,14 @@ class SeedModMenu(KH2Submenu):
         if min_random > self.settings.get(settingkey.BATTLE_LEVEL_RANDOM_MAX):
             self.settings.set(settingkey.BATTLE_LEVEL_RANDOM_MAX, min_random)
             self.update_widget(settingkey.BATTLE_LEVEL_RANDOM_MAX)
+
+    def _keyblade_locking_change(self):
+        keyblade_locking = self.settings.get(settingkey.KEYBLADES_LOCK_CHESTS)
+        
+        self.set_option_visibility(
+            settingkey.ENABLED_KEYBLADE_LOCKING_WORLDS,
+            visible=keyblade_locking
+        )
 
     def _btlv_setting_change(self):
         # Sanity checking before doing anything else

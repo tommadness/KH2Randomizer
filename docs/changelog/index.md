@@ -1,5 +1,47 @@
 # Changelog
 
+## 3.2.0 (2026-04-04)
+
+Features
+* Vanilla Keyblade abilities and stats options
+* Battle Level Scaling based on Spheres (scaling based on logical access)
+* Battle Level Setting to force final fights to be LV50 even if TWTNW is not (courtesy of Num/Zeddikus)
+* Keyblade Locking Chests configurable by world (with corresponding tracker update from roromaniac8)
+* Ability to customize starting with specific magic/movement/visit unlocks and a range of random ones. 
+* Custom Objective Pool support
+* Armor/Accessories can have randomized abilities (will update description with replaced ability)
+* Configurable Bonus Stat Reward Pool (HP/MP/Slots)
+* Configurable Shop Prices for added shop items
+* Non-second Visit Item Depth (excludes second visits of GoA portal worlds)
+* Level Slot randomization option (same number of slots available on levels, just random which levels have the items)
+
+QoL
+* Seed string copy formatting for pasting to Discord (opt-in)
+* Custom command menu cosmetic support
+* Texture preset improvements
+* Starting with all visit unlocks should disable the tracker from tracking all the unlocks to GoA
+* Donald/Goofy AP can increment by 1 instead of 5 (minimum is still 5/4 respectively due to ModManager)
+* Small seed checking lua file to check if the seed was added into the game properly
+
+Bugfixes
+* Valor/Final in the second slot of bonuses shouldn't fail to track anymore
+* Random preset should be random
+* Keyblade slots should no longer show as unreachable in the spoiler log (unless they are actually unreachable)
+
+Detailed Notes for Custom Cosmetics (courtesy of equations19)
+* incorporate a lot of the player feedback to rework the cosmetics menu's layout, in hopes of simplifying its use
+  * add windows to display the custom keyblades, command menus, itempics, room transitions, ending screens
+  * rearrange some of the options to hopefully make it less confusing which ones go together
+  * cosmetic settings that have an additional options screen now include an "additional settings" button inline with the associated setting, rather than a separate button below
+  * separate music options into sections for KH games music and custom music to make it clearer which are overall settings and which go with the individual music pools
+  * music summary is formatted as a grid now
+  * if isn't set up yet for a particular cosmetic setting, try to guide the player on what to do in-app rather than just giving a popup message or silently having options be disabled
+* add the ability to download custom keyblade packs for KH1 and BBS, with permission from the mod authors
+* Generalize keyblade importing to support more mods
+* Adds a basic OpenKH mod.yml parser that can use a mod.yml file to determine the locations of keyblade models, textures, etc., rather than having to bake them into code. This (in theory) enables most well-formed keyblade replacement mods to be able to have their keyblade(s) imported into the seed generator without any work from the mod author.
+* Add a setting to replace GoA keyblades
+
+
 ## 3.1.2 (2025-04-25)
 
 Fixing starting inventory causing problems with journal text
