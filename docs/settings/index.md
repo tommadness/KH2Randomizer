@@ -23,6 +23,8 @@ not guaranteed to work, especially if custom cosmetics are used).
 
 **Load Seed from Clipboard** - Loads a seed from the clipboard into the generator.
 
+**Format Seed String for Discord** - Adds markdown formatting to the Save Seed to Clipboard button to allow for easy copying from the Discord message that is posted.
+
 ### Preset
 
 **Open Preset Folder** - Opens the folder containing preset configurations. Can be useful for sharing presets with
@@ -89,6 +91,8 @@ as other information about the seed.
 
 > Note that the `Level 1` option means you must choose either `Vanilla` or `Junk` rewards for Levels.
 
+**Randomize Level Check Slots** - Randomizes what levels have items on them, instead of using the predetermined slots. The number of checks remains the same.
+
 **Dream Weapon Matters** - At the beginning of a seed, the dream weapon you choose will determine when you get items
 from levels. When disabled, all weapons will give the same items on the same levels.
 
@@ -101,25 +105,13 @@ from levels. When disabled, all weapons will give the same items on the same lev
 
 ### Starting Visit Availability
 
-**Availability** - How "visits" for worlds that have them (the 13 portal worlds) should be initially available.
-        
-* All Visits - All visits of all worlds are available from the beginning of the seed.
-* First Visits - All first visits are immediately available, but you must find visit unlock items to
-  access subsequent visits in each visit-capable world.
-* No Visits - No world visits are immediately available, outside the ones that are always present. You
-  must find a visit unlock item in the immediately available areas to proceed. 
-* Random Visits - Unlock a random set of visits by starting with random visit unlock items. Use `Minimum Visits
-  Available` and `Maximum Visits Available` to configure a range of how many.
-* Specific Visits - Unlock a specific set of visits by starting with specific visit unlock items. Use the individual 
-  location options to configure how many visits to make available at the start for each location.
-
-**Minimum Visits Available** - When using Random Visits, the minimum number of random visits to unlock at the start.
+**Minimum Visits Available** - The minimum number of random visits to unlock at the start.
 This can be the same as `Maximum Visits Available` to configure an exact number of random visits.
 
-**Maximum Visits Available** - When using Random Visits, the maximum number of random visits to unlock at the start.
+**Maximum Visits Available** - The maximum number of random visits to unlock at the start.
 This can be the same as `Minimum Visits Available` to configure an exact number of random visits.
 
-**(individual location options)** - When using Specific Visits, the number of visits to make available at the start for
+**(individual location options)** - The number of visits to make available at the start for
 each location.
 
 > See the [Visit Unlock Items](../unlocks/index.md) page for more information about visit unlocking.
@@ -158,7 +150,7 @@ Xemnas).
 
 **Objectives Available** - When using Objectives, the number of objectives that will be placed in the game.
 
-**Objective Pool** - When using Objectives, configures the type of objectives that are available.
+**Objective Pool** - When using Objectives, configures the type of objectives that are available. You can set your objective pool completely manually, but some preset options are provided that can automatically select subsets.
 
 * All Objectives - All available world progress checkpoints, Drive Form levels, and bosses.
 * Bosses Only - Only allows bosses to be in the pool (both story and superbosses).
@@ -200,6 +192,8 @@ progress in your seed.
 >   portals)
 > - **Superbosses** - Force onto superbosses only (Data Organization/Absent Silhouette/Sephiroth/Terra)
 > - **Non First Visits** - Opposite of the first visit depth. Anywhere but the first visit of the 13 portal worlds (can
+>   include Drive Forms/Levels/100 Acre Wood)
+> - **Non Second Visits** - Opposite of the second visit depth. Anywhere but the second visit of the 13 portal worlds (can
 >   include Drive Forms/Levels/100 Acre Wood)
 
 **Visit Unlock Depth** - Configures locations where the visit unlocks can be placed.
@@ -300,6 +294,10 @@ the Promise Charm and satisfied the Final Door Requirement.
 
 **Add Ansem Reports To Shop** - Adds a number of Ansem Reports into the Moogle shop.
 
+**Visit Unlock Price** - The price to assign to any visit unlocks that are in the shop.
+
+**Report Price** - The price to assign to any report that are in the shop.
+
 ### Guaranteed Shop Items
 
 **Keyblades** - Adds duplicates of each keyblade into the Moogle shop.
@@ -310,6 +308,8 @@ the Promise Charm and satisfied the Final Door Requirement.
 
 **Stat Boosts** - Adds Power Boost, Magic Boost, Defense Boost, and AP Boost into the Moogle shop.
 
+Corresponding prices for all the above items can be set individually.
+
 ### Junk Items
 
 Once all the required items are placed, items from this list are used to fill any remaining locations. This list is also
@@ -319,25 +319,11 @@ used as the items to place in worlds/locations that are configured to contain on
 
 ### Starting Inventory
 
-**Growth Abilities** - Select how many growth (movement) abilities you want to start with.
+**Growth Abilities** - Select how many growth (movement) abilities you want to start with. This can be hard coded starting growth, or a specified number of random growth.
 
-* None
-* 3 Random - Pick 3 individual growth abilities to add at the start (e.g. you could start with High Jump LV1 and Dodge
-  Roll LV2).
-* 5 Random - Pick 5 individual growth abilities to add at the start.
-* 7 Random - Pick 7 individual growth abilities to add at the start.
-* 9 Random - Pick 9 individual growth abilities to add at the start.
-* Level 1 - All growths start at level 1.
-* Level 2 - All growths start at level 2.
-* Level 3 - All growths start at level 3.
-* Max - All growths start at the maximum level.
+**Magics** - Begin the game with this many of each Magic already acquired. Can be hard coded to start with something specific, or a random number of a random type.
 
-(Magics) - Begin the game with this many of each Magic already acquired.
-
-**Torn Pages** - Begin the game with this many Torn Pages already acquired.
-
-**Ansem Reports** - Begin the game with this many Ansem Reports already acquired (will randomly choose among
-the reports).
+**Key Items** - Begin the game with this many Torn Pages, Ansem Reports, or other key items acquired.
 
 ### (Other Groups)
 
@@ -425,7 +411,8 @@ Shan-Yu to progress.
 
 **Keyblades Unlock Chests** - When enabled, Sora must have certain keyblades to open chests in the different worlds.
 It's not required to equip the keyblade - being in the inventory is enough. If the keyblade is not acquired, the
-reaction command to open chests in the associated world will be disabled.
+reaction command to open chests in the associated world will be disabled. You can toggle which world/region from the 
+list below are actually locked.
 
 > **Note** - this setting requires the `KH2FM-Mods-equations19/KH2-Lua-Library` mod, and will not work properly
 > without it installed and enabled.
@@ -466,6 +453,9 @@ reaction command to open chests in the associated world will be disabled.
 * Random - Chooses a random battle level for each world visit within a configurable range.
 * Scale to 50 - All last visits are set to battle level 50, with previous visits to the same world scaled
   proportionally.
+* Scale to Spheres - The battle level scaling aims to roughly increase as you play through the seed, increasing along logical 'spheres'. As you acquire visit unlocks, later worlds and visits will increase battle level. 
+
+**Force Final Fights to Level 50** - This setting will force the final fight sequence (Engine Core, Armored Xemnas 1/2, Final Xemnas) to be level 50, regardless of what battle level The World That Never Was is assigned.
 
 ## EXP/Stats
 
@@ -499,11 +489,21 @@ Allows for further customization of experience rates, inspired by a similar conc
 * Dusk - Early levels (up to 50 for Sora, levels 2-4 for Drive Forms and Summons) require even more experience, but
   later levels require even less.
 
-## Keyblades
+## Equipment
 
 ### Keyblade Statistics
 
+**Randomize Keyblade Stats** - Enables randomization of keyblade stats. Vanilla stats will be used otherwise.
+
 **Keyblade Min/Max Stat** - Controls the minimum and maximum strength and magic stat that each keyblade can have.
+
+### Keyblade Abilities
+
+**Randomize Keyblade Abilities** - Enables randomizing the abilities of keyblades. Vanilla abilities will be used otherwise. 
+
+### Armor/Accessory Abilities
+
+**Random Abilities on Accessory/Armor** - Assign a random ability onto all armor and accessories. All abilities used here are in addition to the freely available abilities for Sora and keyblades. The pool of abilities is separate from keyblades.
 
 ### Support/Action Keyblade-Eligible Abilities
 
