@@ -207,7 +207,7 @@ class CosmeticsMenu(KH2Submenu):
         has_extracted_kh1 = self._has_extracted_data("kh1")
         has_extracted_recom = self._has_extracted_data("recom")
         has_extracted_bbs = self._has_extracted_data("bbs")
-        has_extracted_ddd = self._has_extracted_data("ddd")
+        has_extracted_ddd = self._has_extracted_data("kh3d")
         self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_KH1, visible=has_extracted_data)
         self.set_auxiliary_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_KH1, visible=not has_extracted_kh1)
         self.set_option_visibility(settingkey.MUSIC_RANDO_PC_INCLUDE_KH2, visible=has_extracted_data)
