@@ -6,7 +6,7 @@
 * [OpenKH Mods Manager](https://github.com/OpenKH/OpenKh/releases/download/latest/openkh.zip)
 * [.NET Desktop Runtime](https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.20/windowsdesktop-runtime-8.0.20-win-x64.exe)
   (Required to run OpenKH Mods Manager)
-* [KH2 Tracker](https://github.com/roromaniac/KH2Tracker/releases/download/v2.7.2/KhTracker.exe) (Not strictly required but
+* [KH2 Tracker](https://github.com/roromaniac/KH2Tracker/releases/latest/download/KhTracker.exe) (Not strictly required but
   strongly recommended)
  
 See the individual setup guides for any additional required downloads for each version of the game.
