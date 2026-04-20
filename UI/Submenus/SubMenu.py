@@ -15,13 +15,14 @@ from List.configDict import locationType
 from Module.resources import resource_path
 from UI import theme
 from UI.Submenus.ProgressionWidgets import ProgressionWidget
+from UI.qtlib import set_css_class, layout_widget
 
 header_styles = [
-    f"background: {theme.KhMediumRed}; color: {theme.KhLightRed};",
-    f"background: {theme.KhMediumYellow}; color: {theme.KhLightYellow};",
-    f"background: {theme.KhMediumGreen}; color: {theme.KhLightGreen};",
-    f"background: {theme.KhMediumBlue}; color: {theme.KhLightBlue};",
-    f"background: {theme.KhMediumPurple}; color: {theme.KhLightPurple};",
+    f'QWidget[cssClass~="groupHeader"], QLabel[cssClass~="groupHeader"] {{ background: {theme.KhMediumRed}; color: {theme.KhLightRed}; }}',
+    f'QWidget[cssClass~="groupHeader"], QLabel[cssClass~="groupHeader"] {{ background: {theme.KhMediumYellow}; color: {theme.KhLightYellow}; }}',
+    f'QWidget[cssClass~="groupHeader"], QLabel[cssClass~="groupHeader"] {{ background: {theme.KhMediumGreen}; color: {theme.KhLightGreen}; }}',
+    f'QWidget[cssClass~="groupHeader"], QLabel[cssClass~="groupHeader"] {{ background: {theme.KhMediumBlue}; color: {theme.KhLightBlue}; }}',
+    f'QWidget[cssClass~="groupHeader"], QLabel[cssClass~="groupHeader"] {{ background: {theme.KhMediumPurple}; color: {theme.KhLightPurple}; }}',
 ]
 frame_styles = [
     f"background: {theme.KhDarkRed};",
@@ -46,6 +47,7 @@ class KH2Submenu(QWidget):
         self.menulayout = QHBoxLayout()
         self.pending_column: Optional[QVBoxLayout] = None
         self.pending_group: Optional[QVBoxLayout] = None
+        self.pending_group_header_widget: Optional[QWidget] = None
 
         self.tristate_combo_boxes: dict[str, QComboBox] = {}
 
@@ -65,20 +67,29 @@ class KH2Submenu(QWidget):
         self.pending_column = None
 
     def start_group(self):
-        self.pending_group = QVBoxLayout()
-        self.pending_group.setContentsMargins(8, 0, 8, 0)
+        pending_group = QVBoxLayout()
+        pending_group.setContentsMargins(8, 0, 8, 0)
+        self.pending_group = pending_group
 
-    def end_group(self, title='', group_id=''):
+    def end_group(self, title: str="", group_id: str=""):
+        pending_group = self.pending_group
+        if pending_group is None:
+            print("No pending group to end")
+            return
+
         header_style_choice = self.next_header_style % len(header_styles)
         self.next_header_style = self.next_header_style + 1
 
-        group = QVBoxLayout()
-        group.setContentsMargins(0, 0, 0, 0)
-
-        frame = self.make_styled_frame(self.pending_group, header_style_choice=header_style_choice, title=title)
+        frame = self.make_styled_frame(
+            layout=pending_group,
+            header_style_choice=header_style_choice,
+            title=title,
+            header_widget=self.pending_group_header_widget,
+        )
 
         self.pending_column.addWidget(frame)
         self.pending_group = None
+        self.pending_group_header_widget = None
 
         if group_id != '':
             self.groups_by_id[group_id] = frame
@@ -203,6 +214,10 @@ class KH2Submenu(QWidget):
         if group_id in self.groups_by_id:
             widget = self.groups_by_id[group_id]
             widget.setVisible(visible)
+
+    def set_group_widget(self, widget: QWidget):
+        if self.pending_group:
+            self.pending_group_header_widget = widget
 
     def make_multiselect_tristate(self, setting_name: str) -> (WorldRandomizationTristate, list[QGroupBox]):
         setting = Class.seedSettings.settings_by_name[setting_name]
@@ -358,7 +373,7 @@ class KH2Submenu(QWidget):
                 widget.setDisabled(True)
             elif isinstance(setting, MultiSelect):
                 if isinstance(widget, QListWidget):
-                    # widget.setDisabled(True)                    
+                    # widget.setDisabled(True)
                     widget.setSelectionMode(QAbstractItemView.NoSelection)
                 elif isinstance(widget, list):
                     for index, key in enumerate(setting.choice_keys):
@@ -422,16 +437,39 @@ class KH2Submenu(QWidget):
             self.update_widget(name)
 
     @staticmethod
-    def make_styled_frame(layout: QLayout, header_style_choice: int, title: str = "") -> QFrame:
+    def make_styled_frame(
+            layout: QLayout,
+            header_style_choice: int,
+            title: str = "",
+            header_widget: Optional[QWidget] = None,
+    ) -> QFrame:
         group = QVBoxLayout()
         group.setContentsMargins(0, 0, 0, 0)
 
-        if title != '':
+        if header_widget is None:
+            if title != "":
+                title_label = QLabel(title)
+                title_label.setContentsMargins(8, 8, 8, 8)
+                set_css_class(title_label, "groupHeader")
+                title_label.setStyleSheet(header_styles[header_style_choice])
+                group.addWidget(title_label)
+        else:
+            title_widget = layout_widget()
+            title_widget.setContentsMargins(0, 0, 0, 0)
+            set_css_class(title_widget, "groupHeader")
+            title_widget.setStyleSheet(header_styles[header_style_choice])
+
+            title_layout = QHBoxLayout()
+
             title_label = QLabel(title)
-            title_label.setContentsMargins(8, 8, 8, 8)
-            title_label.setProperty('cssClass', 'groupHeader')
-            title_label.setStyleSheet(header_styles[header_style_choice])
-            group.addWidget(title_label)
+            set_css_class(title_label, "groupHeader")
+
+            title_layout.addWidget(title_label, stretch=True)
+
+            title_layout.addWidget(header_widget)
+
+            title_widget.setLayout(title_layout)
+            group.addWidget(title_widget)
 
         group.addLayout(layout)
 
@@ -566,9 +604,14 @@ class KH2Submenu(QWidget):
         button = QPushButton(icon=QIcon(resource_path(f"static/icons/misc/{icon_name}.png")))
         button.setToolTip(tooltip)
         button.setFixedWidth(48)
-        button.clicked.connect(slot_function)
+        if slot_function:
+            button.clicked.connect(slot_function)
         return button
 
     @staticmethod
     def make_settings_button(slot_function, tooltip: str = "") -> QPushButton:
         return KH2Submenu.make_icon_button(slot_function, icon_name="settings", tooltip=tooltip)
+
+    @staticmethod
+    def make_menu_button(tooltip: str = "") -> QPushButton:
+        return KH2Submenu.make_icon_button(slot_function=None, icon_name="menu", tooltip=tooltip)

@@ -2054,24 +2054,16 @@ _all_settings = [
         name=settingkey.KEYBLADE_SUPPORT_ABILITIES,
         group=SettingGroup.KEYBLADES,
         ui_label="Support Keyblade-Eligible Abilities",
-        choices={
-            str(item.Id): item.Name for item in Items.sort_ability_items(
-                Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
-            )
-        },
+        choices={str(item.Id): item.Name for item in Items.equipment_eligible_support_abilities()},
         shared=True,
-        default=list(
-            set([str(item.Id) for item in Items.sort_ability_items(
-                Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
-            )])
-        ),
+        default=list(set([str(item.Id) for item in Items.equipment_eligible_support_abilities()])),
         tooltip="Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.",
     ),
     MultiSelect(
         name=settingkey.KEYBLADE_ACTION_ABILITIES,
         group=SettingGroup.KEYBLADES,
         ui_label="Action Keyblade-Eligible Abilities",
-        choices={str(item.Id): item.Name for item in Items.sort_ability_items(Items.getActionAbilityList())},
+        choices={str(item.Id): item.Name for item in Items.equipment_eligible_action_abilities()},
         shared=True,
         default=[],
         tooltip="Selected abilities may randomize onto keyblades. Unselected abilities will not be on keyblades.",
@@ -2079,27 +2071,19 @@ _all_settings = [
     Toggle(
         name=settingkey.ARMOR_ACCESSORY_ABILITIES,
         group=SettingGroup.KEYBLADES,
-        ui_label="Random Abilities on Accessory/Armor",
+        ui_label="Randomize Armor/Accessory Abilities",
         shared=True,
         default=False,
         randomizable=True,
-        tooltip="If enabled, armor and accessories will have random abilities assigned to them. The item description will be updated to the equipment's new ability.",
+        tooltip="If enabled, armor and accessories will have random abilities assigned to them. The item's description will be updated to its new ability.",
     ),
     MultiSelect(
         name=settingkey.ARMOR_ACCESSORY_ABILITY_LIST,
         group=SettingGroup.KEYBLADES,
         ui_label="Equipment Ability Pool",
-        choices={
-            str(item.Id): item.Name for item in Items.sort_ability_items(
-                Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList() + Items.getActionAbilityList()
-            )
-        },
+        choices={str(item.Id): item.Name for item in Items.equipment_eligible_abilities()},
         shared=True,
-        default=list(
-            set([str(item.Id) for item in Items.sort_ability_items(
-                Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList()
-            )])
-        ),
+        default=list(set([str(item.Id) for item in Items.equipment_eligible_support_abilities()])),
         tooltip="Selected abilities may randomize onto armor and accessories. \nUnselected abilities will not appear. \nThese abilities are extra copies and do not affect the available abilities on keyblades and on their own.",
     ),
 
