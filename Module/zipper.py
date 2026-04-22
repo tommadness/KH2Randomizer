@@ -2083,7 +2083,7 @@ class CosmeticsOnlyZip:
 class BossEnemyOnlyZip:
     def __init__(self, seed_name: str, ui_settings: SeedSettings, platform: str):
         self.settings = ui_settings
-        self.enemy_options = makeKHBRSettings(seed_name, self.settings)
+        self.enemy_options = makeKHBRSettings(seed_name, self.settings, boss_enemy_only=True)
         self.platform = platform
 
     def create_zip(self) -> io.BytesIO:

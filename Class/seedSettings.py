@@ -3990,7 +3990,7 @@ def randomize_settings(real_settings_object: SeedSettings, randomizable_settings
         real_settings_object.set(r.name, random_choices[r.name])
 
 
-def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
+def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings, boss_enemy_only: bool = False):
     enemy_options = {
         "seed_name": seed_name + ui_settings.settings_string(),
         "remove_damage_cap": ui_settings.get(settingkey.REMOVE_DAMAGE_CAP),
@@ -4002,6 +4002,12 @@ def makeKHBRSettings(seed_name: str, ui_settings: SeedSettings):
         "costume_rando": False,
         "revenge_limit_rando": ui_settings.get(settingkey.REVENGE_LIMIT_RANDO),
     }
+    if boss_enemy_only:
+        enemy_options = {
+            "seed_name": seed_name + ui_settings.settings_string(),
+            "retry_data_final_xemnas": ui_settings.get(settingkey.RETRY_DFX),
+            "retry_dark_thorn": ui_settings.get(settingkey.RETRY_DARK_THORN),
+        }
     for setting in boss_settings + enemy_settings:
         value = ui_settings.get(setting.name)
         if value is not None:
