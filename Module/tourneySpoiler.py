@@ -88,8 +88,11 @@ class TourneySeedSaver:
     def _add_seed_html(self, seed_string: str, seed_filename: str):
         self.seed_htmls.append(f"""
 <div class="tourney-seed">
-    <h2>Seed {len(self.seed_strings)}</h2>
-    <h3>{seed_string}</h3>
+    <h2>Seed {len(self.seed_strings)}    
+        <button onclick="navigator.clipboard.writeText(document.getElementById('{seed_filename}').textContent).then(function(){{var b=document.getElementById('copy-btn-{seed_filename}');b.textContent='Copied!';setTimeout(function(){{b.textContent='Copy'}},1500)}})" id="copy-btn-{seed_filename}" style="margin-left:10px;padding:3px 10px;background:#422169;color:#c663f5;border:1px solid #c663f5;border-radius:4px;cursor:pointer;font-family:KHMenu,sans-serif;font-size:0.8em;">Copy</button>
+    </h2>
+    <h3><span id="{seed_filename}">{seed_string}</span>
+    </h3>
     <img src="{seed_filename}.png">
     <a href="{seed_filename}.html">Spoiler Log</a>
 </div>
