@@ -790,3 +790,22 @@ class Items:
             KH2Item(GoofyAbilities.Protera),
             KH2Item(GoofyAbilities.Protega),
         ]
+
+    @staticmethod
+    def equipment_eligible_support_abilities() -> list[KH2Item]:
+        abilities = []
+        abilities.extend(Items.getSupportAbilityList())
+        abilities.extend(Items.getKeybladeAbilityList())
+        abilities.extend(Items.getLevelAbilityList())
+        return Items.sort_ability_items(abilities)
+
+    @staticmethod
+    def equipment_eligible_action_abilities() -> list[KH2Item]:
+        return Items.sort_ability_items(Items.getActionAbilityList())
+
+    @staticmethod
+    def equipment_eligible_abilities() -> list[KH2Item]:
+        abilities = []
+        abilities.extend(Items.equipment_eligible_support_abilities())
+        abilities.extend(Items.equipment_eligible_action_abilities())
+        return Items.sort_ability_items(abilities)

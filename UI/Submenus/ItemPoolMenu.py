@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QHBoxLayout, QWidget, QPushButton
+from PySide6.QtGui import QAction
+from PySide6.QtWidgets import QPushButton, QMenu
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
@@ -59,24 +60,12 @@ class ItemPoolMenu(KH2Submenu):
         self.end_group('Guaranteed Shop Items')
         self.end_column(stretch_at_end=True)
 
-        
         self.start_column()
         self.start_group()
+        self.set_group_widget(self._junk_presets_menu_button())
         self.add_option(settingkey.JUNK_ITEMS)
-
-        junk_widget_layout = QHBoxLayout()
-        junk_widget = QWidget()
-        junk_widget.setProperty('cssClass', 'layoutWidget')
-        junk_widget.setLayout(junk_widget_layout)
-        select_all_junk = QPushButton("Select All")
-        select_better_junk = QPushButton("No Synth")
-        junk_widget_layout.addWidget(select_all_junk)
-        junk_widget_layout.addWidget(select_better_junk)
-        self._add_option_widget("", "", junk_widget)
         self.end_group('Junk Items')
         self.end_column(stretch_at_end=False)
-        select_all_junk.clicked.connect(lambda: self.toggle_all_items())
-        select_better_junk.clicked.connect(lambda: self.toggle_better_junk())
 
         settings.observe(settingkey.STATSANITY, self._statsanity_changed)
         
@@ -91,6 +80,20 @@ class ItemPoolMenu(KH2Submenu):
         self.set_option_visibility(settingkey.NUM_ARMOR_SLOT_BONUSES, enabled)
         self.set_option_visibility(settingkey.NUM_ITEM_SLOT_BONUSES, enabled)
 
+    def _junk_presets_menu_button(self) -> QPushButton:
+        button = KH2Submenu.make_menu_button()
+        menu = QMenu(button)
+
+        all_items = QAction("Select All", menu)
+        all_items.triggered.connect(self.toggle_all_items)
+        menu.addAction(all_items)
+
+        better_junk = QAction("No Synthesis Items", menu)
+        better_junk.triggered.connect(self.toggle_better_junk)
+        menu.addAction(better_junk)
+
+        button.setMenu(menu)
+        return button
 
     def toggle_all_items(self):
         setting, widget = self.widgets_and_settings_by_name[settingkey.JUNK_ITEMS]
