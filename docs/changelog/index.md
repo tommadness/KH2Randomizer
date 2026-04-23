@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.2.2 (2026-04-23)
+
+Features
+* Helper buttons for Visit Unlocks, Equipment, Junk Items, Growth, and Magic to make selection easier
+* Seed copy button in spoiler logs
+
+Bugfixes
+* DDD Music Randomization looks at the correct folder
+* Drive Objectives now can be customized
+* Boss/Enemy Only seeds no longer carry extra unrelated modifications.
+
 ## 3.2.1 (2026-04-04)
 
 Hotfix to battle level scaling for final fights
