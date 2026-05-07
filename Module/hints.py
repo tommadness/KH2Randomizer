@@ -328,8 +328,14 @@ class Hints:
 
         if common_tracker_data.coop_mode:
             if common_tracker_data.coop_hint_type == "random":
-                # change the specified hint ordering to random
-                raise SettingsException("Random ordering hints is not implemented")
+                if common_tracker_data.coop_player_number == "2":
+                    keys = list(hint_data["Reports"].keys())
+                    random.shuffle(keys)
+                    new_data = {}
+                    for index, key in enumerate(keys):
+                        new_data[index+1] = copy.deepcopy(hint_data["Reports"][key])
+                        new_data[index+1]["Location"] = copy.deepcopy(hint_data["Reports"][index+1]["Location"])
+                    hint_data["Reports"] = new_data
             elif common_tracker_data.coop_hint_type == "reversed":
                 if common_tracker_data.coop_player_number == "2":
                     # reverse the hint order for this person
@@ -338,14 +344,20 @@ class Hints:
                     for index,key in enumerate(keys):
                         new_data[index+1] = copy.deepcopy(hint_data["Reports"][key])
                         new_data[index+1]["Location"] = copy.deepcopy(hint_data["Reports"][index+1]["Location"])
-
-                    print(json.dumps(new_data))
-                    print("-----------------")
-                    print(json.dumps(hint_data["Reports"]))
                     hint_data["Reports"] = new_data
             elif common_tracker_data.coop_hint_type == "default":
-                # ensure player 1 and 2 hints are the same order
-                raise SettingsException("Same ordering hints is not implemented")
+                if common_tracker_data.coop_player_number == "2":
+                    p1_data = hint_datas[hint_names.index(common_tracker_data.coop_player1_hints)]
+                    p1_world_key = "HintedWorld" if p1_data.get("hintsType") == HintType.PATH else "World"
+                    p2_world_key = "HintedWorld" if hint_data.get("hintsType") == HintType.PATH else "World"
+                    world_to_p2_key = {hint_data["Reports"][k][p2_world_key]: k for k in hint_data["Reports"]}
+                    new_data = {}
+                    for slot in range(1, 14):
+                        p1_world = p1_data["Reports"][slot][p1_world_key]
+                        p2_key = world_to_p2_key[p1_world]
+                        new_data[slot] = copy.deepcopy(hint_data["Reports"][p2_key])
+                        new_data[slot]["Location"] = copy.deepcopy(hint_data["Reports"][slot]["Location"])
+                    hint_data["Reports"] = new_data
             else:
                 raise SettingsException("Unknown coop hint type")
 
