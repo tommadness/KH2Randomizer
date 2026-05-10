@@ -155,7 +155,7 @@ def _find_locations(
 
 
 class Randomizer:
-    def __init__(self, settings: RandomizerSettings, progress_bar_vis: bool = False):
+    def __init__(self, settings: RandomizerSettings, progress_bar_vis: bool = False, attempt_number: int = 0):
         if settings is None:
             raise SettingsException(
                 "Invalid settings passed to randomize. Change settings and try again"
@@ -188,7 +188,7 @@ class Randomizer:
         self.synthesis_recipes: list[SynthesisRecipe] = []
         self.shop_items: list[KH2Item] = []
         self.objectives: list[KH2Objective] = []
-        self.assign_sora_items(settings)
+        self.assign_sora_items(settings, attempt_number)
         if progress_bar_vis:
             return
         self.assign_party_items()
@@ -570,7 +570,7 @@ class Randomizer:
                 randomizable_abilities.append(item)
         return vanilla_abilities, randomizable_abilities
 
-    def assign_sora_items(self, settings: RandomizerSettings):
+    def assign_sora_items(self, settings: RandomizerSettings, attempt_number: int):
         """Assigns items to locations for Sora."""
         self.apply_starting_items(settings)
 
@@ -757,7 +757,7 @@ class Randomizer:
             self.assign_chain_logic(settings, item_pool, valid_locations)
         else:
             # create some space for random assignment by doing a forward-pass assignment
-            self.create_available_location_space(settings, item_pool, valid_locations)
+            self.create_available_location_space(settings, item_pool, valid_locations, attempt_number)
 
         self.randomly_assign_items(item_pool, valid_locations)
 
@@ -921,7 +921,7 @@ class Randomizer:
             if proof.ProofOfNonexistence.id not in acquired_items:
                 raise GeneratorException("Couldn't access proof of nonexistence in chain logic")
 
-    def create_available_location_space(self, settings, item_pool, valid_locations):
+    def create_available_location_space(self, settings, item_pool, valid_locations, attempt_number: int):
         # (a)determine sphere 0
         #    if sphere 0 is big enough
         #       return
@@ -936,7 +936,7 @@ class Randomizer:
         shop_item_ids = [i.Id for i in self.shop_items]
 
         sphere_0_check = 30
-        num_available_locations_needed_to_allow_random_assignment = 125 # TODO(zak) this is arbitrary and may need tuning
+        num_available_locations_needed_to_allow_random_assignment = 125 + attempt_number*25 # this is still arbitrary, but does expand the window until a seed can be made
         while sphere_0_check > 0:
             # calculate the available checks
             _, sphere_0 = self.get_accessible_locations(valid_locations, validator, shop_item_ids)

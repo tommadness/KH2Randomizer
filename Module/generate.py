@@ -18,7 +18,7 @@ def generateSeed(
     for attempt in range(50):
         newSeedValidation = LocationInformedSeedValidator()
         try:
-            randomizer = Randomizer(settings)
+            randomizer = Randomizer(settings,attempt_number=attempt)
             location_spheres = newSeedValidation.validate_seed(
                 settings, randomizer
             )
@@ -42,7 +42,7 @@ def generateSeedCLI(
     for attempt in range(50):
         newSeedValidation = LocationInformedSeedValidator()
         try:
-            randomizer = Randomizer(settings)
+            randomizer = Randomizer(settings, attempt_number=attempt)
             location_spheres = newSeedValidation.validate_seed(
                 settings, randomizer, False
             )
