@@ -66,7 +66,7 @@ class ImportableKeyblade:
         self._write_keyblade_json(author=author, source=source, keyblade_output_location=keyblade_output_location)
 
     def _create_keyblade_output_path(self, output_path: Path) -> Path:
-        safe_name = self.keyblade_name.replace("/", "-").replace("\\", "-")
+        safe_name = self.keyblade_name.replace("/", "-").replace("\\", "-").replace("\n","")
         keyblade_output_location = output_path / safe_name
         keyblade_output_location.mkdir(parents=True, exist_ok=True)
         return keyblade_output_location
