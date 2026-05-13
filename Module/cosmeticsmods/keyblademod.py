@@ -287,7 +287,7 @@ class KeybladeModParser:
             nonlocal unknown_count
             found_name = keyblade_names.get(found_keyblade.text_id, "")
             if found_name:
-                return found_name
+                return found_name.replace("\n", "")
             else:
                 name = f"Unnamed Keyblade {unknown_count}"
                 unknown_count = unknown_count + 1
