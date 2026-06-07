@@ -46,7 +46,7 @@ After Installing the seed click "Mod Loader -> Build/Build and Run". Every slot 
 
 ## Using the KH2 Client from the Archipelago software
 
-Start the game through OpenKH Mod Manager. If starting a new run, enter the Garden of Assemblage from a new save. If returning to a run, load the save and enter the Garden of Assemblage. Then run the ArchipelagoLauncher.exe installed with the archipelago software from https://github.com/ArchipelagoMW/Archipelago/releases and select the KH2 Client.<br>
+Start the game through OpenKH Mod Manager. If starting a new run, enter the Garden of Assemblage from a new save. If returning to a run, load the save and enter the Garden of Assemblage. Then run the ArchipelagoLauncher.exe installed from [Archipelago Software](https://github.com/ArchipelagoMW/Archipelago/releases) earlier and select the KH2 Client.<br>
 When you successfully connect to the server the client will automatically hook into the game to send/receive checks. <br>
 If the client ever loses connection to the game, it will also disconnect from the server and you will need to reconnect.<br> 
 
