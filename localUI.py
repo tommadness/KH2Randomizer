@@ -50,9 +50,12 @@ from UI.Submenus.SeedModMenu import SeedModMenu
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.about import AboutDialog
+from UI.Submenus.SeedHistoryDialog import SeedHistoryDialog
+from UI.Submenus.SettingsDiffDialog import SettingsDiffDialog
 from UI.presets import SettingsPreset, RandomPresetDialog
 from UI.qtlib import show_alert
 from UI.worker import GenerateSeedWorker
+from Module import seedHistory
 
 
 class Logger(object):
@@ -357,10 +360,14 @@ class KH2RandomizerApp(QMainWindow):
         self.presetMenu.addAction("Import Preset", self._import_preset)
         self.presetMenu.addAction("Save Settings as New Preset", self._save_preset)
         self.presetMenu.addAction("Pick a Random Preset", self.randomPreset)
+        self.presetMenu.addSeparator()
+        self.presetMenu.addAction("Compare Settings to Preset...", self._show_settings_diff)
         
         self.seedMenu = QMenu("Share Seed")
         self.seedMenu.addAction("Save Seed to Clipboard", self.shareSeed)
         self.seedMenu.addAction("Load Seed from Clipboard", self.receiveSeed)
+        self.seedMenu.addSeparator()
+        self.seedMenu.addAction("Seed History...", self._show_seed_history)
         self.seedMenu.addSeparator()
         self.markdown_seed_string_toggle = self.seedMenu.addAction('Format Seed String for Discord', self.update_markdown_seed_string)
         self.markdown_seed_string_toggle.setCheckable(True)
@@ -758,7 +765,13 @@ class KH2RandomizerApp(QMainWindow):
 
             rando_settings = self.make_rando_settings()
             if rando_settings is not None:
+                _seed_name = rando_settings.random_seed
+                _settings_snapshot = self.settings.settings_json(include_private=True)
                 worker = GenerateSeedWorker(self, rando_settings, extra_data)
+                worker.finished.connect(
+                    lambda _, sn=_seed_name, ss=_settings_snapshot:
+                        seedHistory.save_seed_to_history(sn, ss)
+                )
                 worker.start()
 
         # rando_settings = self.make_rando_settings()
@@ -1002,6 +1015,23 @@ class KH2RandomizerApp(QMainWindow):
 
     def show_about(self):
         dialog = AboutDialog(self)
+        dialog.exec()
+
+    def _show_seed_history(self):
+        def load_settings(seed_name: str, settings_json: dict):
+            self.seedName.setText(seed_name)
+            self.recalculate = False
+            self.settings.apply_settings_json(settings_json,include_private=True)
+            for widget in self.widgets:
+                widget.update_widgets()
+            self.recalculate = True
+            self.get_num_enabled_locations()
+
+        dialog = SeedHistoryDialog(self, on_load_settings=load_settings)
+        dialog.exec()
+
+    def _show_settings_diff(self):
+        dialog = SettingsDiffDialog(self, self.settings)
         dialog.exec()
 
     @staticmethod
