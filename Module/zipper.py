@@ -2073,7 +2073,7 @@ class CosmeticsOnlyZip:
             mod.write_to_zip_file(out_zip)
 
             out_zip.write(
-                resource_path("static/icons/misc/Kingdom Hearts II.png"), "icon.png"
+                resource_path("static/icons/misc/cosmetics-mod.png"), "icon.png"
             )
 
         data.seek(0)
