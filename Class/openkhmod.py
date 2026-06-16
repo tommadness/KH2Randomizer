@@ -1169,7 +1169,8 @@ class AttackEntriesOrganizer:
             values["Kind"],
             values["HPDrain"],
         )
-
+    
+    # Obsolete, use the switch method instead to avoid any bugs
     def get_attack_using_ids(self, SubId, Id):
         for attack_entry in self.yaml_list_data:
             if attack_entry["SubId"] == SubId and attack_entry["Id"] == Id:
@@ -1184,3 +1185,6 @@ class AttackEntriesOrganizer:
                 and attack_entry["Switch"] == Switch
             ):
                 return self.attack_entry_constructor(attack_entry)
+
+    def get_all_attack_ids(self):
+        return self.yaml_list_data
