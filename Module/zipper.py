@@ -43,6 +43,7 @@ from Module.spoilerLog import (
 )
 from Module.version import LOCAL_UI_VERSION
 from Module import atkpRandomizer
+from Module.atkpRandomizer import atkpRandomizerClass
 
 
 def noop(self, *args, **kw):
@@ -1702,9 +1703,9 @@ class SeedZip:
 
     def prepare_attack_data_randomization(self, mod: SeedModBuilder):
         keys = settingkey
+        ui_settings = self.settings.ui_settings
         if(not ui_settings.get(keys.ATTACK_DATA_RANDOMIZATION)):
             return
-        ui_settings = self.settings.ui_settings
         companions_damage = ui_settings.get(keys.COMPANION_DAMAGE_TOGGLE)
 
         kill_boss = 0
@@ -1718,7 +1719,7 @@ class SeedZip:
         multi_hit_preset = ui_settings.get(keys.ATTACK_DATA_MULTI_HIT_PRESET)
         knockback_amount_preset = ui_settings.get(keys.ATTACK_DATA_KNOCKBACK_AMOUNT_PRESET)
         
-        atkp_data_randomizer = atkpRandomizer(kill_boss, companions_damage)
+        atkp_data_randomizer = atkpRandomizerClass(kill_boss, companions_damage)
         atkp_data_randomizer.randomize_atkp_data(mod._get_atkp_organizer(), damage_preset, on_hit, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset)
 
 

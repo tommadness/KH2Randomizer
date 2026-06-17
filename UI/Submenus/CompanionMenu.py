@@ -26,13 +26,15 @@ class CompanionMenu(KH2Submenu):
         self.add_option(settingkey.ATTACK_DATA_MULTI_HIT_PRESET)
         self.add_option(settingkey.ATTACK_DATA_REVENGE_VALUE_PRESET)
         self.end_group("Attack Data Randomization Parameters", group_id = _ATTACK_DATA_PARAMS)
+        self.end_column()
         
         settings.observe(settingkey.ATTACK_DATA_RANDOMIZATION, self._attack_data_randomized)
         
+        self.set_group_visibility("Attack Data Randomization", True)
         self.finalizeMenu()
 
     def _attack_data_randomized(self):
-        enabled = self.settings.get(settingkey.COMPANION_DAMAGE_TOGGLE)
+        enabled = self.settings.get(settingkey.ATTACK_DATA_RANDOMIZATION)
         self.set_group_visibility(
             group_id=_ATTACK_DATA_PARAMS, visible=enabled
         )

@@ -1,18 +1,18 @@
 import random
 from Class.openkhmod import AttackEntriesOrganizer, ATKPObject
 
-WEAK_MAX_DIFFERENCE = 30
-WEAK_MIN_DIFFERENCE = 0
-MILD_MAX_DIFFERENCE = 50
-MILD_MIN_DIFFERENCE = 0
-MEDIUM_MAX_DIFFERENCE = 80
-MEDIUM_MIN_DIFFERENCE = 20
-STRONG_MAX_DIFFERENCE = 120
-STRONG_MIN_DIFFERENCE = 50
-HEAVY_MAX_DIFFERENCE = 200
-HEAVY_MIN_DIFFERENCE = 80
-CHAOS_MAX_DIFFERENCE = 400
-CHAOS_MIN_DIFFERENCE = 0
+WEAK_MAX_DIFFERENCE = 0.3
+WEAK_MIN_DIFFERENCE = 0.0
+MILD_MAX_DIFFERENCE = 0.5
+MILD_MIN_DIFFERENCE = 0.0
+MEDIUM_MAX_DIFFERENCE = 0.8
+MEDIUM_MIN_DIFFERENCE = 0.2
+STRONG_MAX_DIFFERENCE = 1.2
+STRONG_MIN_DIFFERENCE = 0.5
+HEAVY_MAX_DIFFERENCE = 2.0
+HEAVY_MIN_DIFFERENCE = 0.8
+CHAOS_MAX_DIFFERENCE = 4.0
+CHAOS_MIN_DIFFERENCE = 0.0
 
 LIST_OF_COMPANION_IDS = [
 	1698,
@@ -223,7 +223,7 @@ ALL_MULTI_HIT_PRESETS = {
 	"CHAOS": [25, 3, 32],
 }
 
-class atkpRandomizer:
+class atkpRandomizerClass:
 	def __init__(self, kill_boss, companion_damage):
 		self.companion_kill_boss = kill_boss
 		self.companion_deal_damage = companion_damage
@@ -244,7 +244,7 @@ class atkpRandomizer:
 			attack_entries.append(atkp_organizer.attack_entry_constructor(attack_entry))
 		for attack_entry in attack_entries:
 			attack_entry: ATKPObject
-			attack_entry.Power = self.randomize_power(attack_entry.Power)
+			attack_entry.Power = int(round(self.randomize_power(attack_entry.Power)))
 			if(element):
 				attack_entry.Element = self.randomize_elements()
 			if(LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id)):
@@ -253,9 +253,12 @@ class atkpRandomizer:
 				attack_entry.Flags = self.companion_kill_boss
 			if(on_hit): 
 				attack_entry.EffectOnHit = self.randomize_on_hit()
-			attack_entry.KnockbackStrength1 = self.randomize_value(attack_entry.KnockbackStrength1, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1])
-			attack_entry.KnockbackStrength2 = self.randomize_value(attack_entry.KnockbackStrength2, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1])
+			#Knockback values in vanilla can reach as high as 32767, which I don't think is for attacks that really knock you back
+			#Therefore, to avoid overflow issues, knockback is capped at 32767. This limit shouldn't be reached by any other number
+			attack_entry.KnockbackStrength1 = min(int(round(self.randomize_value(attack_entry.KnockbackStrength1, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767)
+			attack_entry.KnockbackStrength2 = min(int(round(self.randomize_value(attack_entry.KnockbackStrength2, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767)
 			attack_entry.RevengeDamage += self.randomize_revenge_value(self.REVENGE_VALUE_PRESETS[0], self.REVENGE_VALUE_PRESETS[1])
+			self.randomize_multi_hit(self.MULTI_HIT_PRESETS[0], self.MULTI_HIT_PRESETS[1], self.MULTI_HIT_PRESETS[2], attack_entry)
 		
 		for attack_entry in attack_entries:
 			atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(attack_entry)
@@ -267,26 +270,26 @@ class atkpRandomizer:
 		if(random.randint(0, 100) > 50):
 			increase_value = True
 		if(increase_value):
-			multiplier = 1.0 + (random.randrange(min_difference, max_difference) / 100.0)
+			multiplier = 1.0 + random.uniform(min_difference, max_difference)
 			return value * multiplier
 		else:
-			divisor = 1.0 + (random.randrange(min_difference, max_difference) / 100.0)
+			divisor = 1.0 + random.uniform(min_difference, max_difference)
 			return value / divisor
 	
-	def randomize_elements():
+	def randomize_elements(self):
 		return random.randint(0, 5)
 	
-	def randomize_on_hit():
+	def randomize_on_hit(self):
 		return random.randint(0, 12)
 	
-	def randomize_companion_knockback_type():
+	def randomize_companion_knockback_type(self):
 		index = random.randint(0, 2)
 		return KNOCBACK_LIST[index]
 
-	def randomize_multi_hit(self, chance, minFrames, maxFrames, attack_entry: ATKPObject):
+	def randomize_multi_hit(self, chance, minFrames, maxFrames, current_attack_entry: ATKPObject):
 		if(random.randint(1, 100) > chance):
 			return
-		attack_entry.Interval = random.randint(minFrames, maxFrames)
+		current_attack_entry.Interval = random.randint(minFrames, maxFrames)
 	
 	# Because a lot of moves have either 0 revenge value or a high amount, randomization
 	# is handled by first determining if any change will happen, then by a flat value.
@@ -304,5 +307,5 @@ class atkpRandomizer:
 
 	def randomize_power(self, value):
 		if(value == 0):
-			return
-		self.randomize_value(value, self.DAMAGE_PRESETS[0], self.DAMAGE_PRESETS[1])
+			return 0
+		return self.randomize_value(value, self.DAMAGE_PRESETS[0], self.DAMAGE_PRESETS[1])
