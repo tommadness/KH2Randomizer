@@ -42,7 +42,7 @@ from Module.spoilerLog import (
     objectives_dictionary,
 )
 from Module.version import LOCAL_UI_VERSION
-from atkpRandomizer import atkpRandomizer
+from Module import atkpRandomizer
 
 
 def noop(self, *args, **kw):

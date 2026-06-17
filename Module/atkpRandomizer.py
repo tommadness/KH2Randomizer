@@ -1,6 +1,5 @@
 import random
 from Class.openkhmod import AttackEntriesOrganizer, ATKPObject
-from attackDataPresets import AttackDataPresets
 
 WEAK_MAX_DIFFERENCE = 30
 WEAK_MIN_DIFFERENCE = 0
@@ -191,6 +190,39 @@ LIST_OF_COMPANION_IDS = [
 ]
 KNOCBACK_LIST = [8, 11, 12]
 
+ALL_DAMAGE_PRESETS = {
+	"WEAK": [WEAK_MAX_DIFFERENCE, WEAK_MIN_DIFFERENCE],
+	"MILD": [MILD_MAX_DIFFERENCE, MILD_MIN_DIFFERENCE],
+	"MEDIUM": [MEDIUM_MAX_DIFFERENCE, MEDIUM_MIN_DIFFERENCE],
+	"STRONG": [STRONG_MAX_DIFFERENCE, STRONG_MIN_DIFFERENCE],
+	"HEAVY": [HEAVY_MAX_DIFFERENCE, HEAVY_MIN_DIFFERENCE],
+	"CHAOS": [CHAOS_MAX_DIFFERENCE, CHAOS_MIN_DIFFERENCE],
+}
+ALL_KNOCKBACK_AMOUNT_PRESETS = {
+	"WEAK": [WEAK_MAX_DIFFERENCE, WEAK_MIN_DIFFERENCE],
+	"MILD": [MILD_MAX_DIFFERENCE, MILD_MIN_DIFFERENCE],
+	"MEDIUM": [MEDIUM_MAX_DIFFERENCE, MEDIUM_MIN_DIFFERENCE],
+	"STRONG": [STRONG_MAX_DIFFERENCE, STRONG_MIN_DIFFERENCE],
+	"HEAVY": [HEAVY_MAX_DIFFERENCE, HEAVY_MIN_DIFFERENCE],
+	"CHAOS": [CHAOS_MAX_DIFFERENCE, CHAOS_MIN_DIFFERENCE],
+}
+ALL_REVENGE_VALUE_PRESETS = {
+	"WEAK": [0, 1],
+	"MILD": [0, 2],
+	"MEDIUM": [1, 2],
+	"STRONG": [1, 3],
+	"HEAVY": [2, 4],
+	"CHAOS": [0, 10],
+}
+ALL_MULTI_HIT_PRESETS = {
+	"WEAK": [3, 24, 32],
+	"MILD": [5, 22, 28],
+	"MEDIUM": [8, 18, 28],
+	"STRONG": [12, 15, 24],
+	"HEAVY": [20, 8, 24],
+	"CHAOS": [25, 3, 32],
+}
+
 class atkpRandomizer:
 	def __init__(self, kill_boss, companion_damage):
 		self.companion_kill_boss = kill_boss
@@ -200,77 +232,27 @@ class atkpRandomizer:
 		self.REVENGE_VALUE_PRESETS = []
 		self.MULTI_HIT_PRESETS = []
 	
-	def randomize_atkp_data(self, atkp_organizer: AttackEntriesOrganizer, damage_preset, on_hit, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset):
+	def randomize_atkp_data(self, atkp_organizer: AttackEntriesOrganizer, damage_preset: str, on_hit, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset):
 		list_data = atkp_organizer.get_all_attack_ids()
 		attack_entries = []
-		attack_entries
-		match damage_preset:
-			case "WEAK":
-				self.DAMAGE_PRESETS = [WEAK_MAX_DIFFERENCE, WEAK_MIN_DIFFERENCE]
-			case "MILD":
-				self.DAMAGE_PRESETS = [MILD_MAX_DIFFERENCE, MILD_MIN_DIFFERENCE]
-			case "MEDIUM":
-				self.DAMAGE_PRESETS = [MEDIUM_MAX_DIFFERENCE, MEDIUM_MIN_DIFFERENCE]
-			case "STRONG":
-				self.DAMAGE_PRESETS = [STRONG_MAX_DIFFERENCE, STRONG_MIN_DIFFERENCE]
-			case "HEAVY":
-				self.DAMAGE_PRESETS = [HEAVY_MAX_DIFFERENCE, HEAVY_MIN_DIFFERENCE]
-			case "CHAOS":
-				self.DAMAGE_PRESETS = [CHAOS_MAX_DIFFERENCE, CHAOS_MIN_DIFFERENCE]
-		
-		match knockback_amount_preset:
-			case "WEAK":
-				self.KNOCKBACK_AMOUNT_PRESETS = [WEAK_MAX_DIFFERENCE, WEAK_MIN_DIFFERENCE]
-			case "MILD":
-				self.KNOCKBACK_AMOUNT_PRESETS = [MILD_MAX_DIFFERENCE, MILD_MIN_DIFFERENCE]
-			case "MEDIUM":
-				self.KNOCKBACK_AMOUNT_PRESETS = [MEDIUM_MAX_DIFFERENCE, MEDIUM_MIN_DIFFERENCE]
-			case "STRONG":
-				self.KNOCKBACK_AMOUNT_PRESETS = [STRONG_MAX_DIFFERENCE, STRONG_MIN_DIFFERENCE]
-			case "HEAVY":
-				self.KNOCKBACK_AMOUNT_PRESETS = [HEAVY_MAX_DIFFERENCE, HEAVY_MIN_DIFFERENCE]
-			case "CHAOS":
-				self.KNOCKBACK_AMOUNT_PRESETS = [CHAOS_MAX_DIFFERENCE, CHAOS_MIN_DIFFERENCE]
-		
-		match revenge_value_preset:
-			case "WEAK":
-				self.REVENGE_VALUE_PRESETS = [0, 1]
-			case "MILD":
-				self.REVENGE_VALUE_PRESETS = [0, 2]
-			case "MEDIUM":
-				self.REVENGE_VALUE_PRESETS = [1, 2]
-			case "STRONG":
-				self.REVENGE_VALUE_PRESETS = [1, 3]
-			case "HEAVY":
-				self.REVENGE_VALUE_PRESETS = [2, 4]
-			case "CHAOS":
-				self.REVENGE_VALUE_PRESETS = [0, 10]
-
-		match multi_hit_preset:
-			case "WEAK":
-				self.MULTI_HIT_PRESETS = [3, 24, 32]
-			case "MILD":
-				self.MULTI_HIT_PRESETS = [5, 22, 28]
-			case "MEDIUM":
-				self.MULTI_HIT_PRESETS = [8, 18, 28]
-			case "STRONG":
-				self.MULTI_HIT_PRESETS = [12, 15, 24]
-			case "HEAVY":
-				self.MULTI_HIT_PRESETS = [20, 8, 24]
-			case "CHAOS":
-				self.MULTI_HIT_PRESETS = [25, 3, 32]
+		self.DAMAGE_PRESETS = ALL_DAMAGE_PRESETS[damage_preset]
+		self.KNOCKBACK_AMOUNT_PRESETS = ALL_KNOCKBACK_AMOUNT_PRESETS[knockback_amount_preset]
+		self.REVENGE_VALUE_PRESETS = ALL_REVENGE_VALUE_PRESETS[revenge_value_preset]
+		self.MULTI_HIT_PRESETS = ALL_MULTI_HIT_PRESETS[multi_hit_preset]
 
 		for attack_entry in list_data:
 			attack_entries.append(atkp_organizer.attack_entry_constructor(attack_entry))
 		for attack_entry in attack_entries:
 			attack_entry: ATKPObject
 			attack_entry.Power = self.randomize_power(attack_entry.Power)
-			attack_entry.Element = self.randomize_elements()
+			if(element):
+				attack_entry.Element = self.randomize_elements()
 			if(LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id)):
 				if(self.companion_deal_damage):
 					attack_entry.EnemyReaction = self.randomize_companion_knockback_type()
 				attack_entry.Flags = self.companion_kill_boss
-			attack_entry.EffectOnHit = self.randomize_on_hit()
+			if(on_hit): 
+				attack_entry.EffectOnHit = self.randomize_on_hit()
 			attack_entry.KnockbackStrength1 = self.randomize_value(attack_entry.KnockbackStrength1, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1])
 			attack_entry.KnockbackStrength2 = self.randomize_value(attack_entry.KnockbackStrength2, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1])
 			attack_entry.RevengeDamage += self.randomize_revenge_value(self.REVENGE_VALUE_PRESETS[0], self.REVENGE_VALUE_PRESETS[1])
