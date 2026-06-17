@@ -641,13 +641,24 @@ seed generated outside the standard seed generator (using [Archipelago](https://
 > 
 > Each custom command menu folder must include a .2dd file for the base asset, and a .png or .dds file for the
 > remastered asset (if using the PC game version).
+> 
+> The settings icon next to the Command Menu drop down can be used to preview the available command menus.
 
-### Visuals (PC Panacea Only)
+### Textures (PC)
 
-_These options will only work properly when using [Panacea](../glossary/index.md#panacea) for loading mods. Things will
-likely look incorrect if using any of these options when patching the game._
+**Recolor Some Textures** - If enabled, allows for basic recoloring of some of the in-game textures. See
+[Texture Colors](../seed-generator/textures/index.md) for more details.
+
+> Recoloring textures requires the OpenKH folder to be set up in the Configure menu, and for KH2 to have been extracted
+> using the OpenKH Mods Manager setup wizard.
 
 **Add Randomizer-Themed Textures** - If enabled, adds a few KH2 Randomizer-themed textures to the game.
+
+### Keyblades (PC)
+
+See the main [Randomized Keyblades](../keyblades/index.md) page for instructions.
+
+### Other Visuals (PC)
 
 **Item Pictures** - controls the appearance of item pictures.
 
@@ -696,17 +707,7 @@ specific custom picture for each supported item in the game.
 > -> Choose Custom Visuals Folder. Place any custom images into an `ending-pictures` folder within your chosen
 > custom visuals folder. Custom images must be in .png format.
 
-**Recolor Some Textures** - If enabled, allows for basic recoloring of some of the in-game textures. See
-[Texture Colors](../seed-generator/textures/index.md) for more details.
-
-> Recoloring textures requires the OpenKH folder to be set up in the Configure menu, and for KH2 to have been extracted
-> using the OpenKH Mods Manager setup wizard.
-
-### Keyblades
-
-See the main [Randomized Keyblades](../keyblades/index.md) page for instructions.
-
-### Music
+### Music (PC)
 
 See the main [Randomized Music](../music/index.md) page for instructions.
 

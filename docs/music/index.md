@@ -3,18 +3,14 @@
 The KH2 Randomizer supports randomizing songs from some Kingdom Hearts games, as well as your own custom songs.
 
 * [General Options](#general-options)
-* [Kingdom Hearts Songs](#kingdom-hearts-songs)
-* [Custom Songs](#custom-songs)
+* [KH Games Music Pool](#kh-games-music-pool)
+* [Custom Music Pool](#custom-music-pool)
 
 ## General Options
 
 ### Randomize Music
 
 Controls whether music randomization is active.
-
-### DMCA Safe
-
-Check this option to exclude songs from the randomized music pool that are known to have some copyright concerns.
 
 ### Categorize Songs
 
@@ -31,7 +27,7 @@ from your randomized music pool to be used (even if it means some songs will be 
 With this option disabled, once the music randomizer runs out of replacement songs, it will not replace any further
 songs from the game, and some songs will remain unchanged.
 
-## Kingdom Hearts Songs
+## KH Games Music Pool
 
 There are options to include songs from some Kingdom Hearts games into the randomized music pool.
 
@@ -43,7 +39,15 @@ configure this, choose `Find OpenKH Folder` in the `Configure` menu.
 Each game's option may also be disabled if you haven't extracted that game's data using the setup wizard in OpenKH Mods
 Manager.
 
-## Custom Songs
+### DMCA Safe
+
+Check this option to exclude some Kingdom Hearts songs from the randomized music pool that are known to have particular
+copyright concerns.
+
+> Note that _all_ Kingdom Hearts music has been known to trigger automated copyright detection due to the music from
+> the games being available on streaming services.
+
+## Custom Music Pool
 
 You can use your own `.scd` files as part of the music randomizer. There is an `Include Custom Songs` option that
 controls whether custom songs are included in the randomized music pool.
@@ -52,8 +56,8 @@ controls whether custom songs are included in the randomized music pool.
 
 ### Setup
 
-If you haven't chosen a custom music folder yet, you should see a message indicating `Custom music folder not
-configured`. To configure this, choose `Choose Custom Music Folder` in the `Configure` menu.
+If you haven't chosen a custom music folder yet, you should see a message indicating this. To configure this, choose
+`Choose Custom Music Folder` in the `Configure -> Cosmetics` menu.
 
 ![Choose Custom Music Folder](choose-custom-music-folder.png)
 
