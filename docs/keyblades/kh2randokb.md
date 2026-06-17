@@ -61,5 +61,5 @@ My Keyblade/                      the root folder is the name of the keyblade
 
 A `.kh2randokb` file is simply a standard zip file where the files inside are arranged in the folder structure described
 above. The intended usage of this file type is for sharing of randomizer-capable keyblades. The randomizer seed
-generator provides a [Package Custom Keyblade](../keyblades/index.md#packaging-keyblades) option to properly package all
+generator provides a [Create .kh2randokb File](../keyblades/index.md#packaging-keyblades) option to properly package all
 the keyblade assets.
