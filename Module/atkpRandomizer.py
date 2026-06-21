@@ -232,9 +232,9 @@ class atkpRandomizerClass:
 		self.REVENGE_VALUE_PRESETS = []
 		self.MULTI_HIT_PRESETS = []
 	
-	def randomize_atkp_data(self, atkp_organizer: AttackEntriesOrganizer, damage_preset: str, on_hit, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset):
-		list_data = atkp_organizer.get_all_attack_ids()
-		attack_entries = []
+	def randomize_atkp_data(self, list_data, atkp_organizer: AttackEntriesOrganizer, damage_preset: str, on_hit, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset):
+		""" attack_entries = []
+		final_attack_entries = []
 		self.DAMAGE_PRESETS = ALL_DAMAGE_PRESETS[damage_preset]
 		self.KNOCKBACK_AMOUNT_PRESETS = ALL_KNOCKBACK_AMOUNT_PRESETS[knockback_amount_preset]
 		self.REVENGE_VALUE_PRESETS = ALL_REVENGE_VALUE_PRESETS[revenge_value_preset]
@@ -257,13 +257,24 @@ class atkpRandomizerClass:
 			#Therefore, to avoid overflow issues, knockback is capped at 32767. This limit shouldn't be reached by any other number
 			attack_entry.KnockbackStrength1 = min(int(round(self.randomize_value(attack_entry.KnockbackStrength1, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767)
 			attack_entry.KnockbackStrength2 = min(int(round(self.randomize_value(attack_entry.KnockbackStrength2, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767)
-			attack_entry.RevengeDamage += self.randomize_revenge_value(self.REVENGE_VALUE_PRESETS[0], self.REVENGE_VALUE_PRESETS[1])
+			attack_entry.RevengeDamage = max(attack_entry.RevengeDamage + (self.randomize_revenge_value(self.REVENGE_VALUE_PRESETS[0], self.REVENGE_VALUE_PRESETS[1])), 0)
 			self.randomize_multi_hit(self.MULTI_HIT_PRESETS[0], self.MULTI_HIT_PRESETS[1], self.MULTI_HIT_PRESETS[2], attack_entry)
+			final_attack_entries.append(attack_entry) """
 		
-		for attack_entry in attack_entries:
-			atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(attack_entry)
-				
-
+		"""return final_attack_entries"""
+		test = []
+		for attack_entry in list_data:
+			test.append(atkp_organizer.attack_entry_constructor(attack_entry))
+		""" count = 0
+		while count <= 500:
+			test.pop(0)
+			count += 1
+		count = len(test)
+		endpoint = count - 500
+		while count > endpoint:
+			test.pop(len(test) - 1)
+			count -= 1 """
+		return test
 
 	def randomize_value(self, value, max_difference, min_difference):
 		increase_value = False
