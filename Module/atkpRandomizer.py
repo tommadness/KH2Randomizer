@@ -277,10 +277,12 @@ class atkpRandomizerClass:
 						attack_entry.Element = self.randomize_elements()
 				else: 
 					attack_entry.Element = self.randomize_elements()
-			if(LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id)):
-				if(self.companion_deal_damage):
+			if(self.companion_deal_damage):
+				if(LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id)):
 					attack_entry.EnemyReaction = self.randomize_companion_knockback_type()
-				attack_entry.Flags = self.companion_kill_boss
+			if(self.companion_kill_boss != 0):
+				if(LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id)):
+					attack_entry.Flags = self.companion_kill_boss
 			if(len(self.KNOCKBACK_AMOUNT_PRESETS) != 0):
 				attack_entry.KnockbackStrength1 = max(min(int(round(self.randomize_value(attack_entry.KnockbackStrength1, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767), -32767)
 				attack_entry.KnockbackStrength2 = max(min(int(round(self.randomize_value(attack_entry.KnockbackStrength2, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767), -32767)

@@ -29,7 +29,7 @@ class CompanionMenu(KH2Submenu):
         self.end_column()
         
         settings.observe(settingkey.ATTACK_DATA_RANDOMIZATION, self._attack_data_randomized)
-        settings.observe(settingkey.EXCLUDE_SORA_ROXAS_BASE_ATTACK, self._element_randomization_on)
+        settings.observe(settingkey.ATTACK_DATA_ELEMENT, self._element_randomization_on)
         
         self.set_group_visibility("Attack Data Randomization", True)
         self.finalizeMenu()

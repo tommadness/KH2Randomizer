@@ -1718,6 +1718,18 @@ class SeedZip:
         multi_hit_preset = ui_settings.get(keys.ATTACK_DATA_MULTI_HIT_PRESET)
         knockback_amount_preset = ui_settings.get(keys.ATTACK_DATA_KNOCKBACK_AMOUNT_PRESET)
         exclude_basic_attack_preset = ui_settings.get(keys.EXCLUDE_SORA_ROXAS_BASE_ATTACK)
+        #Just do nothing if all options are turned off
+        if(
+            damage_preset == "DISABLED" and 
+            element == False and 
+            revenge_value_preset == "DISABLED" and
+            multi_hit_preset == "DISABLED" and
+            knockback_amount_preset == "DISABLED" and
+            companions_damage == False and
+            kill_boss == 0
+        ):
+            return
+
         atkp_organizer = mod._get_atkp_organizer()
 
         atkp_data_randomizer = atkpRandomizerClass(kill_boss, companions_damage)
