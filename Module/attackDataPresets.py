@@ -3,7 +3,9 @@ MILD = "MILD"
 MEDIUM = "MEDIUM"
 STRONG = "STRONG"
 HEAVY = "HEAVY"
+OVERPOWERED = "OVERPOWERED"
 CHAOS = "CHAOS"
+DISABLED = "DISABLED"
 
 class AttackDataPresets:
 
@@ -19,19 +21,23 @@ class AttackDataPresets:
             MEDIUM: "MEDIUM",
             STRONG: "STRONG",
             HEAVY: "HEAVY",
+            OVERPOWERED: "OVERPOWERED",
             CHAOS: "CHAOS",
+            DISABLED: "DISABLED",
         }
 
     @staticmethod
     def attack_data_preset_tooltip() -> str:
         return """
         Influences the strength of which these values are randomized.
+        PRESET      MIN    MAX  (multiplier)
         Weak =      1.0x - 1.3x difference
         Mild =      1.0x - 1.5x
         Medium =    1.2x - 1.8x
         Strong =    1.5x - 2.2x
         Heavy =     1.8x - 3.0x
-        Chaos =     1.0x - 5.0x
+        Overpowered = 2.2x - 4.0x
+        Chaos =     1.0x - 7.0x
 
         Remember that the difference can be either positive or negative.
         Some attack data parameters can only be between certain values,

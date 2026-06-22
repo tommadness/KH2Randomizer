@@ -11,7 +11,9 @@ STRONG_MAX_DIFFERENCE = 1.2
 STRONG_MIN_DIFFERENCE = 0.5
 HEAVY_MAX_DIFFERENCE = 2.0
 HEAVY_MIN_DIFFERENCE = 0.8
-CHAOS_MAX_DIFFERENCE = 4.0
+OVERPOWERED_MAX_DIFFERENCE = 3.0
+OVERPOWERED_MIN_DIFFERENCE = 1.2
+CHAOS_MAX_DIFFERENCE = 6.0
 CHAOS_MIN_DIFFERENCE = 0.0
 
 LIST_OF_COMPANION_IDS = [
@@ -191,37 +193,60 @@ LIST_OF_COMPANION_IDS = [
 KNOCBACK_LIST = [8, 11, 12]
 
 ALL_DAMAGE_PRESETS = {
+	"DISABLED": [],
 	"WEAK": [WEAK_MAX_DIFFERENCE, WEAK_MIN_DIFFERENCE],
 	"MILD": [MILD_MAX_DIFFERENCE, MILD_MIN_DIFFERENCE],
 	"MEDIUM": [MEDIUM_MAX_DIFFERENCE, MEDIUM_MIN_DIFFERENCE],
 	"STRONG": [STRONG_MAX_DIFFERENCE, STRONG_MIN_DIFFERENCE],
 	"HEAVY": [HEAVY_MAX_DIFFERENCE, HEAVY_MIN_DIFFERENCE],
+	"OVERPOWERED": [OVERPOWERED_MAX_DIFFERENCE, OVERPOWERED_MIN_DIFFERENCE],
 	"CHAOS": [CHAOS_MAX_DIFFERENCE, CHAOS_MIN_DIFFERENCE],
 }
 ALL_KNOCKBACK_AMOUNT_PRESETS = {
+	"DISABLED": [],
 	"WEAK": [WEAK_MAX_DIFFERENCE, WEAK_MIN_DIFFERENCE],
 	"MILD": [MILD_MAX_DIFFERENCE, MILD_MIN_DIFFERENCE],
 	"MEDIUM": [MEDIUM_MAX_DIFFERENCE, MEDIUM_MIN_DIFFERENCE],
 	"STRONG": [STRONG_MAX_DIFFERENCE, STRONG_MIN_DIFFERENCE],
 	"HEAVY": [HEAVY_MAX_DIFFERENCE, HEAVY_MIN_DIFFERENCE],
+	"OVERPOWERED": [OVERPOWERED_MAX_DIFFERENCE, OVERPOWERED_MIN_DIFFERENCE],
 	"CHAOS": [CHAOS_MAX_DIFFERENCE, CHAOS_MIN_DIFFERENCE],
 }
 ALL_REVENGE_VALUE_PRESETS = {
+	"DISABLED": [],
 	"WEAK": [0, 1],
 	"MILD": [0, 2],
 	"MEDIUM": [1, 2],
 	"STRONG": [1, 3],
 	"HEAVY": [2, 4],
-	"CHAOS": [0, 10],
+	"OVERPOWERED": [3, 8],
+	"CHAOS": [0, 20],
 }
 ALL_MULTI_HIT_PRESETS = {
-	"WEAK": [3, 24, 32],
-	"MILD": [5, 22, 28],
-	"MEDIUM": [8, 18, 28],
-	"STRONG": [12, 15, 24],
-	"HEAVY": [20, 8, 24],
-	"CHAOS": [25, 3, 32],
+	"DISABLED": [],
+	"WEAK": [5, 24, 32],
+	"MILD": [8, 22, 28],
+	"MEDIUM": [10, 18, 28],
+	"STRONG": [25, 15, 24],
+	"HEAVY": [35, 8, 24],
+	"OVERPOWERED": [40, 6, 18],
+	"CHAOS": [60, 3, 32],
 }
+#Randomizing element in all IDs can be painful against certain enemies like gargoyles.
+#These IDs can be excluded from having element randomized if enabled.
+SORA_BASE_ATTACK_IDS = [
+	126,
+	127,
+	128,
+	147,
+	131,
+	132,
+	129,
+	130,
+	133,
+	134,
+	926
+]
 
 class atkpRandomizerClass:
 	def __init__(self, kill_boss, companion_damage):
@@ -232,8 +257,8 @@ class atkpRandomizerClass:
 		self.REVENGE_VALUE_PRESETS = []
 		self.MULTI_HIT_PRESETS = []
 	
-	def randomize_atkp_data(self, list_data, atkp_organizer: AttackEntriesOrganizer, damage_preset: str, on_hit, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset):
-		""" attack_entries = []
+	def randomize_atkp_data(self, list_data, atkp_organizer: AttackEntriesOrganizer, damage_preset: str, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset, exclude_base_attack):
+		attack_entries = []
 		final_attack_entries = []
 		self.DAMAGE_PRESETS = ALL_DAMAGE_PRESETS[damage_preset]
 		self.KNOCKBACK_AMOUNT_PRESETS = ALL_KNOCKBACK_AMOUNT_PRESETS[knockback_amount_preset]
@@ -244,37 +269,29 @@ class atkpRandomizerClass:
 			attack_entries.append(atkp_organizer.attack_entry_constructor(attack_entry))
 		for attack_entry in attack_entries:
 			attack_entry: ATKPObject
-			attack_entry.Power = int(round(self.randomize_power(attack_entry.Power)))
+			if(len(self.DAMAGE_PRESETS) != 0):
+				attack_entry.Power = max(min(int(round(self.randomize_power(attack_entry.Power))), 65535), 0)
 			if(element):
-				attack_entry.Element = self.randomize_elements()
+				if(exclude_base_attack):
+					if(not SORA_BASE_ATTACK_IDS.__contains__(attack_entry.Id)):
+						attack_entry.Element = self.randomize_elements()
+				else: 
+					attack_entry.Element = self.randomize_elements()
 			if(LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id)):
 				if(self.companion_deal_damage):
 					attack_entry.EnemyReaction = self.randomize_companion_knockback_type()
 				attack_entry.Flags = self.companion_kill_boss
-			if(on_hit): 
-				attack_entry.EffectOnHit = self.randomize_on_hit()
-			#Knockback values in vanilla can reach as high as 32767, which I don't think is for attacks that really knock you back
-			#Therefore, to avoid overflow issues, knockback is capped at 32767. This limit shouldn't be reached by any other number
-			attack_entry.KnockbackStrength1 = min(int(round(self.randomize_value(attack_entry.KnockbackStrength1, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767)
-			attack_entry.KnockbackStrength2 = min(int(round(self.randomize_value(attack_entry.KnockbackStrength2, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767)
-			attack_entry.RevengeDamage = max(attack_entry.RevengeDamage + (self.randomize_revenge_value(self.REVENGE_VALUE_PRESETS[0], self.REVENGE_VALUE_PRESETS[1])), 0)
-			self.randomize_multi_hit(self.MULTI_HIT_PRESETS[0], self.MULTI_HIT_PRESETS[1], self.MULTI_HIT_PRESETS[2], attack_entry)
-			final_attack_entries.append(attack_entry) """
+			if(len(self.KNOCKBACK_AMOUNT_PRESETS) != 0):
+				attack_entry.KnockbackStrength1 = max(min(int(round(self.randomize_value(attack_entry.KnockbackStrength1, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767), -32767)
+				attack_entry.KnockbackStrength2 = max(min(int(round(self.randomize_value(attack_entry.KnockbackStrength2, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767), -32767)
+			if(len(self.REVENGE_VALUE_PRESETS) != 0):
+				attack_entry.RevengeDamage = min(max(attack_entry.RevengeDamage + (self.randomize_revenge_value(self.REVENGE_VALUE_PRESETS[0], self.REVENGE_VALUE_PRESETS[1])), 0), 255)
+			if(len(self.MULTI_HIT_PRESETS) != 0):
+				self.randomize_multi_hit(self.MULTI_HIT_PRESETS[0], self.MULTI_HIT_PRESETS[1], self.MULTI_HIT_PRESETS[2], attack_entry)
+			attack_entry.validate()
+			final_attack_entries.append(attack_entry)
 		
-		"""return final_attack_entries"""
-		test = []
-		for attack_entry in list_data:
-			test.append(atkp_organizer.attack_entry_constructor(attack_entry))
-		""" count = 0
-		while count <= 500:
-			test.pop(0)
-			count += 1
-		count = len(test)
-		endpoint = count - 500
-		while count > endpoint:
-			test.pop(len(test) - 1)
-			count -= 1 """
-		return test
+		return final_attack_entries
 
 	def randomize_value(self, value, max_difference, min_difference):
 		increase_value = False

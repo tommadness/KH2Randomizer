@@ -1713,15 +1713,15 @@ class SeedZip:
             kill_boss = "KillBoss"
         
         damage_preset = ui_settings.get(keys.ATTACK_DATA_DAMAGE_PRESET)
-        on_hit = ui_settings.get(keys.ATTACK_DATA_EFFECT_ON_HIT)
         element = ui_settings.get(keys.ATTACK_DATA_ELEMENT)
         revenge_value_preset = ui_settings.get(keys.ATTACK_DATA_REVENGE_VALUE_PRESET)
         multi_hit_preset = ui_settings.get(keys.ATTACK_DATA_MULTI_HIT_PRESET)
         knockback_amount_preset = ui_settings.get(keys.ATTACK_DATA_KNOCKBACK_AMOUNT_PRESET)
+        exclude_basic_attack_preset = ui_settings.get(keys.EXCLUDE_SORA_ROXAS_BASE_ATTACK)
         atkp_organizer = mod._get_atkp_organizer()
 
         atkp_data_randomizer = atkpRandomizerClass(kill_boss, companions_damage)
-        randomized_data = atkp_data_randomizer.randomize_atkp_data(atkp_organizer.get_all_attack_ids(), atkp_organizer, damage_preset, on_hit, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset)
+        randomized_data = atkp_data_randomizer.randomize_atkp_data(atkp_organizer.get_all_attack_ids(), atkp_organizer, damage_preset, element, revenge_value_preset, multi_hit_preset, knockback_amount_preset, exclude_basic_attack_preset)
         for atkp_object in randomized_data:
             atkp_organizer.convert_atkp_object_to_dict_and_add_to_data(atkp_object)
 

@@ -1078,6 +1078,114 @@ class ATKPObject:
         self.RandomEffect = RandomEffect
         self.Kind = Kind
         self.HPDrain = HPDrain
+        self.validate()
+
+    def validate(self):
+        # ushort
+        if self.SubId < 0 or self.SubId > 65535:
+            raise ValueError(f"SubId {self.SubId} outside bounds")
+        # ushort
+        if self.Id < 0 or self.Id > 65535:
+            raise ValueError(f"Id {self.Id} outside bounds")
+        # string
+        if self.Type not in ["NormalAttack","PierceArmor","Guard","SGuard","Special","Cure","CCure"]:
+            raise ValueError(f"Type {self.Type} outside bounds")
+        # byte
+        if self.CriticalAdjust < 0 or self.CriticalAdjust > 255:
+            raise ValueError(f"CriticalAdjust {self.CriticalAdjust} outside bounds")
+        # ushort
+        if self.Power < 0 or self.Power > 65535:
+            raise ValueError(f"Power {self.Power} outside bounds")
+        # byte
+        if self.Team < 0 or self.Team > 255:
+            raise ValueError(f"Team {self.Team} outside bounds")
+        # byte
+        if self.Element < 0 or self.Element > 255:
+            raise ValueError(f"Element {self.Element} outside bounds")
+        # byte
+        if self.EnemyReaction < 0 or self.EnemyReaction > 255:
+            raise ValueError(f"EnemyReaction {self.EnemyReaction} outside bounds")
+        # byte
+        if self.EffectOnHit < 0 or self.EffectOnHit > 255:
+            raise ValueError(f"EffectOnHit {self.EffectOnHit} outside bounds")
+        # short 
+        if self.KnockbackStrength1 < -32768 or self.KnockbackStrength1 > 32767:
+            raise ValueError(f"KnockbackStrength1 {self.KnockbackStrength1} outside bounds")
+        # short
+        if self.KnockbackStrength2 < -32768 or self.KnockbackStrength2 > 32767:
+            raise ValueError(f"KnockbackStrength2 {self.KnockbackStrength2} outside bounds")
+        # short
+        if self.Unknown < -32768 or self.Unknown > 32767:
+            raise ValueError(f"Unknown {self.Unknown} outside bounds")
+        # string 
+        # if self.Flags not in [0,"BGHit","LimitPAX","Land","CapturePAX","ThankYou","KillBoss"]:
+        #     raise ValueError(f"Flags {self.Flags} outside bounds")
+        # string
+        if self.RefactSelf not in ["Reflect","Guard","Nothing"]:
+            raise ValueError(f"RefactSelf {self.RefactSelf} outside bounds")
+        # string
+        if self.RefactOther not in ["Reflect","Guard","Nothing"]:
+            raise ValueError(f"RefactOther {self.RefactOther} outside bounds")
+        # byte
+        if self.ReflectedMotion < 0:
+            self.ReflectedMotion = self.ReflectedMotion + 128
+        if self.ReflectedMotion < 0 or self.ReflectedMotion > 255:
+            raise ValueError(f"ReflectedMotion {self.ReflectedMotion} outside bounds")
+        # short
+        if self.ReflectedHitBack < -32768 or self.ReflectedHitBack > 32767:
+            raise ValueError(f"ReflectedHitBack {self.ReflectedHitBack} outside bounds")
+        # int
+        if self.ReflectAction < -2147483648 or self.ReflectAction >  2147483647:
+            raise ValueError(f"ReflectAction {self.ReflectAction} outside bounds")
+        # int
+        if self.ReflectHitSound < -2147483648 or self.ReflectHitSound > 2147483647:
+            raise ValueError(f"ReflectHitSound {self.ReflectHitSound} outside bounds")
+        # ushort
+        if self.ReflectRC < 0 or self.ReflectRC > 65535:
+            raise ValueError(f"ReflectRC {self.ReflectRC} outside bounds")
+        # byte
+        if self.ReflectRange < 0:
+            self.ReflectRange = self.ReflectRange + 128
+        if self.ReflectRange < 0 or self.ReflectRange > 255:
+            raise ValueError(f"ReflectRange {self.ReflectRange} outside bounds")
+        # sbyte
+        if self.ReflectAngle < -128 or self.ReflectAngle > 127:
+            raise ValueError(f"ReflectAngle {self.ReflectAngle} outside bounds")
+        # byte
+        if self.DamageEffect < 0 or self.DamageEffect > 255:
+            raise ValueError(f"DamageEffect {self.DamageEffect} outside bounds")
+        # byte
+        if self.Switch < 0 or self.Switch > 255:
+            raise ValueError(f"Switch {self.Switch} outside bounds")
+        # ushort
+        if self.Interval < 0 or self.Interval > 65535:
+            raise ValueError(f"Interval {self.Interval} outside bounds")
+        # byte
+        if self.FloorCheck < 0 or self.FloorCheck > 255:
+            raise ValueError(f"FloorCheck {self.FloorCheck} outside bounds")
+        # byte
+        if self.DriveDrain < 0 or self.DriveDrain > 255:
+            raise ValueError(f"DriveDrain {self.DriveDrain} outside bounds")
+        # byte
+        if self.RevengeDamage < 0 or self.RevengeDamage > 255:
+            raise ValueError(f"RevengeDamage {self.RevengeDamage} outside bounds")
+        # string
+        if self.AttackTrReaction not in ["Attack","Charge","Crash","Wall"]:
+            raise ValueError(f"AttackTrReaction {self.AttackTrReaction} outside bounds")
+        # byte
+        if self.ComboGroup < 0:
+            self.ComboGroup = self.ComboGroup + 128
+        if self.ComboGroup < 0 or self.ComboGroup > 255:
+            raise ValueError(f"ComboGroup {self.ComboGroup} outside bounds")
+        # byte
+        if self.RandomEffect < 0 or self.RandomEffect > 255:
+            raise ValueError(f"RandomEffect {self.RandomEffect} outside bounds")
+        # string (can be zero)
+        if self.Kind not in [0,"ComboFinisher","AirComboFinisher","ReactionCommand"]:
+            raise ValueError(f"Kind {self.Kind} outside bounds")
+        # byte
+        if self.HPDrain < 0 or self.HPDrain > 255:
+            raise ValueError(f"HPDrain {self.HPDrain} outside bounds")
 
 
 class AttackEntriesOrganizer:

@@ -3339,21 +3339,27 @@ _all_settings = [
         tooltip=AttackDataPresets.attack_data_preset_tooltip(),
     ),
     Toggle(
-        name=settingkey.ATTACK_DATA_EFFECT_ON_HIT,
-        group=SettingGroup.COMPANIONS,
-        ui_label="Randomize visual effect on hit",
-        shared=True,
-        default=False,
-        tooltip="If enabled, attacks will have random visual effects.",
-        randomizable=False,
-    ),
-    Toggle(
         name=settingkey.ATTACK_DATA_ELEMENT,
         group=SettingGroup.COMPANIONS,
         ui_label="Randomize element of attack",
         shared=True,
         default=False,
         tooltip="If enabled, attacks will have random element type.",
+        randomizable=False,
+    ),
+    Toggle(
+        name=settingkey.EXCLUDE_SORA_ROXAS_BASE_ATTACK,
+        group=SettingGroup.COMPANIONS,
+        ui_label="Exclude element randomization of sora/roxas base attacks",
+        shared=True,
+        default=True,
+        tooltip="""
+        RECOMMENDED TO BE LEFT TURNED ON
+
+        If enabled, Sora and Roxas will have their basic attacks' element type, i.e no ability specific attacks,
+        not randomized to avoid excess difficulty when fighting enemes like gargoyles who have large amounts of immunity
+        to elemental damage.
+        """,
         randomizable=False,
     ),
     SingleSelect(
