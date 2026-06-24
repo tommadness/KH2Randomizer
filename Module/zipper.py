@@ -1704,7 +1704,7 @@ class SeedZip:
     def prepare_attack_data_randomization(self, mod: SeedModBuilder):
         keys = settingkey
         ui_settings = self.settings.ui_settings
-        if(not ui_settings.get(keys.ATTACK_DATA_RANDOMIZATION)):
+        if not ui_settings.get(keys.ATTACK_DATA_RANDOMIZATION):
             return
         companions_damage = ui_settings.get(keys.COMPANION_DAMAGE_TOGGLE)
 

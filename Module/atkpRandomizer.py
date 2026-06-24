@@ -523,28 +523,28 @@ class atkpRandomizerClass:
 		for attack_entry in attack_entries:
 			attack_entry: ATKPObject
 			#Workaround
-			if(SORA_IDS.__contains__(attack_entry.Id)):
+			if SORA_IDS.__contains__(attack_entry.Id):
 				attack_entry.Flags = "KillBoss"
-			if(len(self.DAMAGE_PRESETS) != 0):
+			if len(self.DAMAGE_PRESETS) != 0:
 				attack_entry.Power = max(min(int(round(self.randomize_power(attack_entry.Power))), 65535), 0)
-			if(element):
-				if(exclude_base_attack):
-					if(not SORA_BASE_ATTACK_IDS.__contains__(attack_entry.Id)):
+			if element:
+				if exclude_base_attack:
+					if not SORA_BASE_ATTACK_IDS.__contains__(attack_entry.Id):
 						attack_entry.Element = self.randomize_elements()
 				else: 
 					attack_entry.Element = self.randomize_elements()
-			if(self.companion_deal_damage):
-				if(LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id)):
+			if self.companion_deal_damage:
+				if LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id):
 					attack_entry.EnemyReaction = self.randomize_companion_knockback_type()
-			if(self.companion_kill_boss != 0):
-				if(LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id)):
+			if self.companion_kill_boss != 0:
+				if LIST_OF_COMPANION_IDS.__contains__(attack_entry.Id):
 					attack_entry.Flags = self.companion_kill_boss
-			if(len(self.KNOCKBACK_AMOUNT_PRESETS) != 0):
+			if len(self.KNOCKBACK_AMOUNT_PRESETS) != 0:
 				attack_entry.KnockbackStrength1 = max(min(int(round(self.randomize_value(attack_entry.KnockbackStrength1, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767), -32767)
 				attack_entry.KnockbackStrength2 = max(min(int(round(self.randomize_value(attack_entry.KnockbackStrength2, self.KNOCKBACK_AMOUNT_PRESETS[0], self.KNOCKBACK_AMOUNT_PRESETS[1]))), 32767), -32767)
-			if(len(self.REVENGE_VALUE_PRESETS) != 0):
+			if len(self.REVENGE_VALUE_PRESETS) != 0:
 				attack_entry.RevengeDamage = min(max(attack_entry.RevengeDamage + (self.randomize_revenge_value(self.REVENGE_VALUE_PRESETS[0], self.REVENGE_VALUE_PRESETS[1])), 0), 255)
-			if(len(self.MULTI_HIT_PRESETS) != 0):
+			if len(self.MULTI_HIT_PRESETS) != 0:
 				self.randomize_multi_hit(self.MULTI_HIT_PRESETS[0], self.MULTI_HIT_PRESETS[1], self.MULTI_HIT_PRESETS[2], attack_entry)
 			final_attack_entries.append(attack_entry)
 		
@@ -552,9 +552,9 @@ class atkpRandomizerClass:
 
 	def randomize_value(self, value, max_difference, min_difference):
 		increase_value = False
-		if(random.randint(0, 100) > 50):
+		if random.randint(0, 100) > 50:
 			increase_value = True
-		if(increase_value):
+		if increase_value:
 			multiplier = 1.0 + random.uniform(min_difference, max_difference)
 			return value * multiplier
 		else:
@@ -572,7 +572,7 @@ class atkpRandomizerClass:
 		return KNOCBACK_LIST[index]
 
 	def randomize_multi_hit(self, chance, minFrames, maxFrames, current_attack_entry: ATKPObject):
-		if(random.randint(1, 100) > chance):
+		if random.randint(1, 100) > chance:
 			return
 		current_attack_entry.Interval = random.randint(minFrames, maxFrames)
 	
@@ -583,14 +583,14 @@ class atkpRandomizerClass:
 	# differences because the game would be kind of unplayable. (unless Chaos enabled)
 	def randomize_revenge_value(self, minValue, maxValue):
 		increase_value = False
-		if(random.randint(0, 100) > 50):
+		if random.randint(0, 100) > 50:
 			increase_value = True
 		num = random.randint(minValue, maxValue)
-		if(not increase_value):
+		if not increase_value:
 			return -num
 		return num
 
 	def randomize_power(self, value):
-		if(value == 0):
+		if value == 0:
 			return 0
 		return self.randomize_value(value, self.DAMAGE_PRESETS[0], self.DAMAGE_PRESETS[1])

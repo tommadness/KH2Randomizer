@@ -1127,7 +1127,8 @@ class ATKPObject:
         if self.RefactOther not in ["Reflect","Guard","Nothing"]:
             raise ValueError(f"RefactOther {self.RefactOther} outside bounds")
         # byte
-        self.ReflectedMotion = self.ReflectedMotion + 128
+        if self.ReflectedMotion < 0:
+            self.ReflectedMotion = self.ReflectedMotion + 128
         if self.ReflectedMotion < 0 or self.ReflectedMotion > 255:
             raise ValueError(f"ReflectedMotion {self.ReflectedMotion} outside bounds")
         # short
@@ -1143,7 +1144,8 @@ class ATKPObject:
         if self.ReflectRC < 0 or self.ReflectRC > 65535:
             raise ValueError(f"ReflectRC {self.ReflectRC} outside bounds")
         # byte
-        self.ReflectRange = self.ReflectRange + 128
+        if self.ReflectRange < 0:
+            self.ReflectRange = self.ReflectRange + 128
         if self.ReflectRange < 0 or self.ReflectRange > 255:
             raise ValueError(f"ReflectRange {self.ReflectRange} outside bounds")
         # sbyte
@@ -1171,7 +1173,8 @@ class ATKPObject:
         if self.AttackTrReaction not in ["Attack","Charge","Crash","Wall"]:
             raise ValueError(f"AttackTrReaction {self.AttackTrReaction} outside bounds")
         # byte
-        self.ComboGroup = self.ComboGroup + 128
+        if self.ComboGroup < 0:
+            self.ComboGroup = self.ComboGroup + 128
         if self.ComboGroup < 0 or self.ComboGroup > 255:
             raise ValueError(f"ComboGroup {self.ComboGroup} outside bounds")
         # byte
