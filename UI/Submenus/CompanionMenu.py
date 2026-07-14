@@ -2,21 +2,11 @@ from Class import settingkey
 from Class.seedSettings import SeedSettings
 from UI.Submenus.SubMenu import KH2Submenu
 
-_JACK_SKELLINGTON = "Jack Skellington"
-_PING_MULAN = "Ping Mulan"
-_DONALD = "Donald"
-_GOOFY = "Goofy"
-_SIMBA = "Simba"
-_TRON = "Tron"
-_AURON = "Auron"
-_RIKU = "Riku"
-_JACK_SPARROW = "Jack Sparrow"
-_BEAST = "Beast"
-_ALADDIN = "Aladdin"
+_ATTACK_DATA_PARAMS = "ATTACK_DATA_PARAMS"
 
 class CompanionMenu(KH2Submenu):
     def __init__(self, settings: SeedSettings):
-        super().__init__(title="Companions", settings=settings)
+        super().__init__(title="Companions / Attack Data", settings=settings)
         
         self.start_column()
         self.start_group()
@@ -24,113 +14,32 @@ class CompanionMenu(KH2Submenu):
         self.add_option(settingkey.GOOFY_AP)
         self.end_group("AP")
         self.start_group()
+        self.add_option(settingkey.ATTACK_DATA_RANDOMIZATION)
+        self.end_group("Attack Data Randomization")
+        self.start_group()
         self.add_option(settingkey.COMPANION_DAMAGE_TOGGLE)
         self.add_option(settingkey.COMPANION_KILL_BOSS)
-        self.end_group("All Companions")
-        self.start_group()
-        self.add_option(settingkey.JACK_SKELLINGTON_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.JACK_SKELLINGTON_BLAZING_FURY_KNOCKBACK_TYPE)
-        self.add_option(settingkey.JACK_SKELLINGTON_ICY_TERROR_KNOCKBACK_TYPE)
-        self.add_option(settingkey.JACK_SKELLINGTON_BOLTS_OF_SORROW_KNOCKBACK_TYPE)
-        self.end_group("Jack Skellington", group_id=_JACK_SKELLINGTON)
-        self.start_group()
-        self.add_option(settingkey.PING_MULAN_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.MULAN_MUSHU_FIRE_KNOCKBACK_TYPE)
-        self.add_option(settingkey.MULAN_FLAMETONGUE_KNOCKBACK_TYPE)
-        self.end_group("Ping/Mulan", group_id=_PING_MULAN)
-        self.start_group()
-        self.add_option(settingkey.JACK_SPARROW_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.JACK_SPARROW_NO_MERCY_KNOCKBACK_TYPE)
-        self.add_option(settingkey.JACK_SPARROW_RAIN_STORM_KNOCKBACK_TYPE)
-        self.add_option(settingkey.JACK_SPARROW_BONE_SMASH_KNOCKBACK_TYPE)
-        self.end_group("Jack Sparrow", group_id=_JACK_SPARROW)
-        self.end_column()
-
-        self.start_column()
-        self.start_group()
-        self.add_option(settingkey.DONALD_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.DONALD_FIRE_KNOCKBACK_TYPE)
-        self.add_option(settingkey.DONALD_BLIZZARD_KNOCKBACK_TYPE)
-        self.add_option(settingkey.DONALD_THUNDER_KNOCKBACK_TYPE)
-        self.end_group("Donald", group_id=_DONALD)
-        self.start_group()
-        self.add_option(settingkey.SIMBA_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.SIMBA_FIERCE_CLAW_KNOCKBACK_TYPE)
-        self.add_option(settingkey.SIMBA_GROUNDSHAKER_KNOCKBACK_TYPE)
-        self.end_group("Simba", group_id=_SIMBA)
-        self.start_group()
-        self.add_option(settingkey.BEAST_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.BEAST_SHOUT_KNOCKBACK_TYPE)
-        self.add_option(settingkey.BEAST_RUSH_KNOCKBACK_TYPE)
-        self.end_group("Beast", group_id=_BEAST)
-        self.start_group()
-        self.add_option(settingkey.RIKU_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.RIKU_DARK_AURA_KNOCKBACK_TYPE)
-        self.add_option(settingkey.RIKU_DARK_SHIELD_KNOCKBACK_TYPE)
-        self.end_group("Riku", group_id=_RIKU)
-        self.start_group()
-        self.end_column()
-
-        self.start_column()
-        self.start_group()
-        self.add_option(settingkey.GOOFY_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.GOOFY_BASH_KNOCKBACK_TYPE)
-        self.add_option(settingkey.GOOFY_TURBO_KNOCKBACK_TYPE)
-        self.add_option(settingkey.GOOFY_TORNADO_KNOCKBACK_TYPE)
-        self.end_group("Goofy", group_id=_GOOFY)
-        self.start_group()
-        self.add_option(settingkey.ALADDIN_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.ALADDIN_SLASH_FRENZY_KNOCKBACK_TYPE)
-        self.add_option(settingkey.ALADDIN_QUICKPLAY_KNOCKBACK_TYPE)
-        self.end_group("Aladdin", group_id=_ALADDIN)
-        self.start_group()
-        self.add_option(settingkey.TRON_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.TRON_SCOUTING_DISK_KNOCKBACK_TYPE)
-        self.add_option(settingkey.TRON_PULSING_THUNDER_KNOCKBACK_TYPE)
-        self.end_group("Tron", group_id=_TRON)
-        self.start_group()
-        self.add_option(settingkey.AURON_MELEE_ATTACKS_KNOCKBACK_TYPE)
-        self.add_option(settingkey.AURON_DIVIDER_KNOCKBACK_TYPE)
-        self.end_group("Auron", group_id=_AURON)
+        self.add_option(settingkey.ATTACK_DATA_DAMAGE_PRESET)
+        self.add_option(settingkey.ATTACK_DATA_ELEMENT)
+        self.add_option(settingkey.EXCLUDE_SORA_ROXAS_BASE_ATTACK)
+        self.add_option(settingkey.ATTACK_DATA_KNOCKBACK_AMOUNT_PRESET)
+        self.add_option(settingkey.ATTACK_DATA_MULTI_HIT_PRESET)
+        self.add_option(settingkey.ATTACK_DATA_REVENGE_VALUE_PRESET)
+        self.end_group("Attack Data Randomization Parameters", group_id = _ATTACK_DATA_PARAMS)
         self.end_column()
         
-        settings.observe(settingkey.COMPANION_DAMAGE_TOGGLE, self._companions_changed)
+        settings.observe(settingkey.ATTACK_DATA_RANDOMIZATION, self._attack_data_randomized)
+        settings.observe(settingkey.ATTACK_DATA_ELEMENT, self._element_randomization_on)
         
+        self.set_group_visibility("Attack Data Randomization", True)
         self.finalizeMenu()
 
-    def _companions_changed(self):
-        enabled = self.settings.get(settingkey.COMPANION_DAMAGE_TOGGLE)
-        self.set_option_visibility(settingkey.COMPANION_KILL_BOSS, enabled)
+    def _attack_data_randomized(self):
+        enabled = self.settings.get(settingkey.ATTACK_DATA_RANDOMIZATION)
         self.set_group_visibility(
-            group_id=_JACK_SKELLINGTON, visible=enabled
+            group_id=_ATTACK_DATA_PARAMS, visible=enabled
         )
-        self.set_group_visibility(
-            group_id=_PING_MULAN, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_DONALD, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_GOOFY, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_RIKU, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_ALADDIN, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_AURON, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_SIMBA, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_JACK_SPARROW, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_BEAST, visible=enabled
-        )
-        self.set_group_visibility(
-            group_id=_TRON, visible=enabled
-        )
+
+    def _element_randomization_on(self):
+        enabled = self.settings.get(settingkey.ATTACK_DATA_ELEMENT)
+        self.set_option_visibility(settingkey.EXCLUDE_SORA_ROXAS_BASE_ATTACK, enabled)
