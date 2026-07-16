@@ -2,7 +2,7 @@ import json
 import random
 import shutil
 import struct
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Optional, Any
 
@@ -20,7 +20,7 @@ REMASTERED_EFFECTS = "remastered-effects"
 REMASTERED_TEXTURES = "remastered-textures"
 
 
-class KeybladeModelVariant(str, Enum):
+class KeybladeModelVariant(StrEnum):
     BASE = "base"
     NIGHTMARE = "nm"
     TRON = "tr"

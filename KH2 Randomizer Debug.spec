@@ -1,9 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 
-block_cipher = None
-
-
 import os, glob, khbr
 khbrpath = os.path.dirname(khbr.__file__)
 def build_datas_recursive(paths):
@@ -31,7 +28,7 @@ def external_data_recursive(paths):
       if dest_dirname == "":
         dest_dirname = "."
       else:
-        dest_dirname = dest_dirname.split("site-packages\\")[1]
+        dest_dirname = dest_dirname.split("site-packages" + os.sep)[1]
       
       data_entry = (filename, dest_dirname)
       datas.append(data_entry)
@@ -56,12 +53,9 @@ a = Analysis(
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
-    win_no_prefer_redirects=False,
-    win_private_assemblies=False,
-    cipher=block_cipher,
     noarchive=False,
 )
-pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+pyz = PYZ(a.pure)
 
 
 
@@ -69,7 +63,6 @@ exe = EXE(
     pyz,
     a.scripts,
     a.binaries,
-    a.zipfiles,
     a.datas,
     [],
     name='KH2 Randomizer DEBUG VERSION',

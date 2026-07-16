@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, StrEnum
 
-class ObjectiveType(str, Enum):
+class ObjectiveType(StrEnum):
     BOSS = "Boss"
     WORLDPROGRESS = "WorldProgress"
     FIGHT = "Fight"
 
-class ObjectiveDifficulty(str, Enum):
+class ObjectiveDifficulty(StrEnum):
     EARLY = "Early"
     MIDDLE = "Middle"
     LATE = "Late"

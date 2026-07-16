@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KH2 Randomizer
+Comment=Kingdom Hearts II Final Mix randomizer seed generator
+Exec=kh2randomizer
+Icon=kh2randomizer
+Categories=Game;
+Terminal=false

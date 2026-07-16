@@ -1,10 +1,36 @@
 import os
+from pathlib import Path
+from typing import Optional
+
 import requests
 from packaging import version
 
-from PySide6.QtWidgets import QProgressDialog
+from PySide6.QtWidgets import QMessageBox, QProgressDialog
 
+from Module import platformutils
 from Module.version import LOCAL_UI_VERSION
+
+WINDOWS_ASSET_NAME = "KH2.Randomizer.exe"
+
+
+def _is_platform_asset(asset_name: str) -> bool:
+    """True if a release asset is the download for the current platform."""
+    if platformutils.is_windows():
+        return asset_name.endswith(".exe")
+    else:
+        return asset_name.endswith(".AppImage")
+
+
+def update_install_target() -> Optional[Path]:
+    """
+    Where a downloaded update gets installed, or None if self-updating isn't possible
+    (on Linux, only an AppImage can replace itself; a source checkout updates via git).
+    """
+    if platformutils.is_windows():
+        return Path(WINDOWS_ASSET_NAME).absolute()
+    else:
+        return platformutils.appimage_path()
+
 
 class GithubReleaseInfo:
     def __init__(self, info_json):
@@ -18,11 +44,23 @@ class GithubReleaseInfo:
         self.download_link = None
         self.updated_time = None
         for asset in info_json["assets"]:
-            if ".exe" in asset["name"]:
+            if _is_platform_asset(asset["name"]):
                 self.download_link = asset["browser_download_url"]
                 self.updated_time = asset["updated_at"]
 
     def download_release(self):
+        target = update_install_target()
+        if target is None:
+            message = QMessageBox(text=(
+                "The seed generator can't update itself when running from source."
+                " Update your checkout (for example, with git pull) instead."
+            ))
+            message.setWindowTitle("KH2 Seed Generator")
+            message.exec()
+            return False
+
+        temp_target = target.parent / (target.name + ".tmp")
+
         progress = QProgressDialog(
             f"Downloading version {self.version}", None, 0, 100, None
         )
@@ -32,16 +70,18 @@ class GithubReleaseInfo:
         with requests.get(self.download_link, stream=True) as response:
             num_bytes = int(response.headers["Content-Length"])
             bytes_downloaded = 0
-            with open("KH2.Randomizer.exe.tmp", mode="wb") as file:
+            with open(temp_target, mode="wb") as file:
                 release_chunk_size = 50 * 1024
                 for chunk in response.iter_content(chunk_size=release_chunk_size):
                     bytes_downloaded += release_chunk_size
-                    progress.setValue(bytes_downloaded*100.0/num_bytes)
+                    progress.setValue(int(bytes_downloaded * 100.0 / num_bytes))
                     file.write(chunk)
-        os.replace("KH2.Randomizer.exe.tmp", "KH2.Randomizer.exe")
+        if not platformutils.is_windows():
+            os.chmod(temp_target, 0o755)
+        os.replace(temp_target, target)
         progress.close()
         return True
-    
+
     def __str__(self):
         return f"{self.version} {self.updated_time} : {self.notes}"
 
@@ -58,9 +98,10 @@ class KH2RandomizerGithubReleases:
                 # THIS LINE IS FOR TESTING PURPOSES ONLY
                 # self.current_version = version.parse("2.2.0")
                 self.current_version = version.parse(LOCAL_UI_VERSION)
-                # if we have a version that is higher than current version, add it to update list
+                # if we have a version that is higher than current version and has a
+                # download for this platform, add it to update list
                 for info in self.infos:
-                    if self.current_version < info.version:
+                    if self.current_version < info.version and info.download_link is not None:
                         self.potential_updates.append(info)
         except:
             # not doing anything if we can't connect to internet or other error occurs

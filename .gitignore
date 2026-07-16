@@ -1,6 +1,8 @@
 *.zip
+*.AppImage
 __pycache__
 venv
+.venv
 .vs
 .vscode
 .idea/

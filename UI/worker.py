@@ -1,3 +1,4 @@
+import os
 import subprocess
 from io import BytesIO
 from pathlib import Path
@@ -6,9 +7,9 @@ from typing import Optional
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QProgressDialog, QFileDialog, QWidget, QMessageBox
 
-from Class.exceptions import RandomizerExceptions
+from Class.exceptions import GeneratorException, RandomizerExceptions
 from Class.seedSettings import SeedSettings, ExtraConfigurationData
-from Module import appconfig
+from Module import appconfig, platformutils
 from Module.RandomizerSettings import RandomizerSettings
 from Module.generate import generateSeed, generateMultiWorldSeed
 from Module.zipper import BossEnemyOnlyZip, CosmeticsOnlyZip, SeedZipResult
@@ -27,7 +28,21 @@ class GenerateModWorker(BaseWorker):
             custom_file_path = Path(custom_executable)
             if custom_file_path.is_file():
                 custom_cwd = custom_file_path.parent
-                subprocess.call(custom_file_path, cwd=custom_cwd)
+                if platformutils.is_windows():
+                    subprocess.call([str(custom_file_path)], cwd=custom_cwd)
+                elif custom_file_path.suffix.lower() == ".exe":
+                    subprocess.call(
+                        platformutils.windows_exe_command(custom_file_path, []), cwd=custom_cwd
+                    )
+                elif os.access(custom_file_path, os.X_OK):
+                    subprocess.call([str(custom_file_path)], cwd=custom_cwd)
+                elif custom_file_path.suffix.lower() == ".sh":
+                    subprocess.call(["/bin/sh", str(custom_file_path)], cwd=custom_cwd)
+                else:
+                    raise GeneratorException(
+                        f"{custom_file_path.name} is not executable. Mark it executable"
+                        " (chmod +x) or choose a .sh or .exe file."
+                    )
 
     def download_mod(self, zip_data: BytesIO, output_file_name: str, title: str):
         last_save_path = appconfig.read_last_save_path()

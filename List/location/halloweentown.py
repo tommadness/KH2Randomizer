@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType, itemType
 from List.inventory import magic, keyblade, ability, misc
@@ -7,7 +7,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     Graveyard = "Graveyard"
     GraveyardChests = "Graveyard Chests"
     FinklesteinsLab = "Finklestein's Lab"
@@ -30,7 +30,7 @@ class NodeId(str, Enum):
     DataVexen = "Data Vexen"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     GraveyardMythrilShard = "Graveyard Mythril Shard"
     GraveyardSerenityGem = "Graveyard Serenity Gem"
     FinklesteinsLabHalloweenTownMap = "Finklestein's Lab Halloween Town Map"

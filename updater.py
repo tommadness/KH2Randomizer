@@ -7,9 +7,10 @@ from PySide6 import QtGui
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QGridLayout, QWidget, QListWidget, QPushButton, QPlainTextEdit
 
+from Module import platformutils
 from Module.resources import resource_path
 from UI import theme
-from UI.GithubInfo.releaseInfo import GithubReleaseInfo, KH2RandomizerGithubReleases
+from UI.GithubInfo.releaseInfo import GithubReleaseInfo, KH2RandomizerGithubReleases, update_install_target
 
 class KH2RandoUpdater(QMainWindow):
     def __init__(self):
@@ -51,12 +52,16 @@ class KH2RandoUpdater(QMainWindow):
             update_info : GithubReleaseInfo = self.updates[index.row()]
             result = update_info.download_release()
             if result:
-                process = subprocess.Popen("KH2.Randomizer.exe")
+                if platformutils.is_windows():
+                    process = subprocess.Popen("KH2.Randomizer.exe")
+                else:
+                    process = subprocess.Popen([str(update_install_target())])
                 sys.exit()
     
 
 
-if __name__=="__main__":
+def main():
+    platformutils.prepare_qt_environment()
     app = QApplication([])
     QtGui.QFontDatabase.addApplicationFont(resource_path('static/KHMenu.otf'))
     window = KH2RandoUpdater()
@@ -75,3 +80,7 @@ if __name__=="__main__":
         app.setStyleSheet((stylesheet + file.read().format(**os.environ)) % css_resources)
     window.show()
     sys.exit(app.exec())
+
+
+if __name__=="__main__":
+    main()

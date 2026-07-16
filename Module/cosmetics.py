@@ -5,7 +5,7 @@ from pathlib import Path
 from Class import settingkey
 from Class.openkhmod import ModAsset, StrDict
 from Class.seedSettings import SeedSettings
-from Module import appconfig
+from Module import appconfig, platformutils
 from Module.cosmeticsmods import music
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
 from Module.cosmeticsmods.field2d import CommandMenuRandomizer, RoomTransitionImageRandomizer
@@ -131,7 +131,7 @@ class CosmeticsMod:
                 if kh2_path.is_dir():
                     for kh2_song in music.kh2_music_list:
                         add_game_song(
-                            song_file_path=kh2_path / kh2_song['filename'],
+                            song_file_path=kh2_path / platformutils.fs_relative(kh2_song['filename']),
                             category=kh2_song['type'][0].lower(),
                             song_dmca=kh2_song.get('dmca', False)
                         )
@@ -140,7 +140,7 @@ class CosmeticsMod:
                 if settings.get(enabled_key) and game_music_path.is_dir():
                     for song in game_music_list:
                         add_game_song(
-                            song_file_path=game_music_path / song['name'],
+                            song_file_path=game_music_path / platformutils.fs_relative(song['name']),
                             category=song['kind'],
                             song_dmca=song.get('dmca', False)
                         )

@@ -1,9 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 
-block_cipher = None
-
-
 import os, glob, shutil, importlib, khbr
 
 for root, dirs, files in os.walk(DISTPATH):
@@ -38,7 +35,7 @@ def external_data_recursive(paths):
       if dest_dirname == "":
         dest_dirname = "."
       else:
-        dest_dirname = dest_dirname.split("site-packages\\")[1]
+        dest_dirname = dest_dirname.split("site-packages" + os.sep)[1]
       
       data_entry = (filename, dest_dirname)
       datas.append(data_entry)
@@ -62,19 +59,15 @@ updater_analysis = Analysis(
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
-    win_no_prefer_redirects=False,
-    win_private_assemblies=False,
-    cipher=block_cipher,
     noarchive=False,
 )
 
-pyz = PYZ(updater_analysis.pure, updater_analysis.zipped_data, cipher=block_cipher)
+pyz = PYZ(updater_analysis.pure)
 
 updater_exe = EXE(
     pyz,
     updater_analysis.scripts,
     updater_analysis.binaries,
-    updater_analysis.zipfiles,
     updater_analysis.datas,
     [],
     name='cli_gen',

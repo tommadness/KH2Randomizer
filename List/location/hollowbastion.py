@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType, itemType
 from List.inventory import magic, keyblade, ability, summon, report, storyunlock, form, misc
@@ -7,7 +7,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     MarketplaceMapPopup = "Marketplace Map Popup"
     Borough = "Borough"
     BoroughChests = "Borough Chests"
@@ -56,7 +56,7 @@ class NodeId(str, Enum):
     TransportToRemembrance = "Transport to Remembrance"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     MarketplaceMap = "Marketplace Map"
     BoroughDriveRecovery = "Borough Drive Recovery"
     BoroughApBoost = "Borough AP Boost"

@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType
 from List.inventory import magic, keyblade
@@ -6,7 +6,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     PoohsHowse = "Pooh's Howse"
     PoohsHowseChests = "Pooh's Howse Chests"
     PigletsHowse = "Piglet's Howse"
@@ -22,7 +22,7 @@ class NodeId(str, Enum):
     StarryHillPopups = "Starry Hill Popups"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     PoohsHowseHundredAcreWoodMap = "Pooh's House 100 Acre Wood Map"
     PoohsHowseApBoost = "Pooh's House AP Boost"
     PoohsHowseMythrilStone = "Pooh's House Mythril Stone"

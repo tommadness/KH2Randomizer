@@ -1,11 +1,11 @@
-from enum import Enum
+from enum import StrEnum
 
 from Class.newLocationClass import KH2Location
 from List.configDict import locationType, itemType, locationCategory
 from List.location.graph import LocationGraphBuilder, START_NODE
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     FreeDev1 = "Synthesis Free Dev 1"
     FreeDev1Part2 = "Synthesis Free Dev 1 Part 2"
     FreeDev1Part3 = "Synthesis Free Dev 1 Part 3"

@@ -2,7 +2,7 @@ import subprocess
 from pathlib import Path
 
 from Class.exceptions import GeneratorException
-from Module import appconfig
+from Module import appconfig, platformutils
 
 
 class BinaryArchiver:
@@ -21,6 +21,8 @@ class BinaryArchiver:
         if not bar_exe.is_file():
             raise GeneratorException("No OpenKh.Command.Bar.exe found.")
 
+        platformutils.ensure_windows_exe_runnable()
+
         self.bar_exe = bar_exe
 
     def extract_bar(self, bar_file: Path, destination: Path):
@@ -29,11 +31,11 @@ class BinaryArchiver:
         """
         destination.mkdir(parents=True, exist_ok=True)
         # -o specifies the output location
-        args = [self.bar_exe, "unpack", "-o", destination, bar_file]
-        subprocess.call(args, creationflags=subprocess.CREATE_NO_WINDOW)
+        args = platformutils.windows_exe_command(self.bar_exe, ["unpack", "-o", destination, bar_file])
+        subprocess.call(args, creationflags=platformutils.no_window_flags())
 
     def create_bar(self, bar_json_file: Path, destination: Path):
         """Packs a BAR file to the destination file from a JSON "project file"."""
         # -o specifies the output location
-        args = [self.bar_exe, "pack", "-o", destination, bar_json_file]
-        subprocess.call(args, creationflags=subprocess.CREATE_NO_WINDOW)
+        args = platformutils.windows_exe_command(self.bar_exe, ["pack", "-o", destination, bar_json_file])
+        subprocess.call(args, creationflags=platformutils.no_window_flags())

@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType
 from List.inventory import misc, magic, keyblade, ability, summon
@@ -7,7 +7,7 @@ from List.location.graph import RequirementEdge, chest, popup, item_bonus, stat_
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     AgrabahMapPopup = "Agrabah Map Popup"
     Agrabah = "Agrabah"
     AgrabahChests = "Agrabah Chests"
@@ -33,7 +33,7 @@ class NodeId(str, Enum):
     DataLexaeus = "Data Lexaeus"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     AgrabahMap = "Agrabah Map"
     AgrabahDarkShard = "Agrabah Dark Shard"
     AgrabahMythrilShard = "Agrabah Mythril Shard"

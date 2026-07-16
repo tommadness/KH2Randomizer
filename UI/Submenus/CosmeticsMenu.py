@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QListWidget, QHBoxLayout, QFileDialog, QLabel, QGr
 from Class import settingkey
 from Class.seedSettings import SeedSettings, ExtraConfigurationData
 from List import configDict
-from Module import appconfig
+from Module import appconfig, platformutils
 from Module.cosmetics import CustomCosmetics, CosmeticsMod
 from UI import configui
 from UI.Submenus.CustomVisualsDialogs import ItempicViewerDialog, RoomTransitionViewerDialog, EndingPictureViewerDialog, \
@@ -255,7 +255,12 @@ class CosmeticsMenu(KH2Submenu):
 
     def _add_custom_executable(self):
         file_dialog = QFileDialog()
-        outfile_name, _ = file_dialog.getOpenFileName(self, filter='Executables (*.exe *.bat)')
+        if platformutils.is_windows():
+            name_filter = 'Executables (*.exe *.bat)'
+        else:
+            # Linux executables are often extensionless, so allow choosing any file
+            name_filter = 'Executables (*.exe *.sh *);;All files (*)'
+        outfile_name, _ = file_dialog.getOpenFileName(self, filter=name_filter)
         if outfile_name != '':
             self.custom_cosmetics.add_custom_executable(outfile_name)
         self._reload_custom_executables_list()
@@ -310,7 +315,7 @@ class CosmeticsMenu(KH2Submenu):
     def _open_custom_music_folder():
         custom_music_path = appconfig.read_custom_music_path()
         if custom_music_path is not None:
-            os.startfile(custom_music_path)
+            platformutils.open_folder(custom_music_path)
 
     def _make_cosmetics_only_mod(self):
         extra_data = ExtraConfigurationData(

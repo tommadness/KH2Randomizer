@@ -26,7 +26,7 @@ class DevCreateRecolorDialog(QDialog):
         row = 0
 
         grid.addWidget(QLabel("Image File"), row, 0)
-        self.image_path_field = QLineEdit(r"C:\games\kh2\extract\kh2\remastered\obj\P_EX100.mdlx\-0.dds")
+        self.image_path_field = QLineEdit(str(Path.home()))
         self.image_path_field.textChanged.connect(self._do_preview)
         grid.addWidget(self.image_path_field, row, 1, 1, 2)
         row = row + 1

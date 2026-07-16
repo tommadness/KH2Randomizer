@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 VANILLA = "vanilla"
 RANDOMIZE_ONE = "rand1"
@@ -7,7 +7,7 @@ RANDOMIZE_IN_GAME_ONLY = "randInGameOnly"
 RANDOMIZE_CUSTOM_ONLY = "randCustomOnly"
 
 
-class locationType(str, Enum):
+class locationType(StrEnum):
     LoD = "Land of Dragons"
     BC = "Beast's Castle"
     HB = "Hollow Bastion"
@@ -45,7 +45,7 @@ class locationType(str, Enum):
     Creations = "Creations"
 
 
-class locationCategory(str, Enum):
+class locationCategory(StrEnum):
     CHEST = "Chest"
     POPUP = "Popup"
     CREATION = "Creation"
@@ -72,7 +72,7 @@ class locationCategory(str, Enum):
         ]
 
 
-class itemDifficulty(str, Enum):
+class itemDifficulty(StrEnum):
     SUPEREASY = "Super Easy"
     EASY = "Easy"
     SLIGHTLY_EASY = "Slightly Easy"
@@ -84,7 +84,7 @@ class itemDifficulty(str, Enum):
     NIGHTMARE = "Nightmare"
 
     
-class itemBias(str, Enum):
+class itemBias(StrEnum):
     VERY_EARLY = "Very Early"
     EARLY = "Early"
     SLIGHTLY_EARLY = "Slightly Early"
@@ -96,7 +96,7 @@ class itemBias(str, Enum):
     NIGHTMARE = "As Late as Possible"
 
 
-class locationDepth(str, Enum):
+class locationDepth(StrEnum):
     Anywhere = "Anywhere"
     NonSuperboss = "SecondVisit"  # Keep an old naming for compatibility
     FirstVisit = "FirstVisit"
@@ -122,7 +122,7 @@ def location_depth_choices() -> dict[locationDepth, str]:
     }
 
 
-class expCurve(str, Enum):
+class expCurve(StrEnum):
     DAWN = "Dawn"
     MIDDAY = "Midday"
     DUSK = "Dusk"
@@ -132,7 +132,7 @@ class expCurve(str, Enum):
         return next(c for c in expCurve if c.name == name)
 
 
-class itemType(str, Enum):
+class itemType(StrEnum):
     PROOF_OF_CONNECTION = "Proof of Connection"
     PROOF_OF_PEACE = "Proof of Peace"
     PROOF_OF_NONEXISTENCE = "Proof of Nonexistence"
@@ -174,44 +174,44 @@ class itemType(str, Enum):
     OBJECTIVE="Objective"
 
 
-class itemRarity(str, Enum):
+class itemRarity(StrEnum):
     COMMON = "Common"
     UNCOMMON = "Uncommon"
     RARE = "Rare"
     MYTHIC = "Mythic"
 
 
-class SoraLevelOption(str, Enum):
+class SoraLevelOption(StrEnum):
     LEVEL_1 = "Level"
     LEVEL_50 = "ExcludeFrom50"
     LEVEL_99 = "ExcludeFrom99"
 
 
-class AbilityPoolOption(str, Enum):
+class AbilityPoolOption(StrEnum):
     DEFAULT = "default"
     RANDOMIZE = "randomize"
     RANDOMIZE_SUPPORT = "randomize support"
     RANDOMIZE_STACKABLE = "randomize stackable"
 
 
-class ItemAccessibilityOption(str, Enum):
+class ItemAccessibilityOption(StrEnum):
     ALL = "all"
     BEATABLE = "beatable"
 
 
-class SoftlockPreventionOption(str, Enum):
+class SoftlockPreventionOption(StrEnum):
     DEFAULT = "default"
     REVERSE = "reverse"
     BOTH = "both"
 
 
-class DisableFinalOption(str, Enum):
+class DisableFinalOption(StrEnum):
     DEFAULT = "default"
     NO_ANTIFORM = "no_antiform"
     NO_FINAL = "no_final"
 
 
-class BattleLevelOption(str, Enum):
+class BattleLevelOption(StrEnum):
     NORMAL = "Normal"
     SHUFFLE = "Shuffle"
     OFFSET = "Offset"
@@ -221,7 +221,7 @@ class BattleLevelOption(str, Enum):
     SPHERE_SCALING = "Scale to Spheres"
 
 
-class ObjectivePoolOption(str, Enum):
+class ObjectivePoolOption(StrEnum):
     ALL = "All Objectives"
     BOSSES = "Bosses Only"
     LASTSTORY = "Last Story Check"
@@ -229,14 +229,14 @@ class ObjectivePoolOption(str, Enum):
     HITLIST = "Spike Hit List"
 
 
-class LevelUpStatBonus(str, Enum):
+class LevelUpStatBonus(StrEnum):
     STRENGTH = "Strength"
     MAGIC = "Magic"
     DEFENSE = "Defense"
     AP = "AP"
 
 
-class HintType(str, Enum):
+class HintType(StrEnum):
     DISABLED = "Disabled"
     JSMARTEE = "JSmartee"
     SHANANAS = "Shananas"
@@ -245,7 +245,7 @@ class HintType(str, Enum):
     SPOILER = "Spoiler"
 
 
-class FinalDoorRequirement(str, Enum):
+class FinalDoorRequirement(StrEnum):
     THREE_PROOF = "Three Proofs"
     OBJECTIVES = "Objectives"
     EMBLEMS = "Emblems"

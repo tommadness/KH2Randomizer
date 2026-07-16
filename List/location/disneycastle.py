@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType, itemType
 from List.inventory import misc, magic, keyblade, ability, form
@@ -7,7 +7,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     DisneyCastleCourtyard = "DC Courtyard"
     DisneyCastleCourtyardChests = "DC Courtyard Chests"
     Library = "Library"
@@ -29,7 +29,7 @@ class NodeId(str, Enum):
     LingeringWill = "Lingering Will"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     CourtyardMythrilShard = "DC Courtyard Mythril Shard"
     CourtyardStarRecipe = "DC Courtyard Star Recipe"
     CourtyardApBoost = "DC Courtyard AP Boost"

@@ -295,6 +295,7 @@ def _invoke_khbr_with_overrides(
     # return create_spoiler_text(game_data.spoilers)
 
     ### Backup old way
+    from Module import compat as _compat  # noqa: F401 - must precede kh2fmbr import
     from kh2fmbr.randomizer import Randomizer as BossEnemyRandomizer
     enemySpoilers = BossEnemyRandomizer().generateToZip("kh2", enemy_options, mod, out_zip)
     return enemySpoilers
