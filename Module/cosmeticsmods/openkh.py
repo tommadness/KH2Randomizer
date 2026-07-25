@@ -17,13 +17,7 @@ class BinaryArchiver:
         if openkh_path is None:
             raise GeneratorException("No OpenKH path configured.")
 
-        bar_exe = openkh_path / "OpenKh.Command.Bar.exe"
-        if not bar_exe.is_file():
-            raise GeneratorException("No OpenKh.Command.Bar.exe found.")
-
-        platformutils.ensure_windows_exe_runnable()
-
-        self.bar_exe = bar_exe
+        self.bar_launcher = platformutils.openkh_tool_launcher(openkh_path, "OpenKh.Command.Bar")
 
     def extract_bar(self, bar_file: Path, destination: Path):
         """
@@ -31,11 +25,11 @@ class BinaryArchiver:
         """
         destination.mkdir(parents=True, exist_ok=True)
         # -o specifies the output location
-        args = platformutils.windows_exe_command(self.bar_exe, ["unpack", "-o", destination, bar_file])
+        args = self.bar_launcher + ["unpack", "-o", str(destination), str(bar_file)]
         subprocess.call(args, creationflags=platformutils.no_window_flags())
 
     def create_bar(self, bar_json_file: Path, destination: Path):
         """Packs a BAR file to the destination file from a JSON "project file"."""
         # -o specifies the output location
-        args = platformutils.windows_exe_command(self.bar_exe, ["pack", "-o", destination, bar_json_file])
+        args = self.bar_launcher + ["pack", "-o", str(destination), str(bar_json_file)]
         subprocess.call(args, creationflags=platformutils.no_window_flags())

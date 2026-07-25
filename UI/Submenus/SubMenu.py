@@ -497,7 +497,7 @@ class KH2Submenu(QWidget):
     def make_check_box(self, name: str):
         check_box = QCheckBox()
         check_box.setCheckState(Qt.Checked if self.settings.get(name) else Qt.Unchecked)
-        check_box.stateChanged.connect(lambda state: self.settings.set(name, state == Qt.Checked))
+        check_box.toggled.connect(lambda checked: self.settings.set(name, checked))
         return check_box
 
     def make_int_spin_box(self, name: str):

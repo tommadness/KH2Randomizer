@@ -4,6 +4,8 @@ from typing import Optional
 
 import yaml
 
+from Module import platformutils
+
 AUTOSAVE_FOLDER = "auto-save"
 PRESET_FOLDER = "presets"
 
@@ -59,7 +61,7 @@ def _read_directory(key: str) -> Optional[Path]:
     if value is None:
         return None
 
-    candidate = Path(value)
+    candidate = platformutils.path_from_config_value(value)
     if candidate.is_dir():
         return candidate
     else:
@@ -116,7 +118,7 @@ def extracted_data_path() -> Optional[Path]:
             # Regardless, nothing we can do here.
             return None
 
-        extracted_data = Path(game_data_path)
+        extracted_data = platformutils.path_from_config_value(game_data_path)
         if extracted_data.is_dir():
             return extracted_data
         else:

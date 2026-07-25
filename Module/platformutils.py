@@ -91,6 +91,50 @@ def windows_exe_command(exe_path, args: list) -> list:
     return ["wine"] + command
 
 
+def openkh_tool_launcher(openkh_path: Path, tool_name: str) -> list:
+    """
+    Command prefix that runs the given OpenKH tool (e.g. "OpenKh.Command.Bar") on the
+    current platform; append the tool's arguments to it. On Windows this is the .exe.
+    Elsewhere, prefers a native Linux build of the tool, then the framework-dependent
+    .dll via the dotnet runtime, then the .exe through wine.
+    """
+    exe = openkh_path / f"{tool_name}.exe"
+    if is_windows():
+        if not exe.is_file():
+            raise GeneratorException(f"No {tool_name}.exe found.")
+        return [str(exe)]
+
+    native = openkh_path / tool_name
+    if native.is_file() and os.access(native, os.X_OK):
+        return [str(native)]
+
+    dll = openkh_path / f"{tool_name}.dll"
+    if dll.is_file() and shutil.which("dotnet") is not None:
+        # OpenKH releases target an older .NET; roll forward to whatever is installed
+        return ["dotnet", "--roll-forward", "LatestMajor", str(dll)]
+
+    if exe.is_file():
+        if wine_available():
+            return ["wine", str(exe)]
+        raise GeneratorException(
+            f"Found {tool_name} in the OpenKH folder, but no way to run it on this"
+            " system. Install the .NET runtime (dotnet) or Wine and try again."
+        )
+
+    raise GeneratorException(f"No {tool_name} found in the OpenKH folder.")
+
+
 def fs_relative(data_path: str) -> Path:
     """Converts a backslash-separated archive-internal path to a relative Path."""
     return Path(data_path.replace("\\", "/"))
+
+
+def path_from_config_value(value: str) -> Path:
+    """
+    Interprets a path read from a config file. On Linux, translates Wine-style paths
+    (Z:\\home\\...) that tools previously running under Wine may have written, since
+    wine's Z: drive maps to the filesystem root.
+    """
+    if not is_windows() and len(value) >= 2 and value[0] in "Zz" and value[1] == ":":
+        return Path(value[2:].replace("\\", "/"))
+    return Path(value)

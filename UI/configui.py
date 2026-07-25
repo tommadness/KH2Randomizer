@@ -20,7 +20,11 @@ def openkh_folder_getter() -> bool:
         return False
 
     selected_path = Path(selected_directory)
-    mods_manager_names = ("OpenKh.Tools.ModsManager.exe", "OpenKh.Tools.ModsManager")
+    mods_manager_names = (
+        "OpenKh.Tools.ModsManager.exe",
+        "OpenKh.Tools.ModsManager",
+        "OpenKh.Tools.ModsManager.Avalonia",
+    )
     if not any((selected_path / name).is_file() for name in mods_manager_names):
         show_alert("Not a valid OpenKH folder.")
         return False
