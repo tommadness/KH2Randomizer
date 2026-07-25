@@ -1,0 +1,74 @@
+name: Build AppImage
+
+on:
+  push:
+    branches: [linux-port]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write # attach the AppImage to releases
+
+jobs:
+  build:
+    # Build on the oldest supported distro: the bundled glibc floor comes from
+    # the build machine, so newer runners would break older distros.
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Obtain extracted_data.zip
+        env:
+          EXTRACTED_DATA_URL: ${{ vars.EXTRACTED_DATA_URL }}
+        run: |
+          if [ -n "$EXTRACTED_DATA_URL" ]; then
+            curl -fL -o extracted_data.zip "$EXTRACTED_DATA_URL"
+          else
+            # Pull the same data file the upstream Windows release bundles inside its exe
+            pip install pyinstxtractor-ng
+            curl -fL -o upstream.exe \
+              "https://github.com/tommadness/KH2Randomizer/releases/latest/download/KH2.Randomizer.exe"
+            pyinstxtractor-ng upstream.exe
+            cp upstream.exe_extracted/extracted_data.zip .
+            rm -rf upstream.exe upstream.exe_extracted
+          fi
+          test -s extracted_data.zip
+
+      - name: Build AppImage
+        env:
+          # appimagetool runs without FUSE on CI runners
+          APPIMAGE_EXTRACT_AND_RUN: '1'
+          PYTHON: python
+        run: ./packaging/linux/build_appimage.sh
+
+      - name: Smoke test
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq libegl1 libgl1 libxkbcommon0
+          chmod +x KH2.Randomizer-x86_64.AppImage
+          # Boot headless for a few seconds; exit code 124 means it was still
+          # running (the GUI event loop) when the timeout killed it.
+          rc=0
+          timeout 20 env QT_QPA_PLATFORM=offscreen APPIMAGE_EXTRACT_AND_RUN=1 \
+            ./KH2.Randomizer-x86_64.AppImage || rc=$?
+          test "$rc" -eq 124
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KH2.Randomizer-x86_64.AppImage
+          path: KH2.Randomizer-x86_64.AppImage
+          compression-level: 0
+
+      - name: Attach to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload '${{ github.event.release.tag_name }}' KH2.Randomizer-x86_64.AppImage --clobber
