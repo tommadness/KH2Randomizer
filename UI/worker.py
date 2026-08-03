@@ -7,7 +7,7 @@ from typing import Optional
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QProgressDialog, QFileDialog, QWidget, QMessageBox
 
-from Class.exceptions import GeneratorException, RandomizerExceptions
+from Class.exceptions import ExternalExecutableException, RandomizerExceptions
 from Class.seedSettings import SeedSettings, ExtraConfigurationData
 from Module import appconfig, platformutils
 from Module.RandomizerSettings import RandomizerSettings
@@ -39,7 +39,7 @@ class GenerateModWorker(BaseWorker):
                 elif custom_file_path.suffix.lower() == ".sh":
                     subprocess.call(["/bin/sh", str(custom_file_path)], cwd=custom_cwd)
                 else:
-                    raise GeneratorException(
+                    raise ExternalExecutableException(
                         f"{custom_file_path.name} is not executable. Mark it executable"
                         " (chmod +x) or choose a .sh or .exe file."
                     )

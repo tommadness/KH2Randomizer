@@ -21,4 +21,15 @@ class BossEnemyException(Exception):
 class BackendException(Exception):
     pass
 
-RandomizerExceptions = (GeneratorException,HintException,SettingsException,ValidationException)
+
+class ExternalExecutableException(Exception):
+    pass
+
+
+RandomizerExceptions = (
+    GeneratorException,
+    HintException,
+    SettingsException,
+    ValidationException,
+    ExternalExecutableException,
+)
