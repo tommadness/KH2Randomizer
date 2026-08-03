@@ -61,6 +61,7 @@ class KH2RandoUpdater(QMainWindow):
 
 
 def main():
+    platformutils.initialize_application_data_directory()
     platformutils.prepare_qt_environment()
     app = QApplication([])
     QtGui.QFontDatabase.addApplicationFont(resource_path('static/KHMenu.otf'))

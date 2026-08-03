@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # attach the AppImage to releases
+  contents: read
 
 jobs:
   build:
@@ -16,9 +16,11 @@ jobs:
     # the build machine, so newer runners would break older distros.
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
           cache: pip
@@ -36,7 +38,7 @@ jobs:
             curl -fL -o extracted_data.zip "$EXTRACTED_DATA_URL"
           else
             # Pull the same data file the upstream Windows release bundles inside its exe
-            pip install pyinstxtractor-ng
+            pip install pyinstxtractor-ng==2026.7.3
             curl -fL -o upstream.exe \
               "https://github.com/tommadness/KH2Randomizer/releases/latest/download/KH2.Randomizer.exe"
             pyinstxtractor-ng upstream.exe
@@ -63,14 +65,24 @@ jobs:
             ./KH2.Randomizer-x86_64.AppImage || rc=$?
           test "$rc" -eq 124
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: KH2.Randomizer-x86_64.AppImage
           path: KH2.Randomizer-x86_64.AppImage
           compression-level: 0
 
+  release:
+    if: github.event_name == 'release'
+    needs: build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: KH2.Randomizer-x86_64.AppImage
+
       - name: Attach to release
-        if: github.event_name == 'release'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload '${{ github.event.release.tag_name }}' KH2.Randomizer-x86_64.AppImage --clobber

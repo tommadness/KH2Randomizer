@@ -17,6 +17,7 @@ PYTHON=${PYTHON:-.venv/bin/python}
 BUILD_DIR=build/appimage
 APPDIR="$BUILD_DIR/AppDir"
 OUTPUT_NAME="KH2.Randomizer-x86_64.AppImage"
+APPIMAGETOOL_SHA256="a6d71e2b6cd66f8e8d16c37ad164658985e0cf5fcaa950c90a482890cb9d13e0"
 
 if [ ! -f extracted_data.zip ]; then
     echo "error: extracted_data.zip not found in the repo root (required for bundling)" >&2
@@ -42,6 +43,7 @@ if ! command -v "$APPIMAGETOOL" >/dev/null 2>&1; then
             "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
         chmod +x "$APPIMAGETOOL"
     fi
+    echo "$APPIMAGETOOL_SHA256  $APPIMAGETOOL" | sha256sum --check -
 fi
 
 ARCH=x86_64 "$APPIMAGETOOL" "$APPDIR" "$OUTPUT_NAME"

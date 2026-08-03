@@ -29,6 +29,9 @@ Runtime notes:
   so `wine` must be installed for those features. Everything else works without it.
 - `extracted_data.zip` (bundled with releases) is needed in the repo root for the
   first-launch data extraction, the same as when building the Windows executable.
+- Mutable application data (configuration, presets, autosaves, overrides, and extracted
+  data) is stored under `$XDG_DATA_HOME/kh2randomizer`, or
+  `~/.local/share/kh2randomizer` when `XDG_DATA_HOME` is not set.
 
 ### AppImage
 

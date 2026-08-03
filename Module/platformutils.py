@@ -30,6 +30,31 @@ def appimage_path() -> Optional[Path]:
     return Path(path) if path else None
 
 
+def application_data_directory() -> Path:
+    """Returns the stable directory used for mutable application data."""
+    if is_linux():
+        xdg_data_home = os.environ.get("XDG_DATA_HOME")
+        base = Path(xdg_data_home).expanduser() if xdg_data_home else Path.home() / ".local" / "share"
+        return base / "kh2randomizer"
+    return Path.cwd()
+
+
+def initialize_application_data_directory() -> Path:
+    """
+    Selects a stable, writable working directory for mutable application data.
+
+    The existing application stores configuration, presets, autosaves, overrides, and
+    extracted data relative to the working directory. Preserve that behavior on Windows,
+    while preventing Linux desktop/AppImage launches from writing into an arbitrary or
+    read-only launch directory.
+    """
+    data_directory = application_data_directory()
+    if is_linux():
+        data_directory.mkdir(parents=True, exist_ok=True)
+        os.chdir(data_directory)
+    return data_directory
+
+
 def no_window_flags() -> int:
     """subprocess creation flags that suppress a console window on Windows."""
     return subprocess.CREATE_NO_WINDOW if is_windows() else 0

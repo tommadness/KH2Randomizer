@@ -1046,6 +1046,7 @@ class KH2RandomizerApp(QMainWindow):
 
 
 def main():
+    platformutils.initialize_application_data_directory()
     platformutils.prepare_qt_environment()
     app = QApplication([])
 
