@@ -22,6 +22,9 @@ jobs:
           cache: pip
       - name: Install dependencies
         run: python -m pip install --retries 5 -r requirements.txt pytest
+      - name: Install Linux GUI runtime libraries
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq libegl1 libgl1 libxkbcommon0
       - name: Compile
         run: python -m compileall -q Class List Module UI linux_main.py localUI.py updater.py
       - name: Test
