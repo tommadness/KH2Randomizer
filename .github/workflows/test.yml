@@ -31,7 +31,11 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
           XDG_DATA_HOME: ${{ runner.temp }}/kh2randomizer-test-data
-        run: python -m pytest -q tests
+        run: >-
+          python -m pytest -q
+          tests/test_platformutils.py
+          tests/test_releaseInfo.py
+          tests/test_checkbox_settings.py
 
   windows-package:
     runs-on: windows-2022

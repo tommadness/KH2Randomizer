@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication
 
-from UI.Submenus.SubMenu import SubMenu
+from UI.Submenus.SubMenu import KH2Submenu
 
 
 class _Settings:
@@ -19,7 +19,7 @@ def test_checkbox_uses_boolean_toggle_value():
     app = QApplication.instance() or QApplication([])
     settings = _Settings()
 
-    checkbox = SubMenu.make_check_box_for_settings(settings, "example")
+    checkbox = KH2Submenu.make_check_box_for_settings(settings, "example")
     assert checkbox.checkState() == Qt.Checked
     assert settings.value is True
 

@@ -1,4 +1,5 @@
 bitstring==3.1.9
+khbr==4.0.5
 kh2fmbr==0.0.1
 numpy==2.5.1
 packaging==26.2
