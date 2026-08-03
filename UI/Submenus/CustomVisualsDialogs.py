@@ -6,7 +6,7 @@ from PIL import Image
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QWidget, QLabel, QScrollArea, QGridLayout, QMenuBar, QMenu, QFrame
 
-from Module import appconfig
+from Module import appconfig, platformutils
 from Module.cosmeticsmods.endingpic import EndingPictureRandomizer
 from Module.cosmeticsmods.field2d import RoomTransitionImageRandomizer, CommandMenuRandomizer
 from Module.cosmeticsmods.itempic import ItempicRandomizer
@@ -109,7 +109,7 @@ class VisualsViewerDialog(QDialog):
         else:
             folder_path = custom_visuals_path / self.folder_name
             folder_path.mkdir(parents=True, exist_ok=True)
-            os.startfile(folder_path)
+            platformutils.open_folder(folder_path)
 
     def _configure_custom_visuals(self):
         if configui.custom_visuals_folder_getter():

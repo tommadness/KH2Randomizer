@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from Class.newLocationClass import KH2Location
 from List.configDict import locationType, locationCategory, itemType
@@ -6,7 +6,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, LocationGrap
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     AwakeningPuzzle = "Awakening Puzzle"
     HeartPuzzle = "Heart Puzzle"
     DualityPuzzle = "Duality Puzzle"
@@ -15,7 +15,7 @@ class NodeId(str, Enum):
     SunsetPuzzle = "Sunset Puzzle"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     AwakeningApBoost = "Awakening (AP Boost)"
     HeartSerenityCrystal = "Heart (Serenity Crystal)"
     DualityRareDocument = "Duality (Rare Document)"

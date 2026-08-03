@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType, itemType
 from List.inventory import magic, keyblade, ability, misc, report
@@ -7,7 +7,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     Passage = "Passage"
     PassageChests = "Passage Chests"
     InnerChamber = "Inner Chamber"
@@ -39,7 +39,7 @@ class NodeId(str, Enum):
     DataZexion = "Data Zexion"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     PassageMythrilShard = "Passage Mythril Shard"
     PassageMythrilStone = "Passage Mythril Stone"
     PassageEther = "Passage Ether"

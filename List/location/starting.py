@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from Class.newLocationClass import KH2Location
 from List.configDict import locationType
@@ -6,7 +6,7 @@ from List.inventory import proof
 from List.location.graph import chest, LocationGraphBuilder, START_NODE
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     GardenOfAssemblageMap = "Garden of Assemblage Map"
     GoaLostIllusion = "GoA Lost Illusion"
     ProofOfNonexistence = "Proof of Nonexistence"

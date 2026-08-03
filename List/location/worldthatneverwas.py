@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType, itemType
 from List.inventory import keyblade, ability, magic, report
@@ -7,7 +7,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     FragmentCrossing = "Fragment Crossing"
     FragmentCrossingChests = "Fragment Crossing Chests"
     Roxas = "Roxas"
@@ -33,7 +33,7 @@ class NodeId(str, Enum):
     DataXemnas = "Data Xemnas"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     FragmentCrossingMythrilStone = "Fragment Crossing Mythril Stone"
     FragmentCrossingMythrilCrystal = "Fragment Crossing Mythril Crystal"
     FragmentCrossingApBoost = "Fragment Crossing AP Boost"

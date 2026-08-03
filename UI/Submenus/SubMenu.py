@@ -494,11 +494,15 @@ class KH2Submenu(QWidget):
         combo_box.currentIndexChanged.connect(lambda index: self.settings.set(name, keys[index]))
         return combo_box
 
-    def make_check_box(self, name: str):
+    @staticmethod
+    def make_check_box_for_settings(settings, name: str):
         check_box = QCheckBox()
-        check_box.setCheckState(Qt.Checked if self.settings.get(name) else Qt.Unchecked)
-        check_box.stateChanged.connect(lambda state: self.settings.set(name, state == Qt.Checked))
+        check_box.setCheckState(Qt.Checked if settings.get(name) else Qt.Unchecked)
+        check_box.toggled.connect(lambda checked: settings.set(name, checked))
         return check_box
+
+    def make_check_box(self, name: str):
+        return self.make_check_box_for_settings(self.settings, name)
 
     def make_int_spin_box(self, name: str):
         setting: IntSpinner = Class.seedSettings.settings_by_name[name]

@@ -1,0 +1,4 @@
+#!/bin/sh
+# AppImage entry point. Arguments (such as --updater) pass through to the app.
+HERE="$(dirname "$(readlink -f "$0")")"
+exec "$HERE/usr/bin/kh2randomizer/kh2randomizer" "$@"

@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 from typing import Optional
 
 from Class.newLocationClass import KH2Location
@@ -10,7 +10,7 @@ from List.location.graph import RequirementEdge, LocationGraphBuilder, START_NOD
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     Valor2 = "Valor Level 2"
     Valor3 = "Valor Level 3"
     Valor4 = "Valor Level 4"

@@ -15,7 +15,7 @@ from PySide6.QtWidgets import QDialog, QMenuBar, QMenu, QComboBox, QSpinBox, QLa
 
 from Class import settingkey
 from Class.seedSettings import SeedSettings
-from Module import appconfig
+from Module import appconfig, platformutils
 from Module.cosmeticsmods import texture
 from Module.cosmeticsmods.texture import TextureRecolorSettings, TextureRecolorizer, recolor_image, RecolorDefinition, \
     TextureConditionsLoader
@@ -353,7 +353,7 @@ class TextureRecolorSettingsDialog(QDialog):
 
     @staticmethod
     def _open_preset_folder():
-        os.startfile(TextureRecolorSettings.texture_recolors_presets_folder())
+        platformutils.open_folder(TextureRecolorSettings.texture_recolors_presets_folder())
 
     def _import_preset(self):
         file_dialog = QFileDialog(self)

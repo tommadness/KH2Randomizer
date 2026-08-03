@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType
 from List.inventory import misc, magic, keyblade, ability
@@ -7,7 +7,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     BambooGrove = "Bamboo Grove"
     BambooGroveChests = "Bamboo Grove Chests"
     EncampmentAreaMap = "Encampment Area Map"
@@ -29,7 +29,7 @@ class NodeId(str, Enum):
     DataXigbar = "Data Xigbar"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     BambooGroveDarkShard = "Bamboo Grove Dark Shard"
     BambooGroveEther = "Bamboo Grove Ether"
     BambooGroveMythrilShard = "Bamboo Grove Mythril Shard"

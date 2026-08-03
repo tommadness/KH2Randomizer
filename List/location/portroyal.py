@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType
 from List.inventory import magic, keyblade, ability, misc, summon, report
@@ -7,7 +7,7 @@ from List.location.graph import DefaultLogicGraph, RequirementEdge, chest, popup
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     Rampart = "Ramparts"
     RampartChests = "Ramparts Chests"
     PortRoyalTown = "PR Town"
@@ -34,7 +34,7 @@ class NodeId(str, Enum):
     DataLuxord = "Data Luxord"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     RampartNavalMap = "Rampart Naval Map"
     RampartMythrilStone = "Rampart Mythril Stone"
     RampartDarkShard = "Rampart Dark Shard"

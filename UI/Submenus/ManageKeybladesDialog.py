@@ -9,7 +9,7 @@ from PySide6.QtWidgets import QDialog, QMenuBar, QMenu, QVBoxLayout, QWidget, QG
     QFileDialog
 
 from Class.seedSettings import SeedSettings
-from Module import appconfig
+from Module import appconfig, platformutils
 from Module.cosmeticsmods.keyblade import KeybladeRandomizer, ReplacementKeyblade
 from UI import theme, configui
 from UI.Submenus.KeybladePackageDialog import KeybladePackageDialog, KeybladeModImportDialog
@@ -137,7 +137,7 @@ class ManageKeybladesDialog(QDialog):
         else:
             keyblades_path = custom_visuals_path / KeybladeRandomizer.directory_name()
             keyblades_path.mkdir(parents=True, exist_ok=True)
-            os.startfile(keyblades_path)
+            platformutils.open_folder(keyblades_path)
 
     def _configure_custom_visuals(self):
         if configui.custom_visuals_folder_getter():

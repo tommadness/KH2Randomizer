@@ -25,7 +25,7 @@ from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
 from Class.randomUtils import unseeded_rng, random_seed_name
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
-from Module import appconfig, hashimage, version
+from Module import appconfig, hashimage, platformutils, version
 from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
@@ -413,8 +413,14 @@ class KH2RandomizerApp(QMainWindow):
         menu_bar.addAction("About", self.show_about)
 
     def _update_generator(self):
-        #invoke the update exe
-        process = subprocess.Popen(resource_path("updater.exe"))
+        #invoke the updater and exit so the main executable can be replaced
+        if platformutils.is_windows():
+            process = subprocess.Popen(resource_path("updater.exe"))
+        elif platformutils.appimage_path() is not None:
+            process = subprocess.Popen([str(platformutils.appimage_path()), "--updater"])
+        else:
+            # running from source
+            process = subprocess.Popen([sys.executable, resource_path("updater.py")])
         sys.exit()
 
     def _build_progress_frame(self) -> QFrame:
@@ -897,7 +903,7 @@ class KH2RandomizerApp(QMainWindow):
         return None,None
 
     def openPresetFolder(self):
-        os.startfile(appconfig.settings_presets_folder())
+        platformutils.open_folder(appconfig.settings_presets_folder())
 
     def _use_preset(self, preset: SettingsPreset):
         self.recalculate = False
@@ -1039,7 +1045,9 @@ class KH2RandomizerApp(QMainWindow):
         DevCreateRecolorDialog().exec()
 
 
-if __name__ == "__main__":
+def main():
+    platformutils.initialize_application_data_directory()
+    platformutils.prepare_qt_environment()
     app = QApplication([])
 
     QtGui.QFontDatabase.addApplicationFont(resource_path('static/KHMenu.otf'))
@@ -1110,3 +1118,7 @@ if __name__ == "__main__":
         window.move(center.x() - window.width() / 2, center.y() - window.height() / 2)
 
     sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()

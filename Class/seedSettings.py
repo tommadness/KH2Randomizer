@@ -4,10 +4,12 @@ import random
 import string
 import textwrap
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Callable, Any
 
 from bitstring import BitArray
+
+from Module import compat as _compat  # noqa: F401 - must precede kh2fmbr import
 from kh2fmbr.randomizer import Randomizer as khbr
 
 from Class import settingkey
@@ -55,7 +57,7 @@ def _format_list_for_spoiler(values: list[str]) -> str:
         return "(none)"
 
 
-class SettingGroup(str, Enum):
+class SettingGroup(StrEnum):
     """
     Serves to provide a rough grouping of settings. Not necessarily meant to designate where things should live in the
     seed generator UI; rather, meant to give a way for settings to be grouped for things like the spoiler log.

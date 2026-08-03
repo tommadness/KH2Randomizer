@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 
 from List.configDict import locationType
 from List.inventory import keyblade, magic
@@ -6,13 +6,13 @@ from List.location.graph import RequirementEdge, popup, LocationGraphBuilder, ST
 from Module.itemPlacementRestriction import ItemPlacementHelpers
 
 
-class NodeId(str, Enum):
+class NodeId(StrEnum):
     AtlanticaTutorial = "Atlantica Tutorial"
     Ursula = "Ursula"
     NewDayIsDawning = "New Day is Dawning"
 
 
-class CheckLocation(str, Enum):
+class CheckLocation(StrEnum):
     UnderseaKingdomMap = "Undersea Kingdom Map"
     MysteriousAbyss = "Mysterious Abyss"
     MusicalBlizzardElement = "Musical Blizzard Element"

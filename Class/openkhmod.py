@@ -1,6 +1,6 @@
 import re
 from copy import deepcopy
-from enum import Enum
+from enum import StrEnum
 from pathlib import PurePath, Path
 from typing import Any, Optional, Iterator, Union
 from zipfile import ZipFile
@@ -53,7 +53,7 @@ class ModYmlSyntaxException(ModYmlException):
     pass
 
 
-class AssetMethod(str, Enum):
+class AssetMethod(StrEnum):
     # https://github.com/OpenKH/OpenKh/blob/8f967bd412a9e7104a5124ae2688815307ba2472/OpenKh.Patcher/Metadata.cs#L96-L107
     AREADATASCRIPT = "areadatascript"
     BDSCRIPT = "bdscript"
@@ -67,12 +67,12 @@ class AssetMethod(str, Enum):
     SYNTHPATCH = "synthpatch"
 
 
-class AssetPlatform(str, Enum):
+class AssetPlatform(StrEnum):
     PC = "pc"
     PS2 = "ps2"
 
 
-class BinarcMethod(str, Enum):
+class BinarcMethod(StrEnum):
     # Taken from OpenKH docs originally, but found others in use in practice.
     # It's not entirely clear whether these are even meant to be a separate entity from the AssetMethod.
     AREADATASCRIPT = "areadatascript"
