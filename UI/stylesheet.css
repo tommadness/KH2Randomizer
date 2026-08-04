@@ -56,6 +56,8 @@ QGroupBox {{
 QLabel {{
     font-family: KHMenu;
     font-size: 14px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }}
 
 QLabel[cssClass~="header"] {{
@@ -101,6 +103,11 @@ QCheckBox::indicator {{
     height: 20px;
 }}
 
+QCheckBox::indicator:unchecked {{
+    background-color: #FFFFFF;
+    border-radius: 4px;
+}}
+
 QCheckBox::indicator:checked {{
     image: url(%(ability-on)s);
 }}
@@ -108,8 +115,9 @@ QCheckBox::indicator:checked {{
 /* Combo boxes, spin boxes, and buttons are made to look like some buttons on in-game menus */
 QComboBox, QAbstractSpinBox {{
     height: 24px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0px;
     border-radius: 12px;
     background-color: #00000a;
     color: white;
@@ -117,17 +125,35 @@ QComboBox, QAbstractSpinBox {{
     font-size: 16px;
 }}
 
+QAbstractSpinBox {{
+    padding-top: -2px;
+    padding-bottom: -2px;
+}}
+
 QComboBox:disabled {{
     background-color: #666666;
     color: #cccccc;
 }}
 
-QComboBox::drop-down, QAbstractSpinBox::up-button, QAbstractSpinBox::down-button {{
+QComboBox::drop-down {{
     border: none;
+}}
+
+QAbstractSpinBox::up-button {{
+    border: none;
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+}}
+
+QAbstractSpinBox::down-button {{
+    border: none;
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
 }}
 
 QComboBox::down-arrow, QAbstractSpinBox::down-arrow {{
     padding-right: 8px;
+    padding-left: 0px;
     width: 8px;
     height: 8px;
     image: url(%(down-arrow)s);
@@ -135,6 +161,7 @@ QComboBox::down-arrow, QAbstractSpinBox::down-arrow {{
 
 QAbstractSpinBox::up-arrow {{
     padding-right: 8px;
+    padding-left: 0px;
     width: 8px;
     height: 8px;
     image: url(%(up-arrow)s);

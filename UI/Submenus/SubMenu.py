@@ -5,7 +5,7 @@ from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QPushButton, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QScrollArea, QLayout
+    QPushButton, QSizePolicy, QSpinBox, QWidget, QVBoxLayout, QAbstractItemView, QScrollArea, QLayout
 )
 
 import Class.seedSettings
@@ -96,6 +96,7 @@ class KH2Submenu(QWidget):
 
     def add_labeled_widget(self, widget: QWidget, label_text: str, tooltip: str = "", auxiliary_widget: Optional[QWidget] = None):
         label = QLabel(label_text)
+        label.setContentsMargins(0, 0, 0, 0)
         if tooltip != '':
             label.setToolTip(tooltip)
         else:
@@ -507,6 +508,9 @@ class KH2Submenu(QWidget):
     def make_int_spin_box(self, name: str):
         setting: IntSpinner = Class.seedSettings.settings_by_name[name]
         spin_box = QSpinBox()
+        spin_box.setSizePolicy(QSizePolicy.Policy.Maximum,QSizePolicy.Policy.Fixed)
+        # assuming max integer UI element is 3 digits, plus some pixels for the arrows
+        spin_box.setMaximumWidth(spin_box.fontMetrics().horizontalAdvance(" 555 ") + 50)
         spin_box.setRange(setting.min, setting.max)
         spin_box.setSingleStep(setting.step)
         spin_box.setValue(self.settings.get(name))

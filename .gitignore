@@ -25,4 +25,3 @@ _site
 .generator/
 override_enemies.yaml
 override_locations.yaml
-presets/Boss Rando.json

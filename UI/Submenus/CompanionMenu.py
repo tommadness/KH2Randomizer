@@ -6,7 +6,7 @@ _ATTACK_DATA_PARAMS = "ATTACK_DATA_PARAMS"
 
 class CompanionMenu(KH2Submenu):
     def __init__(self, settings: SeedSettings):
-        super().__init__(title="Companions / Attack Data", settings=settings)
+        super().__init__(title="Companions", settings=settings)
         
         self.start_column()
         self.start_group()
