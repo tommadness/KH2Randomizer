@@ -1801,5 +1801,15 @@ class BossEnemyOnlyZip:
             )
             out_zip.writestr("enemyspoilers.txt", enemy_spoilers)
 
+            if self.settings.get(settingkey.REPORTS_REVEAL) == "bossreports":
+                hint_data = {}
+                hint_data["boss_enemy_only"] = True
+                hint_data["ProgressionType"] = "Bosses"
+                hint_data["generatorVersion"] = LOCAL_UI_VERSION
+                hint_data["coop_hints_enabled"] = self.settings.get(settingkey.COOP_HINTS_ENABLED)
+                hint_data["coop_player_number"] = self.settings.get(settingkey.COOP_PLAYER_NUMBER)
+                hint_data["coop_hint_type"] = self.settings.get(settingkey.COOP_HINT_TYPE)
+                Hints.write_hints(hint_data,out_zip)
+
             data.seek(0)
             return data
