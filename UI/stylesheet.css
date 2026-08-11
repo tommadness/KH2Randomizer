@@ -56,8 +56,8 @@ QGroupBox {{
 QLabel {{
     font-family: KHMenu;
     font-size: 10.5pt;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: -1px;
+    margin-bottom: -1px;
 }}
 
 QLabel[cssClass~="header"] {{
