@@ -35,7 +35,7 @@ QTabBar:tab {{
     background-color: #500000;
     color: white;
     font-family: KHMenu;
-    font-size: 14px;
+    font-size: 10.5pt;
 }}
 
 QTabBar:tab:selected, QTabBar:tab:hover {{
@@ -49,23 +49,23 @@ QScrollArea {{
 
 QGroupBox {{
     font-family: KHMenu;
-    font-size: 14px;
+    font-size: 10.5pt;
     text-transform: none;
 }}
 
 QLabel {{
     font-family: KHMenu;
-    font-size: 14px;
+    font-size: 10.5pt;
     margin-top: 2px;
     margin-bottom: 2px;
 }}
 
 QLabel[cssClass~="header"] {{
-    font-size: 20px;
+    font-size: 15pt;
 }}
 
 QLabel[cssClass~="groupHeader"] {{
-    font-size: 16px;
+    font-size: 12pt;
 }}
 
 QLineEdit {{
@@ -78,12 +78,12 @@ QLineEdit {{
     border-radius: 12px;
     background-color: #00000a;
     font-family: KHMenu;
-    font-size: 16px;
+    font-size: 12pt;
 }}
 
 QLineEdit[cssClass~="biggerLineEdit"], QInputDialog > QLineEdit {{
     min-height: 20px;
-    font-size: 20px;
+    font-size: 15pt;
     border-radius: 14px;
 }}
 
@@ -91,7 +91,7 @@ QLineEdit[cssClass~="biggerLineEdit"], QInputDialog > QLineEdit {{
 QCheckBox {{
     height: 24px;
     font-family: KHMenu;
-    font-size: 14px;
+    font-size: 10.5pt;
 }}
 
 QCheckBox:disabled {{
@@ -122,7 +122,7 @@ QComboBox, QAbstractSpinBox {{
     background-color: #00000a;
     color: white;
     font-family: KHMenu;
-    font-size: 16px;
+    font-size: 12pt;
 }}
 
 QAbstractSpinBox {{
@@ -176,7 +176,7 @@ QPushButton {{
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #5f5f66, stop: 0.1 #64646B, stop: 0.11 #00000a, stop: 1.0 #00000a);
     color: white;
     font-family: KHMenu;
-    font-size: 16px;
+    font-size: 12pt;
     qproperty-iconSize: 24px;
 }}
 
@@ -239,7 +239,7 @@ QToolTip {{
     border: 1px solid white;
     background-color: %(background-dark)s;
     color: white;
-    font-size: 14px;
+    font-size: 10.5pt;
 }}
 
 /* Progress bar is made to look like a health bar */
