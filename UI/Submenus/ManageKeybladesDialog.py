@@ -4,7 +4,7 @@ from typing import Optional
 
 from PIL import Image
 from PySide6.QtCore import QSize
-from PySide6.QtGui import Qt
+from PySide6.QtGui import Qt, QPixmap
 from PySide6.QtWidgets import QDialog, QMenuBar, QMenu, QVBoxLayout, QWidget, QGridLayout, QLabel, QScrollArea, \
     QFileDialog
 
@@ -99,16 +99,27 @@ class ManageKeybladesDialog(QDialog):
         else:
             self._refresh_keyblade_info(vanilla_grid, vanilla_keyblades)
 
+    _itempic_pixmap_cache: dict[tuple[Path, float], QPixmap] = {}
+
+    @staticmethod
+    def _load_itempic_pixmap(itempic: Path) -> QPixmap:
+        cache_key = (itempic, itempic.stat().st_mtime)
+        pixmap = ManageKeybladesDialog._itempic_pixmap_cache.get(cache_key)
+        if pixmap is None:
+            with Image.open(itempic) as image:
+                pixmap = image.resize((48, 48)).toqpixmap()
+            ManageKeybladesDialog._itempic_pixmap_cache[cache_key] = pixmap
+        return pixmap
+
     @staticmethod
     def _refresh_keyblade_info(grid: QGridLayout, keyblades: list[ReplacementKeyblade]):
-        row = 0
-        for keyblade in keyblades:
+        add_widget = grid.addWidget
+        for row, keyblade in enumerate(keyblades):
             itempic = keyblade.remastered_itempic()
             itempic_label = QLabel("")
             itempic_label.setFixedSize(QSize(48, 48))
             if itempic:
-                with Image.open(itempic) as image:
-                    itempic_label.setPixmap(image.resize((48, 48)).toqpixmap())
+                itempic_label.setPixmap(ManageKeybladesDialog._load_itempic_pixmap(itempic))
 
             name_label = QLabel(keyblade.name)
             author_label = QLabel(keyblade.author)
@@ -125,8 +136,6 @@ class ManageKeybladesDialog(QDialog):
             grid.addWidget(name_label, row, 1)
             grid.addWidget(author_label, row, 2)
             grid.addWidget(source_label, row, 3)
-
-            row = row + 1
 
     def _open_custom_keyblades_folder(self):
         custom_visuals_path = appconfig.read_custom_visuals_path()
