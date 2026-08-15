@@ -116,24 +116,20 @@ def windows_exe_command(exe_path, args: list) -> list:
     return ["wine"] + command
 
 
-def openkh_tool_launcher(openkh_path: Path, tool_name: str) -> list:
+def _openkh_tool_launcher_in(tool_dir: Path, tool_name: str) -> Optional[list]:
     """
-    Command prefix that runs the given OpenKH tool (e.g. "OpenKh.Command.Bar") on the
-    current platform; append the tool's arguments to it. On Windows this is the .exe.
-    Elsewhere, prefers a native Linux build of the tool, then the framework-dependent
-    .dll via the dotnet runtime, then the .exe through wine.
+    Same resolution rules as openkh_tool_launcher, but scoped to a single directory;
+    returns None instead of raising an exception when tool_name isn't found there at all.
     """
-    exe = openkh_path / f"{tool_name}.exe"
+    exe = tool_dir / f"{tool_name}.exe"
     if is_windows():
-        if not exe.is_file():
-            raise GeneratorException(f"No {tool_name}.exe found.")
-        return [str(exe)]
+        return [str(exe)] if exe.is_file() else None
 
-    native = openkh_path / tool_name
+    native = tool_dir / tool_name
     if native.is_file() and os.access(native, os.X_OK):
         return [str(native)]
 
-    dll = openkh_path / f"{tool_name}.dll"
+    dll = tool_dir / f"{tool_name}.dll"
     if dll.is_file() and shutil.which("dotnet") is not None:
         # OpenKH releases target an older .NET; roll forward to whatever is installed
         return ["dotnet", "--roll-forward", "LatestMajor", str(dll)]
@@ -145,6 +141,25 @@ def openkh_tool_launcher(openkh_path: Path, tool_name: str) -> list:
             f"Found {tool_name} in the OpenKH folder, but no way to run it on this"
             " system. Install the .NET runtime (dotnet) or Wine and try again."
         )
+
+    return None
+
+
+def openkh_tool_launcher(openkh_path: Path, tool_name: str) -> list:
+    """
+    Command prefix that runs the given OpenKH tool (e.g. "OpenKh.Command.Bar") on the
+    current platform; append the tool's arguments to it. On Windows this is the .exe.
+    Elsewhere, prefers a native Linux build of the tool, then the framework-dependent
+    .dll via the dotnet runtime, then the .exe through wine.
+
+    Looks directly in openkh_path first, then in an "Apps" subfolder of it, since
+    newer OpenKH releases moved the tools there; this keeps older extracted releases
+    (tools directly in openkh_path) working unchanged.
+    """
+    for tool_dir in (openkh_path, openkh_path / "Apps"):
+        result = _openkh_tool_launcher_in(tool_dir, tool_name)
+        if result is not None:
+            return result
 
     raise GeneratorException(f"No {tool_name} found in the OpenKH folder.")
 
