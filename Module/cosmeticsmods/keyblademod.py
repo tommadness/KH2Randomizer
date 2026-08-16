@@ -78,6 +78,11 @@ class ImportableKeyblade:
             if itempic.is_file():
                 shutil.copy2(itempic, out_itempic_path)
 
+        KeybladeRandomizer.create_thumbnail_if_needed(
+            remastered_itempic=self.remastered_itempic,
+            target_path=keyblade_output_location
+        )
+
     def _copy_remastered_files(self, variant: KeybladeModelVariant, variant_path: Path):
         def copy_textures(textures_input: dict[str, Path], textures_output: Path):
             if textures_input:

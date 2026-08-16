@@ -6,6 +6,8 @@ from enum import StrEnum
 from pathlib import Path
 from typing import Optional, Any
 
+from PIL import Image
+
 from Class.exceptions import GeneratorException
 from Class.openkhmod import AssetPlatform, BinarcMethod, ModAsset, ModBinarcSource, ModSourceFile, StrDict, \
     ObjectEntries
@@ -250,6 +252,12 @@ class ReplacementKeyblade:
 
     def remastered_itempic(self) -> Optional[Path]:
         return child_with_extension(self.keyblade_dir / ITEMPIC, ".dds")
+
+    def itempic_thumbnail(self) -> Optional[Path]:
+        return KeybladeRandomizer.create_thumbnail_if_needed(
+            remastered_itempic=self.remastered_itempic(),
+            target_path=self.keyblade_dir,
+        )
 
     def model(self, variant: KeybladeModelVariant) -> Optional[Path]:
         full_path = self.keyblade_dir / variant.keyblade_mod_subdir_name()
@@ -540,6 +548,20 @@ class KeybladeRandomizer:
                     result.append(ReplacementKeyblade(keyblade_dir.name, keyblade_dir, keyblade_json_file))
 
         return result
+
+    @staticmethod
+    def create_thumbnail_if_needed(remastered_itempic: Optional[Path], target_path: Path) -> Optional[Path]:
+        thumbnail_path = target_path / "thumbnail.png"
+        if thumbnail_path.is_file():
+            return thumbnail_path
+
+        if remastered_itempic and remastered_itempic.is_file():
+            with Image.open(remastered_itempic) as image:
+                resized = image.resize((48, 48))
+                resized.save(thumbnail_path, format="PNG")
+                return thumbnail_path
+        else:
+            return None
 
     @staticmethod
     def collect_vanilla_keyblades() -> list[ReplacementKeyblade]:
