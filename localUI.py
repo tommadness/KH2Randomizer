@@ -25,7 +25,7 @@ from Class import settingkey
 from Class.exceptions import CantAssignItemException, RandomizerExceptions, SettingsException
 from Class.randomUtils import unseeded_rng, random_seed_name
 from Class.seedSettings import SeedSettings, ExtraConfigurationData, randomize_settings
-from Module import appconfig, hashimage, platformutils, version
+from Module import appconfig, hashimage, platformutils, version, logger, seedHistory
 from Module.RandomizerSettings import RandomizerSettings
 from Module.cosmetics import CosmeticsMod, CustomCosmetics
 from Module.dailySeed import allDailyModifiers, getDailyModifiers
@@ -46,33 +46,15 @@ from UI.Submenus.ItemPlacementMenu import ItemPlacementMenu
 from UI.Submenus.ItemPoolMenu import ItemPoolMenu
 from UI.Submenus.KeybladeMenu import KeybladeMenu
 from UI.Submenus.RewardLocationsMenu import RewardLocationsMenu
+from UI.Submenus.SeedHistoryDialog import SeedHistoryDialog
 from UI.Submenus.SeedModMenu import SeedModMenu
+from UI.Submenus.SettingsDiffDialog import SettingsDiffDialog
 from UI.Submenus.SoraMenu import SoraMenu
 from UI.Submenus.StartingMenu import StartingMenu
 from UI.Submenus.about import AboutDialog
-from UI.Submenus.SeedHistoryDialog import SeedHistoryDialog
-from UI.Submenus.SettingsDiffDialog import SettingsDiffDialog
 from UI.presets import SettingsPreset, RandomPresetDialog
 from UI.qtlib import show_alert
 from UI.worker import GenerateSeedWorker
-from Module import seedHistory
-
-
-class Logger(object):
-    def __init__(self, orig_stream):
-        self.filename = "log.txt"
-        self.orig_stream = orig_stream
-    def write(self, data):
-        with open(self.filename, "a") as f:
-            f.write(str(data))
-        self.orig_stream.write(str(data))
-    def flush(self):
-        self.orig_stream.flush()
-
-logger = Logger(sys.stdout)
-
-sys.stdout = logger
-sys.stderr = logger
 
 
 class TourneySeedDialog(QDialog):
@@ -1051,6 +1033,8 @@ def main():
     app = QApplication([])
 
     QtGui.QFontDatabase.addApplicationFont(resource_path('static/KHMenu.otf'))
+
+    logger.initialize_logging()
 
     window = KH2RandomizerApp()
 
