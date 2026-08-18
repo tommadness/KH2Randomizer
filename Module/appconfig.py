@@ -101,29 +101,7 @@ def write_custom_visuals_path(selected_directory):
 
 
 def extracted_data_path() -> Optional[Path]:
-    """Returns the path to extracted game data, or None if not found."""
-    openkh_path = read_openkh_path()
-    if openkh_path is None:
-        return None
-
-    mods_manager_yml_path = openkh_path / "mods-manager.yml"
-    if not mods_manager_yml_path.is_file():
-        return None
-
-    with open(mods_manager_yml_path, encoding="utf-8") as mod_manager_file:
-        mod_manager_yaml = yaml.safe_load(mod_manager_file)
-        game_data_path = mod_manager_yaml.get("gameDataPath", "to-nowhere")
-        if game_data_path is None:
-            # Maybe something weird happened in the Mods Manager setup? Should have a gameDataPath.
-            # Regardless, nothing we can do here.
-            return None
-
-        extracted_data = platformutils.path_from_config_value(game_data_path)
-        if extracted_data.is_dir():
-            return extracted_data
-        else:
-            # Has a gameDataPath configured, but it's not being detected as a directory
-            return None
+    return _read_mods_manager_config_dir(["extractedGameDataPath", "gameDataPath"])
 
 
 def extracted_game_path(game: str) -> Optional[Path]:
@@ -145,7 +123,11 @@ def goa_mod_path() -> Optional[Path]:
     if openkh_path is None:
         return None
 
-    kh2_mods_path = openkh_path / "mods" / "kh2"
+    mods_path = _read_mods_manager_config_dir(["installedModsPath"])
+    if not mods_path:
+        mods_path = openkh_path / "mods"
+
+    kh2_mods_path = mods_path / "kh2"
     if not kh2_mods_path.is_dir():
         return None
 
@@ -162,3 +144,26 @@ def goa_mod_path() -> Optional[Path]:
                 return second_dir
 
     return None
+
+
+def _read_mods_manager_config_dir(keys: list[str]) -> Optional[Path]:
+    """Returns a path configured in the mods-manager.yml file at one of the provided keys, or None if not found."""
+    openkh_path = read_openkh_path()
+    if openkh_path is None:
+        return None
+
+    mods_manager_yml_path = openkh_path / "mods-manager.yml"
+    if not mods_manager_yml_path.is_file():
+        return None
+
+    with open(mods_manager_yml_path, encoding="utf-8") as mod_manager_file:
+        mod_manager_yaml = yaml.safe_load(mod_manager_file)
+
+        for key in keys:
+            value = mod_manager_yaml.get(key, "")
+            if value:
+                directory = platformutils.path_from_config_value(value)
+                if directory.is_dir():
+                    return directory
+
+        return None
