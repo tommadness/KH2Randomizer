@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.3.0 (2026-08-19)
+
+Features
+* Co-op Hints - Customize hints for two different players, where they can play different hint systems, get hints in different orders, or both. Progression hints only for now.
+* Seed History - Check seeds you've generated before
+* Settings Comparison to Presets - Compare the settings you have loaded with any of your presets and see what changed.
+* Updated Party Member Modifications Menu by Kareking
+* New icon
+
+Bugfixes
+* Search bar for boss/enemy replacement in spoiler log
+* Whitespace characters in custom keyblade names will no longer cause issues in cosmetic randomization
+* More explicit Linux support courtesy of Zexyen
+* Compatibility fixes for newer versions of OpenKH
+* Updated python version to 3.12.x
+
 ## 3.2.2 (2026-04-23)
 
 Features

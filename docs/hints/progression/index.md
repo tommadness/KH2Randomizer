@@ -6,6 +6,7 @@
 * [Points Progression Hints](#points-progression-hints)
 * [Path Progression Hints](#path-progression-hints)
 * [Spoiler Progression Hints](#spoiler-progression-hints)
+* [Co-op Progression Hints](#co-op-progression-hints)
 * [Extra Progression Information](#extra-progression-information)
 
 ## Summary
@@ -123,6 +124,17 @@ revealed with progression hints, a boss replacement hint will be given.
 For example, the progression hint would say "Thresholder replaced Prison Keeper".
 
 For this variation, the hint costs may be static.
+
+## Co-op Progression Hints
+
+![Co-op Hint Window](coop-hints.png)
+
+Co-op hints allows two players to play with all the same item locations, randomized stats, etc., but allows the players to obtain different hints, even from different hint systems. You can specify that you get worlds hinted in the same order, reversed order, or a random order compared to each other. 
+
+Note: When making your seed, make sure to set your co-op player number to what you agreed with your co-op partner. You should be able to verify your player number on the start screen as seen below:
+
+![Co-op Player 1](coop-player1.png)
+![Co-op Player 2](coop-player2.png)
 
 ## Extra Progression Information
 

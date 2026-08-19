@@ -177,6 +177,7 @@ def pathHints(seed_settings: SeedSettings):
 def keybladeLocking(seed_settings: SeedSettings):
     seed_settings.set(settingkey.KEYBLADES_LOCK_CHESTS, True)
     seed_settings.set(settingkey.HINTABLE_CHECKS, seed_settings.get(settingkey.HINTABLE_CHECKS) + ["keyblade"])
+    seed_settings.set(settingkey.SPOILER_REVEAL_TYPES, seed_settings.get(settingkey.SPOILER_REVEAL_TYPES) + ["keyblade"])
 
 def level_3_growth(seed_settings: SeedSettings):
     seed_settings.set(settingkey.STARTING_GROWTH_HIGH_JUMP, 3)
