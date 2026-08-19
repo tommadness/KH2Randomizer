@@ -85,4 +85,5 @@ jobs:
       - name: Attach to release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: gh release upload '${{ github.event.release.tag_name }}' KH2.Randomizer-x86_64.AppImage --clobber
