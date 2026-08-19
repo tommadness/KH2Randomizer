@@ -48,7 +48,7 @@ After Installing the seed click "Mod Loader -> Build/Build and Run". Every slot 
 ![image](Mod_Manager_Archipelago.png)
 
 ### Option 2 with KH2 - Archipelago Enablers \[LITE\]
-![image](Mod_Manager_Archipelago.png)
+![image](Mod_Manager_Archipelago_Alt.png)
 
 - if you are using APEnablers Lite, install `KH2FM-Mods-equations19/soft-reset` and  `KH2FM-Mods-equations19/KH2-Lua-Library`. Put them below the APCompanion but ABOVE the goa
 
