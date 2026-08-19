@@ -5,8 +5,9 @@
     1. [Archipelago Software](https://github.com/ArchipelagoMW/Archipelago/releases)
     2. Install the Archipelago Companion mod from `JaredWeakStrike/APCompanion` using OpenKH Mod Manager
     3. Install the mod from `TopazTK/KH2-ArchipelagoEnablers@codeberg.org` using OpenKH Mod manager
-       1. Do Note that if you have `KH2FM-Mods-equations19/auto-save` OR `KH2FM-Mods-equations19/soft-reset` you should download `TopazTK/KH2-ArchipelagoEnablersLITE@codeberg.org` instead
-       2. This mod overwrites slot 99 with an autosave. Make sure to copy your save data to another slot before installing.
+       1. This mod overwrites slot 99 with an autosave. Make sure to copy your save data to another slot before installing.
+       2. Do Note that if you have `KH2FM-Mods-equations19/auto-save` OR `KH2FM-Mods-equations19/soft-reset` you should download `TopazTK/KH2-ArchipelagoEnablersLITE@codeberg.org` instead
+           ### DO NOT INSTALL BOTH ArchipelagoEnablers and  ArchipelagoEnablersLITE only install one otherwise the game will fail to start.
     4. AP Randomizer Seed
 - Optional Quality of Life Mods for Archipelago
     1. Optionally Install the Archipelago Quality Of Life mod from `JaredWeakStrike/AP_QOL` using OpenKH Mod Manager
@@ -42,10 +43,11 @@ After Installing the seed click "Mod Loader -> Build/Build and Run". Every slot 
 ## What the Mod Manager Should Look Like.
 
 - Your Mod Manager should match one of these two images below as close as possible. If you have any additional mods you want to install generally they should go above the GoA ROM but below any of the top Archipelago mods with few exceptions.
-Option 1 with KH2 - Archipelago Enablers
+
+### Option 1 with KH2 - Archipelago Enablers
 ![image](Mod_Manager_Archipelago.png)
 
-Option 2 with KH2 - Archipelago Enablers \[LITE\]
+### Option 2 with KH2 - Archipelago Enablers \[LITE\]
 ![image](Mod_Manager_Archipelago.png)
 
 - if you are using APEnablers Lite, install `KH2FM-Mods-equations19/soft-reset` and  `KH2FM-Mods-equations19/KH2-Lua-Library`. Put them below the APCompanion but ABOVE the goa
