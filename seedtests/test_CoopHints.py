@@ -83,7 +83,8 @@ class Tests(unittest.TestCase):
             return [w for w in temp_world_order if w in hintable_worlds]
         world_key = "HintedWorld" if hint_data.get("hintsType") == HintType.PATH else "World"
         reports = hint_data["Reports"]
-        temp_world_order = [reports[slot][world_key] for slot in reports.keys()]
+        sorted_keys = sorted(reports.keys())
+        temp_world_order = [reports[slot][world_key] for slot in sorted_keys]
         return [w for w in temp_world_order if w in hintable_worlds]
 
 

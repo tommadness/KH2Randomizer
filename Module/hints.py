@@ -334,7 +334,8 @@ class Hints:
                     temp_world_list =  list(data["world_order"])
                     return [w for w in temp_world_list if w in hintable_worlds]
                 world_key = "HintedWorld" if data.get("hintsType") == HintType.PATH else "World"
-                temp_world_list = [data["Reports"][slot][world_key] for slot in data["Reports"].keys()]
+                sorted_keys = sorted(data["Reports"].keys())
+                temp_world_list = [data["Reports"][slot][world_key] for slot in sorted_keys]
                 return [w for w in temp_world_list if w in hintable_worlds]
 
             def apply_world_order(data: HintData, new_world_order: list):
