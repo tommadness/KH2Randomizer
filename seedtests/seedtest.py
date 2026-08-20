@@ -20,3 +20,10 @@ def test_seeds(seed_settings: SeedSettings, count: int = SEED_COUNT) -> Iterable
     for name in test_seed_names(count):
         settings = RandomizerSettings(name, True, "version", seed_settings, "")
         yield Randomizer(settings)
+
+
+def test_seeds_with_settings(seed_settings: SeedSettings, count: int = SEED_COUNT) -> Iterable[Randomizer]:
+    """ Generates unique seeds that can be used for testing. The amount is based on the SEED_COUNT. """
+    for name in test_seed_names(count):
+        settings = RandomizerSettings(name, True, "version", seed_settings, "")
+        yield Randomizer(settings), settings

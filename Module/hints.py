@@ -238,6 +238,7 @@ class Hints:
             hint_datas[hint_data_index]["Reports"] = copy.deepcopy(world_items.report_information)
             if common_tracker_data.progression_settings is not None:
                 world_list = list(hint_datas[hint_data_index]["world"].keys())
+                world_list = [w for w in world_list if w in hintable_worlds]
                 random.shuffle(world_list)
                 hint_datas[hint_data_index]["world_order"] = world_list
             hint_data_index+=1
@@ -263,6 +264,7 @@ class Hints:
             hint_names.append(HintType.POINTS)
             if common_tracker_data.progression_settings is not None:
                 world_list = list(hint_datas[hint_data_index]["world"].keys())
+                world_list = [w for w in world_list if w in hintable_worlds]
                 random.shuffle(world_list)
                 hint_datas[hint_data_index]["world_order"] = world_list
             point_data = []
@@ -326,40 +328,42 @@ class Hints:
 
         hint_data["startingInventory"] = randomizer.starting_item_ids
 
-        if common_tracker_data.coop_mode:
-            if common_tracker_data.coop_hint_type == "random":
-                if common_tracker_data.coop_player_number == "2":
-                    keys = list(hint_data["Reports"].keys())
-                    random.shuffle(keys)
-                    new_data = {}
-                    for index, key in enumerate(keys):
-                        new_data[index+1] = copy.deepcopy(hint_data["Reports"][key])
-                        new_data[index+1]["Location"] = copy.deepcopy(hint_data["Reports"][index+1]["Location"])
-                    hint_data["Reports"] = new_data
+        if common_tracker_data.coop_mode and common_tracker_data.coop_player_number == "2":
+            def world_order_of(data: HintData) -> list:
+                if data.get("hintsType") in (HintType.SHANANAS, HintType.POINTS):
+                    temp_world_list =  list(data["world_order"])
+                    return [w for w in temp_world_list if w in hintable_worlds]
+                world_key = "HintedWorld" if data.get("hintsType") == HintType.PATH else "World"
+                temp_world_list = [data["Reports"][slot][world_key] for slot in data["Reports"].keys()]
+                return [w for w in temp_world_list if w in hintable_worlds]
+
+            def apply_world_order(data: HintData, new_world_order: list):
+                if data.get("hintsType") in (HintType.SHANANAS, HintType.POINTS):
+                    data["world_order"] = new_world_order
+                    return
+                world_key = "HintedWorld" if data.get("hintsType") == HintType.PATH else "World"
+                world_to_slot = {data["Reports"][slot][world_key]: slot for slot in data["Reports"].keys()}
+                new_reports = {}
+                for slot, world in enumerate(new_world_order, start=1):
+                    new_reports[slot] = copy.deepcopy(data["Reports"][world_to_slot[world]])
+                    new_reports[slot]["Location"] = copy.deepcopy(data["Reports"][slot]["Location"])
+                data["Reports"] = new_reports
+
+            # player 1's world order is never modified, only used as the basis for player 2's
+            p1_data = hint_datas[hint_names.index(common_tracker_data.coop_player1_hints)]
+            player1_world_order = world_order_of(p1_data)
+
+            if common_tracker_data.coop_hint_type == "default":
+                player2_world_order = list(player1_world_order)
             elif common_tracker_data.coop_hint_type == "reversed":
-                if common_tracker_data.coop_player_number == "2":
-                    # reverse the hint order for this person
-                    keys = sorted(hint_data["Reports"].keys(),reverse=True)
-                    new_data = {}
-                    for index,key in enumerate(keys):
-                        new_data[index+1] = copy.deepcopy(hint_data["Reports"][key])
-                        new_data[index+1]["Location"] = copy.deepcopy(hint_data["Reports"][index+1]["Location"])
-                    hint_data["Reports"] = new_data
-            elif common_tracker_data.coop_hint_type == "default":
-                if common_tracker_data.coop_player_number == "2":
-                    p1_data = hint_datas[hint_names.index(common_tracker_data.coop_player1_hints)]
-                    p1_world_key = "HintedWorld" if p1_data.get("hintsType") == HintType.PATH else "World"
-                    p2_world_key = "HintedWorld" if hint_data.get("hintsType") == HintType.PATH else "World"
-                    world_to_p2_key = {hint_data["Reports"][k][p2_world_key]: k for k in hint_data["Reports"]}
-                    new_data = {}
-                    for slot in range(1, 14):
-                        p1_world = p1_data["Reports"][slot][p1_world_key]
-                        p2_key = world_to_p2_key[p1_world]
-                        new_data[slot] = copy.deepcopy(hint_data["Reports"][p2_key])
-                        new_data[slot]["Location"] = copy.deepcopy(hint_data["Reports"][slot]["Location"])
-                    hint_data["Reports"] = new_data
+                player2_world_order = list(reversed(player1_world_order))
+            elif common_tracker_data.coop_hint_type == "random":
+                player2_world_order = list(player1_world_order)
+                random.shuffle(player2_world_order)
             else:
                 raise SettingsException("Unknown coop hint type")
+
+            apply_world_order(hint_data, player2_world_order)
 
         Hints.generator_journal_hints(location_item_tuples, settings, hint_data)
         return hint_data
