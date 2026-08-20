@@ -51,6 +51,9 @@ jobs:
         env:
           # appimagetool runs without FUSE on CI runners
           APPIMAGE_EXTRACT_AND_RUN: '1'
+          # Keep AppImages compatible with distributions that provide glibc
+          # 2.36. The build script rejects artifacts linked against newer versions.
+          MAX_GLIBC_VERSION: '2.36'
           PYTHON: python
         run: ./packaging/linux/build_appimage.sh
 
@@ -85,4 +88,5 @@ jobs:
       - name: Attach to release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: gh release upload '${{ github.event.release.tag_name }}' KH2.Randomizer-x86_64.AppImage --clobber

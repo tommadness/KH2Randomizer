@@ -18,6 +18,7 @@ BUILD_DIR=build/appimage
 APPDIR="$BUILD_DIR/AppDir"
 OUTPUT_NAME="KH2.Randomizer-x86_64.AppImage"
 APPIMAGETOOL_SHA256="a6d71e2b6cd66f8e8d16c37ad164658985e0cf5fcaa950c90a482890cb9d13e0"
+MAX_GLIBC_VERSION=${MAX_GLIBC_VERSION:-2.36}
 
 if [ ! -f extracted_data.zip ]; then
     echo "error: extracted_data.zip not found in the repo root (required for bundling)" >&2
@@ -33,6 +34,10 @@ install -m 755 packaging/linux/AppRun "$APPDIR/AppRun"
 cp packaging/linux/kh2randomizer.desktop "$APPDIR/"
 "$PYTHON" -c "from PIL import Image; Image.open('rando.ico').save('$APPDIR/kh2randomizer.png')"
 cp "$APPDIR/kh2randomizer.png" "$APPDIR/usr/share/icons/hicolor/256x256/apps/kh2randomizer.png"
+
+# Fail before packaging if a local or CI build accidentally raises the Linux
+# runtime requirement above the compatibility target.
+packaging/linux/check_glibc_compatibility.sh "$APPDIR" "$MAX_GLIBC_VERSION"
 
 APPIMAGETOOL=${APPIMAGETOOL:-appimagetool}
 if ! command -v "$APPIMAGETOOL" >/dev/null 2>&1; then

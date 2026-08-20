@@ -84,6 +84,25 @@ def write_openkh_path(selected_directory):
     update_app_config('openkh_folder', selected_directory)
 
 
+def is_openkh_folder(selected_path: Path) -> bool:
+    """Accept both extracted OpenKH installations and Linux config folders."""
+    mods_manager_names = (
+        "OpenKh.Tools.ModsManager.exe",
+        "OpenKh.Tools.ModsManager",
+        "OpenKh.Tools.ModsManager.Avalonia",
+    )
+    tool_directories = (selected_path, selected_path / "Apps")
+    has_mods_manager = any(
+        (tool_directory / name).is_file()
+        for tool_directory in tool_directories
+        for name in mods_manager_names
+    )
+
+    # Native Linux installations keep Mods Manager data in ~/.config/OpenKh.
+    has_mods_manager_config = (selected_path / "mods-manager.yml").is_file()
+    return has_mods_manager or has_mods_manager_config
+
+
 def read_custom_music_path() -> Optional[Path]:
     return _read_directory("custom_music_folder")
 
