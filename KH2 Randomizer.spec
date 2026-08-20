@@ -60,15 +60,19 @@ updater_analysis = Analysis(
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=None,
     noarchive=False,
 )
 
-pyz = PYZ(updater_analysis.pure)
+pyz = PYZ(updater_analysis.pure, updater_analysis.zipped_data, cipher=None)
 
 updater_exe = EXE(
     pyz,
     updater_analysis.scripts,
     updater_analysis.binaries,
+    updater_analysis.zipfiles,
     updater_analysis.datas,
     [],
     name='updater',
@@ -105,17 +109,21 @@ a = Analysis(
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=None,
     noarchive=False,
 )
 
-rando_pyz = PYZ(a.pure)
+rando_pyz = PYZ(a.pure, a.zipped_data, cipher=None)
 exe = EXE(
     rando_pyz,
     a.scripts,
     a.binaries,
+    a.zipfiles,
     a.datas,
     [],
-    name='KH2 Randomizer',
+    name='KH2.Randomizer',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
