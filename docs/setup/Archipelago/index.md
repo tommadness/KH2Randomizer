@@ -21,7 +21,7 @@ This mod is based upon Num's Garden of Assemblage Mod and requires it to work. W
 
 ### Required: Archipelago Enablers (Deathlink and other QoL Features)
 
-Load this mod just like <b> GoA ROM</b> `TopazTK/KH2-ArchipelagoEnablers@codeberg.org`. <b>NOTE:</b> if you perfer `KH2FM-Mods-equations19/auto-save` or `KH2FM-Mods-equations19/soft-reset`you need to download `TopazTK/KH2-ArchipelagoEnablersLITE@codeberg.org`
+Load this mod just like <b> GoA ROM</b> `TopazTK/KH2-ArchipelagoEnablers@codeberg.org`. <b>NOTE:</b> if you prefer `KH2FM-Mods-equations19/auto-save` or `KH2FM-Mods-equations19/soft-reset` you need to download `TopazTK/KH2-ArchipelagoEnablersLITE@codeberg.org`
 
 ### Optional QoL Mods: AP QoL and Bear Skip
 
