@@ -195,6 +195,21 @@ class Randomizer:
         self.assign_weapon_stats(settings)
         self.assign_level_stats(settings)
         self.assign_form_level_exp(settings)
+        self.assign_ability_ap(settings)
+
+    def assign_ability_ap(self,settings: RandomizerSettings):
+        self.ability_ap_values = None
+        if not settings.ability_ap_rando:
+            return
+        all_abilities = Items.getActionAbilityList() + Items.getSupportAbilityList() + Items.getKeybladeAbilityList() + Items.getLevelAbilityList() + Items.getUniqueGrowthAbilityList()
+        min_ap_value = settings.ability_ap_rando_min_value
+        max_ap_value = settings.ability_ap_rando_max_value
+
+        unique_ability_ids = {item.Id for item in all_abilities}
+        self.ability_ap_values = {
+            ability_id: random.randint(min_ap_value, max_ap_value) for ability_id in unique_ability_ids
+        }
+
 
     def assign_form_level_exp(self, settings: RandomizerSettings):
         """Assigns experience values to each form level."""

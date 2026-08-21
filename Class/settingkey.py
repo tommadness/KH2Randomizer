@@ -1,4 +1,7 @@
 ABILITY_POOL = "ability_pool"
+ABILITY_AP_RANDO = "ability_ap_rando"
+ABILITY_MAX_AP_VALUE = "ability_max_ap_value"
+ABILITY_MIN_AP_VALUE = "ability_min_ap_value"
 ACCESSIBILITY = "seed_accessibility"
 ACCESSORIES_IN_ITEM_POOL = "accessories_in_item_pool"
 ALLOW_PROOF_HINTING = "allow_proof_hinting"

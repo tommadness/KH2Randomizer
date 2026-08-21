@@ -43,6 +43,9 @@ class SeedModMenu(KH2Submenu):
         self.add_option(settingkey.UNLIMITED_MP)
         self.end_group('Drops')
         self.start_group()
+        self.add_option(settingkey.ABILITY_AP_RANDO)
+        self.add_option(settingkey.ABILITY_MIN_AP_VALUE)
+        self.add_option(settingkey.ABILITY_MAX_AP_VALUE)
         self.add_option(settingkey.BLOCK_COR_SKIP)
         self.add_option(settingkey.BLOCK_SHAN_YU_SKIP)
         self.add_option(settingkey.DISABLE_FINAL_FORM)
@@ -90,6 +93,7 @@ class SeedModMenu(KH2Submenu):
         settings.observe(settingkey.BATTLE_LEVEL_RANDOM_MAX, self._btlv_setting_change)
         settings.observe(settingkey.SOFTLOCK_CHECKING, self.reverse_rando_checking)
         settings.observe(settingkey.KEYBLADES_LOCK_CHESTS, self._keyblade_locking_change)
+        settings.observe(settingkey.ABILITY_AP_RANDO, self._ability_ap_rando_change)
 
         self.finalizeMenu()
 
@@ -120,6 +124,19 @@ class SeedModMenu(KH2Submenu):
             settingkey.ENABLED_KEYBLADE_LOCKING_WORLDS,
             visible=keyblade_locking
         )
+
+    def _ability_ap_rando_change(self):
+        ap_rando = self.settings.get(settingkey.ABILITY_AP_RANDO)
+        
+        self.set_option_visibility(
+            settingkey.ABILITY_MIN_AP_VALUE,
+            visible=ap_rando
+        )
+        self.set_option_visibility(
+            settingkey.ABILITY_MAX_AP_VALUE,
+            visible=ap_rando
+        )
+        
 
     def _btlv_setting_change(self):
         # Sanity checking before doing anything else

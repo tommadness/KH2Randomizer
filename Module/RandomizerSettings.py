@@ -503,6 +503,12 @@ class RandomizerSettings:
         self.disable_final_form: bool = ui_settings.get(settingkey.DISABLE_FINAL_FORM) == DisableFinalOption.NO_FINAL
         self.block_cor_skip: bool = ui_settings.get(settingkey.BLOCK_COR_SKIP)
         self.block_shan_yu_skip: bool = ui_settings.get(settingkey.BLOCK_SHAN_YU_SKIP)
+        self.ability_ap_rando: bool = ui_settings.get(settingkey.ABILITY_AP_RANDO)
+        self.ability_ap_rando_min_value: bool = ui_settings.get(settingkey.ABILITY_MIN_AP_VALUE)
+        self.ability_ap_rando_max_value: bool = ui_settings.get(settingkey.ABILITY_MAX_AP_VALUE)
+        if self.ability_ap_rando_min_value > self.ability_ap_rando_max_value:
+            raise SettingsException("Ability AP randomization can't have a minimum value larger than the max value")
+        self.ability_ap_rando: bool = ui_settings.get(settingkey.ABILITY_AP_RANDO)
         self.pr_map_skip: bool = ui_settings.get(settingkey.PR_MAP_SKIP)
         self.atlantica_skip: bool = ui_settings.get(settingkey.ATLANTICA_TUTORIAL_SKIP)
         self.wardrobe_skip: bool = ui_settings.get(settingkey.REMOVE_WARDROBE_ANIMATION)

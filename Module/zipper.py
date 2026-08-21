@@ -420,6 +420,7 @@ class SeedZip:
                 mod.write_atlantica_tutorial_skip_assets()
             if settings.wardrobe_skip:
                 mod.write_wardrobe_skip_assets()
+            self.create_ability_ap_rando_assets(mod)
             self.create_drop_rate_assets(mod)
             self.create_shop_rando_assets(mod)
             self.create_equipment_ability_rando_assets(mod)
@@ -912,6 +913,52 @@ class SeedZip:
             icon_1=0,
             icon_2=2,
         )
+
+
+    def create_ability_ap_rando_assets(self, mod: SeedModBuilder):
+        if not self.settings.ability_ap_rando:
+            return
+        ability_ap_values = self.randomizer.ability_ap_values
+        with open(resource_path("static/full_items.json"), "r") as item_json:
+            all_item_jsons = json.loads(item_json.read())
+
+            ability_jsons = [y for y in all_item_jsons["Items"] if y["Type"] in ["Ability"]]
+            support_ids = [i.Id for i in Items.getSupportAbilityList()+Items.getKeybladeAbilityList()+Items.getLevelAbilityList()]
+            action_ids = [i.Id for i in Items.getActionAbilityList()]
+            growth_ids = [i.Id for i in Items.getUniqueGrowthAbilityList()]
+            for item_json in ability_jsons:
+                ability_id = item_json["Id"]
+                if ability_id not in ability_ap_values:
+                    continue
+                # the ap cost of an ability is the most significant byte of the StatEntry, but the least signifcant byte is used for type (?) of ability, so we only want to touch the most significant byte
+                byte0,byte1 = number_to_bytes(item_json["StatEntry"])
+                byte1 = ability_ap_values[ability_id]
+                # since we are modifying the ability item itself, we need to use the proper picture that the GoA modifies
+                if ability_id in support_ids:
+                    picture_id = 14
+                elif ability_id in action_ids:
+                    picture_id = 12
+                elif ability_id in growth_ids:
+                    picture_id = 13
+                else:
+                    picture_id = 0
+                mod.items.add_item(
+                    item_id=item_json["Id"],
+                    item_type=item_json["Type"],
+                    flag_0=item_json["Flag0"],
+                    flag_1=item_json["Flag1"],
+                    rank=item_json["Rank"],
+                    stat_entry=bytes_to_number(byte0,byte1),
+                    name=item_json["Name"],
+                    description=item_json["Description"],
+                    shop_buy=item_json["ShopBuy"],
+                    shop_sell=item_json["ShopSell"],
+                    command=item_json["Command"],
+                    slot=item_json["Slot"],
+                    picture=picture_id,
+                    icon_1=item_json["Icon1"],
+                    icon_2=item_json["Icon2"],
+                )
 
     def create_equipment_ability_rando_assets(self, mod: SeedModBuilder):
         if not self.settings.equipment_abilities_enabled:

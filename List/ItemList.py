@@ -511,6 +511,35 @@ class Items:
         ]
 
     @staticmethod
+    def getUniqueGrowthAbilityList() -> list[KH2Item]:
+        return [
+            KH2Item(growth.HighJump1),
+            KH2Item(growth.HighJump2, itemRarity.UNCOMMON),
+            KH2Item(growth.HighJump3, itemRarity.RARE),
+            KH2Item(growth.HighJumpMax, itemRarity.RARE),
+
+            KH2Item(growth.QuickRun1),
+            KH2Item(growth.QuickRun2, itemRarity.UNCOMMON),
+            KH2Item(growth.QuickRun3, itemRarity.RARE),
+            KH2Item(growth.QuickRunMax, itemRarity.RARE),
+
+            KH2Item(growth.AerialDodge1),
+            KH2Item(growth.AerialDodge2, itemRarity.UNCOMMON),
+            KH2Item(growth.AerialDodge3, itemRarity.RARE),
+            KH2Item(growth.AerialDodgeMax, itemRarity.RARE),
+
+            KH2Item(growth.Glide1),
+            KH2Item(growth.Glide2, itemRarity.UNCOMMON),
+            KH2Item(growth.Glide3, itemRarity.RARE),
+            KH2Item(growth.GlideMax, itemRarity.RARE),
+
+            KH2Item(growth.DodgeRoll1),
+            KH2Item(growth.DodgeRoll2, itemRarity.UNCOMMON),
+            KH2Item(growth.DodgeRoll3, itemRarity.RARE),
+            KH2Item(growth.DodgeRollMax, itemRarity.RARE),
+        ]
+
+    @staticmethod
     def sort_ability_items(abilities: Iterable[KH2Item]) -> list[KH2Item]:
         def key_function(ability_item: KH2Item) -> int:
             inventory_item = ability_item.item
