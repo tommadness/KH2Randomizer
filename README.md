@@ -20,8 +20,6 @@ python -m venv .venv
 
 Runtime notes:
 
-- Copying seed strings to the clipboard needs a clipboard utility: `wl-clipboard`
-  on Wayland or `xclip`/`xsel` on X11.
 - Some distributions need Qt's xcb runtime libraries for PySide6 (for example,
   `libxcb-cursor0` on Debian/Ubuntu).
 - Cosmetics features that use the OpenKH tools (keyblade randomization, texture
