@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.1 (2026-08-20)
+
+* Bugfixes for Co-op Hints - Needs a tracker update to use Points/Shananas hints with co-op.
+
 ## 3.3.0 (2026-08-19)
 
 Features

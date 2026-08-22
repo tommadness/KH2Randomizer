@@ -4,9 +4,10 @@
 - Needed for Archipelago 
     1. [Archipelago Software](https://github.com/ArchipelagoMW/Archipelago/releases)
     2. Install the Archipelago Companion mod from `JaredWeakStrike/APCompanion` using OpenKH Mod Manager
-    3. Install the mod from `TopazTK/KH2-ArchipelagoEnablers` using OpenKH Mod manager
-       1. Do Note that if you have `KH2FM-Mods-equations19/auto-save` OR `KH2FM-Mods-equations19/soft-reset` you should download `TopazTK/KH2-ArchipelagoEnablersLITE` instead
-       2. This mod overwrites slot 99 with an autosave. Make sure to copy your save data to another slot before installing.
+    3. Install the mod from `TopazTK/KH2-ArchipelagoEnablers@codeberg.org` using OpenKH Mod manager
+       1. This mod overwrites slot 99 with an autosave. Make sure to copy your save data to another slot before installing.
+       2. Do Note that if you have `KH2FM-Mods-equations19/auto-save` OR `KH2FM-Mods-equations19/soft-reset` you should download `TopazTK/KH2-ArchipelagoEnablersLITE@codeberg.org` instead
+           ### DO NOT INSTALL BOTH ArchipelagoEnablers and  ArchipelagoEnablersLITE only install one otherwise the game will fail to start.
     4. AP Randomizer Seed
 - Optional Quality of Life Mods for Archipelago
     1. Optionally Install the Archipelago Quality Of Life mod from `JaredWeakStrike/AP_QOL` using OpenKH Mod Manager
@@ -18,9 +19,9 @@ Load this mod just like the <b>GoA ROM</b> you did during the KH2 Rando setup. `
 Have this mod second-highest priority below the .zip seed.<br>
 This mod is based upon Num's Garden of Assemblage Mod and requires it to work. Without Num this could not be possible. 
 
-### Required: Archipelago Enablers
+### Required: Archipelago Enablers (Deathlink and other QoL Features)
 
-Load this mod just like <b> GoA ROM</b> `TopazTK/KH2-ArchipelagoEnablers`. <b>NOTE:</b> if you perfer `KH2FM-Mods-equations19/auto-save` or `KH2FM-Mods-equations19/soft-reset`you need to download `TopazTK/KH2-ArchipelagoEnablersLITE`
+Load this mod just like <b> GoA ROM</b> `TopazTK/KH2-ArchipelagoEnablers@codeberg.org`. <b>NOTE:</b> if you prefer `KH2FM-Mods-equations19/auto-save` or `KH2FM-Mods-equations19/soft-reset` you need to download `TopazTK/KH2-ArchipelagoEnablersLITE@codeberg.org`
 
 ### Optional QoL Mods: AP QoL and Bear Skip
 
@@ -41,7 +42,14 @@ After Installing the seed click "Mod Loader -> Build/Build and Run". Every slot 
 
 ## What the Mod Manager Should Look Like.
 
+- Your Mod Manager should match one of these two images below as close as possible. If you have any additional mods you want to install generally they should go above the GoA ROM but below any of the top Archipelago mods with few exceptions.
+
+### Option 1 with KH2 - Archipelago Enablers
 ![image](Mod_Manager_Archipelago.png)
+
+### Option 2 with KH2 - Archipelago Enablers \[LITE\]
+![image](Mod_Manager_Archipelago_Alt.png)
+
 - if you are using APEnablers Lite, install `KH2FM-Mods-equations19/soft-reset` and  `KH2FM-Mods-equations19/KH2-Lua-Library`. Put them below the APCompanion but ABOVE the goa
 
 ## Using the KH2 Client from the Archipelago software
