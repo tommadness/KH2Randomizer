@@ -1,5 +1,5 @@
-import pyperclip as pc
 from PySide6.QtWidgets import (
+    QApplication,
     QComboBox,
     QGridLayout,
     QLabel,
@@ -177,13 +177,13 @@ class ProgressionWidget(QWidget):
                 csv_string += ","
                 csv_string += str(setting.progression.get_cp_for_world(w, x))
             csv_string += "\n"
-        pc.copy(csv_string)
+        QApplication.clipboard().setText(csv_string)
         message = QMessageBox(text="Copied point table to clipboard")
         message.setWindowTitle("KH2 Seed Generator")
         message.exec()
 
     def load_csv(self):
-        csv_string = str(pc.paste())
+        csv_string = str(QApplication.clipboard().text())
         split_data = [s.split(",") for s in csv_string.splitlines()]
         print(split_data)
         if len(split_data[0]) == 1:

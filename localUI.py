@@ -9,7 +9,6 @@ import textwrap
 import zipfile
 from pathlib import Path
 
-import pyperclip as pc
 import pytz
 from PySide6 import QtGui
 from PySide6.QtCore import Qt, QSize
@@ -900,7 +899,7 @@ class KH2RandomizerApp(QMainWindow):
         if self.markdown_seed_string:
             output_text = f"```\n{output_text}\n```"
 
-        pc.copy(output_text)
+        QApplication.clipboard().setText(output_text)
         message = QMessageBox(text="Copied seed to clipboard")
         message.setWindowTitle("KH2 Seed Generator")
         message.exec()
@@ -924,7 +923,7 @@ class KH2RandomizerApp(QMainWindow):
 
     def receiveSeed(self):
         try:
-            share_string = "".join(str(pc.paste()).strip().strip('`').splitlines())
+            share_string = "".join(str(QApplication.clipboard().text()).strip().strip('`').splitlines())
             shared_seed = SharedSeed.from_share_string(
                 local_generator_version=LOCAL_UI_VERSION,
                 share_string=share_string
